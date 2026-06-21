@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Launcher-icon background for the Lime alias. Intentionally a deeper olive-lime than the
+    in-app Lime theme color (#CDDC39): the shared foreground bubble is white, and white has too
+    little contrast on bright lime-yellow — on the Android 12+ splash the bubble washed out.
+    A darker lime keeps the bubble legible and the icon recognisably lime.
+    The in-app theme color is kept bright separately, so only the icon/splash uses this shade.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#9EA000"/>
+</shape>
