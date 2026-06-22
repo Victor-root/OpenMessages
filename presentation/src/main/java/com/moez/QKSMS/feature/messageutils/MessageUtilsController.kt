@@ -1,20 +1,22 @@
-package dev.octoshrimpy.quik.feature.messageutils
+package io.openmessages.feature.messageutils
 
 import android.animation.ObjectAnimator
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
-import dev.octoshrimpy.quik.databinding.MessageUtilsControllerBinding
-import dev.octoshrimpy.quik.feature.settings.autodelete.AutoDeleteDialog
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.repository.MessageRepository
+import io.openmessages.R
+import io.openmessages.common.base.QkController
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.animateLayoutChanges
+import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.databinding.MessageUtilsControllerBinding
+import io.openmessages.feature.settings.autodelete.AutoDeleteDialog
+import io.openmessages.injection.appComponent
+import io.openmessages.repository.MessageRepository
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
@@ -31,9 +33,10 @@ class MessageUtilsController : QkController<MessageUtilsControllerBinding, Messa
         MessageUtilsControllerBinding.inflate(inflater, container, false)
 
     @Inject lateinit var context: Context
+    @Inject lateinit var colors: Colors
     @Inject override lateinit var presenter: MessageUtilsPresenter
     private val autoDeleteDialog: AutoDeleteDialog by lazy {
-        AutoDeleteDialog(activity!!, autoDeleteSubject::onNext)
+        AutoDeleteDialog(activity!!, colors.theme().theme, autoDeleteSubject::onNext)
     }
     private val autoDeleteSubject: Subject<Int> = PublishSubject.create()
     override val autoDeduplicateClickIntent by lazy { binding.autoDeduplicate.clicks() }
@@ -86,7 +89,7 @@ class MessageUtilsController : QkController<MessageUtilsControllerBinding, Messa
             }
         }
 
-        binding!!.autoDelete.summary = when (state.autoDelete) {
+        binding.autoDelete.summary = when (state.autoDelete) {
             0 -> context.getString(R.string.settings_auto_delete_never)
             else -> context.resources.getQuantityString(
                 R.plurals.settings_auto_delete_summary, state.autoDelete, state.autoDelete)
@@ -94,13 +97,14 @@ class MessageUtilsController : QkController<MessageUtilsControllerBinding, Messa
     }
 
     override fun showDeduplicationConfirmationDialog(): Single<Boolean> = Single.create { emitter ->
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(activity!!)
             .setTitle(R.string.deduplicate_messages_title)
             .setMessage(R.string.deduplicate_message_confirmation_dialog_message)
             .setPositiveButton(R.string.button_continue) { _, _ -> emitter.onSuccess(true) }
             .setNegativeButton(R.string.button_cancel) { _, _ -> emitter.onSuccess(false) }
             .setCancelable(false)
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun handleDeduplicationResult(resIdString: Int) {
@@ -114,13 +118,14 @@ class MessageUtilsController : QkController<MessageUtilsControllerBinding, Messa
 
     override suspend fun showAutoDeleteWarningDialog(messages: Int): Boolean = withContext(Dispatchers.Main) {
         suspendCancellableCoroutine { cont ->
-            androidx.appcompat.app.AlertDialog.Builder(activity!!)
+            AlertDialog.Builder(activity!!)
                 .setTitle(R.string.settings_auto_delete_warning)
                 .setMessage(context.resources.getString(R.string.settings_auto_delete_warning_message, messages))
                 .setOnCancelListener { cont.resume(false) }
                 .setNegativeButton(R.string.button_cancel) { _, _ -> cont.resume(false) }
                 .setPositiveButton(R.string.button_yes) { _, _ -> cont.resume(true) }
                 .show()
+                .themeButtons(colors.theme().theme)
         }
     }
 }

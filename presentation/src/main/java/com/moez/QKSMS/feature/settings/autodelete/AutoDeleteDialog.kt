@@ -1,31 +1,35 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings.autodelete
+package io.openmessages.feature.settings.autodelete
 
 import android.app.Activity
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.databinding.SettingsAutoDeleteDialogBinding
+import io.openmessages.R
+import io.openmessages.databinding.SettingsAutoDeleteDialogBinding
 
-class AutoDeleteDialog(context: Activity, listener: (Int) -> Unit) : AlertDialog(context) {
+class AutoDeleteDialog(
+    context: Activity,
+    private val themeColor: Int,
+    listener: (Int) -> Unit
+) : AlertDialog(context) {
 
     private val layout = SettingsAutoDeleteDialogBinding.inflate(LayoutInflater.from(context))
 
@@ -38,6 +42,14 @@ class AutoDeleteDialog(context: Activity, listener: (Int) -> Unit) : AlertDialog
         setButton(DialogInterface.BUTTON_POSITIVE, context.getString(R.string.button_save)) { _, _ ->
             listener(layout.field.text.toString().toIntOrNull() ?: 0)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Buttons exist once shown — colour them with the user's theme color.
+        getButton(DialogInterface.BUTTON_POSITIVE)?.setTextColor(themeColor)
+        getButton(DialogInterface.BUTTON_NEGATIVE)?.setTextColor(themeColor)
+        getButton(DialogInterface.BUTTON_NEUTRAL)?.setTextColor(themeColor)
     }
 
     fun setExpiry(days: Int): AutoDeleteDialog {

@@ -1,15 +1,15 @@
-package dev.octoshrimpy.quik.feature.messageutils
+package io.openmessages.feature.messageutils
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.interactor.DeduplicateMessages
-import dev.octoshrimpy.quik.interactor.DeleteOldMessages
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.service.AutoDeleteService
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.interactor.DeduplicateMessages
+import io.openmessages.interactor.DeleteOldMessages
+import io.openmessages.repository.MessageRepository
+import io.openmessages.service.AutoDeleteService
+import io.openmessages.util.Preferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
