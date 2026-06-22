@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.repository
+package io.openmessages.repository
 
 import android.content.ContentResolver
 import android.content.ContentUris
@@ -25,29 +25,29 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.provider.Telephony
 import com.f2prateek.rx.preferences2.RxSharedPreferences
-import dev.octoshrimpy.quik.extensions.forEach
-import dev.octoshrimpy.quik.extensions.insertOrUpdate
-import dev.octoshrimpy.quik.extensions.map
-import dev.octoshrimpy.quik.manager.KeyManager
-import dev.octoshrimpy.quik.mapper.CursorToContact
-import dev.octoshrimpy.quik.mapper.CursorToContactGroup
-import dev.octoshrimpy.quik.mapper.CursorToContactGroupMember
-import dev.octoshrimpy.quik.mapper.CursorToConversation
-import dev.octoshrimpy.quik.mapper.CursorToMessage
-import dev.octoshrimpy.quik.mapper.CursorToPart
-import dev.octoshrimpy.quik.mapper.CursorToRecipient
-import dev.octoshrimpy.quik.model.Contact
-import dev.octoshrimpy.quik.model.ContactGroup
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.model.EmojiReaction
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.model.MmsPart
-import dev.octoshrimpy.quik.model.PhoneNumber
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.model.SyncLog
-import dev.octoshrimpy.quik.interactor.DeduplicateMessages
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.extensions.forEach
+import io.openmessages.extensions.insertOrUpdate
+import io.openmessages.extensions.map
+import io.openmessages.manager.KeyManager
+import io.openmessages.mapper.CursorToContact
+import io.openmessages.mapper.CursorToContactGroup
+import io.openmessages.mapper.CursorToContactGroupMember
+import io.openmessages.mapper.CursorToConversation
+import io.openmessages.mapper.CursorToMessage
+import io.openmessages.mapper.CursorToPart
+import io.openmessages.mapper.CursorToRecipient
+import io.openmessages.model.Contact
+import io.openmessages.model.ContactGroup
+import io.openmessages.model.Conversation
+import io.openmessages.model.EmojiReaction
+import io.openmessages.model.Message
+import io.openmessages.model.MmsPart
+import io.openmessages.model.PhoneNumber
+import io.openmessages.model.Recipient
+import io.openmessages.model.SyncLog
+import io.openmessages.interactor.DeduplicateMessages
+import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.tryOrNull
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject

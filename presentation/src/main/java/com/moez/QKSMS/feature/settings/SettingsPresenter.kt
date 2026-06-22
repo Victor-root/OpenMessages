@@ -1,37 +1,37 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings
+package io.openmessages.feature.settings
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.makeToast
-import dev.octoshrimpy.quik.interactor.SyncMessages
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.NightModeManager
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.makeToast
+import io.openmessages.interactor.SyncMessages
+import io.openmessages.manager.BillingManager
+import io.openmessages.repository.SyncRepository
+import io.openmessages.util.NightModeManager
+import io.openmessages.util.Preferences
 import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
 import java.util.Calendar
@@ -234,7 +234,7 @@ class SettingsPresenter @Inject constructor(
                 }
 
         view.nightModeSelected()
-                .withLatestFrom(billingManager.upgradeStatus) { mode, upgraded ->
+                .withLatestFrom(billingManager.upgradeStatus) { mode, _ ->
 //                    if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
 //                        view.showQksmsPlusSnackbar()
 //                    } else {
@@ -261,7 +261,7 @@ class SettingsPresenter @Inject constructor(
                 .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
-                .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
+                .withLatestFrom(billingManager.upgradeStatus) { duration, _ ->
 //                    if (!upgraded && duration != 0) {
 //                        view.showQksmsPlusSnackbar()
 //                    } else {

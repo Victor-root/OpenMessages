@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="shortcut_compose_long_label">Új beszélgetés</string>
     <string name="shortcut_compose_short_label">Írás</string>
@@ -54,12 +54,12 @@
     <string name="archived_empty_text">Az archivált beszélgetései itt jelennek meg</string>
     <string name="main_fab_cd">Új beszélgetés kezdeményezése</string>
     <string name="main_default_sms_title">Szeresse meg újból az SMS-ezést</string>
-    <string name="main_default_sms_message">A QUIK beállítása alapértelmezett SMS-alkalmazásként</string>
+    <string name="main_default_sms_message">A Open Messages beállítása alapértelmezett SMS-alkalmazásként</string>
     <string name="main_default_sms_change">Módosítás</string>
     <string name="main_permission_required">Engedély szükséges</string>
-    <string name="main_permission_sms">A QUIK-nek engedélyre van szüksége az SMS-ek küldéséhez és megtekintéséhez</string>
-    <string name="main_permission_contacts">A QUIK-nek engedélyre van szüksége a névjegyek megtekintéséhez</string>
-    <string name="main_permission_notifications">A QUIK-nek engedélyre van szüksége az értesítések megjelenítéséhez</string>
+    <string name="main_permission_sms">A Open Messages-nek engedélyre van szüksége az SMS-ek küldéséhez és megtekintéséhez</string>
+    <string name="main_permission_contacts">A Open Messages-nek engedélyre van szüksége a névjegyek megtekintéséhez</string>
+    <string name="main_permission_notifications">A Open Messages-nek engedélyre van szüksége az értesítések megjelenítéséhez</string>
     <string name="main_permission_allow">Engedélyezés</string>
     <string name="drawer_inbox">Bejövő üzenetek</string>
     <string name="drawer_archived">Archivált</string>
@@ -70,7 +70,7 @@
     <string name="drawer_help">Súgó és visszajelzés</string>
     <string name="drawer_invite">Barátok meghívása</string>
     <string name="drawer_plus_banner_summary">Jusson hozzá a fantasztikus új funkciókhoz, és támogassa a fejlesztést</string>
-    <string name="rate_title">Tetszik a QUIK?</string>
+    <string name="rate_title">Tetszik a Open Messages?</string>
     <string name="rate_summary">Mutassa ki támogatását, és hagyjon nekünk egy csillagot a GitHubon!</string>
     <string name="rate_okay">OK!</string>
     <string name="rate_dismiss">MELLŐZÉS</string>
@@ -96,7 +96,7 @@
     <string name="compose_vcard_label">Névjegy</string>
     <string name="compose_scheduled_for">Ütemezett idő:</string>
     <string name="compose_scheduled_future">A kiválasztott időpontnak a jövőben kell lennie!</string>
-    <string name="compose_scheduled_plus">Az ütemezés szerinti üzenetküldés használatához fel kell oldania a QUIK+ szolgáltatást</string>
+    <string name="compose_scheduled_plus">Az ütemezés szerinti üzenetküldés használatához fel kell oldania a Open Messages+ szolgáltatást</string>
     <string name="compose_scheduled_toast">Hozzáadva az ütemezett üzenetekhez</string>
     <string name="compose_hint">Írjon egy üzenetet…</string>
     <string name="compose_menu_copy">Szöveg másolása</string>
@@ -150,7 +150,7 @@
     <string name="backup_location_summary">Mappa megadása</string>
     <string name="backup_restore_title">Visszaállítás</string>
     <string name="backup_restore_summary">Válasszon egy mentést</string>
-    <string name="backup_restore_error_plus">Oldja fel a QUIK+-t a biztonsági mentés és visszaállítás használatához</string>
+    <string name="backup_restore_error_plus">Oldja fel a Open Messages+-t a biztonsági mentés és visszaállítás használatához</string>
     <string name="backup_restore_error_backup">Mentés folyamatban…</string>
     <string name="backup_restore_error_restore">Visszaállítás folyamatban…</string>
     <string name="backup_restore_confirm_title">Visszaállítás mentésből</string>
@@ -251,7 +251,7 @@
     <string name="settings_mms_size_title">MMS-képmellékletek automatikus tömörítése</string>
     <string name="settings_sync_title">Üzenetek szinkronizálása</string>
     <string name="settings_sync_summary">Üzenetek újraszinkronizálása az Android natív SMS-adatbázisával</string>
-    <string name="settings_about_title">A QUIK névjegye</string>
+    <string name="settings_about_title">A Open Messages névjegye</string>
     <string name="settings_version">%s verzió</string>
     <string name="settings_logging_enabled">Hibanaplózás engedélyezve</string>
     <string name="settings_logging_disabled">Hibanaplózás letiltva</string>
@@ -261,7 +261,7 @@
     <string name="blocking_drop_summary">Üzenetek eldobása a tiltott küldőktől az elrejtésük helyett</string>
     <string name="blocking_conversations">Letiltott beszélgetések</string>
     <string name="blocking_manager_title">Tiltáskezelő</string>
-    <string name="blocking_manager_qksms_summary">A QUIK beépített tiltási funkciója</string>
+    <string name="blocking_manager_qksms_summary">A Open Messages beépített tiltási funkciója</string>
     <string name="blocking_manager_call_blocker_summary">Tiltja a kéretlen tartalmú üzeneteket, számokat és ismeretlen hívásokat a tiltólistával és az ütemezéssel</string>
     <string name="blocking_manager_call_control_summary">Automatikus hívás- és üzenetszűrés egy kényelmes helyen! A Community IQ™ segítségével megakadályozhatja a közösségben ismert kéretlen tartalom küldők üzeneteinek érkezését</string>
     <string name="blocking_manager_sia_summary">Automatikusan szűrheti az üzeneteket a számok alapján a „Should I Answer” alkalmazás használatával</string>
@@ -299,10 +299,10 @@
     <string name="qksms_plus_upgrade">Élettartam-frissítések a következőhöz: %1$s %2$s-ért</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Feloldás és adományozás: %1$s %2$s-ért</string>
-    <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatja a QUIK-et!</string>
-    <string name="qksms_plus_thanks_summary">Most már hozzáférhet minden QUIK+ funkcióhoz</string>
+    <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatja a Open Messages-et!</string>
+    <string name="qksms_plus_thanks_summary">Most már hozzáférhet minden Open Messages+ funkcióhoz</string>
     <string name="qksms_plus_error">Hiba történt, próbálja meg újra</string>
-    <string name="qksms_plus_free_title">A QUIK+ ingyenes az F-Droid felhasználók számára. Ha szeretné támogatni a fejlesztést, a felajánlott adományát nagyra értékeljük.</string>
+    <string name="qksms_plus_free_title">A Open Messages+ ingyenes az F-Droid felhasználók számára. Ha szeretné támogatni a fejlesztést, a felajánlott adományát nagyra értékeljük.</string>
     <string name="qksms_plus_donate">Adományozás PayPalon keresztül</string>
     <string name="qksms_plus_coming_soon">Hamarosan</string>
     <string name="qksms_plus_themes_title">Prémium témák</string>
@@ -324,7 +324,7 @@
     <string name="qksms_plus_respond_title">Automatikus válasz</string>
     <string name="qksms_plus_respond_summary">Előre megadott sablonok küldése bejövő üzenetekre</string>
     <string name="qksms_plus_more_title">Tovább</string>
-    <string name="qksms_plus_more_summary">A QUIK aktív fejlesztés alatt áll, és a vásárlásával az összes jövőbeli QUIK+ funkciót megkapja!</string>
+    <string name="qksms_plus_more_summary">A Open Messages aktív fejlesztés alatt áll, és a vásárlásával az összes jövőbeli Open Messages+ funkciót megkapja!</string>
     <string name="widget_loading">Betöltés…</string>
     <string name="widget_more">További beszélgetések megtekintése</string>
     <string name="qkreply_menu_read">Megjelölés olvasottként</string>
@@ -355,7 +355,7 @@
     <string name="button_set">Beállítás</string>
     <string name="button_undo">Visszavonás</string>
     <string name="toast_copied">Másolva</string>
-    <string name="toast_qksms_plus">Ehhez fel kell oldania a QUIK+-t</string>
+    <string name="toast_qksms_plus">Ehhez fel kell oldania a Open Messages+-t</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Új üzenet</item>
         <item quantity="other">%s új üzenet</item>

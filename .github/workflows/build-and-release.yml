@@ -147,7 +147,7 @@ jobs:
         run: |
           set -euo pipefail
           shopt -s nullglob
-          files=(presentation/build/outputs/apk/release/QUIK-v*-release.apk)
+          files=(presentation/build/outputs/apk/release/Open Messages-v*-release.apk)
           if [[ "${#files[@]}" -ne 1 ]]; then
             echo "::error title=APK lookup failed::Expected 1 APK, found ${#files[@]} (${files[*]:-none})."
             exit 1
@@ -160,7 +160,7 @@ jobs:
         run: |
           set -euo pipefail
           shopt -s nullglob
-          files=(presentation/build/outputs/apk/fdroid/QUIK-v*-fdroid.apk)
+          files=(presentation/build/outputs/apk/fdroid/Open Messages-v*-fdroid.apk)
           if [[ "${#files[@]}" -ne 1 ]]; then
             echo "::error title=APK lookup failed::Expected 1 APK, found ${#files[@]} (${files[*]:-none})."
             exit 1
@@ -226,7 +226,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.build.outputs.tag_name }}
-          name: QUIK v${{ needs.build.outputs.version_name }}
+          name: Open Messages v${{ needs.build.outputs.version_name }}
           draft: ${{ inputs.publish_release != true }}
           prerelease: ${{ inputs.prerelease }}
           body: ${{ steps.clean_notes.outputs.clean_notes }}
@@ -250,7 +250,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p repo
-          target_apk="repo/dev.octoshrimpy.quik_${VERSION_CODE}.apk"
+          target_apk="repo/io.openmessages_${VERSION_CODE}.apk"
           cp "$APK_PATH" "$target_apk"
           fdroid update --config config.yml --pretty
 

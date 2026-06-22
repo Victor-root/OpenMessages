@@ -1,33 +1,33 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings.about
+package io.openmessages.feature.settings.about
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jakewharton.rxbinding2.view.clicks
-import dev.octoshrimpy.quik.BuildConfig
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.widget.PreferenceView
-import dev.octoshrimpy.quik.databinding.AboutControllerBinding
-import dev.octoshrimpy.quik.injection.appComponent
+import io.openmessages.BuildConfig
+import io.openmessages.R
+import io.openmessages.common.base.QkController
+import io.openmessages.common.widget.PreferenceView
+import io.openmessages.databinding.AboutControllerBinding
+import io.openmessages.injection.appComponent
 import io.reactivex.Observable
 import javax.inject.Inject
 

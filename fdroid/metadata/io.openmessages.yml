@@ -1,10 +1,10 @@
-PackageName: dev.octoshrimpy.quik
-Name: QUIK
+PackageName: io.openmessages
+Name: Open Messages
 Summary: The most beautiful SMS messenger for Android
 License: GPL-3.0
 AuthorName: Marcos Jones
-SourceCode: https://github.com/octoshrimpy/quik
-IssueTracker: https://github.com/octoshrimpy/quik/issues
+SourceCode: https://github.com/victor-root/openmessages
+IssueTracker: https://github.com/victor-root/openmessages/issues
 WebSite: ""
 Categories:
   - Communication
@@ -13,8 +13,8 @@ AntiFeatures: NonFreeNet
 CurrentVersion: "4.1.1"
 CurrentVersionCode: 2229
 Description: |
-  QUIK is an open source replacement for the stock messaging app on Android.
+  Open Messages is an open source replacement for the stock messaging app on Android.
   It displays SMS/MMS conversations, supports scheduled sends, backups, voice
   messages, speech-to-text and text-to-speech, and more.  
-  QUIK connects to public APIs (e.g. Space Devs) for news and may fetch
+  Open Messages connects to public APIs (e.g. Space Devs) for news and may fetch
   thumbnails from third-party hosts, so it’s marked as NonFreeNet.

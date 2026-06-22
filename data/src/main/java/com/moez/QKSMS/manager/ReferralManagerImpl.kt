@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.manager
+package io.openmessages.manager
 
 import javax.inject.Inject
 

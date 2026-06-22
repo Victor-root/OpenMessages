@@ -1,12 +1,12 @@
-package dev.octoshrimpy.quik.feature.settings.about
+package io.openmessages.feature.settings.about
 
 import android.os.Bundle
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.databinding.ContainerActivityBinding
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.databinding.ContainerActivityBinding
 
 class AboutActivity : QkThemedActivity() {
     private lateinit var binding: ContainerActivityBinding
@@ -24,6 +24,7 @@ class AboutActivity : QkThemedActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         if (!router.handleBack()) {
             super.onBackPressed()

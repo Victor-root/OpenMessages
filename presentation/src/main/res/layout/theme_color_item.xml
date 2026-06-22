@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.openmessages.common.widget.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <View
+        android:id="@+id/colorCircle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/circle" />
+
+    <ImageView
+        android:id="@+id/checkIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_check_white_24dp"
+        android:visibility="gone" />
+
+</io.openmessages.common.widget.SquareFrameLayout>

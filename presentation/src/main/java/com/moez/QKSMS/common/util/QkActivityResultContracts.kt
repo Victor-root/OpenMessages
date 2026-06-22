@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.common.util
+package io.openmessages.common.util
 
 import android.app.Activity
 import android.content.Context

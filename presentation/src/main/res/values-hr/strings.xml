@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="shortcut_compose_long_label">Novi razgovor</string>
     <string name="shortcut_compose_short_label">Sastavi</string>
@@ -54,12 +54,12 @@
     <string name="archived_empty_text">Vaši arhivirani razgovori će se pojaviti ovdje</string>
     <string name="main_fab_cd">Započni novi razgovor</string>
     <string name="main_default_sms_title">Ponovno zavolite poruke</string>
-    <string name="main_default_sms_message">Postavite QUIK kao zadanu aplikaciju za SMS-ove</string>
+    <string name="main_default_sms_message">Postavite Open Messages kao zadanu aplikaciju za SMS-ove</string>
     <string name="main_default_sms_change">Promijeni</string>
     <string name="main_permission_required">Potrebne su dozvole</string>
-    <string name="main_permission_sms">QUIK treba dozvolu za slanje i pregledavanje SMS poruka</string>
-    <string name="main_permission_contacts">QUIK treba dozvolu za pregledavanje vaših kontakata</string>
-    <string name="main_permission_notifications">QUIK needs permission to display notifications</string>
+    <string name="main_permission_sms">Open Messages treba dozvolu za slanje i pregledavanje SMS poruka</string>
+    <string name="main_permission_contacts">Open Messages treba dozvolu za pregledavanje vaših kontakata</string>
+    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Dopusti</string>
     <string name="drawer_inbox">Poruke</string>
     <string name="drawer_archived">Arhivirano</string>
@@ -70,7 +70,7 @@
     <string name="drawer_help">Pomoć i povratne informacije</string>
     <string name="drawer_invite">Pozovi prijatelje</string>
     <string name="drawer_plus_banner_summary">Otključajte čudesne nove značajke i podržite razvoj</string>
-    <string name="rate_title">Uživate u QUIK?</string>
+    <string name="rate_title">Uživate u Open Messages?</string>
     <string name="rate_summary">Podijelite malo ljubavi i ocijenite nas na Google Playu!</string>
     <string name="rate_okay">U REDU!</string>
     <string name="rate_dismiss">ODBACI</string>
@@ -97,7 +97,7 @@
     <string name="compose_vcard_label">Kartica kontakta</string>
     <string name="compose_scheduled_for">Zakazano za</string>
     <string name="compose_scheduled_future">Odabrano vrijeme mora biti u budućnosti!</string>
-    <string name="compose_scheduled_plus">Morate otključati QUIK+ za zakazivanje poruke</string>
+    <string name="compose_scheduled_plus">Morate otključati Open Messages+ za zakazivanje poruke</string>
     <string name="compose_scheduled_toast">Dodano u zakazane poruke</string>
     <string name="compose_hint">Napiši poruku…</string>
     <string name="compose_menu_copy">Kopiraj tekst</string>
@@ -151,7 +151,7 @@
     <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Vraćanje</string>
     <string name="backup_restore_summary">Odaberite sig. kopiju</string>
-    <string name="backup_restore_error_plus">Otključajte QUIK+ za korištenje sig. kopiranja i vraćanja podataka</string>
+    <string name="backup_restore_error_plus">Otključajte Open Messages+ za korištenje sig. kopiranja i vraćanja podataka</string>
     <string name="backup_restore_error_backup">Sigurno kopiranje u tijeku…</string>
     <string name="backup_restore_error_restore">Vraćanje podataka u tijeku…</string>
     <string name="backup_restore_confirm_title">Vrati iz sigurnosne kopije</string>
@@ -253,7 +253,7 @@
     <string name="settings_mms_size_title">Automatski kompresiraj MMS priloge</string>
     <string name="settings_sync_title">Uskladi poruke</string>
     <string name="settings_sync_summary">Ponovno uskladite svoje poruke s Androidovom nativnom bazom SMS-ova</string>
-    <string name="settings_about_title">O QUIK-u</string>
+    <string name="settings_about_title">O Open Messages-u</string>
     <string name="settings_version">Verzija %s</string>
     <string name="settings_logging_enabled">Omogućen zapisnik za ispravljanje grešaka</string>
     <string name="settings_logging_disabled">Onemogućen zapisnik za ispravljanje grešaka</string>
@@ -263,7 +263,7 @@
     <string name="blocking_drop_summary">Odbacite dolazne poruke od blokiranih pošiljatelja umjesto da ih samo sakrivate</string>
     <string name="blocking_conversations">Blokirani razgovori</string>
     <string name="blocking_manager_title">Upravitelj za blokiranje</string>
-    <string name="blocking_manager_qksms_summary">Ugrađena funkcionalnost blokiranja u QUIK-u</string>
+    <string name="blocking_manager_qksms_summary">Ugrađena funkcionalnost blokiranja u Open Messages-u</string>
     <string name="blocking_manager_call_blocker_summary">Blokirajte neželjene poruke, brojeve i nepoznate pozive pomoću crne liste i zakazivanja</string>
     <string name="blocking_manager_call_control_summary">Automatski filtrirajte svoje pozive i poruke na jednom mjestu! Community IQ™ omogućuje vam filtriranje neželjenih poruka od spammera poznatih zajednici</string>
     <string name="blocking_manager_sia_summary">Automatski filtrirajte poruke od neželjenih brojeva pomoću aplikacije \"Should I Answer\"</string>
@@ -303,10 +303,10 @@
     <string name="qksms_plus_upgrade">Doživotna nadogradnja za %1$s %2$s</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Otključajte + donirajte za %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Hvala vam za podržavanje QUIK!</string>
-    <string name="qksms_plus_thanks_summary">Sada imate pristup svim QUIK+ značajkama</string>
+    <string name="qksms_plus_thanks_title">Hvala vam za podržavanje Open Messages!</string>
+    <string name="qksms_plus_thanks_summary">Sada imate pristup svim Open Messages+ značajkama</string>
     <string name="qksms_plus_error">Dogodila se greška, pokušajte ponovno</string>
-    <string name="qksms_plus_free_title">QUIK+ ke besplatan za korisnike F-Droida! Ako želite podržati razvoj, vrlo smo zahvalni na donacijama.</string>
+    <string name="qksms_plus_free_title">Open Messages+ ke besplatan za korisnike F-Droida! Ako želite podržati razvoj, vrlo smo zahvalni na donacijama.</string>
     <string name="qksms_plus_donate">Donirajte putem PayPala</string>
     <string name="qksms_plus_coming_soon">Uskoro dolazi</string>
     <string name="qksms_plus_themes_title">Premium teme</string>
@@ -328,7 +328,7 @@
     <string name="qksms_plus_respond_title">Automatsko odgovaranje</string>
     <string name="qksms_plus_respond_summary">Automatski odgovorite na poruke sa prilagođenim odgovorima</string>
     <string name="qksms_plus_more_title"> Više</string>
-    <string name="qksms_plus_more_summary">QUIK aktivno se razvija i vaša kupnja sadržat će sve buduće QUIK+ značajke!</string>
+    <string name="qksms_plus_more_summary">Open Messages aktivno se razvija i vaša kupnja sadržat će sve buduće Open Messages+ značajke!</string>
     <string name="widget_loading">Učitavanje…</string>
     <string name="widget_more">Prikaži više razgovora</string>
     <string name="qkreply_menu_read">Označi kao pročitano</string>
@@ -359,7 +359,7 @@
     <string name="button_set">Postavi</string>
     <string name="button_undo">Poništi</string>
     <string name="toast_copied">Kopirano</string>
-    <string name="toast_qksms_plus">Morate otključati QUIK+ za korištenje ovog</string>
+    <string name="toast_qksms_plus">Morate otključati Open Messages+ za korištenje ovog</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Nova poruka</item>
         <item quantity="few">%s nove poruke</item>

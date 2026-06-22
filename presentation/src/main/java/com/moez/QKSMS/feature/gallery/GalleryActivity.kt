@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.gallery
+package io.openmessages.feature.gallery
 
 import android.Manifest
 import android.os.Bundle
@@ -30,12 +30,12 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkActivity
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.databinding.GalleryActivityBinding
-import dev.octoshrimpy.quik.model.MmsPart
+import io.openmessages.R
+import io.openmessages.common.base.QkActivity
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.databinding.GalleryActivityBinding
+import io.openmessages.model.MmsPart
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -113,6 +113,7 @@ class GalleryActivity : QkActivity(), GalleryView {
         return super.onCreateOptionsMenu(menu)
     }
 
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()

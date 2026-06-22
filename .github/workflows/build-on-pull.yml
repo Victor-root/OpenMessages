@@ -41,19 +41,19 @@ jobs:
       run: |
         set -euo pipefail
         shopt -s nullglob
-        mapfile -t apk_files < <(printf '%s\n' presentation/build/outputs/apk/debug/QUIK-v*-debug.apk)
+        mapfile -t apk_files < <(printf '%s\n' presentation/build/outputs/apk/debug/Open Messages-v*-debug.apk)
         if [[ "${#apk_files[@]}" -eq 0 ]]; then
-          echo "No APK found matching QUIK-v*-debug.apk" >&2
+          echo "No APK found matching Open Messages-v*-debug.apk" >&2
           exit 1
         fi
         if [[ "${#apk_files[@]}" -gt 1 ]]; then
           echo "Multiple APKs found: ${apk_files[*]}" >&2
           exit 1
         fi
-        mv "${apk_files[0]}" presentation/build/outputs/apk/debug/QUIK-debug.apk
+        mv "${apk_files[0]}" presentation/build/outputs/apk/debug/Open Messages-debug.apk
 
     - name: Upload App
       uses: actions/upload-artifact@v7
       with:
         name: apk-debug
-        path: presentation/build/outputs/apk/debug/QUIK-debug.apk
+        path: presentation/build/outputs/apk/debug/Open Messages-debug.apk

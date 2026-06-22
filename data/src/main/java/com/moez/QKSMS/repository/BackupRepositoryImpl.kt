@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.repository
+package io.openmessages.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -28,10 +28,10 @@ import androidx.core.content.contentValuesOf
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import com.squareup.moshi.Moshi
-import dev.octoshrimpy.quik.common.util.extensions.now
-import dev.octoshrimpy.quik.model.BackupFile
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.common.util.extensions.now
+import io.openmessages.model.BackupFile
+import io.openmessages.model.Message
+import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -90,7 +90,7 @@ class BackupRepositoryImpl @Inject constructor(
     @Volatile private var stopFlag: Boolean = false
 
     override fun getDefaultBackupPath(): String {
-        return "${Environment.getExternalStorageDirectory()}/QKSMS/Backups"
+        return "${Environment.getExternalStorageDirectory()}/OpenMessages/Backups"
     }
 
     override fun getBackupDocumentTree(): DocumentFile? {

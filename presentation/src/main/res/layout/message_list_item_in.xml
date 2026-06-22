@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/timestamp"
                 style="@style/TextSecondary"
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
                 app:layout_constraintTop_toTopOf="@id/timestamp"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/simIndex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:clipToPadding="false"
             android:clipChildren="false">
 
-            <dev.octoshrimpy.quik.common.widget.AvatarView
+            <io.openmessages.common.widget.AvatarView
                 android:id="@+id/avatar"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -104,7 +104,7 @@
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp">
 
-                <dev.octoshrimpy.quik.common.widget.QkContextMenuRecyclerViewLongMmsPart
+                <io.openmessages.common.widget.QkContextMenuRecyclerViewLongMmsPart
                     android:id="@+id/parts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/mms_image_preview_list_item" />
 
-                <dev.octoshrimpy.quik.common.widget.TightTextView
+                <io.openmessages.common.widget.TightTextView
                     android:id="@+id/body"
                     style="@style/TextPrimary"
                     android:layout_width="wrap_content"
@@ -166,7 +166,7 @@
 
         </LinearLayout>
 
-        <dev.octoshrimpy.quik.common.widget.QkTextView
+        <io.openmessages.common.widget.QkTextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

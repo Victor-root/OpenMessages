@@ -1,10 +1,10 @@
-package dev.octoshrimpy.quik.receiver
+package io.openmessages.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.interactor.SendExistingMessage
+import io.openmessages.interactor.SendExistingMessage
 import javax.inject.Inject
 
 class ResendMessageReceiver : BroadcastReceiver() {

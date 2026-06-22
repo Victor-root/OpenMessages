@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.util
+package io.openmessages.common.util
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -36,33 +36,33 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.extensions.dpToPx
-import dev.octoshrimpy.quik.common.util.extensions.fromRecipient
-import dev.octoshrimpy.quik.common.util.extensions.toPerson
-import dev.octoshrimpy.quik.extensions.isImage
-import dev.octoshrimpy.quik.feature.compose.ComposeActivity
-import dev.octoshrimpy.quik.feature.qkreply.QkReplyActivity
-import dev.octoshrimpy.quik.manager.PermissionManager
-import dev.octoshrimpy.quik.manager.ShortcutManager
-import dev.octoshrimpy.quik.mapper.CursorToPartImpl
-import dev.octoshrimpy.quik.receiver.BlockThreadReceiver
-import dev.octoshrimpy.quik.receiver.DeleteMessagesReceiver
-import dev.octoshrimpy.quik.receiver.MessageMarkReceiver
-import dev.octoshrimpy.quik.receiver.RemoteMessagingReceiver
-import dev.octoshrimpy.quik.receiver.SpeakThreadsReceiver
-import dev.octoshrimpy.quik.repository.ContactRepository
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.util.GlideApp
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
-import dev.octoshrimpy.quik.util.Preferences
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.R
+import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.fromRecipient
+import io.openmessages.common.util.extensions.toPerson
+import io.openmessages.extensions.isImage
+import io.openmessages.feature.compose.ComposeActivity
+import io.openmessages.feature.qkreply.QkReplyActivity
+import io.openmessages.manager.PermissionManager
+import io.openmessages.manager.ShortcutManager
+import io.openmessages.mapper.CursorToPartImpl
+import io.openmessages.receiver.BlockThreadReceiver
+import io.openmessages.receiver.DeleteMessagesReceiver
+import io.openmessages.receiver.MessageMarkReceiver
+import io.openmessages.receiver.RemoteMessagingReceiver
+import io.openmessages.receiver.SpeakThreadsReceiver
+import io.openmessages.repository.ContactRepository
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.MessageRepository
+import io.openmessages.util.GlideApp
+import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.Preferences
+import io.openmessages.util.tryOrNull
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 import androidx.core.net.toUri
-import dev.octoshrimpy.quik.receiver.ResendMessageReceiver
+import io.openmessages.receiver.ResendMessageReceiver
 
 @Singleton
 class NotificationManagerImpl @Inject constructor(
@@ -75,7 +75,7 @@ class NotificationManagerImpl @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils,
     private val contactRepo: ContactRepository,
     private val shortcutManager: ShortcutManager
-) : dev.octoshrimpy.quik.manager.NotificationManager {
+) : io.openmessages.manager.NotificationManager {
 
     companion object {
         const val DEFAULT_CHANNEL_ID = "notifications_default"
@@ -203,6 +203,7 @@ class NotificationManagerImpl @Inject constructor(
             notification.setSound(ringtone)
 
     // Tell the notification if it's a group message
+        @Suppress("DEPRECATION")
         val messagingStyle = NotificationCompat.MessagingStyle("Me")
         if (conversation.recipients.size >= 2) {
             messagingStyle.isGroupConversation = true
@@ -383,6 +384,7 @@ class NotificationManagerImpl @Inject constructor(
         if (prefs.wakeScreen(threadId).get()) {
             context.getSystemService<PowerManager>()?.let { powerManager ->
                 if (!powerManager.isInteractive) {
+                    @Suppress("DEPRECATION")
                     val flags = PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP
                     val wakeLock = powerManager.newWakeLock(flags, context.packageName)
                     wakeLock.acquire(5000)
@@ -391,8 +393,8 @@ class NotificationManagerImpl @Inject constructor(
         }
     }
 
-    override fun notifyFailed(msgId: Long) {
-        val message = messageRepo.getMessage(msgId)
+    override fun notifyFailed(threadId: Long) {
+        val message = messageRepo.getMessage(threadId)
 
         if (message == null || !message.isFailedMessage()) {
             return
@@ -404,8 +406,6 @@ class NotificationManagerImpl @Inject constructor(
                 phoneNumberUtils.compare(recipient.address, lastMessage.address)
             }
         } ?: conversation.recipients.firstOrNull()
-
-        val threadId = conversation.id
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)

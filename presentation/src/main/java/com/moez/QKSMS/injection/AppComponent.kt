@@ -1,52 +1,53 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.injection
+package io.openmessages.injection
 
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
-import dev.octoshrimpy.quik.common.QKApplication
-import dev.octoshrimpy.quik.common.QkDialog
-import dev.octoshrimpy.quik.common.util.QkChooserTargetService
-import dev.octoshrimpy.quik.common.widget.AvatarView
-import dev.octoshrimpy.quik.common.widget.PagerTitleView
-import dev.octoshrimpy.quik.common.widget.PreferenceView
-import dev.octoshrimpy.quik.common.widget.QkEditText
-import dev.octoshrimpy.quik.common.widget.QkSwitch
-import dev.octoshrimpy.quik.common.widget.QkTextView
-import dev.octoshrimpy.quik.common.widget.RadioPreferenceView
-import dev.octoshrimpy.quik.feature.backup.BackupController
-import dev.octoshrimpy.quik.feature.blocking.BlockingController
-import dev.octoshrimpy.quik.feature.blocking.filters.MessageContentFiltersController
-import dev.octoshrimpy.quik.feature.blocking.manager.BlockingManagerController
-import dev.octoshrimpy.quik.feature.blocking.messages.BlockedMessagesController
-import dev.octoshrimpy.quik.feature.blocking.numbers.BlockedNumbersController
-import dev.octoshrimpy.quik.feature.compose.editing.DetailedChipView
-import dev.octoshrimpy.quik.feature.conversationinfo.injection.ConversationInfoComponent
-import dev.octoshrimpy.quik.feature.messageutils.MessageUtilsController
-import dev.octoshrimpy.quik.feature.settings.SettingsController
-import dev.octoshrimpy.quik.feature.settings.about.AboutController
-import dev.octoshrimpy.quik.feature.settings.swipe.SwipeActionsController
-import dev.octoshrimpy.quik.feature.themepicker.injection.ThemePickerComponent
-import dev.octoshrimpy.quik.feature.widget.WidgetAdapter
-import dev.octoshrimpy.quik.injection.android.ActivityBuilderModule
-import dev.octoshrimpy.quik.injection.android.BroadcastReceiverBuilderModule
-import dev.octoshrimpy.quik.injection.android.ServiceBuilderModule
+import io.openmessages.common.QKApplication
+import io.openmessages.common.QkDialog
+import io.openmessages.common.util.QkChooserTargetService
+import io.openmessages.common.widget.AvatarView
+import io.openmessages.common.widget.PagerTitleView
+import io.openmessages.common.widget.PreferenceView
+import io.openmessages.common.widget.QkEditText
+import io.openmessages.common.widget.QkSwitch
+import io.openmessages.common.widget.QkTextView
+import io.openmessages.common.widget.RadioPreferenceView
+import io.openmessages.feature.backup.BackupController
+import io.openmessages.feature.blocking.BlockingController
+import io.openmessages.feature.blocking.filters.MessageContentFiltersController
+import io.openmessages.feature.blocking.manager.BlockingManagerController
+import io.openmessages.feature.blocking.messages.BlockedMessagesController
+import io.openmessages.feature.blocking.numbers.BlockedNumbersController
+import io.openmessages.feature.compose.editing.DetailedChipView
+import io.openmessages.feature.conversationinfo.injection.ConversationInfoComponent
+import io.openmessages.feature.messageutils.MessageUtilsController
+import io.openmessages.feature.settings.SettingsController
+import io.openmessages.feature.settings.ThemePickerDialog
+import io.openmessages.feature.settings.about.AboutController
+import io.openmessages.feature.settings.swipe.SwipeActionsController
+import io.openmessages.feature.themepicker.injection.ThemePickerComponent
+import io.openmessages.feature.widget.WidgetAdapter
+import io.openmessages.injection.android.ActivityBuilderModule
+import io.openmessages.injection.android.BroadcastReceiverBuilderModule
+import io.openmessages.injection.android.ServiceBuilderModule
 import javax.inject.Singleton
 
 @Singleton
@@ -73,6 +74,7 @@ interface AppComponent {
     fun inject(controller: MessageUtilsController)
     fun inject(controller: SettingsController)
     fun inject(controller: SwipeActionsController)
+    fun inject(dialog: ThemePickerDialog)
 
     fun inject(dialog: QkDialog)
 

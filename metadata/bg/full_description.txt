@@ -9,4 +9,4 @@
 - Сортиране на съобщения
 - Отложено изпращане
 
-Можете да общувате с общността на адрес <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a>
+Можете да общувате с общността на адрес <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a>

@@ -1,36 +1,36 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.widget
+package io.openmessages.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.databinding.AvatarViewBinding
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.util.GlideApp
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.databinding.AvatarViewBinding
+import io.openmessages.injection.appComponent
+import io.openmessages.model.Recipient
+import io.openmessages.util.GlideApp
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(
@@ -55,7 +55,7 @@ class AvatarView @JvmOverloads constructor(
         theme = colors.theme()
 
         layout = AvatarViewBinding.inflate(LayoutInflater.from(context), this)
-        setBackgroundResource(R.drawable.circle)
+        setBackgroundResource(R.drawable.rounded_rect_12dp)
         clipToOutline = true
     }
 

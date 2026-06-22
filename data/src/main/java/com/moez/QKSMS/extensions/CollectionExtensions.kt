@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.extensions
+package io.openmessages.extensions
 
 inline fun <K, T> Iterable<T>.associateByNotNull(keySelector: (T) -> K?): Map<K, T> {
     val map = hashMapOf<K, T>()

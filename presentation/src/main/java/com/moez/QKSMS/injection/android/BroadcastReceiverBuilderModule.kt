@@ -1,45 +1,45 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.injection.android
+package io.openmessages.injection.android
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dev.octoshrimpy.quik.feature.widget.WidgetProvider
-import dev.octoshrimpy.quik.injection.scope.ActivityScope
-import dev.octoshrimpy.quik.receiver.BlockThreadReceiver
-import dev.octoshrimpy.quik.receiver.BootReceiver
-import dev.octoshrimpy.quik.receiver.DefaultSmsChangedReceiver
-import dev.octoshrimpy.quik.receiver.DeleteMessagesReceiver
-import dev.octoshrimpy.quik.receiver.MmsReceivedReceiver
-import dev.octoshrimpy.quik.receiver.MmsWapPushReceiver
-import dev.octoshrimpy.quik.receiver.NightModeReceiver
-import dev.octoshrimpy.quik.receiver.RemoteMessagingReceiver
-import dev.octoshrimpy.quik.receiver.SendScheduledMessageReceiver
-import dev.octoshrimpy.quik.receiver.MessageDeliveredReceiver
-import dev.octoshrimpy.quik.receiver.SmsProviderChangedReceiver
-import dev.octoshrimpy.quik.receiver.SmsReceivedReceiver
-import dev.octoshrimpy.quik.receiver.MessageMarkReceiver
-import dev.octoshrimpy.quik.receiver.MessageSentReceiver
-import dev.octoshrimpy.quik.receiver.ResendMessageReceiver
-import dev.octoshrimpy.quik.receiver.SendDelayedMessageReceiver
-import dev.octoshrimpy.quik.receiver.SpeakThreadsReceiver
-import dev.octoshrimpy.quik.receiver.StartActivityFromWidgetReceiver
+import io.openmessages.feature.widget.WidgetProvider
+import io.openmessages.injection.scope.ActivityScope
+import io.openmessages.receiver.BlockThreadReceiver
+import io.openmessages.receiver.BootReceiver
+import io.openmessages.receiver.DefaultSmsChangedReceiver
+import io.openmessages.receiver.DeleteMessagesReceiver
+import io.openmessages.receiver.MmsReceivedReceiver
+import io.openmessages.receiver.MmsWapPushReceiver
+import io.openmessages.receiver.NightModeReceiver
+import io.openmessages.receiver.RemoteMessagingReceiver
+import io.openmessages.receiver.SendScheduledMessageReceiver
+import io.openmessages.receiver.MessageDeliveredReceiver
+import io.openmessages.receiver.SmsProviderChangedReceiver
+import io.openmessages.receiver.SmsReceivedReceiver
+import io.openmessages.receiver.MessageMarkReceiver
+import io.openmessages.receiver.MessageSentReceiver
+import io.openmessages.receiver.ResendMessageReceiver
+import io.openmessages.receiver.SendDelayedMessageReceiver
+import io.openmessages.receiver.SpeakThreadsReceiver
+import io.openmessages.receiver.StartActivityFromWidgetReceiver
 
 @Module
 abstract class BroadcastReceiverBuilderModule {

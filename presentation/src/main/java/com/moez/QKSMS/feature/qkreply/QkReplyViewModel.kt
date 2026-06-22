@@ -1,39 +1,41 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.qkreply
+package io.openmessages.feature.qkreply
 
 import android.telephony.SmsMessage
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkViewModel
-import dev.octoshrimpy.quik.compat.SubscriptionManagerCompat
-import dev.octoshrimpy.quik.extensions.asObservable
-import dev.octoshrimpy.quik.extensions.mapNotNull
-import dev.octoshrimpy.quik.interactor.DeleteMessages
-import dev.octoshrimpy.quik.interactor.MarkRead
-import dev.octoshrimpy.quik.interactor.SendNewMessage
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.util.ActiveSubscriptionObservable
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkViewModel
+import io.openmessages.compat.SubscriptionManagerCompat
+import io.openmessages.extensions.asObservable
+import io.openmessages.extensions.mapNotNull
+import io.openmessages.interactor.DeleteMessages
+import io.openmessages.interactor.MarkRead
+import io.openmessages.interactor.SendNewMessage
+import io.openmessages.model.Message
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.MessageRepository
+import io.openmessages.util.ActiveSubscriptionObservable
+import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -197,7 +199,7 @@ class QkReplyViewModel @Inject constructor(
 
         // Toggle to the next sim slot
         view.changeSimIntent
-                .withLatestFrom(state) { _, state ->
+                .withLatestFrom(state, BiFunction { _, state ->
                     val subs = subscriptionManager.activeSubscriptionInfoList
                     val subIndex = subs.indexOfFirst { it.subscriptionId == state.subscription?.subscriptionId }
                     val subscription = when {
@@ -206,21 +208,21 @@ class QkReplyViewModel @Inject constructor(
                         else -> subs[0]
                     }
                     newState { copy(subscription = subscription) }
-                }
+                })
                 .autoDisposable(view.scope())
                 .subscribe()
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
-                .withLatestFrom(view.textChangedIntent) { _, body -> body }
+                .withLatestFrom(view.textChangedIntent, BiFunction { _, body -> body })
                 .map { body -> body.toString() }
-                .withLatestFrom(state, conversation) { body, state, conversation ->
+                .withLatestFrom(state, conversation, Function3 { body, state, conversation ->
                     sendNewMessage.execute(SendNewMessage.Params(
                         state.subscription?.subscriptionId ?: -1, 0,
                         conversation.recipients.map { it.address }, body, conversation.sendAsGroup
                     ))
                     view.setDraft("")
-                }
+                })
                 .doOnNext {
                     markRead.execute(listOf(threadId)) { newState { copy(hasError = true) } }
                 }

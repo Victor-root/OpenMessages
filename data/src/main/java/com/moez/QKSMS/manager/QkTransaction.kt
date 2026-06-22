@@ -15,24 +15,24 @@
  *
  * Copyright (C) 2025
  *
- * modified from original for QUIK
+ * modified from original for Open Messages
  *
- * This file is part of QUIK.
+ * This file is part of Open Messages.
  *
- * QUIK is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QUIK is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QUIK.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.manager
+package io.openmessages.manager
 
 import android.app.PendingIntent
 import android.content.ContentResolver

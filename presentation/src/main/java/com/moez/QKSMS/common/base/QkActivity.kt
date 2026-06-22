@@ -1,24 +1,26 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.base
+package io.openmessages.common.base
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -27,8 +29,8 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.util.Preferences
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
@@ -44,6 +46,12 @@ abstract class QkActivity : AppCompatActivity() {
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = prefs.theme().get()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility and
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+        }
         onNewIntent(intent)
         disableScreenshots(prefs.disableScreenshots.get())
     }
@@ -53,6 +61,7 @@ abstract class QkActivity : AppCompatActivity() {
         disableScreenshots(prefs.disableScreenshots.get())
     }
 
+    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -66,12 +75,14 @@ abstract class QkActivity : AppCompatActivity() {
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         title = title // The title may have been set before layout inflation
     }
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         title = title // The title may have been set before layout inflation
     }
 
@@ -94,6 +105,7 @@ abstract class QkActivity : AppCompatActivity() {
 
     protected open fun showBackButton(show: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
+        toolbar?.navigationIcon?.setTint(Color.WHITE)
     }
 
     private fun disableScreenshots(disableScreenshots: Boolean) {

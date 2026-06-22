@@ -1,20 +1,20 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
@@ -25,12 +25,12 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId 'dev.octoshrimpy.quik'
+        applicationId 'io.openmessages'
         minSdkVersion 23
         targetSdkVersion 33
         versionCode 2238
         versionName '4.3.6'
-        setProperty("archivesBaseName", "QUIK-v${versionName}")
+        setProperty("archivesBaseName", "OpenMessages-v${versionName}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -38,16 +38,14 @@ android {
         debug // Uses the default debug keystore.
         release {
             def keystoreProps = new Properties()
-            def keystorePropsFile = rootProject.file('./.gradle/.gradlerc')
-            storeFile file('./my-release-key.keystore')
-            keyAlias 'quik_release'
+            def keystorePropsFile = rootProject.file('keystore.properties')
             if (keystorePropsFile.exists()) {
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
-            } else {
-                // do nothing
+                storeFile file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
             }
-            storePassword keystoreProps['storePassword']
-            keyPassword keystoreProps['keyPassword']
         }
     }
 
@@ -68,7 +66,7 @@ android {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            resValue("string", "app_name", "QUIK-Debug")
+            resValue("string", "app_name", "Open Messages Debug")
             resValue("string", "application_id", defaultConfig.applicationId)
             signingConfig signingConfigs.debug
         }
@@ -94,7 +92,7 @@ android {
     lint {
         abortOnError false
     }
-    namespace 'dev.octoshrimpy.quik'
+    namespace 'io.openmessages'
     buildFeatures {
         buildConfig true
         viewBinding true
@@ -217,7 +215,7 @@ dependencies {
 gradle.taskGraph.whenReady { taskGraph ->
     if ((taskGraph.hasTask(':assembleRelease') ||
             taskGraph.allTasks.any { it.name == 'assembleRelease' }) &&
-            !file('./.gradle/.gradlerc').exists() &&
+            !rootProject.file('keystore.properties').exists() &&
             System.getenv("CI") != "true") {
         throw new GradleException("Keystore properties file not found")
     }

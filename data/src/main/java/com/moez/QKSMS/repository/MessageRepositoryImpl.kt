@@ -1,24 +1,24 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.repository
+package io.openmessages.repository
 
-import com.moez.QKSMS.manager.QkTransaction
+import io.openmessages.manager.QkTransaction
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ContentUris
@@ -37,33 +37,33 @@ import android.webkit.MimeTypeMap
 import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
 import com.klinker.android.send_message.SmsManagerFactory
-import dev.octoshrimpy.quik.common.util.extensions.now
-import dev.octoshrimpy.quik.compat.TelephonyCompat
-import dev.octoshrimpy.quik.extensions.anyOf
-import dev.octoshrimpy.quik.extensions.insertOrUpdate
-import dev.octoshrimpy.quik.extensions.isImage
-import dev.octoshrimpy.quik.extensions.isVideo
-import dev.octoshrimpy.quik.extensions.map
-import dev.octoshrimpy.quik.extensions.resourceExists
-import dev.octoshrimpy.quik.manager.ActiveConversationManager
-import dev.octoshrimpy.quik.manager.KeyManager
-import dev.octoshrimpy.quik.mapper.CursorToMessage
-import dev.octoshrimpy.quik.mapper.CursorToPart
-import dev.octoshrimpy.quik.model.Attachment
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.model.Message.Companion.TYPE_MMS
-import dev.octoshrimpy.quik.model.Message.Companion.TYPE_SMS
-import dev.octoshrimpy.quik.model.MmsPart
-import dev.octoshrimpy.quik.receiver.MessageDeliveredReceiver
-import dev.octoshrimpy.quik.receiver.MessageSentReceiver
-import dev.octoshrimpy.quik.receiver.SendDelayedMessageReceiver
-import dev.octoshrimpy.quik.receiver.SendDelayedMessageReceiver.Companion.MESSAGE_ID_EXTRA
-import dev.octoshrimpy.quik.util.ImageUtils
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
-import dev.octoshrimpy.quik.util.Preferences
-import dev.octoshrimpy.quik.util.sha256
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.common.util.extensions.now
+import io.openmessages.compat.TelephonyCompat
+import io.openmessages.extensions.anyOf
+import io.openmessages.extensions.insertOrUpdate
+import io.openmessages.extensions.isImage
+import io.openmessages.extensions.isVideo
+import io.openmessages.extensions.map
+import io.openmessages.extensions.resourceExists
+import io.openmessages.manager.ActiveConversationManager
+import io.openmessages.manager.KeyManager
+import io.openmessages.mapper.CursorToMessage
+import io.openmessages.mapper.CursorToPart
+import io.openmessages.model.Attachment
+import io.openmessages.model.Conversation
+import io.openmessages.model.Message
+import io.openmessages.model.Message.Companion.TYPE_MMS
+import io.openmessages.model.Message.Companion.TYPE_SMS
+import io.openmessages.model.MmsPart
+import io.openmessages.receiver.MessageDeliveredReceiver
+import io.openmessages.receiver.MessageSentReceiver
+import io.openmessages.receiver.SendDelayedMessageReceiver
+import io.openmessages.receiver.SendDelayedMessageReceiver.Companion.MESSAGE_ID_EXTRA
+import io.openmessages.util.ImageUtils
+import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.Preferences
+import io.openmessages.util.sha256
+import io.openmessages.util.tryOrNull
 import io.reactivex.Flowable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -201,7 +201,7 @@ open class MessageRepositoryImpl @Inject constructor(
         // fileDateAndTime is divided by 1000 in order to remove the extra 0's after date and time
         // This way the file name isn't so long.
         val fileDateAndTime = (part.messages?.first()?.date)?.div(1000)
-        val fileName = "QUIK_${part.type.split("/").last()}_$fileDateAndTime.$extension"
+        val fileName = "OpenMessages_${part.type.split("/").last()}_$fileDateAndTime.$extension"
 
         val values = contentValuesOf(
             MediaStore.MediaColumns.DISPLAY_NAME to fileName,
@@ -212,9 +212,9 @@ open class MessageRepositoryImpl @Inject constructor(
             values.put(MediaStore.MediaColumns.IS_PENDING, 1)
             values.put(
                 MediaStore.MediaColumns.RELATIVE_PATH, when {
-                    part.isImage() -> "${Environment.DIRECTORY_PICTURES}/QUIK"
-                    part.isVideo() -> "${Environment.DIRECTORY_MOVIES}/QUIK"
-                    else -> "${Environment.DIRECTORY_DOWNLOADS}/QUIK"
+                    part.isImage() -> "${Environment.DIRECTORY_PICTURES}/OpenMessages"
+                    part.isVideo() -> "${Environment.DIRECTORY_MOVIES}/OpenMessages"
+                    else -> "${Environment.DIRECTORY_DOWNLOADS}/OpenMessages"
                 }
             )
         }
@@ -667,12 +667,12 @@ open class MessageRepositoryImpl @Inject constructor(
 
                 // individual message to send, send it
                 val sentIntent = Intent(context, MessageSentReceiver::class.java)
-                    .putExtra(MessageSentReceiver.EXTRA_QUIK_MESSAGE_ID, message.id)
+                    .putExtra(MessageSentReceiver.EXTRA_OPENMESSAGES_MESSAGE_ID, message.id)
 
                 val deliveryIntent =
                     if (prefs.delivery.get())
                         Intent(context, MessageDeliveredReceiver::class.java)
-                            .putExtra(MessageDeliveredReceiver.EXTRA_QUIK_MESSAGE_ID, message.id)
+                            .putExtra(MessageDeliveredReceiver.EXTRA_OPENMESSAGES_MESSAGE_ID, message.id)
                     else null
 
                 // use values from os provider to resend the message, except subId

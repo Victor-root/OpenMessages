@@ -9,4 +9,4 @@ Nyílt forráskódú alternatíva az Android alapértelmezett SMS-alkalmazása h
 - Üzenetek rendezése
 - Késleltetett küldés
 
-A közösséggel a következő helyen tud beszélgetni: <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a>
+A közösséggel a következő helyen tud beszélgetni: <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a>

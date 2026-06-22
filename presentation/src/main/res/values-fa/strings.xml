@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="shortcut_compose_long_label">گفتگوی نو</string>
     <string name="shortcut_compose_short_label">نوشتن</string>
@@ -54,12 +54,12 @@
     <string name="archived_empty_text">بایگانی‌هایتان اینجا نمایش داده می‌شود</string>
     <string name="main_fab_cd">آغاز گفتگوی نو</string>
     <string name="main_default_sms_title">دوباره دوستدار پیامک‌ شوید</string>
-    <string name="main_default_sms_message">QUIK را برنامه پیش‌گزیده‌ی پیامکتان کنید</string>
+    <string name="main_default_sms_message">Open Messages را برنامه پیش‌گزیده‌ی پیامکتان کنید</string>
     <string name="main_default_sms_change">ورتاندن</string>
     <string name="main_permission_required">نیازمند هیشتن</string>
-    <string name="main_permission_sms">QUIK برای فرستادن و دیدن پیامک‌ها نیاز به هشیتن دارد</string>
-    <string name="main_permission_contacts">QUIK نیاز به هیشتن برای دیدن هَمدرِنگان شما دارد</string>
-    <string name="main_permission_notifications">QUIK به هیشتن برای نمایش آگاهنده‌ها نیاز دارد</string>
+    <string name="main_permission_sms">Open Messages برای فرستادن و دیدن پیامک‌ها نیاز به هشیتن دارد</string>
+    <string name="main_permission_contacts">Open Messages نیاز به هیشتن برای دیدن هَمدرِنگان شما دارد</string>
+    <string name="main_permission_notifications">Open Messages به هیشتن برای نمایش آگاهنده‌ها نیاز دارد</string>
     <string name="main_permission_allow">هیشتن</string>
     <string name="drawer_inbox">دریافتی</string>
     <string name="drawer_archived">بایگانی شده</string>
@@ -70,7 +70,7 @@
     <string name="drawer_help">راهنما اود بازخورد</string>
     <string name="drawer_invite">نِوِستن دوستان</string>
     <string name="drawer_plus_banner_summary">ویژگی های شگفت‌انگیز نو را گشوده اود از پیشرفت برنامه پشتیبانی کنید</string>
-    <string name="rate_title">از QUIK خرسند‌ید؟</string>
+    <string name="rate_title">از Open Messages خرسند‌ید؟</string>
     <string name="rate_summary">مهرورزی نمایید اود برایمان در گیت‌هاب ستاره‌ای بگذارید!</string>
     <string name="rate_okay">باشد!</string>
     <string name="rate_dismiss">رد کردن</string>
@@ -96,7 +96,7 @@
     <string name="compose_vcard_label">کارت هَمدرِنگ</string>
     <string name="compose_scheduled_for">زمان برنامه‌ریزی‌شده:</string>
     <string name="compose_scheduled_future">زمان برگزیده باید در آینده باشد!</string>
-    <string name="compose_scheduled_plus">برای بهره‌مندی از پیام‌های برنامه‌ریزی شده، باید +QUIK را بگشایید</string>
+    <string name="compose_scheduled_plus">برای بهره‌مندی از پیام‌های برنامه‌ریزی شده، باید +Open Messages را بگشایید</string>
     <string name="compose_scheduled_toast">به پیام‌های برنامه‌ریزی شده افزوده شد</string>
     <string name="compose_hint">نوشتن پیام…</string>
     <string name="compose_menu_copy">رونگاشتن نوشتار</string>
@@ -148,7 +148,7 @@
     <string name="backup_never">هرگز</string>
     <string name="backup_restore_title">بازگردانی</string>
     <string name="backup_restore_summary">یک پشتیبان را برگزینید</string>
-    <string name="backup_restore_error_plus">خواهشمند است QUIK + را باز کنید تا از پشتیبان‌گیری و بازیابی بهره ببرید</string>
+    <string name="backup_restore_error_plus">خواهشمند است Open Messages + را باز کنید تا از پشتیبان‌گیری و بازیابی بهره ببرید</string>
     <string name="backup_restore_error_backup">پشتیبان‌گیری دارد انجام می‌شود…</string>
     <string name="backup_restore_error_restore">بازگردانی دارد انجام می‌شود…</string>
     <string name="backup_restore_confirm_title">بازگردانی از پشتیبان</string>
@@ -249,7 +249,7 @@
     <string name="settings_mms_size_title">فشرده‌سازی خودکار پیوست ها</string>
     <string name="settings_sync_title">همگام‌سازی پیام‌ها</string>
     <string name="settings_sync_summary">همگام‌سازی دوباره پیام‌ها با پایگاه‌داده بومی پیامک اندروید</string>
-    <string name="settings_about_title">درباره QUIK</string>
+    <string name="settings_about_title">درباره Open Messages</string>
     <string name="settings_version">نگارش %s</string>
     <string name="settings_logging_enabled">گزارش‌گیری آک‌زدایی کارا است</string>
     <string name="settings_logging_disabled">گزارش‌گیری آک‌زدایی ناکارا است</string>
@@ -259,7 +259,7 @@
     <string name="blocking_drop_summary">دریافتی‌های فرستنده‌های بژکم شده را به جای مخفی کردن، دور بیانداز</string>
     <string name="blocking_conversations">گفتگوهای بژکم شده</string>
     <string name="blocking_manager_title">راینیدن بژکم شدگان</string>
-    <string name="blocking_manager_qksms_summary">کارکرد بژکم کننده درونی در QUIK</string>
+    <string name="blocking_manager_qksms_summary">کارکرد بژکم کننده درونی در Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">بژکم کردن پیام‌های هرزنامه، شماره‌ها و زنگ‌های ناشناخته با لیست سیاه اود برنامه‌ریزی</string>
     <string name="blocking_manager_call_control_summary">زنگ‌ها و پیام‌های خود را خودکار پالایش کنید! Community IQ™ به شما دسترسی می دهد تا از پیام‌های ناخواسته از هرزفرست‌های شناخته شده جلوگیری کنید</string>
     <string name="blocking_manager_sia_summary">با بکارگیری برنامه «می‌شود پاسخ دهم»، پیام‌ها را از شماره‌های ناخواسته خودکار پالایش کنید</string>
@@ -297,10 +297,10 @@
     <string name="qksms_plus_upgrade">اَهرافتن همیشگی به‌ازای %1$s%2$s</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">نگارش پیشرفته و پشتیبانی به‌ازای %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">سپاس از شما برای پشتیبانی از QUIK!</string>
-    <string name="qksms_plus_thanks_summary">اکنون شما به همه ویژگی‌های QUIK+ دسترسی دارید</string>
+    <string name="qksms_plus_thanks_title">سپاس از شما برای پشتیبانی از Open Messages!</string>
+    <string name="qksms_plus_thanks_summary">اکنون شما به همه ویژگی‌های Open Messages+ دسترسی دارید</string>
     <string name="qksms_plus_error">ایرنگی رخ داده است، دوباره تلاش کنید</string>
-    <string name="qksms_plus_free_title">QUIK+ برای کاربران F-Droid رایگان است! اگر می‌خواهید از پیشرفت برنامه پشتیبانی کنید، از یاری مالی بسیار سپاسداری می‌شود.</string>
+    <string name="qksms_plus_free_title">Open Messages+ برای کاربران F-Droid رایگان است! اگر می‌خواهید از پیشرفت برنامه پشتیبانی کنید، از یاری مالی بسیار سپاسداری می‌شود.</string>
     <string name="qksms_plus_donate">با PayPal یاری مالی کنید</string>
     <string name="qksms_plus_coming_soon">به زودی</string>
     <string name="qksms_plus_themes_title">پوسته‌های ویژه</string>
@@ -322,7 +322,7 @@
     <string name="qksms_plus_respond_title">پاسخ خودکار</string>
     <string name="qksms_plus_respond_summary">پاسخ خودکار به پیام‌های دریافتی با پاسخی پیش‌گزیده</string>
     <string name="qksms_plus_more_title">بیشتر</string>
-    <string name="qksms_plus_more_summary">QUIK دارد پویا گسترش می‌یابد، اود خرید شما همه‌ی ویژگی‌های آینده QUIK+ را نیز دربر می‌گیرد!</string>
+    <string name="qksms_plus_more_summary">Open Messages دارد پویا گسترش می‌یابد، اود خرید شما همه‌ی ویژگی‌های آینده Open Messages+ را نیز دربر می‌گیرد!</string>
     <string name="widget_loading">بارگذاری…</string>
     <string name="widget_more">دیدن گفتگوهای بیشتر</string>
     <string name="qkreply_menu_read">چونان خوانده‌شده گذاردن</string>

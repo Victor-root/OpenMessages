@@ -1,4 +1,4 @@
-package com.moez.QKSMS.manager
+package io.openmessages.manager
 
 import android.content.Context
 import android.media.AudioAttributes
@@ -8,7 +8,7 @@ import android.os.Build
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import android.text.format.DateFormat
-import dev.octoshrimpy.quik.model.Conversation
+import io.openmessages.model.Conversation
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Calendar

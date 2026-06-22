@@ -99,7 +99,7 @@ jobs:
           BRANCH_NAME: ${{ steps.version.outputs.branch_name }}
         run: |
           set -euo pipefail
-          cp fdroid/metadata/dev.octoshrimpy.quik.yml fdroiddata/metadata/dev.octoshrimpy.quik.yml
+          cp fdroid/metadata/io.openmessages.yml fdroiddata/metadata/io.openmessages.yml
           cd fdroiddata
           if git diff --quiet; then
             echo "no_changes=true" >> "$GITHUB_ENV"
@@ -118,8 +118,8 @@ jobs:
           cd fdroiddata
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add metadata/dev.octoshrimpy.quik.yml
-          git commit -m "Update QUIK to v${VERSION_NAME}"
+          git add metadata/io.openmessages.yml
+          git commit -m "Update Open Messages to v${VERSION_NAME}"
           git push --force-with-lease origin "${BRANCH_NAME}"
 
       - name: Create GitLab Merge Request
@@ -177,13 +177,13 @@ jobs:
 
           description = (
               f"Automated update after {pr_url}\n\n"
-              f"GitHub release: https://github.com/octoshrimpy/quik/releases/tag/v{version}"
+              f"GitHub release: https://github.com/victor-root/openmessages/releases/tag/v{version}"
           )
 
           payload = urllib.parse.urlencode({
               "source_branch": branch,
               "target_branch": "master",
-              "title": f"Update QUIK to v{version}",
+              "title": f"Update Open Messages to v{version}",
               "description": description,
               "source_project_id": fork_id,
           }).encode()
