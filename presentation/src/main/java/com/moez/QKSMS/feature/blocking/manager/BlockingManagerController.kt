@@ -1,20 +1,21 @@
-package dev.octoshrimpy.quik.feature.blocking.manager
+package io.openmessages.feature.blocking.manager
 
 import android.app.Activity
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import com.jakewharton.rxbinding2.view.clicks
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.databinding.BlockingManagerControllerBinding
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.base.QkController
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.resolveThemeColor
+import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.databinding.BlockingManagerControllerBinding
+import io.openmessages.injection.appComponent
+import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
@@ -62,7 +63,7 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
     override fun render(state: BlockingManagerState) {
         binding.qksms.actionView.setImageResource(getActionIcon(true))
         binding.qksms.actionView.isActivated = true
-        binding.qksms.actionView.isInvisible = state.blockingManager != Preferences.BLOCKING_MANAGER_QKSMS
+        binding.qksms.actionView.isInvisible = state.blockingManager != Preferences.BLOCKING_MANAGER_DEFAULT
 
         binding.callBlocker.actionView.setImageResource(getActionIcon(state.callBlockerInstalled))
         binding.callBlocker.actionView.isActivated = state.callBlockerInstalled
@@ -92,13 +93,14 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
     override fun siaClicked(): Observable<*> = binding.shouldIAnswer.clicks()
 
     override fun showCopyDialog(manager: String): Single<Boolean> = Single.create { emitter ->
-        AlertDialog.Builder(activity)
+        AlertDialog.Builder(activity!!)
                 .setTitle(R.string.blocking_manager_copy_title)
                 .setMessage(resources?.getString(R.string.blocking_manager_copy_summary, manager))
                 .setPositiveButton(R.string.button_continue) { _, _ -> emitter.onSuccess(true) }
                 .setNegativeButton(R.string.button_cancel) { _, _ -> emitter.onSuccess(false) }
                 .setCancelable(false)
                 .show()
+                .themeButtons(colors.theme().theme)
     }
 
 }

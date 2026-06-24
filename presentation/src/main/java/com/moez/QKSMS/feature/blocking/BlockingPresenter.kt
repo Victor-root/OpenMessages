@@ -1,37 +1,42 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.blocking
+package io.openmessages.feature.blocking
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.blocking.BlockingClient
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.blocking.BlockingClient
+import io.openmessages.blocking.BlockingListDownloader
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.util.Preferences
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class BlockingPresenter @Inject constructor(
-    context: Context,
+    private val context: Context,
     private val blockingClient: BlockingClient,
-    private val prefs: Preferences
+    private val prefs: Preferences,
+    private val downloader: BlockingListDownloader
 ) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
 
     init {
@@ -47,8 +52,19 @@ class BlockingPresenter @Inject constructor(
                 .map(context::getString)
                 .subscribe { manager -> newState { copy(blockingManager = manager) } }
 
+        disposables += prefs.blockSourceArcep.asObservable()
+                .subscribe { enabled -> newState { copy(arcepEnabled = enabled) } }
+
+        disposables += prefs.blockSourcePhishing.asObservable()
+                .subscribe { enabled -> newState { copy(phishingEnabled = enabled) } }
+
+        disposables += prefs.blockFlaggedAsSpam.asObservable()
+                .subscribe { enabled -> newState { copy(flagBlockEnabled = enabled) } }
+
         disposables += prefs.drop.asObservable()
                 .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
+
+        newState { copy(arcepSummary = arcepSummary(), phishingSummary = phishingSummary()) }
     }
 
     override fun bindIntents(view: BlockingView) {
@@ -61,13 +77,25 @@ class BlockingPresenter @Inject constructor(
         view.blockedNumbersIntent
                 .autoDisposable(view.scope())
                 .subscribe {
-                    if (prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_QKSMS) {
+                    if (prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_DEFAULT) {
                         // TODO: This is a hack, get rid of it once we implement AndroidX navigation
                         view.openBlockedNumbers()
                     } else {
                         blockingClient.openSettings()
                     }
                 }
+
+        view.arcepSourceIntent
+                .autoDisposable(view.scope())
+                .subscribe { toggleArcep() }
+
+        view.phishingSourceIntent
+                .autoDisposable(view.scope())
+                .subscribe { togglePhishing() }
+
+        view.flagBlockSourceIntent
+                .autoDisposable(view.scope())
+                .subscribe { prefs.blockFlaggedAsSpam.set(!prefs.blockFlaggedAsSpam.get()) }
 
         view.messageContentFiltersIntent
                 .autoDisposable(view.scope())
@@ -80,6 +108,60 @@ class BlockingPresenter @Inject constructor(
         view.dropClickedIntent
                 .autoDisposable(view.scope())
                 .subscribe { prefs.drop.set(!prefs.drop.get()) }
+    }
+
+    /** Row summary for the Saracroche source: the download status when on, the description otherwise. */
+    private fun arcepSummary(): String = when {
+        prefs.blockSourceArcep.get() && downloader.arcepDownloaded() ->
+            context.getString(R.string.blocking_source_status_updated, prefs.blockArcepCount.get())
+        else -> context.getString(R.string.blocking_source_arcep_summary)
+    }
+
+    private fun phishingSummary(): String = when {
+        prefs.blockSourcePhishing.get() && downloader.phishingDownloaded() ->
+            context.getString(R.string.blocking_source_status_updated, prefs.blockPhishingCount.get())
+        else -> context.getString(R.string.blocking_source_phishing_summary)
+    }
+
+    /** Toggle the source; the first time it is enabled, download its list (the only network call). */
+    private fun toggleArcep() {
+        val enabling = !prefs.blockSourceArcep.get()
+        prefs.blockSourceArcep.set(enabling)
+        if (enabling) {
+            newState { copy(arcepSummary = context.getString(R.string.blocking_source_status_updating)) }
+            disposables += downloader.updateArcep()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ count ->
+                        prefs.blockArcepCount.set(count)
+                        newState { copy(arcepSummary = context.getString(R.string.blocking_source_status_updated, count)) }
+                    }, { error ->
+                        Timber.w(error, "Saracroche list download failed")
+                        newState { copy(arcepSummary = context.getString(R.string.blocking_source_status_failed)) }
+                    })
+        } else {
+            newState { copy(arcepSummary = arcepSummary()) }
+        }
+    }
+
+    private fun togglePhishing() {
+        val enabling = !prefs.blockSourcePhishing.get()
+        prefs.blockSourcePhishing.set(enabling)
+        if (enabling) {
+            newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_updating)) }
+            disposables += downloader.updatePhishing()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ count ->
+                        prefs.blockPhishingCount.set(count)
+                        newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_updated, count)) }
+                    }, { error ->
+                        Timber.w(error, "Phishing list download failed")
+                        newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_failed)) }
+                    })
+        } else {
+            newState { copy(phishingSummary = phishingSummary()) }
+        }
     }
 
 }

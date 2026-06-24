@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.blocking
+package io.openmessages.blocking
 
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -38,11 +38,16 @@ interface BlockingClient {
         // shouldn't unblock the conversation in that case
         object DoNothing : Action()
 
+        // Soft outcome: the message stays in the inbox, but the conversation is tagged as suspected spam.
+        // Used by sources that only flag a number (e.g. "potential spam" ranges) rather than block it.
+        class Flag(val reason: String? = null) : Action()
+
         override fun toString(): String {
             return when (this) {
                 is Block -> "Block"
                 is Unblock -> "Unblock"
                 is DoNothing -> "DoNothing"
+                is Flag -> "Flag"
             }
         }
     }
@@ -53,7 +58,7 @@ interface BlockingClient {
     fun isAvailable(): Boolean
 
     /**
-     * Returns the level of access that the given blocking client provides to QKSMS
+     * Returns the level of access that the given blocking client provides to Open Messages
      */
     fun getClientCapability(): Capability
 
