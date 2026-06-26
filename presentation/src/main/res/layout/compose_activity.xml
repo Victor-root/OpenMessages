@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -25,7 +25,7 @@
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground"
     android:orientation="vertical"
-    tools:context="dev.octoshrimpy.quik.feature.compose.ComposeActivity">
+    tools:context="io.openmessages.feature.compose.ComposeActivity">
 
     <FrameLayout
         android:id="@+id/speechToTextFrame"
@@ -67,16 +67,78 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="12dp"
-        android:paddingTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/messageBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground"
+        app:layout_constraintTop_toBottomOf="@id/flaggedBanner"
         app:stackFromEnd="true"
         tools:listitem="@layout/message_list_item_in" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <!-- "Suspected spam" warning bar, shown for flagged conversations. Collapses to nothing when
+         gone, so it leaves the message list where it was. -->
+    <LinearLayout
+        android:id="@+id/flaggedBanner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#22F57C00"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="6dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground"
+        tools:visibility="visible">
+
+        <io.openmessages.common.widget.QkTextView
+            android:id="@+id/flaggedReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#E65100"
+            android:textStyle="bold"
+            app:textSize="secondary"
+            tools:text="Spam potentiel — Démarchage ARCEP" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <io.openmessages.common.widget.QkTextView
+                android:id="@+id/flaggedApprove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="10dp"
+                android:text="@string/compose_flagged_approve"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold"
+                app:textSize="secondary" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:id="@+id/flaggedBlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="10dp"
+                android:text="@string/compose_flagged_block"
+                android:textColor="#E65100"
+                android:textStyle="bold"
+                app:textSize="secondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/messagesEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -119,7 +181,7 @@
         app:layout_constraintBottom_toBottomOf="@id/sendAsGroupSummary"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/sendAsGroupTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -134,7 +196,7 @@
         app:layout_constraintTop_toTopOf="@id/sendAsGroupBackground"
         app:textSize="primary" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/sendAsGroupSummary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -146,7 +208,7 @@
         app:layout_constraintTop_toBottomOf="@id/sendAsGroupTitle"
         app:textSize="secondary" />
 
-    <dev.octoshrimpy.quik.common.widget.QkSwitch
+    <io.openmessages.common.widget.QkSwitch
         android:id="@+id/sendAsGroupSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -201,7 +263,7 @@
         android:visibility="gone"
         app:constraint_referenced_ids="scheduledTitle,scheduledTime,scheduledCancel,scheduledSeparator" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/scheduledTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -218,7 +280,7 @@
         app:layout_constraintVertical_chainStyle="packed"
         app:textSize="secondary" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/scheduledTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -267,7 +329,7 @@
         app:layout_constraintStart_toStartOf="@id/messageBackground"
         tools:listitem="@layout/attachment_file_list_item" />
 
-    <dev.octoshrimpy.quik.common.widget.QkEditText
+    <io.openmessages.common.widget.QkEditText
         android:id="@+id/message"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -278,7 +340,7 @@
         android:hint="@string/compose_hint"
         android:inputType="textLongMessage|textCapSentences|textMultiLine"
         android:longClickable="true"
-        android:maxLines="6"
+        android:maxLines="12"
         android:minHeight="44dp"
         android:paddingStart="16dp"
         android:paddingTop="12dp"
@@ -286,11 +348,11 @@
         android:paddingBottom="12dp"
         android:textColorHint="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toStartOf="@id/sim"
+        app:layout_constraintEnd_toStartOf="@id/inputEndBarrier"
         app:layout_constraintStart_toStartOf="@id/messageBackground">
 
         <requestFocus />
-    </dev.octoshrimpy.quik.common.widget.QkEditText>
+    </io.openmessages.common.widget.QkEditText>
 
     <ImageView
         android:id="@+id/sim"
@@ -305,7 +367,7 @@
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:tint="?android:attr/textColorPrimary" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -320,7 +382,29 @@
         tools:ignore="SpUsage"
         tools:text="1" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <ImageView
+        android:id="@+id/expand"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/compose_expand_cd"
+        android:padding="8dp"
+        android:src="@drawable/ic_chevrons_up"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/messageBackground"
+        app:layout_constraintTop_toTopOf="@id/messageBackground"
+        app:tint="?android:attr/textColorSecondary"
+        tools:visibility="visible" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/inputEndBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierAllowsGoneWidgets="true"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="sim,expand" />
+
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/counter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -379,14 +463,14 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText"
                 android:layout_height="wrap_content"
                 android:textDirection="ltr"
                 tools:text="Moez Bhatti" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/toolbarSubtitle"
                 style="@style/ToolbarText"
                 android:textColor="?android:attr/textColorTertiary"
@@ -419,7 +503,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="contact,contactLabel,schedule,scheduleLabel,attachAFileIcon,attachAFileLabel,attachAnAudioMessageIcon,attachAnAudioMessageLabel,gallery,galleryLabel,camera,cameraLabel" />
+        app:constraint_referenced_ids="template,templateLabel,contact,contactLabel,schedule,scheduleLabel,attachAFileIcon,attachAFileLabel,attachAnAudioMessageIcon,attachAnAudioMessageLabel,gallery,galleryLabel,camera,cameraLabel" />
 
     <View
         android:id="@+id/shadeBackground"
@@ -451,7 +535,7 @@
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="@color/textPrimaryDark" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/contactLabel"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -467,6 +551,40 @@
         app:layout_constraintBottom_toBottomOf="@id/contact"
         app:layout_constraintStart_toEndOf="@id/contact"
         app:layout_constraintTop_toTopOf="@id/contact" />
+
+    <ImageView
+        android:id="@+id/template"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="@color/tools_theme"
+        android:contentDescription="@string/templates_title"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_clipboard_text"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/contact"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach"
+        app:tint="@color/textPrimaryDark" />
+
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/templateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_rectangle_4dp"
+        android:backgroundTint="@color/tools_theme"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/templates_title"
+        android:textColor="@color/textPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="@id/template"
+        app:layout_constraintStart_toEndOf="@id/template"
+        app:layout_constraintTop_toTopOf="@id/template" />
 
     <ImageView
         android:id="@+id/schedule"
@@ -485,7 +603,7 @@
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="@color/textPrimaryDark" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/scheduleLabel"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -520,7 +638,7 @@
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="@color/textPrimaryDark" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/attachAFileLabel"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -554,7 +672,7 @@
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="@color/textPrimaryDark" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/attachAnAudioMessageLabel"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -588,7 +706,7 @@
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="@color/textPrimaryDark" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/galleryLabel"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -622,7 +740,7 @@
         app:layout_constraintStart_toStartOf="@id/attach"
         app:tint="@color/textPrimaryDark" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/cameraLabel"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -663,6 +781,8 @@
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
         android:text="@string/compose_no_valid_recipients"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -786,7 +906,7 @@
                     android:layout_gravity="center"
                     app:srcCompat="@android:drawable/stat_sys_data_bluetooth" />
 
-                <dev.octoshrimpy.quik.common.widget.MicInputCloudView
+                <io.openmessages.common.widget.MicInputCloudView
                     android:id="@+id/audioMsgRecord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -810,6 +930,79 @@
                 app:tint="?android:attr/textColorPrimary" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Full-screen message editor, shown when the expand chevron in the bubble is tapped. -->
+    <LinearLayout
+        android:id="@+id/fullscreenEditor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:attr/windowBackground"
+        android:elevation="16dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <ImageView
+                android:id="@+id/fullscreenCollapse"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/compose_collapse_cd"
+                android:padding="12dp"
+                android:src="@drawable/ic_chevrons_down"
+                app:tint="?android:attr/textColorSecondary" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/fullscreenSend"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/compose_send_cd"
+                android:padding="12dp"
+                android:src="@drawable/ic_send_black_24dp"
+                app:tint="?android:attr/textColorSecondary" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/divider" />
+
+        <io.openmessages.common.widget.QkEditText
+            android:id="@+id/fullscreenMessage"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="top|start"
+            android:hint="@string/compose_hint"
+            android:inputType="textLongMessage|textCapSentences|textMultiLine"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:textColorHint="?android:attr/textColorTertiary"
+            app:textSize="primary" />
 
     </LinearLayout>
 

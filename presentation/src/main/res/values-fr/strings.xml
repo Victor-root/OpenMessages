@@ -2,22 +2,22 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
-    <string name="app_name" translatable="false">QUIK</string>
+    <string name="app_name" translatable="false">Open Messages</string>
     <string name="shortcut_compose_long_label">Nouvelle conversation</string>
     <string name="shortcut_compose_short_label">Rédiger</string>
     <string name="shortcut_compose_disabled_message">Raccourci désactivé</string>
@@ -25,6 +25,15 @@
     <string name="title_settings">Paramètres</string>
     <string name="title_notification_prefs">Notifications</string>
     <string name="title_theme">Thème</string>
+    <string name="theme_default">Par défaut</string>
+    <string name="theme_wallpaper">Fond d\'écran</string>
+    <string name="theme_other_colors">Couleurs</string>
+    <string name="theme_tab_presets">Palette</string>
+    <string name="theme_tab_custom">Personnalisé</string>
+    <string name="theme_apply_to_icon">Appliquer la couleur à l\'icône de l\'app (l\'app se fermera)</string>
+    <string name="theme_tab_icon">Icône</string>
+    <string name="theme_icon_follow_theme">Suivre la couleur du thème</string>
+    <string name="theme_icon_summary">Choisissez la couleur de l\'icône de l\'app, indépendamment du thème. La modifier fermera l\'app.</string>
     <string name="title_conversations">Rechercher dans les conversations…</string>
     <string name="title_compose">Entrer un nom ou un numéro</string>
     <string name="title_qksms_plus" translatable="false">If you see this, send in an issue please!</string>
@@ -55,6 +64,7 @@
     <string name="main_menu_rename_conversation">Renommer la conversation</string>
     <string name="main_syncing">Synchronisation des messages…</string>
     <string name="main_sender_you">Vous : %s</string>
+    <string name="conversation_flagged_label">Spam potentiel</string>
     <string name="main_message_results_title">Résultats dans les messages</string>
     <string name="main_message_results">%d messages</string>
     <string name="inbox_empty_text">Vos conversations apparaîtront ici</string>
@@ -62,12 +72,12 @@
     <string name="archived_empty_text">Vos conversations archivées apparaîtront ici</string>
     <string name="main_fab_cd">Débuter une nouvelle conversation</string>
     <string name="main_default_sms_title">Réapprenez à aimer les textos</string>
-    <string name="main_default_sms_message">Faire de QUIK votre appli SMS par défaut</string>
+    <string name="main_default_sms_message">Faire de Open Messages votre appli SMS par défaut</string>
     <string name="main_default_sms_change">Changer</string>
     <string name="main_permission_required">Autorisation requise</string>
-    <string name="main_permission_sms">QUIK a besoin de l’autorisation d’envoyer et de consulter les messages SMS</string>
-    <string name="main_permission_contacts">QUIK a besoin de l’autorisation d’accéder aux contacts</string>
-    <string name="main_permission_notifications">QUIK a besoin de l’autorisation d’afficher des notifications</string>
+    <string name="main_permission_sms">Open Messages a besoin de l’autorisation d’envoyer et de consulter les messages SMS</string>
+    <string name="main_permission_contacts">Open Messages a besoin de l’autorisation d’accéder aux contacts</string>
+    <string name="main_permission_notifications">Open Messages a besoin de l’autorisation d’afficher des notifications</string>
     <string name="main_permission_allow">Autoriser</string>
     <string name="scheduled_menu_send_now">Envoyer maintenant</string>
     <string name="scheduled_menu_edit_message">Modifier le message</string>
@@ -82,7 +92,7 @@
     <string name="drawer_invite">Inviter des amis</string>
     <string name="drawer_plus_banner_title" translatable="false">DEPRECATED - drawer_plus_banner_title</string>
     <string name="drawer_plus_banner_summary">Débloquez des nouvelles fonctionnalités incroyables et soutenez le développement</string>
-    <string name="rate_title">Vous aimez QUIK ?</string>
+    <string name="rate_title">Vous aimez Open Messages ?</string>
     <string name="rate_summary">Partagez votre amour et laissez nous une étoile sur GitHub !</string>
     <string name="rate_okay">OK !</string>
     <string name="rate_dismiss">ANNULER</string>
@@ -124,10 +134,15 @@
     <string name="compose_vcard_label">Fiche du contact</string>
     <string name="compose_scheduled_for">Heure d\'envoi prévue :</string>
     <string name="compose_scheduled_future">Le moment choisi doit être dans le futur !</string>
-    <string name="compose_scheduled_plus">Vous devez déverrouiller QUIK+ pour utiliser la programmation de message</string>
+    <string name="compose_scheduled_plus">Vous devez déverrouiller Open Messages+ pour utiliser la programmation de message</string>
     <string name="compose_scheduled_toast">Ajouté aux messages programmés</string>
     <string name="compose_hint">Écrire un message…</string>
+    <string name="compose_expand_cd">Agrandir en plein écran</string>
+    <string name="compose_collapse_cd">Réduire</string>
     <string name="compose_no_valid_recipients">Impossible d’envoyer aux autres participants</string>
+    <string name="compose_flagged_title">Spam potentiel</string>
+    <string name="compose_flagged_approve">Approuver</string>
+    <string name="compose_flagged_block">Bloquer</string>
     <string name="compose_menu_copy">Copier le texte</string>
     <string name="compose_menu_share">Partager le texte</string>
     <string name="compose_menu_forward">Transférer</string>
@@ -195,7 +210,7 @@
     <string name="backup_location_summary">Définir le dossier</string>
     <string name="backup_restore_title">Restauration</string>
     <string name="backup_restore_summary">Sélectionner une sauvegarde</string>
-    <string name="backup_restore_error_plus">Déverrouillez QUIK+ pour utiliser la sauvegarde et la restauration</string>
+    <string name="backup_restore_error_plus">Déverrouillez Open Messages+ pour utiliser la sauvegarde et la restauration</string>
     <string name="backup_restore_error_backup">Sauvegarde en cours…</string>
     <string name="backup_restore_error_restore">Restauration en cours…</string>
     <string name="backup_restore_confirm_title">Restaurer à partir d’une sauvegarde</string>
@@ -208,7 +223,7 @@
     <string name="backup_selected_backup_error_message">Impossible de lire le fichier de sauvegarde</string>
     <string name="backup_selected_backup_details_title">Détails de la sauvegarde</string>
     <string name="backup_restore_dialog_title">Sauvegardes</string>
-    <string name="backup_restore_dialog_summary" translatable="false">/QUIK/Backups</string>
+    <string name="backup_restore_dialog_summary" translatable="false">/OpenMessages/Backups</string>
     <string name="backup_restore_dialog_empty">Aucune sauvegarde trouvée</string>
     <string name="backup_disclaimer">Actuellement, seules la sauvegarde et la restauration des SMS sont prises en charge. Les MMS et les sauvegardes planifiées arriveront bientôt !</string>
     <string name="backup_now">Sauvegarder maintenant</string>
@@ -238,7 +253,7 @@
     <string name="settings_black_title">Mode noir pur</string>
     <string name="settings_night_start_title">Heure de début</string>
     <string name="settings_night_end_title">Heure de fin</string>
-    <string name="settings_automatic_colors_title">Couleurs de contact automatiques</string>
+    <string name="settings_automatic_colors_title">Couleur automatique par conversation</string>
     <string name="settings_text_size_title">Taille de la police</string>
     <string name="settings_system_font_title">Utiliser la police du système</string>
     <string name="settings_system_show_stt_title">Afficher le bouton de saisie vocale</string>
@@ -276,6 +291,7 @@
         <item>Marquer comme lu</item>
         <item>Marquer comme non-lu</item>
         <item>Parler</item>
+        <item>Marquer comme lu/non-lu</item>
     </string-array>
     <string name="settings_delivery_title">Accusés de réception</string>
     <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
@@ -306,7 +322,7 @@
     <string name="settings_diable_screenshots_summary">Empêche l’OS et les autres applications de prendre des captures d’écran de l’application.</string>
     <string name="settings_sync_title">Synchroniser les messages</string>
     <string name="settings_sync_summary">Resynchroniser les messages avec la base de données Android native</string>
-    <string name="settings_about_title">À propos de QUIK</string>
+    <string name="settings_about_title">À propos de Open Messages</string>
     <string name="settings_version">Version %s</string>
     <string name="settings_logging_enabled">Journal de débogage activé</string>
     <string name="settings_logging_disabled">Journal de débogage désactivé</string>
@@ -315,8 +331,24 @@
     <string name="blocking_drop_title">Supprimer les messages</string>
     <string name="blocking_drop_summary">Supprimer les messages entrants des expéditeurs bloqués au lieu de les masquer</string>
     <string name="blocking_conversations">Conversations bloquées</string>
+
+    <!-- Sections de la page de blocage -->
+    <string name="blocking_category_integrated">Blocage intégré</string>
+    <string name="blocking_integrated_description">Open Messages bloque le spam sur votre téléphone. Les sources optionnelles ci-dessous téléchargent leur liste via Internet quand vous les activez, puis fonctionnent hors-ligne.</string>
+    <string name="blocking_category_external_apps">Applications externes</string>
+    <string name="blocked_numbers_summary">Les numéros que vous bloquez vous-même</string>
+    <string name="blocking_source_arcep_title">Démarchage téléphonique</string>
+    <string name="blocking_source_arcep_summary">Bloque les plages de numéros de démarchage. L\'activer télécharge la liste depuis Saracroche via Internet ; le filtrage est ensuite hors-ligne.</string>
+    <string name="blocking_source_phishing_title">Anti-hameçonnage</string>
+    <string name="blocking_source_phishing_summary">Bloque les messages renvoyant vers des sites d’hameçonnage connus. L\'activer télécharge la liste via Internet ; le filtrage est ensuite hors-ligne.</string>
+    <string name="blocking_source_flag_block_title">Bloquer le spam potentiel</string>
+    <string name="blocking_source_flag_block_summary">Envoie les messages étiquetés « spam potentiel » directement dans la liste des bloqués au lieu de seulement les signaler dans la boîte de réception</string>
+    <string name="blocking_source_status_updating">Mise à jour…</string>
+    <string name="blocking_source_status_updated">À jour · %1$d entrées</string>
+    <string name="blocking_source_status_failed">Échec de la mise à jour</string>
+
     <string name="blocking_manager_title">Gestionnaire de blocage</string>
-    <string name="blocking_manager_qksms_summary">Fonction de blocage intégrée dans QUIK</string>
+    <string name="blocking_manager_qksms_summary">Fonction de blocage intégrée dans Open Messages</string>
     <string name="blocking_manager_call_blocker_title" translatable="false">Call Blocker - Incoming/Outgoing</string>
     <string name="blocking_manager_call_blocker_summary">Bloquer les spams, les numéros &amp; les appels inconnus avec une liste noire &amp; planifier</string>
     <string name="blocking_manager_call_control_title" translatable="false">Call Control</string>
@@ -362,10 +394,10 @@
     <string name="qksms_plus_upgrade_d" translatable="false">One-time purchase of %1$s %2$s</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Déverrouiller + faire un don pour %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Merci de soutenir QUIK !</string>
-    <string name="qksms_plus_thanks_summary">Vous avez maintenant accès à toutes les fonctionnalités de QUIK+</string>
+    <string name="qksms_plus_thanks_title">Merci de soutenir Open Messages !</string>
+    <string name="qksms_plus_thanks_summary">Vous avez maintenant accès à toutes les fonctionnalités de Open Messages+</string>
     <string name="qksms_plus_error">Une erreur s’est produite. Merci de réessayer.</string>
-    <string name="qksms_plus_free_title">QUIK + est gratuit pour les utilisateurs de F-Droid ! Si vous souhaitez soutenir le développement, n’hésitez pas à faire un don.</string>
+    <string name="qksms_plus_free_title">Open Messages + est gratuit pour les utilisateurs de F-Droid ! Si vous souhaitez soutenir le développement, n’hésitez pas à faire un don.</string>
     <string name="qksms_plus_donate">Faire un don avec PayPal</string>
     <string name="qksms_plus_coming_soon">Prochainement</string>
     <string name="qksms_plus_themes_title">Thèmes premium</string>
@@ -387,7 +419,7 @@
     <string name="qksms_plus_respond_title">Réponse automatique</string>
     <string name="qksms_plus_respond_summary">Répondre automatiquement aux messages entrants avec une réponse prédéfinie</string>
     <string name="qksms_plus_more_title">Plus</string>
-    <string name="qksms_plus_more_summary">QUIK est en cours de développement actif, et votre achat comprendra toutes les futures fonctionnalités QUIK+ !</string>
+    <string name="qksms_plus_more_summary">Open Messages est en cours de développement actif, et votre achat comprendra toutes les futures fonctionnalités Open Messages+ !</string>
     <string name="widget_loading">Chargement…</string>
     <string name="widget_more">Afficher plus de conversations</string>
     <string name="qkreply_menu_read">Marquer comme lu</string>
@@ -401,12 +433,12 @@
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Appliquer</string>
     <string name="about_developer" translatable="false">Une équipe de merveilleux développeurs du monde entier !</string>
-    <string name="about_source" translatable="false">https://github.com/octoshrimpy/quik</string>
-    <string name="about_changelog" translatable="false">https://github.com/octoshrimpy/quik/releases</string>
-    <string name="about_contact" translatable="false">quik@octo.sh</string>
+    <string name="about_source" translatable="false">https://github.com/victor-root/openmessages</string>
+    <string name="about_changelog" translatable="false">https://github.com/victor-root/openmessages/releases</string>
+    <string name="about_contact" translatable="false">https://github.com/victor-root/openmessages/issues</string>
     <string name="about_license" translatable="false">GNU General Public License v3.0</string>
     <string name="about_copyright" translatable="false">© 2014–2024</string>
-    <string name="changelog_title" translatable="false">New in QUIK</string>
+    <string name="changelog_title" translatable="false">New in Open Messages</string>
     <string name="changelog_version" translatable="false">Version %s</string>
     <string name="changelog_added" translatable="false">Added</string>
     <string name="changelog_improved" translatable="false">Improved</string>
@@ -432,6 +464,10 @@
     <string name="button_stop">Arrêter</string>
     <string name="button_more">Plus</string>
     <string name="button_set">Choisir</string>
+    <string name="button_later">Plus tard</string>
+    <string name="icon_restart_title">Redémarrage requis</string>
+    <string name="icon_restart_message">L\'icône de l\'application nécessite un redémarrage pour terminer sa mise à jour.</string>
+    <string name="icon_restart_now">Redémarrer</string>
     <string name="button_undo">Annuler</string>
     <string name="button_clear">Nettoyer</string>
     <string name="toast_copied">Copié</string>
@@ -440,7 +476,7 @@
         <item quantity="many">%d conversations archivées</item>
         <item quantity="other">%d conversations archivées</item>
     </plurals>
-    <string name="toast_qksms_plus">Vous devez déverrouiller QUIK+ pour utiliser cela</string>
+    <string name="toast_qksms_plus">Vous devez déverrouiller Open Messages+ pour utiliser cela</string>
     <plurals name="notification_new_messages">
         <item quantity="one">Nouveau message</item>
         <item quantity="many">%s nouveaux messages</item>
@@ -526,6 +562,10 @@
     <string name="stt_toast_extra_prompt">Exprimez votre message</string>
     <string name="messages_text_share_file_error">Oups ! Quelque chose s’est mal déroulé pendant le partage</string>
     <string name="main_sender_draft">Brouillon : %s</string>
+    <string name="snippet_picture">Photo</string>
+    <string name="snippet_video">Vidéo</string>
+    <string name="snippet_audio">Audio</string>
+    <string name="snippet_contact_card">Carte de contact</string>
     <string name="compose_scheduled_view">Messages programmés pour cette conversation</string>
     <string name="scheduled_send_cd">Programmer l\'envoi de ce message</string>
     <string name="message_content_filters_title">Filtres de contenu des messages</string>
@@ -550,6 +590,11 @@
     <string name="notification_foreground_worker_title">Réception du message</string>
     <string name="main_sync_emojis">Analyse des réactions emoji…</string>
     <string name="message_management_title">Gestion des messages</string>
+    <string name="templates_title">Modèles</string>
+    <string name="templates_empty">Aucun message enregistré.\nTouchez + pour enregistrer un message fréquent — puis touchez-le pour choisir à qui l\'envoyer.</string>
+    <string name="template_hint">Saisissez votre message…</string>
+    <string name="template_title_hint">Titre (optionnel)</string>
+    <string name="templates_add_cd">Nouveau modèle</string>
     <string name="compose_reactions_title">Réactions</string>
     <string name="deduplicate_messages_category">Supprimer les doublons de messages</string>
     <string name="deduplicate_messages_title">Supprimer les messages dupliqués</string>

@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.compose.part
+package io.openmessages.feature.compose.part
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -25,23 +25,23 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.METADATA_KEY_TITLE
 import android.view.View
 import android.widget.SeekBar
-import com.moez.QKSMS.common.QkMediaPlayer
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.common.util.extensions.withAlpha
-import dev.octoshrimpy.quik.common.widget.BubbleImageView
-import dev.octoshrimpy.quik.databinding.MmsAudioPreviewListItemBinding
-import dev.octoshrimpy.quik.extensions.isAudio
-import dev.octoshrimpy.quik.extensions.resourceExists
-import dev.octoshrimpy.quik.feature.compose.MessagesAdapter
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.model.MmsPart
-import dev.octoshrimpy.quik.util.GlideApp
+import io.openmessages.common.QkMediaPlayer
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.resolveThemeColor
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.withAlpha
+import io.openmessages.common.widget.BubbleImageView
+import io.openmessages.databinding.MmsAudioPreviewListItemBinding
+import io.openmessages.extensions.isAudio
+import io.openmessages.extensions.resourceExists
+import io.openmessages.feature.compose.MessagesAdapter
+import io.openmessages.model.Message
+import io.openmessages.model.MmsPart
+import io.openmessages.util.GlideApp
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

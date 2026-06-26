@@ -1,41 +1,44 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.conversations
+package io.openmessages.feature.conversations
 
 import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.databinding.ConversationListItemBinding
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.resolveThemeColor
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.databinding.ConversationListItemBinding
+import io.openmessages.model.Conversation
+import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -118,14 +121,45 @@ class ConversationsAdapter @Inject constructor(
             append(conversation.getTitle())
         }
         binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
-        binding.snippet.text = when {
-            conversation.draft.isNotEmpty() -> context.getString(R.string.main_sender_draft, conversation.draft)
-            conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
+
+        val localSnippet = when (conversation.snippet) {
+            "Picture" -> context.getString(R.string.snippet_picture)
+            "Video" -> context.getString(R.string.snippet_video)
+            "Audio" -> context.getString(R.string.snippet_audio)
+            "Contact card" -> context.getString(R.string.snippet_contact_card)
             else -> conversation.snippet
+        }
+        val snippetText = when {
+            conversation.draft.isNotEmpty() -> context.getString(R.string.main_sender_draft, conversation.draft)
+            conversation.me -> context.getString(R.string.main_sender_you, localSnippet)
+            else -> localSnippet
+        }
+        // Flagged ("suspected spam") conversations stay in the inbox but carry a discreet amber label
+        binding.snippet.text = when {
+            conversation.flagged -> buildSpannedString {
+                // Amber so it stands out from the grey snippet regardless of the app theme
+                color(0xFFF57C00.toInt()) {
+                    bold { append(context.getString(R.string.conversation_flagged_label)) }
+                }
+                append("  ")
+                append(snippetText.orEmpty())
+            }
+            else -> snippetText
         }
 
         // Make the preview in italics if draft
         if (conversation.draft.isNotEmpty()) binding.snippet.setTypeface(null, Typeface.ITALIC)
+
+        val mediaIcon = when (conversation.snippet) {
+            "Picture" -> ContextCompat.getDrawable(context, R.drawable.ic_tabler_photo)?.mutate()?.also {
+                val size = binding.snippet.textSize.toInt()
+                it.setBounds(0, 0, size, size)
+                it.setTint(binding.snippet.currentTextColor)
+            }
+            else -> null
+        }
+        binding.snippet.setCompoundDrawablesRelative(mediaIcon, null, null, null)
+        binding.snippet.compoundDrawablePadding = (4 * context.resources.displayMetrics.density + 0.5f).toInt()
 
         binding.scheduled.isVisible = conversation.id in hasScheduledConversation
 
@@ -140,6 +174,9 @@ class ConversationsAdapter @Inject constructor(
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position)?.unread == false) 0 else 1
     }
+
+    /** Whether the conversation at [position] is currently unread, for state-aware swipe icons. */
+    fun unreadAt(position: Int): Boolean = getItem(position)?.unread == true
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)

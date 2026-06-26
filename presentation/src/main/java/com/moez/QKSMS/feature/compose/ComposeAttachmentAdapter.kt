@@ -1,38 +1,38 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.compose
+package io.openmessages.feature.compose
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkAdapter
-import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.common.util.extensions.getDisplayName
-import dev.octoshrimpy.quik.databinding.AttachmentContactListItemBinding
-import dev.octoshrimpy.quik.databinding.AttachmentFileListItemBinding
-import dev.octoshrimpy.quik.extensions.getName
-import dev.octoshrimpy.quik.feature.extensions.LoadBestIconIntoImageView
-import dev.octoshrimpy.quik.feature.extensions.loadBestIconIntoImageView
-import dev.octoshrimpy.quik.model.Attachment
+import io.openmessages.R
+import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.util.extensions.getDisplayName
+import io.openmessages.databinding.AttachmentContactListItemBinding
+import io.openmessages.databinding.AttachmentFileListItemBinding
+import io.openmessages.extensions.getName
+import io.openmessages.feature.extensions.LoadBestIconIntoImageView
+import io.openmessages.feature.extensions.loadBestIconIntoImageView
+import io.openmessages.model.Attachment
 import ezvcard.Ezvcard
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject

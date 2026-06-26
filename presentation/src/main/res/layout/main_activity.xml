@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,119 +24,214 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/Toolbar"
-            android:animateLayoutChanges="true"
-            app:contentInsetStartWithNavigation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <dev.octoshrimpy.quik.common.widget.QkTextView
-                android:id="@+id/toolbarTitle"
-                style="@style/ToolbarText"
-                android:layout_marginStart="16dp"
-                android:visibility="gone" />
-
-            <dev.octoshrimpy.quik.common.widget.QkEditText
-                android:id="@+id/toolbarSearch"
-                style="@style/ToolbarText"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:minHeight="40dp"
-                android:background="@drawable/rounded_rectangle_24dp"
-                android:backgroundTint="?attr/bubbleColor"
-                android:hint="@string/title_conversations"
-                android:inputType="text"
-                android:maxLines="1"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:textColorHint="?android:attr/textColorTertiary"
-                app:textSize="primary"
-                tools:textSize="16sp"
-                android:focusable="true"
-                android:nextFocusRight="@+id/compose" />
-        </androidx.appcompat.widget.Toolbar>
-
-        <dev.octoshrimpy.quik.common.widget.QkTextView
-            android:id="@+id/empty"
-            style="@style/TextSecondary"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="56dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:text="Your conversations will appear here"
-            tools:visibility="invisible" />
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:background="?android:attr/windowBackground">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar"
+                android:animateLayoutChanges="true"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <LinearLayout
+                    android:id="@+id/toolbarLogoGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:visibility="gone">
+
+                    <io.openmessages.common.widget.QkTextView
+                        android:id="@+id/toolbarTitle"
+                        style="@style/ToolbarText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="none"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/toolbarSearchIcon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/title_search"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_search_outline"
+                    android:visibility="gone"
+                    app:tint="@color/white" />
+
+                <FrameLayout
+                    android:id="@+id/toolbarUnreadBadge"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_tabler_mail_filled"
+                        android:contentDescription="@null"
+                        app:tint="@color/white" />
+
+                    <io.openmessages.common.widget.QkTextView
+                        android:id="@+id/toolbarUnreadCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/badge_count"
+                        android:gravity="center"
+                        android:minWidth="16dp"
+                        android:minHeight="16dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:paddingTop="1dp"
+                        android:paddingBottom="1dp"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        tools:text="3" />
+
+                </FrameLayout>
+
+                <io.openmessages.common.widget.QkEditText
+                    android:id="@+id/toolbarSearch"
+                    style="@style/ToolbarText"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:minHeight="40dp"
+                    android:background="@drawable/rounded_rectangle_24dp"
+                    android:backgroundTint="?attr/bubbleColor"
+                    android:hint="@string/title_conversations"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:textColorHint="@color/text_tertiary"
+                    app:textSize="primary"
+                    tools:textSize="16sp"
+                    android:focusable="true"
+                    android:nextFocusRight="@+id/compose" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/bottom"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            tools:listitem="@layout/conversation_list_item" />
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <io.openmessages.common.widget.QkTextView
+                android:id="@+id/empty"
+                style="@style/TextSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="56dp"
+                app:layout_constraintBottom_toTopOf="@id/bottom"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Your conversations will appear here"
+                tools:visibility="invisible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="72dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/bottom"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/conversation_list_item" />
+
+            <View
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/divider"
+                app:layout_constraintBottom_toTopOf="@id/snackbar" />
+
+            <ViewStub
+                android:id="@+id/snackbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inflatedId="@id/snackbar"
+                android:layout="@layout/main_permission_hint"
+                app:layout_constraintBottom_toTopOf="@id/syncing" />
+
+            <ViewStub
+                android:id="@+id/syncing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inflatedId="@id/syncing"
+                android:layout="@layout/main_syncing"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--
+            FAB lives directly in CoordinatorLayout, NOT inside the scrolling ConstraintLayout.
+            ScrollingViewBehavior lays ConstraintLayout out as (CoordinatorLayout.height + AppBarLayout.height)
+            so the ConstraintLayout bottom deliberately extends past CoordinatorLayout bounds.
+            Any view constrained to that bottom would be hidden below the nav bar when the toolbar
+            is visible. CoordinatorLayout itself is always bounded correctly above the nav bar.
+        -->
+        <ImageView
+            android:id="@+id/scrollToTop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/circle_gradient_brand"
+            android:contentDescription="@null"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+            android:visibility="gone"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/compose"
             android:layout_width="56dp"
             android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
-            android:background="@drawable/circle_ripple"
+            android:background="@drawable/rounded_rect_gradient_brand"
             android:contentDescription="@string/main_fab_cd"
             android:elevation="8dp"
-            android:padding="16dp"
+            android:padding="14dp"
             android:src="@drawable/ic_add_black_24dp"
-            app:layout_constraintBottom_toTopOf="@id/bottom"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:backgroundTint="@color/tools_theme"
             app:tint="@color/white" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="8dp"
-            android:background="@drawable/ab_shadow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <View
-            android:id="@+id/bottom"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/divider"
-            app:layout_constraintBottom_toTopOf="@id/snackbar" />
-
-        <ViewStub
-            android:id="@+id/snackbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inflatedId="@id/snackbar"
-            android:layout="@layout/main_permission_hint"
-            app:layout_constraintBottom_toTopOf="@id/syncing" />
-
-        <ViewStub
-            android:id="@+id/syncing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inflatedId="@id/syncing"
-            android:layout="@layout/main_syncing"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <include
         android:id="@+id/drawer"

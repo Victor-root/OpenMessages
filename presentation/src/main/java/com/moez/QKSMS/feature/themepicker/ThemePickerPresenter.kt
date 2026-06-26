@@ -1,32 +1,32 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.themepicker
+package io.openmessages.feature.themepicker
 
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.manager.WidgetManager
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.util.Colors
+import io.openmessages.manager.BillingManager
+import io.openmessages.manager.WidgetManager
+import io.openmessages.util.Preferences
 import io.reactivex.rxkotlin.Observables
 import javax.inject.Inject
 import javax.inject.Named
@@ -88,7 +88,7 @@ class ThemePickerPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        // Show QKSMS+ activity
+        // Show plus features activity
         view.viewQksmsPlusClicks()
                 .autoDisposable(view.scope())
                 .subscribe { navigator.showQksmsPlusActivity("settings_theme") }

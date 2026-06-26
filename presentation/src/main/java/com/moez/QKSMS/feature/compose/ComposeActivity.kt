@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.compose
+package io.openmessages.feature.compose
 
 import android.Manifest
 import android.animation.LayoutTransition
@@ -43,6 +43,7 @@ import android.view.DragEvent.ACTION_DROP
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -56,35 +57,38 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
-import com.moez.QKSMS.common.QkMediaPlayer
+import io.openmessages.common.QkMediaPlayer
 import com.uber.autodispose.ObservableSubscribeProxy
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
-import dev.octoshrimpy.quik.common.util.extensions.dpToPx
-import dev.octoshrimpy.quik.common.util.extensions.hideKeyboard
-import dev.octoshrimpy.quik.common.util.extensions.makeToast
-import dev.octoshrimpy.quik.common.util.extensions.scrapViews
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.util.extensions.showKeyboard
-import dev.octoshrimpy.quik.common.widget.MicInputCloudView
-import dev.octoshrimpy.quik.extensions.mapNotNull
-import dev.octoshrimpy.quik.feature.compose.editing.ChipsAdapter
-import dev.octoshrimpy.quik.feature.contacts.ContactsActivity
-import dev.octoshrimpy.quik.model.Attachment
-import dev.octoshrimpy.quik.model.Recipient
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.autoScrollToStart
+import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.hideKeyboard
+import io.openmessages.common.util.extensions.makeToast
+import io.openmessages.common.util.extensions.scrapViews
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.extensions.showKeyboard
+import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.common.widget.MicInputCloudView
+import io.openmessages.extensions.mapNotNull
+import io.openmessages.feature.blocking.BlockingDialog
+import io.openmessages.feature.compose.editing.ChipsAdapter
+import io.openmessages.feature.contacts.ContactsActivity
+import io.openmessages.feature.templates.TemplatesActivity
+import io.openmessages.model.Attachment
+import io.openmessages.model.Recipient
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import dev.octoshrimpy.quik.databinding.ComposeActivityBinding
+import io.openmessages.databinding.ComposeActivityBinding
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.text.SimpleDateFormat
@@ -103,6 +107,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var blockingDialog: BlockingDialog
 
     private lateinit var binding: ComposeActivityBinding
 
@@ -128,6 +133,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val attachAnyFileIntent: Observable<Unit> by lazy { Observable.merge(binding.attachAFileIcon.clicks(), binding.attachAFileLabel.clicks()) }
     override val scheduleIntent: Observable<Unit> by lazy { Observable.merge(binding.schedule.clicks(), binding.scheduleLabel.clicks()) }
     override val attachContactIntent: Observable<Unit> by lazy { Observable.merge(binding.contact.clicks(), binding.contactLabel.clicks()) }
+    override val templateIntent: Observable<Unit> by lazy { Observable.merge(binding.template.clicks(), binding.templateLabel.clicks()) }
+    override val flaggedApproveIntent by lazy { binding.flaggedApprove.clicks() }
+    override val flaggedBlockIntent by lazy { binding.flaggedBlock.clicks() }
     override val attachAnyFileSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val contactSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { binding.message.inputContentSelected }
@@ -163,6 +171,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
     private var cameraDestination: Uri? = null
+
+    /** Window soft-input mode to restore after closing the full-screen editor. */
+    private var savedSoftInputMode = 0
 
     private fun getSeekBarUpdater(): ObservableSubscribeProxy<Long> {
         return Observable.interval(500, TimeUnit.MILLISECONDS)
@@ -201,6 +212,21 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
             binding.message.supportsInputContent = true
 
+            // Full-screen editor: the expand chevron opens it; collapse/send sync back to the bubble.
+            savedSoftInputMode = window.attributes.softInputMode
+            binding.expand.clicks()
+                .autoDisposable(scope())
+                .subscribe { showFullscreen() }
+            binding.fullscreenCollapse.clicks()
+                .autoDisposable(scope())
+                .subscribe { collapseFullscreen() }
+            binding.fullscreenSend.clicks()
+                .autoDisposable(scope())
+                .subscribe { sendFromFullscreen() }
+            binding.message.textChanges()
+                .autoDisposable(scope())
+                .subscribe { binding.message.post { updateExpandButton() } }
+
             theme
                 .doOnNext {
                     binding.loading.setTint(it.theme)
@@ -209,6 +235,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     binding.attach.setBackgroundTint(it.theme); binding.attach.setTint(it.textPrimary)
                     binding.contact.setBackgroundTint(it.theme); binding.contact.setTint(it.textPrimary)
                     binding.contactLabel.setBackgroundTint(it.theme); binding.contactLabel.setTint(it.textPrimary)
+                    binding.template.setBackgroundTint(it.theme); binding.template.setTint(it.textPrimary)
+                    binding.templateLabel.setBackgroundTint(it.theme); binding.templateLabel.setTint(it.textPrimary)
                     binding.schedule.setBackgroundTint(it.theme); binding.schedule.setTint(it.textPrimary)
                     binding.scheduleLabel.setBackgroundTint(it.theme); binding.scheduleLabel.setTint(it.textPrimary)
                     binding.attachAFileIcon.setBackgroundTint(it.theme); binding.attachAFileIcon.setTint(it.textPrimary)
@@ -405,6 +433,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         threadId.onNext(state.threadId)
 
+        binding.flaggedBanner.isVisible = state.flagged
+        if (state.flagged) {
+            binding.flaggedReason.text = when {
+                state.flagReason.isBlank() -> getString(R.string.compose_flagged_title)
+                else -> getString(R.string.compose_flagged_title) + " — " + state.flagReason
+            }
+        }
+
         title = when {
             state.selectedMessages > 0 -> getString(R.string.compose_title_selected, state.selectedMessages)
             state.query.isNotEmpty() -> state.query
@@ -418,6 +454,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.toolbarTitle.setVisible(!state.editingMode)
         binding.chips.setVisible(state.editingMode)
         binding.composeBar.setVisible(!state.loading)
+        binding.message.post { updateExpandButton() }
 
         // Don't set the adapters unless needed
         if (state.editingMode && binding.chips.adapter == null) binding.chips.adapter = chipsAdapter
@@ -548,6 +585,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         messageAdapter.expandMessages(messageIds, expand)
     }
 
+    override fun showBlockingDialog(threadIds: List<Long>, block: Boolean) {
+        // Blocking a conversation from the "suspected spam" banner removes it from the inbox, so
+        // bounce back to the conversation list once the block has been applied.
+        blockingDialog.show(this, threadIds, block) { finish() }
+    }
+
     override fun showDetails(details: String) {
         AlertDialog.Builder(this)
             .setTitle(R.string.compose_details_title)
@@ -569,8 +612,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     null
                 )
             }
-            .setNegativeButton(R.string.messageLinkHandling_dialog_negative) { _, _ -> { } }
+            .setNegativeButton(R.string.messageLinkHandling_dialog_negative) { _, _ -> run { } }
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun requestDefaultSms() {
@@ -609,6 +653,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.message.hideKeyboard()
     }
 
+    @Suppress("DEPRECATION")
     override fun requestContact() {
         val intent = Intent(Intent.ACTION_PICK)
             .setType(ContactsContract.Contacts.CONTENT_TYPE)
@@ -616,6 +661,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(Intent.createChooser(intent, null), ComposeView.ATTACH_CONTACT_REQUEST_CODE)
     }
 
+    @Suppress("DEPRECATION")
     override fun showContacts(sharing: Boolean, chips: List<Recipient>) {
         binding.message.hideKeyboard()
         val serialized = HashMap(chips.associate { chip -> chip.address to chip.contact?.lookupKey })
@@ -625,6 +671,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(intent, ComposeView.SELECT_CONTACT_REQUEST_CODE)
     }
 
+    @Suppress("DEPRECATION")
     override fun startSpeechRecognition() {
         if (isSpeechRecognitionAvailable()) {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
@@ -648,6 +695,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }, 200)
     }
 
+    @Suppress("DEPRECATION")
     override fun requestCamera() {
         cameraDestination = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             .let { timestamp -> ContentValues().apply { put(MediaStore.Images.Media.TITLE, timestamp) } }
@@ -658,6 +706,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(Intent.createChooser(intent, null), ComposeView.TAKE_PHOTOS_REQUEST_CODE)
     }
 
+    @Suppress("DEPRECATION")
     override fun requestGallery(mimeType: String, requestCode: Int) {
         val intent = Intent(Intent.ACTION_PICK)
             .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
@@ -671,6 +720,58 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun setDraft(draft: String) {
         binding.message.setText(draft)
         binding.message.setSelection(draft.length)
+    }
+
+    /** Opens the full Templates screen in pick mode; the chosen template returns via onActivityResult. */
+    override fun showTemplatePicker() {
+        startActivityForResult(
+            Intent(this, TemplatesActivity::class.java).putExtra(TemplatesActivity.EXTRA_PICK, true),
+            ComposeView.TEMPLATE_REQUEST_CODE
+        )
+    }
+
+    /** Show/hide the bubble's expand chevron — only useful once the message spans multiple lines. */
+    private fun updateExpandButton() {
+        binding.expand.isVisible = binding.message.isVisible && binding.message.lineCount > 1
+    }
+
+    /** Opens the full-screen editor, seeded with the current message text. */
+    private fun showFullscreen() {
+        binding.fullscreenMessage.setText(binding.message.text)
+        binding.fullscreenMessage.setSelection(binding.fullscreenMessage.length())
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        binding.fullscreenEditor.isVisible = true
+        binding.fullscreenMessage.requestFocus()
+        binding.fullscreenMessage.showKeyboard()
+    }
+
+    /** Closes the full-screen editor, syncing its text back into the bubble. */
+    private fun collapseFullscreen() {
+        binding.message.setText(binding.fullscreenMessage.text)
+        binding.message.setSelection(binding.message.length())
+        binding.fullscreenEditor.isVisible = false
+        window.setSoftInputMode(savedSoftInputMode)
+        binding.message.requestFocus()
+    }
+
+    /** Syncs the full-screen text into the bubble and triggers the normal send. */
+    private fun sendFromFullscreen() {
+        binding.message.setText(binding.fullscreenMessage.text)
+        binding.fullscreenEditor.isVisible = false
+        window.setSoftInputMode(savedSoftInputMode)
+        binding.send.performClick()
+    }
+
+    /** Inserts [text] into the message field at the cursor, replacing any selection. */
+    private fun insertIntoMessage(text: String) {
+        val field = binding.message
+        val editable = field.text ?: return
+        val start = field.selectionStart.coerceIn(0, editable.length)
+        val end = field.selectionEnd.coerceIn(0, editable.length)
+        editable.replace(minOf(start, end), maxOf(start, end), text)
+        field.setSelection((minOf(start, end) + text.length).coerceAtMost(field.length()))
+        field.requestFocus()
+        field.showKeyboard()
     }
 
     override fun scrollToMessage(id: Long) {
@@ -696,6 +797,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(messages) }
             .setNegativeButton(R.string.button_cancel, null)
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun showClearCurrentMessageDialog() {
@@ -707,6 +809,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             }
             .setNegativeButton(R.string.button_cancel, null)
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun showReactionsDialog(reactions: List<String>) {
@@ -727,7 +830,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun getColoredMenuItems(): List<Int> {
-        return super.getColoredMenuItems() + R.id.call
+        return super.getColoredMenuItems()
     }
 
     override fun onCreateContextMenu(
@@ -745,12 +848,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         return true
     }
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_OK)
             return
 
         when (requestCode) {
             ComposeView.SELECT_CONTACT_REQUEST_CODE -> {
+                @Suppress("UNCHECKED_CAST")
                 chipsSelectedIntent.onNext(data?.getSerializableExtra(ContactsActivity.CHIPS_KEY)
                     ?.let { serializable -> serializable as? HashMap<String, String?> }
                     ?: hashMapOf())
@@ -783,6 +888,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 }
             }
 
+            ComposeView.TEMPLATE_REQUEST_CODE -> {
+                data?.getStringExtra(TemplatesActivity.EXTRA_BODY)?.let(::insertIntoMessage)
+            }
+
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
@@ -792,12 +901,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         super.onSaveInstanceState(outState)
     }
 
+    @Suppress("DEPRECATION")
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         cameraDestination = savedInstanceState.getParcelable(ComposeView.CAMERA_DESTINATION_KEY)
         super.onRestoreInstanceState(savedInstanceState)
     }
 
-    override fun onBackPressed() = backPressedIntent.onNext(Unit)
+    override fun onBackPressed() {
+        if (binding.fullscreenEditor.isVisible) collapseFullscreen()
+        else backPressedIntent.onNext(Unit)
+    }
 
     override fun focusMessage() {
         binding.message.requestFocus()

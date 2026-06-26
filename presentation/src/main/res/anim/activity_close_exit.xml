@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Closing screen on pop: slides out to the right edge (mirror of the open animation). -->
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="250"
+    android:fromXDelta="0"
+    android:interpolator="@android:anim/decelerate_interpolator"
+    android:toXDelta="100%p" />

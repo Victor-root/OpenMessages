@@ -1,30 +1,30 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings.swipe
+package io.openmessages.feature.settings.swipe
 
 import android.content.Context
 import androidx.annotation.DrawableRes
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.util.Preferences
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
@@ -75,6 +75,7 @@ class SwipeActionsPresenter @Inject constructor(
         Preferences.SWIPE_ACTION_CALL -> R.drawable.ic_call_white_24dp
         Preferences.SWIPE_ACTION_READ -> R.drawable.ic_check_white_24dp
         Preferences.SWIPE_ACTION_UNREAD -> R.drawable.ic_markunread_black_24dp
+        Preferences.SWIPE_ACTION_TOGGLE_READ -> R.drawable.ic_mail
         Preferences.SWIPE_ACTION_SPEAK -> R.drawable.ic_speaker_black_24dp
         else -> 0
     }

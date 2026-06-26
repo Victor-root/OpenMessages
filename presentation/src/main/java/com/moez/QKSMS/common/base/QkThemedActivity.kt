@@ -1,43 +1,48 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.base
+package io.openmessages.common.base
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
-import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
+import androidx.core.view.drawToBitmap
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
+import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeBoolean
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.extensions.Optional
-import dev.octoshrimpy.quik.extensions.asObservable
-import dev.octoshrimpy.quik.extensions.mapNotNull
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
+import io.openmessages.R
+import io.openmessages.common.util.Colors
+import io.openmessages.extensions.Optional
+import io.openmessages.extensions.asObservable
+import io.openmessages.extensions.mapNotNull
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.MessageRepository
+import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
@@ -94,56 +99,150 @@ abstract class QkThemedActivity : QkActivity() {
             }
             .switchMap { colors.themeObservable(it.value) }
 
-    @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(getActivityThemeRes(prefs.black.get()))
         super.onCreate(savedInstanceState)
 
-        // When certain preferences change, we need to recreate the activity
-        val triggers = listOf(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont)
+        // When certain preferences change, we need to recreate the activity. Screens that want to
+        // rebuild on a theme-color change (e.g. settings, whose QkSwitch thumbs and themed category
+        // titles read the color once at inflation) add prefs.theme() via recreateOnThemeChangeTriggers().
+        // It is deliberately NOT a global trigger: the launcher entry is an activity-alias, so a
+        // back-stacked, alias-launched activity must not be relaunched while the icon may be changing.
+        // The 400ms debounce guarantees the theme picker dialog has dismissed before the rebuild.
+        val triggers: List<Preference<*>> =
+                listOf<Preference<*>>(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont) +
+                        recreateOnThemeChangeTriggers()
         Observable.merge(triggers.map { it.asObservable().skip(1) })
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(scope())
-                .subscribe { recreate() }
+                .subscribe { recreateWithCrossfade() }
 
-        // We can only set light nav bar on API 27 in attrs, but we can do it in API 26 here
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
-            val night = !resolveThemeBoolean(R.attr.isLightTheme)
-            window.decorView.systemUiVisibility = if (night) 0 else
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        }
-
-        // Some devices don't let you modify android.R.attr.navigationBarColor
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = resolveThemeColor(android.R.attr.windowBackground)
-        }
-
-        // Set the color for the recent apps title
-        val toolbarColor = resolveThemeColor(R.attr.colorPrimary)
-        val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-        val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, toolbarColor)
-        setTaskDescription(taskDesc)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        // Set the color for the overflow and navigation icon
-        val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
-        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(Color.WHITE) }
 
-        // Update the colours of the menu items
         Observables.combineLatest(menu, theme) { menu, theme ->
             menu.iterator().forEach { menuItem ->
                 val tint = when (menuItem.itemId) {
                     in getColoredMenuItems() -> theme.theme
-                    else -> textSecondary
+                    else -> Color.WHITE
                 }
 
                 menuItem.icon = menuItem.icon?.apply { setTint(tint) }
             }
         }.autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
+
+        theme
+            .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+            .subscribe { theme ->
+                window.statusBarColor = theme.theme
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    window.navigationBarColor = theme.theme
+                }
+
+                // Match the system-bar icon brightness to the bar color so they stay legible on
+                // every device and in both light and dark mode. The bar colors are set above, but
+                // the light/dark icon flag is not derived from them automatically: stock Android in
+                // light mode (API 27+) defaults the nav bar to dark icons, which are invisible on a
+                // dark brand bar like the default violet — some OEMs override this, which is why the
+                // icons looked white on one phone and black on a Pixel.
+                @Suppress("DEPRECATION")
+                run {
+                    val darkIcons = colors.useDarkSystemBarIcons(theme.theme)
+                    var visibility = window.decorView.systemUiVisibility
+                    visibility = if (darkIcons) {
+                        visibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    } else {
+                        visibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        visibility = if (darkIcons) {
+                            visibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                        } else {
+                            visibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+                        }
+                    }
+                    window.decorView.systemUiVisibility = visibility
+                }
+
+                // Default violet keeps the brand gradient header; custom colors paint it flat.
+                toolbar?.background = if (colors.usesBrandGradient(theme.theme)) {
+                    GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            intArrayOf(theme.theme, colors.deriveGradientEndColor(theme.theme)))
+                } else {
+                    ColorDrawable(theme.theme)
+                }
+
+                // Keep the recent-apps card header color in sync with the live theme color.
+                // The card would otherwise show whatever color was active when the task was created,
+                // only refreshing after a full app restart. Passing null for the icon bitmap lets
+                // the system keep using the default launcher icon (no need to generate one).
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    setTaskDescription(ActivityManager.TaskDescription.Builder()
+                        .setLabel(getString(R.string.app_name))
+                        .setBackgroundColor(theme.theme)
+                        .build())
+                } else {
+                    @Suppress("DEPRECATION")
+                    setTaskDescription(ActivityManager.TaskDescription(
+                        getString(R.string.app_name), null, theme.theme))
+                }
+            }
+
+        // Crossfade from the pre-recreate snapshot (if this was a theme-change recreate) so the swap
+        // doesn't flash. Done after the theme subscription so the new content is themed underneath
+        // the fading snapshot.
+        playThemeCrossfade()
+    }
+
+    /**
+     * Recreate to apply a theme change, but first snapshot the current screen so the recreated
+     * activity can crossfade from it ([playThemeCrossfade]) instead of flashing the bare window
+     * background. Only the visible activity snapshots; a backgrounded one (e.g. the list behind
+     * Settings) recreates invisibly. The snapshot is keyed by activity class so a background activity
+     * that also recreates can't consume the visible activity's snapshot.
+     */
+    private fun recreateWithCrossfade() {
+        if (window.decorView.isShown) {
+            themeSnapshot?.takeIf { !it.isRecycled }?.recycle()
+            themeSnapshot = runCatching { findViewById<View>(android.R.id.content)?.drawToBitmap() }.getOrNull()
+            themeSnapshotOwner = if (themeSnapshot != null) javaClass.name else null
+        }
+        recreate()
+    }
+
+    private fun playThemeCrossfade() {
+        if (themeSnapshotOwner != javaClass.name) return
+        val snapshot = themeSnapshot ?: return
+        themeSnapshot = null
+        themeSnapshotOwner = null
+
+        val content = findViewById<ViewGroup>(android.R.id.content)
+        if (content == null) {
+            snapshot.recycle()
+            return
+        }
+
+        val overlay = ImageView(this).apply {
+            setImageBitmap(snapshot)
+            scaleType = ImageView.ScaleType.FIT_XY
+            layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+        }
+        content.addView(overlay)
+
+        // Fade the old screen out over the freshly themed one. The post-delayed cleanup runs whether
+        // or not the animation finishes, so a stale snapshot can never be left covering the UI.
+        overlay.animate().alpha(0f).setStartDelay(60).setDuration(220).start()
+        overlay.postDelayed({
+            (overlay.parent as? ViewGroup)?.removeView(overlay)
+            if (!snapshot.isRecycled) snapshot.recycle()
+        }, 320)
     }
 
     open fun getColoredMenuItems(): List<Int> {
@@ -151,11 +250,27 @@ abstract class QkThemedActivity : QkActivity() {
     }
 
     /**
+     * Preferences that, when changed, should recreate this specific activity. Used for the theme
+     * color, which only the settings screen needs to rebuild for. Kept off the shared trigger list
+     * so we never relaunch a back-stacked, activity-alias-launched screen on a theme change.
+     */
+    open fun recreateOnThemeChangeTriggers(): List<Preference<*>> = emptyList()
+
+    /**
      * This can be overridden in case an activity does not want to use the default themes
      */
     open fun getActivityThemeRes(black: Boolean) = when {
         black -> R.style.AppTheme_Black
         else -> R.style.AppTheme
+    }
+
+    companion object {
+        // Screen snapshot handed from an activity to its recreated self across a theme-change
+        // recreate(), so the new instance can crossfade from it instead of flashing. Static because
+        // it must survive the recreate; [themeSnapshotOwner] (the owning activity's class name) keeps
+        // a background activity that recreates at the same time from consuming it.
+        private var themeSnapshot: Bitmap? = null
+        private var themeSnapshotOwner: String? = null
     }
 
 }

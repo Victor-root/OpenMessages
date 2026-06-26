@@ -1,59 +1,60 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.main
+package io.openmessages.feature.main
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkViewModel
-import dev.octoshrimpy.quik.extensions.mapNotNull
-import dev.octoshrimpy.quik.interactor.DeleteConversations
-import dev.octoshrimpy.quik.interactor.MarkAllSeen
-import dev.octoshrimpy.quik.interactor.MarkArchived
-import dev.octoshrimpy.quik.interactor.MarkPinned
-import dev.octoshrimpy.quik.interactor.MarkRead
-import dev.octoshrimpy.quik.interactor.MarkUnarchived
-import dev.octoshrimpy.quik.interactor.MarkUnpinned
-import dev.octoshrimpy.quik.interactor.MarkUnread
-import dev.octoshrimpy.quik.interactor.MigratePreferences
-import dev.octoshrimpy.quik.interactor.SpeakThreads
-import dev.octoshrimpy.quik.interactor.SyncContacts
-import dev.octoshrimpy.quik.interactor.SyncMessages
-import dev.octoshrimpy.quik.listener.ContactAddedListener
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.manager.ChangelogManager
-import dev.octoshrimpy.quik.manager.PermissionManager
-import dev.octoshrimpy.quik.manager.RatingManager
-import dev.octoshrimpy.quik.model.EmojiSyncNeeded
-import dev.octoshrimpy.quik.model.SyncLog
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.EmojiReactionRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
-import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkViewModel
+import io.openmessages.extensions.mapNotNull
+import io.openmessages.interactor.DeleteConversations
+import io.openmessages.interactor.MarkAllSeen
+import io.openmessages.interactor.MarkArchived
+import io.openmessages.interactor.MarkPinned
+import io.openmessages.interactor.MarkRead
+import io.openmessages.interactor.MarkUnarchived
+import io.openmessages.interactor.MarkUnpinned
+import io.openmessages.interactor.MarkUnread
+import io.openmessages.interactor.MigratePreferences
+import io.openmessages.interactor.SpeakThreads
+import io.openmessages.interactor.SyncContacts
+import io.openmessages.interactor.SyncMessages
+import io.openmessages.listener.ContactAddedListener
+import io.openmessages.manager.BillingManager
+import io.openmessages.manager.ChangelogManager
+import io.openmessages.manager.PermissionManager
+import io.openmessages.manager.RatingManager
+import io.openmessages.model.EmojiSyncNeeded
+import io.openmessages.model.SyncLog
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.EmojiReactionRepository
+import io.openmessages.repository.MessageRepository
+import io.openmessages.repository.ScheduledMessageRepository
+import io.openmessages.repository.SyncRepository
+import io.openmessages.util.Preferences
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -247,6 +248,7 @@ class MainViewModel @Inject constructor(
         // Show changelog
         if (changelogManager.didUpdate()) {
             if (Locale.getDefault().language.startsWith("en")) {
+                @OptIn(DelicateCoroutinesApi::class)
                 GlobalScope.launch(Dispatchers.Main) {
                     val changelog = changelogManager.getChangelog()
                     changelogManager.markChangelogSeen()
@@ -343,6 +345,7 @@ class MainViewModel @Inject constructor(
                         NavItem.SCHEDULED -> navigator.showScheduled(null)
                         NavItem.BLOCKING -> navigator.showBlockedConversations()
                         NavItem.MESSAGE_UTILS -> navigator.showMessageUtils()
+                        NavItem.TEMPLATES -> navigator.showTemplates()
                         NavItem.SETTINGS -> navigator.showSettings()
                         NavItem.ABOUT -> navigator.showAbout()
 //                        NavItem.PLUS -> navigator.showQksmsPlusActivity("main_menu")
@@ -491,7 +494,7 @@ class MainViewModel @Inject constructor(
                             ?.takeIf { conversation -> conversation.recipients.size == 1 }
                             ?.recipients?.first()
                             ?.takeIf { recipient -> recipient.contact == null } != null
-                    val pin = conversations.sumBy { if (it.pinned) -1 else 1 } >= 0
+                    val pin = conversations.map { if (it.pinned) -1 else 1 }.sum() >= 0
                     val read = when (conversations.size) {
                         0    -> false
                         1    -> conversations[0].unread
@@ -511,7 +514,6 @@ class MainViewModel @Inject constructor(
                         }
 
                         is Searching -> {} // Ignore
-                        else -> {}
                     }
                 }
                 .autoDisposable(view.scope())
@@ -568,6 +570,12 @@ class MainViewModel @Inject constructor(
                         }
                         Preferences.SWIPE_ACTION_READ -> markRead.execute(listOf(threadId))
                         Preferences.SWIPE_ACTION_UNREAD -> markUnread.execute(listOf(threadId))
+                        Preferences.SWIPE_ACTION_TOGGLE_READ ->
+                            if (conversationRepo.getConversation(threadId)?.unread == true) {
+                                markRead.execute(listOf(threadId))
+                            } else {
+                                markUnread.execute(listOf(threadId))
+                            }
                         Preferences.SWIPE_ACTION_SPEAK -> speakThreads.execute(listOf(threadId))
                     }
                 }

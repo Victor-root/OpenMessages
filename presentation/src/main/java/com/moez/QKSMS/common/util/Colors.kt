@@ -1,30 +1,30 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.util
+package io.openmessages.common.util
 
 import android.content.Context
 import android.graphics.Color
 import androidx.core.content.res.getColorOrThrow
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.util.extensions.getColorCompat
+import io.openmessages.model.Recipient
+import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,6 +36,35 @@ class Colors @Inject constructor(
     private val context: Context,
     private val prefs: Preferences
 ) {
+
+    companion object {
+        /**
+         * The default brand color (violet). This is the only theme that shows the brand gradient
+         * (toolbar, drawer header, FAB, scroll-to-top, swipe background); every custom color the
+         * user picks is painted as a single flat color instead.
+         */
+        const val DEFAULT_THEME = 0xFF7B2DDC.toInt()
+    }
+
+    /**
+     * Whether the brand gradient should be used for the given theme color. Only true for the
+     * default violet — custom colors are always flat.
+     */
+    fun usesBrandGradient(color: Int): Boolean = color == DEFAULT_THEME
+
+    /**
+     * Whether the status- and navigation-bar icons drawn on top of [color] should use the dark
+     * (black) variant. Returns true for light theme colors and false for dark ones, based on
+     * perceived brightness (ITU-R BT.601).
+     *
+     * The bar background is painted with the theme color in code, but the light/dark icon flag is
+     * NOT inferred from it automatically — and stock Android (light mode, API 27+) defaults the
+     * navigation bar to dark icons (windowLightNavigationBar), which are invisible on a dark brand
+     * bar such as the default violet. Some OEMs override this, which is why the icons could look
+     * white on one phone and black on another for the same color.
+     */
+    fun useDarkSystemBarIcons(color: Int): Boolean =
+            (Color.red(color) * 0.299 + Color.green(color) * 0.587 + Color.blue(color) * 0.114) > 150
 
     data class Theme(val theme: Int, private val colors: Colors) {
         val highlight by lazy { colors.highlightColorForTheme(theme) }
@@ -131,6 +160,15 @@ class Colors @Inject constructor(
                 .map { if (it < 0.03928) it / 12.92 else ((it + 0.055) / 1.055).pow(2.4) }
 
         return 0.2126 * array[0] + 0.7152 * array[1] + 0.0722 * array[2] + 0.05
+    }
+
+    fun deriveGradientEndColor(color: Int): Int {
+        val hsv = FloatArray(3)
+        Color.colorToHSV(color, hsv)
+        hsv[0] = (hsv[0] - 30f + 360f) % 360f
+        hsv[1] = (hsv[1] * 0.8f).coerceIn(0f, 1f)
+        hsv[2] = (hsv[2] * 1.2f).coerceIn(0f, 1f)
+        return Color.HSVToColor(hsv)
     }
 
     private fun generateColor(recipient: Recipient): Int {

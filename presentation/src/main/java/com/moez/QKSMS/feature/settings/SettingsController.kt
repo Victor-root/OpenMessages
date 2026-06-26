@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings
+package io.openmessages.feature.settings
 
 import android.animation.ObjectAnimator
 import android.app.TimePickerDialog
@@ -31,27 +31,24 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.BuildConfig
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.MenuItem
-import dev.octoshrimpy.quik.common.QkChangeHandler
-import dev.octoshrimpy.quik.common.QkDialog
-import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.widget.PreferenceView
-import dev.octoshrimpy.quik.common.widget.TextInputDialog
-import dev.octoshrimpy.quik.databinding.SettingsControllerBinding
-import dev.octoshrimpy.quik.feature.settings.about.AboutController
-import dev.octoshrimpy.quik.feature.settings.swipe.SwipeActionsController
-import dev.octoshrimpy.quik.feature.themepicker.ThemePickerController
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.BuildConfig
+import io.openmessages.R
+import io.openmessages.common.MenuItem
+import io.openmessages.common.QkChangeHandler
+import io.openmessages.common.QkDialog
+import io.openmessages.common.base.QkController
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.animateLayoutChanges
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.widget.PreferenceView
+import io.openmessages.common.widget.TextInputDialog
+import io.openmessages.databinding.SettingsControllerBinding
+import io.openmessages.feature.settings.about.AboutController
+import io.openmessages.feature.settings.swipe.SwipeActionsController
+import io.openmessages.injection.appComponent
+import io.openmessages.repository.SyncRepository
+import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -73,7 +70,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     @Inject override lateinit var presenter: SettingsPresenter
 
     private val signatureDialog: TextInputDialog by lazy {
-        TextInputDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
+        TextInputDialog(activity!!, colors.theme().theme, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
     }
 
     private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
@@ -86,10 +83,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
-
-        colors.themeObservable()
-                .autoDisposable(scope())
-                .subscribe { activity?.recreate() }
     }
 
     override fun onViewCreated() {
@@ -111,6 +104,10 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun onAttach(view: View) {
         super.onAttach(view)
+        // Treat the first render after each (re)attach as a silent population, so the switches don't
+        // replay their slide — notably after the activity is recreated for a theme change such as
+        // toggling pure-black mode. bindIntents() emits state synchronously, so reset before it.
+        switchesPopulated = false
         presenter.bindIntents(this)
         setTitle(R.string.title_settings)
         showBackButton(true)
@@ -142,7 +139,16 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun messageLinkHandlingSelected(): Observable<Int> = messageLinkHandlingDialog.adapter.menuItemClicks
 
+    // Becomes true after the switches have been populated once, so only later renders animate.
+    private var switchesPopulated = false
+
     override fun render(state: SettingsState) {
+        // The first render (including the one when the activity is recreated for a theme change,
+        // e.g. toggling pure-black mode) populates the switches without animating, so they appear
+        // already in position instead of replaying their on/off slide. Later renders animate, so a
+        // genuine user toggle still slides.
+        val animate = switchesPopulated
+
         binding.theme.findViewById<View>(R.id.themePreview)?.setBackgroundTint(state.theme)
         binding.night.summary = state.nightModeSummary
         nightModeDialog.adapter.selectedItem = state.nightModeId
@@ -152,16 +158,16 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.nightEnd.summary = state.nightEnd
 
         binding.black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
-        binding.black.checkbox?.isChecked = state.black
+        binding.black.checkbox?.setChecked(state.black, animate)
 
-        binding.autoEmoji.checkbox?.isChecked = state.autoEmojiEnabled
+        binding.autoEmoji.checkbox?.setChecked(state.autoEmojiEnabled, animate)
 
         binding.delayed.summary = state.sendDelaySummary
         sendDelayDialog.adapter.selectedItem = state.sendDelayId
 
-        binding.delivery.checkbox?.isChecked = state.deliveryEnabled
+        binding.delivery.checkbox?.setChecked(state.deliveryEnabled, animate)
 
-        binding.unreadAtTop.checkbox?.isChecked = state.unreadAtTopEnabled
+        binding.unreadAtTop.checkbox?.setChecked(state.unreadAtTopEnabled, animate)
 
         binding.signature.summary = state.signature.takeIf { it.isNotBlank() }
                 ?: context.getString(R.string.settings_signature_summary)
@@ -169,16 +175,16 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
 
-        binding.autoColor.checkbox?.isChecked = state.autoColor
+        binding.autoColor.checkbox?.setChecked(state.autoColor, animate)
 
-        binding.systemFont.checkbox?.isChecked = state.systemFontEnabled
+        binding.systemFont.checkbox?.setChecked(state.systemFontEnabled, animate)
 
-        binding.showStt.checkbox?.isChecked = state.showStt
+        binding.showStt.checkbox?.setChecked(state.showStt, animate)
 
-        binding.unicode.checkbox?.isChecked = state.stripUnicodeEnabled
-        binding.mobileOnly.checkbox?.isChecked = state.mobileOnly
+        binding.unicode.checkbox?.setChecked(state.stripUnicodeEnabled, animate)
+        binding.mobileOnly.checkbox?.setChecked(state.mobileOnly, animate)
 
-        binding.longAsMms.checkbox?.isChecked = state.longAsMms
+        binding.longAsMms.checkbox?.setChecked(state.longAsMms, animate)
 
         binding.mmsSize.summary = state.maxMmsSizeSummary
         mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
@@ -186,7 +192,9 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.messsageLinkHandling.summary = state.messageLinkHandlingSummary
         messageLinkHandlingDialog.adapter.selectedItem = state.messageLinkHandlingId
 
-        binding.disableScreenshots.checkbox?.isChecked = state.disableScreenshotsEnabled
+        binding.disableScreenshots.checkbox?.setChecked(state.disableScreenshotsEnabled, animate)
+
+        switchesPopulated = true
 
         when (state.syncProgress) {
             is SyncRepository.SyncProgress.Idle -> binding.syncingProgress.isVisible = false
@@ -249,9 +257,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     }
 
     override fun showThemePicker() {
-        router.pushController(RouterTransaction.with(ThemePickerController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
+        val fm = themedActivity?.supportFragmentManager ?: return
+        ThemePickerDialog.newInstance().show(fm, "theme_picker")
     }
 
     override fun showAbout() {

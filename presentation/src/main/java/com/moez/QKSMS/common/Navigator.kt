@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common
+package io.openmessages.common
 
 import android.app.Activity
 import android.app.role.RoleManager
@@ -28,25 +28,26 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.provider.Telephony
-import dev.octoshrimpy.quik.BuildConfig
-import dev.octoshrimpy.quik.compat.TelephonyCompat
-import dev.octoshrimpy.quik.extensions.resourceExists
-import dev.octoshrimpy.quik.feature.settings.about.AboutActivity
-import dev.octoshrimpy.quik.feature.backup.BackupActivity
-import dev.octoshrimpy.quik.feature.blocking.BlockingActivity
-import dev.octoshrimpy.quik.feature.compose.ComposeActivity
-import dev.octoshrimpy.quik.feature.conversationinfo.ConversationInfoActivity
-import dev.octoshrimpy.quik.feature.gallery.GalleryActivity
-import dev.octoshrimpy.quik.feature.main.MainActivity
-import dev.octoshrimpy.quik.feature.messageutils.MessageUtilsActivity
-import dev.octoshrimpy.quik.feature.notificationprefs.NotificationPrefsActivity
-import dev.octoshrimpy.quik.feature.plus.PlusActivity
-import dev.octoshrimpy.quik.feature.scheduled.ScheduledActivity
-import dev.octoshrimpy.quik.feature.settings.SettingsActivity
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.manager.NotificationManager
-import dev.octoshrimpy.quik.manager.PermissionManager
-import dev.octoshrimpy.quik.model.ScheduledMessage
+import io.openmessages.BuildConfig
+import io.openmessages.compat.TelephonyCompat
+import io.openmessages.extensions.resourceExists
+import io.openmessages.feature.settings.about.AboutActivity
+import io.openmessages.feature.backup.BackupActivity
+import io.openmessages.feature.blocking.BlockingActivity
+import io.openmessages.feature.compose.ComposeActivity
+import io.openmessages.feature.conversationinfo.ConversationInfoActivity
+import io.openmessages.feature.gallery.GalleryActivity
+import io.openmessages.feature.main.MainActivity
+import io.openmessages.feature.messageutils.MessageUtilsActivity
+import io.openmessages.feature.notificationprefs.NotificationPrefsActivity
+import io.openmessages.feature.plus.PlusActivity
+import io.openmessages.feature.scheduled.ScheduledActivity
+import io.openmessages.feature.settings.SettingsActivity
+import io.openmessages.feature.templates.TemplatesActivity
+import io.openmessages.manager.BillingManager
+import io.openmessages.manager.NotificationManager
+import io.openmessages.manager.PermissionManager
+import io.openmessages.model.ScheduledMessage
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -72,9 +73,10 @@ class Navigator @Inject constructor(
     }
 
     /**
-     * @param source String to indicate where this QKSMS+ screen was launched from. This should be
+     * @param source String to indicate where this plus-features screen was launched from. This should be
      * one of [main_menu, compose_schedule, settings_night, settings_theme]
      */
+    @Suppress("UNUSED_PARAMETER")
     fun showQksmsPlusActivity(source: String) {
         val intent = Intent(context, PlusActivity::class.java)
         startActivity(intent)
@@ -179,6 +181,10 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
+    fun showTemplates() {
+        startActivity(Intent(context, TemplatesActivity::class.java))
+    }
+
     fun showSettings() {
         val intent = Intent(context, SettingsActivity::class.java)
         startActivity(intent)
@@ -190,22 +196,22 @@ class Navigator @Inject constructor(
     }
 
     fun showDeveloper() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/quik-sms/quik/graphs/contributors"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages/graphs/contributors"))
         startActivityExternal(intent)
     }
 
     fun showSourceCode() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/quik-sms/quik"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages"))
         startActivityExternal(intent)
     }
 
     fun showChangelog() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/quik-sms/quik/releases"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages/releases"))
         startActivityExternal(intent)
     }
 
     fun showLicense() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/quik-sms/quik/blob/master/LICENSE"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages/blob/master/LICENSE"))
         startActivityExternal(intent)
     }
 
@@ -221,12 +227,12 @@ class Navigator @Inject constructor(
     }
 
     fun showDonation() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/quik-sms/quik"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages"))
         startActivityExternal(intent)
     }
 
     fun showRating() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/quik-sms/quik"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages"))
                 .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY
                         or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
                         or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
@@ -234,7 +240,7 @@ class Navigator @Inject constructor(
         try {
             startActivityExternal(intent)
         } catch (e: ActivityNotFoundException) {
-            val url = "https://github.com/quik-sms/quik"
+            val url = "https://github.com/victor-root/openmessages"
             startActivityExternal(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
@@ -267,26 +273,14 @@ class Navigator @Inject constructor(
     }
 
     fun showSupport() {
-        val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("mailto:")
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("quik@octo.sh"))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "QUIK Support")
-        intent.putExtra(Intent.EXTRA_TEXT, StringBuilder("\n\n")
-                .append("\n\n--- Please write your message above this line ---\n\n")
-                .append("Package: ${context.packageName}\n")
-                .append("Version: ${BuildConfig.VERSION_NAME}\n")
-                .append("Device: ${Build.BRAND} ${Build.MODEL}\n")
-                .append("SDK: ${Build.VERSION.SDK_INT}\n")
-                .append("Upgraded"
-                        .takeIf { billingManager.upgradeStatus.blockingFirst() } ?: "")
-                .toString())
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages/issues"))
         startActivityExternal(intent)
     }
 
     fun showInvite() {
         Intent(Intent.ACTION_SEND)
                 .setType("text/plain")
-                .putExtra(Intent.EXTRA_TEXT, "https://github.com/quik-sms/quik/releases/latest")
+                .putExtra(Intent.EXTRA_TEXT, "https://github.com/victor-root/openmessages/releases/latest")
                 .let { Intent.createChooser(it, null) }
                 .let(::startActivityExternal)
     }

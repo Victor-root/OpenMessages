@@ -1,30 +1,30 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.conversationinfo
+package io.openmessages.feature.conversationinfo
 
 import android.os.Bundle
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.databinding.ContainerActivityBinding
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.databinding.ContainerActivityBinding
 
 class ConversationInfoActivity : QkThemedActivity() {
 
@@ -38,12 +38,14 @@ class ConversationInfoActivity : QkThemedActivity() {
         setContentView(binding.root)
 
         router = Conductor.attachRouter(this, binding.container, savedInstanceState)
+        val threadId = intent.extras?.getLong("threadId") ?: 0L
+        this.threadId.onNext(threadId) // theme the whole page for this conversation
         if (!router.hasRootController()) {
-            val threadId = intent.extras?.getLong("threadId") ?: 0L
             router.setRoot(RouterTransaction.with(ConversationInfoController(threadId)))
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         if (!router.handleBack()) {
             super.onBackPressed()

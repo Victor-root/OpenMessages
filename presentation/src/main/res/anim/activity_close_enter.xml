@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Revealed (previous) screen on pop: returns from a quarter-width to the left. -->
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="250"
+    android:fromXDelta="-25%p"
+    android:interpolator="@android:anim/decelerate_interpolator"
+    android:toXDelta="0" />

@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.util
+package io.openmessages.util
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -25,7 +25,7 @@ import android.os.Build
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
-import dev.octoshrimpy.quik.common.util.extensions.versionCode
+import io.openmessages.common.util.extensions.versionCode
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -75,8 +75,9 @@ class Preferences @Inject constructor(
         const val SWIPE_ACTION_READ = 5
         const val SWIPE_ACTION_UNREAD = 6
         const val SWIPE_ACTION_SPEAK = 7
+        const val SWIPE_ACTION_TOGGLE_READ = 8
 
-        const val BLOCKING_MANAGER_QKSMS = 0
+        const val BLOCKING_MANAGER_DEFAULT = 0
         const val BLOCKING_MANAGER_CC = 1
         const val BLOCKING_MANAGER_SIA = 2
         const val BLOCKING_MANAGER_CB = 3
@@ -108,11 +109,20 @@ class Preferences @Inject constructor(
     val black = rxPrefs.getBoolean("black", false)
     val autoColor = rxPrefs.getBoolean("autoColor", true)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
-    val showStt = rxPrefs.getBoolean("showStt", true)
+    val showStt = rxPrefs.getBoolean("showStt", false)
     val showSttOffsetX = rxPrefs.getFloat("showSttOffsetX", Float.MIN_VALUE)
     val showSttOffsetY = rxPrefs.getFloat("showSttOffsetY", Float.MIN_VALUE)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
-    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
+    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_DEFAULT)
+    // Integrated blocking sources (additive, on top of the manual blocklist and any external app)
+    val blockSourceArcep = rxPrefs.getBoolean("blockSourceArcep", false)
+    val blockSourcePhishing = rxPrefs.getBoolean("blockSourcePhishing", false)
+    // Number of entries in each downloaded list, kept only to show a status without re-parsing
+    val blockArcepCount = rxPrefs.getInteger("blockArcepCount", 0)
+    val blockPhishingCount = rxPrefs.getInteger("blockPhishingCount", 0)
+    // When on, a "suspected spam" soft-flag is upgraded to a full block so the message skips the
+    // inbox entirely instead of just being tagged with the "potential spam" banner.
+    val blockFlaggedAsSpam = rxPrefs.getBoolean("blockFlaggedAsSpam", false)
     val drop = rxPrefs.getBoolean("drop", false)
     val silentNotContact = rxPrefs.getBoolean("silentNotContact", false)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
@@ -121,7 +131,7 @@ class Preferences @Inject constructor(
     val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", true)
     val sendDelay = rxPrefs.getInteger("sendDelay", SEND_DELAY_NONE)
-    val swipeRight = rxPrefs.getInteger("swipeRight", SWIPE_ACTION_ARCHIVE)
+    val swipeRight = rxPrefs.getInteger("swipeRight", SWIPE_ACTION_READ)
     val swipeLeft = rxPrefs.getInteger("swipeLeft", SWIPE_ACTION_ARCHIVE)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
@@ -137,6 +147,11 @@ class Preferences @Inject constructor(
     val unreadAtTop = rxPrefs.getBoolean("unreadAtTop", false)
 
     val autoDeduplicate = rxPrefs.getBoolean("autoDeduplicateMessages", false)
+    val linkIconToTheme = rxPrefs.getBoolean("linkIconToTheme", false)
+    val appIconColor = rxPrefs.getInteger("appIconColor", 0xFF7B2DDC.toInt())
+
+    /** Saved message templates, stored as a JSON array (see feature.templates.Template). */
+    val templates = rxPrefs.getString("templates", "[]")
 
     init {
         // Migrate from old night mode preference to new one, now that we support android Q night mode
@@ -171,10 +186,10 @@ class Preferences @Inject constructor(
 
     fun theme(
         recipientId: Long = 0,
-        default: Int = rxPrefs.getInteger("theme", 0xFF0097A7.toInt()).get()
+        default: Int = rxPrefs.getInteger("theme", 0xFF7B2DDC.toInt()).get()
     ): Preference<Int> {
         return when (recipientId) {
-            0L -> rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
+            0L -> rxPrefs.getInteger("theme", 0xFF7B2DDC.toInt())
             else -> rxPrefs.getInteger("theme_$recipientId", default)
         }
     }
