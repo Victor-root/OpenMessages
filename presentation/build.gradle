@@ -28,8 +28,11 @@ android {
         applicationId 'io.openmessages'
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 2238
-        versionName '4.3.6'
+        // First Open Messages release. The rebrand to the io.openmessages package means it installs
+        // fresh (never over QKSMS/QUIK), so the counter restarts at 1. Bump versionCode by 1 and
+        // update versionName for each release.
+        versionCode 1
+        versionName '1.0.0'
         setProperty("archivesBaseName", "OpenMessages-v${versionName}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,11 +44,19 @@ android {
             def keystorePropsFile = rootProject.file('keystore.properties')
             if (keystorePropsFile.exists()) {
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
-                storeFile file(keystoreProps['storeFile'])
+                // storeFile is resolved relative to the repo root (where keystore.properties lives),
+                // so an entry like storeFile=my-release-key.jks just works. Absolute paths also work.
+                storeFile rootProject.file(keystoreProps['storeFile'])
                 storePassword keystoreProps['storePassword']
                 keyAlias keystoreProps['keyAlias']
                 keyPassword keystoreProps['keyPassword']
             }
+            // Sign with the legacy JAR scheme (v1, for API < 24) plus the modern full-APK schemes
+            // (v2 for API 24+, v3 for API 28+ key rotation) when building the release variant via
+            // Gradle. The "Generate Signed APK" wizard only applies v1 + v2.
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
         }
     }
 
@@ -97,6 +108,16 @@ android {
         buildConfig true
         viewBinding true
     }
+
+    // Name every built APK after the version, e.g. OpenMessages-v1.0.0.apk, so the signed release
+    // never needs renaming by hand. Debug keeps its -debug suffix (from versionNameSuffix), so the
+    // two never collide.
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.outputFileName = "OpenMessages-v${variant.versionName}.apk"
+        }
+    }
+
     if (System.getenv("CI") == "true") {
         signingConfigs.release.storePassword = System.getenv("keystore_password")
         signingConfigs.release.keyAlias = System.getenv("key_alias")
