@@ -196,7 +196,7 @@ class Navigator @Inject constructor(
     }
 
     fun showDeveloper() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root/openmessages/graphs/contributors"))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/victor-root"))
         startActivityExternal(intent)
     }
 

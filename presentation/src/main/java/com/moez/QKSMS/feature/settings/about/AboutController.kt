@@ -44,6 +44,10 @@ class AboutController : QkController<AboutControllerBinding, AboutView, Unit, Ab
 
     override fun onViewCreated() {
         binding.version.summary = BuildConfig.VERSION_NAME
+        // The copyright span is a year range, not translatable text, so it lives here instead of in
+        // the per-language string files (where it had drifted out of sync). Only the row title is
+        // translated. Update the end year when you ship changes in a new year.
+        binding.copyright.summary = "© 2014–2026"
     }
 
     override fun onAttach(view: View) {
