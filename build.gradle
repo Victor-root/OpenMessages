@@ -85,5 +85,13 @@ subprojects {
                 }
             }
         }
+
+        // Skip the release "lintVital" check across all Android modules. AGP 8.2's lint analyzer
+        // crashes during setup on some JDK/JBR versions (NoClassDefFoundError: UastFacade /
+        // "Already disposed: MessageBus"), which would otherwise break assembleRelease even though
+        // there is no real lint problem. Lint can still be run on demand with the lint* tasks.
+        if (project.extensions.findByName('android') != null) {
+            project.android.lint.checkReleaseBuilds = false
+        }
     }
 }
