@@ -103,6 +103,8 @@ class Preferences @Inject constructor(
     val backupDirectory = rxPrefs.getObject("backupDirectory", Uri.EMPTY, UriPreferenceConverter())
     // How many days between automatic background backups (0 = off); see BACKUP_FREQUENCY_* above
     val backupFrequency = rxPrefs.getInteger("backupFrequency", BACKUP_FREQUENCY_NEVER)
+    // Write each backup as a single .zip archive instead of a folder of files (easier to transfer)
+    val backupZip = rxPrefs.getBoolean("backupZip", false)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
 

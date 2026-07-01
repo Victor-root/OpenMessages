@@ -219,6 +219,11 @@
         <item quantity="one">Tous les %d jour</item>
         <item quantity="other">Tous les %d jours</item>
     </plurals>
+    <string name="backup_zip_title">Enregistrer en fichier .zip</string>
+    <string name="backup_zip_summary">Regroupe chaque sauvegarde dans une seule archive, plus simple à transférer entre téléphones</string>
+    <string name="backup_restore_from_title">Restaurer depuis</string>
+    <string name="backup_restore_from_folder">Un dossier</string>
+    <string name="backup_restore_from_zip">Un fichier .zip</string>
     <string name="backup_restore_title">Restauration</string>
     <string name="backup_restore_summary">Sélectionner une sauvegarde</string>
     <string name="backup_restore_error_plus">Déverrouillez Open Messages+ pour utiliser la sauvegarde et la restauration</string>

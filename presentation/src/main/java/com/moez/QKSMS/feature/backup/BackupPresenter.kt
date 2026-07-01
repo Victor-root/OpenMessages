@@ -31,6 +31,7 @@ import io.openmessages.interactor.PerformBackup
 import io.openmessages.manager.BillingManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.BackupCategory
+import io.openmessages.model.BackupFolder
 import io.openmessages.repository.BackupRepository
 import io.openmessages.util.Preferences
 import io.openmessages.worker.AutoBackupWorker
@@ -71,6 +72,9 @@ class BackupPresenter @Inject constructor(
         disposables += prefs.backupFrequency.asObservable()
                 .subscribe { frequency -> newState { copy(autoBackupFrequency = frequency) } }
 
+        disposables += prefs.backupZip.asObservable()
+                .subscribe { enabled -> newState { copy(zipEnabled = enabled) } }
+
         newState { copy(backupLocation = backupRepo.getBackupLocationLabel()) }
     }
 
@@ -94,6 +98,11 @@ class BackupPresenter @Inject constructor(
                     prefs.backupFrequency.set(frequency)
                     AutoBackupWorker.register(context, frequency)
                 }
+
+        // Toggle whether backups are written as a single .zip archive
+        view.zipClicks()
+                .autoDisposable(view.scope())
+                .subscribe { prefs.backupZip.set(!prefs.backupZip.get()) }
 
         // Backup writes automatically (no folder to pick), so go straight to the category picker
         view.backupClicks()
@@ -121,7 +130,7 @@ class BackupPresenter @Inject constructor(
                         !upgraded -> context.makeToast(R.string.backup_restore_error_plus)
                         backupProgress.running -> context.makeToast(R.string.backup_restore_error_backup)
                         restoreProgress.running -> context.makeToast(R.string.backup_restore_error_restore)
-                        else -> view.selectRestoreFolder(backupRepo.getBackupPathUriForPicker())
+                        else -> view.showRestoreSourceChoice(backupRepo.getBackupPathUriForPicker())
                     }
                 }
                 .autoDisposable(view.scope())
@@ -133,16 +142,21 @@ class BackupPresenter @Inject constructor(
                 .map { uri -> uri to backupRepo.listBackups(uri) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
-                .subscribe({ (uri, backups) ->
-                    when {
-                        backups.isEmpty() -> newState { copy(showSelectedBackupError = true) }
-                        backups.size == 1 -> backups.first().let { backup ->
-                            view.showRestoreCategoryPicker(uri, backup.folderName, backup.categories,
-                                    dateFormatter.getDetailedTimestamp(backup.date))
-                        }
-                        else -> view.showRestoreSourcePicker(uri, backups,
-                                backups.map { dateFormatter.getDetailedTimestamp(it.date) })
-                    }
+                .subscribe({ (uri, backups) -> onBackupsListed(view, uri, backups) },
+                        { newState { copy(showSelectedBackupError = true) } })
+
+        // A .zip was picked: extract it to a temp folder, then treat it exactly like a picked folder
+        view.restoreZipSelected()
+                .observeOn(Schedulers.io())
+                .map { zipUri ->
+                    val folder = backupRepo.importZip(zipUri)
+                    folder to (folder?.let { backupRepo.listBackups(it) } ?: emptyList())
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe({ (folder, backups) ->
+                    if (folder == null) newState { copy(showSelectedBackupError = true) }
+                    else onBackupsListed(view, folder, backups)
                 }, { newState { copy(showSelectedBackupError = true) } })
 
         // Several backups in the folder: the user picked which one to restore from
@@ -205,6 +219,19 @@ class BackupPresenter @Inject constructor(
                     backupRepo.persistBackupDirectory(uri)
                     newState { copy(backupLocation = backupRepo.getBackupLocationLabel()) }
                 }
+    }
+
+    /** Shows the right picker for the backup sets found in a source folder (or extracted .zip). */
+    private fun onBackupsListed(view: BackupView, uri: Uri, backups: List<BackupFolder>) {
+        when {
+            backups.isEmpty() -> newState { copy(showSelectedBackupError = true) }
+            backups.size == 1 -> backups.first().let { backup ->
+                view.showRestoreCategoryPicker(uri, backup.folderName, backup.categories,
+                        dateFormatter.getDetailedTimestamp(backup.date))
+            }
+            else -> view.showRestoreSourcePicker(uri, backups,
+                    backups.map { dateFormatter.getDetailedTimestamp(it.date) })
+        }
     }
 
     /** Kicks off the restore held back while the exact-alarm dialog was showing. */

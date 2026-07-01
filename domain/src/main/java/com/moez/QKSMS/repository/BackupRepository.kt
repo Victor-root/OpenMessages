@@ -54,6 +54,12 @@ interface BackupRepository {
     /** Lists the backup sets found in [folder] (picked as a document tree), most recent first. */
     fun listBackups(folder: Uri): List<BackupFolder>
 
+    /**
+     * Extracts a picked .zip backup into a temporary folder and returns its Uri, which can then be
+     * passed to [listBackups] and [performRestore] exactly like a normal folder. Returns null on failure.
+     */
+    fun importZip(zip: Uri): Uri?
+
     /** Restores the selected [categories] of the backup sub-folder [folderName] within [folder]. */
     fun performRestore(folder: Uri, folderName: String, categories: Set<BackupCategory>)
 

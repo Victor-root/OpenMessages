@@ -257,6 +257,11 @@
         <item quantity="one">Every %d day</item>
         <item quantity="other">Every %d days</item>
     </plurals>
+    <string name="backup_zip_title">Save as a .zip file</string>
+    <string name="backup_zip_summary">Store each backup as a single archive, easier to move between phones</string>
+    <string name="backup_restore_from_title">Restore from</string>
+    <string name="backup_restore_from_folder">A folder</string>
+    <string name="backup_restore_from_zip">A .zip file</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_plus">Please unlock Open Messages+ to use backup and restore</string>

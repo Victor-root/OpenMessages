@@ -27,6 +27,7 @@ import io.reactivex.Observable
 interface BackupView : QkViewContract<BackupState> {
     fun setBackupLocationClicks(): Observable<*>
     fun autoBackupClicks(): Observable<*>
+    fun zipClicks(): Observable<*>
     fun restoreClicks(): Observable<*>
 
     fun backupClicks(): Observable<*>
@@ -52,6 +53,9 @@ interface BackupView : QkViewContract<BackupState> {
     /** Emits the tree Uri of the folder the user picked to restore from. */
     fun restoreFolderSelected(): Observable<Uri>
 
+    /** Emits the Uri of the .zip file the user picked to restore from. */
+    fun restoreZipSelected(): Observable<Uri>
+
     /** Emits the categories the user ticked in the backup dialog. */
     fun backupCategoriesSelected(): Observable<Set<BackupCategory>>
 
@@ -63,6 +67,10 @@ interface BackupView : QkViewContract<BackupState> {
 
     fun selectFolder(initialUri: Uri)
     fun selectRestoreFolder(initialUri: Uri)
+    fun selectRestoreZip()
+
+    /** Lets the user choose whether to restore from a folder or a .zip file. */
+    fun showRestoreSourceChoice(initialUri: Uri)
 
     fun showAutoBackupFrequencyPicker(current: Int)
     fun openExactAlarmSettings()

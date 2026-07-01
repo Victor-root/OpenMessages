@@ -57,9 +57,14 @@ import io.realm.Realm
 import okio.buffer
 import okio.source
 import timber.log.Timber
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
 import java.io.File
 import java.io.OutputStream
 import java.text.SimpleDateFormat
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+import java.util.zip.ZipOutputStream
 import java.util.Locale
 import java.util.Timer
 import javax.inject.Inject
@@ -97,6 +102,9 @@ class BackupRepositoryImpl @Inject constructor(
 
         /** Sub-folder of a backup set that holds the MMS attachment binaries, one file per part. */
         private const val ATTACHMENTS_DIR = "attachments"
+
+        /** Cache sub-folder a picked .zip backup is extracted into before it's restored. */
+        private const val RESTORE_TEMP_DIR = "restore-backup"
 
         /**
          * Preference keys that are device-specific or internal and must never be carried across a
@@ -396,6 +404,9 @@ class BackupRepositoryImpl @Inject constructor(
                     counts = counts)
             destination.writeFile("manifest.json",
                     moshi.adapter(BackupManifest::class.java).indent("\t").toJson(manifest).toByteArray())
+
+            // Finalise the set (closes the .zip archive; a no-op for folder destinations).
+            destination.finish()
         } catch (e: Exception) {
             Timber.w(e)
         }
@@ -426,19 +437,78 @@ class BackupRepositoryImpl @Inject constructor(
     private interface BackupDestination {
         fun writeFile(name: String, bytes: ByteArray)
         fun openAttachment(name: String): OutputStream
+        /** Finalises the set once everything is written (closes the archive for the .zip destination). */
+        fun finish() {}
     }
 
     /**
-     * Picks where a backup set is written: the user's custom SAF folder if they set one, otherwise the
-     * default Documents/OpenMessages via MediaStore (Android 10+) or legacy file access (Android 9-).
-     * The date-and-time sub-folder is created here so attachments can be streamed into it right away.
+     * Picks where a backup set is written: as a single .zip archive when the user enabled it, otherwise a
+     * date-and-time sub-folder in the user's custom SAF folder, or the default Documents/OpenMessages via
+     * MediaStore (Android 10+) or legacy file access (Android 9-). The folder/archive is created here so
+     * attachments can be streamed into it right away.
      */
     private fun createBackupDestination(folderName: String): BackupDestination {
         val tree = getBackupDocumentTree()
+        if (prefs.backupZip.get()) {
+            return ZipBackupDestination(openBackupFileStream(tree, "$folderName.zip", "application/zip"))
+        }
         return when {
             tree != null -> SafBackupDestination(tree, folderName)
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> MediaStoreBackupDestination(folderName)
             else -> LegacyBackupDestination(folderName)
+        }
+    }
+
+    /**
+     * Opens an output stream for a single top-level file (the .zip archive) in the backup location:
+     * the user's SAF folder, or the default Documents/OpenMessages via MediaStore or legacy storage.
+     */
+    private fun openBackupFileStream(tree: DocumentFile?, name: String, mimeType: String): OutputStream {
+        if (tree != null) {
+            val file = tree.createFile(mimeType, name) ?: throw Exception("Failed to create $name")
+            return context.contentResolver.openOutputStream(file.uri)
+                    ?: throw Exception("Failed to open output stream for $name")
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+                put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "${Environment.DIRECTORY_DOCUMENTS}/$BACKUP_DIR")
+            }
+            val uri = context.contentResolver.insert(
+                    MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values)
+                    ?: throw Exception("Failed to create $name via MediaStore")
+            return context.contentResolver.openOutputStream(uri)
+                    ?: throw Exception("Failed to open output stream for $name")
+        }
+        @Suppress("DEPRECATION")
+        val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), BACKUP_DIR)
+        if (!dir.exists() && !dir.mkdirs()) throw Exception("Failed to create backup directory $dir")
+        return File(dir, name).outputStream()
+    }
+
+    /** Writes the whole backup set as entries inside one .zip archive - a single file to transfer. */
+    private inner class ZipBackupDestination(outputStream: OutputStream) : BackupDestination {
+        private val zip = ZipOutputStream(BufferedOutputStream(outputStream))
+
+        override fun writeFile(name: String, bytes: ByteArray) {
+            zip.putNextEntry(ZipEntry(name))
+            zip.write(bytes)
+            zip.closeEntry()
+        }
+
+        override fun openAttachment(name: String): OutputStream {
+            zip.putNextEntry(ZipEntry("$ATTACHMENTS_DIR/$name"))
+            // Hand back a stream that closes only the current entry, never the shared archive.
+            return object : OutputStream() {
+                override fun write(b: Int) = zip.write(b)
+                override fun write(b: ByteArray, off: Int, len: Int) = zip.write(b, off, len)
+                override fun close() = zip.closeEntry()
+            }
+        }
+
+        override fun finish() {
+            zip.close()
         }
     }
 
@@ -654,9 +724,44 @@ class BackupRepositoryImpl @Inject constructor(
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
+    override fun importZip(zip: Uri): Uri? {
+        return try {
+            val dir = File(context.cacheDir, RESTORE_TEMP_DIR)
+            if (dir.exists()) dir.deleteRecursively()
+            dir.mkdirs()
+
+            context.contentResolver.openInputStream(zip)?.use { input ->
+                ZipInputStream(BufferedInputStream(input)).use { zin ->
+                    var entry = zin.nextEntry
+                    while (entry != null) {
+                        if (!entry.isDirectory) {
+                            val outFile = File(dir, entry.name)
+                            // Guard against a malicious archive writing outside the temp directory (Zip Slip).
+                            if (outFile.canonicalPath.startsWith(dir.canonicalPath + File.separator)) {
+                                outFile.parentFile?.mkdirs()
+                                outFile.outputStream().use { output -> zin.copyTo(output) }
+                            }
+                        }
+                        zin.closeEntry()
+                        entry = zin.nextEntry
+                    }
+                }
+            }
+            DocumentFile.fromFile(dir).uri
+        } catch (e: Exception) {
+            Timber.w(e)
+            null
+        }
+    }
+
+    /** Resolves a backup source Uri to a document tree, accepting both SAF trees and local file paths. */
+    private fun documentTree(uri: Uri): DocumentFile? =
+            if (uri.scheme == "file") uri.path?.let { path -> DocumentFile.fromFile(File(path)) }
+            else DocumentFile.fromTreeUri(context, uri)
+
     override fun listBackups(folder: Uri): List<BackupFolder> {
         return try {
-            val tree = DocumentFile.fromTreeUri(context, folder) ?: return emptyList()
+            val tree = documentTree(folder) ?: return emptyList()
             val adapter = moshi.adapter(BackupManifest::class.java)
 
             // If the user picked a single backup sub-folder directly, it holds the manifest itself.
@@ -697,7 +802,7 @@ class BackupRepositoryImpl @Inject constructor(
 
         restoreProgress.onNext(BackupRepository.Progress.Parsing())
 
-        val tree = DocumentFile.fromTreeUri(context, folder)
+        val tree = documentTree(folder)
         val backupDir = when {
             tree == null -> null
             folderName.isEmpty() -> tree

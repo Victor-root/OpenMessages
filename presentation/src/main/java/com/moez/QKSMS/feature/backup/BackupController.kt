@@ -75,6 +75,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     private val documentTreeSelectedSubject: Subject<Uri> = PublishSubject.create()
     private val restoreFolderSelectedSubject: Subject<Uri> = PublishSubject.create()
+    private val restoreZipSelectedSubject: Subject<Uri> = PublishSubject.create()
 
     private val autoBackupFrequencySelectedSubject: Subject<Int> = PublishSubject.create()
     private val backupCategoriesSelectedSubject: Subject<Set<BackupCategory>> = PublishSubject.create()
@@ -115,6 +116,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     private lateinit var openDirectory: ActivityResultLauncher<Uri?>
     private lateinit var openRestoreDirectory: ActivityResultLauncher<Uri?>
+    private lateinit var openRestoreZip: ActivityResultLauncher<Array<String>>
     private lateinit var exactAlarmSettings: ActivityResultLauncher<Intent>
 
     init {
@@ -133,6 +135,11 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
         openRestoreDirectory = themedActivity!!
             .registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
                 uri?.let(restoreFolderSelectedSubject::onNext)
+            }
+
+        openRestoreZip = themedActivity!!
+            .registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                uri?.let(restoreZipSelectedSubject::onNext)
             }
 
         // Fires when the user returns from the exact-alarm settings, so restore can start only then
@@ -211,6 +218,8 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
         binding.autoBackup.summary = autoBackupFrequencyLabel(state.autoBackupFrequency)
 
+        binding.zip.checkbox?.setChecked(state.zipEnabled, false)
+
         selectedBackupErrorDialog.setShowing(state.showSelectedBackupError)
 
         exactAlarmDialog.setShowing(state.showExactAlarmDialog)
@@ -233,6 +242,8 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     override fun autoBackupClicks(): Observable<*> = binding.autoBackup.clicks()
 
     override fun autoBackupFrequencySelected(): Observable<Int> = autoBackupFrequencySelectedSubject
+
+    override fun zipClicks(): Observable<*> = binding.zip.clicks()
 
     override fun restoreClicks(): Observable<*> = binding.restore.clicks()
 
@@ -266,6 +277,8 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun restoreFolderSelected(): Observable<Uri> = restoreFolderSelectedSubject
 
+    override fun restoreZipSelected(): Observable<Uri> = restoreZipSelectedSubject
+
     override fun backupCategoriesSelected(): Observable<Set<BackupCategory>> = backupCategoriesSelectedSubject
 
     override fun restoreSourceSelected(): Observable<Pair<Uri, BackupFolder>> = restoreSourceSelectedSubject
@@ -279,6 +292,31 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun selectRestoreFolder(initialUri: Uri) {
         openRestoreDirectory.launch(initialUri)
+    }
+
+    override fun selectRestoreZip() {
+        // Accept any file: third-party file managers report .zip under inconsistent MIME types, so we
+        // let the user pick freely and validate the archive when reading it.
+        openRestoreZip.launch(arrayOf("*/*"))
+    }
+
+    override fun showRestoreSourceChoice(initialUri: Uri) {
+        val labels = arrayOf(
+                activity!!.getString(R.string.backup_restore_from_folder),
+                activity!!.getString(R.string.backup_restore_from_zip))
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_restore_from_title)
+                .setItems(labels) { _, which ->
+                    when (which) {
+                        0 -> selectRestoreFolder(initialUri)
+                        else -> selectRestoreZip()
+                    }
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
     }
 
     override fun showAutoBackupFrequencyPicker(current: Int) {
