@@ -437,7 +437,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         if (state.flagged) {
             binding.flaggedReason.text = when {
                 state.flagReason.isBlank() -> getString(R.string.compose_flagged_title)
-                else -> getString(R.string.compose_flagged_title) + " — " + state.flagReason
+                else -> getString(R.string.compose_flagged_title) + " - " + state.flagReason
             }
         }
 

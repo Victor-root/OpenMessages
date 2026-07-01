@@ -100,7 +100,7 @@
             android:textColor="#E65100"
             android:textStyle="bold"
             app:textSize="secondary"
-            tools:text="Spam potentiel — Démarchage ARCEP" />
+            tools:text="Spam potentiel - Démarchage ARCEP" />
 
         <LinearLayout
             android:layout_width="match_parent"

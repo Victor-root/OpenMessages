@@ -106,7 +106,7 @@
     <string name="drawer_more">More</string>
     <string name="message_management_title">Message Management</string>
     <string name="templates_title">Templates</string>
-    <string name="templates_empty">No saved messages yet.\nTap + to save a message you send often — then tap it to choose who to send it to.</string>
+    <string name="templates_empty">No saved messages yet.\nTap + to save a message you send often, then tap it to choose who to send it to.</string>
     <string name="template_hint">Type your message…</string>
     <string name="template_title_hint">Title (optional)</string>
     <string name="templates_add_cd">New template</string>

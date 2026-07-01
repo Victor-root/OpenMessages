@@ -590,7 +590,7 @@
     <string name="main_sync_emojis">Analyse des réactions emoji…</string>
     <string name="message_management_title">Gestion des messages</string>
     <string name="templates_title">Modèles</string>
-    <string name="templates_empty">Aucun message enregistré.\nTouchez + pour enregistrer un message fréquent — puis touchez-le pour choisir à qui l\'envoyer.</string>
+    <string name="templates_empty">Aucun message enregistré.\nTouchez + pour enregistrer un message fréquent, puis touchez-le pour choisir à qui l\'envoyer.</string>
     <string name="template_hint">Saisissez votre message…</string>
     <string name="template_title_hint">Titre (optionnel)</string>
     <string name="templates_add_cd">Nouveau modèle</string>
