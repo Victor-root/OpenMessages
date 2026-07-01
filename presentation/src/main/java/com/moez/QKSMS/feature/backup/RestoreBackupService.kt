@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import dagger.android.AndroidInjection
 import io.openmessages.common.util.extensions.getLabel
 import io.openmessages.manager.NotificationManager
+import io.openmessages.model.BackupCategory
 import io.openmessages.repository.BackupRepository
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -44,12 +45,16 @@ class RestoreBackupService : Service() {
 
         private const val ACTION_START = "ACTION_START"
         private const val ACTION_STOP = "ACTION_STOP"
-        private const val EXTRA_FILE_URI = "EXTRA_FILE_URI"
+        private const val EXTRA_FOLDER_URI = "EXTRA_FOLDER_URI"
+        private const val EXTRA_FOLDER_NAME = "EXTRA_FOLDER_NAME"
+        private const val EXTRA_CATEGORIES = "EXTRA_CATEGORIES"
 
-        fun start(context: Context, backupFile: Uri) {
+        fun start(context: Context, folder: Uri, folderName: String, categories: Set<BackupCategory>) {
             val intent = Intent(context, RestoreBackupService::class.java)
                 .setAction("${context.packageName}.$ACTION_START")
-                .putExtra("${context.packageName}.$EXTRA_FILE_URI", backupFile.toString())
+                .putExtra("${context.packageName}.$EXTRA_FOLDER_URI", folder.toString())
+                .putExtra("${context.packageName}.$EXTRA_FOLDER_NAME", folderName)
+                .putExtra("${context.packageName}.$EXTRA_CATEGORIES", categories.map { it.name }.toTypedArray())
 
             ContextCompat.startForegroundService(context, intent)
         }
@@ -101,10 +106,18 @@ class RestoreBackupService : Service() {
 
         // Start the restore
         Observable.just(intent)
-            .map { Uri.parse(it.getStringExtra("${baseContext.packageName}.$EXTRA_FILE_URI")) }
-            .map(backupRepo::performRestore)
+            .map { i ->
+                val folder = Uri.parse(i.getStringExtra("${baseContext.packageName}.$EXTRA_FOLDER_URI"))
+                val folderName = i.getStringExtra("${baseContext.packageName}.$EXTRA_FOLDER_NAME").orEmpty()
+                val categories = (i.getStringArrayExtra("${baseContext.packageName}.$EXTRA_CATEGORIES") ?: emptyArray())
+                    .mapNotNull { name -> BackupCategory.values().firstOrNull { it.name == name } }
+                    .toSet()
+                Triple(folder, folderName, categories)
+            }
             .subscribeOn(Schedulers.io())
-            .subscribe({}, Timber::w)
+            .subscribe({ (folder, folderName, categories) ->
+                backupRepo.performRestore(folder, folderName, categories)
+            }, Timber::w)
     }
 
     @Suppress("DEPRECATION")

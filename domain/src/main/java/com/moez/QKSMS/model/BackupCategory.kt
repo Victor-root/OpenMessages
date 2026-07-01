@@ -16,23 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.openmessages.interactor
+package io.openmessages.model
 
-import android.net.Uri
-import io.openmessages.model.BackupCategory
-import io.openmessages.repository.BackupRepository
-import io.reactivex.Flowable
-import javax.inject.Inject
-
-class PerformRestore @Inject constructor(
-    private val backupRepo: BackupRepository
-) : Interactor<PerformRestore.Params>() {
-
-    data class Params(val folder: Uri, val folderName: String, val categories: Set<BackupCategory>)
-
-    override fun buildObservable(params: Params): Flowable<*> {
-        return Flowable.just(params)
-                .doOnNext { backupRepo.performRestore(it.folder, it.folderName, it.categories) }
-    }
-
+/**
+ * A category of data that can be independently included in or excluded from a backup. Each category
+ * is written to its own timestamp-prefixed file directly in the chosen backup folder, so the user can
+ * pick exactly what to back up and what to restore. A per-backup manifest records which file holds
+ * which category.
+ *
+ * New categories are added here as they gain full round-trip (backup + restore) support; the backup
+ * and restore UIs enumerate this list, so they stay in sync automatically.
+ */
+enum class BackupCategory {
+    MESSAGES,
+    SETTINGS,
+    BLOCKING,
+    CONVERSATIONS,
+    SCHEDULED
 }

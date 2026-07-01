@@ -18,17 +18,18 @@
  */
 package io.openmessages.interactor
 
+import io.openmessages.model.BackupCategory
 import io.openmessages.repository.BackupRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class PerformBackup @Inject constructor(
     private val backupRepo: BackupRepository
-) : Interactor<Unit>() {
+) : Interactor<Set<BackupCategory>>() {
 
-    override fun buildObservable(params: Unit): Flowable<*> {
+    override fun buildObservable(params: Set<BackupCategory>): Flowable<*> {
         return Flowable.just(params)
-                .doOnNext { backupRepo.performBackup() }
+                .doOnNext { categories -> backupRepo.performBackup(categories) }
     }
 
 }

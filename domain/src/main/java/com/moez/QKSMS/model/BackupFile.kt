@@ -22,3 +22,18 @@ data class BackupFile(
     val date: Long,
     val messages: Int
 )
+
+/**
+ * Summary of one backup set, read from its manifest. Each backup is a date-and-time named sub-folder
+ * (holding manifest.json plus one file per category) inside the folder the user chose as the backup
+ * destination. Lets the restore UI list the available backups, show when each was made, and offer
+ * only the categories it actually contains.
+ *
+ * [folderName] is the backup sub-folder's name, or empty when the user picked a single backup
+ * sub-folder directly (so it is itself the backup).
+ */
+data class BackupFolder(
+    val folderName: String,
+    val date: Long,
+    val categories: Set<BackupCategory>
+)

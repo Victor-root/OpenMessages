@@ -21,6 +21,7 @@ package io.openmessages.manager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import io.openmessages.receiver.SendScheduledMessageReceiver
 import javax.inject.Inject
 
@@ -33,7 +34,20 @@ class AlarmManagerImpl @Inject constructor(private val context: Context) : Alarm
 
     override fun setAlarm(date: Long, intent: PendingIntent) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager
-        alarmManager.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, date, intent)
+
+        // On Android 12+ exact alarms require SCHEDULE_EXACT_ALARM; if it isn't granted,
+        // setExactAndAllowWhileIdle throws a SecurityException. Fall back to an inexact wake-up so the
+        // scheduled message still fires (a little late) instead of crashing the caller (e.g. restore).
+        val canExact = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()
+        try {
+            if (canExact) {
+                alarmManager.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, date, intent)
+            } else {
+                alarmManager.setAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, date, intent)
+            }
+        } catch (e: SecurityException) {
+            alarmManager.setAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, date, intent)
+        }
     }
 
 }

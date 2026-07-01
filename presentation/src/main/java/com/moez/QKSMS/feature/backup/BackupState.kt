@@ -24,10 +24,11 @@ data class BackupState(
     val backupProgress: BackupRepository.Progress = BackupRepository.Progress.Idle(),
     val restoreProgress: BackupRepository.Progress = BackupRepository.Progress.Idle(),
 
-    val showLocationRationale: Boolean = false,
     val showSelectedBackupError: Boolean = false,
-    val selectedBackupDetails: String? = null,
     val showStopRestoreDialog: Boolean = false,
+    val showExactAlarmDialog: Boolean = false,
+
+    val backupLocation: String = "",
 
     val upgraded: Boolean = true
 )

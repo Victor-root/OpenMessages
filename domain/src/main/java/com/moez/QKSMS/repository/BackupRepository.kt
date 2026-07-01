@@ -20,7 +20,8 @@ package io.openmessages.repository
 
 import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
-import io.openmessages.model.BackupFile
+import io.openmessages.model.BackupCategory
+import io.openmessages.model.BackupFolder
 import io.reactivex.Observable
 
 interface BackupRepository {
@@ -40,15 +41,21 @@ interface BackupRepository {
 
     fun getBackupPathUriForPicker(): Uri
 
+    /** Human-readable label of the current backup destination (custom folder name, or the default). */
+    fun getBackupLocationLabel(): String
+
     fun persistBackupDirectory(directory: Uri)
 
-    fun performBackup()
+    /** Writes a date-and-time named sub-folder with a manifest and one file per selected category. */
+    fun performBackup(categories: Set<BackupCategory>)
 
     fun getBackupProgress(): Observable<Progress>
 
-    fun parseBackup(uri: Uri): BackupFile
+    /** Lists the backup sets found in [folder] (picked as a document tree), most recent first. */
+    fun listBackups(folder: Uri): List<BackupFolder>
 
-    fun performRestore(uri: Uri)
+    /** Restores the selected [categories] of the backup sub-folder [folderName] within [folder]. */
+    fun performRestore(folder: Uri, folderName: String, categories: Set<BackupCategory>)
 
     fun getRestoreProgress(): Observable<Progress>
 

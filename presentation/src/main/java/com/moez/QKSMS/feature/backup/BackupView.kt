@@ -20,6 +20,8 @@ package io.openmessages.feature.backup
 
 import android.net.Uri
 import io.openmessages.common.base.QkViewContract
+import io.openmessages.model.BackupCategory
+import io.openmessages.model.BackupFolder
 import io.reactivex.Observable
 
 interface BackupView : QkViewContract<BackupState> {
@@ -28,21 +30,34 @@ interface BackupView : QkViewContract<BackupState> {
 
     fun backupClicks(): Observable<*>
 
-    fun locationRationaleConfirmClicks(): Observable<*>
-    fun locationRationaleCancelClicks(): Observable<*>
-
     fun selectedBackupErrorClicks(): Observable<*>
 
-    fun confirmRestoreBackupConfirmClicks(): Observable<*>
-    fun confirmRestoreBackupCancelClicks(): Observable<*>
+    fun exactAlarmGrantClicks(): Observable<*>
+    fun exactAlarmSkipClicks(): Observable<*>
 
     fun stopRestoreClicks(): Observable<*>
     fun stopRestoreConfirmed(): Observable<*>
     fun stopRestoreCancel(): Observable<*>
 
+    /** Emits the tree Uri the user picked as a custom backup destination folder. */
     fun documentTreeSelected(): Observable<Uri>
-    fun documentSelected(): Observable<Uri>
+
+    /** Emits the tree Uri of the folder the user picked to restore from. */
+    fun restoreFolderSelected(): Observable<Uri>
+
+    /** Emits the categories the user ticked in the backup dialog. */
+    fun backupCategoriesSelected(): Observable<Set<BackupCategory>>
+
+    /** Emits the folder plus the backup set the user picked when the folder holds several. */
+    fun restoreSourceSelected(): Observable<Pair<Uri, BackupFolder>>
+
+    /** Emits the folder, the chosen backup's sub-folder name, and the ticked categories. */
+    fun restoreCategoriesSelected(): Observable<Triple<Uri, String, Set<BackupCategory>>>
 
     fun selectFolder(initialUri: Uri)
-    fun selectFile(initialUri: Uri)
+    fun selectRestoreFolder(initialUri: Uri)
+
+    fun showBackupCategoryPicker()
+    fun showRestoreSourcePicker(folder: Uri, backups: List<BackupFolder>, labels: List<String>)
+    fun showRestoreCategoryPicker(folder: Uri, folderName: String, available: Set<BackupCategory>, dateLabel: String)
 }

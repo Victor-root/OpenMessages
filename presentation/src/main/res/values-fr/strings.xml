@@ -225,8 +225,20 @@
     <string name="backup_restore_dialog_title">Sauvegardes</string>
     <string name="backup_restore_dialog_summary" translatable="false">/OpenMessages/Backups</string>
     <string name="backup_restore_dialog_empty">Aucune sauvegarde trouvée</string>
-    <string name="backup_disclaimer">Actuellement, seules la sauvegarde et la restauration des SMS sont prises en charge. Les MMS et les sauvegardes planifiées arriveront bientôt !</string>
+    <string name="backup_disclaimer">Par défaut, les sauvegardes sont dans Documents/OpenMessages ; utilisez Emplacement de sauvegarde ci-dessus pour changer. Vos SMS et tous vos réglages (dont les modèles) sont inclus. D\'autres catégories, les pièces jointes MMS et les sauvegardes planifiées arrivent prochainement !</string>
     <string name="backup_now">Sauvegarder maintenant</string>
+    <string name="backup_categories_title">Que sauvegarder</string>
+    <string name="backup_restore_source_title">Quelle sauvegarde ?</string>
+    <string name="backup_restore_categories_title">Restaurer depuis %s</string>
+    <string name="backup_category_messages">Messages (SMS)</string>
+    <string name="backup_category_settings">Réglages et modèles</string>
+    <string name="backup_category_blocking">Règles de blocage</string>
+    <string name="backup_category_conversations">Archivés et épinglés</string>
+    <string name="backup_category_scheduled">Messages programmés</string>
+    <string name="backup_exact_alarm_title">Autoriser les alarmes exactes</string>
+    <string name="backup_exact_alarm_message">Pour envoyer vos messages programmés à l\'heure exacte, Open Messages a besoin de l\'autorisation de définir des alarmes exactes. Sans elle, ils pourraient partir avec un peu de retard.</string>
+    <string name="backup_exact_alarm_grant">Autoriser</string>
+    <string name="backup_exact_alarm_skip">Restaurer quand même</string>
     <string name="backup_progress_parsing">Analyse de la sauvegarde…</string>
     <string name="backup_progress_running">%d/%d messages</string>
     <string name="backup_progress_saving">Enregistrement de la sauvegarde…</string>

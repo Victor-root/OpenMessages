@@ -263,8 +263,20 @@
     <string name="backup_restore_dialog_title">Backups</string>
     <string name="backup_restore_dialog_summary" translatable="false">/OpenMessages/Backups</string>
     <string name="backup_restore_dialog_empty">No backups found</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">By default, backups are saved to Documents/OpenMessages; use Backup location above to change it. Your SMS and all app settings (including templates) are included. More categories, MMS attachments and scheduled backups are on the way.</string>
     <string name="backup_now">Backup now</string>
+    <string name="backup_categories_title">What to back up</string>
+    <string name="backup_restore_source_title">Which backup?</string>
+    <string name="backup_restore_categories_title">Restore from %s</string>
+    <string name="backup_category_messages">Messages (SMS)</string>
+    <string name="backup_category_settings">Settings and templates</string>
+    <string name="backup_category_blocking">Blocking rules</string>
+    <string name="backup_category_conversations">Archived and pinned</string>
+    <string name="backup_category_scheduled">Scheduled messages</string>
+    <string name="backup_exact_alarm_title">Allow exact alarms</string>
+    <string name="backup_exact_alarm_message">To send your scheduled messages at the exact time, Open Messages needs permission to set exact alarms. Without it, they may go out a little late.</string>
+    <string name="backup_exact_alarm_grant">Allow</string>
+    <string name="backup_exact_alarm_skip">Restore anyway</string>
     <string name="backup_progress_parsing">Parsing backup…</string>
     <string name="backup_progress_running">%d/%d messages</string>
     <string name="backup_progress_saving">Saving backup…</string>
