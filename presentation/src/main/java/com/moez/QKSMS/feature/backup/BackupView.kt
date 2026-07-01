@@ -26,9 +26,13 @@ import io.reactivex.Observable
 
 interface BackupView : QkViewContract<BackupState> {
     fun setBackupLocationClicks(): Observable<*>
+    fun autoBackupClicks(): Observable<*>
     fun restoreClicks(): Observable<*>
 
     fun backupClicks(): Observable<*>
+
+    /** Emits the automatic-backup frequency the user picked (a Preferences.BACKUP_FREQUENCY_* value). */
+    fun autoBackupFrequencySelected(): Observable<Int>
 
     fun selectedBackupErrorClicks(): Observable<*>
 
@@ -56,6 +60,8 @@ interface BackupView : QkViewContract<BackupState> {
 
     fun selectFolder(initialUri: Uri)
     fun selectRestoreFolder(initialUri: Uri)
+
+    fun showAutoBackupFrequencyPicker(current: Int)
 
     fun showBackupCategoryPicker()
     fun showRestoreSourcePicker(folder: Uri, backups: List<BackupFolder>, labels: List<String>)

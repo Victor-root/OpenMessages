@@ -32,6 +32,8 @@ import io.openmessages.manager.BillingManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.BackupCategory
 import io.openmessages.repository.BackupRepository
+import io.openmessages.util.Preferences
+import io.openmessages.worker.AutoBackupWorker
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
@@ -45,7 +47,8 @@ class BackupPresenter @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val performBackup: PerformBackup,
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    private val prefs: Preferences
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
 
     /** Restore parameters held while we ask the user to grant the exact-alarm permission. */
@@ -65,6 +68,9 @@ class BackupPresenter @Inject constructor(
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
 
+        disposables += prefs.backupFrequency.asObservable()
+                .subscribe { frequency -> newState { copy(autoBackupFrequency = frequency) } }
+
         newState { copy(backupLocation = backupRepo.getBackupLocationLabel()) }
     }
 
@@ -76,6 +82,18 @@ class BackupPresenter @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
                 .subscribe { view.selectFolder(backupRepo.getBackupPathUriForPicker()) }
+
+        // Automatic backup: pick how often a full backup should run on its own
+        view.autoBackupClicks()
+                .autoDisposable(view.scope())
+                .subscribe { view.showAutoBackupFrequencyPicker(prefs.backupFrequency.get()) }
+
+        view.autoBackupFrequencySelected()
+                .autoDisposable(view.scope())
+                .subscribe { frequency ->
+                    prefs.backupFrequency.set(frequency)
+                    AutoBackupWorker.register(context, frequency)
+                }
 
         // Backup writes automatically (no folder to pick), so go straight to the category picker
         view.backupClicks()

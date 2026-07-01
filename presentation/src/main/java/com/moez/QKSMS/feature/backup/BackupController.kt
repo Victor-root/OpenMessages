@@ -46,6 +46,7 @@ import io.openmessages.injection.appComponent
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
 import io.openmessages.repository.BackupRepository
+import io.openmessages.util.Preferences
 import io.openmessages.databinding.BackupControllerBinding
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -68,6 +69,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     private val documentTreeSelectedSubject: Subject<Uri> = PublishSubject.create()
     private val restoreFolderSelectedSubject: Subject<Uri> = PublishSubject.create()
 
+    private val autoBackupFrequencySelectedSubject: Subject<Int> = PublishSubject.create()
     private val backupCategoriesSelectedSubject: Subject<Set<BackupCategory>> = PublishSubject.create()
     private val restoreSourceSelectedSubject: Subject<Pair<Uri, BackupFolder>> = PublishSubject.create()
     private val restoreCategoriesSelectedSubject: Subject<Triple<Uri, String, Set<BackupCategory>>> = PublishSubject.create()
@@ -193,6 +195,8 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
         if (state.backupLocation.isNotEmpty()) binding.location.summary = state.backupLocation
 
+        binding.autoBackup.summary = activity!!.getString(autoBackupFrequencyLabel(state.autoBackupFrequency))
+
         selectedBackupErrorDialog.setShowing(state.showSelectedBackupError)
 
         exactAlarmDialog.setShowing(state.showExactAlarmDialog)
@@ -211,6 +215,10 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     }
 
     override fun setBackupLocationClicks(): Observable<*> = binding.location.clicks()
+
+    override fun autoBackupClicks(): Observable<*> = binding.autoBackup.clicks()
+
+    override fun autoBackupFrequencySelected(): Observable<Int> = autoBackupFrequencySelectedSubject
 
     override fun restoreClicks(): Observable<*> = binding.restore.clicks()
 
@@ -245,6 +253,26 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun selectRestoreFolder(initialUri: Uri) {
         openRestoreDirectory.launch(initialUri)
+    }
+
+    override fun showAutoBackupFrequencyPicker(current: Int) {
+        // The labels line up with the Preferences.BACKUP_FREQUENCY_* values (Never=0, Daily=1, Weekly=2),
+        // so the tapped index is exactly the frequency to store.
+        val labels = arrayOf(
+                activity!!.getString(R.string.backup_auto_never),
+                activity!!.getString(R.string.backup_auto_daily),
+                activity!!.getString(R.string.backup_auto_weekly))
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_auto_title)
+                .setSingleChoiceItems(labels, current) { dialog, which ->
+                    autoBackupFrequencySelectedSubject.onNext(which)
+                    dialog.dismiss()
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
     }
 
     override fun showBackupCategoryPicker() {
@@ -297,6 +325,13 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .create()
                 .themeButtons(colors.theme().theme)
                 .show()
+    }
+
+    /** Maps an automatic-backup frequency to its localized summary label. */
+    private fun autoBackupFrequencyLabel(frequency: Int): Int = when (frequency) {
+        Preferences.BACKUP_FREQUENCY_DAILY -> R.string.backup_auto_daily
+        Preferences.BACKUP_FREQUENCY_WEEKLY -> R.string.backup_auto_weekly
+        else -> R.string.backup_auto_never
     }
 
     /** Maps each backup category to its localized checkbox label. */

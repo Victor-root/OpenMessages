@@ -85,6 +85,10 @@ class Preferences @Inject constructor(
         const val MESSAGE_LINK_HANDLING_BLOCK = 0
         const val MESSAGE_LINK_HANDLING_ALLOW = 1
         const val MESSAGE_LINK_HANDLING_ASK = 2
+
+        const val BACKUP_FREQUENCY_NEVER = 0
+        const val BACKUP_FREQUENCY_DAILY = 1
+        const val BACKUP_FREQUENCY_WEEKLY = 2
     }
 
     // Internal
@@ -95,6 +99,8 @@ class Preferences @Inject constructor(
     val changelogVersion = rxPrefs.getInteger("changelogVersion", context.versionCode)
     val hasAskedForNotificationPermission = rxPrefs.getBoolean("hasAskedForNotificationPermission", false)
     val backupDirectory = rxPrefs.getObject("backupDirectory", Uri.EMPTY, UriPreferenceConverter())
+    // How often a full backup runs automatically in the background (see BACKUP_FREQUENCY_* above)
+    val backupFrequency = rxPrefs.getInteger("backupFrequency", BACKUP_FREQUENCY_NEVER)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
 

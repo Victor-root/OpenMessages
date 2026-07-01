@@ -44,6 +44,8 @@ import io.openmessages.manager.ReferralManager
 import io.openmessages.migration.QkMigration
 import io.openmessages.migration.QkRealmMigration
 import io.openmessages.util.NightModeManager
+import io.openmessages.util.Preferences
+import io.openmessages.worker.AutoBackupWorker
 import io.openmessages.worker.HousekeepingWorker
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -68,6 +70,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
+    @Inject lateinit var prefs: Preferences
     @Inject lateinit var realmMigration: QkRealmMigration
     @Inject lateinit var referralManager: ReferralManager
     @Inject lateinit var workerFactory: WorkerFactory
@@ -131,6 +134,9 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         // register, or re-register, housekeeping work manager
         HousekeepingWorker.register(applicationContext)
+
+        // register, or re-register, the automatic backup according to the saved frequency
+        AutoBackupWorker.register(applicationContext, prefs.backupFrequency.get())
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

@@ -127,6 +127,14 @@
                 app:summary="@string/backup_location_summary" />
 
             <io.openmessages.common.widget.PreferenceView
+                android:id="@+id/autoBackup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_av_timer_black_24dp"
+                app:title="@string/backup_auto_title"
+                tools:summary="@string/backup_auto_never" />
+
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/restore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

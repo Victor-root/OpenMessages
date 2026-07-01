@@ -208,6 +208,10 @@
     <string name="backup_never">Jamais</string>
     <string name="backup_location_title">Emplacement de sauvegarde</string>
     <string name="backup_location_summary">Définir le dossier</string>
+    <string name="backup_auto_title">Sauvegarde automatique</string>
+    <string name="backup_auto_never">Jamais</string>
+    <string name="backup_auto_daily">Chaque jour</string>
+    <string name="backup_auto_weekly">Chaque semaine</string>
     <string name="backup_restore_title">Restauration</string>
     <string name="backup_restore_summary">Sélectionner une sauvegarde</string>
     <string name="backup_restore_error_plus">Déverrouillez Open Messages+ pour utiliser la sauvegarde et la restauration</string>

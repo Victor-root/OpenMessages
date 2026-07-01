@@ -246,6 +246,10 @@
     <string name="backup_never">Never</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Automatic backup</string>
+    <string name="backup_auto_never">Never</string>
+    <string name="backup_auto_daily">Every day</string>
+    <string name="backup_auto_weekly">Every week</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_plus">Please unlock Open Messages+ to use backup and restore</string>

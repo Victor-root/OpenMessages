@@ -29,6 +29,7 @@ data class BackupState(
     val showExactAlarmDialog: Boolean = false,
 
     val backupLocation: String = "",
+    val autoBackupFrequency: Int = 0,
 
     val upgraded: Boolean = true
 )

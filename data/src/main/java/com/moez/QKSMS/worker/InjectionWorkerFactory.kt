@@ -30,6 +30,7 @@ import io.openmessages.manager.ActiveConversationManager
 import io.openmessages.manager.NotificationManager
 import io.openmessages.manager.ShortcutManager
 import io.openmessages.repository.AllowlistRepository
+import io.openmessages.repository.BackupRepository
 import io.openmessages.repository.ContactRepository
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageContentFilterRepository
@@ -54,6 +55,7 @@ class InjectionWorkerFactory @Inject constructor(
     private val contactRepo: ContactRepository,
     private val linkSpamFilter: LinkSpamFilter,
     private val allowlistRepo: AllowlistRepository,
+    private val backupRepo: BackupRepository,
 
 ) : WorkerFactory() {
     override fun createWorker(
@@ -70,6 +72,8 @@ class InjectionWorkerFactory @Inject constructor(
         when (instance) {
             is HousekeepingWorker ->
                 instance.scheduledMessageRepository = scheduledMessageRepository
+            is AutoBackupWorker ->
+                instance.backupRepo = backupRepo
             is ReceiveSmsWorker -> {
                 instance.conversationRepo  = conversationRepo
                 instance.blockingClient = blockingClient
