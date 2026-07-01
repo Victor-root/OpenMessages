@@ -250,6 +250,13 @@
     <string name="backup_auto_never">Never</string>
     <string name="backup_auto_daily">Every day</string>
     <string name="backup_auto_weekly">Every week</string>
+    <string name="backup_auto_custom">Custom…</string>
+    <string name="backup_auto_custom_title">Days between backups</string>
+    <string name="backup_auto_custom_hint">Number of days</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Every %d day</item>
+        <item quantity="other">Every %d days</item>
+    </plurals>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_plus">Please unlock Open Messages+ to use backup and restore</string>
@@ -267,12 +274,12 @@
     <string name="backup_restore_dialog_title">Backups</string>
     <string name="backup_restore_dialog_summary" translatable="false">/OpenMessages/Backups</string>
     <string name="backup_restore_dialog_empty">No backups found</string>
-    <string name="backup_disclaimer">By default, backups are saved to Documents/OpenMessages; use Backup location above to change it. Your SMS and all app settings (including templates) are included. More categories, MMS attachments and scheduled backups are on the way.</string>
+    <string name="backup_disclaimer">By default, backups are saved to Documents/OpenMessages; use Backup location above to change it. Your SMS and MMS (with attachments), settings, templates, blocking rules, scheduled messages and archived or pinned conversations can all be included. Use Automatic backup above to run one on a schedule.</string>
     <string name="backup_now">Backup now</string>
-    <string name="backup_categories_title">What to back up</string>
+    <string name="backup_categories_title">What should be backed up?</string>
     <string name="backup_restore_source_title">Which backup?</string>
     <string name="backup_restore_categories_title">Restore from %s</string>
-    <string name="backup_category_messages">Messages (SMS)</string>
+    <string name="backup_category_messages">Messages (SMS, MMS and attachments)</string>
     <string name="backup_category_settings">Settings and templates</string>
     <string name="backup_category_blocking">Blocking rules</string>
     <string name="backup_category_conversations">Archived and pinned</string>
@@ -526,7 +533,7 @@
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
 
-    <string name="about_developer" translatable="false">victor-root</string>
+    <string name="about_developer" translatable="false">Victor-root</string>
     <string name="about_source" translatable="false">https://github.com/victor-root/openmessages</string>
     <string name="about_changelog" translatable="false">https://github.com/victor-root/openmessages/releases</string>
     <string name="about_contact" translatable="false">https://github.com/victor-root/openmessages/issues</string>

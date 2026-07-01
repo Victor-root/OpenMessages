@@ -19,12 +19,18 @@
 package io.openmessages.feature.backup
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -62,6 +68,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     private val exactAlarmGrantSubject: Subject<Unit> = PublishSubject.create()
     private val exactAlarmSkipSubject: Subject<Unit> = PublishSubject.create()
+    private val exactAlarmSettingsClosedSubject: Subject<Unit> = PublishSubject.create()
 
     private val stopRestoreConfirmSubject: Subject<Unit> = PublishSubject.create()
     private val stopRestoreCancelSubject: Subject<Unit> = PublishSubject.create()
@@ -108,6 +115,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     private lateinit var openDirectory: ActivityResultLauncher<Uri?>
     private lateinit var openRestoreDirectory: ActivityResultLauncher<Uri?>
+    private lateinit var exactAlarmSettings: ActivityResultLauncher<Intent>
 
     init {
         appComponent.inject(this)
@@ -125,6 +133,12 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
         openRestoreDirectory = themedActivity!!
             .registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
                 uri?.let(restoreFolderSelectedSubject::onNext)
+            }
+
+        // Fires when the user returns from the exact-alarm settings, so restore can start only then
+        exactAlarmSettings = themedActivity!!
+            .registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                exactAlarmSettingsClosedSubject.onNext(Unit)
             }
     }
 
@@ -195,7 +209,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
         if (state.backupLocation.isNotEmpty()) binding.location.summary = state.backupLocation
 
-        binding.autoBackup.summary = activity!!.getString(autoBackupFrequencyLabel(state.autoBackupFrequency))
+        binding.autoBackup.summary = autoBackupFrequencyLabel(state.autoBackupFrequency)
 
         selectedBackupErrorDialog.setShowing(state.showSelectedBackupError)
 
@@ -228,6 +242,18 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun exactAlarmSkipClicks(): Observable<*> = exactAlarmSkipSubject
 
+    override fun exactAlarmSettingsClosed(): Observable<*> = exactAlarmSettingsClosedSubject
+
+    override fun openExactAlarmSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            exactAlarmSettings.launch(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    .setData(Uri.parse("package:${activity!!.packageName}")))
+        } else {
+            // The dialog only appears on Android 12+, but stay safe: proceed straight to the restore
+            exactAlarmSettingsClosedSubject.onNext(Unit)
+        }
+    }
+
     override fun stopRestoreClicks(): Observable<*> = binding.progressCancel.clicks()
 
     override fun stopRestoreConfirmed(): Observable<*> = stopRestoreConfirmSubject
@@ -256,18 +282,58 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     }
 
     override fun showAutoBackupFrequencyPicker(current: Int) {
-        // The labels line up with the Preferences.BACKUP_FREQUENCY_* values (Never=0, Daily=1, Weekly=2),
-        // so the tapped index is exactly the frequency to store.
         val labels = arrayOf(
                 activity!!.getString(R.string.backup_auto_never),
                 activity!!.getString(R.string.backup_auto_daily),
-                activity!!.getString(R.string.backup_auto_weekly))
+                activity!!.getString(R.string.backup_auto_weekly),
+                activity!!.getString(R.string.backup_auto_custom))
+
+        // Pre-tick the preset that matches the stored day count, or "Custom" for any other value
+        val checked = when (current) {
+            Preferences.BACKUP_FREQUENCY_NEVER -> 0
+            Preferences.BACKUP_FREQUENCY_DAILY -> 1
+            Preferences.BACKUP_FREQUENCY_WEEKLY -> 2
+            else -> 3
+        }
 
         AlertDialog.Builder(activity!!)
                 .setTitle(R.string.backup_auto_title)
-                .setSingleChoiceItems(labels, current) { dialog, which ->
-                    autoBackupFrequencySelectedSubject.onNext(which)
+                .setSingleChoiceItems(labels, checked) { dialog, which ->
                     dialog.dismiss()
+                    when (which) {
+                        0 -> autoBackupFrequencySelectedSubject.onNext(Preferences.BACKUP_FREQUENCY_NEVER)
+                        1 -> autoBackupFrequencySelectedSubject.onNext(Preferences.BACKUP_FREQUENCY_DAILY)
+                        2 -> autoBackupFrequencySelectedSubject.onNext(Preferences.BACKUP_FREQUENCY_WEEKLY)
+                        else -> showCustomFrequencyDialog(current)
+                    }
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    /** Lets the user type any number of days between automatic backups. */
+    private fun showCustomFrequencyDialog(current: Int) {
+        val margin = (activity!!.resources.displayMetrics.density * 20).toInt()
+        val input = EditText(activity!!).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            setHint(R.string.backup_auto_custom_hint)
+            current.takeIf { it > 1 }?.let { setText(it.toString()) }
+            setSelection(text.length)
+        }
+        val container = FrameLayout(activity!!).apply {
+            setPadding(margin, margin / 2, margin, 0)
+            addView(input)
+        }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_auto_custom_title)
+                .setView(container)
+                .setPositiveButton(R.string.button_save) { _, _ ->
+                    input.text.toString().toIntOrNull()?.coerceIn(1, 365)?.let { days ->
+                        autoBackupFrequencySelectedSubject.onNext(days)
+                    }
                 }
                 .setNegativeButton(R.string.button_cancel, null)
                 .create()
@@ -327,11 +393,12 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .show()
     }
 
-    /** Maps an automatic-backup frequency to its localized summary label. */
-    private fun autoBackupFrequencyLabel(frequency: Int): Int = when (frequency) {
-        Preferences.BACKUP_FREQUENCY_DAILY -> R.string.backup_auto_daily
-        Preferences.BACKUP_FREQUENCY_WEEKLY -> R.string.backup_auto_weekly
-        else -> R.string.backup_auto_never
+    /** Maps an automatic-backup interval (in days) to its localized summary label. */
+    private fun autoBackupFrequencyLabel(days: Int): String = when (days) {
+        Preferences.BACKUP_FREQUENCY_NEVER -> activity!!.getString(R.string.backup_auto_never)
+        Preferences.BACKUP_FREQUENCY_DAILY -> activity!!.getString(R.string.backup_auto_daily)
+        Preferences.BACKUP_FREQUENCY_WEEKLY -> activity!!.getString(R.string.backup_auto_weekly)
+        else -> activity!!.resources.getQuantityString(R.plurals.backup_auto_every_days, days, days)
     }
 
     /** Maps each backup category to its localized checkbox label. */

@@ -31,13 +31,16 @@ interface BackupView : QkViewContract<BackupState> {
 
     fun backupClicks(): Observable<*>
 
-    /** Emits the automatic-backup frequency the user picked (a Preferences.BACKUP_FREQUENCY_* value). */
+    /** Emits the automatic-backup interval the user picked, in days (0 = off, or any custom count). */
     fun autoBackupFrequencySelected(): Observable<Int>
 
     fun selectedBackupErrorClicks(): Observable<*>
 
     fun exactAlarmGrantClicks(): Observable<*>
     fun exactAlarmSkipClicks(): Observable<*>
+
+    /** Emits when the user returns from the exact-alarm settings opened via [openExactAlarmSettings]. */
+    fun exactAlarmSettingsClosed(): Observable<*>
 
     fun stopRestoreClicks(): Observable<*>
     fun stopRestoreConfirmed(): Observable<*>
@@ -62,6 +65,7 @@ interface BackupView : QkViewContract<BackupState> {
     fun selectRestoreFolder(initialUri: Uri)
 
     fun showAutoBackupFrequencyPicker(current: Int)
+    fun openExactAlarmSettings()
 
     fun showBackupCategoryPicker()
     fun showRestoreSourcePicker(folder: Uri, backups: List<BackupFolder>, labels: List<String>)

@@ -27,7 +27,6 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import io.openmessages.model.BackupCategory
 import io.openmessages.repository.BackupRepository
-import io.openmessages.util.Preferences
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -43,17 +42,9 @@ class AutoBackupWorker(appContext: Context, workerParams: WorkerParameters)
     companion object {
         private val WORKER_TAG: String = AutoBackupWorker::class.java.simpleName
 
-        /** Maps a BACKUP_FREQUENCY_* choice to a period in days; 0 means "don't schedule". */
-        private fun frequencyToDays(frequency: Int): Long = when (frequency) {
-            Preferences.BACKUP_FREQUENCY_DAILY -> 1
-            Preferences.BACKUP_FREQUENCY_WEEKLY -> 7
-            else -> 0
-        }
-
-        /** Schedules (or reschedules) the automatic backup, or cancels it when frequency is Never. */
-        fun register(context: Context, frequency: Int) {
-            val days = frequencyToDays(frequency)
-            if (days <= 0) {
+        /** Schedules (or reschedules) the automatic backup every [frequencyDays], or cancels it at 0. */
+        fun register(context: Context, frequencyDays: Int) {
+            if (frequencyDays <= 0) {
                 cancel(context)
                 return
             }
@@ -61,7 +52,7 @@ class AutoBackupWorker(appContext: Context, workerParams: WorkerParameters)
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WORKER_TAG,
                 ExistingPeriodicWorkPolicy.UPDATE,
-                PeriodicWorkRequest.Builder(AutoBackupWorker::class.java, days, TimeUnit.DAYS)
+                PeriodicWorkRequest.Builder(AutoBackupWorker::class.java, frequencyDays.toLong(), TimeUnit.DAYS)
                     .setConstraints(
                         Constraints.Builder()
                             // good citizens don't back up on a low battery

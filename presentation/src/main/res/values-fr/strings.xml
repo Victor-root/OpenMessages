@@ -212,6 +212,13 @@
     <string name="backup_auto_never">Jamais</string>
     <string name="backup_auto_daily">Chaque jour</string>
     <string name="backup_auto_weekly">Chaque semaine</string>
+    <string name="backup_auto_custom">Personnalisé…</string>
+    <string name="backup_auto_custom_title">Jours entre les sauvegardes</string>
+    <string name="backup_auto_custom_hint">Nombre de jours</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Tous les %d jour</item>
+        <item quantity="other">Tous les %d jours</item>
+    </plurals>
     <string name="backup_restore_title">Restauration</string>
     <string name="backup_restore_summary">Sélectionner une sauvegarde</string>
     <string name="backup_restore_error_plus">Déverrouillez Open Messages+ pour utiliser la sauvegarde et la restauration</string>
@@ -229,12 +236,12 @@
     <string name="backup_restore_dialog_title">Sauvegardes</string>
     <string name="backup_restore_dialog_summary" translatable="false">/OpenMessages/Backups</string>
     <string name="backup_restore_dialog_empty">Aucune sauvegarde trouvée</string>
-    <string name="backup_disclaimer">Par défaut, les sauvegardes sont dans Documents/OpenMessages ; utilisez Emplacement de sauvegarde ci-dessus pour changer. Vos SMS et tous vos réglages (dont les modèles) sont inclus. D\'autres catégories, les pièces jointes MMS et les sauvegardes planifiées arrivent prochainement !</string>
+    <string name="backup_disclaimer">Par défaut, les sauvegardes sont dans Documents/OpenMessages ; utilisez Emplacement de sauvegarde ci-dessus pour changer. Vos SMS et MMS (avec pièces jointes), réglages, modèles, règles de blocage, messages programmés et conversations archivées ou épinglées peuvent tous être inclus. Utilisez Sauvegarde automatique ci-dessus pour en lancer une régulièrement.</string>
     <string name="backup_now">Sauvegarder maintenant</string>
-    <string name="backup_categories_title">Que sauvegarder</string>
+    <string name="backup_categories_title">Que faut-il sauvegarder ?</string>
     <string name="backup_restore_source_title">Quelle sauvegarde ?</string>
     <string name="backup_restore_categories_title">Restaurer depuis %s</string>
-    <string name="backup_category_messages">Messages (SMS)</string>
+    <string name="backup_category_messages">Messages (SMS, MMS et pièces jointes)</string>
     <string name="backup_category_settings">Réglages et modèles</string>
     <string name="backup_category_blocking">Règles de blocage</string>
     <string name="backup_category_conversations">Archivés et épinglés</string>

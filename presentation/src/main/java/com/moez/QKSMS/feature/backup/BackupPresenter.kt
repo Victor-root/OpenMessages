@@ -165,15 +165,16 @@ class BackupPresenter @Inject constructor(
                     }
                 }
 
-        // "Grant": start the restore and open the exact-alarm settings (its alarms become exact on the
-        // next re-arm once granted). "Skip": just run the restore now with the inexact-alarm fallback.
+        // "Grant": open the exact-alarm settings and only start the restore once the user comes back,
+        // so the alarms are already in place. "Skip": run the restore now with the inexact-alarm fallback.
         view.exactAlarmGrantClicks()
                 .doOnNext { newState { copy(showExactAlarmDialog = false) } }
                 .autoDisposable(view.scope())
-                .subscribe {
-                    startPendingRestore()
-                    navigator.showExactAlarmsSettings()
-                }
+                .subscribe { view.openExactAlarmSettings() }
+
+        view.exactAlarmSettingsClosed()
+                .autoDisposable(view.scope())
+                .subscribe { startPendingRestore() }
 
         view.exactAlarmSkipClicks()
                 .doOnNext { newState { copy(showExactAlarmDialog = false) } }

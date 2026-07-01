@@ -29,11 +29,11 @@ import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Telephony
-import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.core.content.contentValuesOf
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
+import com.google.android.mms.pdu_alt.PduHeaders
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.openmessages.common.util.extensions.now
@@ -58,6 +58,7 @@ import okio.buffer
 import okio.source
 import timber.log.Timber
 import java.io.File
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.Timer
@@ -81,14 +82,21 @@ class BackupRepositoryImpl @Inject constructor(
 ) : BackupRepository {
 
     companion object {
-        /** Bumped when the on-disk backup format changes. Version 3 added MMS messages and attachments. */
-        private const val BACKUP_FORMAT_VERSION = 3
+        /**
+         * Bumped when the on-disk backup format changes. Version 3 added MMS; version 4 moved MMS
+         * attachments out of messages.json into streamed binary files under an attachments/ sub-folder,
+         * so a large MMS history no longer has to fit in memory.
+         */
+        private const val BACKUP_FORMAT_VERSION = 4
 
         /** MMS protocol version stamped on restored messages (matches the app's own send path). */
         private const val MMS_VERSION = 18
 
         /** Backups are written automatically under this folder inside the shared Documents directory. */
         private const val BACKUP_DIR = "OpenMessages"
+
+        /** Sub-folder of a backup set that holds the MMS attachment binaries, one file per part. */
+        private const val ATTACHMENTS_DIR = "attachments"
 
         /**
          * Preference keys that are device-specific or internal and must never be carried across a
@@ -121,9 +129,10 @@ class BackupRepositoryImpl @Inject constructor(
 
     /**
      * One MMS message with its address rows and parts. Dates stay in milliseconds (as the app stores
-     * them); the telephony provider wants seconds, so restore divides by 1000. Binary parts carry their
-     * bytes base64-encoded in [BackupMmsPart.data]; text and SMIL parts keep their text inline instead.
-     * [recipients] is the conversation's recipient list, used to re-resolve the thread on restore.
+     * them); the telephony provider wants seconds, so restore divides by 1000. Binary parts are streamed
+     * to their own file under the attachments/ sub-folder and referenced by [BackupMmsPart.dataFile];
+     * text and SMIL parts keep their text inline instead. [recipients] is the conversation's recipient
+     * list, used to re-resolve the thread on restore.
      */
     data class BackupMmsMessage(
         val boxId: Int = 0,
@@ -153,7 +162,8 @@ class BackupRepositoryImpl @Inject constructor(
         val seq: Int = -1,
         val name: String? = null,
         val text: String? = null,
-        val data: String? = null
+        // Name of this part's binary in the attachments/ sub-folder; null for text and SMIL parts
+        val dataFile: String? = null
     )
 
     /**
@@ -278,120 +288,114 @@ class BackupRepositoryImpl @Inject constructor(
         val createdAt = now()
         val folderName = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault()).format(createdAt)
 
-        // Build a payload per selected category before touching the filesystem. Each backup lives in
-        // its own date-and-time sub-folder, holding one plainly-named file per category and a manifest.
-        val payloads = linkedMapOf<BackupCategory, Pair<String, ByteArray>>()
-        val counts = linkedMapOf<String, Int>()
-
-        if (BackupCategory.MESSAGES in categories) {
-            val backup = Realm.getDefaultInstance().use { realm ->
-                val smsMessages = realm.where(Message::class.java)
-                        .equalTo("type", Message.TYPE_SMS)
-                        .sort("date")
-                        .findAll()
-                        .createSnapshot()
-                val mmsMessages = realm.where(Message::class.java)
-                        .equalTo("type", Message.TYPE_MMS)
-                        .sort("date")
-                        .findAll()
-                        .createSnapshot()
-
-                val total = smsMessages.size + mmsMessages.size
-                val sms = smsMessages.mapIndexed { index, message ->
-                    backupProgress.onNext(BackupRepository.Progress.Running(total, index))
-                    messageToBackupMessage(message)
-                }
-                val mms = mmsMessages.mapIndexed { index, message ->
-                    backupProgress.onNext(BackupRepository.Progress.Running(total, smsMessages.size + index))
-                    messageToBackupMms(message, realm)
-                }
-                Backup(sms.size, sms, mms.size, mms)
-            }
-
-            val bytes = moshi.adapter(Backup::class.java).indent("\t").toJson(backup).toByteArray()
-            payloads[BackupCategory.MESSAGES] = "messages.json" to bytes
-            counts[BackupCategory.MESSAGES.name] = backup.messageCount + backup.mmsCount
-        }
-
-        if (BackupCategory.SETTINGS in categories) {
-            val settings = buildSettingsBackup()
-            val bytes = moshi.adapter(SettingsBackup::class.java).indent("\t").toJson(settings).toByteArray()
-            payloads[BackupCategory.SETTINGS] = "settings.json" to bytes
-            counts[BackupCategory.SETTINGS.name] = settings.total()
-        }
-
-        if (BackupCategory.BLOCKING in categories) {
-            val blocking = Realm.getDefaultInstance().use { realm ->
-                BlockingBackup(
-                        blockedNumbers = realm.where(BlockedNumber::class.java).findAll().map { it.address },
-                        allowedNumbers = realm.where(AllowedNumber::class.java).findAll().map { it.address },
-                        contentFilters = realm.where(MessageContentFilter::class.java).findAll().map { filter ->
-                            ContentFilterBackup(filter.value, filter.caseSensitive, filter.isRegex, filter.includeContacts)
-                        })
-            }
-            val bytes = moshi.adapter(BlockingBackup::class.java).indent("\t").toJson(blocking).toByteArray()
-            payloads[BackupCategory.BLOCKING] = "blocking.json" to bytes
-            counts[BackupCategory.BLOCKING.name] =
-                    blocking.blockedNumbers.size + blocking.allowedNumbers.size + blocking.contentFilters.size
-        }
-
-        if (BackupCategory.CONVERSATIONS in categories) {
-            val conversations = Realm.getDefaultInstance().use { realm ->
-                realm.where(Conversation::class.java).findAll()
-                        .filter { it.archived || it.pinned || it.blocked || it.flagged || it.name.isNotBlank() }
-                        .mapNotNull { conversation ->
-                            val addresses = conversation.recipients
-                                    .mapNotNull { recipient -> recipient.address.takeIf { addr -> addr.isNotBlank() } }
-                            if (addresses.isEmpty()) null
-                            else ConversationBackup(addresses, conversation.archived, conversation.pinned,
-                                    conversation.blocked, conversation.name, conversation.blockingClient,
-                                    conversation.blockReason, conversation.flagged, conversation.flagReason)
-                        }
-            }
-            val bytes = moshi.adapter(ConversationsBackup::class.java).indent("\t")
-                    .toJson(ConversationsBackup(conversations)).toByteArray()
-            payloads[BackupCategory.CONVERSATIONS] = "conversations.json" to bytes
-            counts[BackupCategory.CONVERSATIONS.name] = conversations.size
-        }
-
-        if (BackupCategory.SCHEDULED in categories) {
-            val scheduled = Realm.getDefaultInstance().use { realm ->
-                realm.where(ScheduledMessage::class.java).findAll().map { message ->
-                    ScheduledMessageBackup(message.date, message.subId, message.recipients.toList(),
-                            message.sendAsGroup, message.body, message.attachments.toList())
-                }
-            }
-            val bytes = moshi.adapter(ScheduledBackup::class.java).indent("\t")
-                    .toJson(ScheduledBackup(scheduled)).toByteArray()
-            payloads[BackupCategory.SCHEDULED] = "scheduled.json" to bytes
-            counts[BackupCategory.SCHEDULED.name] = scheduled.size
-        }
-
-        // Update the status, and set the progress to be indeterminate since we can no longer calculate progress
-        backupProgress.onNext(BackupRepository.Progress.Saving())
-
         try {
+            // Create the destination folder up front so each MMS attachment can be streamed straight
+            // into it as its message is processed, instead of being held in memory. Custom folder if
+            // the user picked one, otherwise the default Documents/OpenMessages (no folder to pick).
+            val destination = createBackupDestination(folderName)
+
+            // One plainly-named JSON file per category; each is small enough to build in memory.
+            val payloads = linkedMapOf<BackupCategory, Pair<String, ByteArray>>()
+            val counts = linkedMapOf<String, Int>()
+
+            if (BackupCategory.MESSAGES in categories) {
+                val backup = Realm.getDefaultInstance().use { realm ->
+                    val smsMessages = realm.where(Message::class.java)
+                            .equalTo("type", Message.TYPE_SMS)
+                            .sort("date")
+                            .findAll()
+                            .createSnapshot()
+                    val mmsMessages = realm.where(Message::class.java)
+                            .equalTo("type", Message.TYPE_MMS)
+                            .sort("date")
+                            .findAll()
+                            .createSnapshot()
+
+                    val total = smsMessages.size + mmsMessages.size
+                    val sms = smsMessages.mapIndexed { index, message ->
+                        backupProgress.onNext(BackupRepository.Progress.Running(total, index))
+                        messageToBackupMessage(message)
+                    }
+                    val mms = mmsMessages.mapIndexed { index, message ->
+                        backupProgress.onNext(BackupRepository.Progress.Running(total, smsMessages.size + index))
+                        messageToBackupMms(message, realm, destination)
+                    }
+                    Backup(sms.size, sms, mms.size, mms)
+                }
+
+                val bytes = moshi.adapter(Backup::class.java).indent("\t").toJson(backup).toByteArray()
+                payloads[BackupCategory.MESSAGES] = "messages.json" to bytes
+                counts[BackupCategory.MESSAGES.name] = backup.messageCount + backup.mmsCount
+            }
+
+            if (BackupCategory.SETTINGS in categories) {
+                val settings = buildSettingsBackup()
+                val bytes = moshi.adapter(SettingsBackup::class.java).indent("\t").toJson(settings).toByteArray()
+                payloads[BackupCategory.SETTINGS] = "settings.json" to bytes
+                counts[BackupCategory.SETTINGS.name] = settings.total()
+            }
+
+            if (BackupCategory.BLOCKING in categories) {
+                val blocking = Realm.getDefaultInstance().use { realm ->
+                    BlockingBackup(
+                            blockedNumbers = realm.where(BlockedNumber::class.java).findAll().map { it.address },
+                            allowedNumbers = realm.where(AllowedNumber::class.java).findAll().map { it.address },
+                            contentFilters = realm.where(MessageContentFilter::class.java).findAll().map { filter ->
+                                ContentFilterBackup(filter.value, filter.caseSensitive, filter.isRegex, filter.includeContacts)
+                            })
+                }
+                val bytes = moshi.adapter(BlockingBackup::class.java).indent("\t").toJson(blocking).toByteArray()
+                payloads[BackupCategory.BLOCKING] = "blocking.json" to bytes
+                counts[BackupCategory.BLOCKING.name] =
+                        blocking.blockedNumbers.size + blocking.allowedNumbers.size + blocking.contentFilters.size
+            }
+
+            if (BackupCategory.CONVERSATIONS in categories) {
+                val conversations = Realm.getDefaultInstance().use { realm ->
+                    realm.where(Conversation::class.java).findAll()
+                            .filter { it.archived || it.pinned || it.blocked || it.flagged || it.name.isNotBlank() }
+                            .mapNotNull { conversation ->
+                                val addresses = conversation.recipients
+                                        .mapNotNull { recipient -> recipient.address.takeIf { addr -> addr.isNotBlank() } }
+                                if (addresses.isEmpty()) null
+                                else ConversationBackup(addresses, conversation.archived, conversation.pinned,
+                                        conversation.blocked, conversation.name, conversation.blockingClient,
+                                        conversation.blockReason, conversation.flagged, conversation.flagReason)
+                            }
+                }
+                val bytes = moshi.adapter(ConversationsBackup::class.java).indent("\t")
+                        .toJson(ConversationsBackup(conversations)).toByteArray()
+                payloads[BackupCategory.CONVERSATIONS] = "conversations.json" to bytes
+                counts[BackupCategory.CONVERSATIONS.name] = conversations.size
+            }
+
+            if (BackupCategory.SCHEDULED in categories) {
+                val scheduled = Realm.getDefaultInstance().use { realm ->
+                    realm.where(ScheduledMessage::class.java).findAll().map { message ->
+                        ScheduledMessageBackup(message.date, message.subId, message.recipients.toList(),
+                                message.sendAsGroup, message.body, message.attachments.toList())
+                    }
+                }
+                val bytes = moshi.adapter(ScheduledBackup::class.java).indent("\t")
+                        .toJson(ScheduledBackup(scheduled)).toByteArray()
+                payloads[BackupCategory.SCHEDULED] = "scheduled.json" to bytes
+                counts[BackupCategory.SCHEDULED.name] = scheduled.size
+            }
+
+            // Update the status, and set the progress to be indeterminate since we can no longer calculate progress
+            backupProgress.onNext(BackupRepository.Progress.Saving())
+
+            // Write one JSON file per category, then the manifest that marks the set complete.
+            payloads.values.forEach { (fileName, bytes) -> destination.writeFile(fileName, bytes) }
+
             val manifest = BackupManifest(
                     version = BACKUP_FORMAT_VERSION,
                     createdAt = createdAt,
                     app = "OpenMessages",
                     files = payloads.entries.associate { (category, payload) -> category.name to payload.first },
                     counts = counts)
-
-            // Assemble every file of this backup set (one per category, plus the manifest).
-            val backupFiles = linkedMapOf<String, ByteArray>()
-            payloads.values.forEach { (fileName, bytes) -> backupFiles[fileName] = bytes }
-            backupFiles["manifest.json"] =
-                    moshi.adapter(BackupManifest::class.java).indent("\t").toJson(manifest).toByteArray()
-
-            // Write to the user's custom folder if they picked one, otherwise straight to the default
-            // Documents/OpenMessages (no folder to pick).
-            val overrideTree = getBackupDocumentTree()
-            if (overrideTree != null) {
-                writeBackupSetSaf(overrideTree, folderName, backupFiles)
-            } else {
-                writeBackupSet(folderName, backupFiles)
-            }
+            destination.writeFile("manifest.json",
+                    moshi.adapter(BackupManifest::class.java).indent("\t").toJson(manifest).toByteArray())
         } catch (e: Exception) {
             Timber.w(e)
         }
@@ -415,14 +419,26 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     /**
-     * Writes all files of a backup set into a date-and-time sub-folder of Documents/OpenMessages,
-     * creating the folders as needed. No folder needs to be picked by the user.
+     * A backup set's destination folder. It writes small JSON files whole, and hands out output streams
+     * for MMS attachments so their bytes can be streamed straight from the provider without ever being
+     * held in memory. The attachments/ sub-folder is created lazily, only when there's an attachment.
      */
-    private fun writeBackupSet(folderName: String, files: Map<String, ByteArray>) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            writeBackupSetMediaStore(folderName, files)
-        } else {
-            writeBackupSetLegacy(folderName, files)
+    private interface BackupDestination {
+        fun writeFile(name: String, bytes: ByteArray)
+        fun openAttachment(name: String): OutputStream
+    }
+
+    /**
+     * Picks where a backup set is written: the user's custom SAF folder if they set one, otherwise the
+     * default Documents/OpenMessages via MediaStore (Android 10+) or legacy file access (Android 9-).
+     * The date-and-time sub-folder is created here so attachments can be streamed into it right away.
+     */
+    private fun createBackupDestination(folderName: String): BackupDestination {
+        val tree = getBackupDocumentTree()
+        return when {
+            tree != null -> SafBackupDestination(tree, folderName)
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> MediaStoreBackupDestination(folderName)
+            else -> LegacyBackupDestination(folderName)
         }
     }
 
@@ -431,47 +447,74 @@ class BackupRepositoryImpl @Inject constructor(
      * required - the app owns the files it creates in the shared Documents collection.
      */
     @RequiresApi(Build.VERSION_CODES.Q)
-    private fun writeBackupSetMediaStore(folderName: String, files: Map<String, ByteArray>) {
-        val relativePath = "${Environment.DIRECTORY_DOCUMENTS}/$BACKUP_DIR/$folderName"
-        val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+    private inner class MediaStoreBackupDestination(folderName: String) : BackupDestination {
+        private val basePath = "${Environment.DIRECTORY_DOCUMENTS}/$BACKUP_DIR/$folderName"
+        private val collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
 
-        files.forEach { (fileName, bytes) ->
+        override fun writeFile(name: String, bytes: ByteArray) {
+            openStream(name, "application/json", basePath).use { it.write(bytes) }
+        }
+
+        override fun openAttachment(name: String): OutputStream =
+                openStream(name, "application/octet-stream", "$basePath/$ATTACHMENTS_DIR")
+
+        private fun openStream(name: String, mimeType: String, relativePath: String): OutputStream {
             val values = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-                put(MediaStore.MediaColumns.MIME_TYPE, "application/json")
+                put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+                put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
                 put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
             }
             val uri = context.contentResolver.insert(collection, values)
-                    ?: throw Exception("Failed to create $fileName via MediaStore")
-            (context.contentResolver.openOutputStream(uri)
-                    ?: throw Exception("Failed to open output stream for $fileName")).use { it.write(bytes) }
+                    ?: throw Exception("Failed to create $name via MediaStore")
+            return context.contentResolver.openOutputStream(uri)
+                    ?: throw Exception("Failed to open output stream for $name")
         }
     }
 
     /** Android 9 and below: write straight to the public Documents directory (legacy storage). */
     @Suppress("DEPRECATION")
-    private fun writeBackupSetLegacy(folderName: String, files: Map<String, ByteArray>) {
-        val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
-                "$BACKUP_DIR/$folderName")
-        if (!dir.exists() && !dir.mkdirs()) throw Exception("Failed to create backup directory $dir")
+    private inner class LegacyBackupDestination(folderName: String) : BackupDestination {
+        private val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+                "$BACKUP_DIR/$folderName").apply {
+            if (!exists() && !mkdirs()) throw Exception("Failed to create backup directory $this")
+        }
 
-        files.forEach { (fileName, bytes) ->
-            File(dir, fileName).outputStream().use { it.write(bytes) }
+        override fun writeFile(name: String, bytes: ByteArray) {
+            File(dir, name).outputStream().use { it.write(bytes) }
+        }
+
+        override fun openAttachment(name: String): OutputStream {
+            val attachmentsDir = File(dir, ATTACHMENTS_DIR)
+            if (!attachmentsDir.exists() && !attachmentsDir.mkdirs()) {
+                throw Exception("Failed to create attachments directory $attachmentsDir")
+            }
+            return File(attachmentsDir, name).outputStream()
         }
     }
 
     /** Writes a backup set into a date-and-time sub-folder of a folder the user picked via SAF. */
-    private fun writeBackupSetSaf(tree: DocumentFile, folderName: String, files: Map<String, ByteArray>) {
-        val backupDir = tree.createDirectory(folderName)
+    private inner class SafBackupDestination(tree: DocumentFile, folderName: String) : BackupDestination {
+        private val backupDir = tree.createDirectory(folderName)
                 ?: throw Exception("Failed to create backup sub-folder")
-        files.forEach { (fileName, bytes) -> writeJson(backupDir, fileName, bytes) }
-    }
+        private var attachmentsDir: DocumentFile? = null
 
-    private fun writeJson(folder: DocumentFile, fileName: String, bytes: ByteArray) {
-        val file = folder.createFile("application/json", fileName)
-                ?: throw Exception("Failed to create $fileName")
-        (context.contentResolver.openOutputStream(file.uri)
-                ?: throw Exception("Failed to open output stream for $fileName")).use { it.write(bytes) }
+        override fun writeFile(name: String, bytes: ByteArray) {
+            val file = backupDir.createFile("application/json", name)
+                    ?: throw Exception("Failed to create $name")
+            (context.contentResolver.openOutputStream(file.uri)
+                    ?: throw Exception("Failed to open output stream for $name")).use { it.write(bytes) }
+        }
+
+        override fun openAttachment(name: String): OutputStream {
+            val dir = attachmentsDir
+                    ?: (backupDir.createDirectory(ATTACHMENTS_DIR)
+                            ?: throw Exception("Failed to create attachments sub-folder"))
+                            .also { attachmentsDir = it }
+            val file = dir.createFile("application/octet-stream", name)
+                    ?: throw Exception("Failed to create attachment $name")
+            return context.contentResolver.openOutputStream(file.uri)
+                    ?: throw Exception("Failed to open output stream for $name")
+        }
     }
 
     @SuppressLint("Recycle") // InputStream is closed by Okio BufferedSource
@@ -510,10 +553,11 @@ class BackupRepositoryImpl @Inject constructor(
 
     /**
      * Builds the backup payload for one MMS: its recipient list (used to re-resolve the thread on
-     * restore), the raw address rows from the provider, and every part. Binary parts have their bytes
-     * read from the provider and base64-encoded; text and SMIL parts keep their text inline.
+     * restore), the raw address rows from the provider, and every part. Binary parts are streamed to
+     * their own file under the attachments/ sub-folder and referenced by name; text and SMIL parts keep
+     * their text inline.
      */
-    private fun messageToBackupMms(message: Message, realm: Realm): BackupMmsMessage {
+    private fun messageToBackupMms(message: Message, realm: Realm, destination: BackupDestination): BackupMmsMessage {
         val recipients = realm.where(Conversation::class.java)
                 .equalTo("id", message.threadId)
                 .findFirst()
@@ -522,14 +566,23 @@ class BackupRepositoryImpl @Inject constructor(
                 ?: emptyList()
 
         val parts = message.parts.map { part ->
-            val isText = part.type.startsWith("text/", ignoreCase = true) ||
+            // Only these live in the provider's TEXT column; everything else (images, audio recordings,
+            // video, vCards, PDFs, ...) is a binary file, matching how the platform's PduPersister
+            // stores parts. In particular text/x-vcard is binary despite the "text/" prefix.
+            val isText = part.type.equals("text/plain", ignoreCase = true) ||
+                    part.type.equals("text/html", ignoreCase = true) ||
                     part.type.equals("application/smil", ignoreCase = true)
-            BackupMmsPart(
-                    type = part.type,
-                    seq = part.seq,
-                    name = part.name,
-                    text = if (isText) part.text else null,
-                    data = if (isText) null else readPartData(part))
+            if (isText) {
+                BackupMmsPart(type = part.type, seq = part.seq, name = part.name, text = part.text)
+            } else {
+                val fileName = attachmentFileName(part)
+                val written = writeAttachment(part, destination, fileName)
+                BackupMmsPart(
+                        type = part.type,
+                        seq = part.seq,
+                        name = part.name,
+                        dataFile = if (written) fileName else null)
+            }
         }
 
         return BackupMmsMessage(
@@ -575,16 +628,27 @@ class BackupRepositoryImpl @Inject constructor(
         }
     }
 
-    /** Reads one binary MMS part's bytes from the provider and base64-encodes them. */
-    @SuppressLint("Recycle") // InputStream closed by use{}
-    private fun readPartData(part: MmsPart): String? {
+    /** A unique, filesystem-safe name for a binary part's file, keyed on its unique provider id. */
+    private fun attachmentFileName(part: MmsPart): String {
+        val ext = part.type.substringAfter('/', "").substringBefore(';').trim()
+        return if (ext.isBlank()) "part_${part.id}" else "part_${part.id}.$ext"
+    }
+
+    /**
+     * Streams one binary MMS part from the provider straight into its own file in the backup, without
+     * ever holding it all in memory. Returns true if it was written, so callers only reference files
+     * that actually exist.
+     */
+    @SuppressLint("Recycle") // streams closed by use{}
+    private fun writeAttachment(part: MmsPart, destination: BackupDestination, fileName: String): Boolean {
         return try {
             context.contentResolver.openInputStream(part.getUri())?.use { input ->
-                Base64.encodeToString(input.readBytes(), Base64.NO_WRAP)
-            }
+                destination.openAttachment(fileName).use { output -> input.copyTo(output) }
+                true
+            } ?: false
         } catch (e: Exception) {
             Timber.w(e)
-            null
+            false
         }
     }
 
@@ -645,43 +709,72 @@ class BackupRepositoryImpl @Inject constructor(
             return
         }
 
-        // Never let a failure in one category leave the progress stuck (the screen would show
-        // "Parsing…" forever). Log it and still mark the restore finished below.
-        try {
-            // Settings first (instant); it seeds templates and every toggle before messages come in.
-            if (BackupCategory.SETTINGS in categories) {
-                manifest.files[BackupCategory.SETTINGS.name]?.let { fileName -> restoreSettings(backupDir, fileName) }
-            }
+        // Each category is restored inside its own guard so a failure in one never cascades into the
+        // others (the conversation overlay and scheduled messages come last and would otherwise be
+        // skipped whenever anything before them threw).
 
-            if (BackupCategory.BLOCKING in categories) {
-                manifest.files[BackupCategory.BLOCKING.name]?.let { fileName -> restoreBlocking(backupDir, fileName) }
-            }
+        // Settings first (instant); it seeds templates and every toggle before messages come in.
+        if (BackupCategory.SETTINGS in categories) {
+            restoreCategory(BackupCategory.SETTINGS, manifest) { fileName -> restoreSettings(backupDir, fileName) }
+        }
 
-            if (BackupCategory.MESSAGES in categories) {
-                manifest.files[BackupCategory.MESSAGES.name]?.let { fileName ->
-                    if (!restoreMessages(backupDir, fileName)) {
-                        // The user cancelled mid-restore
-                        restoreProgress.onNext(BackupRepository.Progress.Idle())
-                        return
-                    }
+        if (BackupCategory.BLOCKING in categories) {
+            restoreCategory(BackupCategory.BLOCKING, manifest) { fileName -> restoreBlocking(backupDir, fileName) }
+        }
+
+        // Messages restore is synchronous end-to-end: restoreMessages now waits for the (otherwise
+        // asynchronous) sync to finish, so the conversation overlay below matches real, synced threads.
+        if (BackupCategory.MESSAGES in categories) {
+            val fileName = manifest.files[BackupCategory.MESSAGES.name]
+            if (fileName != null) {
+                val completed = try {
+                    restoreMessages(backupDir, fileName)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    true // a thrown failure still shouldn't abort the later categories
+                }
+                if (!completed) {
+                    // The user cancelled mid-restore
+                    restoreProgress.onNext(BackupRepository.Progress.Idle())
+                    return
                 }
             }
+        }
 
-            // Conversation overlay last: it matches by address against the (now synced) conversations.
-            if (BackupCategory.CONVERSATIONS in categories) {
-                manifest.files[BackupCategory.CONVERSATIONS.name]?.let { fileName -> restoreConversations(backupDir, fileName) }
-            }
+        // Conversation overlay after the sync has completed: it matches by address against the now-synced
+        // conversations, so archived / pinned / blocked / named threads are re-applied.
+        if (BackupCategory.CONVERSATIONS in categories) {
+            restoreCategory(BackupCategory.CONVERSATIONS, manifest) { fileName -> restoreConversations(backupDir, fileName) }
+        }
 
-            if (BackupCategory.SCHEDULED in categories) {
-                manifest.files[BackupCategory.SCHEDULED.name]?.let { fileName -> restoreScheduled(backupDir, fileName) }
-            }
-        } catch (e: Exception) {
-            Timber.w(e)
+        if (BackupCategory.SCHEDULED in categories) {
+            restoreCategory(BackupCategory.SCHEDULED, manifest) { fileName -> restoreScheduled(backupDir, fileName) }
         }
 
         // Mark the task finished, and set it as Idle a second later
         restoreProgress.onNext(BackupRepository.Progress.Finished())
         Timer().schedule(1000) { restoreProgress.onNext(BackupRepository.Progress.Idle()) }
+    }
+
+    /**
+     * Runs one category's restore in isolation: resolves its file from the manifest, logs when it is
+     * selected but missing from the backup, and never lets its failure escape to abort other categories.
+     */
+    private fun restoreCategory(
+        category: BackupCategory,
+        manifest: BackupManifest,
+        restore: (String) -> Unit
+    ) {
+        val fileName = manifest.files[category.name]
+        if (fileName == null) {
+            Timber.w("${category.name} was selected to restore but isn't in this backup")
+            return
+        }
+        try {
+            restore(fileName)
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to restore ${category.name}")
+        }
     }
 
     /** Re-applies backed-up preferences. Returns silently if the file is missing. */
@@ -765,6 +858,9 @@ class BackupRepositoryImpl @Inject constructor(
         val backup = readJson(tree, fileName, moshi.adapter(Backup::class.java))
                 ?: return true
 
+        // MMS attachment binaries live alongside messages.json in this sub-folder (absent if none)
+        val attachmentsDir = tree.findFile(ATTACHMENTS_DIR)
+
         val total = backup.messages.size + backup.mms.size
         var errorCount = 0
 
@@ -796,7 +892,12 @@ class BackupRepositoryImpl @Inject constructor(
                     values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
                 }
 
-                context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
+                // A null Uri means the provider silently refused the row (no exception thrown), which is
+                // otherwise invisible; surface it so a partial restore can be diagnosed.
+                if (context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values) == null) {
+                    Timber.w("SMS insert refused (type=${message.type}, address=${message.address}, date=${message.date})")
+                    errorCount++
+                }
             } catch (e: Exception) {
                 Timber.w(e)
                 errorCount++
@@ -812,7 +913,7 @@ class BackupRepositoryImpl @Inject constructor(
             restoreProgress.onNext(BackupRepository.Progress.Running(total, backup.messages.size + index))
 
             try {
-                restoreMms(mms)
+                restoreMms(mms, attachmentsDir)
             } catch (e: Exception) {
                 Timber.w(e)
                 errorCount++
@@ -823,11 +924,42 @@ class BackupRepositoryImpl @Inject constructor(
             Timber.w(Exception("Failed to restore $errorCount/$total messages"))
         }
 
-        // Sync the messages
+        // Sync the messages, then wait for it to finish. syncMessages() does its Realm work on a
+        // background thread, so without this wait the conversation-overlay restore that follows would
+        // race an empty Realm (and the restore would report "finished" while the import is still going).
         restoreProgress.onNext(BackupRepository.Progress.Syncing())
         syncRepo.syncMessages()
+        awaitSyncCompletion()
 
         return true
+    }
+
+    /**
+     * Blocks the calling (restore) thread until the asynchronous message sync has returned to Idle, so
+     * everything that depends on synced conversations runs against real data. syncMessages() flips the
+     * progress to Running synchronously before returning, so we wait for the genuine completion signal.
+     */
+    private fun awaitSyncCompletion() {
+        try {
+            syncRepo.syncProgress
+                    .filter { progress -> progress is SyncRepository.SyncProgress.Idle }
+                    .timeout(30, TimeUnit.MINUTES)
+                    .blockingFirst()
+        } catch (e: Exception) {
+            Timber.w(e)
+        }
+    }
+
+    /**
+     * When a conversation's recipient list wasn't captured, derive the thread's other party from the raw
+     * address rows: the sender (FROM) for an incoming MMS, the recipients (TO) for an outgoing one. This
+     * avoids building a bogus "self + sender" group thread from all address rows.
+     */
+    private fun fallbackRecipients(mms: BackupMmsMessage): List<String> {
+        val wantedType = if (mms.boxId == Telephony.Mms.MESSAGE_BOX_INBOX) PduHeaders.FROM else PduHeaders.TO
+        return mms.addresses.filter { it.type == wantedType }.map { it.address }
+                .ifEmpty { mms.addresses.map { it.address } }
+                .distinct()
     }
 
     /**
@@ -835,11 +967,18 @@ class BackupRepositoryImpl @Inject constructor(
      * message row, then its parts (text inline, binary written to the part's output stream), then its
      * address rows. The thread is re-resolved from the recipient list, and dates go back to seconds.
      */
-    private fun restoreMms(mms: BackupMmsMessage) {
-        val recipients = mms.recipients.ifEmpty { mms.addresses.map { it.address }.distinct() }
-        if (recipients.isEmpty()) return
+    private fun restoreMms(mms: BackupMmsMessage, attachmentsDir: DocumentFile?) {
+        val recipients = mms.recipients.ifEmpty { fallbackRecipients(mms) }
+        if (recipients.isEmpty()) {
+            Timber.w("MMS skipped: no recipients (box=${mms.boxId}, parts=${mms.parts.size})")
+            return
+        }
 
         val threadId = TelephonyCompat.getOrCreateThreadId(context, recipients)
+        if (threadId <= 0L) {
+            Timber.w("MMS skipped: couldn't resolve a thread for $recipients")
+            return
+        }
 
         val values = ContentValues().apply {
             put(Telephony.Mms.THREAD_ID, threadId)
@@ -862,7 +1001,11 @@ class BackupRepositoryImpl @Inject constructor(
             }
         }
 
-        val mmsUri = context.contentResolver.insert(Telephony.Mms.CONTENT_URI, values) ?: return
+        val mmsUri = context.contentResolver.insert(Telephony.Mms.CONTENT_URI, values)
+        if (mmsUri == null) {
+            Timber.w("MMS insert refused (box=${mms.boxId}, thread=$threadId, parts=${mms.parts.size})")
+            return
+        }
         val mmsId = ContentUris.parseId(mmsUri)
 
         // Parts: text and SMIL keep their text in the TEXT column; binary parts get their bytes
@@ -878,14 +1021,13 @@ class BackupRepositoryImpl @Inject constructor(
                     put(Telephony.Mms.Part.CONTENT_LOCATION, name)
                     put(Telephony.Mms.Part.CONTENT_ID, "<$name>")
                 }
-                if (part.data == null) {
+                if (part.dataFile == null) {
                     put(Telephony.Mms.Part.TEXT, part.text ?: "")
                 }
             }
             val insertedPart = context.contentResolver.insert(partUri, partValues) ?: return@forEach
-            part.data?.let { encoded ->
-                val bytes = Base64.decode(encoded, Base64.NO_WRAP)
-                context.contentResolver.openOutputStream(insertedPart)?.use { it.write(bytes) }
+            part.dataFile?.let { dataFile ->
+                streamAttachmentInto(attachmentsDir, dataFile, insertedPart)
             }
         }
 
@@ -898,6 +1040,23 @@ class BackupRepositoryImpl @Inject constructor(
                 put(Telephony.Mms.Addr.CHARSET, addr.charset)
             }
             context.contentResolver.insert(addrUri, addrValues)
+        }
+    }
+
+    /**
+     * Streams one backed-up attachment file straight into the freshly-inserted MMS part's output
+     * stream, without holding it in memory. A missing or unreadable attachment is skipped (the part is
+     * simply left without its binary) rather than failing the whole restore.
+     */
+    @SuppressLint("Recycle") // streams closed by use{}
+    private fun streamAttachmentInto(attachmentsDir: DocumentFile?, fileName: String, partUri: Uri) {
+        val file = attachmentsDir?.findFile(fileName) ?: return
+        try {
+            context.contentResolver.openInputStream(file.uri)?.use { input ->
+                context.contentResolver.openOutputStream(partUri)?.use { output -> input.copyTo(output) }
+            }
+        } catch (e: Exception) {
+            Timber.w(e)
         }
     }
 
