@@ -49,7 +49,8 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Recipient, QkBindingViewHol
     override fun onBindViewHolder(holder: QkBindingViewHolder<ContactChipBinding>, position: Int) {
         val recipient = getItem(position)
 
-        holder.binding.avatar.setRecipient(recipient)
+        // No avatar here: the chip mirrors an existing conversation's plain-text title (see
+        // contact_chip.xml). The avatar still appears in the detailed chip popup when tapped.
         holder.binding.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
     }
 

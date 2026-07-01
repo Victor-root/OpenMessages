@@ -57,6 +57,14 @@
             android:layout_height="match_parent"
             android:animateLayoutChanges="true">
 
+            <!--
+                The field sits inside the Toolbar, whose ThemeOverlay.AppCompat.Dark.ActionBar forces
+                ?android:attr/textColorPrimary (used by the ToolbarText style) to white. But the field's
+                background is a light bubble (?attr/bubbleColor = bubbleLight = #FFFFFF) in light mode,
+                which made the typed number white-on-white. Set the text color to the day/night
+                @color/text_primary explicitly: resource resolution follows night mode (not the toolbar
+                overlay), so it is dark on the light bubble and light on the dark bubble.
+            -->
             <io.openmessages.common.widget.QkEditText
                 android:id="@+id/search"
                 style="@style/ToolbarText"
@@ -72,29 +80,10 @@
                 android:maxLines="1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
+                android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_tertiary"
                 app:textSize="primary"
                 tools:textSize="16sp" />
-
-<!--            <io.openmessages.common.widget.QkEditText-->
-<!--                android:id="@+id/search"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_marginTop="8dp"-->
-<!--                android:layout_marginEnd="8dp"-->
-<!--                android:layout_marginBottom="8dp"-->
-<!--                android:background="@drawable/rounded_rectangle_24dp"-->
-<!--                android:backgroundTint="?attr/bubbleColor"-->
-<!--                android:hint="@string/title_compose"-->
-<!--                android:imeOptions="flagNoExtractUi"-->
-<!--                android:inputType="textFilter|textNoSuggestions"-->
-<!--                android:padding="8dp"-->
-<!--                android:paddingStart="16dp"-->
-<!--                android:paddingEnd="40dp"-->
-<!--                android:privateImeOptions="nm"-->
-<!--                android:textColor="?android:attr/textColorPrimary"-->
-<!--                android:textColorHint="?android:attr/textColorTertiary"-->
-<!--                app:textSize="primary" />-->
 
             <ImageView
                 android:id="@+id/cancel"

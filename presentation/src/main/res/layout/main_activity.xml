@@ -115,6 +115,13 @@
 
                 </FrameLayout>
 
+                <!--
+                    android:textColor is set to the day/night @color/text_primary rather than relying
+                    on the ToolbarText style: this field lives in the Dark-overlay Toolbar (which would
+                    force ?android:attr/textColorPrimary to white) but its background is the light
+                    ?attr/bubbleColor bubble, so without this the typed search text was white-on-white
+                    in light mode. See the matching field in contacts_activity.xml.
+                -->
                 <io.openmessages.common.widget.QkEditText
                     android:id="@+id/toolbarSearch"
                     style="@style/ToolbarText"
@@ -129,6 +136,7 @@
                     android:maxLines="1"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_tertiary"
                     app:textSize="primary"
                     tools:textSize="16sp"
