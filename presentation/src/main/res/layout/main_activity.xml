@@ -239,6 +239,21 @@
             android:src="@drawable/ic_add_black_24dp"
             app:tint="@color/white" />
 
+        <!--
+            Dynamic status-bar scrim (edge-to-edge only). Height is set to the status-bar inset at
+            runtime and its alpha follows the AppBarLayout offset: transparent while the toolbar is
+            shown (status bar over the themed toolbar), fading in as the toolbar collapses and the
+            light list scrolls behind the status bar, so the white status icons stay readable.
+        -->
+        <View
+            android:id="@+id/statusBarScrim"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="top"
+            android:alpha="0"
+            android:background="@android:color/black"
+            android:visibility="gone" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <include

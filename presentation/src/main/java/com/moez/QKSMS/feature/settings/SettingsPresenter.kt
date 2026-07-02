@@ -108,6 +108,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.systemFont.asObservable()
             .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
 
+        disposables += prefs.edgeToEdge.asObservable()
+            .subscribe { enabled -> newState { copy(edgeToEdgeEnabled = enabled) } }
+
         disposables += prefs.showStt.asObservable()
             .subscribe { enabled -> newState { copy(showStt = enabled) } }
 
@@ -197,6 +200,8 @@ class SettingsPresenter @Inject constructor(
                         }
 
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
+
+                        R.id.edgeToEdge -> prefs.edgeToEdge.set(!prefs.edgeToEdge.get())
 
                         R.id.showStt -> {
                             prefs.showStt.set(!prefs.showStt.get())

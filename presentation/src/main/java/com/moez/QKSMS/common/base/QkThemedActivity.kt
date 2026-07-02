@@ -59,7 +59,6 @@ import javax.inject.Inject
  */
 abstract class QkThemedActivity : QkActivity() {
 
-    @Inject lateinit var colors: Colors
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var messageRepo: MessageRepository
     @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
@@ -110,7 +109,7 @@ abstract class QkThemedActivity : QkActivity() {
         // back-stacked, alias-launched activity must not be relaunched while the icon may be changing.
         // The 400ms debounce guarantees the theme picker dialog has dismissed before the rebuild.
         val triggers: List<Preference<*>> =
-                listOf<Preference<*>>(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont) +
+                listOf<Preference<*>>(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont, prefs.edgeToEdge) +
                         recreateOnThemeChangeTriggers()
         Observable.merge(triggers.map { it.asObservable().skip(1) })
                 .debounce(400, TimeUnit.MILLISECONDS)
@@ -139,35 +138,9 @@ abstract class QkThemedActivity : QkActivity() {
         theme
             .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
             .subscribe { theme ->
-                window.statusBarColor = theme.theme
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    window.navigationBarColor = theme.theme
-                }
-
-                // Match the system-bar icon brightness to the bar color so they stay legible on
-                // every device and in both light and dark mode. The bar colors are set above, but
-                // the light/dark icon flag is not derived from them automatically: stock Android in
-                // light mode (API 27+) defaults the nav bar to dark icons, which are invisible on a
-                // dark brand bar like the default violet — some OEMs override this, which is why the
-                // icons looked white on one phone and black on a Pixel.
-                @Suppress("DEPRECATION")
-                run {
-                    val darkIcons = colors.useDarkSystemBarIcons(theme.theme)
-                    var visibility = window.decorView.systemUiVisibility
-                    visibility = if (darkIcons) {
-                        visibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    } else {
-                        visibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-                    }
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        visibility = if (darkIcons) {
-                            visibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                        } else {
-                            visibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-                        }
-                    }
-                    window.decorView.systemUiVisibility = visibility
-                }
+                // Transparent bars behind content (edge-to-edge) or opaque themed bars, plus the
+                // correct light/dark icon contrast for each. See QkActivity.applySystemBars.
+                applySystemBars(theme.theme)
 
                 // Default violet keeps the brand gradient header; custom colors paint it flat.
                 toolbar?.background = if (colors.usesBrandGradient(theme.theme)) {

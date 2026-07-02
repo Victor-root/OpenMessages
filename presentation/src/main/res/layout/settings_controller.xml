@@ -101,6 +101,15 @@
             app:widget="@layout/settings_switch_widget" />
 
         <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/edgeToEdge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_fullscreen_black_24dp"
+            app:title="@string/settings_edge_to_edge_title"
+            app:summary="@string/settings_edge_to_edge_summary"
+            app:widget="@layout/settings_switch_widget" />
+
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/showStt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

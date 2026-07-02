@@ -119,6 +119,9 @@ class Preferences @Inject constructor(
     val black = rxPrefs.getBoolean("black", false)
     val autoColor = rxPrefs.getBoolean("autoColor", true)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
+
+    /** Draw page content behind the transparent status and navigation bars (edge-to-edge). */
+    val edgeToEdge = rxPrefs.getBoolean("edgeToEdge", false)
     val showStt = rxPrefs.getBoolean("showStt", false)
     val showSttOffsetX = rxPrefs.getFloat("showSttOffsetX", Float.MIN_VALUE)
     val showSttOffsetY = rxPrefs.getFloat("showSttOffsetY", Float.MIN_VALUE)

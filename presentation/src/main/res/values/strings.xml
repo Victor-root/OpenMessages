@@ -342,6 +342,8 @@
     <string name="settings_automatic_colors_title">Automatic color per conversation</string>
     <string name="settings_text_size_title">Font size</string>
     <string name="settings_system_font_title">Use system font</string>
+    <string name="settings_edge_to_edge_title">Edge-to-edge</string>
+    <string name="settings_edge_to_edge_summary">Draw content behind the status and navigation bars</string>
     <string name="settings_system_show_stt_title">Show the speech-to-text button</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_notifications_title">Notifications</string>

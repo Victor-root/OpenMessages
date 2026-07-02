@@ -40,6 +40,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -58,6 +59,9 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.androidxcompat.drawerOpen
 import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.applyInsetBottomMargin
+import io.openmessages.common.util.extensions.applyInsetPadding
+import io.openmessages.common.util.extensions.applyInsetTop
 import io.openmessages.common.util.extensions.autoScrollToStart
 import io.openmessages.common.util.extensions.dismissKeyboard
 import io.openmessages.common.util.extensions.resolveThemeColor
@@ -82,6 +86,9 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
+// Peak opacity of the dynamic status-bar scrim once the toolbar is fully collapsed (a subtle veil).
+private const val STATUS_BAR_SCRIM_ALPHA = 0.32f
+
 class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var blockingDialog: BlockingDialog
@@ -101,6 +108,7 @@ class MainActivity : QkThemedActivity(), MainView {
     private var lastState: MainState? = null
     private var nextUnreadIndex = 0
     private var scrollToTopVisible = false
+    private var statusBarScrimListener: AppBarLayout.OnOffsetChangedListener? = null
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val activityResumedIntent: Subject<Boolean> = PublishSubject.create()
@@ -353,6 +361,35 @@ class MainActivity : QkThemedActivity(), MainView {
                         row.background = RippleDrawable(rippleColor, states, null)
                     }
                 }
+    }
+
+    // Edge-to-edge: the toolbar's themed background extends behind the status bar; the list draws
+    // behind the transparent nav bar (clipToPadding is already false) while everything interactive
+    // is lifted above it.
+    override fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
+        binding.toolbar.applyInsetTop(top)
+        binding.recyclerView.applyInsetPadding(bottom = bottom)
+        binding.compose.applyInsetBottomMargin(bottom)
+        binding.scrollToTop.applyInsetBottomMargin(bottom)
+        binding.drawer.root.applyInsetPadding(bottom = bottom)
+        if (::snackbarBinding.isInitialized) snackbarBinding.root.applyInsetPadding(bottom = bottom)
+        if (::syncingBinding.isInitialized) syncingBinding.root.applyInsetPadding(bottom = bottom)
+        setupStatusBarScrim(top)
+    }
+
+    // Sizes the status-bar scrim to the inset and, once, hooks its alpha to the toolbar collapse so
+    // it stays transparent at rest and fades in only as the list scrolls behind the status bar.
+    private fun setupStatusBarScrim(top: Int) {
+        binding.statusBarScrim.updateLayoutParams { height = top }
+        binding.statusBarScrim.isVisible = true
+        if (statusBarScrimListener == null) {
+            statusBarScrimListener = AppBarLayout.OnOffsetChangedListener { appBar, offset ->
+                val range = appBar.totalScrollRange
+                val fraction = if (range > 0) -offset.toFloat() / range else 0f
+                binding.statusBarScrim.alpha = fraction * STATUS_BAR_SCRIM_ALPHA
+            }
+            binding.appBarLayout.addOnOffsetChangedListener(statusBarScrimListener)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) =

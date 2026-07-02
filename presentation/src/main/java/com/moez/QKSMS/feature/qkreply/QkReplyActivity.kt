@@ -53,6 +53,9 @@ import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
+    // Floating dialog window: keep the platform's default bars, no edge-to-edge.
+    override val supportsEdgeToEdge get() = false
+
     private lateinit var binding: QkreplyActivityBinding
 
     @Inject lateinit var adapter: MessagesAdapter

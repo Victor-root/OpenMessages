@@ -43,6 +43,9 @@ import javax.inject.Inject
 
 class GalleryActivity : QkActivity(), GalleryView {
 
+    // Full-screen media viewer with its own chrome: leave the bars as-is for now.
+    override val supportsEdgeToEdge get() = false
+
     private lateinit var binding: GalleryActivityBinding
 
     @Inject lateinit var dateFormatter: DateFormatter

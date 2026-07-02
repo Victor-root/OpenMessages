@@ -179,6 +179,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
         binding.systemFont.checkbox?.setChecked(state.systemFontEnabled, animate)
 
+        binding.edgeToEdge.checkbox?.setChecked(state.edgeToEdgeEnabled, animate)
+
         binding.showStt.checkbox?.setChecked(state.showStt, animate)
 
         binding.unicode.checkbox?.setChecked(state.stripUnicodeEnabled, animate)

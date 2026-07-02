@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tags used by View.applyInsetPadding / applyInsetBottomMargin to remember a view's original
+         padding/margin, so repeated window-inset passes (rotation, IME) never accumulate. -->
+    <item name="insetBasePadding" type="id" />
+    <item name="insetBaseMargin" type="id" />
+    <item name="insetBaseHeight" type="id" />
+</resources>

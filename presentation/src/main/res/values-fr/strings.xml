@@ -294,6 +294,8 @@
     <string name="settings_automatic_colors_title">Couleur automatique par conversation</string>
     <string name="settings_text_size_title">Taille de la police</string>
     <string name="settings_system_font_title">Utiliser la police du système</string>
+    <string name="settings_edge_to_edge_title">Bord à bord</string>
+    <string name="settings_edge_to_edge_summary">Afficher le contenu derrière les barres de statut et de navigation</string>
     <string name="settings_system_show_stt_title">Afficher le bouton de saisie vocale</string>
     <string name="settings_auto_emoji_title">Émoticône automatique</string>
     <string name="settings_notifications_title">Notifications</string>
