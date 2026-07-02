@@ -29,7 +29,6 @@ import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import dagger.android.AndroidInjection
 import io.openmessages.R
-import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.extensions.hideKeyboard
@@ -58,7 +57,6 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     @Inject lateinit var contactsAdapter: ComposeItemAdapter
     @Inject lateinit var phoneNumberAdapter: PhoneNumberPickerAdapter
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var navigator: Navigator
 
     override val queryChangedIntent: Observable<CharSequence> by lazy { binding.search.textChanges() }
     override val queryClearedIntent: Observable<*> by lazy { binding.cancel.clicks() }
@@ -94,7 +92,9 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                navigator.showMainActivity()
+                // Cancel the picker with an empty result. The composer closes itself when no recipient
+                // was chosen and returns to whatever opened it, instead of jumping to the main screen.
+                this@ContactsActivity.finish(hashMapOf<String, String?>())
             }
         }
         onBackPressedDispatcher.addCallback(this, callback)
