@@ -32,6 +32,7 @@ import io.openmessages.manager.BillingManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
 import io.openmessages.repository.BackupRepository
 import io.openmessages.util.Preferences
 import io.openmessages.worker.AutoBackupWorker
@@ -103,6 +104,36 @@ class BackupPresenter @Inject constructor(
         view.zipClicks()
                 .autoDisposable(view.scope())
                 .subscribe { prefs.backupZip.set(!prefs.backupZip.get()) }
+
+        // Manage backups: list the existing ones so the user can rename or delete them
+        view.manageBackupsClicks()
+                .observeOn(Schedulers.io())
+                .map { backupRepo.getManagedBackups() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { backups -> view.showBackupManager(backups) }
+
+        view.renameBackupSelected()
+                .observeOn(Schedulers.io())
+                .map { (item, newName) ->
+                    backupRepo.renameBackup(item, newName) to backupRepo.getManagedBackups()
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { (ok, backups) ->
+                    if (!ok) context.makeToast(R.string.backup_manage_error)
+                    view.showBackupManager(backups)
+                }
+
+        view.deleteBackupSelected()
+                .observeOn(Schedulers.io())
+                .map { item -> backupRepo.deleteBackup(item) to backupRepo.getManagedBackups() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { (ok, backups) ->
+                    if (!ok) context.makeToast(R.string.backup_manage_error)
+                    view.showBackupManager(backups)
+                }
 
         // Backup writes automatically (no folder to pick), so go straight to the category picker
         view.backupClicks()

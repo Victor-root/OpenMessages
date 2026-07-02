@@ -221,6 +221,13 @@
     </plurals>
     <string name="backup_zip_title">Enregistrer en fichier .zip</string>
     <string name="backup_zip_summary">Regroupe chaque sauvegarde dans une seule archive, plus simple à transférer entre téléphones</string>
+    <string name="backup_manage_title">Gérer les sauvegardes</string>
+    <string name="backup_manage_summary">Renommer ou supprimer vos sauvegardes</string>
+    <string name="backup_manage_empty">Aucune sauvegarde trouvée à cet emplacement</string>
+    <string name="backup_manage_rename">Renommer</string>
+    <string name="backup_manage_delete">Supprimer</string>
+    <string name="backup_manage_delete_confirm">Supprimer « %s » ? C\'est irréversible.</string>
+    <string name="backup_manage_error">Impossible de modifier cette sauvegarde</string>
     <string name="backup_restore_from_title">Restaurer depuis</string>
     <string name="backup_restore_from_folder">Un dossier</string>
     <string name="backup_restore_from_zip">Un fichier .zip</string>
@@ -486,6 +493,7 @@
     <string name="button_yes">Oui</string>
     <string name="button_continue">Continuer</string>
     <string name="button_cancel">Annuler</string>
+    <string name="button_close">Fermer</string>
     <string name="button_delete">Supprimer</string>
     <string name="button_save">Enregistrer</string>
     <string name="button_stop">Arrêter</string>

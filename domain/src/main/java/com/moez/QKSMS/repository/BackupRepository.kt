@@ -22,6 +22,7 @@ import android.net.Uri
 import androidx.documentfile.provider.DocumentFile
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
 import io.reactivex.Observable
 
 interface BackupRepository {
@@ -66,5 +67,14 @@ interface BackupRepository {
     fun getRestoreProgress(): Observable<Progress>
 
     fun stopRestore()
+
+    /** Lists the backups (folders and .zip archives) in the current backup location, most recent first. */
+    fun getManagedBackups(): List<BackupItem>
+
+    /** Renames a backup in place. Returns true on success. */
+    fun renameBackup(item: BackupItem, newName: String): Boolean
+
+    /** Permanently deletes a backup (its whole sub-folder, or its .zip file). Returns true on success. */
+    fun deleteBackup(item: BackupItem): Boolean
 
 }

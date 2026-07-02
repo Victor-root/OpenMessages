@@ -259,6 +259,13 @@
     </plurals>
     <string name="backup_zip_title">Save as a .zip file</string>
     <string name="backup_zip_summary">Store each backup as a single archive, easier to move between phones</string>
+    <string name="backup_manage_title">Manage backups</string>
+    <string name="backup_manage_summary">Rename or delete your backups</string>
+    <string name="backup_manage_empty">No backups found in this location</string>
+    <string name="backup_manage_rename">Rename</string>
+    <string name="backup_manage_delete">Delete</string>
+    <string name="backup_manage_delete_confirm">Delete \"%s\"? This can\'t be undone.</string>
+    <string name="backup_manage_error">Couldn\'t update this backup</string>
     <string name="backup_restore_from_title">Restore from</string>
     <string name="backup_restore_from_folder">A folder</string>
     <string name="backup_restore_from_zip">A .zip file</string>
@@ -567,6 +574,7 @@
     <string name="button_yes">Yes</string>
     <string name="button_continue">Continue</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_close">Close</string>
     <string name="button_delete">Delete</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>

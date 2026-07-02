@@ -42,6 +42,7 @@ import io.openmessages.manager.AlarmManager
 import io.openmessages.model.AllowedNumber
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
 import io.openmessages.model.BlockedNumber
 import io.openmessages.model.Conversation
 import io.openmessages.model.Message
@@ -67,6 +68,7 @@ import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
 import java.util.Locale
 import java.util.Timer
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.concurrent.schedule
@@ -997,10 +999,7 @@ class BackupRepositoryImpl @Inject constructor(
                     values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
                 }
 
-                // A null Uri means the provider silently refused the row (no exception thrown), which is
-                // otherwise invisible; surface it so a partial restore can be diagnosed.
                 if (context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values) == null) {
-                    Timber.w("SMS insert refused (type=${message.type}, address=${message.address}, date=${message.date})")
                     errorCount++
                 }
             } catch (e: Exception) {
@@ -1174,5 +1173,193 @@ class BackupRepositoryImpl @Inject constructor(
     private fun isBackupOrRestoreRunning(): Boolean {
         return backupProgress.blockingFirst().running || restoreProgress.blockingFirst().running
     }
+
+    // region Backup management (list / rename / delete)
+
+    override fun getManagedBackups(): List<BackupItem> {
+        val tree = getBackupDocumentTree()
+        return try {
+            when {
+                tree != null -> listSafBackups(tree)
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> listMediaStoreBackups()
+                else -> listLegacyBackups()
+            }.sortedByDescending { backup -> backup.date }
+        } catch (e: Exception) {
+            Timber.w(e)
+            emptyList()
+        }
+    }
+
+    override fun renameBackup(item: BackupItem, newName: String): Boolean {
+        val safeName = newName.trim().replace('/', '-')
+        if (safeName.isEmpty() || safeName == item.name) return false
+        val tree = getBackupDocumentTree()
+        return try {
+            when {
+                tree != null -> renameSafBackup(tree, item, safeName)
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> renameMediaStoreBackup(item, safeName)
+                else -> renameLegacyBackup(item, safeName)
+            }
+        } catch (e: Exception) {
+            Timber.w(e)
+            false
+        }
+    }
+
+    override fun deleteBackup(item: BackupItem): Boolean {
+        val tree = getBackupDocumentTree()
+        return try {
+            when {
+                tree != null -> deleteSafBackup(tree, item)
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> deleteMediaStoreBackup(item)
+                else -> deleteLegacyBackup(item)
+            }
+        } catch (e: Exception) {
+            Timber.w(e)
+            false
+        }
+    }
+
+    /** Parses the default yyyy-MM-dd_HH-mm-ss backup name into a timestamp; 0 once it has been renamed. */
+    private fun dateFromName(name: String): Long =
+            try {
+                SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault()).parse(name)?.time ?: 0
+            } catch (e: Exception) {
+                0
+            }
+
+    private fun childName(item: BackupItem): String = if (item.isZip) "${item.name}.zip" else item.name
+
+    // SAF (the user's custom folder)
+
+    private fun listSafBackups(tree: DocumentFile): List<BackupItem> =
+            tree.listFiles().mapNotNull { file ->
+                val name = file.name ?: return@mapNotNull null
+                when {
+                    file.isDirectory && file.findFile("manifest.json") != null ->
+                            BackupItem(name, dateFromName(name), false)
+                    !file.isDirectory && name.endsWith(".zip", ignoreCase = true) ->
+                            name.dropLast(4).let { base -> BackupItem(base, dateFromName(base), true) }
+                    else -> null
+                }
+            }
+
+    private fun renameSafBackup(tree: DocumentFile, item: BackupItem, newName: String): Boolean {
+        val newTarget = if (item.isZip) "$newName.zip" else newName
+        return tree.findFile(childName(item))?.renameTo(newTarget) ?: false
+    }
+
+    private fun deleteSafBackup(tree: DocumentFile, item: BackupItem): Boolean =
+            tree.findFile(childName(item))?.delete() ?: false
+
+    // MediaStore (the default Documents/OpenMessages location on Android 10+)
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun mediaStoreCollection() = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun listMediaStoreBackups(): List<BackupItem> {
+        val basePath = "${Environment.DIRECTORY_DOCUMENTS}/$BACKUP_DIR"
+        val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME, MediaStore.MediaColumns.RELATIVE_PATH)
+        val items = mutableListOf<BackupItem>()
+        val seenFolders = mutableSetOf<String>()
+        context.contentResolver.query(mediaStoreCollection(), projection,
+                "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ?", arrayOf("$basePath/%"), null)?.use { cursor ->
+            val nameCol = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME)
+            val pathCol = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.RELATIVE_PATH)
+            while (cursor.moveToNext()) {
+                val name = cursor.getString(nameCol) ?: continue
+                val path = (cursor.getString(pathCol) ?: "").trimEnd('/')
+                when {
+                    // A .zip sitting directly in the OpenMessages folder is one backup
+                    name.endsWith(".zip", ignoreCase = true) && path.endsWith(BACKUP_DIR) ->
+                            name.dropLast(4).let { base -> items.add(BackupItem(base, dateFromName(base), true)) }
+                    // A manifest.json marks a folder backup; the parent folder name is the backup name
+                    name == "manifest.json" -> {
+                        val folder = path.substringAfterLast('/')
+                        if (folder != BACKUP_DIR && seenFolders.add(folder)) {
+                            items.add(BackupItem(folder, dateFromName(folder), false))
+                        }
+                    }
+                }
+            }
+        }
+        return items
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun deleteMediaStoreBackup(item: BackupItem): Boolean {
+        val basePath = "${Environment.DIRECTORY_DOCUMENTS}/$BACKUP_DIR"
+        return if (item.isZip) {
+            context.contentResolver.delete(mediaStoreCollection(),
+                    "${MediaStore.MediaColumns.RELATIVE_PATH}=? AND ${MediaStore.MediaColumns.DISPLAY_NAME}=?",
+                    arrayOf("$basePath/", "${item.name}.zip")) > 0
+        } else {
+            context.contentResolver.delete(mediaStoreCollection(),
+                    "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ?", arrayOf("$basePath/${item.name}/%")) > 0
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun renameMediaStoreBackup(item: BackupItem, newName: String): Boolean {
+        val basePath = "${Environment.DIRECTORY_DOCUMENTS}/$BACKUP_DIR"
+        if (item.isZip) {
+            val values = ContentValues().apply { put(MediaStore.MediaColumns.DISPLAY_NAME, "$newName.zip") }
+            return context.contentResolver.update(mediaStoreCollection(), values,
+                    "${MediaStore.MediaColumns.RELATIVE_PATH}=? AND ${MediaStore.MediaColumns.DISPLAY_NAME}=?",
+                    arrayOf("$basePath/", "${item.name}.zip")) > 0
+        }
+        // Folder rename: move every file from .../<old>/... to .../<new>/... via its RELATIVE_PATH
+        val projection = arrayOf(MediaStore.MediaColumns._ID, MediaStore.MediaColumns.RELATIVE_PATH)
+        var moved = 0
+        context.contentResolver.query(mediaStoreCollection(), projection,
+                "${MediaStore.MediaColumns.RELATIVE_PATH} LIKE ?", arrayOf("$basePath/${item.name}/%"), null)?.use { cursor ->
+            val idCol = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns._ID)
+            val pathCol = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.RELATIVE_PATH)
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idCol)
+                val path = cursor.getString(pathCol) ?: continue
+                val newPath = path.replaceFirst("$basePath/${item.name}", "$basePath/$newName")
+                val values = ContentValues().apply { put(MediaStore.MediaColumns.RELATIVE_PATH, newPath) }
+                try {
+                    if (context.contentResolver.update(
+                                    ContentUris.withAppendedId(mediaStoreCollection(), id), values, null, null) > 0) {
+                        moved++
+                    }
+                } catch (e: Exception) {
+                    Timber.w(e)
+                }
+            }
+        }
+        return moved > 0
+    }
+
+    // Legacy public storage (Android 9 and below)
+
+    @Suppress("DEPRECATION")
+    private fun legacyBackupDir() =
+            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), BACKUP_DIR)
+
+    private fun listLegacyBackups(): List<BackupItem> =
+            legacyBackupDir().listFiles()?.mapNotNull { file ->
+                when {
+                    file.isDirectory && File(file, "manifest.json").exists() ->
+                            BackupItem(file.name, dateFromName(file.name), false)
+                    file.isFile && file.name.endsWith(".zip", ignoreCase = true) ->
+                            file.name.dropLast(4).let { base -> BackupItem(base, dateFromName(base), true) }
+                    else -> null
+                }
+            } ?: emptyList()
+
+    private fun renameLegacyBackup(item: BackupItem, newName: String): Boolean {
+        val old = File(legacyBackupDir(), childName(item))
+        val new = File(legacyBackupDir(), if (item.isZip) "$newName.zip" else newName)
+        return old.exists() && !new.exists() && old.renameTo(new)
+    }
+
+    private fun deleteLegacyBackup(item: BackupItem): Boolean =
+            File(legacyBackupDir(), childName(item)).deleteRecursively()
+
+    // endregion
 
 }

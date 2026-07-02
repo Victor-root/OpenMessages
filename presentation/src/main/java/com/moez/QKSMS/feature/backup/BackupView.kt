@@ -22,13 +22,21 @@ import android.net.Uri
 import io.openmessages.common.base.QkViewContract
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
 import io.reactivex.Observable
 
 interface BackupView : QkViewContract<BackupState> {
     fun setBackupLocationClicks(): Observable<*>
     fun autoBackupClicks(): Observable<*>
     fun zipClicks(): Observable<*>
+    fun manageBackupsClicks(): Observable<*>
     fun restoreClicks(): Observable<*>
+
+    /** Emits a backup to rename plus its new name. */
+    fun renameBackupSelected(): Observable<Pair<BackupItem, String>>
+
+    /** Emits a backup the user confirmed to delete. */
+    fun deleteBackupSelected(): Observable<BackupItem>
 
     fun backupClicks(): Observable<*>
 
@@ -74,6 +82,9 @@ interface BackupView : QkViewContract<BackupState> {
 
     fun showAutoBackupFrequencyPicker(current: Int)
     fun openExactAlarmSettings()
+
+    /** Shows the backup manager: the list of existing backups with rename/delete actions. */
+    fun showBackupManager(backups: List<BackupItem>)
 
     fun showBackupCategoryPicker()
     fun showRestoreSourcePicker(folder: Uri, backups: List<BackupFolder>, labels: List<String>)

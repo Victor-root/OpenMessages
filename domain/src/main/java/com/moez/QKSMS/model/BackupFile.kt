@@ -37,3 +37,14 @@ data class BackupFolder(
     val date: Long,
     val categories: Set<BackupCategory>
 )
+
+/**
+ * One backup as shown in the in-app manager. [name] is the sub-folder name, or the .zip file name
+ * without its extension; [isZip] tells the two apart. [date] is parsed from the default date-and-time
+ * name (0 once the user has renamed it to something else), used only for sorting and display.
+ */
+data class BackupItem(
+    val name: String,
+    val date: Long,
+    val isZip: Boolean
+)

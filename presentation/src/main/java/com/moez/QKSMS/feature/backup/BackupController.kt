@@ -51,6 +51,7 @@ import io.openmessages.common.widget.PreferenceView
 import io.openmessages.injection.appComponent
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
 import io.openmessages.repository.BackupRepository
 import io.openmessages.util.Preferences
 import io.openmessages.databinding.BackupControllerBinding
@@ -78,6 +79,8 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     private val restoreZipSelectedSubject: Subject<Uri> = PublishSubject.create()
 
     private val autoBackupFrequencySelectedSubject: Subject<Int> = PublishSubject.create()
+    private val renameBackupSelectedSubject: Subject<Pair<BackupItem, String>> = PublishSubject.create()
+    private val deleteBackupSelectedSubject: Subject<BackupItem> = PublishSubject.create()
     private val backupCategoriesSelectedSubject: Subject<Set<BackupCategory>> = PublishSubject.create()
     private val restoreSourceSelectedSubject: Subject<Pair<Uri, BackupFolder>> = PublishSubject.create()
     private val restoreCategoriesSelectedSubject: Subject<Triple<Uri, String, Set<BackupCategory>>> = PublishSubject.create()
@@ -245,6 +248,12 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun zipClicks(): Observable<*> = binding.zip.clicks()
 
+    override fun manageBackupsClicks(): Observable<*> = binding.manage.clicks()
+
+    override fun renameBackupSelected(): Observable<Pair<BackupItem, String>> = renameBackupSelectedSubject
+
+    override fun deleteBackupSelected(): Observable<BackupItem> = deleteBackupSelectedSubject
+
     override fun restoreClicks(): Observable<*> = binding.restore.clicks()
 
     override fun selectedBackupErrorClicks(): Observable<*> = restoreErrorConfirmSubject
@@ -313,6 +322,87 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                         else -> selectRestoreZip()
                     }
                 }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    override fun showBackupManager(backups: List<BackupItem>) {
+        if (backups.isEmpty()) {
+            AlertDialog.Builder(activity!!)
+                    .setTitle(R.string.backup_manage_title)
+                    .setMessage(R.string.backup_manage_empty)
+                    .setPositiveButton(R.string.button_continue, null)
+                    .create()
+                    .themeButtons(colors.theme().theme)
+                    .show()
+            return
+        }
+
+        val labels = backups.map { backup ->
+            if (backup.isZip) "${backup.name}  (.zip)" else backup.name
+        }.toTypedArray()
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_manage_title)
+                .setItems(labels) { _, which -> showBackupActions(backups[which]) }
+                .setNegativeButton(R.string.button_close, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    /** Second step of the manager: rename or delete one backup. */
+    private fun showBackupActions(item: BackupItem) {
+        val actions = arrayOf(
+                activity!!.getString(R.string.backup_manage_rename),
+                activity!!.getString(R.string.backup_manage_delete))
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(item.name)
+                .setItems(actions) { _, which ->
+                    when (which) {
+                        0 -> showRenameBackupDialog(item)
+                        else -> showDeleteBackupConfirm(item)
+                    }
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    private fun showRenameBackupDialog(item: BackupItem) {
+        val margin = (activity!!.resources.displayMetrics.density * 20).toInt()
+        val input = EditText(activity!!).apply {
+            inputType = InputType.TYPE_CLASS_TEXT
+            setText(item.name)
+            setSelection(text.length)
+        }
+        val container = FrameLayout(activity!!).apply {
+            setPadding(margin, margin / 2, margin, 0)
+            addView(input)
+        }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_manage_rename)
+                .setView(container)
+                .setPositiveButton(R.string.button_save) { _, _ ->
+                    val newName = input.text.toString().trim()
+                    if (newName.isNotEmpty()) renameBackupSelectedSubject.onNext(item to newName)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    private fun showDeleteBackupConfirm(item: BackupItem) {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_manage_delete)
+                .setMessage(activity!!.getString(R.string.backup_manage_delete_confirm, item.name))
+                .setPositiveButton(R.string.button_delete) { _, _ -> deleteBackupSelectedSubject.onNext(item) }
                 .setNegativeButton(R.string.button_cancel, null)
                 .create()
                 .themeButtons(colors.theme().theme)
