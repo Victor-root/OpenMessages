@@ -7,56 +7,54 @@
 
 ## ✨ What's different from upstream
 
-Open Messages is a rebrand of QUIK (itself a fork of QKSMS), with the package `io.openmessages` and
-a number of UX, theming and privacy improvements layered on top. The highlights:
+Open Messages is a rebrand of QUIK (itself a fork of QKSMS), package `io.openmessages`, with UX,
+theming and privacy improvements layered on top. The highlights:
 
 ### 🛡️ Privacy-first spam & phishing blocking
-* The blocking settings are split into two clear sections: **Integrated** (Open Messages blocks
-  on your own device, with no third-party app) and **External apps** (optionally delegate to
-  Call Control, Should I Answer? or Call Blocker). The integrated sources are **additive**, so you
-  can combine several at once instead of picking only one.
-* **Allowlist**: approve a sender and the automatic sources will never flag or block them again.
-* **"Suspected spam"**: borderline senders stay in your inbox but get a discreet label in the
-  conversation list and a banner inside the conversation with one-tap **Approve** or **Block**. An
-  option lets you send suspected spam straight to the blocked list instead of just labelling it.
-* Opt-in integrated sources: **telemarketing numbers** (French ARCEP "démarchage" ranges, with
-  matching logic ported from the open-source
-  [Saracroche](https://codeberg.org/cbouvat/saracroche-android)) and **anti-phishing** (catches
-  messages whose links point to known phishing sites).
-* **Offline-first & transparent**: Open Messages makes no network connection on its own. When you
-  turn a source on, it downloads that list once over the internet (from
-  [Saracroche](https://codeberg.org/cbouvat/saracroche-android) or
-  [The Block List Project](https://github.com/blocklistproject/Lists)); everything after that, all
-  the matching, happens offline on your device.
+* On-device blocking in two clear sections: **Integrated** (no third-party app) and **External apps**
+  (optionally delegate to Call Control, Should I Answer? or Call Blocker). Integrated sources are
+  **additive**, so you can combine several at once.
+* Opt-in sources: French ARCEP **telemarketing** ranges (matching ported from
+  [Saracroche](https://codeberg.org/cbouvat/saracroche-android)) and **anti-phishing** (messages
+  whose links point to known phishing sites).
+* **"Suspected spam"**: borderline senders stay in your inbox with a discreet label and an
+  in-conversation **Approve / Block** banner, or go straight to the blocked list. The **allowlist**
+  permanently approves a sender.
+* **Offline-first**: no network connection on its own. Each list downloads once when you enable it
+  (from [Saracroche](https://codeberg.org/cbouvat/saracroche-android) or
+  [The Block List Project](https://github.com/blocklistproject/Lists)); all matching then happens on
+  your device.
 
 ### 🎨 Theming & appearance
-* Reworked, tabbed theme picker with rounded corners and **live in-app theme updates** (no restart,
-  no flash). Switching theme, dark mode or text size now crossfades instead of flashing.
-* **Per-conversation colors** use the same modern picker, opening on the conversation's real color.
-* **Pure-black (AMOLED) mode** that turns the dark backgrounds true black to save power on OLED
-  screens.
-* A dedicated **App icon** tab: color the launcher icon independently of the app theme, or have it
-  follow the theme. The icon swaps instantly, and the splash and recent-apps colors stay in sync
-  across launchers and OEMs.
-* New Tabler-style message launcher icon.
-* **Material 3 switches** throughout, themed dialog buttons and rounded corners on dialogs app-wide,
-  a themed unread badge, and the brand gradient restored for the default violet.
-* Icons added to the notification-settings and blocking rows, refreshed drawer icons, and system-bar
-  icons kept legible on every theme color.
+* Tabbed theme picker with **live in-app updates**: theme, dark mode and text size crossfade instead
+  of flashing, no restart. **Per-conversation colors** use the same picker.
+* **Pure-black (AMOLED) mode** for OLED screens.
+* Dedicated **App icon** tab: color the launcher icon independently or have it follow the theme; it
+  swaps instantly and keeps the splash and recent-apps colors in sync. New Tabler-style launcher icon.
+* **Material 3 switches**, themed rounded dialogs, a themed unread badge, refreshed drawer and
+  blocking/notification-row icons, and system-bar icons kept legible on every color.
 
 ### 📋 Main screen
-* Refreshed main screen: a gradient header, a pill-shaped unread badge, a redesigned drawer, a
-  scroll-to-top button and a collapsible search.
+* Gradient header, pill-shaped unread badge, redesigned drawer, scroll-to-top button and collapsible
+  search.
 
 ### 💬 Messaging
-* Saved message **Templates**, with optional titles, distinct cards, and insertion from inside a
-  conversation.
-* **Expandable message input** that grows for long texts, with a full-screen editor.
-* A new **read/unread toggle** swipe action, with an envelope icon that opens or closes to match
-  what the swipe will do. Default swipe actions are **swipe right = mark read** and **swipe left =
-  archive**.
-* Redesigned signature settings, and the target conversation flashes when you jump to the next
-  unread.
+* Saved message **Templates** (optional titles, insert from inside a conversation).
+* **Expandable message input** with a full-screen editor.
+* **Read/unread swipe** toggle with a matching envelope icon; defaults are swipe right = mark read,
+  swipe left = archive.
+* Redesigned signature settings, and the target conversation flashes when you jump to the next unread.
+
+### 💾 Backup & restore
+* **Full local backup and restore**, on-device with no cloud or account. Pick what to include:
+  **messages (SMS, MMS and attachments)**, **settings** (including your templates), **blocking
+  rules**, **scheduled messages** and the **archived / pinned** state of conversations.
+* Saved to **Documents/OpenMessages** or a **custom folder**, as a dated folder or a single **.zip**;
+  restore from either.
+* **Automatic backups** (off, daily, weekly or a custom interval), plus a built-in **manager** to
+  rename or delete backups from inside the app.
+* MMS attachments are **streamed to separate files** to stay light on memory, and restoring
+  **scheduled messages** re-arms their alarms.
 
 ### 🔔 Notifications
 * Notifications show **"Messages"** as the app name in the notification panel.
@@ -78,19 +76,18 @@ a number of UX, theming and privacy improvements layered on top. The highlights:
 
 ## 🚀 Why this fork exists
 
-OpenMessages started after I wanted to make a few small improvements to Open Messages while using it as my daily SMS app.
+OpenMessages started from a few small improvements I wanted while using Open Messages as my daily SMS
+app.
 
-Like many developers today, I use AI tools as part of my workflow, *not to blindly generate code*, but to understand codebases faster, test ideas, and work more efficiently while still **reviewing everything myself**.
+Like many developers today, I use AI tools as part of my workflow, *not to blindly generate code*,
+but to understand codebases faster, test ideas, and work more efficiently while still **reviewing
+everything myself**.
 
-My first instinct was to contribute those changes upstream.
-
-However, after submitting a small contribution, I quickly realized that some projects are still more focused on ***how*** code is written than on the **actual quality of the contribution itself**.
-
-I personally disagree with that approach.
-
-Good code should be judged on the final result, maintainability, and whether the contributor understands what they are shipping, not simply on whether modern development tools were involved during development.
-
-So instead of stopping there, I decided to maintain my own fork.
+My first instinct was to contribute upstream. But after submitting a small contribution, I realized
+some projects are still more focused on ***how*** code is written than on the **actual quality of the
+contribution itself**. I disagree with that approach: good code should be judged on the final result,
+maintainability, and whether the contributor understands what they are shipping, not on whether
+modern tools were involved. So instead of stopping there, I decided to maintain my own fork.
 
 ---
 
