@@ -41,11 +41,9 @@ import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.getLabel
-import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setNegativeButton
 import io.openmessages.common.util.extensions.setPositiveButton
 import io.openmessages.common.util.extensions.setShowing
-import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.injection.appComponent
@@ -55,6 +53,7 @@ import io.openmessages.model.BackupItem
 import io.openmessages.repository.BackupRepository
 import io.openmessages.util.Preferences
 import io.openmessages.databinding.BackupControllerBinding
+import io.openmessages.databinding.BackupListDialogBinding
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -122,6 +121,9 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     private lateinit var openRestoreZip: ActivityResultLauncher<Array<String>>
     private lateinit var exactAlarmSettings: ActivityResultLauncher<Intent>
 
+    private var backupManagerDialog: AlertDialog? = null
+    private var backupsAdapter: BackupsAdapter? = null
+
     init {
         appComponent.inject(this)
     }
@@ -165,9 +167,6 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
         themedActivity?.colors?.theme()?.let { theme ->
             binding.progressBar.indeterminateTintList = ColorStateList.valueOf(theme.theme)
             binding.progressBar.progressTintList = ColorStateList.valueOf(theme.theme)
-            binding.fab.setBackgroundTint(theme.theme)
-            binding.fabIcon.setTint(theme.textPrimary)
-            binding.fabLabel.setTextColor(theme.textPrimary)
         }
 
         // Make the list titles bold
@@ -175,6 +174,13 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
             .mapNotNull { it as? PreferenceView }
             .map { it.titleView }
             .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
+    }
+
+    override fun onDestroyView(view: View) {
+        backupManagerDialog?.dismiss()
+        backupManagerDialog = null
+        backupsAdapter = null
+        super.onDestroyView(view)
     }
 
     override fun render(state: BackupState) {
@@ -192,7 +198,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 binding.progressBar.max = running?.max ?: 0
                 binding.progressBar.progress = running?.count ?: 0
                 binding.progress.isVisible = true
-                binding.fab.isVisible = false
+                binding.backup.isVisible = false
             }
 
             state.restoreProgress.running -> {
@@ -208,12 +214,12 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 binding.progressBar.max = running?.max ?: 0
                 binding.progressBar.progress = running?.count ?: 0
                 binding.progress.isVisible = true
-                binding.fab.isVisible = false
+                binding.backup.isVisible = false
             }
 
             else -> {
                 binding.progress.isVisible = false
-                binding.fab.isVisible = true
+                binding.backup.isVisible = true
             }
         }
 
@@ -228,16 +234,6 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
         exactAlarmDialog.setShowing(state.showExactAlarmDialog)
 
         stopRestoreDialog.setShowing(state.showStopRestoreDialog)
-
-        binding.fabIcon.setImageResource(when (state.upgraded) {
-            true -> R.drawable.ic_file_upload_black_24dp
-            false -> R.drawable.ic_star_black_24dp
-        })
-
-        binding.fabLabel.setText(when (state.upgraded) {
-            true -> R.string.backup_now
-            false -> R.string.title_qksms_plus
-        })
     }
 
     override fun setBackupLocationClicks(): Observable<*> = binding.location.clicks()
@@ -280,7 +276,7 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun stopRestoreCancel(): Observable<*> = stopRestoreCancelSubject
 
-    override fun backupClicks(): Observable<*> = binding.fab.clicks()
+    override fun backupClicks(): Observable<*> = binding.backup.clicks()
 
     override fun documentTreeSelected(): Observable<Uri> = documentTreeSelectedSubject
 
@@ -329,48 +325,26 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     }
 
     override fun showBackupManager(backups: List<BackupItem>) {
-        if (backups.isEmpty()) {
-            AlertDialog.Builder(activity!!)
-                    .setTitle(R.string.backup_manage_title)
-                    .setMessage(R.string.backup_manage_empty)
-                    .setPositiveButton(R.string.button_continue, null)
-                    .create()
-                    .themeButtons(colors.theme().theme)
-                    .show()
+        // Rename/delete re-emit the refreshed list; if the manager is already open, update it in place
+        if (backupManagerDialog?.isShowing == true) {
+            backupsAdapter?.data = backups
             return
         }
 
-        val labels = backups.map { backup ->
-            if (backup.isZip) "${backup.name}  (.zip)" else backup.name
-        }.toTypedArray()
+        val adapter = BackupsAdapter(::showRenameBackupDialog, ::showDeleteBackupConfirm)
+        backupsAdapter = adapter
 
-        AlertDialog.Builder(activity!!)
-                .setTitle(R.string.backup_manage_title)
-                .setItems(labels) { _, which -> showBackupActions(backups[which]) }
+        val dialogBinding = BackupListDialogBinding.inflate(LayoutInflater.from(activity!!))
+        dialogBinding.files.adapter = adapter
+        adapter.emptyView = dialogBinding.empty
+        adapter.data = backups
+
+        backupManagerDialog = AlertDialog.Builder(activity!!)
+                .setView(dialogBinding.root)
                 .setNegativeButton(R.string.button_close, null)
                 .create()
                 .themeButtons(colors.theme().theme)
-                .show()
-    }
-
-    /** Second step of the manager: rename or delete one backup. */
-    private fun showBackupActions(item: BackupItem) {
-        val actions = arrayOf(
-                activity!!.getString(R.string.backup_manage_rename),
-                activity!!.getString(R.string.backup_manage_delete))
-
-        AlertDialog.Builder(activity!!)
-                .setTitle(item.name)
-                .setItems(actions) { _, which ->
-                    when (which) {
-                        0 -> showRenameBackupDialog(item)
-                        else -> showDeleteBackupConfirm(item)
-                    }
-                }
-                .setNegativeButton(R.string.button_cancel, null)
-                .create()
-                .themeButtons(colors.theme().theme)
-                .show()
+                .also { it.show() }
     }
 
     private fun showRenameBackupDialog(item: BackupItem) {

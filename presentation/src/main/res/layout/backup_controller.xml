@@ -152,6 +152,14 @@
                 app:summary="@string/backup_manage_summary" />
 
             <io.openmessages.common.widget.PreferenceView
+                android:id="@+id/backup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_file_upload_black_24dp"
+                app:summary="@string/backup_now_summary"
+                app:title="@string/backup_now" />
+
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/restore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,37 +183,5 @@
         </LinearLayout>
 
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="@drawable/rounded_rectangle_24dp"
-        android:elevation="4dp"
-        android:gravity="center"
-        tools:backgroundTint="@color/tools_theme">
-
-        <ImageView
-            android:id="@+id/fabIcon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="12dp"
-            android:src="@drawable/ic_star_black_24dp"
-            tools:tint="@color/textPrimaryDark" />
-
-        <io.openmessages.common.widget.QkTextView
-            android:id="@+id/fabLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/title_qksms_plus"
-            android:textColor="@color/textPrimaryDark"
-            android:textStyle="bold"
-            app:textSize="primary" />
-
-    </LinearLayout>
 
 </FrameLayout>

@@ -228,6 +228,8 @@
     <string name="backup_manage_delete">Supprimer</string>
     <string name="backup_manage_delete_confirm">Supprimer « %s » ? C\'est irréversible.</string>
     <string name="backup_manage_error">Impossible de modifier cette sauvegarde</string>
+    <string name="backup_manage_type_folder">Dossier</string>
+    <string name="backup_manage_type_zip">Archive .zip</string>
     <string name="backup_restore_from_title">Restaurer depuis</string>
     <string name="backup_restore_from_folder">Un dossier</string>
     <string name="backup_restore_from_zip">Un fichier .zip</string>
@@ -250,6 +252,7 @@
     <string name="backup_restore_dialog_empty">Aucune sauvegarde trouvée</string>
     <string name="backup_disclaimer">Par défaut, les sauvegardes sont dans Documents/OpenMessages ; utilisez Emplacement de sauvegarde ci-dessus pour changer. Vos SMS et MMS (avec pièces jointes), réglages, modèles, règles de blocage, messages programmés et conversations archivées ou épinglées peuvent tous être inclus. Utilisez Sauvegarde automatique ci-dessus pour en lancer une régulièrement.</string>
     <string name="backup_now">Sauvegarder maintenant</string>
+    <string name="backup_now_summary">Créer une nouvelle sauvegarde</string>
     <string name="backup_categories_title">Que faut-il sauvegarder ?</string>
     <string name="backup_restore_source_title">Quelle sauvegarde ?</string>
     <string name="backup_restore_categories_title">Restaurer depuis %s</string>

@@ -266,6 +266,8 @@
     <string name="backup_manage_delete">Delete</string>
     <string name="backup_manage_delete_confirm">Delete \"%s\"? This can\'t be undone.</string>
     <string name="backup_manage_error">Couldn\'t update this backup</string>
+    <string name="backup_manage_type_folder">Folder</string>
+    <string name="backup_manage_type_zip">Zip archive</string>
     <string name="backup_restore_from_title">Restore from</string>
     <string name="backup_restore_from_folder">A folder</string>
     <string name="backup_restore_from_zip">A .zip file</string>
@@ -288,6 +290,7 @@
     <string name="backup_restore_dialog_empty">No backups found</string>
     <string name="backup_disclaimer">By default, backups are saved to Documents/OpenMessages; use Backup location above to change it. Your SMS and MMS (with attachments), settings, templates, blocking rules, scheduled messages and archived or pinned conversations can all be included. Use Automatic backup above to run one on a schedule.</string>
     <string name="backup_now">Backup now</string>
+    <string name="backup_now_summary">Create a new backup</string>
     <string name="backup_categories_title">What should be backed up?</string>
     <string name="backup_restore_source_title">Which backup?</string>
     <string name="backup_restore_categories_title">Restore from %s</string>
