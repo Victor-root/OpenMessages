@@ -593,13 +593,13 @@ class MainViewModel @Inject constructor(
                         !state.defaultSms -> view.requestDefaultSms()
                         !state.smsPermission -> view.requestPermissions()
                         !state.contactPermission -> view.requestPermissions()
-                        !state.notificationPermission -> {
-                            if (prefs.hasAskedForNotificationPermission.get()) {
-                                navigator.showPermissions()
-                            } else {
+                        !state.notificationPermission -> when {
+                            !prefs.hasAskedForNotificationPermission.get() -> {
                                 prefs.hasAskedForNotificationPermission.set(true)
                                 view.requestPermissions()
                             }
+                            view.shouldShowNotificationRationale() -> view.requestPermissions()
+                            else -> navigator.showAppNotificationSettings()
                         }
                     }
                 }

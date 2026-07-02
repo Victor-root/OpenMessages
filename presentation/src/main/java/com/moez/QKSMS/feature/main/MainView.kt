@@ -46,6 +46,7 @@ interface MainView : QkView<MainState> {
 
     fun requestDefaultSms()
     fun requestPermissions()
+    fun shouldShowNotificationRationale(): Boolean
     fun clearSearch()
     fun clearSelection()
     fun toggleSelectAll()

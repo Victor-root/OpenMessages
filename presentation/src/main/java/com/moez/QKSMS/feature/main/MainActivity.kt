@@ -575,6 +575,10 @@ class MainActivity : QkThemedActivity(), MainView {
         ActivityCompat.requestPermissions(this, permissions.toTypedArray(), 0)
     }
 
+    override fun shouldShowNotificationRationale(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)
+
     override fun clearSearch() {
         dismissKeyboard()
         binding.toolbarSearch.text = null

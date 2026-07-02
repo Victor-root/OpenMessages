@@ -319,14 +319,6 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
-    fun showPermissions() {
-        val intent = Intent()
-        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        intent.data = Uri.fromParts("package", context.packageName, null)
-
-        startActivity(intent)
-    }
-
     fun showNotificationSettings(threadId: Long = 0) {
         val intent = Intent(context, NotificationPrefsActivity::class.java)
         intent.putExtra("threadId", threadId)
@@ -351,6 +343,15 @@ class Navigator @Inject constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
                     .setData(Uri.parse("package:${context.packageName}"))
+            startActivity(intent)
+        }
+    }
+
+    /** Opens the system notification settings for this app, where the OS notification toggle lives. */
+    fun showAppNotificationSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
             startActivity(intent)
         }
     }

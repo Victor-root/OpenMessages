@@ -113,7 +113,10 @@ class BackupRepositoryImpl @Inject constructor(
          * restore (e.g. the SAF tree Uri of the backup folder, which is meaningless on another
          * device/install).
          */
-        private val SETTINGS_DENYLIST = setOf("backupDirectory")
+        // Device-local prefs that must not travel through a backup: the backup folder is per-device,
+        // and "have we asked for notification permission" tracks a prompt shown on this device only
+        // (restoring it as true makes a fresh install skip the system dialog and jump to settings).
+        private val SETTINGS_DENYLIST = setOf("backupDirectory", "hasAskedForNotificationPermission")
     }
 
     data class Backup(
