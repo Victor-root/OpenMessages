@@ -43,7 +43,6 @@ class BlockingController : QkController<BlockingControllerBinding, BlockingView,
 
     override val blockingManagerIntent get() = binding.blockingManager.clicks()
     override val blockedNumbersIntent get() = binding.blockedNumbers.clicks()
-    override val arcepSourceIntent get() = binding.arcepSource.clicks()
     override val phishingSourceIntent get() = binding.phishingSource.clicks()
     override val flagBlockSourceIntent get() = binding.flagBlockSource.clicks()
     override val messageContentFiltersIntent get() = binding.messageContentFilters.clicks()
@@ -72,9 +71,7 @@ class BlockingController : QkController<BlockingControllerBinding, BlockingView,
 
     override fun render(state: BlockingState) {
         binding.blockingManager.summary = state.blockingManager
-        binding.arcepSource.checkbox?.isChecked = state.arcepEnabled
         binding.phishingSource.checkbox?.isChecked = state.phishingEnabled
-        if (state.arcepSummary.isNotEmpty()) binding.arcepSource.summary = state.arcepSummary
         if (state.phishingSummary.isNotEmpty()) binding.phishingSource.summary = state.phishingSummary
         binding.flagBlockSource.checkbox?.isChecked = state.flagBlockEnabled
         binding.drop.checkbox?.isChecked = state.dropEnabled

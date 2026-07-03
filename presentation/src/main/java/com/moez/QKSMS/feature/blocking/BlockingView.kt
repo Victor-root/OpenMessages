@@ -25,7 +25,6 @@ interface BlockingView : QkViewContract<BlockingState> {
 
     val blockingManagerIntent: Observable<*>
     val blockedNumbersIntent: Observable<*>
-    val arcepSourceIntent: Observable<*>
     val phishingSourceIntent: Observable<*>
     val flagBlockSourceIntent: Observable<*>
     val messageContentFiltersIntent: Observable<*>

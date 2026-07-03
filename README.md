@@ -12,18 +12,14 @@ theming and privacy improvements layered on top. The highlights:
 
 ### 🛡️ Privacy-first spam & phishing blocking
 * On-device blocking in two clear sections: **Integrated** (no third-party app) and **External apps**
-  (optionally delegate to Call Control, Should I Answer? or Call Blocker). Integrated sources are
-  **additive**, so you can combine several at once.
-* Opt-in sources: French ARCEP **telemarketing** ranges (matching ported from
-  [Saracroche](https://codeberg.org/cbouvat/saracroche-android)) and **anti-phishing** (messages
-  whose links point to known phishing sites).
+  (optionally delegate to Call Control, Should I Answer? or Call Blocker).
+* Opt-in **anti-phishing** source: messages whose links point to known phishing sites.
 * **"Suspected spam"**: borderline senders stay in your inbox with a discreet label and an
   in-conversation **Approve / Block** banner, or go straight to the blocked list. The **allowlist**
   permanently approves a sender.
-* **Offline-first**: no network connection on its own. Each list downloads once when you enable it
-  (from [Saracroche](https://codeberg.org/cbouvat/saracroche-android) or
-  [The Block List Project](https://github.com/blocklistproject/Lists)); all matching then happens on
-  your device.
+* **Offline-first**: no network connection on its own. The phishing list downloads once when you
+  enable it (from [The Block List Project](https://github.com/blocklistproject/Lists)); all matching
+  then happens on your device.
 
 ### 🎨 Theming & appearance
 * Tabbed theme picker with **live in-app updates**: theme, dark mode and text size crossfade instead

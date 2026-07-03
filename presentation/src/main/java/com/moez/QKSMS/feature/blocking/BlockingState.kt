@@ -20,9 +20,7 @@ package io.openmessages.feature.blocking
 
 data class BlockingState(
     val blockingManager: String = "",
-    val arcepEnabled: Boolean = false,
     val phishingEnabled: Boolean = false,
-    val arcepSummary: String = "",
     val phishingSummary: String = "",
     val flagBlockEnabled: Boolean = false,
     val dropEnabled: Boolean = false

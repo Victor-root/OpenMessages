@@ -21,7 +21,6 @@ package io.openmessages.blocking
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -36,7 +35,6 @@ import javax.inject.Singleton
  */
 @Singleton
 class BlockingListDownloader @Inject constructor(
-    private val saracrocheStore: SaracrochePatternStore,
     private val phishingStore: PhishingDomainStore
 ) {
 
@@ -46,16 +44,7 @@ class BlockingListDownloader @Inject constructor(
             .build()
     }
 
-    fun arcepDownloaded(): Boolean = saracrocheStore.hasPatterns()
-
     fun phishingDownloaded(): Boolean = phishingStore.hasDomains()
-
-    /** Fetches the Saracroche "démarchage" list, stores it, and returns the number of patterns. */
-    fun updateArcep(): Single<Int> = Single.fromCallable {
-        val body = fetch(ARCEP_URL)
-        saracrocheStore.save(body)
-        JSONObject(body).optJSONArray("patterns")?.length() ?: 0
-    }
 
     /** Fetches the phishing domain list, stores it, and returns the number of domains. */
     fun updatePhishing(): Single<Int> = Single.fromCallable {
@@ -76,8 +65,6 @@ class BlockingListDownloader @Inject constructor(
     }
 
     companion object {
-        private const val ARCEP_URL =
-            "https://app.saracroche.org/api/v1/lists/french-list-arcep-operators"
         private const val PHISHING_URL =
             "https://blocklistproject.github.io/Lists/phishing.txt"
     }

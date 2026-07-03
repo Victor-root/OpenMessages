@@ -52,9 +52,6 @@ class BlockingPresenter @Inject constructor(
                 .map(context::getString)
                 .subscribe { manager -> newState { copy(blockingManager = manager) } }
 
-        disposables += prefs.blockSourceArcep.asObservable()
-                .subscribe { enabled -> newState { copy(arcepEnabled = enabled) } }
-
         disposables += prefs.blockSourcePhishing.asObservable()
                 .subscribe { enabled -> newState { copy(phishingEnabled = enabled) } }
 
@@ -64,7 +61,7 @@ class BlockingPresenter @Inject constructor(
         disposables += prefs.drop.asObservable()
                 .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
 
-        newState { copy(arcepSummary = arcepSummary(), phishingSummary = phishingSummary()) }
+        newState { copy(phishingSummary = phishingSummary()) }
     }
 
     override fun bindIntents(view: BlockingView) {
@@ -84,10 +81,6 @@ class BlockingPresenter @Inject constructor(
                         blockingClient.openSettings()
                     }
                 }
-
-        view.arcepSourceIntent
-                .autoDisposable(view.scope())
-                .subscribe { toggleArcep() }
 
         view.phishingSourceIntent
                 .autoDisposable(view.scope())
@@ -110,13 +103,6 @@ class BlockingPresenter @Inject constructor(
                 .subscribe { prefs.drop.set(!prefs.drop.get()) }
     }
 
-    /** Row summary for the Saracroche source: the download status when on, the description otherwise. */
-    private fun arcepSummary(): String = when {
-        prefs.blockSourceArcep.get() && downloader.arcepDownloaded() ->
-            context.getString(R.string.blocking_source_status_updated, prefs.blockArcepCount.get())
-        else -> context.getString(R.string.blocking_source_arcep_summary)
-    }
-
     private fun phishingSummary(): String = when {
         prefs.blockSourcePhishing.get() && downloader.phishingDownloaded() ->
             context.getString(R.string.blocking_source_status_updated, prefs.blockPhishingCount.get())
@@ -124,26 +110,6 @@ class BlockingPresenter @Inject constructor(
     }
 
     /** Toggle the source; the first time it is enabled, download its list (the only network call). */
-    private fun toggleArcep() {
-        val enabling = !prefs.blockSourceArcep.get()
-        prefs.blockSourceArcep.set(enabling)
-        if (enabling) {
-            newState { copy(arcepSummary = context.getString(R.string.blocking_source_status_updating)) }
-            disposables += downloader.updateArcep()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ count ->
-                        prefs.blockArcepCount.set(count)
-                        newState { copy(arcepSummary = context.getString(R.string.blocking_source_status_updated, count)) }
-                    }, { error ->
-                        Timber.w(error, "Saracroche list download failed")
-                        newState { copy(arcepSummary = context.getString(R.string.blocking_source_status_failed)) }
-                    })
-        } else {
-            newState { copy(arcepSummary = arcepSummary()) }
-        }
-    }
-
     private fun togglePhishing() {
         val enabling = !prefs.blockSourcePhishing.get()
         prefs.blockSourcePhishing.set(enabling)

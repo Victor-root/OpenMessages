@@ -427,8 +427,6 @@
     <string name="blocking_integrated_description">Open Messages blocks spam on your device. The optional sources below download their list over the internet when you turn them on, then work offline.</string>
     <string name="blocking_category_external_apps">External apps</string>
     <string name="blocked_numbers_summary">Numbers you block yourself</string>
-    <string name="blocking_source_arcep_title">Telemarketing</string>
-    <string name="blocking_source_arcep_summary">Blocks the number ranges used for telemarketing. Turning this on downloads the list from Saracroche over the internet; filtering is offline afterwards.</string>
     <string name="blocking_source_phishing_title">Anti-phishing</string>
     <string name="blocking_source_phishing_summary">Blocks messages linking to known phishing sites. Turning this on downloads the list over the internet; filtering is offline afterwards.</string>
     <string name="blocking_source_flag_block_title">Block suspected spam</string>

@@ -58,15 +58,6 @@
             app:title="@string/blocked_numbers_title" />
 
         <io.openmessages.common.widget.PreferenceView
-            android:id="@+id/arcepSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_phone_off"
-            app:summary="@string/blocking_source_arcep_summary"
-            app:title="@string/blocking_source_arcep_title"
-            app:widget="@layout/settings_switch_widget" />
-
-        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/phishingSource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

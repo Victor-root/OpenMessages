@@ -11,9 +11,8 @@ import javax.inject.Singleton
  * Combines every active blocking source into a single decision.
  *
  * Sources are additive (OR): a message is blocked/flagged if any active source says so. The user's
- * manual blocklist is always active; the integrated list sources (e.g. Saracroche démarchage) are
- * opt-in; and at most one external app (Call Control / Should I Answer? / Call Blocker) can be added
- * on top. Precedence is Block > Flag > Unblock.
+ * manual blocklist is always active; and at most one external app (Call Control / Should I Answer? /
+ * Call Blocker) can be added on top. Precedence is Block > Flag > Unblock.
  *
  * The allowlist is honoured here: an approved sender is ignored by the automatic sources, but the
  * user's own manual blocklist still wins over it.
@@ -23,7 +22,6 @@ class BlockingManager @Inject constructor(
     private val prefs: Preferences,
     private val allowlistRepo: AllowlistRepository,
     private val qksmsBlockingClient: QksmsBlockingClient,
-    private val saracrocheBlockingClient: SaracrocheBlockingClient,
     private val callBlockerBlockingClient: CallBlockerBlockingClient,
     private val callControlBlockingClient: CallControlBlockingClient,
     private val shouldIAnswerBlockingClient: ShouldIAnswerBlockingClient
@@ -40,7 +38,6 @@ class BlockingManager @Inject constructor(
     /** Automatic address-based sources (everything except the always-on manual blocklist). */
     private fun autoSources(): List<BlockingClient> {
         val sources = mutableListOf<BlockingClient>()
-        if (prefs.blockSourceArcep.get()) sources.add(saracrocheBlockingClient)
         externalApp()?.let { sources.add(it) }
         return sources
     }

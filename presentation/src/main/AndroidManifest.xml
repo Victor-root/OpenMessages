@@ -28,7 +28,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- Used for starting foreground service for backup/restore on Android P+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Only used when the user opts in to updating an integrated blocking list (Saracroche / phishing) -->
+    <!-- Only used when the user opts in to updating the integrated phishing blocking list -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />

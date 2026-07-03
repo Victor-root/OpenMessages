@@ -377,8 +377,6 @@
     <string name="blocking_integrated_description">Open Messages bloque le spam sur votre téléphone. Les sources optionnelles ci-dessous téléchargent leur liste via Internet quand vous les activez, puis fonctionnent hors-ligne.</string>
     <string name="blocking_category_external_apps">Applications externes</string>
     <string name="blocked_numbers_summary">Les numéros que vous bloquez vous-même</string>
-    <string name="blocking_source_arcep_title">Démarchage téléphonique</string>
-    <string name="blocking_source_arcep_summary">Bloque les plages de numéros de démarchage. L\'activer télécharge la liste depuis Saracroche via Internet ; le filtrage est ensuite hors-ligne.</string>
     <string name="blocking_source_phishing_title">Anti-hameçonnage</string>
     <string name="blocking_source_phishing_summary">Bloque les messages renvoyant vers des sites d’hameçonnage connus. L\'activer télécharge la liste via Internet ; le filtrage est ensuite hors-ligne.</string>
     <string name="blocking_source_flag_block_title">Bloquer le spam potentiel</string>

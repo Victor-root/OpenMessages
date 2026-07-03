@@ -127,11 +127,9 @@ class Preferences @Inject constructor(
     val showSttOffsetY = rxPrefs.getFloat("showSttOffsetY", Float.MIN_VALUE)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
     val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_DEFAULT)
-    // Integrated blocking sources (additive, on top of the manual blocklist and any external app)
-    val blockSourceArcep = rxPrefs.getBoolean("blockSourceArcep", false)
+    // Integrated blocking source (additive, on top of the manual blocklist and any external app)
     val blockSourcePhishing = rxPrefs.getBoolean("blockSourcePhishing", false)
-    // Number of entries in each downloaded list, kept only to show a status without re-parsing
-    val blockArcepCount = rxPrefs.getInteger("blockArcepCount", 0)
+    // Number of entries in the downloaded list, kept only to show a status without re-parsing
     val blockPhishingCount = rxPrefs.getInteger("blockPhishingCount", 0)
     // When on, a "suspected spam" soft-flag is upgraded to a full block so the message skips the
     // inbox entirely instead of just being tagged with the "potential spam" banner.
