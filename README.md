@@ -29,6 +29,9 @@ theming and privacy improvements layered on top. The highlights:
   swaps instantly and keeps the splash and recent-apps colors in sync. New Tabler-style launcher icon.
 * **Material 3 switches**, themed rounded dialogs, a themed unread badge, refreshed drawer and
   blocking/notification-row icons, and system-bar icons kept legible on every color.
+* Optional **edge-to-edge** mode (off by default): content draws behind the transparent system bars,
+  with a lighter nav-bar veil in light theme and a status-bar scrim that fades in as the main list
+  scrolls behind it.
 
 ### 📋 Main screen
 * Gradient header, pill-shaped unread badge, redesigned drawer, scroll-to-top button and collapsible
@@ -54,6 +57,10 @@ theming and privacy improvements layered on top. The highlights:
 
 ### 🔔 Notifications
 * Notifications show **"Messages"** as the app name in the notification panel.
+* **Copy codes from notifications**: an authentication or one-time-code SMS gets a **Copy code**
+  action on its notification, so you paste the code without opening the app. Detection is keyword-based
+  (English and French) to avoid grabbing unrelated numbers. On by default, with a toggle in
+  Notification settings.
 
 ### 🔒 Privacy
 * The voice-input (speech-to-text) button is **off by default**.
