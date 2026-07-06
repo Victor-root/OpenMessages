@@ -81,6 +81,9 @@ class NotificationPrefsViewModel @Inject constructor(
         disposables += prefs.silentNotContact.asObservable()
                 .subscribe { enabled -> newState { copy(silentNotContact = enabled) } }
 
+        disposables += prefs.copyCodeFromNotification.asObservable()
+                .subscribe { enabled -> newState { copy(copyCodeEnabled = enabled) } }
+
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { copy(vibrationEnabled = enabled) } }
 
@@ -116,6 +119,8 @@ class NotificationPrefsViewModel @Inject constructor(
                         R.id.wake -> wake.set(!wake.get())
 
                         R.id.silentNotContact -> prefs.silentNotContact.set(!prefs.silentNotContact.get())
+
+                        R.id.copyCode -> prefs.copyCodeFromNotification.set(!prefs.copyCodeFromNotification.get())
 
                         R.id.vibration -> vibration.set(!vibration.get())
 

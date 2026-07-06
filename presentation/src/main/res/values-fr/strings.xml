@@ -309,6 +309,10 @@
     <string name="settings_notification_wake_title">Réveiller l’écran</string>
     <string name="settings_notification_silent_title">Notifier seulement pour les contacts</string>
     <string name="settings_notification_silent_summary">Rendre muet les notifications pour les messages sans entrée dans les contacts</string>
+    <string name="settings_copy_code_title">Copier les codes depuis les notifications</string>
+    <string name="settings_copy_code_summary">Ajoute un bouton Copier le code aux notifications des codes à usage unique et de vérification</string>
+    <string name="notification_copy_code">Copier le code</string>
+    <string name="notification_code_copied">Code copié</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Son</string>
     <string name="settings_ringtone_none">Aucun</string>

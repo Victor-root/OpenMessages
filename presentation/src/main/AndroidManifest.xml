@@ -408,6 +408,7 @@
         <receiver android:name=".receiver.SendDelayedMessageReceiver" />
         <receiver android:name=".receiver.DeleteMessagesReceiver" />
         <receiver android:name=".receiver.BlockThreadReceiver" />
+        <receiver android:name=".receiver.CopyCodeReceiver" />
         <receiver android:name=".receiver.MessageMarkReceiver" />
         <receiver
             android:name=".receiver.SpeakThreadsReceiver"

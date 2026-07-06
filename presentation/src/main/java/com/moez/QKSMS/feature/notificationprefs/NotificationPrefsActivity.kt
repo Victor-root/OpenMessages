@@ -103,6 +103,8 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         binding.wake.checkbox?.isChecked = state.wakeEnabled
         binding.silentNotContact.checkbox?.isChecked = state.silentNotContact
         binding.silentNotContact.isVisible = state.threadId == 0L
+        binding.copyCode.checkbox?.isChecked = state.copyCodeEnabled
+        binding.copyCode.isVisible = state.threadId == 0L
         binding.vibration.checkbox?.isChecked = state.vibrationEnabled
         binding.ringtone.summary = state.ringtoneName
 

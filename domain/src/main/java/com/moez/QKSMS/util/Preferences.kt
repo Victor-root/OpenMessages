@@ -136,6 +136,8 @@ class Preferences @Inject constructor(
     val blockFlaggedAsSpam = rxPrefs.getBoolean("blockFlaggedAsSpam", false)
     val drop = rxPrefs.getBoolean("drop", false)
     val silentNotContact = rxPrefs.getBoolean("silentNotContact", false)
+    // Offer a "copy code" action on notifications for SMS that carry a one-time / verification code
+    val copyCodeFromNotification = rxPrefs.getBoolean("copyCodeFromNotification", true)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
     val notifAction2 = rxPrefs.getInteger("notifAction2", NOTIFICATION_ACTION_REPLY)
     val notifAction3 = rxPrefs.getInteger("notifAction3", NOTIFICATION_ACTION_NONE)

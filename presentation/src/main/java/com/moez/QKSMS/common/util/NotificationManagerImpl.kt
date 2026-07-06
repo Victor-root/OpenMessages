@@ -47,6 +47,7 @@ import io.openmessages.manager.PermissionManager
 import io.openmessages.manager.ShortcutManager
 import io.openmessages.mapper.CursorToPartImpl
 import io.openmessages.receiver.BlockThreadReceiver
+import io.openmessages.receiver.CopyCodeReceiver
 import io.openmessages.receiver.DeleteMessagesReceiver
 import io.openmessages.receiver.MessageMarkReceiver
 import io.openmessages.receiver.RemoteMessagingReceiver
@@ -55,6 +56,7 @@ import io.openmessages.repository.ContactRepository
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.util.GlideApp
+import io.openmessages.util.OtpCodeExtractor
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
 import io.openmessages.util.tryOrNull
@@ -277,6 +279,28 @@ class NotificationManagerImpl @Inject constructor(
         // appropriately bypass DND mode
         conversation.recipients.forEach { recipient ->
             notification.addPerson(recipient.toPerson(context, colors))
+        }
+
+        // Offer to copy a one-time / verification code straight from the notification when one is
+        // detected in the newest unread message and the option is on. Added first so it's the most
+        // prominent action (auth codes are usually acted on immediately).
+        if (prefs.copyCodeFromNotification.get()) {
+            messages.sortedByDescending { it.date }
+                    .mapNotNull { OtpCodeExtractor.extract(it.body) }
+                    .firstOrNull()
+                    ?.let { code ->
+                        val intent = Intent(context, CopyCodeReceiver::class.java)
+                                .putExtra(CopyCodeReceiver.EXTRA_CODE, code)
+                        val pi = PendingIntent.getBroadcast(
+                                context,
+                                "copyCode$threadId".hashCode(),
+                                intent,
+                                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+                        notification.addAction(NotificationCompat.Action.Builder(
+                                R.drawable.ic_content_copy_black_24dp,
+                                context.getString(R.string.notification_copy_code),
+                                pi).build())
+                    }
         }
 
         // Add the action buttons

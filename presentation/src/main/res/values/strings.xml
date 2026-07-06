@@ -357,6 +357,10 @@
     <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_notification_silent_title">Silent if not a contact</string>
     <string name="settings_notification_silent_summary">Silences notifications for messages without recipients in your contacts</string>
+    <string name="settings_copy_code_title">Copy codes from notifications</string>
+    <string name="settings_copy_code_summary">Adds a Copy code button to notifications for one-time and verification codes</string>
+    <string name="notification_copy_code">Copy code</string>
+    <string name="notification_code_copied">Code copied</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_ringtone_none">None</string>
