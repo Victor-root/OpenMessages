@@ -851,11 +851,6 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        // Open the attachment options
-        view.attachIntent
-                .autoDisposable(view.scope())
-                .subscribe { newState { copy(attaching = !attaching) } }
-
         // Attach a photo from camera
         view.cameraIntent
                 .autoDisposable(view.scope())

@@ -37,6 +37,7 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.text.format.DateFormat
 import android.view.ContextMenu
+import android.view.ContextThemeWrapper
 import android.view.DragEvent.ACTION_DRAG_ENDED
 import android.view.DragEvent.ACTION_DRAG_EXITED
 import android.view.DragEvent.ACTION_DROP
@@ -54,6 +55,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -89,6 +91,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.openmessages.databinding.ComposeActivityBinding
+import io.openmessages.databinding.ComposeAttachSheetBinding
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.text.SimpleDateFormat
@@ -111,6 +114,21 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     private lateinit var binding: ComposeActivityBinding
 
+    /** Modern attachment picker: a bottom sheet opened by the "+" button. */
+    private val attachSheetBinding by lazy { ComposeAttachSheetBinding.inflate(layoutInflater) }
+    private val attachSheet by lazy {
+        // The app runs on a Theme.AppCompat base; Material's BottomSheetDialog needs a Material
+        // context, so wrap the activity the same way the other Material components here do.
+        BottomSheetDialog(ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context)).apply {
+            setContentView(attachSheetBinding.root)
+            // Drop the default opaque sheet background so our rounded-corner background shows through.
+            setOnShowListener {
+                findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                    ?.setBackgroundResource(android.R.color.transparent)
+            }
+        }
+    }
+
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val chipsSelectedIntent: Subject<HashMap<String, String?>> = PublishSubject.create()
     override val chipDeletedIntent: Subject<Recipient> by lazy { chipsAdapter.chipDeleted }
@@ -127,13 +145,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val resendIntent: Subject<Long> by lazy { messageAdapter.resendClicks }
     override val attachmentDeletedIntent: Subject<Attachment> by lazy { composeAttachmentAdapter.attachmentDeleted }
     override val textChangedIntent by lazy { binding.message.textChanges() }
-    override val attachIntent: Observable<Unit> by lazy { Observable.merge(binding.attach.clicks(), binding.shadeBackground.clicks()) }
-    override val cameraIntent: Observable<Unit> by lazy { Observable.merge(binding.camera.clicks(), binding.cameraLabel.clicks()) }
-    override val attachImageFileIntent: Observable<Unit> by lazy { Observable.merge(binding.gallery.clicks(), binding.galleryLabel.clicks()) }
-    override val attachAnyFileIntent: Observable<Unit> by lazy { Observable.merge(binding.attachAFileIcon.clicks(), binding.attachAFileLabel.clicks()) }
-    override val scheduleIntent: Observable<Unit> by lazy { Observable.merge(binding.schedule.clicks(), binding.scheduleLabel.clicks()) }
-    override val attachContactIntent: Observable<Unit> by lazy { Observable.merge(binding.contact.clicks(), binding.contactLabel.clicks()) }
-    override val templateIntent: Observable<Unit> by lazy { Observable.merge(binding.template.clicks(), binding.templateLabel.clicks()) }
+    // The attach options live in a bottom sheet now (attachSheet); each item feeds its intent below.
+    override val cameraIntent: Subject<Unit> = PublishSubject.create()
+    override val attachImageFileIntent: Subject<Unit> = PublishSubject.create()
+    override val attachAnyFileIntent: Subject<Unit> = PublishSubject.create()
+    override val scheduleIntent: Subject<Unit> = PublishSubject.create()
+    override val attachContactIntent: Subject<Unit> = PublishSubject.create()
+    override val templateIntent: Subject<Unit> = PublishSubject.create()
     override val flaggedApproveIntent by lazy { binding.flaggedApprove.clicks() }
     override val flaggedBlockIntent by lazy { binding.flaggedBlock.clicks() }
     override val attachAnyFileSelectedIntent: Subject<Uri> = PublishSubject.create()
@@ -152,11 +170,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val speechRecogniserIntent by lazy { binding.speechToTextIcon.clicks() }
     override val shadeIntent by lazy { binding.shadeBackground.clicks() }
     override val recordAudioStartStopRecording: Subject<Boolean> = PublishSubject.create()
+    /** Fed by the input-bar mic and the bottom sheet's "audio" item. */
     override val recordAnAudioMessage: Observable<Unit> by lazy {
-        Observable.merge(binding.recordAudioMsg.clicks(),
-            binding.attachAnAudioMessageIcon.clicks(),
-            binding.attachAnAudioMessageLabel.clicks())
+        Observable.merge(binding.recordAudioMsg.clicks(), recordAudioFromSheet)
     }
+    private val recordAudioFromSheet: Subject<Unit> = PublishSubject.create()
     override val recordAudioAbort by lazy { binding.audioMsgAbort.clicks() }
     override val recordAudioAttach by lazy { binding.audioMsgAttach.clicks() }
     override val recordAudioPlayerPlayPause: Subject<QkMediaPlayer.PlayingState> = PublishSubject.create()
@@ -212,6 +230,18 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
             binding.message.supportsInputContent = true
 
+            // "+" opens the attachment sheet; each sheet item feeds its existing intent, then closes.
+            binding.attach.clicks()
+                .autoDisposable(scope())
+                .subscribe { attachSheet.show() }
+            attachSheetBinding.sheetGallery.setOnClickListener { attachImageFileIntent.onNext(Unit); attachSheet.dismiss() }
+            attachSheetBinding.sheetCamera.setOnClickListener { cameraIntent.onNext(Unit); attachSheet.dismiss() }
+            attachSheetBinding.sheetFile.setOnClickListener { attachAnyFileIntent.onNext(Unit); attachSheet.dismiss() }
+            attachSheetBinding.sheetAudio.setOnClickListener { recordAudioFromSheet.onNext(Unit); attachSheet.dismiss() }
+            attachSheetBinding.sheetContact.setOnClickListener { attachContactIntent.onNext(Unit); attachSheet.dismiss() }
+            attachSheetBinding.sheetSchedule.setOnClickListener { scheduleIntent.onNext(Unit); attachSheet.dismiss() }
+            attachSheetBinding.sheetTemplates.setOnClickListener { templateIntent.onNext(Unit); attachSheet.dismiss() }
+
             // Full-screen editor: the expand chevron opens it; collapse/send sync back to the bubble.
             savedSoftInputMode = window.attributes.softInputMode
             binding.expand.clicks()
@@ -231,22 +261,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .doOnNext {
                     binding.loading.setTint(it.theme)
 
-                    // entire attach menu
+                    // Attach button + the bottom-sheet option circles follow the conversation theme.
                     binding.attach.setBackgroundTint(it.theme); binding.attach.setTint(it.textPrimary)
-                    binding.contact.setBackgroundTint(it.theme); binding.contact.setTint(it.textPrimary)
-                    binding.contactLabel.setBackgroundTint(it.theme); binding.contactLabel.setTint(it.textPrimary)
-                    binding.template.setBackgroundTint(it.theme); binding.template.setTint(it.textPrimary)
-                    binding.templateLabel.setBackgroundTint(it.theme); binding.templateLabel.setTint(it.textPrimary)
-                    binding.schedule.setBackgroundTint(it.theme); binding.schedule.setTint(it.textPrimary)
-                    binding.scheduleLabel.setBackgroundTint(it.theme); binding.scheduleLabel.setTint(it.textPrimary)
-                    binding.attachAFileIcon.setBackgroundTint(it.theme); binding.attachAFileIcon.setTint(it.textPrimary)
-                    binding.attachAFileLabel.setBackgroundTint(it.theme); binding.attachAFileLabel.setTint(it.textPrimary)
-                    binding.attachAnAudioMessageIcon.setBackgroundTint(it.theme); binding.attachAnAudioMessageIcon.setTint(it.textPrimary)
-                    binding.attachAnAudioMessageLabel.setBackgroundTint(it.theme); binding.attachAnAudioMessageLabel.setTint(it.textPrimary)
-                    binding.gallery.setBackgroundTint(it.theme); binding.gallery.setTint(it.textPrimary)
-                    binding.galleryLabel.setBackgroundTint(it.theme); binding.galleryLabel.setTint(it.textPrimary)
-                    binding.camera.setBackgroundTint(it.theme); binding.camera.setTint(it.textPrimary)
-                    binding.cameraLabel.setBackgroundTint(it.theme); binding.cameraLabel.setTint(it.textPrimary)
+                    listOf(
+                        attachSheetBinding.sheetGalleryIcon, attachSheetBinding.sheetCameraIcon,
+                        attachSheetBinding.sheetFileIcon, attachSheetBinding.sheetAudioIcon,
+                        attachSheetBinding.sheetContactIcon, attachSheetBinding.sheetScheduleIcon,
+                        attachSheetBinding.sheetTemplatesIcon
+                    ).forEach { icon -> icon.setBackgroundTint(it.theme); icon.setTint(it.textPrimary) }
 
                     // speech to text floating button
                     binding.speechToTextIconBorder.setBackgroundTint(it.theme)
@@ -500,22 +522,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.messageAttachments.setVisible(state.attachments.isNotEmpty())
         composeAttachmentAdapter.data = state.attachments
 
-        binding.attach.animate().rotation(if (state.attaching) 135f else 0f).start()
-        binding.attaching.isVisible = state.attaching
-
         binding.shadeBackground.apply {
-            when {
-                state.attaching -> {
-                    visibility = View.VISIBLE
-                    elevation = 4.dpToPx(context).toFloat() // below attach menu
-                }
-
-                state.audioMsgRecording -> {
-                    visibility = View.VISIBLE
-                    elevation = 5.dpToPx(context).toFloat() // above attach menu
-                }
-
-                else-> visibility = View.GONE
+            if (state.audioMsgRecording) {
+                visibility = View.VISIBLE
+                elevation = 5.dpToPx(context).toFloat() // dim behind the audio recorder
+            } else {
+                visibility = View.GONE
             }
         }
 

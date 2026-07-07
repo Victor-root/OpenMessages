@@ -171,6 +171,14 @@
     <string name="compose_schedule_cancel_cd">Annuler le message programmé</string>
     <string name="compose_contact_cd">Joindre un contact</string>
     <string name="compose_contact_error">Erreur de lecture du contact</string>
+    <!-- Libellés courts sous chaque tuile du sélecteur de pièce jointe -->
+    <string name="compose_attach_gallery">Galerie</string>
+    <string name="compose_attach_camera">Caméra</string>
+    <string name="compose_attach_file">Fichier</string>
+    <string name="compose_attach_audio">Audio</string>
+    <string name="compose_attach_contact">Contact</string>
+    <string name="compose_attach_schedule">Planifier</string>
+    <string name="compose_attach_templates">Modèles</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) sélectionnée</string>
     <string name="compose_sim_cd">%s sélectionné, changer la carte SIM</string>

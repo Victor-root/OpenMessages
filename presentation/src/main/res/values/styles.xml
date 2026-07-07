@@ -141,4 +141,24 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <!-- One tile in the compose attachment bottom sheet: a tinted icon over a centered label.
+         layout_width/height/weight are set on each tile so the four columns stay even. -->
+    <style name="AttachSheetItem">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <style name="AttachSheetIcon">
+        <item name="android:layout_width">52dp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:background">@drawable/circle</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
 </resources>
