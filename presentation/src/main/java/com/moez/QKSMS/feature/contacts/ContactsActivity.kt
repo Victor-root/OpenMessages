@@ -129,6 +129,11 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         val intent = Intent().putExtra(CHIPS_KEY, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
+        // On cancel (empty result) the composer that opened this picker also closes itself right
+        // after. Skip this screen's exit animation so the two closes read as one clean transition
+        // back to whatever opened the composer, instead of a doubled/janky back animation. A real
+        // pick keeps its normal animation as it reveals the composer.
+        if (result.isEmpty()) overridePendingTransition(0, 0)
     }
 
 }

@@ -427,7 +427,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun render(state: ComposeState) {
         if (state.hasError) {
+            // This composer closes itself (e.g. the recipient picker was cancelled). Skip its exit
+            // animation so it doesn't stack a second transition on top of the picker's own close.
             finish()
+            overridePendingTransition(0, 0)
             return
         }
 
