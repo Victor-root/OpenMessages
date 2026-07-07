@@ -17,11 +17,14 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<!-- paddingEnd reserves the compose FAB's footprint (56dp button + 16dp margin) in the bottom-end
+     corner so the action button and text are never hidden behind the floating FAB. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingEnd="72dp">
 
     <io.openmessages.common.widget.QkTextView
         android:id="@+id/snackbarTitle"

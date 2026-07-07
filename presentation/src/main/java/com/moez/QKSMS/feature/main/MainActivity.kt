@@ -500,9 +500,15 @@ class MainActivity : QkThemedActivity(), MainView {
 
         }
 
-        // Pin the toolbar during multi-selection so it can't scroll off screen
+        // Pin the toolbar during multi-selection, and while a bottom banner (the default-SMS /
+        // permission hint or the syncing bar) is shown. Those banners are anchored to the bottom of
+        // the scrolling content, which extends below the fold by the toolbar height, so a collapsing
+        // toolbar leaves them off screen until the user scrolls. Pinning keeps the content within the
+        // visible area so the banner stays put. Restore the collapsing toolbar once neither applies.
+        val bannerShown = state.syncing !is SyncRepository.SyncProgress.Idle ||
+            !state.defaultSms || !state.smsPermission || !state.contactPermission || !state.notificationPermission
         val toolbarParams = binding.toolbar.layoutParams as? AppBarLayout.LayoutParams
-        if (selectedConversations > 0) {
+        if (selectedConversations > 0 || bannerShown) {
             toolbarParams?.scrollFlags = 0
             binding.appBarLayout.setExpanded(true, false)
         } else {

@@ -17,10 +17,13 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<!-- paddingEnd reserves the compose FAB's footprint (56dp button + 16dp margin) in the bottom-end
+     corner so the progress bar and label are never hidden behind the floating FAB. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingEnd="72dp">
 
     <io.openmessages.common.widget.QkTextView
         android:id="@+id/syncingLabel"
