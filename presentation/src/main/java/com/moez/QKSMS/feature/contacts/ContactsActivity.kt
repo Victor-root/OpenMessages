@@ -50,6 +50,10 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     companion object {
         const val SHARING_KEY = "sharing"
         const val CHIPS_KEY = "chips"
+        // Set when the picker is opened directly (e.g. from Templates) rather than by the composer, so
+        // finish() knows how to animate: a direct pick hands off to the composer next, a direct cancel
+        // slides normally back to the caller.
+        const val STANDALONE_KEY = "standalone"
     }
 
     private lateinit var binding: ContactsActivityBinding
@@ -129,11 +133,15 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         val intent = Intent().putExtra(CHIPS_KEY, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
-        // On cancel (empty result) the composer that opened this picker also closes itself right
-        // after. Skip this screen's exit animation so the two closes read as one clean transition
-        // back to whatever opened the composer, instead of a doubled/janky back animation. A real
-        // pick keeps its normal animation as it reveals the composer.
-        if (result.isEmpty()) overridePendingTransition(0, 0)
+        if (getIntent().getBooleanExtra(STANDALONE_KEY, false)) {
+            // Opened directly (e.g. from Templates): a pick hands straight off to the composer, so
+            // skip the flash back to the caller; a cancel slides normally back to it.
+            if (result.isNotEmpty()) overridePendingTransition(0, 0)
+        } else {
+            // Opened by the composer: on cancel the composer closes itself right after, so skip this
+            // exit animation to avoid a doubled/janky back transition (a real pick reveals it normally).
+            if (result.isEmpty()) overridePendingTransition(0, 0)
+        }
     }
 
 }

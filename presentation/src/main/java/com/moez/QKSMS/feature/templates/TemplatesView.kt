@@ -42,6 +42,10 @@ interface TemplatesView : QkView<TemplatesState> {
 
     fun showEditor(template: Template?)
     fun returnTemplate(body: String)
+
+    /** Open the recipient picker for a tapped template; the composer opens once a recipient is chosen. */
+    fun pickRecipientForTemplate(body: String)
+
     fun finishActivity()
 
 }

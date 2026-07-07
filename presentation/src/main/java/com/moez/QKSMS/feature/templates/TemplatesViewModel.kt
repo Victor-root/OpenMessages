@@ -20,7 +20,6 @@ package io.openmessages.feature.templates
 
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.util.Preferences
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +30,6 @@ import javax.inject.Named
 
 class TemplatesViewModel @Inject constructor(
     @Named("pick") private val pick: Boolean,
-    private val navigator: Navigator,
     private val prefs: Preferences
 ) : QkViewModel<TemplatesView, TemplatesState>(TemplatesState()) {
 
@@ -58,12 +56,12 @@ class TemplatesViewModel @Inject constructor(
             .subscribe { template -> view.showEditor(template) }
 
         // Tap to use a template. From the picker (compose's "+") return it to the conversation;
-        // otherwise open the composer pre-filled and let the user pick the recipient.
+        // otherwise open the recipient picker, then the composer once a recipient is chosen.
         view.templateClicksIntent
             .autoDisposable(view.scope())
             .subscribe { template ->
                 if (pick) view.returnTemplate(template.body)
-                else navigator.showCompose(body = template.body)
+                else view.pickRecipientForTemplate(template.body)
             }
 
         // Save from the editor (new or edited)

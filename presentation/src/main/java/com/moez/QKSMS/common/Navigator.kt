@@ -102,8 +102,18 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
-    fun showCompose(body: String? = null, attachments: List<Uri>? = null, mode: String? = null) {
+    fun showCompose(
+        body: String? = null,
+        attachments: List<Uri>? = null,
+        mode: String? = null,
+        addresses: List<String>? = null
+    ) {
         val intent = Intent(context, ComposeActivity::class.java)
+        // Pre-fill recipients through the standard smsto: entry point (the same path external
+        // "send SMS" intents use), so the composer opens straight on the conversation rather than the
+        // recipient picker.
+        addresses?.takeIf { it.isNotEmpty() }
+            ?.let { intent.data = Uri.fromParts("smsto", it.joinToString(","), null) }
         intent.putExtra(Intent.EXTRA_TEXT, body)
         intent.putExtra("mode", mode)
 
