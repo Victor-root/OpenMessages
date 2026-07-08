@@ -120,6 +120,9 @@ class Preferences @Inject constructor(
     val autoColor = rxPrefs.getBoolean("autoColor", true)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
 
+    /** Show the contact's photo next to incoming messages. Off lets bubbles use the full width. */
+    val showAvatar = rxPrefs.getBoolean("showAvatar", true)
+
     /** Draw page content behind the transparent status and navigation bars (edge-to-edge). */
     val edgeToEdge = rxPrefs.getBoolean("edgeToEdge", false)
     val showStt = rxPrefs.getBoolean("showStt", false)

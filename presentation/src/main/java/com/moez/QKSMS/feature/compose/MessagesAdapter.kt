@@ -288,9 +288,22 @@ class MessagesAdapter @Inject constructor(
             status = binding.status
 
             // Bind the avatar and bubble colour
+            val showAvatar = prefs.showAvatar.get()
             binding.avatar.apply {
                 setRecipient(contactCache[message.address])
-                setVisible(!canGroup(message, next), View.INVISIBLE)
+                // Shown: keep the slot (INVISIBLE) for grouped messages so bubbles stay aligned; the
+                // last of a group reveals it. Hidden: drop it (GONE) so the bubble reclaims the width.
+                if (showAvatar) setVisible(!canGroup(message, next), View.INVISIBLE)
+                else setVisible(false, View.GONE)
+            }
+
+            // Keep the status label aligned under the bubble whether or not the avatar takes its slot.
+            (binding.status.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                val startMargin = (if (showAvatar) 72 else 36).dpToPx(context)
+                if (lp.marginStart != startMargin) {
+                    lp.marginStart = startMargin
+                    binding.status.layoutParams = lp
+                }
             }
 
             body.apply {
