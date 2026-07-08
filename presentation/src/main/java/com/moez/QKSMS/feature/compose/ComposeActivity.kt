@@ -270,9 +270,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                         attachSheetBinding.sheetTemplatesIcon
                     ).forEach { icon -> icon.setBackgroundTint(it.theme); icon.setTint(it.textPrimary) }
 
-                    // Send button follows the conversation theme too.
+                    // Send button and the mic (shown instead, before anything is typed) follow the
+                    // conversation theme too.
                     binding.send.setBackgroundTint(it.theme); binding.send.setTint(it.textPrimary)
                     binding.scheduledSend.setBackgroundTint(it.theme); binding.scheduledSend.setTint(it.textPrimary)
+                    binding.recordAudioMsg.setBackgroundTint(it.theme); binding.recordAudioMsg.setTint(it.textPrimary)
 
                     // speech to text floating button
                     binding.speechToTextIconBorder.setBackgroundTint(it.theme)
