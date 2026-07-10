@@ -66,6 +66,18 @@ android {
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
     }
+
+    // 16 KB page-size devices require uncompressed native libraries (e.g. Realm's) to be stored at a
+    // 16 KB-aligned offset inside the APK zip; AGP only does that automatically from 8.5.1 onward
+    // (we're on 8.2.2). Until that upgrade, fall back to Google's documented workaround: compress the
+    // native libraries instead, which sidesteps the zip-alignment requirement entirely (they're
+    // extracted to disk on install like before Android 6, at the cost of a slightly larger install size).
+    // https://developer.android.com/guide/practices/page-sizes
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
     
     buildTypes {
         release {
