@@ -349,6 +349,8 @@
     </string-array>
     <string name="settings_delivery_title">Accusés de réception</string>
     <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
+    <string name="settings_send_sound_title">Son à l\'envoi</string>
+    <string name="settings_send_sound_summary">Jouer une courte tonalité quand vous envoyez un message</string>
     <string name="settings_unread_at_top_title">Non lu en haut de page</string>
     <string name="settings_unread_at_top_summary">Afficher les conversations non lues en haut de la page</string>
     <string name="settings_signature_title">Signature</string>

@@ -167,6 +167,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
         binding.delivery.checkbox?.setChecked(state.deliveryEnabled, animate)
 
+        binding.sendSound.checkbox?.setChecked(state.sendSoundEnabled, animate)
+
         binding.unreadAtTop.checkbox?.setChecked(state.unreadAtTopEnabled, animate)
 
         binding.signature.summary = state.signature.takeIf { it.isNotBlank() }

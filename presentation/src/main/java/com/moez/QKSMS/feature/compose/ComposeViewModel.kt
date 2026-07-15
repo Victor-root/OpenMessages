@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioDeviceInfo
+import android.media.SoundPool
 import android.net.Uri
 import android.os.Vibrator
 import android.telephony.SmsMessage
@@ -148,6 +149,23 @@ class ComposeViewModel @Inject constructor(
     private var showScheduledToast = false
 
     private var bluetoothMicManager: BluetoothMicManager? = null
+
+    // "Sound on send" tone: a synthesized two-note chime in the same style as the AOSP reference
+    // Messaging app's message_sent.wav (platform/packages/apps/Messaging, Apache 2.0), so every user
+    // hears the same sound. Loaded once and reused for every send in this conversation.
+    private val sentSoundPoolLazy = lazy {
+        SoundPool.Builder()
+            .setMaxStreams(1)
+            .setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build()
+            )
+            .build()
+    }
+    private val sentSoundPool by sentSoundPoolLazy
+    private val sentSoundId by lazy { sentSoundPool.load(context, R.raw.message_sent, 1) }
 
     init {
         // set shared subscription into state if set
@@ -317,6 +335,12 @@ class ComposeViewModel @Inject constructor(
         // actions
         if (mode == "scheduling")
             newState { copy(scheduling = true) }
+    }
+
+    /** A short confirmation tone right as a message is handed off to send, if enabled in Settings. */
+    private fun playSentSound() {
+        if (!prefs.sendSound.get()) return
+        sentSoundPool.play(sentSoundId, 1f, 1f, 1, 0, 1f)
     }
 
     @SuppressLint("StringFormatInvalid")
@@ -780,13 +804,17 @@ class ComposeViewModel @Inject constructor(
                 actionDelayedMessage.execute(
                     ActionDelayedMessage.Params(messageId, ActionDelayedMessage.Action.Send)
                 )
+                playSentSound()
             }
 
         // resend a failed message
         view.resendIntent
             .mapNotNull(messageRepo::getMessage)
             .filter { message -> message.isFailedMessage() }
-            .doOnNext { message -> sendExistingMessage.execute(message.id) }
+            .doOnNext { message ->
+                sendExistingMessage.execute(message.id)
+                playSentSound()
+            }
             .autoDisposable(view.scope())
             .subscribe()
 
@@ -1272,6 +1300,7 @@ class ComposeViewModel @Inject constructor(
                                 SendNewMessage.Params(subId, 0, addresses, body.toString(),
                                     sendAsGroup, state.attachments.toList(), delay)
                             )
+                            playSentSound()
                         }
                     }
 
@@ -1339,6 +1368,11 @@ class ComposeViewModel @Inject constructor(
             })
             .autoDisposable(view.scope())
             .subscribe()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        if (sentSoundPoolLazy.isInitialized()) sentSoundPool.release()
     }
 
 }

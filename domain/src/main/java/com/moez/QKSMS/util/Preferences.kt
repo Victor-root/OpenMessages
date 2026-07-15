@@ -110,6 +110,9 @@ class Preferences @Inject constructor(
 
     // User configurable
     val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)
+
+    /** Play a short tone when a message is sent. */
+    val sendSound = rxPrefs.getBoolean("sendSound", false)
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
         true -> NIGHT_MODE_SYSTEM
         false -> NIGHT_MODE_OFF

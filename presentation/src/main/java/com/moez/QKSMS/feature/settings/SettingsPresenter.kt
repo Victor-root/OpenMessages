@@ -90,6 +90,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.delivery.asObservable()
             .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
+        disposables += prefs.sendSound.asObservable()
+            .subscribe { enabled -> newState { copy(sendSoundEnabled = enabled) } }
+
         disposables += prefs.unreadAtTop.asObservable()
             .subscribe { enabled -> newState { copy(unreadAtTopEnabled = enabled) } }
 
@@ -191,6 +194,8 @@ class SettingsPresenter @Inject constructor(
                         R.id.delayed -> view.showDelayDurationDialog()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
+
+                        R.id.sendSound -> prefs.sendSound.set(!prefs.sendSound.get())
 
                         R.id.unreadAtTop -> prefs.unreadAtTop.set(!prefs.unreadAtTop.get())
 

@@ -179,6 +179,15 @@
             app:widget="@layout/settings_switch_widget" />
 
         <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/sendSound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_round_volume_up_24"
+            app:summary="@string/settings_send_sound_summary"
+            app:title="@string/settings_send_sound_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/unreadAtTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

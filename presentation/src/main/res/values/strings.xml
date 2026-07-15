@@ -397,6 +397,8 @@
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_send_sound_title">Sound on send</string>
+    <string name="settings_send_sound_summary">Play a short tone when you send a message</string>
     <string name="settings_unread_at_top_title">Unread at the top</string>
     <string name="settings_unread_at_top_summary">Show unread conversations at the top</string>
     <string name="settings_signature_title">Signature</string>
