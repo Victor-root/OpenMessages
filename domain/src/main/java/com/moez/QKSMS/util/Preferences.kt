@@ -82,6 +82,12 @@ class Preferences @Inject constructor(
         const val BLOCKING_MANAGER_SIA = 2
         const val BLOCKING_MANAGER_CB = 3
 
+        const val HEADER_ACTION_NONE = 0
+        const val HEADER_ACTION_ARCHIVE = 1
+        const val HEADER_ACTION_UNREAD = 2
+        const val HEADER_ACTION_BLOCK = 3
+        const val HEADER_ACTION_DELETE = 4
+
         const val MESSAGE_LINK_HANDLING_BLOCK = 0
         const val MESSAGE_LINK_HANDLING_ALLOW = 1
         const val MESSAGE_LINK_HANDLING_ASK = 2
@@ -125,6 +131,12 @@ class Preferences @Inject constructor(
 
     /** Show the contact's photo next to incoming messages. Off lets bubbles use the full width. */
     val showAvatar = rxPrefs.getBoolean("showAvatar", true)
+
+    /** Show a phone-number conversation title in national format (no country code), e.g. "06 ..." instead of "+33 6 ...". */
+    val hideCountryCode = rxPrefs.getBoolean("hideCountryCode", false)
+
+    /** Which action the conversation header's quick-action button performs. See HEADER_ACTION_*. */
+    val headerQuickAction = rxPrefs.getInteger("headerQuickAction", HEADER_ACTION_NONE)
 
     /** Draw page content behind the transparent status and navigation bars (edge-to-edge). */
     val edgeToEdge = rxPrefs.getBoolean("edgeToEdge", false)

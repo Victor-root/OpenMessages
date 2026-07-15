@@ -68,6 +68,12 @@ class PhoneNumberUtils @Inject constructor(context: Context) {
         return PhoneNumberUtils.formatNumber(number.toString(), countryCode) ?: number.toString()
     }
 
+    /** Same as [formatNumber], but in the device's national format (no country code), e.g. "+33 6 ..." -> "06 ...". */
+    fun formatNumberNational(number: CharSequence): String {
+        val parsed = parse(number) ?: return formatNumber(number)
+        return phoneNumberUtil.format(parsed, PhoneNumberUtil.PhoneNumberFormat.NATIONAL)
+    }
+
     fun normalizeNumber(number: String): String =
         number.filter { it.isLetterOrDigit() || it in "+*#" }
 

@@ -110,6 +110,15 @@
             app:widget="@layout/settings_switch_widget" />
 
         <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/hideCountryCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_call_white_24dp"
+            app:title="@string/settings_hide_country_code_title"
+            app:summary="@string/settings_hide_country_code_summary"
+            app:widget="@layout/settings_switch_widget" />
+
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/edgeToEdge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,6 +195,15 @@
             app:summary="@string/settings_send_sound_summary"
             app:title="@string/settings_send_sound_title"
             app:widget="@layout/settings_switch_widget" />
+
+        <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/headerQuickAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_tap_24dp"
+            app:summary="@string/settings_header_quick_action_summary"
+            app:title="@string/settings_header_quick_action_title"
+            tools:summary="None" />
 
         <io.openmessages.common.widget.PreferenceView
             android:id="@+id/unreadAtTop"

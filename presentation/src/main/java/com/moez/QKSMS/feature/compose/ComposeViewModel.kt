@@ -56,8 +56,11 @@ import io.openmessages.extensions.isVideo
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.interactor.ActionDelayedMessage
 import io.openmessages.interactor.AddScheduledMessage
+import io.openmessages.interactor.DeleteConversations
 import io.openmessages.interactor.DeleteMessages
+import io.openmessages.interactor.MarkArchived
 import io.openmessages.interactor.MarkRead
+import io.openmessages.interactor.MarkUnread
 import io.openmessages.interactor.SendExistingMessage
 import io.openmessages.interactor.SaveImage
 import io.openmessages.interactor.SendNewMessage
@@ -120,8 +123,11 @@ class ComposeViewModel @Inject constructor(
     private val actionDelayedMessage: ActionDelayedMessage,
     private val conversationRepo: ConversationRepository,
     private val allowlistRepo: AllowlistRepository,
+    private val deleteConversations: DeleteConversations,
     private val deleteMessages: DeleteMessages,
+    private val markArchived: MarkArchived,
     private val markRead: MarkRead,
+    private val markUnread: MarkUnread,
     private val messageDetailsFormatter: MessageDetailsFormatter,
     private val messageRepo: MessageRepository,
     private val scheduledMessageRepo: ScheduledMessageRepository,
@@ -260,8 +266,18 @@ class ComposeViewModel @Inject constructor(
                 .switchMap { messages -> messages.asObservable() }
                 .subscribe(messages::onNext)
 
-        disposables += conversation
-                .map { conversation -> conversation.getTitle() }
+        // A phone-number title (no saved contact name, no custom conversation name) can optionally
+        // drop the country code to save space in the toolbar, e.g. "+33 6 ..." -> "06 ...".
+        disposables += Observables.combineLatest(conversation, prefs.hideCountryCode.asObservable()) {
+            conversation, hideCountryCode ->
+            val unknownSingleRecipient = conversation.recipients.singleOrNull()?.takeIf { it.contact == null }
+            when {
+                conversation.name.isNotBlank() -> conversation.getTitle()
+                hideCountryCode && unknownSingleRecipient != null ->
+                    phoneNumberUtils.formatNumberNational(unknownSingleRecipient.address)
+                else -> conversation.getTitle()
+            }
+        }
                 .distinctUntilChanged()
                 .subscribe { title -> newState { copy(conversationtitle = title) } }
 
@@ -456,6 +472,27 @@ class ComposeViewModel @Inject constructor(
             }
             .autoDisposable(view.scope())
             .subscribe { navigator.makePhoneCall(it) }
+
+        // Header quick-action button: perform whichever action is configured in Settings. Archive
+        // and delete leave nothing to look at, so they close the screen (delete does so via the
+        // existing `conversation.isValid` watch above, once the underlying row is actually gone).
+        view.optionsItemIntent
+            .filter { it == R.id.headerQuickAction }
+            .withLatestFrom(conversation, BiFunction { _, conversation -> conversation.id })
+            .autoDisposable(view.scope())
+            .subscribe { threadId ->
+                when (prefs.headerQuickAction.get()) {
+                    Preferences.HEADER_ACTION_ARCHIVE ->
+                        markArchived.execute(listOf(threadId)) { newState { copy(hasError = true) } }
+                    Preferences.HEADER_ACTION_UNREAD -> markUnread.execute(listOf(threadId))
+                    Preferences.HEADER_ACTION_BLOCK -> view.showBlockingDialog(listOf(threadId), true)
+                    Preferences.HEADER_ACTION_DELETE -> view.showDeleteConversationDialog(threadId)
+                }
+            }
+
+        view.confirmDeleteConversationIntent
+            .autoDisposable(view.scope())
+            .subscribe { threadId -> deleteConversations.execute(listOf(threadId)) }
 
         // Open the conversation settings if info button is clicked
         view.optionsItemIntent

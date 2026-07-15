@@ -352,6 +352,8 @@
     <string name="settings_system_font_title">Use system font</string>
     <string name="settings_show_avatar_title">Show contact photo</string>
     <string name="settings_show_avatar_summary">Show the sender\'s photo in conversations. Turn it off to give the message bubbles more width.</string>
+    <string name="settings_hide_country_code_title">Hide country code</string>
+    <string name="settings_hide_country_code_summary">Show phone number titles in local format, e.g. \"06 ...\" instead of \"+33 6 ...\"</string>
     <string name="settings_edge_to_edge_title">Edge-to-edge</string>
     <string name="settings_edge_to_edge_summary">Draw content behind the status and navigation bars</string>
     <string name="settings_system_show_stt_title">Show the speech-to-text button</string>
@@ -399,6 +401,8 @@
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
     <string name="settings_send_sound_title">Sound on send</string>
     <string name="settings_send_sound_summary">Play a short tone when you send a message</string>
+    <string name="settings_header_quick_action_title">Header quick action</string>
+    <string name="settings_header_quick_action_summary">Add a shortcut button to the conversation header</string>
     <string name="settings_unread_at_top_title">Unread at the top</string>
     <string name="settings_unread_at_top_summary">Show unread conversations at the top</string>
     <string name="settings_signature_title">Signature</string>
@@ -655,6 +659,15 @@
         <item>3 seconds</item>
         <item>5 seconds</item>
         <item>10 seconds</item>
+    </string-array>
+
+    <!-- Order matches Preferences.HEADER_ACTION_NONE/ARCHIVE/UNREAD/BLOCK/DELETE (0-4) -->
+    <string-array name="header_quick_action_labels">
+        <item>None</item>
+        <item>Archive</item>
+        <item>Mark unread</item>
+        <item>Block</item>
+        <item>Delete</item>
     </string-array>
 
     <string-array name="mms_sizes">

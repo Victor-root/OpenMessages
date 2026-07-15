@@ -64,6 +64,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     @Inject lateinit var nightModeDialog: QkDialog
     @Inject lateinit var textSizeDialog: QkDialog
     @Inject lateinit var sendDelayDialog: QkDialog
+    @Inject lateinit var headerQuickActionDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
     @Inject lateinit var messageLinkHandlingDialog: QkDialog
 
@@ -96,6 +97,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         }
         textSizeDialog.adapter.setData(R.array.text_sizes)
         sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
+        headerQuickActionDialog.adapter.setData(R.array.header_quick_action_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
         messageLinkHandlingDialog.adapter.setData(R.array.messageLinkHandlings, R.array.messageLinkHandling_ids)
 
@@ -133,6 +135,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun sendDelaySelected(): Observable<Int> = sendDelayDialog.adapter.menuItemClicks
 
+    override fun headerQuickActionSelected(): Observable<Int> = headerQuickActionDialog.adapter.menuItemClicks
+
     override fun signatureChanged(): Observable<String> = signatureSubject
 
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
@@ -169,6 +173,9 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
         binding.sendSound.checkbox?.setChecked(state.sendSoundEnabled, animate)
 
+        binding.headerQuickAction.summary = state.headerQuickActionSummary
+        headerQuickActionDialog.adapter.selectedItem = state.headerQuickActionId
+
         binding.unreadAtTop.checkbox?.setChecked(state.unreadAtTopEnabled, animate)
 
         binding.signature.summary = state.signature.takeIf { it.isNotBlank() }
@@ -182,6 +189,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.systemFont.checkbox?.setChecked(state.systemFontEnabled, animate)
 
         binding.showAvatar.checkbox?.setChecked(state.showAvatarEnabled, animate)
+
+        binding.hideCountryCode.checkbox?.setChecked(state.hideCountryCodeEnabled, animate)
 
         binding.edgeToEdge.checkbox?.setChecked(state.edgeToEdgeEnabled, animate)
 
@@ -249,6 +258,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     override fun showTextSizePicker() = textSizeDialog.show(activity!!)
 
     override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
+
+    override fun showHeaderQuickActionDialog() = headerQuickActionDialog.show(activity!!)
 
     override fun showSignatureDialog(signature: String) = signatureDialog.setText(signature).show()
 

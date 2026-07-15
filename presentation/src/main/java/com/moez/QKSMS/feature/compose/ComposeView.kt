@@ -78,6 +78,7 @@ interface ComposeView : QkView<ComposeState> {
     val viewQksmsPlusIntent: Subject<Unit>
     val backPressedIntent: Observable<Unit>
     val confirmDeleteIntent: Observable<List<Long>>
+    val confirmDeleteConversationIntent: Observable<Long>
     val clearCurrentMessageIntent: Subject<Boolean>
     val messageLinkAskIntent: Observable<Uri>
     val reactionClickIntent: Subject<Long>
@@ -115,6 +116,7 @@ interface ComposeView : QkView<ComposeState> {
     fun scrollToMessage(id: Long)
     fun showQksmsPlusSnackbar(@StringRes message: Int)
     fun showDeleteDialog( messages: List<Long>)
+    fun showDeleteConversationDialog(threadId: Long)
     fun showClearCurrentMessageDialog()
     fun showReactionsDialog(reactions: List<String>)
     fun startSpeechRecognition()

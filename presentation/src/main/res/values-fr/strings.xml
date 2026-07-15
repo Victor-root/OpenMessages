@@ -304,6 +304,8 @@
     <string name="settings_system_font_title">Utiliser la police du système</string>
     <string name="settings_show_avatar_title">Afficher la photo du contact</string>
     <string name="settings_show_avatar_summary">Affiche la photo de l\'expéditeur dans les conversations. Désactivez pour élargir les bulles de message.</string>
+    <string name="settings_hide_country_code_title">Masquer l\'indicatif pays</string>
+    <string name="settings_hide_country_code_summary">Affiche les numéros de téléphone au format local, ex. \"06 ...\" au lieu de \"+33 6 ...\"</string>
     <string name="settings_edge_to_edge_title">Bord à bord</string>
     <string name="settings_edge_to_edge_summary">Afficher le contenu derrière les barres de statut et de navigation</string>
     <string name="settings_system_show_stt_title">Afficher le bouton de saisie vocale</string>
@@ -351,6 +353,8 @@
     <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
     <string name="settings_send_sound_title">Son à l\'envoi</string>
     <string name="settings_send_sound_summary">Jouer une courte tonalité quand vous envoyez un message</string>
+    <string name="settings_header_quick_action_title">Action rapide de l\'en-tête</string>
+    <string name="settings_header_quick_action_summary">Ajouter un bouton de raccourci à l\'en-tête de la conversation</string>
     <string name="settings_unread_at_top_title">Non lu en haut de page</string>
     <string name="settings_unread_at_top_summary">Afficher les conversations non lues en haut de la page</string>
     <string name="settings_signature_title">Signature</string>
@@ -561,6 +565,14 @@
         <item>3 secondes</item>
         <item>5 secondes</item>
         <item>10 secondes</item>
+    </string-array>
+    <!-- L'ordre correspond a Preferences.HEADER_ACTION_NONE/ARCHIVE/UNREAD/BLOCK/DELETE (0-4) -->
+    <string-array name="header_quick_action_labels">
+        <item>Aucune</item>
+        <item>Archiver</item>
+        <item>Marquer comme non-lu</item>
+        <item>Bloquer</item>
+        <item>Supprimer</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automatique</item>

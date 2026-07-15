@@ -93,6 +93,12 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.sendSound.asObservable()
             .subscribe { enabled -> newState { copy(sendSoundEnabled = enabled) } }
 
+        val headerQuickActionLabels = context.resources.getStringArray(R.array.header_quick_action_labels)
+        disposables += prefs.headerQuickAction.asObservable()
+            .subscribe { id ->
+                newState { copy(headerQuickActionSummary = headerQuickActionLabels[id], headerQuickActionId = id) }
+            }
+
         disposables += prefs.unreadAtTop.asObservable()
             .subscribe { enabled -> newState { copy(unreadAtTopEnabled = enabled) } }
 
@@ -113,6 +119,9 @@ class SettingsPresenter @Inject constructor(
 
         disposables += prefs.showAvatar.asObservable()
             .subscribe { enabled -> newState { copy(showAvatarEnabled = enabled) } }
+
+        disposables += prefs.hideCountryCode.asObservable()
+            .subscribe { enabled -> newState { copy(hideCountryCodeEnabled = enabled) } }
 
         disposables += prefs.edgeToEdge.asObservable()
             .subscribe { enabled -> newState { copy(edgeToEdgeEnabled = enabled) } }
@@ -197,6 +206,8 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.sendSound -> prefs.sendSound.set(!prefs.sendSound.get())
 
+                        R.id.headerQuickAction -> view.showHeaderQuickActionDialog()
+
                         R.id.unreadAtTop -> prefs.unreadAtTop.set(!prefs.unreadAtTop.get())
 
                         R.id.signature -> view.showSignatureDialog(prefs.signature.get())
@@ -210,6 +221,8 @@ class SettingsPresenter @Inject constructor(
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
 
                         R.id.showAvatar -> prefs.showAvatar.set(!prefs.showAvatar.get())
+
+                        R.id.hideCountryCode -> prefs.hideCountryCode.set(!prefs.hideCountryCode.get())
 
                         R.id.edgeToEdge -> prefs.edgeToEdge.set(!prefs.edgeToEdge.get())
 
@@ -285,6 +298,10 @@ class SettingsPresenter @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        view.headerQuickActionSelected()
+                .autoDisposable(view.scope())
+                .subscribe(prefs.headerQuickAction::set)
 
         view.signatureChanged()
                 .doOnNext(prefs.signature::set)

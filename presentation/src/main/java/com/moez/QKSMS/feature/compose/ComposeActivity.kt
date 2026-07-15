@@ -27,6 +27,7 @@ import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -86,6 +87,7 @@ import io.openmessages.feature.contacts.ContactsActivity
 import io.openmessages.feature.templates.TemplatesActivity
 import io.openmessages.model.Attachment
 import io.openmessages.model.Recipient
+import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -164,6 +166,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
+    override val confirmDeleteConversationIntent: Subject<Long> = PublishSubject.create()
     override val clearCurrentMessageIntent: Subject<Boolean> = PublishSubject.create()
     override val messageLinkAskIntent: Subject<Uri> by lazy { messageAdapter.messageLinkClicks }
     override val reactionClickIntent: Subject<Long> by lazy { messageAdapter.reactionClicks }
@@ -493,6 +496,24 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.toolbar.menu.findItem(R.id.add)?.isVisible = state.editingMode
         binding.toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0
                 && state.query.isEmpty()
+        binding.toolbar.menu.findItem(R.id.headerQuickAction)?.apply {
+            val quickAction = prefs.headerQuickAction.get()
+            isVisible = quickAction != Preferences.HEADER_ACTION_NONE && !state.editingMode &&
+                state.selectedMessages == 0 && state.query.isEmpty()
+            if (isVisible) {
+                val (iconRes, titleRes) = when (quickAction) {
+                    Preferences.HEADER_ACTION_ARCHIVE -> R.drawable.ic_archive_white_24dp to R.string.main_menu_archive
+                    Preferences.HEADER_ACTION_UNREAD -> R.drawable.ic_markunread_black_24dp to R.string.main_menu_unread
+                    Preferences.HEADER_ACTION_BLOCK -> R.drawable.ic_block_white_24dp to R.string.main_menu_block
+                    else -> R.drawable.ic_delete_white_24dp to R.string.main_menu_delete
+                }
+                // Menu icons are auto-tinted white by QkThemedActivity, but only when the shared
+                // `menu`/`theme` observable fires; reassigning the drawable here (a fresh instance,
+                // since the action can change) needs its own tint so it doesn't render black.
+                icon = ContextCompat.getDrawable(this@ComposeActivity, iconRes)?.apply { setTint(Color.WHITE) }
+                title = getString(titleRes)
+            }
+        }
         binding.toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0
                 && state.query.isEmpty()
         binding.toolbar.menu.findItem(R.id.copy)?.isVisible =
@@ -813,6 +834,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             .setTitle(R.string.dialog_delete_title)
             .setMessage(resources.getQuantityString(R.plurals.dialog_delete_chat, count, count))
             .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(messages) }
+            .setNegativeButton(R.string.button_cancel, null)
+            .show()
+            .themeButtons(colors.theme().theme)
+    }
+
+    override fun showDeleteConversationDialog(threadId: Long) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_delete_title)
+            .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, 1, 1))
+            .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteConversationIntent.onNext(threadId) }
             .setNegativeButton(R.string.button_cancel, null)
             .show()
             .themeButtons(colors.theme().theme)

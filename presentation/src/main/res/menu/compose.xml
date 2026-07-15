@@ -34,6 +34,15 @@
         android:visible="false"
         app:showAsAction="always" />
 
+    <!-- Icon and title are set at render time to match the configured Settings > header quick
+         action (archive/mark unread/block/delete); this placeholder is never shown as-is. -->
+    <item
+        android:id="@+id/headerQuickAction"
+        android:icon="@drawable/ic_archive_white_24dp"
+        android:title="@string/main_menu_archive"
+        android:visible="false"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/viewScheduledMessages"
         android:icon="@drawable/ic_event_black_24dp"
