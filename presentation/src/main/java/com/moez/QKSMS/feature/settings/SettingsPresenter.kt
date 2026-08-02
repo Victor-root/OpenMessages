@@ -90,8 +90,13 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.delivery.asObservable()
             .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
-        disposables += prefs.sendSound.asObservable()
-            .subscribe { enabled -> newState { copy(sendSoundEnabled = enabled) } }
+        val sendSoundLabels = context.resources.getStringArray(R.array.send_sound_labels)
+        val sendSoundIds = context.resources.getIntArray(R.array.send_sound_ids)
+        disposables += prefs.sendSoundId.asObservable()
+            .subscribe { id ->
+                val index = sendSoundIds.indexOf(id)
+                newState { copy(sendSoundSummary = sendSoundLabels[index], sendSoundId = id) }
+            }
 
         val headerQuickActionLabels = context.resources.getStringArray(R.array.header_quick_action_labels)
         disposables += prefs.headerQuickAction.asObservable()
@@ -204,7 +209,7 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
-                        R.id.sendSound -> prefs.sendSound.set(!prefs.sendSound.get())
+                        R.id.sendSound -> view.showSendSoundDialog()
 
                         R.id.headerQuickAction -> view.showHeaderQuickActionDialog()
 
@@ -302,6 +307,14 @@ class SettingsPresenter @Inject constructor(
         view.headerQuickActionSelected()
                 .autoDisposable(view.scope())
                 .subscribe(prefs.headerQuickAction::set)
+
+        view.sendSoundSelected()
+                .autoDisposable(view.scope())
+                .subscribe { id -> if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id) }
+
+        view.sendSoundConfirmed()
+                .autoDisposable(view.scope())
+                .subscribe(prefs.sendSoundId::set)
 
         view.signatureChanged()
                 .doOnNext(prefs.signature::set)

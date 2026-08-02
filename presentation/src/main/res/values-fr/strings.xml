@@ -574,6 +574,24 @@
         <item>Bloquer</item>
         <item>Supprimer</item>
     </string-array>
+    <!-- Associe avec send_sound_ids ci-dessous ; l'ordre est purement pour l'affichage -->
+    <string-array name="send_sound_labels">
+        <item>Aucun</item>
+        <item>Classique</item>
+        <item>Aigu</item>
+        <item>Doux</item>
+        <item>Descendant</item>
+        <item>Triple note</item>
+    </string-array>
+    <!-- Correspond a Preferences.SEND_SOUND_OFF/DEFAULT/BRIGHT/GENTLE/DESCENDING/TRIAD, dans l'ordre d'affichage -->
+    <integer-array name="send_sound_ids">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </integer-array>
     <string-array name="mms_sizes">
         <item>Automatique</item>
         <item>100KB</item>

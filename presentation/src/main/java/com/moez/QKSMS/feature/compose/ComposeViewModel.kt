@@ -45,6 +45,8 @@ import io.openmessages.common.base.QkViewModel
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.common.util.MessageDetailsFormatter
 import io.openmessages.common.util.extensions.makeToast
+import io.openmessages.common.util.sendSoundAudioAttributes
+import io.openmessages.common.util.sendSoundRes
 import io.openmessages.common.widget.MicInputCloudView
 import io.openmessages.common.widget.QkContextMenuRecyclerView
 import io.openmessages.compat.SubscriptionManagerCompat
@@ -163,12 +165,7 @@ class ComposeViewModel @Inject constructor(
     // silent no-op, which was making the very first send in each opened conversation play nothing.
     private val sentSoundPool = SoundPool.Builder()
         .setMaxStreams(1)
-        .setAudioAttributes(
-            AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
-        )
+        .setAudioAttributes(sendSoundAudioAttributes)
         .build()
     // playSentSound() can run on Schedulers.io() (the main send path); the load-complete callback
     // fires on the main thread, so these need to be visible across threads.
@@ -179,7 +176,12 @@ class ComposeViewModel @Inject constructor(
         sentSoundPool.setOnLoadCompleteListener { _, sampleId, status ->
             if (sampleId == sentSoundId && status == 0) sentSoundLoaded = true
         }
-        sentSoundId = sentSoundPool.load(context, R.raw.message_sent, 1)
+        disposables += prefs.sendSoundId.asObservable()
+            .subscribe { id ->
+                sentSoundLoaded = false
+                sentSoundPool.unload(sentSoundId)
+                sentSoundId = sentSoundPool.load(context, sendSoundRes(id), 1)
+            }
 
         // set shared subscription into state if set
         subscriptionManager.activeSubscriptionInfoList.firstOrNull {
@@ -362,7 +364,7 @@ class ComposeViewModel @Inject constructor(
 
     /** A short confirmation tone right as a message is handed off to send, if enabled in Settings. */
     private fun playSentSound() {
-        if (!prefs.sendSound.get() || !sentSoundLoaded) return
+        if (prefs.sendSoundId.get() == Preferences.SEND_SOUND_OFF || !sentSoundLoaded) return
         sentSoundPool.play(sentSoundId, 1f, 1f, 1, 0, 1f)
     }
 

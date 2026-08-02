@@ -21,6 +21,8 @@ package io.openmessages.feature.settings
 import android.animation.ObjectAnimator
 import android.app.TimePickerDialog
 import android.content.Context
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -41,6 +43,8 @@ import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.sendSoundAudioAttributes
+import io.openmessages.common.util.sendSoundRes
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.common.widget.TextInputDialog
 import io.openmessages.databinding.SettingsControllerBinding
@@ -64,6 +68,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     @Inject lateinit var nightModeDialog: QkDialog
     @Inject lateinit var textSizeDialog: QkDialog
     @Inject lateinit var sendDelayDialog: QkDialog
+    @Inject lateinit var sendSoundDialog: QkDialog
     @Inject lateinit var headerQuickActionDialog: QkDialog
     @Inject lateinit var mmsSizeDialog: QkDialog
     @Inject lateinit var messageLinkHandlingDialog: QkDialog
@@ -97,6 +102,9 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         }
         textSizeDialog.adapter.setData(R.array.text_sizes)
         sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
+        sendSoundDialog.adapter.setData(R.array.send_sound_labels, R.array.send_sound_ids)
+        sendSoundDialog.confirmWithButtons = true
+        sendSoundDialog.setTitle(R.string.settings_send_sound_title)
         headerQuickActionDialog.adapter.setData(R.array.header_quick_action_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
         messageLinkHandlingDialog.adapter.setData(R.array.messageLinkHandlings, R.array.messageLinkHandling_ids)
@@ -137,6 +145,10 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun headerQuickActionSelected(): Observable<Int> = headerQuickActionDialog.adapter.menuItemClicks
 
+    override fun sendSoundSelected(): Observable<Int> = sendSoundDialog.adapter.menuItemClicks
+
+    override fun sendSoundConfirmed(): Observable<Int> = sendSoundDialog.confirmClicks
+
     override fun signatureChanged(): Observable<String> = signatureSubject
 
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
@@ -171,7 +183,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
         binding.delivery.checkbox?.setChecked(state.deliveryEnabled, animate)
 
-        binding.sendSound.checkbox?.setChecked(state.sendSoundEnabled, animate)
+        binding.sendSound.summary = state.sendSoundSummary
+        sendSoundDialog.adapter.selectedItem = state.sendSoundId
 
         binding.headerQuickAction.summary = state.headerQuickActionSummary
         headerQuickActionDialog.adapter.selectedItem = state.headerQuickActionId
@@ -260,6 +273,15 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
 
     override fun showHeaderQuickActionDialog() = headerQuickActionDialog.show(activity!!)
+
+    override fun showSendSoundDialog() = sendSoundDialog.show(activity!!)
+
+    override fun previewSendSound(id: Int) {
+        MediaPlayer.create(activity!!, sendSoundRes(id), sendSoundAudioAttributes, AudioManager.AUDIO_SESSION_ID_GENERATE)?.apply {
+            setOnCompletionListener { release() }
+            start()
+        }
+    }
 
     override fun showSignatureDialog(signature: String) = signatureDialog.setText(signature).show()
 

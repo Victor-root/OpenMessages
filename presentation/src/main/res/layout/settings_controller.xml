@@ -194,7 +194,7 @@
             app:icon="@drawable/ic_round_volume_up_24"
             app:summary="@string/settings_send_sound_summary"
             app:title="@string/settings_send_sound_title"
-            app:widget="@layout/settings_switch_widget" />
+            tools:summary="Off" />
 
         <io.openmessages.common.widget.PreferenceView
             android:id="@+id/headerQuickAction"

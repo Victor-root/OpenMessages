@@ -670,6 +670,25 @@
         <item>Delete</item>
     </string-array>
 
+    <!-- Paired with send_sound_ids below; order is purely for display, ids carry the real meaning -->
+    <string-array name="send_sound_labels">
+        <item>None</item>
+        <item>Classic</item>
+        <item>Bright</item>
+        <item>Soft</item>
+        <item>Descending</item>
+        <item>Triple note</item>
+    </string-array>
+    <!-- Matches Preferences.SEND_SOUND_OFF/DEFAULT/BRIGHT/GENTLE/DESCENDING/TRIAD, in display order -->
+    <integer-array name="send_sound_ids">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </integer-array>
+
     <string-array name="mms_sizes">
         <item>Automatic</item>
         <item>100KB</item>

@@ -27,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.setPadding
 import io.openmessages.injection.appComponent
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 /**
@@ -35,6 +37,16 @@ import javax.inject.Inject
 class QkDialog @Inject constructor(private val context: Context, val adapter: MenuItemAdapter) {
 
     var title: String? = null
+
+    /**
+     * When true, tapping an item previews/highlights it instead of dismissing the dialog, and
+     * Cancel/OK buttons are shown instead; [confirmClicks] then fires once, with the last tapped
+     * item, when OK is pressed. When false (the default), tapping any item selects it and
+     * dismisses the dialog immediately.
+     */
+    var confirmWithButtons: Boolean = false
+
+    val confirmClicks: Subject<Int> = PublishSubject.create()
 
     init {
         appComponent.inject(this)
@@ -46,13 +58,27 @@ class QkDialog @Inject constructor(private val context: Context, val adapter: Me
         recyclerView.adapter = adapter
         recyclerView.setPadding(top = 8.dpToPx(context), bottom = 8.dpToPx(context))
 
-        val dialog = AlertDialog.Builder(activity)
+        val builder = AlertDialog.Builder(activity)
                 .setTitle(title)
                 .setView(recyclerView)
-                .create()
+
+        var lastClicked = adapter.selectedItem
+
+        if (confirmWithButtons) {
+            builder.setPositiveButton(android.R.string.ok) { _, _ -> lastClicked?.let(confirmClicks::onNext) }
+            builder.setNegativeButton(android.R.string.cancel, null)
+        }
+
+        val dialog = builder.create()
 
         val clicks = adapter.menuItemClicks
-                .subscribe { dialog.dismiss() }
+                .subscribe { id ->
+                    lastClicked = id
+                    when (confirmWithButtons) {
+                        true -> adapter.selectedItem = id
+                        false -> dialog.dismiss()
+                    }
+                }
 
         dialog.setOnDismissListener {
             clicks.dispose()

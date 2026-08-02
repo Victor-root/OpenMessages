@@ -88,6 +88,13 @@ class Preferences @Inject constructor(
         const val HEADER_ACTION_BLOCK = 3
         const val HEADER_ACTION_DELETE = 4
 
+        const val SEND_SOUND_OFF = -1
+        const val SEND_SOUND_DEFAULT = 0
+        const val SEND_SOUND_BRIGHT = 1
+        const val SEND_SOUND_GENTLE = 2
+        const val SEND_SOUND_DESCENDING = 3
+        const val SEND_SOUND_TRIAD = 4
+
         const val MESSAGE_LINK_HANDLING_BLOCK = 0
         const val MESSAGE_LINK_HANDLING_ALLOW = 1
         const val MESSAGE_LINK_HANDLING_ASK = 2
@@ -117,8 +124,8 @@ class Preferences @Inject constructor(
     // User configurable
     val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)
 
-    /** Play a short tone when a message is sent. */
-    val sendSound = rxPrefs.getBoolean("sendSound", false)
+    /** Which tone plays when a message is sent, or SEND_SOUND_OFF for silence. */
+    val sendSoundId = rxPrefs.getInteger("sendSoundId", SEND_SOUND_OFF)
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
         true -> NIGHT_MODE_SYSTEM
         false -> NIGHT_MODE_OFF
@@ -195,6 +202,13 @@ class Preferences @Inject constructor(
                 else -> NIGHT_MODE_OFF
             })
             nightModeSummary.delete()
+        }
+
+        // Migrate from the old separate on/off toggle now that it's merged into sendSoundId itself
+        val oldSendSoundEnabled = rxPrefs.getBoolean("sendSound")
+        if (oldSendSoundEnabled.isSet) {
+            if (!oldSendSoundEnabled.get()) sendSoundId.set(SEND_SOUND_OFF)
+            oldSendSoundEnabled.delete()
         }
     }
 
