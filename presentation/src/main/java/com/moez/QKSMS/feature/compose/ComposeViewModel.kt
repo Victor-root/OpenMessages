@@ -158,22 +158,29 @@ class ComposeViewModel @Inject constructor(
 
     // "Sound on send" tone: a synthesized two-note chime in the same style as the AOSP reference
     // Messaging app's message_sent.wav (platform/packages/apps/Messaging, Apache 2.0), so every user
-    // hears the same sound. Loaded once and reused for every send in this conversation.
-    private val sentSoundPoolLazy = lazy {
-        SoundPool.Builder()
-            .setMaxStreams(1)
-            .setAudioAttributes(
-                AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build()
-            )
-            .build()
-    }
-    private val sentSoundPool by sentSoundPoolLazy
-    private val sentSoundId by lazy { sentSoundPool.load(context, R.raw.message_sent, 1) }
+    // hears the same sound. SoundPool.load() decodes asynchronously, so loading is kicked off eagerly
+    // in init (below) rather than on first send: playing before the load completes is a documented
+    // silent no-op, which was making the very first send in each opened conversation play nothing.
+    private val sentSoundPool = SoundPool.Builder()
+        .setMaxStreams(1)
+        .setAudioAttributes(
+            AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+        )
+        .build()
+    // playSentSound() can run on Schedulers.io() (the main send path); the load-complete callback
+    // fires on the main thread, so these need to be visible across threads.
+    @Volatile private var sentSoundId = 0
+    @Volatile private var sentSoundLoaded = false
 
     init {
+        sentSoundPool.setOnLoadCompleteListener { _, sampleId, status ->
+            if (sampleId == sentSoundId && status == 0) sentSoundLoaded = true
+        }
+        sentSoundId = sentSoundPool.load(context, R.raw.message_sent, 1)
+
         // set shared subscription into state if set
         subscriptionManager.activeSubscriptionInfoList.firstOrNull {
             it.subscriptionId == sharedSubscriptionId
@@ -355,7 +362,7 @@ class ComposeViewModel @Inject constructor(
 
     /** A short confirmation tone right as a message is handed off to send, if enabled in Settings. */
     private fun playSentSound() {
-        if (!prefs.sendSound.get()) return
+        if (!prefs.sendSound.get() || !sentSoundLoaded) return
         sentSoundPool.play(sentSoundId, 1f, 1f, 1, 0, 1f)
     }
 
@@ -1409,7 +1416,7 @@ class ComposeViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        if (sentSoundPoolLazy.isInitialized()) sentSoundPool.release()
+        sentSoundPool.release()
     }
 
 }
