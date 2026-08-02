@@ -29,6 +29,9 @@ theming and privacy improvements layered on top. The highlights:
   swaps instantly and keeps the splash and recent-apps colors in sync. New Tabler-style launcher icon.
 * **Material 3 switches**, themed rounded dialogs, a themed unread badge, refreshed drawer and
   blocking/notification-row icons, and system-bar icons kept legible on every color.
+* **Themed circular send and mic buttons**, and a redesigned attachment picker as a themed bottom
+  sheet.
+* **Optional contact avatar** in conversations: turn it off to give message bubbles more width.
 * Optional **edge-to-edge** mode (off by default): content draws behind the transparent system bars,
   with a lighter nav-bar veil in light theme and a status-bar scrim that fades in as the main list
   scrolls behind it.
@@ -43,6 +46,10 @@ theming and privacy improvements layered on top. The highlights:
 * **Read/unread swipe** toggle with a matching envelope icon; defaults are swipe right = mark read,
   swipe left = archive.
 * Redesigned signature settings, and the target conversation flashes when you jump to the next unread.
+* **Configurable conversation header**: optionally hide the country code prefix in the title, and
+  add a quick-action button next to the call icon (Archive, Mark unread, Block, Delete, or none).
+* **Optional sound on send**: a short confirmation tone, with a choice of 5 tones, including a
+  brighter one that cuts through background noise, previewed live before you pick.
 
 ### 💾 Backup & restore
 * **Full local backup and restore**, on-device with no cloud or account. Pick what to include:
