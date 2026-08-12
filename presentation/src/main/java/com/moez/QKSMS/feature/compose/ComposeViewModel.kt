@@ -365,7 +365,8 @@ class ComposeViewModel @Inject constructor(
     /** A short confirmation tone right as a message is handed off to send, if enabled in Settings. */
     private fun playSentSound() {
         if (prefs.sendSoundId.get() == Preferences.SEND_SOUND_OFF || !sentSoundLoaded) return
-        sentSoundPool.play(sentSoundId, 1f, 1f, 1, 0, 1f)
+        val volume = prefs.sendSoundVolume.get() / 100f
+        sentSoundPool.play(sentSoundId, volume, volume, 1, 0, 1f)
     }
 
     @SuppressLint("StringFormatInvalid")

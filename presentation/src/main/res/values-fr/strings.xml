@@ -353,6 +353,7 @@
     <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
     <string name="settings_send_sound_title">Son à l\'envoi</string>
     <string name="settings_send_sound_summary">Jouer une courte tonalité quand vous envoyez un message</string>
+    <string name="settings_send_sound_volume_title">Volume</string>
     <string name="settings_header_quick_action_title">Action rapide de l\'en-tête</string>
     <string name="settings_header_quick_action_summary">Ajouter un bouton de raccourci à l\'en-tête de la conversation</string>
     <string name="settings_unread_at_top_title">Non lu en haut de page</string>

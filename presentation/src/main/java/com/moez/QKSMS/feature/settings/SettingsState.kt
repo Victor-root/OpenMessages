@@ -36,6 +36,7 @@ data class SettingsState(
     val deliveryEnabled: Boolean = false,
     val sendSoundSummary: String = "",
     val sendSoundId: Int = Preferences.SEND_SOUND_OFF,
+    val sendSoundVolume: Int = 100,
     val headerQuickActionSummary: String = "",
     val headerQuickActionId: Int = 0,
     val unreadAtTopEnabled: Boolean = false,

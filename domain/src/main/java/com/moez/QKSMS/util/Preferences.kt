@@ -126,6 +126,9 @@ class Preferences @Inject constructor(
 
     /** Which tone plays when a message is sent, or SEND_SOUND_OFF for silence. */
     val sendSoundId = rxPrefs.getInteger("sendSoundId", SEND_SOUND_OFF)
+
+    /** Volume (0-100) for the tone above. */
+    val sendSoundVolume = rxPrefs.getInteger("sendSoundVolume", 100)
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
         true -> NIGHT_MODE_SYSTEM
         false -> NIGHT_MODE_OFF

@@ -34,6 +34,8 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun headerQuickActionSelected(): Observable<Int>
     fun sendSoundSelected(): Observable<Int>
     fun sendSoundConfirmed(): Observable<Int>
+    fun sendSoundVolumeChanged(): Observable<Int>
+    fun sendSoundVolumeCommitted(): Observable<Int>
     fun signatureChanged(): Observable<String>
     fun mmsSizeSelected(): Observable<Int>
     fun messageLinkHandlingSelected(): Observable<Int>
@@ -45,8 +47,8 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun showTextSizePicker()
     fun showDelayDurationDialog()
     fun showHeaderQuickActionDialog()
-    fun showSendSoundDialog()
-    fun previewSendSound(id: Int)
+    fun showSendSoundDialog(id: Int)
+    fun previewSendSound(id: Int, volume: Int)
     fun showSignatureDialog(signature: String)
     fun showMmsSizePicker()
     fun showMessageLinkHandlingDialogPicker()

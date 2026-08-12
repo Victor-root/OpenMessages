@@ -21,6 +21,8 @@ package io.openmessages.common
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -49,6 +51,10 @@ class QkDialog @Inject constructor(private val context: Context, val adapter: Me
      */
     var confirmWithButtons: Boolean = false
 
+    /** Optional view shown between the list and the Cancel/OK row, only meaningful alongside
+     *  [confirmWithButtons]. */
+    var extraView: View? = null
+
     val confirmClicks: Subject<Int> = PublishSubject.create()
 
     init {
@@ -69,10 +75,16 @@ class QkDialog @Inject constructor(private val context: Context, val adapter: Me
         // app's static theme and don't follow the user's chosen theme color (see TextInputDialog).
         val actions = if (confirmWithButtons) QkDialogActionsBinding.inflate(LayoutInflater.from(activity)) else null
 
+        // extraView may be a view kept alive across multiple show() calls (e.g. a widget backed by
+        // a lazily-created binding in the caller), so detach it from any previous dialog first: a
+        // view can only have one parent, and dismissing an AlertDialog doesn't clear that itself.
+        extraView?.let { view -> (view.parent as? ViewGroup)?.removeView(view) }
+
         if (actions != null) {
             builder.setView(LinearLayout(activity).apply {
                 orientation = LinearLayout.VERTICAL
                 addView(recyclerView)
+                extraView?.let(::addView)
                 addView(actions.root)
             })
         } else {

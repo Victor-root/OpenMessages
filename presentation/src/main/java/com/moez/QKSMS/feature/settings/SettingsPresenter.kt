@@ -52,6 +52,11 @@ class SettingsPresenter @Inject constructor(
         nightModeId = prefs.nightMode.get()
 )) {
 
+    // Which tone the volume slider should preview: the one most recently tapped in the sound
+    // dialog (which may not be confirmed yet), reset to the real preference each time the dialog
+    // is (re)opened, in the R.id.sendSound click handler below.
+    private var sendSoundPreviewId: Int = prefs.sendSoundId.get()
+
     init {
         disposables += colors.themeObservable()
                 .subscribe { theme -> newState { copy(theme = theme.theme) } }
@@ -97,6 +102,9 @@ class SettingsPresenter @Inject constructor(
                 val index = sendSoundIds.indexOf(id)
                 newState { copy(sendSoundSummary = sendSoundLabels[index], sendSoundId = id) }
             }
+
+        disposables += prefs.sendSoundVolume.asObservable()
+            .subscribe { volume -> newState { copy(sendSoundVolume = volume) } }
 
         val headerQuickActionLabels = context.resources.getStringArray(R.array.header_quick_action_labels)
         disposables += prefs.headerQuickAction.asObservable()
@@ -209,7 +217,10 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
-                        R.id.sendSound -> view.showSendSoundDialog()
+                        R.id.sendSound -> {
+                            sendSoundPreviewId = prefs.sendSoundId.get()
+                            view.showSendSoundDialog(sendSoundPreviewId)
+                        }
 
                         R.id.headerQuickAction -> view.showHeaderQuickActionDialog()
 
@@ -310,11 +321,24 @@ class SettingsPresenter @Inject constructor(
 
         view.sendSoundSelected()
                 .autoDisposable(view.scope())
-                .subscribe { id -> if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id) }
+                .subscribe { id ->
+                    sendSoundPreviewId = id
+                    if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id, prefs.sendSoundVolume.get())
+                }
 
         view.sendSoundConfirmed()
                 .autoDisposable(view.scope())
                 .subscribe(prefs.sendSoundId::set)
+
+        view.sendSoundVolumeChanged()
+                .autoDisposable(view.scope())
+                .subscribe(prefs.sendSoundVolume::set)
+
+        view.sendSoundVolumeCommitted()
+                .autoDisposable(view.scope())
+                .subscribe { volume ->
+                    if (sendSoundPreviewId != Preferences.SEND_SOUND_OFF) view.previewSendSound(sendSoundPreviewId, volume)
+                }
 
         view.signatureChanged()
                 .doOnNext(prefs.signature::set)

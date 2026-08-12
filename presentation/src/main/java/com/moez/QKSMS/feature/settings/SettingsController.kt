@@ -21,6 +21,7 @@ package io.openmessages.feature.settings
 import android.animation.ObjectAnimator
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.res.ColorStateList
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
@@ -28,6 +29,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.snackbar.Snackbar
@@ -47,6 +49,7 @@ import io.openmessages.common.util.sendSoundAudioAttributes
 import io.openmessages.common.util.sendSoundRes
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.common.widget.TextInputDialog
+import io.openmessages.databinding.SendSoundVolumeBinding
 import io.openmessages.databinding.SettingsControllerBinding
 import io.openmessages.feature.settings.about.AboutController
 import io.openmessages.feature.settings.swipe.SwipeActionsController
@@ -79,10 +82,16 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         TextInputDialog(activity!!, colors.theme().theme, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
     }
 
+    private val sendSoundVolumeBinding: SendSoundVolumeBinding by lazy {
+        SendSoundVolumeBinding.inflate(LayoutInflater.from(activity!!))
+    }
+
     private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
     private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val signatureSubject: Subject<String> = PublishSubject.create()
+    private val sendSoundVolumeSubject: Subject<Int> = PublishSubject.create()
+    private val sendSoundVolumeCommittedSubject: Subject<Int> = PublishSubject.create()
 
     private val progressAnimator by lazy { ObjectAnimator.ofInt(binding.syncingProgress, "progress", 0, 0) }
 
@@ -105,6 +114,21 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         sendSoundDialog.adapter.setData(R.array.send_sound_labels, R.array.send_sound_ids)
         sendSoundDialog.confirmWithButtons = true
         sendSoundDialog.setTitle(R.string.settings_send_sound_title)
+        sendSoundDialog.extraView = sendSoundVolumeBinding.root
+        sendSoundVolumeBinding.volume.apply {
+            val themeColor = ColorStateList.valueOf(colors.theme().theme)
+            progressTintList = themeColor
+            thumbTintList = themeColor
+            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    if (fromUser) sendSoundVolumeSubject.onNext(progress)
+                }
+                override fun onStartTrackingTouch(seekBar: SeekBar?) { /* nothing */ }
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    sendSoundVolumeCommittedSubject.onNext(seekBar?.progress ?: return)
+                }
+            })
+        }
         headerQuickActionDialog.adapter.setData(R.array.header_quick_action_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
         messageLinkHandlingDialog.adapter.setData(R.array.messageLinkHandlings, R.array.messageLinkHandling_ids)
@@ -149,6 +173,10 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun sendSoundConfirmed(): Observable<Int> = sendSoundDialog.confirmClicks
 
+    override fun sendSoundVolumeChanged(): Observable<Int> = sendSoundVolumeSubject
+
+    override fun sendSoundVolumeCommitted(): Observable<Int> = sendSoundVolumeCommittedSubject
+
     override fun signatureChanged(): Observable<String> = signatureSubject
 
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
@@ -184,7 +212,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.delivery.checkbox?.setChecked(state.deliveryEnabled, animate)
 
         binding.sendSound.summary = state.sendSoundSummary
-        sendSoundDialog.adapter.selectedItem = state.sendSoundId
+        // sendSoundDialog's adapter.selectedItem is deliberately not synced here; see showSendSoundDialog().
+        sendSoundVolumeBinding.volume.progress = state.sendSoundVolume
 
         binding.headerQuickAction.summary = state.headerQuickActionSummary
         headerQuickActionDialog.adapter.selectedItem = state.headerQuickActionId
@@ -274,10 +303,19 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun showHeaderQuickActionDialog() = headerQuickActionDialog.show(activity!!)
 
-    override fun showSendSoundDialog() = sendSoundDialog.show(activity!!)
+    override fun showSendSoundDialog(id: Int) {
+        // Set only when the dialog is about to open, not from render(): the sound dialog stays
+        // open while the user taps around previewing tones (see confirmWithButtons on QkDialog),
+        // and prefs.sendSoundId only updates once OK is pressed, so syncing this on every render
+        // would snap the checkmark back to the old tone as soon as anything else re-rendered the
+        // screen (e.g. dragging the volume slider, which re-renders on every step).
+        sendSoundDialog.adapter.selectedItem = id
+        sendSoundDialog.show(activity!!)
+    }
 
-    override fun previewSendSound(id: Int) {
+    override fun previewSendSound(id: Int, volume: Int) {
         MediaPlayer.create(activity!!, sendSoundRes(id), sendSoundAudioAttributes, AudioManager.AUDIO_SESSION_ID_GENERATE)?.apply {
+            setVolume(volume / 100f, volume / 100f)
             setOnCompletionListener { release() }
             start()
         }
