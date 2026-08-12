@@ -20,12 +20,15 @@ package io.openmessages.common
 
 import android.app.Activity
 import android.content.Context
+import android.view.LayoutInflater
+import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.setPadding
+import io.openmessages.databinding.QkDialogActionsBinding
 import io.openmessages.injection.appComponent
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -58,18 +61,31 @@ class QkDialog @Inject constructor(private val context: Context, val adapter: Me
         recyclerView.adapter = adapter
         recyclerView.setPadding(top = 8.dpToPx(context), bottom = 8.dpToPx(context))
 
-        val builder = AlertDialog.Builder(activity)
-                .setTitle(title)
-                .setView(recyclerView)
+        val builder = AlertDialog.Builder(activity).setTitle(title)
 
         var lastClicked = adapter.selectedItem
 
-        if (confirmWithButtons) {
-            builder.setPositiveButton(android.R.string.ok) { _, _ -> lastClicked?.let(confirmClicks::onNext) }
-            builder.setNegativeButton(android.R.string.cancel, null)
+        // A custom action row instead of the stock AlertDialog buttons, which are tinted from the
+        // app's static theme and don't follow the user's chosen theme color (see TextInputDialog).
+        val actions = if (confirmWithButtons) QkDialogActionsBinding.inflate(LayoutInflater.from(activity)) else null
+
+        if (actions != null) {
+            builder.setView(LinearLayout(activity).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(recyclerView)
+                addView(actions.root)
+            })
+        } else {
+            builder.setView(recyclerView)
         }
 
         val dialog = builder.create()
+
+        actions?.cancel?.setOnClickListener { dialog.dismiss() }
+        actions?.ok?.setOnClickListener {
+            lastClicked?.let(confirmClicks::onNext)
+            dialog.dismiss()
+        }
 
         val clicks = adapter.menuItemClicks
                 .subscribe { id ->
