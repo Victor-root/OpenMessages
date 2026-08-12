@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>OpenMessages, messaging that stays yours</title>
+	<meta name="description" content="OpenMessages is a free, open source SMS and MMS app for Android with on-device spam and phishing blocking, full local backups and a fully themeable interface. No account or cloud sign-in required." />
+	<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+	<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png" />
+	<link rel="apple-touch-icon" href="images/favicon-192.png" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Outfit:wght@500;600;700;800&amp;display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+	<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+		<defs>
+			<linearGradient id="markGradient" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+				<stop offset="0" stop-color="#7B2DDC" />
+				<stop offset="1" stop-color="#5D72FB" />
+			</linearGradient>
+		</defs>
+	</svg>
+
+	<div class="glow glow-a" aria-hidden="true"></div>
+	<div class="glow glow-b" aria-hidden="true"></div>
+	<div class="glow glow-c" aria-hidden="true"></div>
+
+	<header class="topbar" id="topbar">
+		<a href="#top" class="brand">
+			<svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<rect x="1.5" y="1.5" width="21" height="21" rx="6.5" fill="url(#markGradient)" />
+				<path d="M6.8 8.4c0-.94.76-1.7 1.7-1.7h7c.94 0 1.7.76 1.7 1.7v5.1c0 .94-.76 1.7-1.7 1.7H11l-2.66 2.4a.5.5 0 0 1-.84-.37v-2.03H8.5c-.94 0-1.7-.76-1.7-1.7z" fill="#fff" />
+				<path d="M9 9.2h5M9 11.15h5M9 13.1h2.6" stroke="#7B2DDC" stroke-width=".85" stroke-linecap="round" />
+			</svg>
+			<span>OpenMessages</span>
+		</a>
+		<nav class="topnav">
+			<a href="#features">Features</a>
+			<a href="#about">About</a>
+		</nav>
+		<a class="btn btn-ghost btn-small" href="https://github.com/Victor-root/OpenMessages" target="_blank" rel="noopener">
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.535-1.5.115-3.12 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.645 1.62.24 2.82.12 3.12.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57C20.565 21.795 24 17.31 24 12c0-6.63-5.37-12-12-12z" fill="currentColor"/></svg>
+			<span>GitHub</span>
+		</a>
+	</header>
+
+	<main id="top">
+
+		<!-- Hero -->
+		<section class="hero">
+			<div class="hero-copy reveal">
+				<span class="eyebrow"><i class="dot"></i>Free, open source, forever</span>
+				<h1>Messaging that<br />stays <span class="grad">yours</span>.</h1>
+				<p class="lead">OpenMessages is a privacy-first SMS &amp; MMS app for Android.
+				On-device spam &amp; phishing blocking, full local backups, and a theme for every
+				mood. No account, no cloud sign-in, no compromise.</p>
+				<div class="cta-row">
+					<a class="btn btn-primary" href="https://github.com/Victor-root/OpenMessages" target="_blank" rel="noopener">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.535-1.5.115-3.12 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.645 1.62.24 2.82.12 3.12.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57C20.565 21.795 24 17.31 24 12c0-6.63-5.37-12-12-12z" fill="currentColor"/></svg>
+						View on GitHub
+					</a>
+					<a class="btn btn-ghost" href="#features">
+						Explore features
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v14m0 0 6-6m-6 6-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+					</a>
+				</div>
+				<ul class="facts">
+					<li>GPLv3 licensed</li>
+					<li>No ads, no trackers</li>
+					<li>Android 6.0 and up</li>
+				</ul>
+			</div>
+
+			<div class="hero-visual reveal" aria-hidden="true">
+				<div class="phone">
+					<div class="phone-notch"></div>
+					<div class="phone-screen">
+						<div class="chat-head">
+							<span class="chat-avatar"></span>
+							<div class="chat-head-lines">
+								<span class="line w60"></span>
+								<span class="line w35 dim"></span>
+							</div>
+						</div>
+						<div class="chat-log">
+							<div class="bubble received">Hey! Did the backup finish?</div>
+							<div class="bubble sent">Yep, zipped and saved. No cloud involved.</div>
+							<div class="bubble received">Love that. What about spam calls?</div>
+							<div class="bubble sent">Blocked on-device before they even show up.</div>
+							<div class="typing"><span></span><span></span><span></span></div>
+						</div>
+					</div>
+				</div>
+				<div class="phone-glow"></div>
+			</div>
+		</section>
+
+		<!-- Features -->
+		<section class="features" id="features">
+			<div class="section-head reveal">
+				<span class="eyebrow"><i class="dot"></i>Features</span>
+				<h2>Three ideas, one app.</h2>
+				<p>Everything below runs on your phone. Nothing is uploaded anywhere.</p>
+			</div>
+
+			<div class="showcase reveal">
+				<div class="showcase-copy">
+					<span class="tag">Privacy</span>
+					<h3>Blocking that never leaves your device.</h3>
+					<p>Spam and phishing detection run entirely on-device, in two clear tiers:
+					built-in, or delegated to an external blocker you already trust. The optional
+					phishing list downloads once; every match after that stays local. Borderline
+					senders get a discreet "suspected spam" label instead of a silent decision
+					made for you.</p>
+				</div>
+				<div class="showcase-visual">
+					<div class="glass-panel privacy-panel">
+						<svg viewBox="0 0 24 24" class="panel-icon" aria-hidden="true"><path d="M12 2.5 5 5.3v6.1c0 5.1 3.1 9.4 7 10.6 3.9-1.2 7-5.5 7-10.6V5.3z" stroke="url(#markGradient)" stroke-width="1.6" stroke-linejoin="round" fill="none"/><path d="M9 12.2l2.1 2.1 4-4.2" stroke="url(#markGradient)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+						<div class="panel-row"><span class="pill blocked">Blocked</span><span class="line w70"></span></div>
+						<div class="panel-row"><span class="pill blocked">Blocked</span><span class="line w55"></span></div>
+						<div class="panel-row"><span class="pill safe">Allowed</span><span class="line w60"></span></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="showcase reverse reveal">
+				<div class="showcase-copy">
+					<span class="tag">Theming</span>
+					<h3>Themeable from top to bottom.</h3>
+					<p>A tabbed theme picker with live in-app updates crossfades theme, dark mode
+					and text size, no restart. Pure-black mode for OLED screens, colors you can
+					set per conversation or tie to the app icon, and a launcher icon that swaps
+					instantly and stays in sync with the splash screen.</p>
+				</div>
+				<div class="showcase-visual">
+					<div class="glass-panel theme-panel">
+						<div class="swatches">
+							<span class="swatch s1"></span>
+							<span class="swatch s2"></span>
+							<span class="swatch s3"></span>
+							<span class="swatch s4 active"></span>
+							<span class="swatch s5"></span>
+						</div>
+						<div class="theme-preview-bubble sent">Aa</div>
+						<div class="panel-row"><span class="line w40"></span></div>
+						<div class="panel-row"><span class="line w65 dim"></span></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="showcase reveal">
+				<div class="showcase-copy">
+					<span class="tag">Backup</span>
+					<h3>Full local backup, no cloud required.</h3>
+					<p>Back up messages, settings, blocking rules, scheduled messages and the
+					archived or pinned state of your conversations, to a folder or a single
+					.zip, entirely on-device. Automatic backups run on your own schedule, and a
+					built-in manager lets you rename or delete them without leaving the app.</p>
+				</div>
+				<div class="showcase-visual">
+					<div class="glass-panel backup-panel">
+						<svg viewBox="0 0 24 24" class="panel-icon" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7" ry="2.5" stroke="url(#markGradient)" stroke-width="1.6" fill="none"/><path d="M5 5.5V12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V5.5M5 12v6.5c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V12" stroke="url(#markGradient)" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+						<div class="panel-row"><span class="line w75"></span><span class="pill safe">Saved</span></div>
+						<div class="progress"><span></span></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- About -->
+		<section class="about" id="about">
+			<div class="glass-panel about-panel reveal">
+				<span class="eyebrow"><i class="dot"></i>About</span>
+				<h2>Why build another fork?</h2>
+				<p>OpenMessages started from a handful of small improvements I wanted while
+				using Open Messages as my daily SMS app. I use AI tools as part of my workflow,
+				not to blindly generate code, but to understand codebases faster, test ideas,
+				and work more efficiently while still reviewing everything myself.</p>
+				<p>My first instinct was to contribute upstream. But after a small contribution
+				got judged more on how it was written than on the quality of the result, I
+				decided to maintain my own fork instead: one judged on the final product, not
+				on whether modern tools were involved.</p>
+			</div>
+		</section>
+
+		<!-- More -->
+		<section class="more">
+			<div class="section-head reveal">
+				<span class="eyebrow"><i class="dot"></i>And more</span>
+				<h2>A long list of small things done right.</h2>
+			</div>
+			<ul class="chips reveal">
+				<li>Saved message templates</li>
+				<li>Expandable full-screen message input</li>
+				<li>Redesigned attachment picker</li>
+				<li>Read / unread swipe actions</li>
+				<li>Configurable conversation header</li>
+				<li>Sound on send, previewed live</li>
+				<li>Copy codes from notifications</li>
+				<li>Automatic scheduled backups</li>
+				<li>Optional edge-to-edge display</li>
+			</ul>
+		</section>
+
+		<!-- CTA -->
+		<section class="cta">
+			<div class="glass-panel cta-panel reveal">
+				<h2>Ready to switch?</h2>
+				<p>Free, open source, and yours to keep.</p>
+				<div class="cta-row center">
+					<a class="btn btn-primary" href="https://github.com/Victor-root/OpenMessages" target="_blank" rel="noopener">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.535-1.5.115-3.12 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.645 1.62.24 2.82.12 3.12.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57C20.565 21.795 24 17.31 24 12c0-6.63-5.37-12-12-12z" fill="currentColor"/></svg>
+						View on GitHub
+					</a>
+					<a class="btn btn-ghost" href="https://github.com/Victor-root/OpenMessages/issues" target="_blank" rel="noopener">Report an issue</a>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="footer">
+		<a href="#top" class="brand small">
+			<svg class="brand-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+				<rect x="1.5" y="1.5" width="21" height="21" rx="6.5" fill="url(#markGradient)" />
+				<path d="M6.8 8.4c0-.94.76-1.7 1.7-1.7h7c.94 0 1.7.76 1.7 1.7v5.1c0 .94-.76 1.7-1.7 1.7H11l-2.66 2.4a.5.5 0 0 1-.84-.37v-2.03H8.5c-.94 0-1.7-.76-1.7-1.7z" fill="#fff" />
+			</svg>
+			<span>OpenMessages</span>
+		</a>
+		<div class="footer-links">
+			<a href="https://github.com/Victor-root/OpenMessages">Source</a>
+			<a href="https://github.com/Victor-root/OpenMessages/blob/main/LICENSE">License</a>
+			<a href="https://github.com/Victor-root/OpenMessages/issues">Issues</a>
+		</div>
+		<p class="copyright">&copy; OpenMessages. Source available under the GPLv3.</p>
+	</footer>
+
+	<script src="script.js"></script>
+</body>
+</html>
