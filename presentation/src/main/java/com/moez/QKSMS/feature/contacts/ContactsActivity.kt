@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.contacts
+package io.openmessages.feature.contacts
 
 import android.app.Activity
 import android.content.Intent
@@ -28,19 +28,18 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.ViewModelFactory
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.extensions.hideKeyboard
-import dev.octoshrimpy.quik.common.util.extensions.showKeyboard
-import dev.octoshrimpy.quik.common.widget.QkDialog
-import dev.octoshrimpy.quik.databinding.ContactsActivityBinding
-import dev.octoshrimpy.quik.extensions.Optional
-import dev.octoshrimpy.quik.feature.compose.editing.ComposeItem
-import dev.octoshrimpy.quik.feature.compose.editing.ComposeItemAdapter
-import dev.octoshrimpy.quik.feature.compose.editing.PhoneNumberAction
-import dev.octoshrimpy.quik.feature.compose.editing.PhoneNumberPickerAdapter
+import io.openmessages.R
+import io.openmessages.common.ViewModelFactory
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.hideKeyboard
+import io.openmessages.common.util.extensions.showKeyboard
+import io.openmessages.common.widget.QkDialog
+import io.openmessages.databinding.ContactsActivityBinding
+import io.openmessages.extensions.Optional
+import io.openmessages.feature.compose.editing.ComposeItem
+import io.openmessages.feature.compose.editing.ComposeItemAdapter
+import io.openmessages.feature.compose.editing.PhoneNumberAction
+import io.openmessages.feature.compose.editing.PhoneNumberPickerAdapter
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -51,6 +50,10 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     companion object {
         const val SHARING_KEY = "sharing"
         const val CHIPS_KEY = "chips"
+        // Set when the picker is opened directly (e.g. from Templates) rather than by the composer, so
+        // finish() knows how to animate: a direct pick hands off to the composer next, a direct cancel
+        // slides normally back to the caller.
+        const val STANDALONE_KEY = "standalone"
     }
 
     private lateinit var binding: ContactsActivityBinding
@@ -58,7 +61,6 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     @Inject lateinit var contactsAdapter: ComposeItemAdapter
     @Inject lateinit var phoneNumberAdapter: PhoneNumberPickerAdapter
     @Inject lateinit var viewModelFactory: ViewModelFactory
-    @Inject lateinit var navigator: Navigator
 
     override val queryChangedIntent: Observable<CharSequence> by lazy { binding.search.textChanges() }
     override val queryClearedIntent: Observable<*> by lazy { binding.cancel.clicks() }
@@ -94,7 +96,9 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                navigator.showMainActivity()
+                // Cancel the picker with an empty result. The composer closes itself when no recipient
+                // was chosen and returns to whatever opened it, instead of jumping to the main screen.
+                this@ContactsActivity.finish(hashMapOf<String, String?>())
             }
         }
         onBackPressedDispatcher.addCallback(this, callback)
@@ -129,6 +133,15 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         val intent = Intent().putExtra(CHIPS_KEY, result)
         setResult(Activity.RESULT_OK, intent)
         finish()
+        if (getIntent().getBooleanExtra(STANDALONE_KEY, false)) {
+            // Opened directly (e.g. from Templates): a pick hands straight off to the composer, so
+            // skip the flash back to the caller; a cancel slides normally back to it.
+            if (result.isNotEmpty()) overridePendingTransition(0, 0)
+        } else {
+            // Opened by the composer: on cancel the composer closes itself right after, so skip this
+            // exit animation to avoid a doubled/janky back transition (a real pick reveals it normally).
+            if (result.isEmpty()) overridePendingTransition(0, 0)
+        }
     }
 
 }

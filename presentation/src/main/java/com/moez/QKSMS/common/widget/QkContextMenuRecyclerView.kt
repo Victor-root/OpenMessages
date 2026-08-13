@@ -1,13 +1,13 @@
-package dev.octoshrimpy.quik.common.widget
+package io.openmessages.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.ContextMenu
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import dev.octoshrimpy.quik.common.base.QkAdapter
-import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.model.MmsPart
+import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.QkViewHolder
+import io.openmessages.model.MmsPart
 
 open class QkContextMenuRecyclerView<ADAPTER_VALUE_TYPE, VIEW_HOLDER_VALUE_TYPE> : RecyclerView {
     class ViewHolder<VIEW_HOLDER_VALUE_TYPE>(view: View) : QkViewHolder(view) {
@@ -37,6 +37,7 @@ open class QkContextMenuRecyclerView<ADAPTER_VALUE_TYPE, VIEW_HOLDER_VALUE_TYPE>
 
     override fun getContextMenuInfo() = contextMenuInfo
 
+    @Suppress("UNCHECKED_CAST")
     override fun getChildViewHolder(child: View): ViewHolder<VIEW_HOLDER_VALUE_TYPE>? {
         return super.getChildViewHolder(child) as ViewHolder<VIEW_HOLDER_VALUE_TYPE>
     }
@@ -51,6 +52,7 @@ open class QkContextMenuRecyclerView<ADAPTER_VALUE_TYPE, VIEW_HOLDER_VALUE_TYPE>
         return super.showContextMenuForChild(originalView, x, y)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun saveContextMenuInfo(originalView: View) {
         contextMenuInfo = ContextMenuInfo(
             (adapter as Adapter<ADAPTER_VALUE_TYPE, *, *>).contextMenuValue,

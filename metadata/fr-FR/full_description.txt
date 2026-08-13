@@ -9,4 +9,4 @@ Remplacement open-source de l'application SMS de base sur Android. Une résurrec
 - Triez vos messages
 - Envoi retardé de messages
 
-Vous pouvez clavarder avec la communauté en suivant ce lien : <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a>
+Vous pouvez clavarder avec la communauté en suivant ce lien : <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a>

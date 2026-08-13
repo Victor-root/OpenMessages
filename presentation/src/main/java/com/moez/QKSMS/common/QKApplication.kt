@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common
+package io.openmessages.common
 
 import android.app.Activity
 import android.app.Application
@@ -34,19 +34,22 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
 import dagger.android.HasServiceInjector
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.FileLoggingTree
-import dev.octoshrimpy.quik.injection.AppComponentManager
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.interactor.SpeakThreads
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.manager.ReferralManager
-import dev.octoshrimpy.quik.migration.QkMigration
-import dev.octoshrimpy.quik.migration.QkRealmMigration
-import dev.octoshrimpy.quik.util.NightModeManager
-import dev.octoshrimpy.quik.worker.HousekeepingWorker
+import io.openmessages.R
+import io.openmessages.common.util.FileLoggingTree
+import io.openmessages.injection.AppComponentManager
+import io.openmessages.injection.appComponent
+import io.openmessages.interactor.SpeakThreads
+import io.openmessages.manager.BillingManager
+import io.openmessages.manager.ReferralManager
+import io.openmessages.migration.QkMigration
+import io.openmessages.migration.QkRealmMigration
+import io.openmessages.util.NightModeManager
+import io.openmessages.util.Preferences
+import io.openmessages.worker.AutoBackupWorker
+import io.openmessages.worker.HousekeepingWorker
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -67,6 +70,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
+    @Inject lateinit var prefs: Preferences
     @Inject lateinit var realmMigration: QkRealmMigration
     @Inject lateinit var referralManager: ReferralManager
     @Inject lateinit var workerFactory: WorkerFactory
@@ -89,6 +93,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         qkMigration.performMigration()
 
+        @OptIn(DelicateCoroutinesApi::class)
         GlobalScope.launch(Dispatchers.IO) {
             referralManager.trackReferrer()
             billingManager.checkForPurchases()
@@ -129,6 +134,9 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         // register, or re-register, housekeeping work manager
         HousekeepingWorker.register(applicationContext)
+
+        // register, or re-register, the automatic backup according to the saved frequency
+        AutoBackupWorker.register(applicationContext, prefs.backupFrequency.get())
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

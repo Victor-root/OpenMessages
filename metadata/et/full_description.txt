@@ -9,4 +9,4 @@ Avatud lähtekoodil põhinev asendus Androidi standardsele lühisõnumirakenduse
 - Sõnumite järjestamine
 - Viivitusega saatmine
 
-Osale kogukonna suhtluses <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a> jututoas
+Osale kogukonna suhtluses <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a> jututoas

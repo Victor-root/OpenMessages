@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.extensions
+package io.openmessages.extensions
 
 import java.util.concurrent.TimeUnit
 

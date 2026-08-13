@@ -1,6 +1,6 @@
-package dev.octoshrimpy.quik.feature.messageutils
+package io.openmessages.feature.messageutils
 
-import dev.octoshrimpy.quik.common.base.QkViewContract
+import io.openmessages.common.base.QkViewContract
 import io.reactivex.Observable
 import io.reactivex.Single
 

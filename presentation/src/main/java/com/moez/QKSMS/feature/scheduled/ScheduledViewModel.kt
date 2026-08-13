@@ -1,16 +1,16 @@
-package dev.octoshrimpy.quik.feature.scheduled
+package io.openmessages.feature.scheduled
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkViewModel
-import dev.octoshrimpy.quik.common.util.ClipboardUtils
-import dev.octoshrimpy.quik.interactor.DeleteScheduledMessages
-import dev.octoshrimpy.quik.interactor.SendScheduledMessage
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.util.ClipboardUtils
+import io.openmessages.interactor.DeleteScheduledMessages
+import io.openmessages.interactor.SendScheduledMessage
+import io.openmessages.manager.BillingManager
+import io.openmessages.repository.ScheduledMessageRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers

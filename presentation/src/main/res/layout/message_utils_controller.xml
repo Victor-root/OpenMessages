@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,11 +32,11 @@
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
-        <dev.octoshrimpy.quik.common.widget.QkTextView
+        <io.openmessages.common.widget.QkTextView
             style="@style/PreferenceCategory"
             android:text="@string/deduplicate_messages_category" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/deduplicateMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             app:summary="@string/deduplicate_messages_summary"
             app:title="@string/deduplicate_messages_title" />
 
-        <dev.octoshrimpy.quik.common.widget.QkTextView
+        <io.openmessages.common.widget.QkTextView
             android:id="@+id/deduplicationProgressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/autoDeduplicate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,11 +73,11 @@
             app:title="@string/auto_deduplicate_messages_title"
             app:widget="@layout/settings_switch_widget" />
 
-        <dev.octoshrimpy.quik.common.widget.QkTextView
+        <io.openmessages.common.widget.QkTextView
             style="@style/PreferenceCategory"
             android:text="@string/settings_category_general" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/autoDelete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

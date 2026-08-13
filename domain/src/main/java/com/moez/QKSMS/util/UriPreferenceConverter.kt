@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.util
+package io.openmessages.util
 
 import android.net.Uri
 import com.f2prateek.rx.preferences2.Preference.Converter

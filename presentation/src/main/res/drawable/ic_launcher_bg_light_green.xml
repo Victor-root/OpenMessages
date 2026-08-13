@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Launcher-icon background for the LightGreen alias. Intentionally a deeper shade than the
+    in-app LightGreen theme color (#8BC34A): the shared foreground bubble is white, and white has
+    insufficient contrast on the bright original — on the Android 12+ splash the bubble washed out.
+    A darker light-green keeps the bubble legible and the icon recognisably light-green.
+    The in-app theme color is kept unchanged, so only the icon/splash uses this shade.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#6AA030"/>
+</shape>

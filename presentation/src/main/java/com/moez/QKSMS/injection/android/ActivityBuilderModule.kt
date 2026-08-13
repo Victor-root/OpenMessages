@@ -1,48 +1,50 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.injection.android
+package io.openmessages.injection.android
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import dev.octoshrimpy.quik.feature.backup.BackupActivity
-import dev.octoshrimpy.quik.feature.blocking.BlockingActivity
-import dev.octoshrimpy.quik.feature.compose.ComposeActivity
-import dev.octoshrimpy.quik.feature.compose.ComposeActivityModule
-import dev.octoshrimpy.quik.feature.contacts.ContactsActivity
-import dev.octoshrimpy.quik.feature.contacts.ContactsActivityModule
-import dev.octoshrimpy.quik.feature.conversationinfo.ConversationInfoActivity
-import dev.octoshrimpy.quik.feature.gallery.GalleryActivity
-import dev.octoshrimpy.quik.feature.gallery.GalleryActivityModule
-import dev.octoshrimpy.quik.feature.main.MainActivity
-import dev.octoshrimpy.quik.feature.main.MainActivityModule
-import dev.octoshrimpy.quik.feature.messageutils.MessageUtilsActivity
-import dev.octoshrimpy.quik.feature.notificationprefs.NotificationPrefsActivity
-import dev.octoshrimpy.quik.feature.notificationprefs.NotificationPrefsActivityModule
-import dev.octoshrimpy.quik.feature.plus.PlusActivity
-import dev.octoshrimpy.quik.feature.plus.PlusActivityModule
-import dev.octoshrimpy.quik.feature.qkreply.QkReplyActivity
-import dev.octoshrimpy.quik.feature.qkreply.QkReplyActivityModule
-import dev.octoshrimpy.quik.feature.scheduled.ScheduledActivity
-import dev.octoshrimpy.quik.feature.scheduled.ScheduledActivityModule
-import dev.octoshrimpy.quik.feature.settings.SettingsActivity
-import dev.octoshrimpy.quik.feature.settings.about.AboutActivity
-import dev.octoshrimpy.quik.injection.scope.ActivityScope
+import io.openmessages.feature.backup.BackupActivity
+import io.openmessages.feature.blocking.BlockingActivity
+import io.openmessages.feature.compose.ComposeActivity
+import io.openmessages.feature.compose.ComposeActivityModule
+import io.openmessages.feature.contacts.ContactsActivity
+import io.openmessages.feature.contacts.ContactsActivityModule
+import io.openmessages.feature.conversationinfo.ConversationInfoActivity
+import io.openmessages.feature.gallery.GalleryActivity
+import io.openmessages.feature.gallery.GalleryActivityModule
+import io.openmessages.feature.main.MainActivity
+import io.openmessages.feature.main.MainActivityModule
+import io.openmessages.feature.messageutils.MessageUtilsActivity
+import io.openmessages.feature.notificationprefs.NotificationPrefsActivity
+import io.openmessages.feature.notificationprefs.NotificationPrefsActivityModule
+import io.openmessages.feature.plus.PlusActivity
+import io.openmessages.feature.plus.PlusActivityModule
+import io.openmessages.feature.qkreply.QkReplyActivity
+import io.openmessages.feature.qkreply.QkReplyActivityModule
+import io.openmessages.feature.scheduled.ScheduledActivity
+import io.openmessages.feature.scheduled.ScheduledActivityModule
+import io.openmessages.feature.settings.SettingsActivity
+import io.openmessages.feature.settings.about.AboutActivity
+import io.openmessages.feature.templates.TemplatesActivity
+import io.openmessages.feature.templates.TemplatesActivityModule
+import io.openmessages.injection.scope.ActivityScope
 
 @Module
 abstract class ActivityBuilderModule {
@@ -86,6 +88,10 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [ScheduledActivityModule::class])
     abstract fun bindScheduledActivity(): ScheduledActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [TemplatesActivityModule::class])
+    abstract fun bindTemplatesActivity(): TemplatesActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [])

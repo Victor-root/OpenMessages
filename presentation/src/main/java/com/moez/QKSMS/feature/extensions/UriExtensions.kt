@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.feature.extensions
+package io.openmessages.feature.extensions
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -7,12 +7,12 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import com.bumptech.glide.Glide
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.extensions.getDefaultActivityIconForMimeType
-import dev.octoshrimpy.quik.extensions.isAudio
-import dev.octoshrimpy.quik.extensions.isImage
-import dev.octoshrimpy.quik.extensions.isVideo
-import dev.octoshrimpy.quik.extensions.resourceExists
+import io.openmessages.R
+import io.openmessages.extensions.getDefaultActivityIconForMimeType
+import io.openmessages.extensions.isAudio
+import io.openmessages.extensions.isImage
+import io.openmessages.extensions.isVideo
+import io.openmessages.extensions.resourceExists
 
 enum class LoadBestIconIntoImageView {
     Missing,

@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.compose
+package io.openmessages.feature.compose
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -40,36 +40,36 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import com.jakewharton.rxbinding2.view.clicks
-import com.moez.QKSMS.common.QkMediaPlayer
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
-import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.TextViewStyler
-import dev.octoshrimpy.quik.common.util.extensions.dpToPx
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setPadding
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.util.extensions.withAlpha
-import dev.octoshrimpy.quik.compat.SubscriptionManagerCompat
-import dev.octoshrimpy.quik.extensions.isSmil
-import dev.octoshrimpy.quik.extensions.isText
-import dev.octoshrimpy.quik.extensions.joinTo
-import dev.octoshrimpy.quik.extensions.millisecondsToMinutes
-import dev.octoshrimpy.quik.extensions.truncateWithEllipses
-import dev.octoshrimpy.quik.feature.compose.BubbleUtils.canGroup
-import dev.octoshrimpy.quik.feature.compose.BubbleUtils.getBubble
-import dev.octoshrimpy.quik.feature.compose.part.PartsAdapter
-import dev.octoshrimpy.quik.feature.extensions.isEmojiOnly
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.databinding.MessageListItemInBinding
-import dev.octoshrimpy.quik.databinding.MessageListItemOutBinding
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.common.QkMediaPlayer
+import io.openmessages.R
+import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.TextViewStyler
+import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setPadding
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.extensions.withAlpha
+import io.openmessages.compat.SubscriptionManagerCompat
+import io.openmessages.extensions.isSmil
+import io.openmessages.extensions.isText
+import io.openmessages.extensions.joinTo
+import io.openmessages.extensions.millisecondsToMinutes
+import io.openmessages.extensions.truncateWithEllipses
+import io.openmessages.feature.compose.BubbleUtils.canGroup
+import io.openmessages.feature.compose.BubbleUtils.getBubble
+import io.openmessages.feature.compose.part.PartsAdapter
+import io.openmessages.feature.extensions.isEmojiOnly
+import io.openmessages.model.Conversation
+import io.openmessages.model.Message
+import io.openmessages.model.Recipient
+import io.openmessages.databinding.MessageListItemInBinding
+import io.openmessages.databinding.MessageListItemOutBinding
+import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.Preferences
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -288,9 +288,22 @@ class MessagesAdapter @Inject constructor(
             status = binding.status
 
             // Bind the avatar and bubble colour
+            val showAvatar = prefs.showAvatar.get()
             binding.avatar.apply {
                 setRecipient(contactCache[message.address])
-                setVisible(!canGroup(message, next), View.INVISIBLE)
+                // Shown: keep the slot (INVISIBLE) for grouped messages so bubbles stay aligned; the
+                // last of a group reveals it. Hidden: drop it (GONE) so the bubble reclaims the width.
+                if (showAvatar) setVisible(!canGroup(message, next), View.INVISIBLE)
+                else setVisible(false, View.GONE)
+            }
+
+            // Keep the status label aligned under the bubble whether or not the avatar takes its slot.
+            (binding.status.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                val startMargin = (if (showAvatar) 72 else 36).dpToPx(context)
+                if (lp.marginStart != startMargin) {
+                    lp.marginStart = startMargin
+                    binding.status.layoutParams = lp
+                }
             }
 
             body.apply {
@@ -307,7 +320,7 @@ class MessagesAdapter @Inject constructor(
 
         val subject = message.getCleansedSubject()
 
-        var isMsgTextTruncated = false
+        var isMsgTextTruncated: Boolean
 
         // get message text to display, which may need to be truncated
         val displayText = subject.joinTo(message.getText(false), "\n").let {

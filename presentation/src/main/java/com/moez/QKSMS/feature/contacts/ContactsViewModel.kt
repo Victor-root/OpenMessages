@@ -1,42 +1,42 @@
 /*
  * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.contacts
+package io.openmessages.feature.contacts
 
 import android.view.inputmethod.EditorInfo
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.common.base.QkViewModel
-import dev.octoshrimpy.quik.extensions.mapNotNull
-import dev.octoshrimpy.quik.extensions.removeAccents
-import dev.octoshrimpy.quik.feature.compose.editing.ComposeItem
-import dev.octoshrimpy.quik.feature.compose.editing.PhoneNumberAction
-import dev.octoshrimpy.quik.filter.ContactFilter
-import dev.octoshrimpy.quik.filter.ContactGroupFilter
-import dev.octoshrimpy.quik.interactor.SetDefaultPhoneNumber
-import dev.octoshrimpy.quik.model.Contact
-import dev.octoshrimpy.quik.model.ContactGroup
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.model.PhoneNumber
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.repository.ContactRepository
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
+import io.openmessages.common.base.QkViewModel
+import io.openmessages.extensions.mapNotNull
+import io.openmessages.extensions.removeAccents
+import io.openmessages.feature.compose.editing.ComposeItem
+import io.openmessages.feature.compose.editing.PhoneNumberAction
+import io.openmessages.filter.ContactFilter
+import io.openmessages.filter.ContactGroupFilter
+import io.openmessages.interactor.SetDefaultPhoneNumber
+import io.openmessages.model.Contact
+import io.openmessages.model.ContactGroup
+import io.openmessages.model.Conversation
+import io.openmessages.model.PhoneNumber
+import io.openmessages.model.Recipient
+import io.openmessages.repository.ContactRepository
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables

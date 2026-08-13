@@ -9,4 +9,4 @@ Open-Source-Ersatz für die Standard-SMS-App auf Android. Eine Neuauflage von QK
 - Nachrichten sortieren
 - Verzögertes Senden
 
-Du kannst mit der Community unter <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a> chatten.
+Du kannst mit der Community unter <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a> chatten.

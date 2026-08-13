@@ -1,23 +1,23 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package dev.octoshrimpy.quik.feature.widget
+package io.openmessages.feature.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -29,14 +29,14 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.RemoteViews
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
-import dev.octoshrimpy.quik.feature.compose.ComposeActivity
-import dev.octoshrimpy.quik.feature.main.MainActivity
-import dev.octoshrimpy.quik.manager.WidgetManager
-import dev.octoshrimpy.quik.receiver.StartActivityFromWidgetReceiver
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.getColorCompat
+import io.openmessages.feature.compose.ComposeActivity
+import io.openmessages.feature.main.MainActivity
+import io.openmessages.manager.WidgetManager
+import io.openmessages.receiver.StartActivityFromWidgetReceiver
+import io.openmessages.util.Preferences
 import timber.log.Timber
 import javax.inject.Inject
 import androidx.core.net.toUri

@@ -1,74 +1,95 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.main
+package io.openmessages.feature.main
 
 import android.Manifest
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.RippleDrawable
+import android.graphics.drawable.StateListDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.androidxcompat.drawerOpen
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
-import dev.octoshrimpy.quik.common.util.extensions.dismissKeyboard
-import dev.octoshrimpy.quik.common.util.extensions.resolveThemeColor
-import dev.octoshrimpy.quik.common.util.extensions.scrapViews
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.widget.TextInputDialog
-import dev.octoshrimpy.quik.feature.blocking.BlockingDialog
-import dev.octoshrimpy.quik.databinding.MainActivityBinding
-import dev.octoshrimpy.quik.databinding.MainPermissionHintBinding
-import dev.octoshrimpy.quik.databinding.MainSyncingBinding
-import dev.octoshrimpy.quik.feature.changelog.ChangelogDialog
-import dev.octoshrimpy.quik.feature.conversations.ConversationItemTouchCallback
-import dev.octoshrimpy.quik.feature.conversations.ConversationsAdapter
-import dev.octoshrimpy.quik.manager.ChangelogManager
-import dev.octoshrimpy.quik.repository.SyncRepository
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.androidxcompat.drawerOpen
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.DialogHost
+import io.openmessages.common.util.extensions.applyInsetBottomMargin
+import io.openmessages.common.util.extensions.applyInsetPadding
+import io.openmessages.common.util.extensions.applyInsetTop
+import io.openmessages.common.util.extensions.autoScrollToStart
+import io.openmessages.common.util.extensions.dismissKeyboard
+import io.openmessages.common.util.extensions.resolveThemeColor
+import io.openmessages.common.util.extensions.scrapViews
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.common.widget.TextInputDialog
+import io.openmessages.feature.blocking.BlockingDialog
+import io.openmessages.databinding.MainActivityBinding
+import io.openmessages.databinding.MainPermissionHintBinding
+import io.openmessages.databinding.MainSyncingBinding
+import io.openmessages.feature.changelog.ChangelogDialog
+import io.openmessages.feature.conversations.ConversationItemTouchCallback
+import io.openmessages.feature.conversations.ConversationsAdapter
+import io.openmessages.manager.ChangelogManager
+import io.openmessages.repository.SyncRepository
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
+
+// Peak opacity of the dynamic status-bar scrim once the toolbar is fully collapsed (a subtle veil).
+private const val STATUS_BAR_SCRIM_ALPHA = 0.32f
 
 class MainActivity : QkThemedActivity(), MainView {
 
@@ -84,6 +105,12 @@ class MainActivity : QkThemedActivity(), MainView {
     private lateinit var binding: MainActivityBinding
     private lateinit var snackbarBinding: MainPermissionHintBinding
     private lateinit var syncingBinding: MainSyncingBinding
+
+    private var searchExpanded = false
+    private var lastState: MainState? = null
+    private var nextUnreadIndex = 0
+    private var scrollToTopVisible = false
+    private var statusBarScrimListener: AppBarLayout.OnOffsetChangedListener? = null
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val activityResumedIntent: Subject<Boolean> = PublishSubject.create()
@@ -102,6 +129,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 binding.drawer.scheduled.clicks().map { NavItem.SCHEDULED },
                 binding.drawer.blocking.clicks().map { NavItem.BLOCKING },
                 binding.drawer.messageUtils.clicks().map { NavItem.MESSAGE_UTILS },
+                binding.drawer.templates.clicks().map { NavItem.TEMPLATES },
                 binding.drawer.settings.clicks().map { NavItem.SETTINGS },
                 binding.drawer.about.clicks().map { NavItem.ABOUT },
 //                plus.clicks().map { NavItem.PLUS },
@@ -114,7 +142,8 @@ class MainActivity : QkThemedActivity(), MainView {
     override val rateIntent by lazy { binding.drawer.rateOkay.clicks() }
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
-    override val renameConversationIntent: Subject<String> = PublishSubject.create()
+    override val dialogDismissedIntent: Subject<MainDialog> = PublishSubject.create()
+    override val renameConversationIntent: Subject<Pair<Long, String>> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val changelogMoreIntent by lazy { changelogDialog.moreClicks }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
@@ -137,13 +166,21 @@ class MainActivity : QkThemedActivity(), MainView {
         ObjectAnimator.ofInt(syncingBinding.syncingProgress, "progress", 0, 0)
     }
     private val changelogDialog by lazy { ChangelogDialog(this) }
+
+    private val dialogHost = DialogHost<MainDialog>(
+        build = { spec -> buildDialog(spec).themeButtons(colors.theme().theme) },
+        onClosed = dialogDismissedIntent::onNext)
+
     private val backPressedSubject: Subject<NavItem> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.toolbarSearch.setTextColor(resolveThemeColor(android.R.attr.textColorPrimary))
+        binding.toolbarSearch.setHintTextColor(resolveThemeColor(android.R.attr.textColorTertiary))
         viewModel.bindView(this)
         onNewIntentIntent.onNext(intent)
 
@@ -164,30 +201,104 @@ class MainActivity : QkThemedActivity(), MainView {
             homeIntent.onNext(Unit)
         }
 
+        binding.toolbarSearchIcon.setOnClickListener {
+            searchExpanded = true
+            // Null the transition so all visibility changes happen instantly (badge hides,
+            // search bar appears, icons hide) — avoids badge/search overlap and any
+            // LayoutTransition interference. Then manually fade the search bar in.
+            val lt = binding.toolbar.layoutTransition
+            binding.toolbar.layoutTransition = null
+            binding.toolbarSearch.alpha = 0f
+            updateSearchVisibility()
+            binding.toolbar.layoutTransition = lt
+            binding.toolbarSearch.animate().alpha(1f).setDuration(300).start()
+            binding.toolbarSearch.requestFocus()
+        }
+
+        binding.toolbarUnreadBadge.setOnClickListener {
+            scrollToNextUnread()
+        }
+
+        binding.toolbarSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus && binding.toolbarSearch.text.isNullOrEmpty()) {
+                searchExpanded = false
+                updateSearchVisibility()
+            }
+        }
+
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(binding.recyclerView)
+
+        // Recount unread whenever the adapter updates (Realm writes are async, so render()
+        // may fire before the write completes; this observer catches the post-write notification).
+        conversationsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() = updateSearchVisibility()
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) = updateSearchVisibility()
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) = updateSearchVisibility()
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) = updateSearchVisibility()
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = updateSearchVisibility()
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) = updateSearchVisibility()
+        })
+
+        // Scroll-to-top button: appear on first scroll down, vanish when back at top
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val shouldShow = recyclerView.canScrollVertically(-1) && lastState?.page !is Searching
+                if (shouldShow == scrollToTopVisible) return
+                scrollToTopVisible = shouldShow
+                binding.scrollToTop.animate().cancel()
+                if (shouldShow) {
+                    binding.scrollToTop.scaleX = 0.7f
+                    binding.scrollToTop.scaleY = 0.7f
+                    binding.scrollToTop.alpha = 0f
+                    binding.scrollToTop.isVisible = true
+                    binding.scrollToTop.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(200).start()
+                } else {
+                    binding.scrollToTop.animate().alpha(0f).scaleX(0.7f).scaleY(0.7f).setDuration(200)
+                        .withEndAction { binding.scrollToTop.isVisible = false }.start()
+                }
+            }
+        })
+        binding.scrollToTop.setOnClickListener {
+            val lm = binding.recyclerView.layoutManager as? LinearLayoutManager
+            if ((lm?.findFirstVisibleItemPosition() ?: 0) > 20) {
+                // Jump to position 20 so the smooth scroll covers enough distance to be visible.
+                binding.recyclerView.scrollToPosition(20)
+                binding.recyclerView.post { binding.recyclerView.smoothScrollToPosition(0) }
+            } else {
+                binding.recyclerView.smoothScrollToPosition(0)
+            }
+            binding.appBarLayout.setExpanded(true, true)
+        }
 
         // Don't allow clicks to pass through the drawer layout
         binding.drawer.root.clicks().autoDisposable(scope()).subscribe()
 
-        // Set the theme color tint to the recyclerView, progressbar, and FAB
+        // Apply the theme color to all dynamic UI elements
         theme
                 .autoDisposable(scope())
                 .subscribe { theme ->
-                    // Set the color for the drawer icons
-                    val states = arrayOf(
+                    val density = resources.displayMetrics.density
+                    val gradientEnd = colors.deriveGradientEndColor(theme.theme)
+                    // The brand gradient is only used for the default violet; custom colors are flat.
+                    val useGradient = colors.usesBrandGradient(theme.theme)
+                    // Anything sitting on the theme color follows the status-bar icon rule. Computed
+                    // here rather than read from toolbarContentColor: this subscription is registered
+                    // in onCreate, so it fires before QkThemedActivity's own in onPostCreate.
+                    val onTheme = colors.contentColorOnTheme(theme.theme)
+
+                    // Drawer icons tint
+                    val iconStates = arrayOf(
                             intArrayOf(android.R.attr.state_activated),
                             intArrayOf(-android.R.attr.state_activated))
-
-                    ColorStateList(states, intArrayOf(theme.theme,
+                    ColorStateList(iconStates, intArrayOf(theme.theme,
                         resolveThemeColor(android.R.attr.textColorSecondary)
-                    ))
-                        .let { tintList ->
-                            binding.drawer.inboxIcon.imageTintList = tintList
-                            binding.drawer.archivedIcon.imageTintList = tintList
-                        }
+                    )).let { tintList ->
+                        binding.drawer.inboxIcon.imageTintList = tintList
+                        binding.drawer.archivedIcon.imageTintList = tintList
+                    }
 
-                    // Miscellaneous views
+                    // Progress bar and misc drawer views
                     listOf(binding.drawer.plusBadge1, binding.drawer.plusBadge2).forEach { badge ->
                         badge.setBackgroundTint(theme.theme)
                         badge.setTextColor(theme.textPrimary)
@@ -196,11 +307,113 @@ class MainActivity : QkThemedActivity(), MainView {
                     syncingBinding.syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     binding.drawer.plusIcon.setTint(theme.theme)
                     binding.drawer.rateIcon.setTint(theme.theme)
-                    binding.compose.setBackgroundTint(theme.theme)
 
-                    // Set the FAB compose icon color
-                    binding.compose.setTint(theme.textPrimary)
+                    // Compose FAB — brand gradient (rounded rect) for the default color, solid otherwise
+                    val cornerPx = 16f * density
+                    val composeBackground = (if (useGradient) {
+                        GradientDrawable(GradientDrawable.Orientation.BL_TR, intArrayOf(theme.theme, gradientEnd))
+                    } else {
+                        GradientDrawable().apply { setColor(theme.theme) }
+                    }).apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadius = cornerPx
+                    }
+                    val composeMask = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        cornerRadius = cornerPx
+                        setColor(Color.WHITE)
+                    }
+                    binding.compose.background = RippleDrawable(
+                        ColorStateList.valueOf(ColorUtils.setAlphaComponent(onTheme, 0x40)),
+                        composeBackground, composeMask
+                    )
+                    binding.compose.setTint(onTheme)
+
+                    // Scroll-to-top — brand gradient (oval) for the default color, solid otherwise
+                    val scrollBackground = (if (useGradient) {
+                        GradientDrawable(GradientDrawable.Orientation.BL_TR, intArrayOf(theme.theme, gradientEnd))
+                    } else {
+                        GradientDrawable().apply { setColor(theme.theme) }
+                    }).apply { shape = GradientDrawable.OVAL }
+                    val scrollMask = GradientDrawable().apply {
+                        shape = GradientDrawable.OVAL
+                        setColor(Color.WHITE)
+                    }
+                    binding.scrollToTop.background = RippleDrawable(
+                        ColorStateList.valueOf(ColorUtils.setAlphaComponent(onTheme, 0x40)),
+                        scrollBackground, scrollMask
+                    )
+                    binding.scrollToTop.setTint(onTheme)
+
+                    // Toolbar content: search icon, unread envelope and its count badge all sit on the
+                    // themed toolbar, so they take the same color as the status-bar icons above them.
+                    binding.toolbarSearchIcon.setTint(onTheme)
+                    binding.toolbarUnreadIcon.setTint(onTheme)
+                    binding.toolbarUnreadCount.setTextColor(onTheme)
+                    // The badge is filled with the theme color on a toolbar of that same color, so its
+                    // border is the only thing that separates the two: it has to stay legible too.
+                    (binding.toolbarUnreadCount.background as? GradientDrawable)?.apply {
+                        mutate()
+                        setColor(theme.theme)
+                        setStroke((1.5f * density).toInt(), onTheme)
+                    }
+
+                    // The drawer arrow / hamburger is drawn by ActionBarDrawerToggle, outside the
+                    // toolbar's own icon tinting, so it needs the color applied here as well.
+                    toggle.drawerArrowDrawable.color = onTheme
+
+                    // Gradient only for the default violet brand color; all custom colors use solid fill
+                    binding.drawer.drawerHeader.background = if (useGradient) {
+                        GradientDrawable(
+                            GradientDrawable.Orientation.TOP_BOTTOM,
+                            intArrayOf(theme.theme, gradientEnd)
+                        )
+                    } else {
+                        ColorDrawable(theme.theme)
+                    }
+
+                    // Activated drawer row highlight
+                    val activeColor = Color.argb((255 * 0.15f).toInt(),
+                        Color.red(theme.theme), Color.green(theme.theme), Color.blue(theme.theme))
+                    val rippleColor = ColorStateList.valueOf(
+                        resolveThemeColor(android.R.attr.colorControlHighlight))
+                    listOf(binding.drawer.inbox, binding.drawer.archived).forEach { row ->
+                        val states = StateListDrawable().apply {
+                            addState(intArrayOf(android.R.attr.state_activated), ColorDrawable(activeColor))
+                            addState(intArrayOf(), ColorDrawable(Color.TRANSPARENT))
+                        }
+                        row.background = RippleDrawable(rippleColor, states, null)
+                    }
                 }
+    }
+
+    // Edge-to-edge: the toolbar's themed background extends behind the status bar; the list draws
+    // behind the transparent nav bar (clipToPadding is already false) while everything interactive
+    // is lifted above it.
+    override fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
+        binding.toolbar.applyInsetTop(top)
+        binding.recyclerView.applyInsetPadding(bottom = bottom)
+        binding.compose.applyInsetBottomMargin(bottom)
+        binding.scrollToTop.applyInsetBottomMargin(bottom)
+        binding.drawer.root.applyInsetPadding(bottom = bottom)
+        if (::snackbarBinding.isInitialized) snackbarBinding.root.applyInsetPadding(bottom = bottom)
+        if (::syncingBinding.isInitialized) syncingBinding.root.applyInsetPadding(bottom = bottom)
+        setupStatusBarScrim(top)
+    }
+
+    // Sizes the status-bar scrim to the inset and, once, hooks its alpha to the toolbar collapse so
+    // it stays transparent at rest and fades in only as the list scrolls behind the status bar.
+    private fun setupStatusBarScrim(top: Int) {
+        binding.statusBarScrim.updateLayoutParams { height = top }
+        binding.statusBarScrim.isVisible = true
+        if (statusBarScrimListener == null) {
+            statusBarScrimListener = AppBarLayout.OnOffsetChangedListener { appBar, offset ->
+                val range = appBar.totalScrollRange
+                val fraction = if (range > 0) -offset.toFloat() / range else 0f
+                binding.statusBarScrim.alpha = fraction * STATUS_BAR_SCRIM_ALPHA
+            }
+            binding.appBarLayout.addOnOffsetChangedListener(statusBarScrimListener)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) =
@@ -214,6 +427,8 @@ class MainActivity : QkThemedActivity(), MainView {
             finish()
             return
         }
+
+        dialogHost.render(state.dialog)
 
         conversationsAdapter.hasScheduledConversation = state.scheduledConversationIds
 
@@ -241,11 +456,8 @@ class MainActivity : QkThemedActivity(), MainView {
             else -> 0
         }
 
-        binding.toolbarSearch.setVisible(state.page is Inbox &&
-                state.page.selected == 0 ||
-                state.page is Searching
-        )
-        binding.toolbarTitle.setVisible(binding.toolbarSearch.visibility != View.VISIBLE)
+        lastState = state
+        updateSearchVisibility(state)
 
         binding.toolbar.menu.apply {
             findItem(R.id.select_all)?.isVisible =
@@ -271,7 +483,7 @@ class MainActivity : QkThemedActivity(), MainView {
         }
 //        plus.isVisible = state.upgraded
         binding.drawer.plusBanner.isVisible = !state.upgraded
-        binding.drawer.rateLayout.setVisible(state.showRating)
+        // rate dialog permanently hidden
 
         binding.compose.setVisible(state.page is Inbox || state.page is Archived)
         conversationsAdapter.emptyView = binding.empty.takeIf {
@@ -282,7 +494,8 @@ class MainActivity : QkThemedActivity(), MainView {
         when (state.page) {
             is Inbox -> {
                 showBackButton(state.page.selected > 0)
-                title = getString(R.string.main_title_selected, state.page.selected)
+                title = if (state.page.selected == 0) getString(R.string.launcher_name)
+                        else getString(R.string.main_title_selected, state.page.selected)
                 if (binding.recyclerView.adapter !== conversationsAdapter)
                     binding.recyclerView.adapter = conversationsAdapter
                 conversationsAdapter.updateData(state.page.data)
@@ -311,8 +524,25 @@ class MainActivity : QkThemedActivity(), MainView {
                 binding.empty.setText(R.string.archived_empty_text)
             }
 
-            else -> {}
         }
+
+        // Pin the toolbar during multi-selection, and while a bottom banner (the default-SMS /
+        // permission hint or the syncing bar) is shown. Those banners are anchored to the bottom of
+        // the scrolling content, which extends below the fold by the toolbar height, so a collapsing
+        // toolbar leaves them off screen until the user scrolls. Pinning keeps the content within the
+        // visible area so the banner stays put. Restore the collapsing toolbar once neither applies.
+        val bannerShown = state.syncing !is SyncRepository.SyncProgress.Idle ||
+            !state.defaultSms || !state.smsPermission || !state.contactPermission || !state.notificationPermission
+        val toolbarParams = binding.toolbar.layoutParams as? AppBarLayout.LayoutParams
+        if (selectedConversations > 0 || bannerShown) {
+            toolbarParams?.scrollFlags = 0
+            binding.appBarLayout.setExpanded(true, false)
+        } else {
+            toolbarParams?.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or
+                AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+        }
+        binding.toolbar.layoutParams = toolbarParams
 
         binding.drawer.inbox.isActivated = state.page is Inbox
         binding.drawer.archived.isActivated = state.page is Archived
@@ -380,22 +610,26 @@ class MainActivity : QkThemedActivity(), MainView {
         }
     }
 
-    override fun onResume() =
-        super.onResume().also { activityResumedIntent.onNext(true) }
+    override fun onResume() {
+        super.onResume()
+        activityResumedIntent.onNext(true)
+        updateSearchVisibility()
+    }
 
     override fun onPause() =
         super.onPause().also { activityResumedIntent.onNext(false) }
 
-    override fun onDestroy() =
-        super.onDestroy().also { disposables.dispose() }
+    override fun onDestroy() = super.onDestroy().also {
+        disposables.dispose()
+        // Closed without reporting it: the state keeps the dialog, and that is what lets the
+        // rebuilt screen show it again instead of leaving its window behind.
+        dialogHost.close()
+    }
 
     override fun showBackButton(show: Boolean) =
         toggle.let {
             it.onDrawerSlide(binding.drawer.root, if (show) 1f else 0f)
-            it.drawerArrowDrawable.color = when (show) {
-                true -> resolveThemeColor(android.R.attr.textColorSecondary)
-                false -> resolveThemeColor(android.R.attr.textColorPrimary)
-            }
+            it.drawerArrowDrawable.color = toolbarContentColor
         }
 
     override fun requestDefaultSms() =
@@ -414,9 +648,15 @@ class MainActivity : QkThemedActivity(), MainView {
         ActivityCompat.requestPermissions(this, permissions.toTypedArray(), 0)
     }
 
+    override fun shouldShowNotificationRationale(): Boolean =
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)
+
     override fun clearSearch() {
         dismissKeyboard()
         binding.toolbarSearch.text = null
+        searchExpanded = false
+        updateSearchVisibility()
     }
 
     override fun clearSelection() = conversationsAdapter.clearSelection()
@@ -426,32 +666,105 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun themeChanged() = binding.recyclerView.scrapViews()
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
-        blockingDialog.show(this, conversations, block)
+        blockingDialog.show(conversations, block)
     }
 
-    override fun showDeleteDialog(conversations: List<Long>) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_delete_title)
-            .setMessage(
-                resources.getQuantityString(
-                    R.plurals.dialog_delete_message,
-                    conversations.size,
-                    conversations.size
-                )
-            )
-            .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(conversations) }
-            .setNegativeButton(R.string.button_cancel, null)
-            .show()
-    }
+    private fun buildDialog(spec: MainDialog): AlertDialog = when (spec) {
+        is MainDialog.DeleteConversations -> {
+            val count = spec.conversationIds.size
+            AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_title)
+                .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, count, count))
+                .setPositiveButton(R.string.button_delete) { _, _ ->
+                    confirmDeleteIntent.onNext(spec.conversationIds)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+        }
 
-    override fun showRenameDialog(conversationName: String) =
-        TextInputDialog(
+        is MainDialog.RenameConversation -> TextInputDialog(
             this,
-            getString(R.string.info_name),
-            renameConversationIntent::onNext
-        )
-            .setText(conversationName)
-            .show()
+            colors.theme().theme,
+            getString(R.string.info_name)
+        ) { name -> renameConversationIntent.onNext(spec.conversationId to name) }
+            .setText(spec.currentName)
+    }
+
+    private fun updateSearchVisibility(state: MainState? = lastState) {
+        if (state == null) return
+        val isInbox = state.page is Inbox && (state.page as Inbox).selected == 0
+        val isSearching = state.page is Searching
+        val showInboxIcons = isInbox && !searchExpanded && !isSearching
+        binding.toolbarSearch.setVisible(isSearching || (isInbox && searchExpanded))
+        binding.toolbarSearchIcon.setVisible(showInboxIcons)
+        binding.toolbarLogoGroup.setVisible(!isSearching && !(isInbox && searchExpanded))
+        // Counted by Realm rather than by walking the list. This runs on every change to the list
+        // and on every redraw of the screen, and counting in Kotlin built a Conversation object per
+        // row just to read one flag. "unread" is lastMessage.read == false, the same query the
+        // conversation repository already uses for it.
+        val unreadCount = if (showInboxIcons) {
+            (state.page as? Inbox)?.data?.where()?.equalTo("lastMessage.read", false)?.count()?.toInt() ?: 0
+        } else 0
+        if (showInboxIcons) {
+            binding.toolbarUnreadCount.text = "$unreadCount"
+        }
+        binding.toolbarUnreadBadge.setVisible(showInboxIcons && unreadCount > 0)
+        // Hide scroll-to-top when search is active
+        if (isSearching || (isInbox && searchExpanded)) {
+            scrollToTopVisible = false
+            binding.scrollToTop.isVisible = false
+        }
+    }
+
+    private fun scrollToNextUnread() {
+        val unreadPositions = (0 until conversationsAdapter.itemCount)
+            .filter { conversationsAdapter.getItem(it)?.unread == true }
+        if (unreadPositions.isEmpty()) return
+
+        val targetPos = unreadPositions[nextUnreadIndex % unreadPositions.size]
+        nextUnreadIndex++
+
+        val lm = binding.recyclerView.layoutManager as? LinearLayoutManager ?: return
+
+        fun flashTarget() {
+            binding.recyclerView.findViewHolderForAdapterPosition(targetPos)
+                ?.itemView?.let { v ->
+                    ObjectAnimator.ofFloat(v, "alpha", 1f, 0.25f, 1f, 0.25f, 1f)
+                        .apply { duration = 1800 }
+                        .start()
+                }
+        }
+
+        val scroller = object : LinearSmoothScroller(this) {
+            override fun calculateDtToFit(
+                viewStart: Int, viewEnd: Int,
+                boxStart: Int, boxEnd: Int,
+                snapPreference: Int
+            ): Int = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
+        }
+
+        var idleListener: RecyclerView.OnScrollListener? = null
+        idleListener = object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    recyclerView.removeOnScrollListener(idleListener!!)
+                    flashTarget()
+                }
+            }
+        }
+        binding.recyclerView.addOnScrollListener(idleListener)
+        scroller.targetPosition = targetPos
+        lm.startSmoothScroll(scroller)
+
+        // Fallback: if item is already at the target (no scroll needed), animate immediately
+        binding.recyclerView.post {
+            if (binding.recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) {
+                binding.recyclerView.removeOnScrollListener(idleListener!!)
+                flashTarget()
+            }
+        }
+    }
+
 
     override fun showChangelog(changelog: ChangelogManager.CumulativeChangelog) =
         changelogDialog.show(changelog)
@@ -481,14 +794,39 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun onOptionsItemSelected(item: MenuItem) =
         optionsItemIntent.onNext(item.itemId).let { true }
 
-    override fun onBackPressed() = backPressedSubject.onNext(NavItem.BACK)
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (searchExpanded && lastState?.page is Inbox && ev?.action == MotionEvent.ACTION_DOWN) {
+            val toolbarBounds = Rect()
+            binding.toolbar.getGlobalVisibleRect(toolbarBounds)
+            if (!toolbarBounds.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                clearSearch()
+                return true
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onBackPressed() {
+        if (searchExpanded) {
+            searchExpanded = false
+            binding.toolbarSearch.text = null
+            dismissKeyboard()
+            updateSearchVisibility()
+        } else {
+            backPressedSubject.onNext(NavItem.BACK)
+        }
+    }
 
     override fun drawerToggled(opened: Boolean) {
         if (opened) {
             dismissKeyboard()
+            if (searchExpanded) {
+                searchExpanded = false
+                binding.toolbarSearch.text = null
+                updateSearchVisibility()
+            }
             if (!binding.drawer.inbox.isInTouchMode)
                 binding.drawer.inbox.requestFocus()
-        } else
-            binding.toolbarSearch.requestFocus()
+        }
     }
 }

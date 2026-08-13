@@ -1,35 +1,35 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.scheduled
+package io.openmessages.feature.scheduled
 
 import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkAdapter
-import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
-import dev.octoshrimpy.quik.extensions.getName
-import dev.octoshrimpy.quik.feature.extensions.LoadBestIconIntoImageView
-import dev.octoshrimpy.quik.feature.extensions.loadBestIconIntoImageView
-import dev.octoshrimpy.quik.databinding.ScheduledMessageImageListItemBinding
+import io.openmessages.R
+import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.extensions.getName
+import io.openmessages.feature.extensions.LoadBestIconIntoImageView
+import io.openmessages.feature.extensions.loadBestIconIntoImageView
+import io.openmessages.databinding.ScheduledMessageImageListItemBinding
 import javax.inject.Inject
 
 

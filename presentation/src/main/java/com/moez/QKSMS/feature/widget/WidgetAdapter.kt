@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.widget
+package io.openmessages.feature.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
@@ -28,20 +28,20 @@ import android.widget.RemoteViewsService
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.core.text.italic
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.dpToPx
-import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.model.Contact
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.model.PhoneNumber
-import dev.octoshrimpy.quik.receiver.StartActivityFromWidgetReceiver
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.util.GlideApp
-import dev.octoshrimpy.quik.util.Preferences
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.R
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.getColorCompat
+import io.openmessages.injection.appComponent
+import io.openmessages.model.Contact
+import io.openmessages.model.Conversation
+import io.openmessages.model.PhoneNumber
+import io.openmessages.receiver.StartActivityFromWidgetReceiver
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.GlideApp
+import io.openmessages.util.Preferences
+import io.openmessages.util.tryOrNull
 import javax.inject.Inject
 
 class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {

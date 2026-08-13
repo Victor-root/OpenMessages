@@ -1,22 +1,23 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.util
+@file:Suppress("DEPRECATION")
+package io.openmessages.common.util
 
 import android.content.ComponentName
 import android.content.IntentFilter
@@ -24,13 +25,13 @@ import android.graphics.drawable.Icon
 import android.service.chooser.ChooserTarget
 import android.service.chooser.ChooserTargetService
 import androidx.core.os.bundleOf
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.feature.compose.ComposeActivity
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.util.GlideApp
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.R
+import io.openmessages.feature.compose.ComposeActivity
+import io.openmessages.injection.appComponent
+import io.openmessages.model.Conversation
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.GlideApp
+import io.openmessages.util.tryOrNull
 import javax.inject.Inject
 
 class QkChooserTargetService : ChooserTargetService() {

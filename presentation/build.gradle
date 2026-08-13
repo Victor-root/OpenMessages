@@ -1,20 +1,20 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
@@ -25,12 +25,14 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId 'dev.octoshrimpy.quik'
+        applicationId 'io.openmessages'
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 2238
-        versionName '4.3.6'
-        setProperty("archivesBaseName", "QUIK-v${versionName}")
+        // First Open Messages release. The rebrand to the io.openmessages package means it installs
+        // fresh, never over the app it was forked from, so the counter restarts at 1. Bump
+        // versionCode by 1 and update versionName for each release.
+        versionCode 1
+        versionName '1.0.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -38,16 +40,24 @@ android {
         debug // Uses the default debug keystore.
         release {
             def keystoreProps = new Properties()
-            def keystorePropsFile = rootProject.file('./.gradle/.gradlerc')
-            storeFile file('./my-release-key.keystore')
-            keyAlias 'quik_release'
+            def keystorePropsFile = rootProject.file('keystore.properties')
             if (keystorePropsFile.exists()) {
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
-            } else {
-                // do nothing
+                // storeFile is resolved relative to the repo root (where keystore.properties lives),
+                // so an entry like storeFile=my-release-key.jks just works. Absolute paths also work.
+                // Each entry is set only when present, so a file missing one of them is reported by
+                // the signing check at the bottom of this file rather than failing here on a null.
+                if (keystoreProps['storeFile'] != null) storeFile rootProject.file(keystoreProps['storeFile'])
+                if (keystoreProps['storePassword'] != null) storePassword keystoreProps['storePassword']
+                if (keystoreProps['keyAlias'] != null) keyAlias keystoreProps['keyAlias']
+                if (keystoreProps['keyPassword'] != null) keyPassword keystoreProps['keyPassword']
             }
-            storePassword keystoreProps['storePassword']
-            keyPassword keystoreProps['keyPassword']
+            // Sign with the legacy JAR scheme (v1, for API < 24) plus the modern full-APK schemes
+            // (v2 for API 24+, v3 for API 28+ key rotation) when building the release variant via
+            // Gradle. The "Generate Signed APK" wizard only applies v1 + v2.
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
         }
     }
 
@@ -56,6 +66,18 @@ android {
         includeInApk = false
         // Disables dependency metadata when building Android App Bundles.
         includeInBundle = false
+    }
+
+    // 16 KB page-size devices require uncompressed native libraries (e.g. Realm's) to be stored at a
+    // 16 KB-aligned offset inside the APK zip; AGP only does that automatically from 8.5.1 onward
+    // (we're on 8.2.2). Until that upgrade, fall back to Google's documented workaround: compress the
+    // native libraries instead, which sidesteps the zip-alignment requirement entirely (they're
+    // extracted to disk on install like before Android 6, at the cost of a slightly larger install size).
+    // https://developer.android.com/guide/practices/page-sizes
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging true
+        }
     }
     
     buildTypes {
@@ -68,17 +90,12 @@ android {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            resValue("string", "app_name", "QUIK-Debug")
+            resValue("string", "app_name", "Open Messages Debug")
+            // The launcher entries are labelled with launcher_name, not app_name, so overriding
+            // app_name alone left both installed versions showing the same name on the home screen.
+            resValue("string", "launcher_name", "Messages Debug")
             resValue("string", "application_id", defaultConfig.applicationId)
             signingConfig signingConfigs.debug
-        }
-        fdroid {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            matchingFallbacks = ['release']
-            applicationIdSuffix ".fdroid"
         }
     }
 
@@ -94,22 +111,29 @@ android {
     lint {
         abortOnError false
     }
-    namespace 'dev.octoshrimpy.quik'
+    namespace 'io.openmessages'
     buildFeatures {
         buildConfig true
         viewBinding true
     }
-    if (System.getenv("CI") == "true") {
-        signingConfigs.release.storePassword = System.getenv("keystore_password")
-        signingConfigs.release.keyAlias = System.getenv("key_alias")
-        signingConfigs.release.keyPassword = System.getenv("key_password")
-    }
+}
+
+// Names every built file after the version: OpenMessages-v1.0.0-release.apk and
+// OpenMessages-v1.0.0-debug.apk, so a signed release never needs renaming by hand and the two never
+// collide.
+//
+// The build type is part of the name rather than absent from the release one, because the only way
+// to control the file name exactly is the old variant API: deprecated on AGP 8, removed in AGP 9,
+// and with nothing public to replace it (the new VariantOutput carries no file name, and the class
+// that does is internal). Taking the suffix is what buys a build that has no deprecated API left in
+// it and nothing to repair on the day of that upgrade.
+base {
+    archivesName = "OpenMessages-v${android.defaultConfig.versionName}"
 }
 
 configurations {
     debug
     release
-    fdroid
 }
 
 dependencies {
@@ -122,6 +146,7 @@ dependencies {
     implementation "androidx.emoji2:emoji2-bundled:$androidx_emoji2_version"
     implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
     implementation "androidx.viewpager2:viewpager2:$androidx_viewpager_version"
     implementation "com.google.android.material:material:$material_version"
     implementation("androidx.work:work-runtime-ktx:$androidx_work_version")
@@ -213,12 +238,25 @@ dependencies {
     implementation project(':domain')
 
 }
-// Check to make sure that the keystore file is present when building a release
+// An unsigned release APK installs nowhere, and nothing along the way says so: the build succeeds
+// and the file looks normal. Fail as soon as the task graph is known instead, before spending a
+// full build on it. This checks the signing configuration itself rather than the presence of
+// keystore.properties, so it holds for every way the credentials can arrive.
 gradle.taskGraph.whenReady { taskGraph ->
-    if ((taskGraph.hasTask(':assembleRelease') ||
-            taskGraph.allTasks.any { it.name == 'assembleRelease' }) &&
-            !file('./.gradle/.gradlerc').exists() &&
-            System.getenv("CI") != "true") {
-        throw new GradleException("Keystore properties file not found")
+    if (!taskGraph.allTasks.any { it.name ==~ /^(assemble|bundle|install)Release$/ }) {
+        return
+    }
+    def signing = android.signingConfigs.release
+    def missing = [storeFile    : signing.storeFile,
+                   storePassword: signing.storePassword,
+                   keyAlias     : signing.keyAlias,
+                   keyPassword  : signing.keyPassword]
+            .findAll { entry -> entry.value == null }
+            .keySet()
+    if (!missing.isEmpty()) {
+        throw new GradleException(
+                "Release signing is incomplete, missing: ${missing.join(', ')}.\n" +
+                "Create keystore.properties at the repository root with storeFile, storePassword, " +
+                "keyAlias and keyPassword. storeFile is resolved from the repository root.")
     }
 }

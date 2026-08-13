@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.util
+package io.openmessages.util
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

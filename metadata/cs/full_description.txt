@@ -9,4 +9,4 @@ Open source náhrada za standardní aplikaci SMS v systému Android. Oživení p
 - Třídění zpráv
 - Odložené odesílání
 
-Můžete chatovat s komunitou na <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a>
+Můžete chatovat s komunitou na <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a>

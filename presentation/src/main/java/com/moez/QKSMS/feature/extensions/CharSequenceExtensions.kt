@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.feature.extensions
+package io.openmessages.feature.extensions
 
 import android.text.Spannable
 import androidx.emoji2.text.EmojiCompat

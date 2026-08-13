@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2026 OpenMessages contributors
+  ~
+  ~ This file is part of Open Messages.
+  ~
+  ~ Open Messages is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Open Messages is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<!-- Attachment picker shown from the compose "+" button. Two rows of four tinted tiles; the
+     icon circles and their glyphs are recoloured to the conversation theme in ComposeActivity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="16dp">
+
+    <View
+        android:layout_width="32dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_drag_handle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/sheetGallery"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetGalleryIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/compose_gallery_cd"
+                android:src="@drawable/ic_insert_photo_black_24dp"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_gallery"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sheetCamera"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetCameraIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/compose_camera_cd"
+                android:src="@drawable/ic_camera_alt_black_24dp"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_camera"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sheetFile"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetFileIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/compose_attach_file_cd"
+                android:src="@drawable/ic_attachment_black_24dp"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_file"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sheetAudio"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetAudioIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/compose_audio_message_cd"
+                android:src="@android:drawable/ic_btn_speak_now"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_audio"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/sheetContact"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetContactIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/compose_contact_cd"
+                android:src="@drawable/ic_person_black_24dp"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_contact"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sheetSchedule"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetScheduleIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/compose_schedule_cd"
+                android:src="@drawable/ic_event_black_24dp"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_schedule"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sheetTemplates"
+            style="@style/AttachSheetItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/sheetTemplatesIcon"
+                style="@style/AttachSheetIcon"
+                android:contentDescription="@string/templates_title"
+                android:src="@drawable/ic_clipboard_text"
+                android:backgroundTint="@color/tools_theme"
+                app:tint="@color/textPrimaryDark" />
+
+            <io.openmessages.common.widget.QkTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/compose_attach_templates"
+                android:textColor="?android:attr/textColorSecondary"
+                app:textSize="tertiary" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

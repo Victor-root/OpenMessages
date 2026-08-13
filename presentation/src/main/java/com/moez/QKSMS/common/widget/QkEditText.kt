@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.widget
+package io.openmessages.common.widget
 
 import android.content.Context
 import android.os.Build
@@ -30,9 +30,9 @@ import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import com.google.android.mms.ContentType
-import dev.octoshrimpy.quik.common.util.TextViewStyler
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.common.util.TextViewStyler
+import io.openmessages.injection.appComponent
+import io.openmessages.util.tryOrNull
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
@@ -89,7 +89,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
                     ContentType.IMAGE_GIF))
         }
 
-        val callback = InputConnectionCompat.OnCommitContentListener { inputContentInfo, flags, opts ->
+        val callback = InputConnectionCompat.OnCommitContentListener { inputContentInfo, flags, _ ->
             val grantReadPermission = flags and InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION != 0
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && grantReadPermission) {
@@ -104,6 +104,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
             true
         }
 
+        @Suppress("DEPRECATION")
         return InputConnectionCompat.createWrapper(inputConnection, editorInfo, callback)
     }
 

@@ -1,40 +1,43 @@
 /*
  * Copyright (C) 2025
  *
- * This file is part of QUIK.
+ * This file is part of Open Messages.
  *
- * QUIK is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QUIK is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QUIK.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.worker
+package io.openmessages.worker
 
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
-import dev.octoshrimpy.quik.blocking.BlockingClient
-import dev.octoshrimpy.quik.interactor.UpdateBadge
-import dev.octoshrimpy.quik.manager.ActiveConversationManager
-import dev.octoshrimpy.quik.manager.NotificationManager
-import dev.octoshrimpy.quik.manager.ShortcutManager
-import dev.octoshrimpy.quik.repository.ContactRepository
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.MessageContentFilterRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.repository.ScheduledMessageRepository
-import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.blocking.BlockingClient
+import io.openmessages.blocking.LinkSpamFilter
+import io.openmessages.interactor.UpdateBadge
+import io.openmessages.manager.ActiveConversationManager
+import io.openmessages.manager.NotificationManager
+import io.openmessages.manager.ShortcutManager
+import io.openmessages.repository.AllowlistRepository
+import io.openmessages.repository.BackupRepository
+import io.openmessages.repository.ContactRepository
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.MessageContentFilterRepository
+import io.openmessages.repository.MessageRepository
+import io.openmessages.repository.ScheduledMessageRepository
+import io.openmessages.repository.SyncRepository
+import io.openmessages.util.Preferences
 import javax.inject.Inject
 
 class InjectionWorkerFactory @Inject constructor(
@@ -50,6 +53,9 @@ class InjectionWorkerFactory @Inject constructor(
     private val syncRepo: SyncRepository,
     private val filterRepo: MessageContentFilterRepository,
     private val contactRepo: ContactRepository,
+    private val linkSpamFilter: LinkSpamFilter,
+    private val allowlistRepo: AllowlistRepository,
+    private val backupRepo: BackupRepository,
 
 ) : WorkerFactory() {
     override fun createWorker(
@@ -66,6 +72,8 @@ class InjectionWorkerFactory @Inject constructor(
         when (instance) {
             is HousekeepingWorker ->
                 instance.scheduledMessageRepository = scheduledMessageRepository
+            is AutoBackupWorker ->
+                instance.backupRepo = backupRepo
             is ReceiveSmsWorker -> {
                 instance.conversationRepo  = conversationRepo
                 instance.blockingClient = blockingClient
@@ -76,6 +84,8 @@ class InjectionWorkerFactory @Inject constructor(
                 instance.updateBadge =  updateBadge
                 instance.filterRepo = filterRepo
                 instance.contactsRepo = contactRepo
+                instance.linkSpamFilter = linkSpamFilter
+                instance.allowlistRepo = allowlistRepo
             }
             is ReceiveMmsWorker -> {
                 instance.syncRepo = syncRepo
@@ -89,6 +99,8 @@ class InjectionWorkerFactory @Inject constructor(
                 instance.updateBadge = updateBadge
                 instance.filterRepo = filterRepo
                 instance.contactsRepo = contactRepo
+                instance.linkSpamFilter = linkSpamFilter
+                instance.allowlistRepo = allowlistRepo
             }
         }
 

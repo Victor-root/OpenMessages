@@ -1,37 +1,38 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings
+package io.openmessages.feature.settings
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.makeToast
-import dev.octoshrimpy.quik.interactor.SyncMessages
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.NightModeManager
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.labelFor
+import io.openmessages.common.util.extensions.makeToast
+import io.openmessages.interactor.SyncMessages
+import io.openmessages.manager.BillingManager
+import io.openmessages.repository.SyncRepository
+import io.openmessages.util.NightModeManager
+import io.openmessages.util.Preferences
 import io.reactivex.rxkotlin.plusAssign
 import timber.log.Timber
 import java.util.Calendar
@@ -52,6 +53,13 @@ class SettingsPresenter @Inject constructor(
         nightModeId = prefs.nightMode.get()
 )) {
 
+    // The tone and volume as they stand in the sound dialog, which may not be confirmed yet. Both
+    // are reset to the real preferences each time the dialog is (re)opened, in the R.id.sendSound
+    // click handler below, and only written back when OK is pressed. Kept here rather than in the
+    // preferences so that cancelling really cancels, volume included.
+    private var sendSoundPreviewId: Int = prefs.sendSoundId.get()
+    private var sendSoundPreviewVolume: Int = prefs.sendSoundVolume.get()
+
     init {
         disposables += colors.themeObservable()
                 .subscribe { theme -> newState { copy(theme = theme.theme) } }
@@ -59,7 +67,8 @@ class SettingsPresenter @Inject constructor(
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
                 .subscribe { nightMode ->
-                    newState { copy(nightModeSummary = nightModeLabels[nightMode], nightModeId = nightMode) }
+                    val summary = nightModeLabels.labelFor(nightMode, prefs.nightMode.defaultValue())
+                    newState { copy(nightModeSummary = summary, nightModeId = nightMode) }
                 }
 
         disposables += prefs.nightStart.asObservable()
@@ -85,10 +94,28 @@ class SettingsPresenter @Inject constructor(
 
         val delayedSendingLabels = context.resources.getStringArray(R.array.delayed_sending_labels)
         disposables += prefs.sendDelay.asObservable()
-                .subscribe { id -> newState { copy(sendDelaySummary = delayedSendingLabels[id], sendDelayId = id) } }
+                .subscribe { id ->
+                    val summary = delayedSendingLabels.labelFor(id, prefs.sendDelay.defaultValue())
+                    newState { copy(sendDelaySummary = summary, sendDelayId = id) }
+                }
 
         disposables += prefs.delivery.asObservable()
             .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
+
+        val sendSoundLabels = context.resources.getStringArray(R.array.send_sound_labels)
+        val sendSoundIds = context.resources.getIntArray(R.array.send_sound_ids)
+        disposables += prefs.sendSoundId.asObservable()
+            .subscribe { id ->
+                val summary = sendSoundLabels.labelFor(id, prefs.sendSoundId.defaultValue(), sendSoundIds)
+                newState { copy(sendSoundSummary = summary) }
+            }
+
+        val headerQuickActionLabels = context.resources.getStringArray(R.array.header_quick_action_labels)
+        disposables += prefs.headerQuickAction.asObservable()
+            .subscribe { id ->
+                val summary = headerQuickActionLabels.labelFor(id, prefs.headerQuickAction.defaultValue())
+                newState { copy(headerQuickActionSummary = summary, headerQuickActionId = id) }
+            }
 
         disposables += prefs.unreadAtTop.asObservable()
             .subscribe { enabled -> newState { copy(unreadAtTopEnabled = enabled) } }
@@ -99,7 +126,8 @@ class SettingsPresenter @Inject constructor(
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize ->
-                    newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
+                    val summary = textSizeLabels.labelFor(textSize, prefs.textSize.defaultValue())
+                    newState { copy(textSizeSummary = summary, textSizeId = textSize) }
                 }
 
         disposables += prefs.autoColor.asObservable()
@@ -107,6 +135,15 @@ class SettingsPresenter @Inject constructor(
 
         disposables += prefs.systemFont.asObservable()
             .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
+
+        disposables += prefs.showAvatar.asObservable()
+            .subscribe { enabled -> newState { copy(showAvatarEnabled = enabled) } }
+
+        disposables += prefs.hideCountryCode.asObservable()
+            .subscribe { enabled -> newState { copy(hideCountryCodeEnabled = enabled) } }
+
+        disposables += prefs.edgeToEdge.asObservable()
+            .subscribe { enabled -> newState { copy(edgeToEdgeEnabled = enabled) } }
 
         disposables += prefs.showStt.asObservable()
             .subscribe { enabled -> newState { copy(showStt = enabled) } }
@@ -124,18 +161,19 @@ class SettingsPresenter @Inject constructor(
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
         disposables += prefs.mmsSize.asObservable()
                 .subscribe { maxMmsSize ->
-                    val index = mmsSizeIds.indexOf(maxMmsSize)
-                    newState { copy(maxMmsSizeSummary = mmsSizeLabels[index], maxMmsSizeId = maxMmsSize) }
+                    val summary = mmsSizeLabels.labelFor(maxMmsSize, prefs.mmsSize.defaultValue(), mmsSizeIds)
+                    newState { copy(maxMmsSizeSummary = summary, maxMmsSizeId = maxMmsSize) }
                 }
 
         val messageLinkHandlingLabels = context.resources.getStringArray(R.array.messageLinkHandlings)
         val messageLinkHandlingIds = context.resources.getIntArray(R.array.messageLinkHandling_ids)
         disposables += prefs.messageLinkHandling.asObservable()
             .subscribe { messageLinkHandlingId ->
-                val index = messageLinkHandlingIds.indexOf(messageLinkHandlingId)
+                val summary = messageLinkHandlingLabels.labelFor(
+                    messageLinkHandlingId, prefs.messageLinkHandling.defaultValue(), messageLinkHandlingIds)
                 newState {
                     copy(
-                        messageLinkHandlingSummary = messageLinkHandlingLabels[index],
+                        messageLinkHandlingSummary = summary,
                         messageLinkHandlingId = messageLinkHandlingId
                     )
                 }
@@ -186,6 +224,14 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
+                        R.id.sendSound -> {
+                            sendSoundPreviewId = prefs.sendSoundId.get()
+                            sendSoundPreviewVolume = prefs.sendSoundVolume.get()
+                            view.showSendSoundDialog(sendSoundPreviewId, sendSoundPreviewVolume)
+                        }
+
+                        R.id.headerQuickAction -> view.showHeaderQuickActionDialog()
+
                         R.id.unreadAtTop -> prefs.unreadAtTop.set(!prefs.unreadAtTop.get())
 
                         R.id.signature -> view.showSignatureDialog(prefs.signature.get())
@@ -197,6 +243,12 @@ class SettingsPresenter @Inject constructor(
                         }
 
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
+
+                        R.id.showAvatar -> prefs.showAvatar.set(!prefs.showAvatar.get())
+
+                        R.id.hideCountryCode -> prefs.hideCountryCode.set(!prefs.hideCountryCode.get())
+
+                        R.id.edgeToEdge -> prefs.edgeToEdge.set(!prefs.edgeToEdge.get())
 
                         R.id.showStt -> {
                             prefs.showStt.set(!prefs.showStt.get())
@@ -234,7 +286,7 @@ class SettingsPresenter @Inject constructor(
                 }
 
         view.nightModeSelected()
-                .withLatestFrom(billingManager.upgradeStatus) { mode, upgraded ->
+                .withLatestFrom(billingManager.upgradeStatus) { mode, _ ->
 //                    if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
 //                        view.showQksmsPlusSnackbar()
 //                    } else {
@@ -261,7 +313,7 @@ class SettingsPresenter @Inject constructor(
                 .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
-                .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
+                .withLatestFrom(billingManager.upgradeStatus) { duration, _ ->
 //                    if (!upgraded && duration != 0) {
 //                        view.showQksmsPlusSnackbar()
 //                    } else {
@@ -270,6 +322,34 @@ class SettingsPresenter @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        view.headerQuickActionSelected()
+                .autoDisposable(view.scope())
+                .subscribe(prefs.headerQuickAction::set)
+
+        view.sendSoundSelected()
+                .autoDisposable(view.scope())
+                .subscribe { id ->
+                    sendSoundPreviewId = id
+                    if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id, sendSoundPreviewVolume)
+                }
+
+        view.sendSoundConfirmed()
+                .autoDisposable(view.scope())
+                .subscribe { id ->
+                    prefs.sendSoundId.set(id)
+                    prefs.sendSoundVolume.set(sendSoundPreviewVolume)
+                }
+
+        view.sendSoundVolumeChanged()
+                .autoDisposable(view.scope())
+                .subscribe { volume -> sendSoundPreviewVolume = volume }
+
+        view.sendSoundVolumeCommitted()
+                .autoDisposable(view.scope())
+                .subscribe { volume ->
+                    if (sendSoundPreviewId != Preferences.SEND_SOUND_OFF) view.previewSendSound(sendSoundPreviewId, volume)
+                }
 
         view.signatureChanged()
                 .doOnNext(prefs.signature::set)

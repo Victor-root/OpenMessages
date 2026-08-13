@@ -1,27 +1,27 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.migration
+package io.openmessages.migration
 
 import android.annotation.SuppressLint
-import dev.octoshrimpy.quik.extensions.map
-import dev.octoshrimpy.quik.mapper.CursorToContactImpl
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.extensions.map
+import io.openmessages.mapper.CursorToContactImpl
+import io.openmessages.util.Preferences
 import io.realm.DynamicRealm
 import io.realm.DynamicRealmObject
 import io.realm.FieldAttribute
@@ -37,7 +37,7 @@ class QkRealmMigration @Inject constructor(
 ) : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 15
+        const val SCHEMA_VERSION: Long = 16
     }
 
     @SuppressLint("ApplySharedPref")
@@ -298,6 +298,20 @@ class QkRealmMigration @Inject constructor(
             }
 
             version ++
+        }
+
+        if (version == 15L) {
+            // Allowlist of user-approved addresses (mirror of BlockedNumber)
+            realm.schema.create("AllowedNumber")
+                .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
+                .addField("address", String::class.java, FieldAttribute.REQUIRED)
+
+            // Soft "suspected spam" tag on a conversation (mirror of blocked/blockReason)
+            realm.schema.get("Conversation")
+                ?.addField("flagged", Boolean::class.java, FieldAttribute.REQUIRED, FieldAttribute.INDEXED)
+                ?.addField("flagReason", String::class.java)
+
+            version++
         }
 
         check(version >= SCHEMA_VERSION) {

@@ -1,25 +1,25 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.settings
+package io.openmessages.feature.settings
 
-import dev.octoshrimpy.quik.common.base.QkViewContract
-import dev.octoshrimpy.quik.common.widget.PreferenceView
+import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.widget.PreferenceView
 import io.reactivex.Observable
 
 interface SettingsView : QkViewContract<SettingsState> {
@@ -31,6 +31,11 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun nightEndSelected(): Observable<Pair<Int, Int>>
     fun textSizeSelected(): Observable<Int>
     fun sendDelaySelected(): Observable<Int>
+    fun headerQuickActionSelected(): Observable<Int>
+    fun sendSoundSelected(): Observable<Int>
+    fun sendSoundConfirmed(): Observable<Int>
+    fun sendSoundVolumeChanged(): Observable<Int>
+    fun sendSoundVolumeCommitted(): Observable<Int>
     fun signatureChanged(): Observable<String>
     fun mmsSizeSelected(): Observable<Int>
     fun messageLinkHandlingSelected(): Observable<Int>
@@ -41,6 +46,9 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun showEndTimePicker(hour: Int, minute: Int)
     fun showTextSizePicker()
     fun showDelayDurationDialog()
+    fun showHeaderQuickActionDialog()
+    fun showSendSoundDialog(id: Int, volume: Int)
+    fun previewSendSound(id: Int, volume: Int)
     fun showSignatureDialog(signature: String)
     fun showMmsSizePicker()
     fun showMessageLinkHandlingDialogPicker()

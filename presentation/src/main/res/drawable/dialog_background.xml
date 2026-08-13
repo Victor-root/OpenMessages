@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded background for all AlertDialogs (applied via alertDialogTheme). The inset preserves the
+     window margin the default dialog background would otherwise provide. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="16dp">
+    <shape android:shape="rectangle">
+        <solid android:color="@color/backgroundLight" />
+        <corners android:radius="24dp" />
+    </shape>
+</inset>

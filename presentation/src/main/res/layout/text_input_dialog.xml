@@ -2,30 +2,87 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<dev.octoshrimpy.quik.common.widget.QkEditText xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/field"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@null"
-    android:lines="1"
-    android:maxLength="64"
-    android:padding="24dp"
-    android:singleLine="true"
-    android:textStyle="bold"
-    app:textSize="dialog" />
+    android:background="?android:attr/windowBackground">
+
+    <io.openmessages.common.widget.QkEditText
+        android:id="@+id/field"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:lines="1"
+        android:maxLength="64"
+        android:padding="24dp"
+        android:singleLine="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:textSize="dialog"
+        tools:hint="@string/settings_signature_title" />
+
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="16dp"
+        android:text="@string/button_save"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/field"
+        app:textSize="secondary" />
+
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="16dp"
+        android:text="@string/button_cancel"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/save"
+        app:layout_constraintEnd_toStartOf="@id/save"
+        app:layout_constraintTop_toTopOf="@id/save"
+        app:textSize="secondary" />
+
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:padding="16dp"
+        android:text="@string/button_delete"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/save"
+        app:textSize="secondary" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

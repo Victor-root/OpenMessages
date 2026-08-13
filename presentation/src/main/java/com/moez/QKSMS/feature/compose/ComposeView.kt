@@ -1,33 +1,33 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.compose
+package io.openmessages.feature.compose
 
 import android.net.Uri
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.core.view.inputmethod.InputContentInfoCompat
-import com.moez.QKSMS.common.QkMediaPlayer
-import dev.octoshrimpy.quik.common.base.QkView
-import dev.octoshrimpy.quik.common.widget.MicInputCloudView
-import dev.octoshrimpy.quik.model.Attachment
-import dev.octoshrimpy.quik.model.Recipient
+import io.openmessages.common.QkMediaPlayer
+import io.openmessages.common.base.QkView
+import io.openmessages.common.widget.MicInputCloudView
+import io.openmessages.model.Attachment
+import io.openmessages.model.Recipient
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 
@@ -39,6 +39,7 @@ interface ComposeView : QkView<ComposeState> {
         const val ATTACH_CONTACT_REQUEST_CODE = 3
         const val ATTACH_FILE_REQUEST_CODE = 4
         const val SPEECH_RECOGNITION_REQUEST_CODE = 5
+        const val TEMPLATE_REQUEST_CODE = 6
 
         const val CAMERA_DESTINATION_KEY = "camera_destination"
     }
@@ -58,26 +59,35 @@ interface ComposeView : QkView<ComposeState> {
     val resendIntent: Subject<Long>
     val attachmentDeletedIntent: Subject<Attachment>
     val textChangedIntent: Observable<CharSequence>
-    val attachIntent: Observable<Unit>
     val cameraIntent: Observable<*>
     val attachAnyFileIntent: Observable<*>
     val attachImageFileIntent: Observable<*>
     val scheduleIntent: Observable<*>
     val scheduleAction: Observable<*>
     val attachContactIntent: Observable<*>
+    val templateIntent: Observable<*>
+    val flaggedApproveIntent: Observable<*>
+    val flaggedBlockIntent: Observable<*>
     val attachAnyFileSelectedIntent: Observable<Uri>
     val contactSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
+    /** The year, month and day picked in the date step of scheduling; the time step follows. */
+    val scheduleDateSelectedIntent: Observable<Triple<Int, Int, Int>>
     val scheduleSelectedIntent: Observable<Long>
     val scheduleCancelIntent: Observable<*>
+    /** The dialog the user closed, so a dialog opened in its place is not closed along with it. */
+    val dialogDismissedIntent: Observable<ComposeDialog>
     val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
     val viewQksmsPlusIntent: Subject<Unit>
     val backPressedIntent: Observable<Unit>
     val confirmDeleteIntent: Observable<List<Long>>
+    val confirmDeleteConversationIntent: Observable<Long>
     val clearCurrentMessageIntent: Subject<Boolean>
     val messageLinkAskIntent: Observable<Uri>
     val reactionClickIntent: Subject<Long>
+    /** The scheduled message tapped in the conversation. */
+    val scheduledMessageClickIntent: Observable<Long>
     val speechRecogniserIntent: Observable<*>
     val shadeIntent: Observable<Unit>
     val recordAudioStartStopRecording: Subject<Boolean>
@@ -94,8 +104,6 @@ interface ComposeView : QkView<ComposeState> {
     fun clearSelection()
     fun toggleSelectAll()
     fun expandMessages(messageIds: List<Long>, expand: Boolean)
-    fun showDetails(details: String)
-    fun showMessageLinkAskDialog(uri: Uri)
     fun requestDefaultSms()
     fun requestStoragePermission()
     fun requestRecordAudioPermission()
@@ -105,14 +113,12 @@ interface ComposeView : QkView<ComposeState> {
     fun showKeyboard()
     fun requestCamera()
     fun requestGallery(mimeType: String, requestCode: Int)
-    fun requestDatePicker()
     fun requestContact()
     fun setDraft(draft: String)
+    fun showTemplatePicker()
     fun scrollToMessage(id: Long)
     fun showQksmsPlusSnackbar(@StringRes message: Int)
-    fun showDeleteDialog( messages: List<Long>)
-    fun showClearCurrentMessageDialog()
-    fun showReactionsDialog(reactions: List<String>)
     fun startSpeechRecognition()
     fun focusMessage()
+    fun showBlockingDialog(threadIds: List<Long>, block: Boolean)
 }

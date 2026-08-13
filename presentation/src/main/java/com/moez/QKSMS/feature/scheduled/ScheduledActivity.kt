@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.scheduled
+package io.openmessages.feature.scheduled
 
 import android.os.Bundle
 import android.view.Menu
@@ -27,11 +27,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.databinding.ScheduledActivityBinding
+import io.openmessages.R
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.databinding.ScheduledActivityBinding
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
@@ -120,6 +121,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
             .setPositiveButton(R.string.button_delete) { _, _ -> deleteScheduledMessages.onNext(messages) }
             .setNegativeButton(R.string.button_cancel, null)
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun showSendNowDialog(messages: List<Long>) {
@@ -130,6 +132,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
             .setPositiveButton(R.string.main_menu_send_now) { _, _ -> sendScheduledMessages.onNext(messages) }
             .setNegativeButton(R.string.button_cancel, null)
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun showEditMessageDialog(message: Long) {
@@ -141,6 +144,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
             }
             .setNegativeButton(R.string.button_cancel, null)
             .show()
+            .themeButtons(colors.theme().theme)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

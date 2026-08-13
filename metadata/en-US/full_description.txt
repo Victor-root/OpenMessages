@@ -1,4 +1,4 @@
-Open source replacement to the stock SMS app on Android. A revival of QKSMS.
+An open-source SMS app for Android, based on QKSMS.
 ## Features
 - Scheduled Messages
 - Message Backup
@@ -9,4 +9,4 @@ Open source replacement to the stock SMS app on Android. A revival of QKSMS.
 - Message Sorting
 - Delayed Sending
 
-You can chat with the community over at <a href="https://matrix.to/#/#quik-sms:matrix.org">#quik-sms:matrix.org</a>
+Find the project at <a href="https://github.com/victor-root/openmessages">github.com/victor-root/openmessages</a>

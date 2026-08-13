@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.model
+package io.openmessages.model
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

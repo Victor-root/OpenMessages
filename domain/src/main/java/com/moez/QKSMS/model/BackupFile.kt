@@ -1,24 +1,50 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.model
+package io.openmessages.model
 
 data class BackupFile(
     val date: Long,
     val messages: Int
+)
+
+/**
+ * Summary of one backup set, read from its manifest. Each backup is a date-and-time named sub-folder
+ * (holding manifest.json plus one file per category) inside the folder the user chose as the backup
+ * destination. Lets the restore UI list the available backups, show when each was made, and offer
+ * only the categories it actually contains.
+ *
+ * [folderName] is the backup sub-folder's name, or empty when the user picked a single backup
+ * sub-folder directly (so it is itself the backup).
+ */
+data class BackupFolder(
+    val folderName: String,
+    val date: Long,
+    val categories: Set<BackupCategory>
+)
+
+/**
+ * One backup as shown in the in-app manager. [name] is the sub-folder name, or the .zip file name
+ * without its extension; [isZip] tells the two apart. [date] is parsed from the default date-and-time
+ * name (0 once the user has renamed it to something else), used only for sorting and display.
+ */
+data class BackupItem(
+    val name: String,
+    val date: Long,
+    val isZip: Boolean
 )

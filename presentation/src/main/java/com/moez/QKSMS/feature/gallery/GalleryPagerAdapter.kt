@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.gallery
+package io.openmessages.feature.gallery
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -30,15 +30,15 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.google.android.mms.ContentType
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkRealmAdapter
-import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.databinding.GalleryImagePageBinding
-import dev.octoshrimpy.quik.databinding.GalleryVideoPageBinding
-import dev.octoshrimpy.quik.extensions.isImage
-import dev.octoshrimpy.quik.extensions.isVideo
-import dev.octoshrimpy.quik.model.MmsPart
-import dev.octoshrimpy.quik.util.GlideApp
+import io.openmessages.R
+import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkViewHolder
+import io.openmessages.databinding.GalleryImagePageBinding
+import io.openmessages.databinding.GalleryVideoPageBinding
+import io.openmessages.extensions.isImage
+import io.openmessages.extensions.isVideo
+import io.openmessages.model.MmsPart
+import io.openmessages.util.GlideApp
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.util.*
@@ -110,13 +110,14 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
 
             VIEW_TYPE_VIDEO -> {
                 val binding = GalleryVideoPageBinding.bind(holder.itemView)
+                @Suppress("DEPRECATION")
                 val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
                 val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
                 val exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
                 binding.video.player = exoPlayer
                 exoPlayers.add(exoPlayer)
 
-                val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "QUIK"))
+                val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "Open Messages"))
                 val videoSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(part.getUri())
                 exoPlayer?.prepare(videoSource)
             }

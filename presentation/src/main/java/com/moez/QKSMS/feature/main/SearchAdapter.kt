@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.main
+package io.openmessages.feature.main
 
 import android.content.Context
 import android.text.SpannableString
@@ -24,16 +24,16 @@ import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkAdapter
-import dev.octoshrimpy.quik.common.base.QkBindingViewHolder
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.extensions.removeAccents
-import dev.octoshrimpy.quik.model.SearchResult
-import dev.octoshrimpy.quik.databinding.SearchListItemBinding
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.extensions.removeAccents
+import io.openmessages.model.SearchResult
+import io.openmessages.databinding.SearchListItemBinding
 import javax.inject.Inject
 
 class SearchAdapter @Inject constructor(

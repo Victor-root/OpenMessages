@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/template_card"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:textSize="primary"
+        tools:text="MIRIAD INFORMATIQUE"
+        tools:visibility="visible" />
+
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorSecondary"
+        app:textSize="primary"
+        tools:text="Bonjour, votre commande est prête à être retirée en magasin. Merci !" />
+
+</LinearLayout>

@@ -1,37 +1,38 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.util
+package io.openmessages.common.util
 
 import android.graphics.Typeface
 import android.os.Build
 import android.util.AttributeSet
 import android.widget.EditText
 import android.widget.TextView
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_PRIMARY
-import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_SECONDARY
-import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_TERTIARY
-import dev.octoshrimpy.quik.common.util.TextViewStyler.Companion.SIZE_TOOLBAR
-import dev.octoshrimpy.quik.common.util.extensions.getColorCompat
-import dev.octoshrimpy.quik.common.widget.QkEditText
-import dev.octoshrimpy.quik.common.widget.QkTextView
-import dev.octoshrimpy.quik.util.Preferences
+import androidx.core.content.ContextCompat
+import io.openmessages.R
+import io.openmessages.common.util.TextViewStyler.Companion.SIZE_PRIMARY
+import io.openmessages.common.util.TextViewStyler.Companion.SIZE_SECONDARY
+import io.openmessages.common.util.TextViewStyler.Companion.SIZE_TERTIARY
+import io.openmessages.common.util.TextViewStyler.Companion.SIZE_TOOLBAR
+import io.openmessages.common.util.extensions.getColorCompat
+import io.openmessages.common.widget.QkEditText
+import io.openmessages.common.widget.QkTextView
+import io.openmessages.util.Preferences
 import javax.inject.Inject
 
 
@@ -57,8 +58,8 @@ class TextViewStyler @Inject constructor(
 
         fun applyEditModeAttributes(textView: TextView, attrs: AttributeSet?) {
             textView.run {
-                var colorAttr = 0
-                var textSizeAttr = 0
+                var colorAttr: Int
+                var textSizeAttr: Int
 
                 when (this) {
                     is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView).run {
@@ -97,8 +98,8 @@ class TextViewStyler @Inject constructor(
     }
 
     fun applyAttributes(textView: TextView, attrs: AttributeSet?) {
-        var colorAttr = 0
-        var textSizeAttr = 0
+        var colorAttr: Int
+        var textSizeAttr: Int
 
         if (!prefs.systemFont.get()) {
             fontProvider.getLato { lato ->
@@ -123,7 +124,10 @@ class TextViewStyler @Inject constructor(
         }
 
         when (colorAttr) {
-            COLOR_THEME -> textView.setTextColor(colors.theme().theme)
+            COLOR_THEME -> {
+                textView.setTextColor(colors.theme().theme)
+                (textView as? QkTextView)?.themeColorAttr = COLOR_THEME
+            }
             COLOR_PRIMARY_ON_THEME -> textView.setTextColor(colors.theme().textPrimary)
             COLOR_SECONDARY_ON_THEME -> textView.setTextColor(colors.theme().textSecondary)
             COLOR_TERTIARY_ON_THEME -> textView.setTextColor(colors.theme().textTertiary)
@@ -132,7 +136,7 @@ class TextViewStyler @Inject constructor(
         setTextSize(textView, textSizeAttr)
 
         if (textView is EditText) {
-            val drawable = textView.resources.getDrawable(R.drawable.cursor).apply { setTint(colors.theme().theme) }
+            val drawable = ContextCompat.getDrawable(textView.context, R.drawable.cursor)!!.apply { setTint(colors.theme().theme) }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 textView.textCursorDrawable = drawable
             }

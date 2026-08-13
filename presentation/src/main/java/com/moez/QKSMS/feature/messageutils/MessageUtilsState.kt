@@ -1,6 +1,6 @@
-package dev.octoshrimpy.quik.feature.messageutils
+package io.openmessages.feature.messageutils
 
-import dev.octoshrimpy.quik.repository.MessageRepository
+import io.openmessages.repository.MessageRepository
 
 data class MessageUtilsState(
     val autoDeduplicateMessages: Boolean = false,

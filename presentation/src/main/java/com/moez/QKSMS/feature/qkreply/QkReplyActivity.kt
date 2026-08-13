@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.qkreply
+package io.openmessages.feature.qkreply
 
 import android.app.Activity
 import android.content.Intent
@@ -39,19 +39,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.extensions.autoScrollToStart
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.util.extensions.showKeyboard
-import dev.octoshrimpy.quik.common.widget.QkEditText
-import dev.octoshrimpy.quik.databinding.QkreplyActivityBinding
-import dev.octoshrimpy.quik.feature.compose.MessagesAdapter
+import io.openmessages.R
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.autoScrollToStart
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.extensions.showKeyboard
+import io.openmessages.common.widget.QkEditText
+import io.openmessages.databinding.QkreplyActivityBinding
+import io.openmessages.feature.compose.MessagesAdapter
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity(), QkReplyView {
+
+    // Floating dialog window: keep the platform's default bars, no edge-to-edge.
+    override val supportsEdgeToEdge get() = false
 
     private lateinit var binding: QkreplyActivityBinding
 

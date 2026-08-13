@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded background for all AlertDialogs in dark mode (applied via alertDialogTheme). -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="16dp">
+    <shape android:shape="rectangle">
+        <solid android:color="@color/backgroundDark" />
+        <corners android:radius="24dp" />
+    </shape>
+</inset>

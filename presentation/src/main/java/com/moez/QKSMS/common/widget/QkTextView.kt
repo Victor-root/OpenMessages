@@ -1,28 +1,31 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.widget
+package io.openmessages.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
-import dev.octoshrimpy.quik.common.util.TextViewStyler
-import dev.octoshrimpy.quik.injection.appComponent
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.TextViewStyler
+import io.openmessages.injection.appComponent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 open class QkTextView @JvmOverloads constructor(
@@ -30,6 +33,7 @@ open class QkTextView @JvmOverloads constructor(
 ) : AppCompatTextView(context, attrs) {
 
     @Inject lateinit var textViewStyler: TextViewStyler
+    @Inject lateinit var colors: Colors
 
     /**
      * Collapse a multiline list of strings into a single line
@@ -45,6 +49,9 @@ open class QkTextView @JvmOverloads constructor(
      */
     var collapseEnabled: Boolean = false
 
+    internal var themeColorAttr: Int = -1
+    private var themeDisposable: Disposable? = null
+
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
@@ -52,6 +59,21 @@ open class QkTextView @JvmOverloads constructor(
         } else {
             TextViewStyler.applyEditModeAttributes(this, attrs)
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (!isInEditMode && themeColorAttr == TextViewStyler.COLOR_THEME) {
+            themeDisposable = colors.themeObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { theme -> setTextColor(theme.theme) }
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeDisposable?.dispose()
+        themeDisposable = null
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {

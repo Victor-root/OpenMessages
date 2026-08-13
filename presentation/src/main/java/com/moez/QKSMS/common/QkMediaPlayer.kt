@@ -1,4 +1,4 @@
-package com.moez.QKSMS.common
+package io.openmessages.common
 
 import android.media.MediaPlayer
 

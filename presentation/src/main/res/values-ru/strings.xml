@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="shortcut_compose_long_label">Новая беседа</string>
     <string name="shortcut_compose_short_label">Написать</string>
@@ -54,12 +54,12 @@
     <string name="archived_empty_text">Архивированные беседы будут появляться здесь</string>
     <string name="main_fab_cd">Начать новую беседу</string>
     <string name="main_default_sms_title">Снова полюбите писать</string>
-    <string name="main_default_sms_message">Сделать QUIK приложением SMS по умолчанию</string>
+    <string name="main_default_sms_message">Сделать Open Messages приложением SMS по умолчанию</string>
     <string name="main_default_sms_change">Изменить</string>
     <string name="main_permission_required">Требуется разрешение</string>
-    <string name="main_permission_sms">QUIK необходимо разрешение для отправки и просмотра SMS-сообщений</string>
-    <string name="main_permission_contacts">QUIK необходимо разрешение для просмотра контактов</string>
-    <string name="main_permission_notifications">QUIK требуется разрешение для отображения уведомлений</string>
+    <string name="main_permission_sms">Open Messages необходимо разрешение для отправки и просмотра SMS-сообщений</string>
+    <string name="main_permission_contacts">Open Messages необходимо разрешение для просмотра контактов</string>
+    <string name="main_permission_notifications">Open Messages требуется разрешение для отображения уведомлений</string>
     <string name="main_permission_allow">Разрешить</string>
     <string name="drawer_inbox">Входящие</string>
     <string name="drawer_archived">Архив</string>
@@ -70,7 +70,7 @@
     <string name="drawer_help">Помощь и обратная связь</string>
     <string name="drawer_invite">Пригласить друзей</string>
     <string name="drawer_plus_banner_summary">Разблокировать новые удивительные функции и поддержать разработку</string>
-    <string name="rate_title">Нравится QUIK?</string>
+    <string name="rate_title">Нравится Open Messages?</string>
     <string name="rate_summary">Поделитесь любовью и оцените нас в Google Play!</string>
     <string name="rate_okay">OK!</string>
     <string name="rate_dismiss">ОТКЛОНИТЬ</string>
@@ -98,7 +98,7 @@
     <string name="compose_vcard_label">Карточка контакта</string>
     <string name="compose_scheduled_for">Запланировано на:</string>
     <string name="compose_scheduled_future">Выбранное время должно быть в будущем!</string>
-    <string name="compose_scheduled_plus">Вы должны разблокировать QUIK+, чтобы использовать запланированные сообщения</string>
+    <string name="compose_scheduled_plus">Вы должны разблокировать Open Messages+, чтобы использовать запланированные сообщения</string>
     <string name="compose_scheduled_toast">Добавлено в планировщик сообщений</string>
     <string name="compose_hint">Написать сообщение…</string>
     <string name="compose_menu_copy">Скопировать текст</string>
@@ -152,7 +152,7 @@
     <string name="backup_location_summary">Выбор папки</string>
     <string name="backup_restore_title">Восстановление</string>
     <string name="backup_restore_summary">Выберите резервную копию</string>
-    <string name="backup_restore_error_plus">Пожалуйста, разблокируйте QUIK+ для использования резервного копирования и восстановления</string>
+    <string name="backup_restore_error_plus">Пожалуйста, разблокируйте Open Messages+ для использования резервного копирования и восстановления</string>
     <string name="backup_restore_error_backup">Выполняется резервное копирование…</string>
     <string name="backup_restore_error_restore">Выполняется восстановление…</string>
     <string name="backup_restore_confirm_title">Восстановление из резервной копии</string>
@@ -255,7 +255,7 @@
     <string name="settings_mms_size_title">Автоматически сжимать вложения MMS</string>
     <string name="settings_sync_title">Синхронизация сообщений</string>
     <string name="settings_sync_summary">Принудительная синхронизация сообщений с собственной базой данных SMS Android</string>
-    <string name="settings_about_title">О QUIK</string>
+    <string name="settings_about_title">О Open Messages</string>
     <string name="settings_version">Версия %s</string>
     <string name="settings_logging_enabled">Ведение журнала отладки включено</string>
     <string name="settings_logging_disabled">Ведение журнала отладки отключено</string>
@@ -265,7 +265,7 @@
     <string name="blocking_drop_summary">Удалять входящие сообщения от заблокированных отправителей, а не скрывать их</string>
     <string name="blocking_conversations">Заблокированные беседы</string>
     <string name="blocking_manager_title">Управление блокировкой</string>
-    <string name="blocking_manager_qksms_summary">Встроенная функция блокировки QUIK</string>
+    <string name="blocking_manager_qksms_summary">Встроенная функция блокировки Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Чёрный список с возможностью работы по расписанию для блокировки сообщений со спамом, звонков с определённых и неизвестных номеров</string>
     <string name="blocking_manager_call_control_summary">Автоматическая фильтрация звонков и сообщений в одном удобном месте! Community IQ™ позволяет предотвратить получение нежелательных сообщений от известных сообществу спаммеров</string>
     <string name="blocking_manager_sia_summary">Автоматически фильтровать сообщения от нежелательных номеров, используя приложение «Should I Answer»</string>
@@ -307,10 +307,10 @@
     <string name="qksms_plus_upgrade">Пожизненное обновление за %1$s %2$s</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
     <string name="qksms_plus_upgrade_donate">Разблокировать + пожертвовать %1$s %2$s</string>
-    <string name="qksms_plus_thanks_title">Спасибо за поддержку QUIK!</string>
-    <string name="qksms_plus_thanks_summary">Теперь у вас есть доступ ко всем функциям QUIK+</string>
+    <string name="qksms_plus_thanks_title">Спасибо за поддержку Open Messages!</string>
+    <string name="qksms_plus_thanks_summary">Теперь у вас есть доступ ко всем функциям Open Messages+</string>
     <string name="qksms_plus_error">Произошла ошибка. Попробуйте ещё раз</string>
-    <string name="qksms_plus_free_title">QUIK+ является бесплатным для пользователей F-Droid! Если вы хотите поддержать развитие приложения, сделайте пожертвование.</string>
+    <string name="qksms_plus_free_title">Open Messages+ является бесплатным для пользователей F-Droid! Если вы хотите поддержать развитие приложения, сделайте пожертвование.</string>
     <string name="qksms_plus_donate">Пожертвовать через PayPal</string>
     <string name="qksms_plus_coming_soon">Скоро</string>
     <string name="qksms_plus_themes_title">Премиальные темы</string>
@@ -332,7 +332,7 @@
     <string name="qksms_plus_respond_title">Автоматический ответ</string>
     <string name="qksms_plus_respond_summary">Автоматически отвечать на входящие сообщения предустановленным ответом</string>
     <string name="qksms_plus_more_title">Ещё</string>
-    <string name="qksms_plus_more_summary">QUIK находится в активной разработке и ваша покупка будет включать в себя все функции QUIK+ в будущем!</string>
+    <string name="qksms_plus_more_summary">Open Messages находится в активной разработке и ваша покупка будет включать в себя все функции Open Messages+ в будущем!</string>
     <string name="widget_loading">Загрузка…</string>
     <string name="widget_more">Посмотреть больше бесед</string>
     <string name="qkreply_menu_read">Прочитано</string>
@@ -363,7 +363,7 @@
     <string name="button_set">Задать</string>
     <string name="button_undo">Отмена</string>
     <string name="toast_copied">Скопировано</string>
-    <string name="toast_qksms_plus">Вы должны разблокировать QUIK+, чтобы использовать</string>
+    <string name="toast_qksms_plus">Вы должны разблокировать Open Messages+, чтобы использовать</string>
     <plurals name="notification_new_messages">
         <item quantity="one">%s новое сообщение</item>
         <item quantity="few">%s новых сообщения</item>

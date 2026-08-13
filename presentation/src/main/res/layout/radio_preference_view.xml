@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    tools:parentTag="dev.octoshrimpy.quik.common.widget.RadioPreferenceView">
+    tools:parentTag="io.openmessages.common.widget.RadioPreferenceView">
 
     <androidx.appcompat.widget.AppCompatRadioButton
         android:id="@+id/radioButton"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/titleView"
         style="@style/TextPrimary"
         android:layout_width="0dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Default SMS App" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/summaryView"
         style="@style/TextSecondary"
         android:layout_width="0dp"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="@id/titleView"
         app:layout_constraintStart_toStartOf="@id/titleView"
         app:layout_constraintTop_toBottomOf="@id/titleView"
-        tools:text="QKSMS is your default SMS app" />
+        tools:text="Open Messages is your default SMS app" />
 
     <FrameLayout
         android:id="@+id/widgetFrame"

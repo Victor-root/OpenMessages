@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,26 +24,26 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/backup_restore_dialog_title"
+        android:text="@string/backup_manage_title"
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         app:textSize="primary" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/backup_restore_dialog_summary"
+        android:text="@string/backup_manage_summary"
         android:textColor="?android:attr/textColorTertiary"
-        app:textSize="primary" />
+        app:textSize="secondary" />
 
     <View
         android:layout_width="match_parent"
@@ -63,15 +63,16 @@
         tools:itemCount="3"
         tools:listitem="@layout/backup_list_item" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="@string/backup_restore_dialog_empty"
+        android:text="@string/backup_manage_empty"
         android:textColor="?android:attr/textColorSecondary"
         app:textSize="secondary" />
 

@@ -1,34 +1,35 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.notificationprefs
+package io.openmessages.feature.notificationprefs
 
 import android.content.Context
 import android.media.RingtoneManager
 import android.net.Uri
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkViewModel
-import dev.octoshrimpy.quik.extensions.mapNotNull
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.util.extensions.labelFor
+import io.openmessages.extensions.mapNotNull
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.Preferences
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
@@ -62,24 +63,37 @@ class NotificationPrefsViewModel @Inject constructor(
         val previewLabels = context.resources.getStringArray(R.array.notification_preview_options)
         disposables += previews.asObservable()
                 .subscribe { previewId ->
-                    newState { copy(previewSummary = previewLabels[previewId], previewId = previewId) }
+                    val summary = previewLabels.labelFor(previewId, previews.defaultValue())
+                    newState { copy(previewSummary = summary, previewId = previewId) }
                 }
 
         val actionLabels = context.resources.getStringArray(R.array.notification_actions)
         disposables += prefs.notifAction1.asObservable()
-                .subscribe { previewId -> newState { copy(action1Summary = actionLabels[previewId]) } }
+                .subscribe { action ->
+                    val summary = actionLabels.labelFor(action, prefs.notifAction1.defaultValue())
+                    newState { copy(action1Summary = summary) }
+                }
 
         disposables += prefs.notifAction2.asObservable()
-                .subscribe { previewId -> newState { copy(action2Summary = actionLabels[previewId]) } }
+                .subscribe { action ->
+                    val summary = actionLabels.labelFor(action, prefs.notifAction2.defaultValue())
+                    newState { copy(action2Summary = summary) }
+                }
 
         disposables += prefs.notifAction3.asObservable()
-                .subscribe { previewId -> newState { copy(action3Summary = actionLabels[previewId]) } }
+                .subscribe { action ->
+                    val summary = actionLabels.labelFor(action, prefs.notifAction3.defaultValue())
+                    newState { copy(action3Summary = summary) }
+                }
 
         disposables += wake.asObservable()
                 .subscribe { enabled -> newState { copy(wakeEnabled = enabled) } }
 
         disposables += prefs.silentNotContact.asObservable()
                 .subscribe { enabled -> newState { copy(silentNotContact = enabled) } }
+
+        disposables += prefs.copyCodeFromNotification.asObservable()
+                .subscribe { enabled -> newState { copy(copyCodeEnabled = enabled) } }
 
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { copy(vibrationEnabled = enabled) } }
@@ -116,6 +130,8 @@ class NotificationPrefsViewModel @Inject constructor(
                         R.id.wake -> wake.set(!wake.get())
 
                         R.id.silentNotContact -> prefs.silentNotContact.set(!prefs.silentNotContact.get())
+
+                        R.id.copyCode -> prefs.copyCodeFromNotification.set(!prefs.copyCodeFromNotification.get())
 
                         R.id.vibration -> vibration.set(!vibration.get())
 

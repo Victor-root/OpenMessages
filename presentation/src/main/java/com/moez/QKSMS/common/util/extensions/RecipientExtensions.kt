@@ -1,4 +1,4 @@
-package dev.octoshrimpy.quik.common.util.extensions
+package io.openmessages.common.util.extensions
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -18,12 +18,12 @@ import androidx.core.app.Person
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.widget.TextViewCompat
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.widget.QkTextView
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.util.GlideApp
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.R
+import io.openmessages.common.util.Colors
+import io.openmessages.common.widget.QkTextView
+import io.openmessages.model.Recipient
+import io.openmessages.util.GlideApp
+import io.openmessages.util.tryOrNull
 import timber.log.Timber
 
 

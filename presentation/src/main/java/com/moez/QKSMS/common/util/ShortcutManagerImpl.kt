@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.util
+package io.openmessages.common.util
 
 import android.content.Context
 import android.content.Intent
@@ -25,12 +25,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
-import dev.octoshrimpy.quik.common.util.extensions.getThemedIcon
-import dev.octoshrimpy.quik.common.util.extensions.toPerson
-import dev.octoshrimpy.quik.feature.compose.ComposeActivity
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
+import io.openmessages.common.util.extensions.getThemedIcon
+import io.openmessages.common.util.extensions.toPerson
+import io.openmessages.feature.compose.ComposeActivity
+import io.openmessages.model.Conversation
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.MessageRepository
 import me.leolin.shortcutbadger.ShortcutBadger
 import timber.log.Timber
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class ShortcutManagerImpl @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val messageRepo: MessageRepository,
     private val colors: Colors
-) : dev.octoshrimpy.quik.manager.ShortcutManager {
+) : io.openmessages.manager.ShortcutManager {
 
     override fun updateBadge() {
         val count = messageRepo.getUnreadCount().toInt()

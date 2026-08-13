@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2025
  *
- * This file is part of QUIK.
+ * This file is part of Open Messages.
  *
- * QUIK is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QUIK is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QUIK.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.worker
+package io.openmessages.worker
 
 import android.app.PendingIntent
 import android.content.ContentResolver
@@ -43,18 +43,20 @@ import com.google.android.mms.util_alt.SqliteWrapper
 import com.klinker.android.send_message.MmsSentReceiver
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.Utils
-import dev.octoshrimpy.quik.blocking.BlockingClient
-import dev.octoshrimpy.quik.interactor.UpdateBadge
-import dev.octoshrimpy.quik.manager.ActiveConversationManager
-import dev.octoshrimpy.quik.manager.NotificationManager
-import dev.octoshrimpy.quik.manager.ShortcutManager
-import dev.octoshrimpy.quik.receiver.MessageSentReceiver
-import dev.octoshrimpy.quik.repository.ContactRepository
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.repository.MessageContentFilterRepository
-import dev.octoshrimpy.quik.repository.MessageRepository
-import dev.octoshrimpy.quik.repository.SyncRepository
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.blocking.BlockingClient
+import io.openmessages.blocking.LinkSpamFilter
+import io.openmessages.interactor.UpdateBadge
+import io.openmessages.manager.ActiveConversationManager
+import io.openmessages.manager.NotificationManager
+import io.openmessages.manager.ShortcutManager
+import io.openmessages.receiver.MessageSentReceiver
+import io.openmessages.repository.AllowlistRepository
+import io.openmessages.repository.ContactRepository
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.repository.MessageContentFilterRepository
+import io.openmessages.repository.MessageRepository
+import io.openmessages.repository.SyncRepository
+import io.openmessages.util.Preferences
 import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
@@ -88,6 +90,8 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
     @Inject lateinit var shortcutManager: ShortcutManager
     @Inject lateinit var filterRepo: MessageContentFilterRepository
     @Inject lateinit var contactsRepo: ContactRepository
+    @Inject lateinit var linkSpamFilter: LinkSpamFilter
+    @Inject lateinit var allowlistRepo: AllowlistRepository
 
     override fun doWork(): Result {
         Timber.v("started")
@@ -164,13 +168,65 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
                     // to check if it should be blocked after we've pulled it into realm. If it
                     // turns out that it should be dropped, then delete it
                     // TODO Don't store blocked messages in the first place
-                    val action = blockingClient.shouldBlock(message.address).blockingGet()
+                    val baseAction = blockingClient.shouldBlock(message.address).blockingGet()
+
+                    // Phishing links: upgrade to a block when the body contains a known phishing
+                    // link (unless already blocked, the source is off, or the sender is approved).
+                    val phishingAction = when {
+                        baseAction !is BlockingClient.Action.Block &&
+                            prefs.blockSourcePhishing.get() &&
+                            !allowlistRepo.isAllowed(message.address) ->
+                            linkSpamFilter.firstBlockedDomain(message.getText())
+                                ?.let { domain -> BlockingClient.Action.Block(domain) }
+                                ?: baseAction
+                        else -> baseAction
+                    }
+
+                    // "Block suspected spam" option: when enabled, a soft Flag is upgraded to a full
+                    // block so the message skips the inbox instead of just being tagged.
+                    val action = when {
+                        phishingAction is BlockingClient.Action.Flag && prefs.blockFlaggedAsSpam.get() ->
+                            BlockingClient.Action.Block(phishingAction.reason)
+                        else -> phishingAction
+                    }
                     val shouldDrop = prefs.drop.get()
                     Timber.v("block=$action, drop=$shouldDrop")
 
                     if (action is BlockingClient.Action.Block && shouldDrop) {
                         messageRepo.deleteMessages(listOf(message.id))
                     } else {
+                        val messageFilterAction = filterRepo.isBlocked(message.getText(), message.address, contactsRepo)
+                        if (messageFilterAction) {
+                            Timber.v("message dropped based on content filters")
+                            messageRepo.deleteMessages(listOf(message.id))
+                            return Result.failure(inputData)
+                        }
+
+                        // Create/refresh the conversation row *before* applying the block/flag
+                        // state. A message from a brand-new sender has no Realm conversation yet at
+                        // this point, so marking it blocked/flagged first would no-op and the row
+                        // created afterwards would default to not-blocked, letting spam through.
+                        //
+                        // The onCreate hook seeds the blocked/flagged state inside the creation
+                        // transaction so a new spam conversation is born blocked and never flashes in
+                        // the inbox. The when() below still covers already-existing conversations.
+                        conversationRepo.updateConversations(listOf(message.threadId))
+                        val conversation =
+                            conversationRepo.getOrCreateConversation(message.threadId) { created ->
+                                when (action) {
+                                    is BlockingClient.Action.Block -> {
+                                        created.blocked = true
+                                        created.blockingClient = prefs.blockingManager.get()
+                                        created.blockReason = action.reason
+                                    }
+                                    is BlockingClient.Action.Flag -> {
+                                        created.flagged = true
+                                        created.flagReason = action.reason
+                                    }
+                                    else -> Unit
+                                }
+                            } ?: return Result.failure(inputData)
+
                         when (action) {
                             is BlockingClient.Action.Block -> {
                                 messageRepo.markRead(listOf(message.threadId))
@@ -179,36 +235,26 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
                                     prefs.blockingManager.get(),
                                     action.reason
                                 )
+                                conversationRepo.markUnflagged(message.threadId)
                             }
 
-                            is BlockingClient.Action.Unblock ->
+                            is BlockingClient.Action.Flag ->
+                                conversationRepo.markFlagged(listOf(message.threadId), action.reason)
+
+                            is BlockingClient.Action.Unblock -> {
                                 conversationRepo.markUnblocked(message.threadId)
+                                conversationRepo.markUnflagged(message.threadId)
+                            }
 
                             else -> Unit
                         }
 
-                        val messageFilterAction = filterRepo.isBlocked(message.getText(), message.address, contactsRepo)
-                        if (messageFilterAction) {
-                            Timber.v("message dropped based on content filters")
-                            messageRepo.deleteMessages(listOf(message.id))
-                            return Result.failure(inputData)
-                        }
-
-                        // update the conversation
-                        conversationRepo.updateConversations(listOf(message.threadId))
-                        val conversation =
-                            conversationRepo.getOrCreateConversation(message.threadId)
-                                ?: return Result.failure(inputData)
-
-                        // don't notify (continue) for blocked conversations
-                        if (conversation.blocked) {
+                        // don't notify (continue) for blocked conversations. Re-read the freshly
+                        // applied state rather than the row we fetched before the block decision.
+                        if (conversationRepo.getConversation(message.threadId)?.blocked == true) {
                             Timber.v("no notifications for blocked")
                             return Result.success(inputData)
                         }
-
-                        // unarchive conversation if necessary
-                        if (conversation.archived)
-                            conversationRepo.markUnarchived(listOf(conversation.id))
 
                         // unarchive conversation if necessary
                         if (conversation.archived) {

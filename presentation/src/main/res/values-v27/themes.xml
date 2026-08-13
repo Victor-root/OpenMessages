@@ -2,26 +2,35 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
 
-    <!-- On Oreo, use the light status and navigation bars -->
+    <!-- Splash screen: light mode on Oreo+ gets light status/nav bar icons -->
+    <style name="AppLaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/backgroundLight</item>
+        <item name="android:statusBarColor">@color/backgroundLight</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <!-- On Oreo+, background-matching status and navigation bars -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/backgroundLight</item>
         <item name="android:statusBarColor">@color/backgroundLight</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLightStatusBar">true</item>

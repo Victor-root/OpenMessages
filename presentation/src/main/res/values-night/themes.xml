@@ -2,39 +2,44 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
 
-    <style name="AppTheme" parent="AppBaseTheme">
+    <!-- Splash screen in system dark mode -->
+    <style name="AppLaunchTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:statusBarColor">@color/backgroundDark</item>
+        <item name="android:windowBackground">@color/backgroundDark</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 
+    <!-- Dark mode base theme: dark backgrounds, dark bubble, dark ripple -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:divider">@color/separatorDark</item>
-        <item name="android:navigationBarColor">@color/backgroundDark</item>
         <item name="android:queryBackground">@color/bubbleDark</item>
-        <item name="android:statusBarColor">@color/backgroundDark</item>
-        <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorSecondary">@color/text_secondary</item>
-        <item name="android:textColorTertiary">@color/text_tertiary</item>
+        <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowBackground">@color/backgroundDark</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="actionBarPopupTheme">@style/PopupTheme</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="actionBarPopupTheme">@style/PopupTheme.Black</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="bubbleColor">@color/bubbleDark</item>
+        <item name="colorAccent">@color/colorBrand</item>
         <item name="colorPrimary">@color/backgroundDark</item>
         <item name="colorPrimaryDark">@color/backgroundDark</item>
         <item name="selectableItemBackground">@drawable/ripple_dark</item>
@@ -45,44 +50,29 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="AppThemeDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorSecondary">@color/text_secondary</item>
-        <item name="android:textColorTertiary">@color/text_tertiary</item>
-        <item name="android:windowBackground">@color/backgroundDark</item>
-        <item name="actionBarPopupTheme">@style/PopupTheme</item>
-        <item name="bubbleColor">@color/bubbleDark</item>
-        <item name="colorPrimary">@color/backgroundDark</item>
-        <item name="colorPrimaryDark">@color/backgroundDark</item>
-        <item name="selectableItemBackground">@drawable/ripple_dark</item>
-        <item name="windowActionBar">false</item>
+    <!-- Dark variant of the rounded alert dialog (windowBackground resolves to drawable-night). -->
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="colorAccent">@color/colorBrand</item>
+        <item name="android:textColorPrimary">@color/textPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textSecondaryDark</item>
     </style>
 
-    <style name="PopupTheme" parent="ThemeOverlay.AppCompat">
+    <style name="PopupTheme.Black" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:colorBackground">@color/backgroundDark</item>
         <item name="android:textColor">@color/textPrimaryDark</item>
     </style>
 
-    <!-- Black theme -->
+    <!--
+        Pure-black ("AMOLED") variant of the dark theme, selected by getActivityThemeRes() when the
+        user turns on pure-black mode. It turns the dark-grey background surfaces true black to save
+        power on OLED screens; the accent colour and the status/navigation bars are applied live in
+        QkThemedActivity, so only the background surfaces need overriding here.
+    -->
     <style name="AppTheme.Black">
-        <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowBackground">@color/black</item>
-        <item name="bubbleColor">@color/bubbleBlack</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-    </style>
-
-    <style name="AppThemeDialog.Black">
-        <item name="android:windowBackground">@color/black</item>
-        <item name="actionBarPopupTheme">@style/PopupTheme.Black</item>
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/black</item>
-    </style>
-
-    <style name="PopupTheme.Black">
-        <item name="android:colorBackground">@color/black</item>
-        <item name="bubbleColor">@color/bubbleBlack</item>
     </style>
 
 </resources>

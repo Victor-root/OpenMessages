@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.util
+package io.openmessages.util
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -25,7 +25,7 @@ import android.os.Build
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
-import dev.octoshrimpy.quik.common.util.extensions.versionCode
+import io.openmessages.common.util.extensions.versionCode
 import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -75,15 +75,35 @@ class Preferences @Inject constructor(
         const val SWIPE_ACTION_READ = 5
         const val SWIPE_ACTION_UNREAD = 6
         const val SWIPE_ACTION_SPEAK = 7
+        const val SWIPE_ACTION_TOGGLE_READ = 8
 
-        const val BLOCKING_MANAGER_QKSMS = 0
+        const val BLOCKING_MANAGER_DEFAULT = 0
         const val BLOCKING_MANAGER_CC = 1
         const val BLOCKING_MANAGER_SIA = 2
         const val BLOCKING_MANAGER_CB = 3
 
+        const val HEADER_ACTION_NONE = 0
+        const val HEADER_ACTION_ARCHIVE = 1
+        const val HEADER_ACTION_UNREAD = 2
+        const val HEADER_ACTION_BLOCK = 3
+        const val HEADER_ACTION_DELETE = 4
+
+        const val SEND_SOUND_OFF = -1
+        const val SEND_SOUND_DEFAULT = 0
+        const val SEND_SOUND_BRIGHT = 1
+        const val SEND_SOUND_GENTLE = 2
+        const val SEND_SOUND_DESCENDING = 3
+        const val SEND_SOUND_TRIAD = 4
+
         const val MESSAGE_LINK_HANDLING_BLOCK = 0
         const val MESSAGE_LINK_HANDLING_ALLOW = 1
         const val MESSAGE_LINK_HANDLING_ASK = 2
+
+        // Automatic-backup interval, stored directly as a number of days (0 = off). The presets below
+        // are just common values; the user can pick any custom day count.
+        const val BACKUP_FREQUENCY_NEVER = 0
+        const val BACKUP_FREQUENCY_DAILY = 1
+        const val BACKUP_FREQUENCY_WEEKLY = 7
     }
 
     // Internal
@@ -94,11 +114,21 @@ class Preferences @Inject constructor(
     val changelogVersion = rxPrefs.getInteger("changelogVersion", context.versionCode)
     val hasAskedForNotificationPermission = rxPrefs.getBoolean("hasAskedForNotificationPermission", false)
     val backupDirectory = rxPrefs.getObject("backupDirectory", Uri.EMPTY, UriPreferenceConverter())
+    // How many days between automatic background backups (0 = off); see BACKUP_FREQUENCY_* above
+    val backupFrequency = rxPrefs.getInteger("backupFrequency", BACKUP_FREQUENCY_NEVER)
+    // Write each backup as a single .zip archive instead of a folder of files (easier to transfer)
+    val backupZip = rxPrefs.getBoolean("backupZip", false)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
 
     // User configurable
     val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)
+
+    /** Which tone plays when a message is sent, or SEND_SOUND_OFF for silence. */
+    val sendSoundId = rxPrefs.getInteger("sendSoundId", SEND_SOUND_OFF)
+
+    /** Volume (0-100) for the tone above. */
+    val sendSoundVolume = rxPrefs.getInteger("sendSoundVolume", 100)
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
         true -> NIGHT_MODE_SYSTEM
         false -> NIGHT_MODE_OFF
@@ -108,20 +138,41 @@ class Preferences @Inject constructor(
     val black = rxPrefs.getBoolean("black", false)
     val autoColor = rxPrefs.getBoolean("autoColor", true)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
-    val showStt = rxPrefs.getBoolean("showStt", true)
+
+    /** Show the contact's photo next to incoming messages. Off lets bubbles use the full width. */
+    val showAvatar = rxPrefs.getBoolean("showAvatar", true)
+
+    /** Show a phone-number conversation title in national format (no country code), e.g. "06 ..." instead of "+33 6 ...". */
+    val hideCountryCode = rxPrefs.getBoolean("hideCountryCode", false)
+
+    /** Which action the conversation header's quick-action button performs. See HEADER_ACTION_*. */
+    val headerQuickAction = rxPrefs.getInteger("headerQuickAction", HEADER_ACTION_NONE)
+
+    /** Draw page content behind the transparent status and navigation bars (edge-to-edge). */
+    val edgeToEdge = rxPrefs.getBoolean("edgeToEdge", false)
+    val showStt = rxPrefs.getBoolean("showStt", false)
     val showSttOffsetX = rxPrefs.getFloat("showSttOffsetX", Float.MIN_VALUE)
     val showSttOffsetY = rxPrefs.getFloat("showSttOffsetY", Float.MIN_VALUE)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
-    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
+    val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_DEFAULT)
+    // Integrated blocking source (additive, on top of the manual blocklist and any external app)
+    val blockSourcePhishing = rxPrefs.getBoolean("blockSourcePhishing", false)
+    // Number of entries in the downloaded list, kept only to show a status without re-parsing
+    val blockPhishingCount = rxPrefs.getInteger("blockPhishingCount", 0)
+    // When on, a "suspected spam" soft-flag is upgraded to a full block so the message skips the
+    // inbox entirely instead of just being tagged with the "potential spam" banner.
+    val blockFlaggedAsSpam = rxPrefs.getBoolean("blockFlaggedAsSpam", false)
     val drop = rxPrefs.getBoolean("drop", false)
     val silentNotContact = rxPrefs.getBoolean("silentNotContact", false)
+    // Offer a "copy code" action on notifications for SMS that carry a one-time / verification code
+    val copyCodeFromNotification = rxPrefs.getBoolean("copyCodeFromNotification", true)
     val notifAction1 = rxPrefs.getInteger("notifAction1", NOTIFICATION_ACTION_READ)
     val notifAction2 = rxPrefs.getInteger("notifAction2", NOTIFICATION_ACTION_REPLY)
     val notifAction3 = rxPrefs.getInteger("notifAction3", NOTIFICATION_ACTION_NONE)
     val qkreply = rxPrefs.getBoolean("qkreply", Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
     val qkreplyTapDismiss = rxPrefs.getBoolean("qkreplyTapDismiss", true)
     val sendDelay = rxPrefs.getInteger("sendDelay", SEND_DELAY_NONE)
-    val swipeRight = rxPrefs.getInteger("swipeRight", SWIPE_ACTION_ARCHIVE)
+    val swipeRight = rxPrefs.getInteger("swipeRight", SWIPE_ACTION_READ)
     val swipeLeft = rxPrefs.getInteger("swipeLeft", SWIPE_ACTION_ARCHIVE)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
@@ -137,6 +188,11 @@ class Preferences @Inject constructor(
     val unreadAtTop = rxPrefs.getBoolean("unreadAtTop", false)
 
     val autoDeduplicate = rxPrefs.getBoolean("autoDeduplicateMessages", false)
+    val linkIconToTheme = rxPrefs.getBoolean("linkIconToTheme", false)
+    val appIconColor = rxPrefs.getInteger("appIconColor", 0xFF7B2DDC.toInt())
+
+    /** Saved message templates, stored as a JSON array (see feature.templates.Template). */
+    val templates = rxPrefs.getString("templates", "[]")
 
     init {
         // Migrate from old night mode preference to new one, now that we support android Q night mode
@@ -149,6 +205,13 @@ class Preferences @Inject constructor(
                 else -> NIGHT_MODE_OFF
             })
             nightModeSummary.delete()
+        }
+
+        // Migrate from the old separate on/off toggle now that it's merged into sendSoundId itself
+        val oldSendSoundEnabled = rxPrefs.getBoolean("sendSound")
+        if (oldSendSoundEnabled.isSet) {
+            if (!oldSendSoundEnabled.get()) sendSoundId.set(SEND_SOUND_OFF)
+            oldSendSoundEnabled.delete()
         }
     }
 
@@ -171,10 +234,10 @@ class Preferences @Inject constructor(
 
     fun theme(
         recipientId: Long = 0,
-        default: Int = rxPrefs.getInteger("theme", 0xFF0097A7.toInt()).get()
+        default: Int = rxPrefs.getInteger("theme", 0xFF7B2DDC.toInt()).get()
     ): Preference<Int> {
         return when (recipientId) {
-            0L -> rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
+            0L -> rxPrefs.getInteger("theme", 0xFF7B2DDC.toInt())
             else -> rxPrefs.getInteger("theme_$recipientId", default)
         }
     }

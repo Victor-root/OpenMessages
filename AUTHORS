@@ -1,0 +1,16 @@
+OpenMessages — Authors and Copyright
+====================================
+
+OpenMessages is free software licensed under the GNU General Public License,
+version 3 or (at your option) any later version. See the LICENSE file for the
+full license text.
+
+Copyright (C) 2026 OpenMessages contributors
+Copyright (C) 2014-2019 Moez Bhatti <moez.bhatti@gmail.com>
+                        and the QKSMS / Open Messages contributors
+
+OpenMessages is a fork of QKSMS / Open Messages, originally created by
+Moez Bhatti (https://github.com/moezbhatti/qksms). The original copyright
+notices are retained throughout the source tree, as required by the GPL.
+The 2026 copyright above covers the changes made as part of the OpenMessages
+fork (https://github.com/victor-root/openmessages).

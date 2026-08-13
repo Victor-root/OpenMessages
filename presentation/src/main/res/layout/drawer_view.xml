@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -28,8 +28,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="8dp"
         android:paddingBottom="8dp">
+
+        <FrameLayout
+            android:id="@+id/drawerHeader"
+            android:layout_width="match_parent"
+            android:layout_height="168dp"
+            android:background="@drawable/gradient_brand_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <FrameLayout
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:background="@drawable/circle_white_alpha">
+
+                    <ImageView
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_launcher_foreground"
+                        android:contentDescription="@string/app_name" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="@string/launcher_name"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/inbox"
@@ -38,10 +77,10 @@
             <ImageView
                 android:id="@+id/inboxIcon"
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_inbox_black_24dp"
+                android:src="@drawable/ic_mail_opened"
                 tools:tint="@color/tools_theme" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_inbox" />
 
@@ -54,10 +93,10 @@
             <ImageView
                 android:id="@+id/archivedIcon"
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_archive_white_24dp"
+                android:src="@drawable/ic_archive_filled"
                 tools:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_archived" />
 
@@ -79,11 +118,11 @@
                 android:src="@drawable/ic_import_export_black_24dp"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/backup_title" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/plusBadge1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,14 +142,14 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_event_black_24dp"
+                android:src="@drawable/ic_calendar_event"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_scheduled" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/plusBadge2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,10 +169,10 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_block_white_24dp"
+                android:src="@drawable/ic_forbid_2"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_blocking" />
 
@@ -148,9 +187,24 @@
                 android:src="@drawable/dashboard_2_gear"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/message_management_title" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/templates"
+            style="@style/DrawerRow">
+
+            <ImageView
+                style="@style/DrawerIcon"
+                android:src="@drawable/ic_clipboard_text"
+                app:tint="?android:attr/textColorSecondary" />
+
+            <io.openmessages.common.widget.QkTextView
+                style="@style/DrawerText"
+                android:text="@string/templates_title" />
 
         </LinearLayout>
 
@@ -167,12 +221,27 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_settings_black_24dp"
+                android:src="@drawable/ic_settings_2"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_settings" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/invite"
+            style="@style/DrawerRow">
+
+            <ImageView
+                style="@style/DrawerIcon"
+                android:src="@drawable/ic_people_black_24dp"
+                app:tint="?android:attr/textColorSecondary" />
+
+            <io.openmessages.common.widget.QkTextView
+                style="@style/DrawerText"
+                android:text="@string/drawer_invite" />
 
         </LinearLayout>
 
@@ -185,54 +254,9 @@
                 android:src="@drawable/ic_info_black_24dp"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 style="@style/DrawerText"
                 android:text="@string/settings_about_title" />
-
-        </LinearLayout>
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/plus"-->
-<!--            style="@style/DrawerRow">-->
-
-<!--            <ImageView-->
-<!--                style="@style/DrawerIcon"-->
-<!--                android:src="@drawable/ic_star_black_24dp"-->
-<!--                android:tint="?android:attr/textColorSecondary" />-->
-
-<!--            <dev.octoshrimpy.quik.common.widget.QkTextView-->
-<!--                style="@style/DrawerText"-->
-<!--                android:text="@string/drawer_plus" />-->
-
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/help"-->
-<!--            style="@style/DrawerRow">-->
-
-<!--            <ImageView-->
-<!--                style="@style/DrawerIcon"-->
-<!--                android:src="@drawable/ic_help_black_24dp"-->
-<!--                android:tint="?android:attr/textColorSecondary" />-->
-
-<!--            <dev.octoshrimpy.quik.common.widget.QkTextView-->
-<!--                style="@style/DrawerText"-->
-<!--                android:text="@string/drawer_help" />-->
-
-<!--        </LinearLayout>-->
-
-        <LinearLayout
-            android:id="@+id/invite"
-            style="@style/DrawerRow">
-
-            <ImageView
-                style="@style/DrawerIcon"
-                android:src="@drawable/ic_people_black_24dp"
-                app:tint="?android:attr/textColorSecondary" />
-
-            <dev.octoshrimpy.quik.common.widget.QkTextView
-                style="@style/DrawerText"
-                android:text="@string/drawer_invite" />
 
         </LinearLayout>
 
@@ -258,7 +282,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:tint="@color/tools_theme" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/plusTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -272,7 +296,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textSize="primary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/plusSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -298,6 +322,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/rateLayout"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -317,7 +342,7 @@
                 app:layout_constraintTop_toTopOf="@id/rateTitle"
                 tools:tint="@color/tools_theme" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/rateTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -332,7 +357,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textSize="primary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/rateSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -345,7 +370,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rateTitle"
                 app:textSize="secondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/rateDismiss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -361,7 +386,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rateSummary"
                 app:textSize="secondary" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/rateOkay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

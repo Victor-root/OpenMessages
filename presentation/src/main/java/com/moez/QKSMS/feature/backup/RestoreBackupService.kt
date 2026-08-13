@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.backup
+package io.openmessages.feature.backup
 
 import android.annotation.SuppressLint
 import android.app.Service
@@ -27,9 +27,10 @@ import android.os.IBinder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.common.util.extensions.getLabel
-import dev.octoshrimpy.quik.manager.NotificationManager
-import dev.octoshrimpy.quik.repository.BackupRepository
+import io.openmessages.common.util.extensions.getLabel
+import io.openmessages.manager.NotificationManager
+import io.openmessages.model.BackupCategory
+import io.openmessages.repository.BackupRepository
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -44,12 +45,16 @@ class RestoreBackupService : Service() {
 
         private const val ACTION_START = "ACTION_START"
         private const val ACTION_STOP = "ACTION_STOP"
-        private const val EXTRA_FILE_URI = "EXTRA_FILE_URI"
+        private const val EXTRA_FOLDER_URI = "EXTRA_FOLDER_URI"
+        private const val EXTRA_FOLDER_NAME = "EXTRA_FOLDER_NAME"
+        private const val EXTRA_CATEGORIES = "EXTRA_CATEGORIES"
 
-        fun start(context: Context, backupFile: Uri) {
+        fun start(context: Context, folder: Uri, folderName: String, categories: Set<BackupCategory>) {
             val intent = Intent(context, RestoreBackupService::class.java)
                 .setAction("${context.packageName}.$ACTION_START")
-                .putExtra("${context.packageName}.$EXTRA_FILE_URI", backupFile.toString())
+                .putExtra("${context.packageName}.$EXTRA_FOLDER_URI", folder.toString())
+                .putExtra("${context.packageName}.$EXTRA_FOLDER_NAME", folderName)
+                .putExtra("${context.packageName}.$EXTRA_CATEGORIES", categories.map { it.name }.toTypedArray())
 
             ContextCompat.startForegroundService(context, intent)
         }
@@ -101,12 +106,28 @@ class RestoreBackupService : Service() {
 
         // Start the restore
         Observable.just(intent)
-            .map { Uri.parse(it.getStringExtra("${baseContext.packageName}.$EXTRA_FILE_URI")) }
-            .map(backupRepo::performRestore)
+            .map { i ->
+                val folder = Uri.parse(i.getStringExtra("${baseContext.packageName}.$EXTRA_FOLDER_URI"))
+                val folderName = i.getStringExtra("${baseContext.packageName}.$EXTRA_FOLDER_NAME").orEmpty()
+                val categories = (i.getStringArrayExtra("${baseContext.packageName}.$EXTRA_CATEGORIES") ?: emptyArray())
+                    .mapNotNull { name -> BackupCategory.values().firstOrNull { it.name == name } }
+                    .toSet()
+                Triple(folder, folderName, categories)
+            }
             .subscribeOn(Schedulers.io())
-            .subscribe({}, Timber::w)
+            .subscribe({ (folder, folderName, categories) ->
+                try {
+                    backupRepo.performRestore(folder, folderName, categories)
+                } finally {
+                    // Restoring from a .zip unpacks it into the cache first. Drop that copy however
+                    // the restore ended — finished, cancelled or failed — instead of leaving a second
+                    // copy of the whole backup on the device until the next restore overwrites it.
+                    backupRepo.clearRestoreCache()
+                }
+            }, Timber::w)
     }
 
+    @Suppress("DEPRECATION")
     private fun stop() {
         stopForeground(true)
         stopSelf()

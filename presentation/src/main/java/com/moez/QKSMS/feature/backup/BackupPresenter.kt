@@ -1,34 +1,42 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.backup
+package io.openmessages.feature.backup
 
 import android.content.Context
+import android.net.Uri
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.common.util.DateFormatter
-import dev.octoshrimpy.quik.common.util.extensions.makeToast
-import dev.octoshrimpy.quik.interactor.PerformBackup
-import dev.octoshrimpy.quik.manager.BillingManager
-import dev.octoshrimpy.quik.repository.BackupRepository
+import io.openmessages.R
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.LauncherIconManager
+import io.openmessages.common.util.extensions.makeToast
+import io.openmessages.interactor.PerformBackup
+import io.openmessages.manager.BillingManager
+import io.openmessages.manager.PermissionManager
+import io.openmessages.model.BackupCategory
+import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
+import io.openmessages.repository.BackupRepository
+import io.openmessages.util.Preferences
+import io.openmessages.worker.AutoBackupWorker
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
@@ -40,9 +48,15 @@ class BackupPresenter @Inject constructor(
     private val billingManager: BillingManager,
     private val context: Context,
     private val dateFormatter: DateFormatter,
+    private val launcherIconManager: LauncherIconManager,
     private val navigator: Navigator,
-    private val performBackup: PerformBackup
+    private val performBackup: PerformBackup,
+    private val permissionManager: PermissionManager,
+    private val prefs: Preferences
 ) : QkPresenter<BackupView, BackupState>(BackupState()) {
+
+    /** Restore parameters held while we ask the user to grant the exact-alarm permission. */
+    private var pendingRestore: Triple<Uri, String, Set<BackupCategory>>? = null
 
     init {
         disposables += backupRepo.getBackupProgress()
@@ -55,18 +69,98 @@ class BackupPresenter @Inject constructor(
                 .distinctUntilChanged()
                 .subscribe { progress -> newState { copy(restoreProgress = progress) } }
 
+        // Once a restore is done, the settings it brought back may ask for a launcher icon this install
+        // isn't showing. Offer to apply it here, where an activity is available to close the app; the
+        // restore itself runs in a service and could not do it.
+        disposables += backupRepo.getRestoreProgress()
+                .filter { progress -> progress is BackupRepository.Progress.Finished }
+                .filter { launcherIconManager.isIconChangeNeeded(launcherIconManager.desiredColor()) }
+                .subscribe { newState { copy(showIconChangeDialog = true) } }
+
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
+
+        disposables += prefs.backupFrequency.asObservable()
+                .subscribe { frequency -> newState { copy(autoBackupFrequency = frequency) } }
+
+        disposables += prefs.backupZip.asObservable()
+                .subscribe { enabled -> newState { copy(zipEnabled = enabled) } }
+
+        newState { copy(backupLocation = backupRepo.getBackupLocationLabel()) }
     }
 
     override fun bindIntents(view: BackupView) {
         super.bindIntents(view)
 
+        // Optional: let the user pick a custom destination folder instead of the default
         view.setBackupLocationClicks()
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
                 .subscribe { view.selectFolder(backupRepo.getBackupPathUriForPicker()) }
 
+        // Automatic backup: pick how often a full backup should run on its own
+        view.autoBackupClicks()
+                .autoDisposable(view.scope())
+                .subscribe { view.showAutoBackupFrequencyPicker(prefs.backupFrequency.get()) }
+
+        view.autoBackupFrequencySelected()
+                .autoDisposable(view.scope())
+                .subscribe { frequency ->
+                    prefs.backupFrequency.set(frequency)
+                    AutoBackupWorker.register(context, frequency)
+                }
+
+        // Toggle whether backups are written as a single .zip archive
+        view.zipClicks()
+                .autoDisposable(view.scope())
+                .subscribe { prefs.backupZip.set(!prefs.backupZip.get()) }
+
+        // Manage backups: list the existing ones so the user can rename or delete them
+        view.manageBackupsClicks()
+                .observeOn(Schedulers.io())
+                .map { backupRepo.getManagedBackups() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { backups -> view.showBackupManager(backups) }
+
+        view.renameBackupSelected()
+                .observeOn(Schedulers.io())
+                .map { (item, newName) ->
+                    backupRepo.renameBackup(item, newName) to backupRepo.getManagedBackups()
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { (ok, backups) ->
+                    if (!ok) context.makeToast(R.string.backup_manage_error)
+                    view.showBackupManager(backups)
+                }
+
+        view.deleteBackupSelected()
+                .observeOn(Schedulers.io())
+                .map { item -> backupRepo.deleteBackup(item) to backupRepo.getManagedBackups() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { (ok, backups) ->
+                    if (!ok) context.makeToast(R.string.backup_manage_error)
+                    view.showBackupManager(backups)
+                }
+
+        // Backup writes automatically (no folder to pick), so go straight to the category picker
+        view.backupClicks()
+                .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
+                .autoDisposable(view.scope())
+                .subscribe { upgraded ->
+                    when {
+                        !upgraded -> navigator.showQksmsPlusActivity("backup_fab")
+                        else -> view.showBackupCategoryPicker()
+                    }
+                }
+
+        view.backupCategoriesSelected()
+                .autoDisposable(view.scope())
+                .subscribe { categories -> performBackup.execute(categories) }
+
+        // Restore: gate the same way, then pick the backup folder to restore from
         view.restoreClicks()
                 .withLatestFrom(
                         backupRepo.getBackupProgress(),
@@ -77,49 +171,86 @@ class BackupPresenter @Inject constructor(
                         !upgraded -> context.makeToast(R.string.backup_restore_error_plus)
                         backupProgress.running -> context.makeToast(R.string.backup_restore_error_backup)
                         restoreProgress.running -> context.makeToast(R.string.backup_restore_error_restore)
-                        else -> view.selectFile(backupRepo.getBackupPathUriForPicker())
+                        else -> view.showRestoreSourceChoice(backupRepo.getBackupPathUriForPicker())
                     }
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        view.backupClicks()
-                .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
+        // A folder was picked: list the backup sets it holds off the main thread
+        view.restoreFolderSelected()
+                .observeOn(Schedulers.io())
+                .map { uri -> uri to backupRepo.listBackups(uri) }
+                .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
-                .subscribe { upgraded ->
-                    when {
-                        backupRepo.getBackupDocumentTree() == null -> {
-                            newState { copy(showLocationRationale = true) }
-                        }
-                        !upgraded -> navigator.showQksmsPlusActivity("backup_fab")
-                        upgraded -> performBackup.execute(Unit)
+                .subscribe({ (uri, backups) -> onBackupsListed(view, uri, backups) },
+                        { newState { copy(showSelectedBackupError = true) } })
+
+        // A .zip was picked: extract it to a temp folder, then treat it exactly like a picked folder
+        view.restoreZipSelected()
+                .observeOn(Schedulers.io())
+                .map { zipUri ->
+                    val folder = backupRepo.importZip(zipUri)
+                    folder to (folder?.let { backupRepo.listBackups(it) } ?: emptyList())
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe({ (folder, backups) ->
+                    if (folder == null) newState { copy(showSelectedBackupError = true) }
+                    else onBackupsListed(view, folder, backups)
+                }, { newState { copy(showSelectedBackupError = true) } })
+
+        // Several backups in the folder: the user picked which one to restore from
+        view.restoreSourceSelected()
+                .autoDisposable(view.scope())
+                .subscribe { (uri, backup) ->
+                    view.showRestoreCategoryPicker(uri, backup.folderName, backup.categories,
+                            dateFormatter.getDetailedTimestamp(backup.date))
+                }
+
+        view.restoreCategoriesSelected()
+                .autoDisposable(view.scope())
+                .subscribe { (folder, folderName, categories) ->
+                    // Scheduled messages need the exact-alarm permission to fire on time; ask for it first
+                    if (BackupCategory.SCHEDULED in categories && !permissionManager.hasExactAlarms()) {
+                        pendingRestore = Triple(folder, folderName, categories)
+                        newState { copy(showExactAlarmDialog = true) }
+                    } else {
+                        RestoreBackupService.start(context, folder, folderName, categories)
                     }
                 }
 
-        view.locationRationaleConfirmClicks()
-                .doOnNext { newState { copy(showLocationRationale = false) } }
+        // "Grant": open the exact-alarm settings and only start the restore once the user comes back,
+        // so the alarms are already in place. "Skip": run the restore now with the inexact-alarm fallback.
+        view.exactAlarmGrantClicks()
+                .doOnNext { newState { copy(showExactAlarmDialog = false) } }
                 .autoDisposable(view.scope())
-                .subscribe { view.selectFolder(backupRepo.getBackupPathUriForPicker()) }
+                .subscribe { view.openExactAlarmSettings() }
 
-        view.locationRationaleCancelClicks()
-                .doOnNext { newState { copy(showLocationRationale = false) } }
+        view.exactAlarmSettingsClosed()
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { startPendingRestore() }
+
+        view.exactAlarmSkipClicks()
+                .doOnNext { newState { copy(showExactAlarmDialog = false) } }
+                .autoDisposable(view.scope())
+                .subscribe { startPendingRestore() }
 
         view.selectedBackupErrorClicks()
                 .autoDisposable(view.scope())
                 .subscribe { newState { copy(showSelectedBackupError = false) } }
 
-        view.confirmRestoreBackupConfirmClicks()
-                .doOnNext { newState { copy(selectedBackupDetails = null) } }
-                .withLatestFrom(view.documentSelected()) { _, backup -> backup }
+        // A restore brings back the icon colour the user had, but it cannot enable the matching
+        // launcher alias by itself: that swap has to close the app, so it is offered here once the
+        // restore is done rather than done behind the user's back.
+        view.iconChangeConfirmClicks()
+                .doOnNext { newState { copy(showIconChangeDialog = false) } }
                 .autoDisposable(view.scope())
-                .subscribe { backup -> RestoreBackupService.start(context, backup) }
+                .subscribe { view.applyIconAndClose(launcherIconManager.desiredColor()) }
 
-        view.confirmRestoreBackupCancelClicks()
-                .doOnNext { newState { copy(selectedBackupDetails = null) } }
+        view.iconChangeDismissClicks()
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe { newState { copy(showIconChangeDialog = false) } }
 
         view.stopRestoreClicks()
                 .autoDisposable(view.scope())
@@ -134,23 +265,34 @@ class BackupPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { newState { copy(showStopRestoreDialog = false) } }
 
+        // The user picked a custom destination folder: persist it and refresh the shown location
         view.documentTreeSelected()
                 .autoDisposable(view.scope())
-                .subscribe { uri -> backupRepo.persistBackupDirectory(uri) }
-
-        view.documentSelected()
-                .observeOn(Schedulers.io())
-                .autoDisposable(view.scope())
                 .subscribe { uri ->
-                    try {
-                        val backupFile = backupRepo.parseBackup(uri)
-                        val date = dateFormatter.getDetailedTimestamp(backupFile.date)
-                        val details = context.getString(R.string.backup_details, date, backupFile.messages)
-                        newState { copy(selectedBackupDetails = details) }
-                    } catch (e: Exception) {
-                        newState { copy(showSelectedBackupError = true) }
-                    }
+                    backupRepo.persistBackupDirectory(uri)
+                    newState { copy(backupLocation = backupRepo.getBackupLocationLabel()) }
                 }
+    }
+
+    /** Shows the right picker for the backup sets found in a source folder (or extracted .zip). */
+    private fun onBackupsListed(view: BackupView, uri: Uri, backups: List<BackupFolder>) {
+        when {
+            backups.isEmpty() -> newState { copy(showSelectedBackupError = true) }
+            backups.size == 1 -> backups.first().let { backup ->
+                view.showRestoreCategoryPicker(uri, backup.folderName, backup.categories,
+                        dateFormatter.getDetailedTimestamp(backup.date))
+            }
+            else -> view.showRestoreSourcePicker(uri, backups,
+                    backups.map { dateFormatter.getDetailedTimestamp(it.date) })
+        }
+    }
+
+    /** Kicks off the restore held back while the exact-alarm dialog was showing. */
+    private fun startPendingRestore() {
+        pendingRestore?.let { (folder, folderName, categories) ->
+            RestoreBackupService.start(context, folder, folderName, categories)
+        }
+        pendingRestore = null
     }
 
 }

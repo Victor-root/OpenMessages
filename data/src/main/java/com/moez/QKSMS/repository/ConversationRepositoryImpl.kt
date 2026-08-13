@@ -1,39 +1,39 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.repository
+package io.openmessages.repository
 
 import android.content.ContentUris
 import android.content.Context
-import dev.octoshrimpy.quik.compat.TelephonyCompat
-import dev.octoshrimpy.quik.extensions.anyOf
-import dev.octoshrimpy.quik.extensions.asObservable
-import dev.octoshrimpy.quik.extensions.map
-import dev.octoshrimpy.quik.filter.ConversationFilter
-import dev.octoshrimpy.quik.mapper.CursorToConversation
-import dev.octoshrimpy.quik.mapper.CursorToRecipient
-import dev.octoshrimpy.quik.model.Contact
-import dev.octoshrimpy.quik.model.Conversation
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.model.Recipient
-import dev.octoshrimpy.quik.model.SearchResult
-import dev.octoshrimpy.quik.util.PhoneNumberUtils
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.compat.TelephonyCompat
+import io.openmessages.extensions.anyOf
+import io.openmessages.extensions.asObservable
+import io.openmessages.extensions.map
+import io.openmessages.filter.ConversationFilter
+import io.openmessages.mapper.CursorToConversation
+import io.openmessages.mapper.CursorToRecipient
+import io.openmessages.model.Contact
+import io.openmessages.model.Conversation
+import io.openmessages.model.Message
+import io.openmessages.model.Recipient
+import io.openmessages.model.SearchResult
+import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.tryOrNull
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -317,8 +317,8 @@ class ConversationRepositoryImpl @Inject constructor(
             .equalTo("id", recipientId)
             .findFirst()
 
-    override fun createConversation(threadId: Long, sendAsGroup: Boolean) =
-        createConversationFromCp(threadId, sendAsGroup)
+    override fun createConversation(threadId: Long, sendAsGroup: Boolean, onCreate: ((Conversation) -> Unit)?) =
+        createConversationFromCp(threadId, sendAsGroup, onCreate)
 
 
     override fun getConversation(recipients: Collection<String>): Conversation? =
@@ -343,8 +343,8 @@ class ConversationRepositoryImpl @Inject constructor(
                     createEmptyConversation(providerThreadId, addresses, sendAsGroup)
             }
 
-    override fun getOrCreateConversation(threadId: Long, sendAsGroup: Boolean) =
-        getConversation(threadId) ?: createConversation(threadId, sendAsGroup)
+    override fun getOrCreateConversation(threadId: Long, sendAsGroup: Boolean, onCreate: ((Conversation) -> Unit)?) =
+        getConversation(threadId) ?: createConversation(threadId, sendAsGroup, onCreate)
 
     override fun getOrCreateConversation(addresses: Collection<String>, sendAsGroup: Boolean) =
         getConversation(addresses) ?: createConversation(addresses, sendAsGroup)
@@ -438,6 +438,9 @@ class ConversationRepositoryImpl @Inject constructor(
                     conversation.blocked = true
                     conversation.blockingClient = blockingClient
                     conversation.blockReason = blockReason
+                    // Blocking supersedes the soft "suspected spam" flag
+                    conversation.flagged = false
+                    conversation.flagReason = null
                 }
             }
         }
@@ -453,6 +456,40 @@ class ConversationRepositoryImpl @Inject constructor(
                     conversation.blocked = false
                     conversation.blockingClient = null
                     conversation.blockReason = null
+                }
+            }
+        }
+
+    override fun markFlagged(threadIds: Collection<Long>, flagReason: String?) =
+        Realm.getDefaultInstance().use { realm ->
+            // Already-flagged conversations used to be filtered out here, which meant a second flag
+            // for a different reason left the banner explaining the first one. They are included now
+            // so the reason shown is the one that flagged the conversation most recently.
+            val conversations = realm.where(Conversation::class.java)
+                .anyOf("id", threadIds.toLongArray())
+                .findAll()
+
+            realm.executeTransaction {
+                conversations.forEach { conversation ->
+                    conversation.flagged = true
+                    // A flag that carries no reason leaves the existing one in place rather than
+                    // replacing an explanation with nothing.
+                    if (flagReason != null) conversation.flagReason = flagReason
+                }
+            }
+        }
+
+    override fun markUnflagged(vararg threadIds: Long) =
+        Realm.getDefaultInstance().use { realm ->
+            val conversations = realm.where(Conversation::class.java)
+                .anyOf("id", threadIds)
+                .equalTo("flagged", true)
+                .findAll()
+
+            realm.executeTransaction {
+                conversations.forEach { conversation ->
+                    conversation.flagged = false
+                    conversation.flagReason = null
                 }
             }
         }
@@ -488,7 +525,11 @@ class ConversationRepositoryImpl @Inject constructor(
      * we can return a [Conversation]. On some devices, the ContentProvider won't return the
      * conversation unless it contains at least 1 message
      */
-    private fun createConversationFromCp(threadId: Long, sendAsGroup: Boolean) =
+    private fun createConversationFromCp(
+        threadId: Long,
+        sendAsGroup: Boolean,
+        onCreate: ((Conversation) -> Unit)? = null
+    ) =
         tryOrNull(true) {
             cursorToConversation.getConversationsCursor()
                 ?.map(cursorToConversation::map)
@@ -530,6 +571,11 @@ class ConversationRepositoryImpl @Inject constructor(
                                 .sort("date", Sort.DESCENDING)
                                 .findFirst()
                         }
+
+                        // Let the caller seed initial state (e.g. blocked/flagged) so it is part of
+                        // the very first commit, instead of a follow-up transaction that a live inbox
+                        // query would briefly observe (which caused blocked spam to flash in the list).
+                        onCreate?.invoke(conversation)
 
                         realm.executeTransaction { it.insertOrUpdate(conversation) }
                     }

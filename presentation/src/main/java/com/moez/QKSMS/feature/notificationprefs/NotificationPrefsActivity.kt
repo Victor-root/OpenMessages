@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.notificationprefs
+package io.openmessages.feature.notificationprefs
 
 import android.app.Activity
 import android.content.Intent
@@ -31,13 +31,13 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.QkDialog
-import dev.octoshrimpy.quik.common.base.QkThemedActivity
-import dev.octoshrimpy.quik.common.util.extensions.animateLayoutChanges
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.widget.PreferenceView
-import dev.octoshrimpy.quik.databinding.NotificationPrefsActivityBinding
+import io.openmessages.R
+import io.openmessages.common.QkDialog
+import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.animateLayoutChanges
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.widget.PreferenceView
+import io.openmessages.databinding.NotificationPrefsActivityBinding
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -103,6 +103,8 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         binding.wake.checkbox?.isChecked = state.wakeEnabled
         binding.silentNotContact.checkbox?.isChecked = state.silentNotContact
         binding.silentNotContact.isVisible = state.threadId == 0L
+        binding.copyCode.checkbox?.isChecked = state.copyCodeEnabled
+        binding.copyCode.isVisible = state.threadId == 0L
         binding.vibration.checkbox?.isChecked = state.vibrationEnabled
         binding.ringtone.summary = state.ringtoneName
 
@@ -126,6 +128,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     override fun showPreviewModeDialog() = previewModeDialog.show(this)
 
+    @Suppress("DEPRECATION")
     override fun showRingtonePicker(default: Uri?) {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
@@ -140,6 +143,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         actionsDialog.show(this)
     }
 
+    @Suppress("DEPRECATION")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 123 && resultCode == Activity.RESULT_OK) {

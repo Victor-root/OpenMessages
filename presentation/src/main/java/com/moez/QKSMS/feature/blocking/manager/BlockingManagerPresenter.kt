@@ -1,18 +1,18 @@
-package dev.octoshrimpy.quik.feature.blocking.manager
+package io.openmessages.feature.blocking.manager
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.blocking.BlockingClient
-import dev.octoshrimpy.quik.blocking.CallBlockerBlockingClient
-import dev.octoshrimpy.quik.blocking.CallControlBlockingClient
-import dev.octoshrimpy.quik.blocking.QksmsBlockingClient
-import dev.octoshrimpy.quik.blocking.ShouldIAnswerBlockingClient
-import dev.octoshrimpy.quik.common.Navigator
-import dev.octoshrimpy.quik.common.base.QkPresenter
-import dev.octoshrimpy.quik.repository.ConversationRepository
-import dev.octoshrimpy.quik.util.Preferences
+import io.openmessages.R
+import io.openmessages.blocking.BlockingClient
+import io.openmessages.blocking.CallBlockerBlockingClient
+import io.openmessages.blocking.CallControlBlockingClient
+import io.openmessages.blocking.QksmsBlockingClient
+import io.openmessages.blocking.ShouldIAnswerBlockingClient
+import io.openmessages.common.Navigator
+import io.openmessages.common.base.QkPresenter
+import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
@@ -67,7 +67,7 @@ class BlockingManagerPresenter @Inject constructor(
                 .switchMap { numbers -> qksms.block(numbers).andThen(Observable.just(Unit)) } // Hack
                 .autoDisposable(view.scope())
                 .subscribe {
-                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_QKSMS)
+                    prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_DEFAULT)
                 }
 
         view.callBlockerClicked()

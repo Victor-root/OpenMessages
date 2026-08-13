@@ -2,21 +2,29 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<!--
+    Recipient chip shown in the compose header while editing recipients. It is intentionally styled to
+    match an existing conversation's title (plain text on the colored toolbar, no bubble box and no
+    avatar) so a new conversation's header looks identical to an existing one. The chip stays tappable:
+    tapping it opens the detailed chip to remove the recipient. Because it lives inside the Toolbar's
+    ThemeOverlay.AppCompat.Dark.ActionBar, ?android:attr/textColorPrimary resolves to white here, which
+    is what we want on the colored header.
+-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,33 +32,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/content"
+    <io.openmessages.common.widget.QkTextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_margin="4dp"
-        android:background="@drawable/chip_background"
-        android:backgroundTint="?attr/bubbleColor"
-        android:orientation="horizontal">
-
-        <dev.octoshrimpy.quik.common.widget.AvatarView
-            android:id="@+id/avatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp" />
-
-        <dev.octoshrimpy.quik.common.widget.QkTextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="12dp"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="bold"
-            app:textSize="secondary"
-            tools:text="Moez Bhatti"
-            android:textDirection="ltr" />
-
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textColor="?android:attr/textColorPrimary"
+        app:textSize="toolbar"
+        tools:text="Moez Bhatti"
+        android:textDirection="ltr" />
 
 </RelativeLayout>

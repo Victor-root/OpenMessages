@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.themepicker
+package io.openmessages.feature.themepicker
 
 import android.content.Context
 import android.graphics.Color
@@ -25,10 +25,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import androidx.constraintlayout.widget.ConstraintLayout
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.common.util.extensions.within
-import dev.octoshrimpy.quik.databinding.HsvPickerViewBinding
+import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.within
+import io.openmessages.databinding.HsvPickerViewBinding
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
@@ -117,7 +117,9 @@ class HSVPickerView @JvmOverloads constructor(
     }
 
     private fun setupBounds() {
-        if (min == 0f || max == 0f) {
+        // Only cache the bounds once the saturation square has actually been laid out. If we compute
+        // them while the view is hidden/unmeasured (width 0) we'd cache a zero range permanently.
+        if ((min == 0f || max == 0f) && binding.saturation.width > 0) {
             min = binding.saturation.x - binding.swatch.width / 2
             max = min + binding.saturation.width
         }
@@ -127,6 +129,11 @@ class HSVPickerView @JvmOverloads constructor(
         setupBounds()
 
         val range = max - min
+        // When the view hasn't been laid out yet (e.g. it lives on a hidden tab), the bounds are
+        // zero. Computing a color from a zero range divides by zero and yields black — don't emit
+        // it, or it would override the real selection everywhere.
+        if (range <= 0f) return
+
         val hsv = floatArrayOf(hue, (binding.swatch.x - min) / range, 1 - (binding.swatch.y - min) / range)
         val color = Color.HSVToColor(hsv)
 

@@ -1,6 +1,6 @@
-package dev.octoshrimpy.quik.repository
+package io.openmessages.repository
 
-import dev.octoshrimpy.quik.model.ScheduledMessage
+import io.openmessages.model.ScheduledMessage
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

@@ -1,36 +1,36 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.compose.part
+package io.openmessages.feature.compose.part
 
 import android.content.Context
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkViewHolder
-import dev.octoshrimpy.quik.common.util.Colors
-import dev.octoshrimpy.quik.common.util.extensions.setVisible
-import dev.octoshrimpy.quik.common.widget.BubbleImageView
-import dev.octoshrimpy.quik.databinding.MmsImagePreviewListItemBinding
-import dev.octoshrimpy.quik.extensions.isImage
-import dev.octoshrimpy.quik.extensions.isVideo
-import dev.octoshrimpy.quik.model.Message
-import dev.octoshrimpy.quik.model.MmsPart
-import dev.octoshrimpy.quik.util.GlideApp
-import dev.octoshrimpy.quik.util.tryOrNull
+import io.openmessages.R
+import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.widget.BubbleImageView
+import io.openmessages.databinding.MmsImagePreviewListItemBinding
+import io.openmessages.extensions.isImage
+import io.openmessages.extensions.isVideo
+import io.openmessages.model.Message
+import io.openmessages.model.MmsPart
+import io.openmessages.util.GlideApp
+import io.openmessages.util.tryOrNull
 import javax.inject.Inject
 
 class ImageBinder @Inject constructor(colors: Colors, private val context: Context) : PartBinder() {

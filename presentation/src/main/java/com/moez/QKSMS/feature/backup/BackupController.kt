@@ -1,49 +1,61 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.feature.backup
+package io.openmessages.feature.backup
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.common.base.QkController
-import dev.octoshrimpy.quik.common.util.QkActivityResultContracts
-import dev.octoshrimpy.quik.common.util.extensions.getLabel
-import dev.octoshrimpy.quik.common.util.extensions.setBackgroundTint
-import dev.octoshrimpy.quik.common.util.extensions.setNegativeButton
-import dev.octoshrimpy.quik.common.util.extensions.setPositiveButton
-import dev.octoshrimpy.quik.common.util.extensions.setShowing
-import dev.octoshrimpy.quik.common.util.extensions.setTint
-import dev.octoshrimpy.quik.common.widget.PreferenceView
-import dev.octoshrimpy.quik.injection.appComponent
-import dev.octoshrimpy.quik.repository.BackupRepository
-import dev.octoshrimpy.quik.databinding.BackupControllerBinding
+import io.openmessages.R
+import io.openmessages.common.base.QkController
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.LauncherIconManager
+import io.openmessages.common.util.extensions.getLabel
+import io.openmessages.common.util.extensions.setNegativeButton
+import io.openmessages.common.util.extensions.setPositiveButton
+import io.openmessages.common.util.extensions.setShowing
+import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.common.util.extensions.themeChoiceItems
+import io.openmessages.common.widget.PreferenceView
+import io.openmessages.injection.appComponent
+import io.openmessages.model.BackupCategory
+import io.openmessages.model.BackupFolder
+import io.openmessages.model.BackupItem
+import io.openmessages.repository.BackupRepository
+import io.openmessages.util.Preferences
+import io.openmessages.databinding.BackupControllerBinding
+import io.openmessages.databinding.BackupListDialogBinding
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -52,20 +64,31 @@ import javax.inject.Inject
 class BackupController : QkController<BackupControllerBinding, BackupView, BackupState, BackupPresenter>(), BackupView {
 
     @Inject override lateinit var presenter: BackupPresenter
-
-    private val selectFolderCancelSubject: Subject<Unit> = PublishSubject.create()
-    private val selectFolderConfirmSubject: Subject<Unit> = PublishSubject.create()
+    @Inject lateinit var colors: Colors
+    @Inject lateinit var launcherIconManager: LauncherIconManager
 
     private val restoreErrorConfirmSubject: Subject<Unit> = PublishSubject.create()
 
-    private val confirmRestoreCancelSubject: Subject<Unit> = PublishSubject.create()
-    private val confirmRestoreConfirmSubject: Subject<Unit> = PublishSubject.create()
+    private val iconChangeConfirmSubject: Subject<Unit> = PublishSubject.create()
+    private val iconChangeDismissSubject: Subject<Unit> = PublishSubject.create()
+
+    private val exactAlarmGrantSubject: Subject<Unit> = PublishSubject.create()
+    private val exactAlarmSkipSubject: Subject<Unit> = PublishSubject.create()
+    private val exactAlarmSettingsClosedSubject: Subject<Unit> = PublishSubject.create()
 
     private val stopRestoreConfirmSubject: Subject<Unit> = PublishSubject.create()
     private val stopRestoreCancelSubject: Subject<Unit> = PublishSubject.create()
 
     private val documentTreeSelectedSubject: Subject<Uri> = PublishSubject.create()
-    private val documentSelectedSubject: Subject<Uri> = PublishSubject.create()
+    private val restoreFolderSelectedSubject: Subject<Uri> = PublishSubject.create()
+    private val restoreZipSelectedSubject: Subject<Uri> = PublishSubject.create()
+
+    private val autoBackupFrequencySelectedSubject: Subject<Int> = PublishSubject.create()
+    private val renameBackupSelectedSubject: Subject<Pair<BackupItem, String>> = PublishSubject.create()
+    private val deleteBackupSelectedSubject: Subject<BackupItem> = PublishSubject.create()
+    private val backupCategoriesSelectedSubject: Subject<Set<BackupCategory>> = PublishSubject.create()
+    private val restoreSourceSelectedSubject: Subject<Pair<Uri, BackupFolder>> = PublishSubject.create()
+    private val restoreCategoriesSelectedSubject: Subject<Triple<Uri, String, Set<BackupCategory>>> = PublishSubject.create()
 
     private val stopRestoreDialog by lazy {
         AlertDialog.Builder(activity!!)
@@ -75,16 +98,18 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .setNegativeButton(R.string.button_cancel, stopRestoreCancelSubject)
                 .setCancelable(false)
                 .create()
+                .themeButtons(colors.theme().theme)
     }
 
-    private val selectLocationRationaleDialog by lazy {
+    private val iconChangeDialog by lazy {
         AlertDialog.Builder(activity!!)
-                .setTitle(R.string.backup_select_location_rationale_title)
-                .setMessage(R.string.backup_select_location_rationale_message)
-                .setPositiveButton(R.string.button_continue, selectFolderConfirmSubject)
-                .setNegativeButton(R.string.button_cancel, selectFolderCancelSubject)
+                .setTitle(R.string.backup_icon_change_title)
+                .setMessage(R.string.backup_icon_change_message)
+                .setPositiveButton(R.string.icon_change_confirm, iconChangeConfirmSubject)
+                .setNegativeButton(R.string.icon_change_later, iconChangeDismissSubject)
                 .setCancelable(false)
                 .create()
+                .themeButtons(colors.theme().theme)
     }
 
     private val selectedBackupErrorDialog by lazy {
@@ -94,19 +119,27 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .setPositiveButton(R.string.button_continue, restoreErrorConfirmSubject)
                 .setCancelable(false)
                 .create()
+                .themeButtons(colors.theme().theme)
     }
 
-    private val selectedBackupDetailsDialog by lazy {
+    private val exactAlarmDialog by lazy {
         AlertDialog.Builder(activity!!)
-                .setTitle(R.string.backup_selected_backup_details_title)
-                .setPositiveButton(R.string.backup_restore_title, confirmRestoreConfirmSubject)
-                .setNegativeButton(R.string.button_cancel, confirmRestoreCancelSubject)
+                .setTitle(R.string.backup_exact_alarm_title)
+                .setMessage(R.string.backup_exact_alarm_message)
+                .setPositiveButton(R.string.backup_exact_alarm_grant, exactAlarmGrantSubject)
+                .setNegativeButton(R.string.backup_exact_alarm_skip, exactAlarmSkipSubject)
                 .setCancelable(false)
                 .create()
+                .themeButtons(colors.theme().theme)
     }
 
     private lateinit var openDirectory: ActivityResultLauncher<Uri?>
-    private lateinit var openDocument: ActivityResultLauncher<QkActivityResultContracts.OpenDocumentParams>
+    private lateinit var openRestoreDirectory: ActivityResultLauncher<Uri?>
+    private lateinit var openRestoreZip: ActivityResultLauncher<Array<String>>
+    private lateinit var exactAlarmSettings: ActivityResultLauncher<Intent>
+
+    private var backupManagerDialog: AlertDialog? = null
+    private var backupsAdapter: BackupsAdapter? = null
 
     init {
         appComponent.inject(this)
@@ -116,15 +149,25 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
         BackupControllerBinding.inflate(inflater, container, false)
 
     override fun onContextAvailable(context: Context) {
-        // Init activity result contracts
         openDirectory = themedActivity!!
             .registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
                 uri?.let(documentTreeSelectedSubject::onNext)
             }
 
-        openDocument = themedActivity!!
-            .registerForActivityResult(QkActivityResultContracts.OpenDocument()) { uri ->
-                uri?.let(documentSelectedSubject::onNext)
+        openRestoreDirectory = themedActivity!!
+            .registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+                uri?.let(restoreFolderSelectedSubject::onNext)
+            }
+
+        openRestoreZip = themedActivity!!
+            .registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                uri?.let(restoreZipSelectedSubject::onNext)
+            }
+
+        // Fires when the user returns from the exact-alarm settings, so restore can start only then
+        exactAlarmSettings = themedActivity!!
+            .registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                exactAlarmSettingsClosedSubject.onNext(Unit)
             }
     }
 
@@ -141,9 +184,6 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
         themedActivity?.colors?.theme()?.let { theme ->
             binding.progressBar.indeterminateTintList = ColorStateList.valueOf(theme.theme)
             binding.progressBar.progressTintList = ColorStateList.valueOf(theme.theme)
-            binding.fab.setBackgroundTint(theme.theme)
-            binding.fabIcon.setTint(theme.textPrimary)
-            binding.fabLabel.setTextColor(theme.textPrimary)
         }
 
         // Make the list titles bold
@@ -153,22 +193,33 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
             .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
     }
 
+    override fun onDestroyView(view: View) {
+        backupManagerDialog?.dismiss()
+        backupManagerDialog = null
+        backupsAdapter = null
+        super.onDestroyView(view)
+    }
+
     override fun render(state: BackupState) {
         when {
             state.backupProgress.running -> {
+                // A failed backup keeps the panel up for a few seconds, but says so plainly and drops
+                // the progress bar rather than posing as a backup still in progress.
+                val failed = state.backupProgress is BackupRepository.Progress.Failed
                 binding.progressIcon.setImageResource(R.drawable.ic_file_upload_black_24dp)
-                binding.progressTitle.setText(R.string.backup_backing_up)
+                binding.progressTitle.setText(
+                    if (failed) R.string.backup_failed_title else R.string.backup_backing_up)
                 binding.progressSummary.text = state.backupProgress.getLabel(activity!!)
                 binding.progressSummary.isVisible = binding.progressSummary.text.isNotEmpty()
                 binding.progressCancel.isVisible = false
                 val running = (state.backupProgress as? BackupRepository.Progress.Running)
-                binding.progressBar.isVisible =
-                    state.backupProgress.indeterminate || (running?.max ?: 0) > 0
+                binding.progressBar.isVisible = !failed &&
+                    (state.backupProgress.indeterminate || (running?.max ?: 0) > 0)
                 binding.progressBar.isIndeterminate = state.backupProgress.indeterminate
                 binding.progressBar.max = running?.max ?: 0
                 binding.progressBar.progress = running?.count ?: 0
                 binding.progress.isVisible = true
-                binding.fab.isVisible = false
+                binding.backup.isVisible = false
             }
 
             state.restoreProgress.running -> {
@@ -184,48 +235,74 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 binding.progressBar.max = running?.max ?: 0
                 binding.progressBar.progress = running?.count ?: 0
                 binding.progress.isVisible = true
-                binding.fab.isVisible = false
+                binding.backup.isVisible = false
             }
 
             else -> {
                 binding.progress.isVisible = false
-                binding.fab.isVisible = true
+                binding.backup.isVisible = true
             }
         }
 
-        selectLocationRationaleDialog.setShowing(state.showLocationRationale)
+        if (state.backupLocation.isNotEmpty()) binding.location.summary = state.backupLocation
+
+        binding.autoBackup.summary = autoBackupFrequencyLabel(state.autoBackupFrequency)
+
+        binding.zip.checkbox?.setChecked(state.zipEnabled, false)
 
         selectedBackupErrorDialog.setShowing(state.showSelectedBackupError)
 
-        selectedBackupDetailsDialog.setMessage(state.selectedBackupDetails)
-        selectedBackupDetailsDialog.setShowing(state.selectedBackupDetails != null)
+        iconChangeDialog.setShowing(state.showIconChangeDialog)
+
+        exactAlarmDialog.setShowing(state.showExactAlarmDialog)
 
         stopRestoreDialog.setShowing(state.showStopRestoreDialog)
-
-        binding.fabIcon.setImageResource(when (state.upgraded) {
-            true -> R.drawable.ic_file_upload_black_24dp
-            false -> R.drawable.ic_star_black_24dp
-        })
-
-        binding.fabLabel.setText(when (state.upgraded) {
-            true -> R.string.backup_now
-            false -> R.string.title_qksms_plus
-        })
     }
 
     override fun setBackupLocationClicks(): Observable<*> = binding.location.clicks()
 
+    override fun autoBackupClicks(): Observable<*> = binding.autoBackup.clicks()
+
+    override fun autoBackupFrequencySelected(): Observable<Int> = autoBackupFrequencySelectedSubject
+
+    override fun zipClicks(): Observable<*> = binding.zip.clicks()
+
+    override fun manageBackupsClicks(): Observable<*> = binding.manage.clicks()
+
+    override fun renameBackupSelected(): Observable<Pair<BackupItem, String>> = renameBackupSelectedSubject
+
+    override fun deleteBackupSelected(): Observable<BackupItem> = deleteBackupSelectedSubject
+
     override fun restoreClicks(): Observable<*> = binding.restore.clicks()
-
-    override fun locationRationaleConfirmClicks(): Observable<*> = selectFolderConfirmSubject
-
-    override fun locationRationaleCancelClicks(): Observable<*> = selectFolderCancelSubject
 
     override fun selectedBackupErrorClicks(): Observable<*> = restoreErrorConfirmSubject
 
-    override fun confirmRestoreBackupConfirmClicks(): Observable<*> = confirmRestoreConfirmSubject
+    override fun iconChangeConfirmClicks(): Observable<*> = iconChangeConfirmSubject
 
-    override fun confirmRestoreBackupCancelClicks(): Observable<*> = confirmRestoreCancelSubject
+    override fun iconChangeDismissClicks(): Observable<*> = iconChangeDismissSubject
+
+    override fun applyIconAndClose(color: Int) {
+        // Capture the activity now: commitIconForColor answers a moment later, once the launcher has
+        // repainted, and the controller may already be detached by then.
+        val host = activity ?: return
+        launcherIconManager.commitIconForColor(color) { host.finishAffinity() }
+    }
+
+    override fun exactAlarmGrantClicks(): Observable<*> = exactAlarmGrantSubject
+
+    override fun exactAlarmSkipClicks(): Observable<*> = exactAlarmSkipSubject
+
+    override fun exactAlarmSettingsClosed(): Observable<*> = exactAlarmSettingsClosedSubject
+
+    override fun openExactAlarmSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            exactAlarmSettings.launch(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    .setData(Uri.parse("package:${activity!!.packageName}")))
+        } else {
+            // The dialog only appears on Android 12+, but stay safe: proceed straight to the restore
+            exactAlarmSettingsClosedSubject.onNext(Unit)
+        }
+    }
 
     override fun stopRestoreClicks(): Observable<*> = binding.progressCancel.clicks()
 
@@ -233,20 +310,249 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     override fun stopRestoreCancel(): Observable<*> = stopRestoreCancelSubject
 
-    override fun backupClicks(): Observable<*> = binding.fab.clicks()
+    override fun backupClicks(): Observable<*> = binding.backup.clicks()
 
     override fun documentTreeSelected(): Observable<Uri> = documentTreeSelectedSubject
 
-    override fun documentSelected(): Observable<Uri> = documentSelectedSubject
+    override fun restoreFolderSelected(): Observable<Uri> = restoreFolderSelectedSubject
+
+    override fun restoreZipSelected(): Observable<Uri> = restoreZipSelectedSubject
+
+    override fun backupCategoriesSelected(): Observable<Set<BackupCategory>> = backupCategoriesSelectedSubject
+
+    override fun restoreSourceSelected(): Observable<Pair<Uri, BackupFolder>> = restoreSourceSelectedSubject
+
+    override fun restoreCategoriesSelected(): Observable<Triple<Uri, String, Set<BackupCategory>>> =
+        restoreCategoriesSelectedSubject
 
     override fun selectFolder(initialUri: Uri) {
         openDirectory.launch(initialUri)
     }
 
-    override fun selectFile(initialUri: Uri) {
-        openDocument.launch(QkActivityResultContracts.OpenDocumentParams(
-                mimeTypes = listOf("application/json", "application/octet-stream"),
-                initialUri = initialUri))
+    override fun selectRestoreFolder(initialUri: Uri) {
+        openRestoreDirectory.launch(initialUri)
+    }
+
+    override fun selectRestoreZip() {
+        // Accept any file: third-party file managers report .zip under inconsistent MIME types, so we
+        // let the user pick freely and validate the archive when reading it.
+        openRestoreZip.launch(arrayOf("*/*"))
+    }
+
+    override fun showRestoreSourceChoice(initialUri: Uri) {
+        val labels = arrayOf(
+                activity!!.getString(R.string.backup_restore_from_folder),
+                activity!!.getString(R.string.backup_restore_from_zip))
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_restore_from_title)
+                .setItems(labels) { _, which ->
+                    when (which) {
+                        0 -> selectRestoreFolder(initialUri)
+                        else -> selectRestoreZip()
+                    }
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    override fun showBackupManager(backups: List<BackupItem>) {
+        // Rename/delete re-emit the refreshed list; if the manager is already open, update it in place
+        if (backupManagerDialog?.isShowing == true) {
+            backupsAdapter?.data = backups
+            return
+        }
+
+        val adapter = BackupsAdapter(::showRenameBackupDialog, ::showDeleteBackupConfirm)
+        backupsAdapter = adapter
+
+        val dialogBinding = BackupListDialogBinding.inflate(LayoutInflater.from(activity!!))
+        dialogBinding.files.adapter = adapter
+        adapter.emptyView = dialogBinding.empty
+        adapter.data = backups
+
+        backupManagerDialog = AlertDialog.Builder(activity!!)
+                .setView(dialogBinding.root)
+                .setNegativeButton(R.string.button_close, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .also { it.show() }
+    }
+
+    private fun showRenameBackupDialog(item: BackupItem) {
+        val margin = (activity!!.resources.displayMetrics.density * 20).toInt()
+        val input = EditText(activity!!).apply {
+            inputType = InputType.TYPE_CLASS_TEXT
+            setText(item.name)
+            setSelection(text.length)
+        }
+        val container = FrameLayout(activity!!).apply {
+            setPadding(margin, margin / 2, margin, 0)
+            addView(input)
+        }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_manage_rename)
+                .setView(container)
+                .setPositiveButton(R.string.button_save) { _, _ ->
+                    val newName = input.text.toString().trim()
+                    if (newName.isNotEmpty()) renameBackupSelectedSubject.onNext(item to newName)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    private fun showDeleteBackupConfirm(item: BackupItem) {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_manage_delete)
+                .setMessage(activity!!.getString(R.string.backup_manage_delete_confirm, item.name))
+                .setPositiveButton(R.string.button_delete) { _, _ -> deleteBackupSelectedSubject.onNext(item) }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    override fun showAutoBackupFrequencyPicker(current: Int) {
+        val labels = arrayOf(
+                activity!!.getString(R.string.backup_auto_never),
+                activity!!.getString(R.string.backup_auto_daily),
+                activity!!.getString(R.string.backup_auto_weekly),
+                activity!!.getString(R.string.backup_auto_custom))
+
+        // Pre-tick the preset that matches the stored day count, or "Custom" for any other value
+        val checked = when (current) {
+            Preferences.BACKUP_FREQUENCY_NEVER -> 0
+            Preferences.BACKUP_FREQUENCY_DAILY -> 1
+            Preferences.BACKUP_FREQUENCY_WEEKLY -> 2
+            else -> 3
+        }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_auto_title)
+                .setSingleChoiceItems(labels, checked) { dialog, which ->
+                    dialog.dismiss()
+                    when (which) {
+                        0 -> autoBackupFrequencySelectedSubject.onNext(Preferences.BACKUP_FREQUENCY_NEVER)
+                        1 -> autoBackupFrequencySelectedSubject.onNext(Preferences.BACKUP_FREQUENCY_DAILY)
+                        2 -> autoBackupFrequencySelectedSubject.onNext(Preferences.BACKUP_FREQUENCY_WEEKLY)
+                        else -> showCustomFrequencyDialog(current)
+                    }
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .also { dialog ->
+                    dialog.show()
+                    dialog.themeChoiceItems(colors.theme().theme)
+                }
+    }
+
+    /** Lets the user type any number of days between automatic backups. */
+    private fun showCustomFrequencyDialog(current: Int) {
+        val margin = (activity!!.resources.displayMetrics.density * 20).toInt()
+        val input = EditText(activity!!).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            setHint(R.string.backup_auto_custom_hint)
+            current.takeIf { it > 1 }?.let { setText(it.toString()) }
+            setSelection(text.length)
+        }
+        val container = FrameLayout(activity!!).apply {
+            setPadding(margin, margin / 2, margin, 0)
+            addView(input)
+        }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_auto_custom_title)
+                .setView(container)
+                .setPositiveButton(R.string.button_save) { _, _ ->
+                    input.text.toString().toIntOrNull()?.coerceIn(1, 365)?.let { days ->
+                        autoBackupFrequencySelectedSubject.onNext(days)
+                    }
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    override fun showBackupCategoryPicker() {
+        val categories = BackupCategory.values()
+        val labels = categories.map { activity!!.getString(categoryLabel(it)) }.toTypedArray()
+        val checked = BooleanArray(categories.size) { true }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_categories_title)
+                .setMultiChoiceItems(labels, checked) { _, which, isChecked -> checked[which] = isChecked }
+                .setPositiveButton(R.string.backup_now) { _, _ ->
+                    val selected = categories.filterIndexed { index, _ -> checked[index] }.toSet()
+                    if (selected.isNotEmpty()) backupCategoriesSelectedSubject.onNext(selected)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .also { dialog ->
+                    dialog.show()
+                    dialog.themeChoiceItems(colors.theme().theme)
+                }
+    }
+
+    override fun showRestoreSourcePicker(folder: Uri, backups: List<BackupFolder>, labels: List<String>) {
+        if (backups.isEmpty()) return
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_restore_source_title)
+                .setItems(labels.toTypedArray()) { _, which ->
+                    restoreSourceSelectedSubject.onNext(folder to backups[which])
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .show()
+    }
+
+    override fun showRestoreCategoryPicker(folder: Uri, folderName: String, available: Set<BackupCategory>, dateLabel: String) {
+        val categories = BackupCategory.values().filter { it in available }
+        if (categories.isEmpty()) return
+
+        val labels = categories.map { activity!!.getString(categoryLabel(it)) }.toTypedArray()
+        val checked = BooleanArray(categories.size) { true }
+
+        AlertDialog.Builder(activity!!)
+                .setTitle(activity!!.getString(R.string.backup_restore_categories_title, dateLabel))
+                .setMultiChoiceItems(labels, checked) { _, which, isChecked -> checked[which] = isChecked }
+                .setPositiveButton(R.string.backup_restore_title) { _, _ ->
+                    val selected = categories.filterIndexed { index, _ -> checked[index] }.toSet()
+                    if (selected.isNotEmpty()) restoreCategoriesSelectedSubject.onNext(Triple(folder, folderName, selected))
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+                .themeButtons(colors.theme().theme)
+                .also { dialog ->
+                    dialog.show()
+                    dialog.themeChoiceItems(colors.theme().theme)
+                }
+    }
+
+    /** Maps an automatic-backup interval (in days) to its localized summary label. */
+    private fun autoBackupFrequencyLabel(days: Int): String = when (days) {
+        Preferences.BACKUP_FREQUENCY_NEVER -> activity!!.getString(R.string.backup_auto_never)
+        Preferences.BACKUP_FREQUENCY_DAILY -> activity!!.getString(R.string.backup_auto_daily)
+        Preferences.BACKUP_FREQUENCY_WEEKLY -> activity!!.getString(R.string.backup_auto_weekly)
+        else -> activity!!.resources.getQuantityString(R.plurals.backup_auto_every_days, days, days)
+    }
+
+    /** Maps each backup category to its localized checkbox label. */
+    private fun categoryLabel(category: BackupCategory): Int = when (category) {
+        BackupCategory.MESSAGES -> R.string.backup_category_messages
+        BackupCategory.SETTINGS -> R.string.backup_category_settings
+        BackupCategory.BLOCKING -> R.string.backup_category_blocking
+        BackupCategory.CONVERSATIONS -> R.string.backup_category_conversations
+        BackupCategory.SCHEDULED -> R.string.backup_category_scheduled
     }
 
 }

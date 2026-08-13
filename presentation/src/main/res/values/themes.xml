@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
 
@@ -25,10 +25,10 @@
     <attr name="switchTrackEnabled" format="color" />
     <attr name="switchTrackDisabled" format="color" />
 
-    <style name="AppLaunchTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:navigationBarColor">@color/backgroundDark</item>
-        <item name="android:statusBarColor">@color/backgroundDark</item>
-        <item name="android:windowBackground">@color/backgroundDark</item>
+    <style name="AppLaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">@color/backgroundLight</item>
+        <item name="android:statusBarColor">@color/backgroundLight</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
@@ -45,8 +45,11 @@
         <item name="android:textColorTertiary">@color/text_tertiary</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
+        <item name="colorAccent">@color/colorBrand</item>
         <item name="colorPrimary">@color/backgroundLight</item>
         <item name="colorPrimaryDark">@color/backgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
@@ -58,6 +61,7 @@
     </style>
 
     <style name="AppThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorTertiary">@color/text_tertiary</item>
@@ -70,6 +74,19 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <!--
+        Rounded-corner alert dialog, applied app-wide through alertDialogTheme so every AlertDialog
+        (and AlertDialog subclass) picks up the modern rounded look without per-call-site changes.
+        The rounded corners come from the windowBackground drawable (works on all API levels, unlike
+        android:dialogCornerRadius which is API 28+). A -night variant overrides the dark colors.
+    -->
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="colorAccent">@color/colorBrand</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+    </style>
+
     <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:colorBackground">@color/backgroundLight</item>
         <item name="android:textColor">@color/textPrimary</item>
@@ -79,9 +96,33 @@
         <item name="android:background">@color/black</item>
     </style>
 
-    <!-- Black mode. No changes needed when not in night theme -->
+    <!-- Pure-black mode only affects the dark theme; the real overrides live in values-night. In the
+         light theme it is identical to AppTheme. -->
     <style name="AppTheme.Black" />
     <style name="AppThemeDialog.Black" />
     <style name="PopupTheme.Black" />
+
+    <!--
+        Material 3 context for individual Material components (the MaterialSwitch and the scheduled
+        FAB). The app runs on a Theme.AppCompat base, which doesn't define the Material color tokens
+        these components need at construction, so the affected views are wrapped in this via
+        android:theme (or a ContextThemeWrapper). DayNight so it follows the app's night mode. The
+        visible colors are still applied explicitly in code to track the user's theme color.
+    -->
+    <style name="Theme.OpenMessages.Material3Context" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <!--
+        App-wide activity transitions. Mirrors the in-app Conductor transition (QkChangeHandler):
+        a pushed screen slides in from the right while the previous one recedes a quarter-width to
+        the left, and going back reverses it exactly. Wired through AppBaseTheme (see themes.xml and
+        values-night/themes.xml) so every themed activity stays consistent. The dialog and gallery
+        themes don't extend AppBaseTheme, so they keep their default animations.
+    -->
+    <style name="WindowAnimationTransition">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
 
 </resources>

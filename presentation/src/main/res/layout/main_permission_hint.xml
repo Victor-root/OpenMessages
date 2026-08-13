@@ -2,28 +2,31 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<!-- paddingEnd reserves the compose FAB's footprint (56dp button + 16dp margin) in the bottom-end
+     corner so the action button and text are never hidden behind the floating FAB. -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingEnd="72dp">
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/snackbarTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,7 +41,7 @@
         app:textSize="primary"
         tools:text="Love texting again" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/snackbarMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,9 +53,9 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:textSize="secondary"
-        tools:text="Make QUIK your default SMS app" />
+        tools:text="Make Open Messages your default SMS app" />
 
-    <dev.octoshrimpy.quik.common.widget.QkTextView
+    <io.openmessages.common.widget.QkTextView
         android:id="@+id/snackbarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

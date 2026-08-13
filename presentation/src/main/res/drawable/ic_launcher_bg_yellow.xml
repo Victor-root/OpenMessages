@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Launcher-icon background for the Yellow alias. Intentionally a deeper honey-gold than the
+    in-app Yellow theme color (#E6C400): the shared foreground bubble is white, and white has too
+    little contrast on a bright yellow — on the Android 12+ splash (which mirrors this icon on a
+    near-white background) the bubble and circle washed out and the logo no longer read as yellow.
+    A darker gold keeps the bubble legible and the icon recognisably yellow without going mustard.
+    The in-app theme color is kept bright separately, so only the icon/splash uses this shade.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#E0A500"/>
+</shape>

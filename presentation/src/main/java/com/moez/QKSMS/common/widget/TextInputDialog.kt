@@ -1,43 +1,60 @@
 /*
  * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
  *
- * This file is part of QKSMS.
+ * This file is part of Open Messages.
  *
- * QKSMS is free software: you can redistribute it and/or modify
+ * Open Messages is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * QKSMS is distributed in the hope that it will be useful,
+ * Open Messages is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dev.octoshrimpy.quik.common.widget
+package io.openmessages.common.widget
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
-import dev.octoshrimpy.quik.R
-import dev.octoshrimpy.quik.databinding.TextInputDialogBinding
+import io.openmessages.databinding.TextInputDialogBinding
 
-class TextInputDialog(context: Activity, hint: String, listener: (String) -> Unit) : AlertDialog(context) {
+class TextInputDialog(
+    context: Activity,
+    private val themeColor: Int,
+    hint: String,
+    listener: (String) -> Unit
+) : AlertDialog(context) {
 
     private val layout = TextInputDialogBinding.inflate(LayoutInflater.from(context))
 
     init {
         layout.field.hint = hint
 
+        // Custom action row (see text_input_dialog.xml) instead of the stock AlertDialog buttons,
+        // which stack into an ugly column when the localized labels are too wide to fit in a row.
         setView(layout.root)
-        setButton(DialogInterface.BUTTON_NEUTRAL, context.getString(R.string.button_cancel)) { _, _ -> }
-        setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.button_delete)) { _, _ -> listener("") }
-        setButton(DialogInterface.BUTTON_POSITIVE, context.getString(R.string.button_save)) { _, _ ->
+        layout.save.setOnClickListener {
             listener(layout.field.text.toString())
+            dismiss()
         }
+        layout.delete.setOnClickListener {
+            listener("")
+            dismiss()
+        }
+        layout.cancel.setOnClickListener { dismiss() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Colour the action labels with the user's theme color.
+        layout.save.setTextColor(themeColor)
+        layout.delete.setTextColor(themeColor)
+        layout.cancel.setTextColor(themeColor)
     }
 
     fun setText(text: String): TextInputDialog {

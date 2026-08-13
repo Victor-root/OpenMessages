@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -31,6 +31,15 @@
         android:id="@+id/call"
         android:icon="@drawable/ic_call_white_24dp"
         android:title="@string/menu_call"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <!-- Icon and title are set at render time to match the configured Settings > header quick
+         action (archive/mark unread/block/delete); this placeholder is never shown as-is. -->
+    <item
+        android:id="@+id/headerQuickAction"
+        android:icon="@drawable/ic_archive_white_24dp"
+        android:title="@string/main_menu_archive"
         android:visible="false"
         app:showAsAction="always" />
 

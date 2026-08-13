@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -29,7 +29,7 @@
         style="@style/Toolbar"
         app:layout_constraintTop_toTopOf="parent">
 
-        <dev.octoshrimpy.quik.common.widget.QkTextView
+        <io.openmessages.common.widget.QkTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Notifications" />
@@ -50,54 +50,70 @@
             android:paddingTop="8dp"
             android:paddingBottom="8dp">
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/notificationsO"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_bell_24dp"
                 app:summary="@string/settings_notifications_o_summary"
                 app:title="@string/settings_notifications_title"
                 tools:visibility="gone" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/notifications"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_bell_24dp"
                 app:title="@string/settings_notifications_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/previews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_eye_24dp"
                 app:title="@string/settings_notification_previews_title"
                 tools:summary="@string/settings_notification_previews_summary" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/wake"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_bulb_24dp"
                 app:title="@string/settings_notification_wake_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/silentNotContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_bell_off_24dp"
                 app:title="@string/settings_notification_silent_title"
                 app:summary="@string/settings_notification_silent_summary"
                 app:widget="@layout/settings_switch_widget" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
+                android:id="@+id/copyCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_content_copy_black_24dp"
+                app:title="@string/settings_copy_code_title"
+                app:summary="@string/settings_copy_code_summary"
+                app:widget="@layout/settings_switch_widget" />
+
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/vibration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_vibration_24dp"
                 app:title="@string/settings_vibration_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/ringtone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_music_24dp"
                 app:title="@string/settings_ringtone_title" />
 
             <View
@@ -108,29 +124,32 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/actionsTitle"
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_notification_actions_title" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/action1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_number_1_24dp"
                 app:title="@string/settings_notification_action_1"
                 tools:summary="Mark read" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/action2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_number_2_24dp"
                 app:title="@string/settings_notification_action_2"
                 tools:summary="Reply" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/action3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_number_3_24dp"
                 app:title="@string/settings_notification_action_3"
                 tools:summary="None" />
 
@@ -142,23 +161,25 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
 
-            <dev.octoshrimpy.quik.common.widget.QkTextView
+            <io.openmessages.common.widget.QkTextView
                 android:id="@+id/qkreplyTitle"
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_category_qkreply" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/qkreply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_quick_reply_24dp"
                 app:summary="@string/settings_qkreply_summary"
                 app:title="@string/settings_qkreply_title"
                 app:widget="@layout/settings_switch_widget" />
 
-            <dev.octoshrimpy.quik.common.widget.PreferenceView
+            <io.openmessages.common.widget.PreferenceView
                 android:id="@+id/qkreplyTapDismiss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:icon="@drawable/ic_tap_24dp"
                 app:summary="@string/settings_qkreply_tap_dismiss_summary"
                 app:title="@string/settings_qkreply_tap_dismiss_title"
                 app:widget="@layout/settings_switch_widget" />

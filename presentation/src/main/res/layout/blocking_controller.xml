@@ -2,20 +2,20 @@
 <!--
   ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
-  ~ This file is part of QKSMS.
+  ~ This file is part of Open Messages.
   ~
-  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ Open Messages is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ Open Messages is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -30,41 +30,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingBottom="16dp">
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
-            android:id="@+id/blockingManager"
+        <!-- Integrated blocking: Open Messages does the blocking itself, offline -->
+
+        <io.openmessages.common.widget.QkTextView
+            style="@style/PreferenceCategory"
+            android:text="@string/blocking_category_integrated" />
+
+        <io.openmessages.common.widget.QkTextView
+            style="@style/TextSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/blocking_manager_title"
-            tools:summary="@string/app_name" />
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/blocking_integrated_description" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/blockedNumbers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_ban"
+            app:summary="@string/blocked_numbers_summary"
             app:title="@string/blocked_numbers_title" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/phishingSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_shield_check"
+            app:summary="@string/blocking_source_phishing_summary"
+            app:title="@string/blocking_source_phishing_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/flagBlockSource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_alert_triangle"
+            app:summary="@string/blocking_source_flag_block_summary"
+            app:title="@string/blocking_source_flag_block_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/messageContentFilters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_filter"
             app:title="@string/message_content_filters_title" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/drop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_trash"
             app:summary="@string/blocking_drop_summary"
             app:title="@string/blocking_drop_title"
             app:widget="@layout/settings_switch_widget" />
 
-        <dev.octoshrimpy.quik.common.widget.PreferenceView
+        <io.openmessages.common.widget.PreferenceView
             android:id="@+id/blockedMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_message_off"
             app:title="@string/blocked_messages_title" />
+
+        <!-- External apps: delegate blocking to another installed app (single choice) -->
+
+        <io.openmessages.common.widget.QkTextView
+            style="@style/PreferenceCategory"
+            android:text="@string/blocking_category_external_apps" />
+
+        <io.openmessages.common.widget.PreferenceView
+            android:id="@+id/blockingManager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_apps"
+            app:title="@string/blocking_manager_title"
+            tools:summary="@string/app_name" />
 
     </LinearLayout>
 
