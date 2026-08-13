@@ -462,15 +462,19 @@ class ConversationRepositoryImpl @Inject constructor(
 
     override fun markFlagged(threadIds: Collection<Long>, flagReason: String?) =
         Realm.getDefaultInstance().use { realm ->
+            // Already-flagged conversations used to be filtered out here, which meant a second flag
+            // for a different reason left the banner explaining the first one. They are included now
+            // so the reason shown is the one that flagged the conversation most recently.
             val conversations = realm.where(Conversation::class.java)
                 .anyOf("id", threadIds.toLongArray())
-                .equalTo("flagged", false)
                 .findAll()
 
             realm.executeTransaction {
                 conversations.forEach { conversation ->
                     conversation.flagged = true
-                    conversation.flagReason = flagReason
+                    // A flag that carries no reason leaves the existing one in place rather than
+                    // replacing an explanation with nothing.
+                    if (flagReason != null) conversation.flagReason = flagReason
                 }
             }
         }

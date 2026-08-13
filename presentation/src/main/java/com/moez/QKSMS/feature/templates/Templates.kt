@@ -20,6 +20,7 @@ package io.openmessages.feature.templates
 
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 
 /**
  * Shared (de)serialisation for the saved templates preference, so every reader/writer agrees on the
@@ -35,6 +36,10 @@ object Templates {
                 Template(obj.getLong("id"), obj.optString("title", ""), obj.getString("body"))
             }
         } catch (e: Exception) {
+            // An empty list here is indistinguishable from "the user has no templates", and the next
+            // save writes over whatever could not be read. Say so in the log at least, so a loss
+            // after a restore leaves a trace instead of none.
+            Timber.w(e, "Stored templates could not be read")
             emptyList()
         }
 
