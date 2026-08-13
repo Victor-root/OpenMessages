@@ -496,7 +496,8 @@ class ComposeViewModel @Inject constructor(
                         markArchived.execute(listOf(threadId)) { newState { copy(hasError = true) } }
                     Preferences.HEADER_ACTION_UNREAD -> markUnread.execute(listOf(threadId))
                     Preferences.HEADER_ACTION_BLOCK -> view.showBlockingDialog(listOf(threadId), true)
-                    Preferences.HEADER_ACTION_DELETE -> view.showDeleteConversationDialog(threadId)
+                    Preferences.HEADER_ACTION_DELETE ->
+                        newState { copy(dialog = ComposeDialog.DeleteConversation(threadId)) }
                 }
             }
 
@@ -593,7 +594,7 @@ class ComposeViewModel @Inject constructor(
                 .mapNotNull(messageRepo::getMessage)
                 .map(messageDetailsFormatter::format)
                 .autoDisposable(view.scope())
-                .subscribe { view.showDetails(it) }
+                .subscribe { details -> newState { copy(dialog = ComposeDialog.MessageDetails(details)) } }
 
         // Show the delete message dialog if one or more messages selected
         view.optionsItemIntent
@@ -601,7 +602,7 @@ class ComposeViewModel @Inject constructor(
             .withLatestFrom(view.messagesSelectedIntent, BiFunction { _, selectedMessages -> selectedMessages })
             .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
             .autoDisposable(view.scope())
-            .subscribe { view.showDeleteDialog(it) }
+            .subscribe { messages -> newState { copy(dialog = ComposeDialog.DeleteMessages(messages.toList())) } }
 
         // show the clear current message dialog if no messages selected
         view.optionsItemIntent
@@ -609,7 +610,7 @@ class ComposeViewModel @Inject constructor(
             .withLatestFrom(state, BiFunction { _, state -> state })
             .filter { it.selectedMessages == 0 }
             .autoDisposable(view.scope())
-            .subscribe { view.showClearCurrentMessageDialog() }
+            .subscribe { newState { copy(dialog = ComposeDialog.ClearMessage) } }
 
         // Forward the message
         view.optionsItemIntent
@@ -868,7 +869,7 @@ class ComposeViewModel @Inject constructor(
         // Show the message details
         view.messageLinkAskIntent
             .autoDisposable(view.scope())
-            .subscribe { view.showMessageLinkAskDialog(it) }
+            .subscribe { uri -> newState { copy(dialog = ComposeDialog.OpenLink(uri)) } }
 
         // Show reaction details popup
         view.reactionClickIntent
@@ -885,7 +886,7 @@ class ComposeViewModel @Inject constructor(
                 }
             })
             .autoDisposable(view.scope())
-            .subscribe { reactions -> view.showReactionsDialog(reactions) }
+            .subscribe { reactions -> newState { copy(dialog = ComposeDialog.Reactions(reactions)) } }
 
         // Set the current conversation
         Observables
@@ -954,13 +955,29 @@ class ComposeViewModel @Inject constructor(
                     upgraded.also { if (!upgraded) view.showQksmsPlusSnackbar(R.string.compose_scheduled_plus) }
                 }
                 .autoDisposable(view.scope())
-                .subscribe { view.requestDatePicker() }
+                .subscribe { newState { copy(dialog = ComposeDialog.ScheduleDate) } }
 
         view.scheduleAction
             .take(1)
             .doOnNext{ newState { copy(scheduling = false) } }
             .autoDisposable(view.scope())
-            .subscribe { view.requestDatePicker() }
+            .subscribe { newState { copy(dialog = ComposeDialog.ScheduleDate) } }
+
+        // Scheduling asks for a date, then a time. The date travels through the state so the time
+        // step still knows it if the screen is rebuilt between the two.
+        view.scheduleDateSelectedIntent
+                .autoDisposable(view.scope())
+                .subscribe { (year, month, day) ->
+                    newState { copy(dialog = ComposeDialog.ScheduleTime(year, month, day)) }
+                }
+
+        // Clear the dialog once it is gone, unless it has already been replaced by another one:
+        // confirming the date step opens the time step and only then reports the date step closed.
+        view.dialogDismissedIntent
+                .autoDisposable(view.scope())
+                .subscribe { dismissed ->
+                    newState { if (dialog == dismissed) copy(dialog = null) else this }
+                }
 
         // an attachment was picked by the user
         Observable.merge(
@@ -1388,9 +1405,11 @@ class ComposeViewModel @Inject constructor(
                 .subscribe()
 
         // Delete the message
+        // The ids come from the dialog itself, not from the adapter's selection: that selection is
+        // gone if the screen was rebuilt while the dialog was up, and confirming would delete nothing.
         view.confirmDeleteIntent
-                .withLatestFrom(view.messagesSelectedIntent, conversation, Function3 { _, messages, conversation ->
-                    deleteMessages.execute(DeleteMessages.Params(messages.toList(), conversation.id))
+                .withLatestFrom(conversation, BiFunction { messages: List<Long>, conversation: Conversation ->
+                    deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
                     Unit
                 })
                 .autoDisposable(view.scope())

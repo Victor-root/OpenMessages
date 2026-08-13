@@ -71,8 +71,12 @@ interface ComposeView : QkView<ComposeState> {
     val attachAnyFileSelectedIntent: Observable<Uri>
     val contactSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<InputContentInfoCompat>
+    /** The year, month and day picked in the date step of scheduling; the time step follows. */
+    val scheduleDateSelectedIntent: Observable<Triple<Int, Int, Int>>
     val scheduleSelectedIntent: Observable<Long>
     val scheduleCancelIntent: Observable<*>
+    /** The dialog the user closed, so a dialog opened in its place is not closed along with it. */
+    val dialogDismissedIntent: Observable<ComposeDialog>
     val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
     val viewQksmsPlusIntent: Subject<Unit>
@@ -98,8 +102,6 @@ interface ComposeView : QkView<ComposeState> {
     fun clearSelection()
     fun toggleSelectAll()
     fun expandMessages(messageIds: List<Long>, expand: Boolean)
-    fun showDetails(details: String)
-    fun showMessageLinkAskDialog(uri: Uri)
     fun requestDefaultSms()
     fun requestStoragePermission()
     fun requestRecordAudioPermission()
@@ -109,16 +111,11 @@ interface ComposeView : QkView<ComposeState> {
     fun showKeyboard()
     fun requestCamera()
     fun requestGallery(mimeType: String, requestCode: Int)
-    fun requestDatePicker()
     fun requestContact()
     fun setDraft(draft: String)
     fun showTemplatePicker()
     fun scrollToMessage(id: Long)
     fun showQksmsPlusSnackbar(@StringRes message: Int)
-    fun showDeleteDialog( messages: List<Long>)
-    fun showDeleteConversationDialog(threadId: Long)
-    fun showClearCurrentMessageDialog()
-    fun showReactionsDialog(reactions: List<String>)
     fun startSpeechRecognition()
     fun focusMessage()
     fun showBlockingDialog(threadIds: List<Long>, block: Boolean)

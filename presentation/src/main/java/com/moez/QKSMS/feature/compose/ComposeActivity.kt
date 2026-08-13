@@ -22,6 +22,7 @@ import android.Manifest
 import android.animation.LayoutTransition
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
@@ -69,6 +70,7 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.autoScrollToStart
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.hideKeyboard
@@ -170,7 +172,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val attachAnyFileSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val contactSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { binding.message.inputContentSelected }
+    override val scheduleDateSelectedIntent: Subject<Triple<Int, Int, Int>> = PublishSubject.create()
     override val scheduleSelectedIntent: Subject<Long> = PublishSubject.create()
+    override val dialogDismissedIntent: Subject<ComposeDialog> = PublishSubject.create()
     override val changeSimIntent by lazy { binding.sim.clicks() }
     override val scheduleCancelIntent by lazy { binding.scheduledCancel.clicks() }
     override val sendIntent by lazy {  Observable.merge(binding.send.clicks(), binding.scheduledSend.clicks()) }
@@ -197,6 +201,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val recordAudioMsgRecordVisible: Subject<Boolean> = PublishSubject.create()
     override val recordAudioChronometer: Subject<Boolean> = PublishSubject.create()
     override val recordAudioRecord: Subject<MicInputCloudView.ViewState> = PublishSubject.create()
+
+    // The date and time pickers are platform dialogs rather than AppCompat ones and were never
+    // themed here; leave them as they were.
+    private val dialogHost = DialogHost<ComposeDialog>(
+        build = { spec -> buildDialog(spec).also { (it as? AlertDialog)?.themeButtons(colors.theme().theme) } },
+        onClosed = dialogDismissedIntent::onNext)
 
     private var seekBarUpdater: Disposable? = null
 
@@ -469,6 +479,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         // goes away, most often on a rotation, its window outlives it: Android reports a leaked
         // window and it keeps the dead activity alive behind it.
         if (attachSheetDelegate.isInitialized()) attachSheet.dismiss()
+
+        // Same for the dialog on screen, but without reporting it closed: the state keeps it, and
+        // that is what lets the rebuilt screen show it again.
+        dialogHost.close()
     }
 
 
@@ -479,6 +493,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
 
         threadId.onNext(state.threadId)
+
+        dialogHost.render(state.dialog)
 
         binding.flaggedBanner.isVisible = state.flagged
         if (state.flagged) {
@@ -647,32 +663,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         blockingDialog.show(this, threadIds, block) { finish() }
     }
 
-    override fun showDetails(details: String) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.compose_details_title)
-            .setMessage(details)
-            .setCancelable(true)
-            .show()
-    }
-
-    override fun showMessageLinkAskDialog(uri: Uri) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.messageLinkHandling_dialog_title)
-            .setMessage(getString(R.string.messageLinkHandling_dialog_body, uri.toString()))
-            .setPositiveButton(
-                R.string.messageLinkHandling_dialog_positive
-            ) { _, _ ->
-                ContextCompat.startActivity(
-                    this,
-                    Intent(Intent.ACTION_VIEW).setData(uri),
-                    null
-                )
-            }
-            .setNegativeButton(R.string.messageLinkHandling_dialog_negative) { _, _ -> run { } }
-            .show()
-            .themeButtons(colors.theme().theme)
-    }
-
     override fun requestDefaultSms() {
         navigator.showDefaultSmsDialog(this)
     }
@@ -689,24 +679,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         ActivityCompat.requestPermissions(this, arrayOf(
             Manifest.permission.READ_SMS,
             Manifest.permission.SEND_SMS), 0)
-    }
-
-    override fun requestDatePicker() {
-        val calendar = Calendar.getInstance()
-        DatePickerDialog(this, { _, year, month, day ->
-            TimePickerDialog(this, { _, hour, minute ->
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.DAY_OF_MONTH, day)
-                calendar.set(Calendar.HOUR_OF_DAY, hour)
-                calendar.set(Calendar.MINUTE, minute)
-                scheduleSelectedIntent.onNext(calendar.timeInMillis)
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this))
-                .show()
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
-
-        // On some devices, the keyboard can cover the date picker
-        binding.message.hideKeyboard()
     }
 
     @Suppress("DEPRECATION")
@@ -845,44 +817,70 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
     }
 
-    override fun showDeleteDialog(messages: List<Long>) {
-        val count = messages.size
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_delete_title)
-            .setMessage(resources.getQuantityString(R.plurals.dialog_delete_chat, count, count))
-            .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(messages) }
-            .setNegativeButton(R.string.button_cancel, null)
-            .show()
-            .themeButtons(colors.theme().theme)
-    }
+    private fun buildDialog(spec: ComposeDialog): Dialog = when (spec) {
+        is ComposeDialog.DeleteMessages -> {
+            val count = spec.messageIds.size
+            AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_title)
+                .setMessage(resources.getQuantityString(R.plurals.dialog_delete_chat, count, count))
+                .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(spec.messageIds) }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+        }
 
-    override fun showDeleteConversationDialog(threadId: Long) {
-        AlertDialog.Builder(this)
+        is ComposeDialog.DeleteConversation -> AlertDialog.Builder(this)
             .setTitle(R.string.dialog_delete_title)
             .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, 1, 1))
-            .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteConversationIntent.onNext(threadId) }
-            .setNegativeButton(R.string.button_cancel, null)
-            .show()
-            .themeButtons(colors.theme().theme)
-    }
-
-    override fun showClearCurrentMessageDialog() {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_clear_compose_title)
-            .setMessage(R.string.dialog_clear_compose)
-            .setPositiveButton(R.string.button_clear) { _, _ ->
-                clearCurrentMessageIntent.onNext(true)
+            .setPositiveButton(R.string.button_delete) { _, _ ->
+                confirmDeleteConversationIntent.onNext(spec.threadId)
             }
             .setNegativeButton(R.string.button_cancel, null)
-            .show()
-            .themeButtons(colors.theme().theme)
-    }
+            .create()
 
-    override fun showReactionsDialog(reactions: List<String>) {
-        AlertDialog.Builder(this)
+        ComposeDialog.ClearMessage -> AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_clear_compose_title)
+            .setMessage(R.string.dialog_clear_compose)
+            .setPositiveButton(R.string.button_clear) { _, _ -> clearCurrentMessageIntent.onNext(true) }
+            .setNegativeButton(R.string.button_cancel, null)
+            .create()
+
+        is ComposeDialog.OpenLink -> AlertDialog.Builder(this)
+            .setTitle(R.string.messageLinkHandling_dialog_title)
+            .setMessage(getString(R.string.messageLinkHandling_dialog_body, spec.uri.toString()))
+            .setPositiveButton(R.string.messageLinkHandling_dialog_positive) { _, _ ->
+                ContextCompat.startActivity(this, Intent(Intent.ACTION_VIEW).setData(spec.uri), null)
+            }
+            .setNegativeButton(R.string.messageLinkHandling_dialog_negative, null)
+            .create()
+
+        is ComposeDialog.MessageDetails -> AlertDialog.Builder(this)
+            .setTitle(R.string.compose_details_title)
+            .setMessage(spec.details)
+            .setCancelable(true)
+            .create()
+
+        is ComposeDialog.Reactions -> AlertDialog.Builder(this)
             .setTitle(R.string.compose_reactions_title)
-            .setMessage(reactions.joinToString("\n"))
-            .show()
+            .setMessage(spec.lines.joinToString("\n"))
+            .create()
+
+        ComposeDialog.ScheduleDate -> {
+            // On some devices, the keyboard can cover the picker
+            binding.message.hideKeyboard()
+            val now = Calendar.getInstance()
+            DatePickerDialog(this, { _, year, month, day ->
+                scheduleDateSelectedIntent.onNext(Triple(year, month, day))
+            }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+        }
+
+        is ComposeDialog.ScheduleTime -> {
+            val now = Calendar.getInstance()
+            TimePickerDialog(this, { _, hour, minute ->
+                val scheduled = Calendar.getInstance()
+                        .apply { set(spec.year, spec.month, spec.day, hour, minute) }
+                scheduleSelectedIntent.onNext(scheduled.timeInMillis)
+            }, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), DateFormat.is24HourFormat(this))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

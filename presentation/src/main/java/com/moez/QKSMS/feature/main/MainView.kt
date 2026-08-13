@@ -38,7 +38,10 @@ interface MainView : QkView<MainState> {
     val rateIntent: Observable<*>
     val conversationsSelectedIntent: Observable<List<Long>>
     val confirmDeleteIntent: Observable<List<Long>>
-    val renameConversationIntent: Observable<String>
+    /** The dialog the user closed, so a dialog opened in its place is not closed along with it. */
+    val dialogDismissedIntent: Observable<MainDialog>
+    /** The conversation to rename and the name typed for it. */
+    val renameConversationIntent: Observable<Pair<Long, String>>
     val swipeConversationIntent: Observable<Pair<Long, Int>>
     val changelogMoreIntent: Observable<*>
     val undoArchiveIntent: Observable<Unit>
@@ -52,8 +55,6 @@ interface MainView : QkView<MainState> {
     fun toggleSelectAll()
     fun themeChanged()
     fun showBlockingDialog(conversations: List<Long>, block: Boolean)
-    fun showDeleteDialog(conversations: List<Long>)
-    fun showRenameDialog(conversationName: String)
     fun showChangelog(changelog: ChangelogManager.CumulativeChangelog)
     fun showArchivedSnackbar(countConversationsArchived: Int, isArchiving: Boolean)
     fun drawerToggled(opened: Boolean)

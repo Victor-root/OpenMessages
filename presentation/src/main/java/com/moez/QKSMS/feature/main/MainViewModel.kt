@@ -396,7 +396,7 @@ class MainViewModel @Inject constructor(
                 .filter { itemId -> itemId == R.id.delete }
                 .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
-                    view.showDeleteDialog(conversations)
+                    newState { copy(dialog = MainDialog.DeleteConversations(conversations)) }
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -466,7 +466,9 @@ class MainViewModel @Inject constructor(
             .withLatestFrom(view.conversationsSelectedIntent) { _, conversationIds -> conversationIds.first() }
             .mapNotNull { conversationId -> conversationRepo.getConversation(conversationId) }
             .autoDisposable(view.scope())
-            .subscribe { conversation -> view.showRenameDialog(conversation.name) }
+            .subscribe { conversation ->
+                newState { copy(dialog = MainDialog.RenameConversation(conversation.id, conversation.name)) }
+            }
 
 //        view.plusBannerIntent
 //                .autoDisposable(view.scope())
@@ -519,6 +521,13 @@ class MainViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
+        // Clear the dialog once it is gone, unless it has already been replaced by another one.
+        view.dialogDismissedIntent
+                .autoDisposable(view.scope())
+                .subscribe { dismissed ->
+                    newState { if (dialog == dismissed) copy(dialog = null) else this }
+                }
+
         // Delete the conversation
         view.confirmDeleteIntent
                 .autoDisposable(view.scope())
@@ -527,16 +536,12 @@ class MainViewModel @Inject constructor(
                     view.clearSelection()
                 }
 
+        // The conversation comes from the dialog, not from the list's selection: that selection is
+        // gone if the screen was rebuilt while the dialog was up, and renaming would rename nothing.
         view.renameConversationIntent
-            .withLatestFrom(view.conversationsSelectedIntent) { newConversationName, selectedConversationIds ->
-                Pair(newConversationName, selectedConversationIds.first())
-            }
             .doOnNext { view.clearSelection() }
-            .map { newNameAndConversationId ->
-                conversationRepo.setConversationName(
-                    newNameAndConversationId.second,
-                    newNameAndConversationId.first
-                )
+            .map { (conversationId, newConversationName) ->
+                conversationRepo.setConversationName(conversationId, newConversationName)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
             }
@@ -557,7 +562,7 @@ class MainViewModel @Inject constructor(
                                 view.showArchivedSnackbar(1, true)
                             }
                         Preferences.SWIPE_ACTION_DELETE ->
-                            view.showDeleteDialog(listOf(threadId))
+                            newState { copy(dialog = MainDialog.DeleteConversations(listOf(threadId))) }
                         Preferences.SWIPE_ACTION_BLOCK ->
                             view.showBlockingDialog(listOf(threadId), true)
                         Preferences.SWIPE_ACTION_CALL -> {

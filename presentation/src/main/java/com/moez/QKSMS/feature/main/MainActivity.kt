@@ -60,6 +60,7 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.androidxcompat.drawerOpen
 import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.applyInsetBottomMargin
 import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.applyInsetTop
@@ -141,7 +142,8 @@ class MainActivity : QkThemedActivity(), MainView {
     override val rateIntent by lazy { binding.drawer.rateOkay.clicks() }
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
-    override val renameConversationIntent: Subject<String> = PublishSubject.create()
+    override val dialogDismissedIntent: Subject<MainDialog> = PublishSubject.create()
+    override val renameConversationIntent: Subject<Pair<Long, String>> = PublishSubject.create()
     override val swipeConversationIntent by lazy { itemTouchCallback.swipes }
     override val changelogMoreIntent by lazy { changelogDialog.moreClicks }
     override val undoArchiveIntent: Subject<Unit> = PublishSubject.create()
@@ -164,6 +166,11 @@ class MainActivity : QkThemedActivity(), MainView {
         ObjectAnimator.ofInt(syncingBinding.syncingProgress, "progress", 0, 0)
     }
     private val changelogDialog by lazy { ChangelogDialog(this) }
+
+    private val dialogHost = DialogHost<MainDialog>(
+        build = { spec -> buildDialog(spec).themeButtons(colors.theme().theme) },
+        onClosed = dialogDismissedIntent::onNext)
+
     private val backPressedSubject: Subject<NavItem> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -421,6 +428,8 @@ class MainActivity : QkThemedActivity(), MainView {
             return
         }
 
+        dialogHost.render(state.dialog)
+
         conversationsAdapter.hasScheduledConversation = state.scheduledConversationIds
 
         val addContact = when (state.page) {
@@ -610,8 +619,12 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun onPause() =
         super.onPause().also { activityResumedIntent.onNext(false) }
 
-    override fun onDestroy() =
-        super.onDestroy().also { disposables.dispose() }
+    override fun onDestroy() = super.onDestroy().also {
+        disposables.dispose()
+        // Closed without reporting it: the state keeps the dialog, and that is what lets the
+        // rebuilt screen show it again instead of leaving its window behind.
+        dialogHost.close()
+    }
 
     override fun showBackButton(show: Boolean) =
         toggle.let {
@@ -656,31 +669,26 @@ class MainActivity : QkThemedActivity(), MainView {
         blockingDialog.show(this, conversations, block)
     }
 
-    override fun showDeleteDialog(conversations: List<Long>) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.dialog_delete_title)
-            .setMessage(
-                resources.getQuantityString(
-                    R.plurals.dialog_delete_message,
-                    conversations.size,
-                    conversations.size
-                )
-            )
-            .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(conversations) }
-            .setNegativeButton(R.string.button_cancel, null)
-            .show()
-            .themeButtons(colors.theme().theme)
-    }
+    private fun buildDialog(spec: MainDialog): AlertDialog = when (spec) {
+        is MainDialog.DeleteConversations -> {
+            val count = spec.conversationIds.size
+            AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_title)
+                .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, count, count))
+                .setPositiveButton(R.string.button_delete) { _, _ ->
+                    confirmDeleteIntent.onNext(spec.conversationIds)
+                }
+                .setNegativeButton(R.string.button_cancel, null)
+                .create()
+        }
 
-    override fun showRenameDialog(conversationName: String) =
-        TextInputDialog(
+        is MainDialog.RenameConversation -> TextInputDialog(
             this,
             colors.theme().theme,
-            getString(R.string.info_name),
-            renameConversationIntent::onNext
-        )
-            .setText(conversationName)
-            .show()
+            getString(R.string.info_name)
+        ) { name -> renameConversationIntent.onNext(spec.conversationId to name) }
+            .setText(spec.currentName)
+    }
 
     private fun updateSearchVisibility(state: MainState? = lastState) {
         if (state == null) return

@@ -54,4 +54,5 @@ data class ComposeState(
     val saveDraft: Boolean = true,
     val flagged: Boolean = false,
     val flagReason: String = "",
+    val dialog: ComposeDialog? = null,
 )

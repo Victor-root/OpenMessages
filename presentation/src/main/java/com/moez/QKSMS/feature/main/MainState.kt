@@ -34,7 +34,8 @@ data class MainState(
     val smsPermission: Boolean = true,
     val contactPermission: Boolean = true,
     val notificationPermission: Boolean = true,
-    val scheduledConversationIds: Set<Long> = emptySet()
+    val scheduledConversationIds: Set<Long> = emptySet(),
+    val dialog: MainDialog? = null
 )
 
 sealed class MainPage
