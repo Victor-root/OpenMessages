@@ -31,6 +31,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.content.edit
 import io.openmessages.util.Preferences
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.abs
@@ -194,34 +195,41 @@ class LauncherIconManager @Inject constructor(
             context.registerReceiver(receiver, filter)
         }
 
-        // Android 14+ supports batching all alias state changes into a single call, which emits
-        // a single ACTION_PACKAGE_CHANGED broadcast. On devices where we're the default SMS app
-        // the system re-evaluates the SMS role on each broadcast, so collapsing 20 calls into 1
-        // makes the launcher icon refresh near-instant. On older devices we fall back to enabling
-        // the target first (no launcher drop-out), then disabling the rest.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            val settings = ICON_ALIASES.map { (_, suffix) ->
-                PackageManager.ComponentEnabledSetting(
-                    aliasComponent(suffix),
-                    if (suffix == targetSuffix) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                    else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                    PackageManager.DONT_KILL_APP
-                )
+        // Off the main thread: rewriting twenty component states is a single binder round-trip into
+        // PackageManagerService that persists them and fires the broadcast, and the system re-checks
+        // our default-SMS role on top. Done inline it stalled the caller long enough for Android to
+        // report the app as not responding. The finish path below stays on the main thread.
+        Schedulers.io().scheduleDirect {
+            // Android 14+ supports batching all alias state changes into a single call, which emits
+            // a single ACTION_PACKAGE_CHANGED broadcast. On devices where we're the default SMS app
+            // the system re-evaluates the SMS role on each broadcast, so collapsing 20 calls into 1
+            // makes the launcher icon refresh near-instant. On older devices we fall back to enabling
+            // the target first (no launcher drop-out), then disabling the rest.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                val settings = ICON_ALIASES.map { (_, suffix) ->
+                    PackageManager.ComponentEnabledSetting(
+                        aliasComponent(suffix),
+                        if (suffix == targetSuffix) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+                        else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP
+                    )
+                }
+                runCatching { pm.setComponentEnabledSettings(settings) }
+            } else {
+                setAliasEnabled(pm, targetSuffix, true)
+                ICON_ALIASES.filter { it.second != targetSuffix }.forEach { (_, suffix) ->
+                    setAliasEnabled(pm, suffix, false)
+                }
             }
-            runCatching { pm.setComponentEnabledSettings(settings) }
-        } else {
-            setAliasEnabled(pm, targetSuffix, true)
-            ICON_ALIASES.filter { it.second != targetSuffix }.forEach { (_, suffix) ->
-                setAliasEnabled(pm, suffix, false)
-            }
-        }
 
-        // Persist synchronously (commit, not the default async apply) so appIconColor can never end up
-        // out of sync with the actually-enabled alias even if the process is later killed by the OS —
-        // otherwise isIconChangeNeeded() would wrongly report "no change" on the next launch (e.g.
-        // switching back to the default theme would no longer prompt a change). Reusing the
-        // rx-preference key keeps observers notified.
-        sharedPrefs.edit(commit = true) { putInt(prefs.appIconColor.key(), targetColor) }
+            // Persist synchronously (commit, not the default async apply) so appIconColor can never end
+            // up out of sync with the actually-enabled alias even if the process is later killed by the
+            // OS — otherwise isIconChangeNeeded() would wrongly report "no change" on the next launch
+            // (e.g. switching back to the default theme would no longer prompt a change). Reusing the
+            // rx-preference key keeps observers notified. A blocking write, hence off the main thread
+            // along with the swap above.
+            sharedPrefs.edit(commit = true) { putInt(prefs.appIconColor.key(), targetColor) }
+        }
 
         // Safety net: if the broadcast never comes back, close anyway so we don't hang open.
         handler.postDelayed({ finish() }, ICON_REFRESH_TIMEOUT_MS)

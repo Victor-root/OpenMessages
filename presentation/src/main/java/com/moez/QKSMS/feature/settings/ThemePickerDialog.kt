@@ -47,6 +47,7 @@ import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.databinding.ThemeColorItemBinding
 import io.openmessages.databinding.ThemePickerDialogBinding
 import io.openmessages.common.util.LauncherIconManager
@@ -311,17 +312,31 @@ class ThemePickerDialog : DialogFragment() {
         // Nothing to do if the chosen icon colour already maps to the active alias — this is also what
         // keeps a plain theme tweak (icon left on a custom colour that didn't change) from closing the app.
         if (!launcherIconManager.isIconChangeNeeded(color)) return
-        // Swap the alias in the foreground, then close the app once the launcher has actually repainted
-        // the new icon (signalled from inside commitIconForColor) — closing earlier would reveal the
-        // home screen mid-repaint and the user would see the icon transition. Capture the activity now
-        // because the dialog detaches on dismiss (getActivity() would be null by the time the callback
-        // fires); the host activity itself outlives the dialog, so finishAffinity() on it is valid.
-        // finishAffinity also drops the task whose base intent now points at the disabled alias, so the
-        // next launch starts clean instead of crashing.
+        // Capture the activity now: this dialog detaches as it dismisses, so getActivity() would be
+        // null by the time anything below runs. The host outlives it.
         val host = activity ?: return
-        launcherIconManager.commitIconForColor(color) {
-            host.finishAffinity()
-        }
+
+        // Confirm before acting. Applying the icon closes the app, and doing that straight off the OK
+        // button reads like a crash. Declining simply leaves the icon alone; the picker offers again
+        // next time, since isIconChangeNeeded still holds.
+        AlertDialog.Builder(host)
+            .setTitle(R.string.theme_icon_change_title)
+            .setMessage(R.string.theme_icon_change_message)
+            .setPositiveButton(R.string.icon_change_confirm) { _, _ ->
+                // Swap the alias in the foreground, then close once the launcher has actually
+                // repainted (signalled from inside commitIconForColor) — closing earlier would reveal
+                // the home screen mid-repaint and show the icon changing. finishAffinity also drops
+                // the task whose base intent now points at the disabled alias, so the next launch
+                // starts clean instead of crashing.
+                launcherIconManager.commitIconForColor(color) {
+                    host.finishAffinity()
+                }
+            }
+            .setNegativeButton(R.string.icon_change_later, null)
+            .setCancelable(false)
+            .create()
+            .themeButtons(selectedColor)
+            .show()
     }
 
     /** Live-preview the chosen color in the status bar, navigation bar and toolbar header. */

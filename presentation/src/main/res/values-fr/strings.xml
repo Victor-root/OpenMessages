@@ -34,6 +34,8 @@
     <string name="theme_tab_icon">Icône</string>
     <string name="theme_icon_follow_theme">Suivre la couleur du thème</string>
     <string name="theme_icon_summary">Choisissez la couleur de l\'icône de l\'app, indépendamment du thème. La modifier fermera l\'app.</string>
+    <string name="theme_icon_change_title">Changer l’icône de l’application ?</string>
+    <string name="theme_icon_change_message">La couleur de l’icône de l’application va changer. Android ne sait changer l’icône que si l’application est fermée : Open Messages va donc se fermer dès que vous confirmez.</string>
     <string name="title_conversations">Rechercher dans les conversations…</string>
     <string name="title_compose">Entrer un nom ou un numéro</string>
     <string name="title_qksms_plus" translatable="false">If you see this, send in an issue please!</string>
@@ -214,8 +216,8 @@
     <string name="backup_failed_title">Échec de la sauvegarde</string>
     <string name="backup_icon_change_title">Restaurer l’icône de l’application ?</string>
     <string name="backup_icon_change_message">Votre sauvegarde a été faite avec une autre couleur d’icône. Android ne sait changer l’icône que si l’application est fermée : Open Messages va donc se fermer dès que vous confirmez.</string>
-    <string name="backup_icon_change_confirm">Appliquer et fermer</string>
-    <string name="backup_icon_change_later">Pas maintenant</string>
+    <string name="icon_change_confirm">Appliquer et fermer</string>
+    <string name="icon_change_later">Pas maintenant</string>
     <string name="backup_restoring">Restaurer à partir d’une sauvegarde</string>
     <string name="backup_loading">Chargement…</string>
     <string name="backup_never">Jamais</string>

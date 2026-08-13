@@ -39,6 +39,8 @@
     <string name="theme_tab_icon">App icon</string>
     <string name="theme_icon_follow_theme">Match the app theme color</string>
     <string name="theme_icon_summary">Pick your app icon color, independently of the theme. Applying a change will close the app.</string>
+    <string name="theme_icon_change_title">Change the app icon?</string>
+    <string name="theme_icon_change_message">The app icon colour is about to change. Android can only swap the icon while the app is closed, so Open Messages will shut down as soon as you confirm.</string>
     <string name="title_conversations">Search inbox…</string>
     <string name="title_search">Search</string>
     <string name="title_compose">Type a name or number</string>
@@ -252,8 +254,8 @@
     <string name="backup_failed_title">Backup failed</string>
     <string name="backup_icon_change_title">Restore the app icon?</string>
     <string name="backup_icon_change_message">Your backup was made with a different app icon colour. Android can only swap the icon while the app is closed, so Open Messages will shut down as soon as you confirm.</string>
-    <string name="backup_icon_change_confirm">Apply and close</string>
-    <string name="backup_icon_change_later">Not now</string>
+    <string name="icon_change_confirm">Apply and close</string>
+    <string name="icon_change_later">Not now</string>
     <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
