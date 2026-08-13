@@ -12,6 +12,7 @@ import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
+import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.databinding.MessageUtilsControllerBinding
 import io.openmessages.feature.settings.autodelete.AutoDeleteDialog
@@ -50,6 +51,8 @@ class MessageUtilsController : QkController<MessageUtilsControllerBinding, Messa
 
     override fun onViewCreated() {
         super.onViewCreated()
+        // The deduplication bar takes colorAccent otherwise, which is the static brand violet.
+        binding.deduplicationProgress.setTint(colors.theme().theme)
         binding.root.postDelayed({
             binding.parent.animateLayoutChanges = true
         }, 100)

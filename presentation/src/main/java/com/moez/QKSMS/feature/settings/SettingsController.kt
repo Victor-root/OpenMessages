@@ -44,6 +44,7 @@ import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.util.sendSoundAudioAttributes
 import io.openmessages.common.util.sendSoundRes
@@ -109,6 +110,9 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
                     .mapIndexed { index, title -> MenuItem(title, index) }
                     .drop(1)
         }
+        // The sync bar takes colorAccent otherwise, which is the static brand violet.
+        binding.syncingProgress.setTint(colors.theme().theme)
+
         textSizeDialog.adapter.setData(R.array.text_sizes)
         sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
         sendSoundDialog.adapter.setData(R.array.send_sound_labels, R.array.send_sound_ids)
