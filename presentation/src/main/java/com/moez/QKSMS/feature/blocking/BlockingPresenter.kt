@@ -27,6 +27,7 @@ import io.openmessages.blocking.BlockingListDownloader
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.util.Preferences
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
@@ -38,6 +39,10 @@ class BlockingPresenter @Inject constructor(
     private val prefs: Preferences,
     private val downloader: BlockingListDownloader
 ) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
+
+    // Kept apart from the presenter's other subscriptions so turning the source off can cancel a
+    // download still in flight, which would otherwise store a list for a source that is now off.
+    private var phishingDownload: Disposable? = null
 
     init {
         disposables += prefs.blockingManager.asObservable()
@@ -120,9 +125,10 @@ class BlockingPresenter @Inject constructor(
     private fun togglePhishing() {
         val enabling = !prefs.blockSourcePhishing.get()
         prefs.blockSourcePhishing.set(enabling)
+        phishingDownload?.dispose()
         if (enabling) {
             newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_updating)) }
-            disposables += downloader.updatePhishing()
+            val download = downloader.updatePhishing()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ count ->
@@ -135,7 +141,14 @@ class BlockingPresenter @Inject constructor(
                         prefs.blockSourcePhishing.set(false)
                         newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_failed)) }
                     })
+            phishingDownload = download
+            disposables += download
         } else {
+            // Several megabytes that nothing matches against any more: drop the list rather than
+            // leave it on the device. Turning the source back on downloads a fresh one, so the
+            // stored count goes with it instead of describing a list that is gone.
+            downloader.clearPhishing()
+            prefs.blockPhishingCount.set(0)
             newState { copy(phishingSummary = phishingSummary()) }
         }
     }

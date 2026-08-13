@@ -46,6 +46,9 @@ class BlockingListDownloader @Inject constructor(
 
     fun phishingDownloaded(): Boolean = phishingStore.hasDomains()
 
+    /** Drops the stored phishing list, for when the user turns the source off. */
+    fun clearPhishing() = phishingStore.clear()
+
     /** Fetches the phishing domain list, stores it, and returns the number of domains. */
     fun updatePhishing(): Single<Int> = Single.fromCallable {
         val body = fetch(PHISHING_URL)
