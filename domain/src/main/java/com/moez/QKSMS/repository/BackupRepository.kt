@@ -67,6 +67,12 @@ interface BackupRepository {
      */
     fun importZip(zip: Uri): Uri?
 
+    /**
+     * Deletes what [importZip] unpacked into the cache. Call once the restore is over: the extracted
+     * copy weighs as much as the backup itself and is of no use afterwards.
+     */
+    fun clearRestoreCache()
+
     /** Restores the selected [categories] of the backup sub-folder [folderName] within [folder]. */
     fun performRestore(folder: Uri, folderName: String, categories: Set<BackupCategory>)
 

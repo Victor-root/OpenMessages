@@ -116,7 +116,14 @@ class RestoreBackupService : Service() {
             }
             .subscribeOn(Schedulers.io())
             .subscribe({ (folder, folderName, categories) ->
-                backupRepo.performRestore(folder, folderName, categories)
+                try {
+                    backupRepo.performRestore(folder, folderName, categories)
+                } finally {
+                    // Restoring from a .zip unpacks it into the cache first. Drop that copy however
+                    // the restore ended — finished, cancelled or failed — instead of leaving a second
+                    // copy of the whole backup on the device until the next restore overwrites it.
+                    backupRepo.clearRestoreCache()
+                }
             }, Timber::w)
     }
 

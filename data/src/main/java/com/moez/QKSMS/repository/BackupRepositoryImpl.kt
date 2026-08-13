@@ -745,9 +745,19 @@ class BackupRepositoryImpl @Inject constructor(
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
+    /** Where a picked .zip backup is unpacked so it can be read like a folder. */
+    private val restoreTempDir: File
+        get() = File(context.cacheDir, RESTORE_TEMP_DIR)
+
+    override fun clearRestoreCache() {
+        runCatching { restoreTempDir.deleteRecursively() }
+                .onFailure { error -> Timber.w(error, "Failed to clear the restore cache") }
+    }
+
     override fun importZip(zip: Uri): Uri? {
         return try {
-            val dir = File(context.cacheDir, RESTORE_TEMP_DIR)
+            val dir = restoreTempDir
+            // Also cleared once the restore is done; this covers a previous run killed part-way.
             if (dir.exists()) dir.deleteRecursively()
             dir.mkdirs()
 
