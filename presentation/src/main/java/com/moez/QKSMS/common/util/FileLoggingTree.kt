@@ -75,7 +75,7 @@ class FileLoggingTree @Inject constructor(
 
                 // if uri of log file not yet determined, get one now
                 if (logFileUri == null) {
-                    val filename = "Quik-log-${
+                    val filename = "OpenMessages-log-${
                         SimpleDateFormat(
                             "yyyy-MM-dd",
                             Locale.getDefault()

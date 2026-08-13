@@ -252,7 +252,11 @@ class MainViewModel @Inject constructor(
                 GlobalScope.launch(Dispatchers.Main) {
                     val changelog = changelogManager.getChangelog()
                     changelogManager.markChangelogSeen()
-                    view.showChangelog(changelog)
+                    // Nothing recorded for this version means nothing to say. The dialog would
+                    // otherwise open empty on every update until entries are written for it.
+                    val hasEntries = changelog.added.isNotEmpty() || changelog.improved.isNotEmpty() ||
+                            changelog.removed.isNotEmpty() || changelog.fixed.isNotEmpty()
+                    if (hasEntries) view.showChangelog(changelog)
                 }
             } else {
                 changelogManager.markChangelogSeen()

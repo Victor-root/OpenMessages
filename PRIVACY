@@ -1,5 +1,10 @@
-# Google Play Privacy Policy
+# Privacy Policy
 
-I do not collect data. This applies to the following apps:
+Open Messages collects nothing. No analytics, no crash reporting, no accounts, no telemetry.
 
-* https://play.google.com/store/apps/details?id=dev.octoshrimpy.quik
+Your messages, contacts and settings stay on your device. Backups are written where you choose them
+and are never uploaded anywhere.
+
+The app makes no network connection on its own. The single exception is the optional anti-phishing
+list, downloaded once from The Block List Project when you enable that source in Blocking settings;
+every message is matched against it on your device afterwards.
