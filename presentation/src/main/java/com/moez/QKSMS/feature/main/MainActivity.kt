@@ -666,7 +666,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun themeChanged() = binding.recyclerView.scrapViews()
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
-        blockingDialog.show(this, conversations, block)
+        blockingDialog.show(conversations, block)
     }
 
     private fun buildDialog(spec: MainDialog): AlertDialog = when (spec) {
@@ -698,8 +698,12 @@ class MainActivity : QkThemedActivity(), MainView {
         binding.toolbarSearch.setVisible(isSearching || (isInbox && searchExpanded))
         binding.toolbarSearchIcon.setVisible(showInboxIcons)
         binding.toolbarLogoGroup.setVisible(!isSearching && !(isInbox && searchExpanded))
+        // Counted by Realm rather than by walking the list. This runs on every change to the list
+        // and on every redraw of the screen, and counting in Kotlin built a Conversation object per
+        // row just to read one flag. "unread" is lastMessage.read == false, the same query the
+        // conversation repository already uses for it.
         val unreadCount = if (showInboxIcons) {
-            (state.page as? Inbox)?.data?.count { it.unread } ?: 0
+            (state.page as? Inbox)?.data?.where()?.equalTo("lastMessage.read", false)?.count()?.toInt() ?: 0
         } else 0
         if (showInboxIcons) {
             binding.toolbarUnreadCount.text = "$unreadCount"

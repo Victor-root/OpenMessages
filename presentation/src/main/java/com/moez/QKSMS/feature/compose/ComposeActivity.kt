@@ -660,7 +660,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun showBlockingDialog(threadIds: List<Long>, block: Boolean) {
         // Blocking a conversation from the "suspected spam" banner removes it from the inbox, so
         // bounce back to the conversation list once the block has been applied.
-        blockingDialog.show(this, threadIds, block) { finish() }
+        blockingDialog.show(threadIds, block) { finish() }
     }
 
     override fun requestDefaultSms() {

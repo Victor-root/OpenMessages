@@ -108,7 +108,7 @@ class BlockedMessagesController : QkController<BlockedMessagesControllerBinding,
     override fun clearSelection() = blockedMessagesAdapter.clearSelection()
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {
-        blockingDialog.show(activity!!, conversations, block)
+        blockingDialog.show(conversations, block)
     }
 
     override fun showDeleteDialog(conversations: List<Long>) {
