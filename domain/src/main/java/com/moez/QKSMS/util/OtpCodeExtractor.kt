@@ -48,11 +48,17 @@ object OtpCodeExtractor {
     // other digits.
     private val DIGIT_CODE = Regex("(?<![0-9])([0-9]{2,4}(?:[ -]?[0-9]{2,4}){0,2})(?![0-9])")
 
+    // The separators allowed inside a digit code, stripped so the copied value is the code alone.
+    private val SEPARATORS = Regex("[ -]")
+
     fun extract(body: String): String? {
         if (body.isBlank() || !KEYWORDS.containsMatchIn(body)) return null
         ALPHA_CODE.find(body)?.let { return it.groupValues[1] }
-        val match = DIGIT_CODE.find(body) ?: return null
-        val code = match.groupValues[1].replace(Regex("[ -]"), "")
-        return code.takeIf { it.length in 4..8 }
+        // Walk every digit run, not just the first: messages routinely put a shorter number ahead of
+        // the code ("valable 15 minutes : 458923"), and stopping at the first match found "15", judged
+        // it too short and gave up on a message that does carry a code.
+        return DIGIT_CODE.findAll(body)
+                .map { match -> match.groupValues[1].replace(SEPARATORS, "") }
+                .firstOrNull { code -> code.length in 4..8 }
     }
 }
