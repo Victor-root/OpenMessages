@@ -216,8 +216,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         binding.delivery.checkbox?.setChecked(state.deliveryEnabled, animate)
 
         binding.sendSound.summary = state.sendSoundSummary
-        // sendSoundDialog's adapter.selectedItem is deliberately not synced here; see showSendSoundDialog().
-        sendSoundVolumeBinding.volume.progress = state.sendSoundVolume
+        // The sound dialog's tone and volume are deliberately not synced here; see showSendSoundDialog().
 
         binding.headerQuickAction.summary = state.headerQuickActionSummary
         headerQuickActionDialog.adapter.selectedItem = state.headerQuickActionId
@@ -307,13 +306,14 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun showHeaderQuickActionDialog() = headerQuickActionDialog.show(activity!!)
 
-    override fun showSendSoundDialog(id: Int) {
-        // Set only when the dialog is about to open, not from render(): the sound dialog stays
-        // open while the user taps around previewing tones (see confirmWithButtons on QkDialog),
-        // and prefs.sendSoundId only updates once OK is pressed, so syncing this on every render
-        // would snap the checkmark back to the old tone as soon as anything else re-rendered the
-        // screen (e.g. dragging the volume slider, which re-renders on every step).
+    override fun showSendSoundDialog(id: Int, volume: Int) {
+        // Both are set only when the dialog is about to open, not from render(): the sound dialog
+        // stays open while the user taps around previewing tones and drags the slider (see
+        // confirmWithButtons on QkDialog), and neither preference updates until OK is pressed, so
+        // syncing on every render would snap the checkmark and the slider back to the stored values
+        // as soon as anything else re-rendered the screen.
         sendSoundDialog.adapter.selectedItem = id
+        sendSoundVolumeBinding.volume.progress = volume
         sendSoundDialog.show(activity!!)
     }
 

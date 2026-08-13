@@ -47,7 +47,7 @@ interface SettingsView : QkViewContract<SettingsState> {
     fun showTextSizePicker()
     fun showDelayDurationDialog()
     fun showHeaderQuickActionDialog()
-    fun showSendSoundDialog(id: Int)
+    fun showSendSoundDialog(id: Int, volume: Int)
     fun previewSendSound(id: Int, volume: Int)
     fun showSignatureDialog(signature: String)
     fun showMmsSizePicker()

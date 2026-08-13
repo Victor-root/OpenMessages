@@ -53,10 +53,12 @@ class SettingsPresenter @Inject constructor(
         nightModeId = prefs.nightMode.get()
 )) {
 
-    // Which tone the volume slider should preview: the one most recently tapped in the sound
-    // dialog (which may not be confirmed yet), reset to the real preference each time the dialog
-    // is (re)opened, in the R.id.sendSound click handler below.
+    // The tone and volume as they stand in the sound dialog, which may not be confirmed yet. Both
+    // are reset to the real preferences each time the dialog is (re)opened, in the R.id.sendSound
+    // click handler below, and only written back when OK is pressed. Kept here rather than in the
+    // preferences so that cancelling really cancels, volume included.
     private var sendSoundPreviewId: Int = prefs.sendSoundId.get()
+    private var sendSoundPreviewVolume: Int = prefs.sendSoundVolume.get()
 
     init {
         disposables += colors.themeObservable()
@@ -105,11 +107,8 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.sendSoundId.asObservable()
             .subscribe { id ->
                 val summary = sendSoundLabels.labelFor(id, prefs.sendSoundId.defaultValue(), sendSoundIds)
-                newState { copy(sendSoundSummary = summary, sendSoundId = id) }
+                newState { copy(sendSoundSummary = summary) }
             }
-
-        disposables += prefs.sendSoundVolume.asObservable()
-            .subscribe { volume -> newState { copy(sendSoundVolume = volume) } }
 
         val headerQuickActionLabels = context.resources.getStringArray(R.array.header_quick_action_labels)
         disposables += prefs.headerQuickAction.asObservable()
@@ -227,7 +226,8 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.sendSound -> {
                             sendSoundPreviewId = prefs.sendSoundId.get()
-                            view.showSendSoundDialog(sendSoundPreviewId)
+                            sendSoundPreviewVolume = prefs.sendSoundVolume.get()
+                            view.showSendSoundDialog(sendSoundPreviewId, sendSoundPreviewVolume)
                         }
 
                         R.id.headerQuickAction -> view.showHeaderQuickActionDialog()
@@ -331,16 +331,19 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { id ->
                     sendSoundPreviewId = id
-                    if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id, prefs.sendSoundVolume.get())
+                    if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id, sendSoundPreviewVolume)
                 }
 
         view.sendSoundConfirmed()
                 .autoDisposable(view.scope())
-                .subscribe(prefs.sendSoundId::set)
+                .subscribe { id ->
+                    prefs.sendSoundId.set(id)
+                    prefs.sendSoundVolume.set(sendSoundPreviewVolume)
+                }
 
         view.sendSoundVolumeChanged()
                 .autoDisposable(view.scope())
-                .subscribe(prefs.sendSoundVolume::set)
+                .subscribe { volume -> sendSoundPreviewVolume = volume }
 
         view.sendSoundVolumeCommitted()
                 .autoDisposable(view.scope())
