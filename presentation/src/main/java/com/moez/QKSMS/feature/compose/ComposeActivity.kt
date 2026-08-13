@@ -55,6 +55,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
@@ -117,18 +118,29 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     /** Modern attachment picker: a bottom sheet opened by the "+" button. */
     private val attachSheetBinding by lazy { ComposeAttachSheetBinding.inflate(layoutInflater) }
-    private val attachSheet by lazy {
+    // Held as the delegate rather than a plain `by lazy` so onDestroy can ask whether the sheet was
+    // ever opened: reading it there would otherwise inflate the layout and build a dialog to throw
+    // straight away, on every conversation the user closes without touching the "+" button.
+    private val attachSheetDelegate = lazy {
         // The app runs on a Theme.AppCompat base; Material's BottomSheetDialog needs a Material
         // context, so wrap the activity the same way the other Material components here do.
         BottomSheetDialog(ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context)).apply {
             setContentView(attachSheetBinding.root)
-            // Drop the default opaque sheet background so our rounded-corner background shows through.
+            // Dragging down closes rather than snapping back to the half-open height, which for a
+            // seven-item menu is only ever a truncated version of the same thing.
+            behavior.skipCollapsed = true
             setOnShowListener {
+                // Drop the default opaque sheet background so our rounded-corner background shows through.
                 findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
                     ?.setBackgroundResource(android.R.color.transparent)
+                // Open at full height. The default is a peek height derived from the screen, which in
+                // landscape is shorter than the two rows and cut the options off at the screen edge.
+                // Set on every show: BottomSheetDialog.onStart() puts the sheet back to collapsed.
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
     }
+    private val attachSheet by attachSheetDelegate
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val chipsSelectedIntent: Subject<HashMap<String, String?>> = PublishSubject.create()
@@ -452,6 +464,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         QkMediaPlayer.reset()
 
         seekBarUpdater?.dispose()
+
+        // The attachment sheet is a Dialog attached to this window. Left showing when the activity
+        // goes away, most often on a rotation, its window outlives it: Android reports a leaked
+        // window and it keeps the dead activity alive behind it.
+        if (attachSheetDelegate.isInitialized()) attachSheet.dismiss()
     }
 
 
