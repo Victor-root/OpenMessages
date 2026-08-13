@@ -46,6 +46,7 @@ import io.openmessages.common.util.extensions.setNegativeButton
 import io.openmessages.common.util.extensions.setPositiveButton
 import io.openmessages.common.util.extensions.setShowing
 import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.common.util.extensions.themeChoiceItems
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.injection.appComponent
 import io.openmessages.model.BackupCategory
@@ -445,7 +446,10 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .setNegativeButton(R.string.button_cancel, null)
                 .create()
                 .themeButtons(colors.theme().theme)
-                .show()
+                .also { dialog ->
+                    dialog.show()
+                    dialog.themeChoiceItems(colors.theme().theme)
+                }
     }
 
     /** Lets the user type any number of days between automatic backups. */
@@ -491,7 +495,10 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .setNegativeButton(R.string.button_cancel, null)
                 .create()
                 .themeButtons(colors.theme().theme)
-                .show()
+                .also { dialog ->
+                    dialog.show()
+                    dialog.themeChoiceItems(colors.theme().theme)
+                }
     }
 
     override fun showRestoreSourcePicker(folder: Uri, backups: List<BackupFolder>, labels: List<String>) {
@@ -525,7 +532,10 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .setNegativeButton(R.string.button_cancel, null)
                 .create()
                 .themeButtons(colors.theme().theme)
-                .show()
+                .also { dialog ->
+                    dialog.show()
+                    dialog.themeChoiceItems(colors.theme().theme)
+                }
     }
 
     /** Maps an automatic-backup interval (in days) to its localized summary label. */
