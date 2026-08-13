@@ -66,6 +66,20 @@ class Colors @Inject constructor(
     fun useDarkSystemBarIcons(color: Int): Boolean =
             (Color.red(color) * 0.299 + Color.green(color) * 0.587 + Color.blue(color) * 0.114) > 150
 
+    /**
+     * The colour for content drawn on top of [color]: toolbar icons and title, the compose and
+     * scroll-to-top glyphs, the switch thumb.
+     *
+     * Deliberately keyed on the same test as [useDarkSystemBarIcons] rather than on
+     * [textPrimaryOnThemeForColor], which uses a different threshold and disagrees on a few of the
+     * palette colours (light green, orange, grey). The status bar sits directly above the toolbar,
+     * so the two must never resolve differently for the same colour.
+     */
+    fun contentColorOnTheme(color: Int): Int = when {
+        useDarkSystemBarIcons(color) -> context.getColorCompat(R.color.textPrimary)
+        else -> Color.WHITE
+    }
+
     data class Theme(val theme: Int, private val colors: Colors) {
         val highlight by lazy { colors.highlightColorForTheme(theme) }
         val textPrimary by lazy { colors.textPrimaryOnThemeForColor(theme) }

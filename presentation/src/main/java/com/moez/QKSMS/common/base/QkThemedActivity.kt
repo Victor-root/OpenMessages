@@ -20,7 +20,6 @@ package io.openmessages.common.base
 
 import android.app.ActivityManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -122,13 +121,11 @@ abstract class QkThemedActivity : QkActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(Color.WHITE) }
-
         Observables.combineLatest(menu, theme) { menu, theme ->
             menu.iterator().forEach { menuItem ->
                 val tint = when (menuItem.itemId) {
                     in getColoredMenuItems() -> theme.theme
-                    else -> Color.WHITE
+                    else -> colors.contentColorOnTheme(theme.theme)
                 }
 
                 menuItem.icon = menuItem.icon?.apply { setTint(tint) }
@@ -141,6 +138,12 @@ abstract class QkThemedActivity : QkActivity() {
                 // Transparent bars behind content (edge-to-edge) or opaque themed bars, plus the
                 // correct light/dark icon contrast for each. See QkActivity.applySystemBars.
                 applySystemBars(theme.theme)
+
+                // The toolbar carries the same colour as the status bar above it, so its icons and
+                // title follow the same light/dark rule. Runs before the background is set below so
+                // toolbarContentColor is ready for anything a subclass tints from its own theme
+                // subscription.
+                applyToolbarContentColor(theme.theme)
 
                 // Default violet keeps the brand gradient header; custom colors paint it flat.
                 toolbar?.background = if (colors.usesBrandGradient(theme.theme)) {

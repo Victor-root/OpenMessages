@@ -38,6 +38,7 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -274,6 +275,10 @@ class MainActivity : QkThemedActivity(), MainView {
                     val gradientEnd = colors.deriveGradientEndColor(theme.theme)
                     // The brand gradient is only used for the default violet; custom colors are flat.
                     val useGradient = colors.usesBrandGradient(theme.theme)
+                    // Anything sitting on the theme color follows the status-bar icon rule. Computed
+                    // here rather than read from toolbarContentColor: this subscription is registered
+                    // in onCreate, so it fires before QkThemedActivity's own in onPostCreate.
+                    val onTheme = colors.contentColorOnTheme(theme.theme)
 
                     // Drawer icons tint
                     val iconStates = arrayOf(
@@ -312,10 +317,10 @@ class MainActivity : QkThemedActivity(), MainView {
                         setColor(Color.WHITE)
                     }
                     binding.compose.background = RippleDrawable(
-                        ColorStateList.valueOf(Color.argb(64, 255, 255, 255)),
+                        ColorStateList.valueOf(ColorUtils.setAlphaComponent(onTheme, 0x40)),
                         composeBackground, composeMask
                     )
-                    binding.compose.setTint(Color.WHITE)
+                    binding.compose.setTint(onTheme)
 
                     // Scroll-to-top — brand gradient (oval) for the default color, solid otherwise
                     val scrollBackground = (if (useGradient) {
@@ -328,15 +333,27 @@ class MainActivity : QkThemedActivity(), MainView {
                         setColor(Color.WHITE)
                     }
                     binding.scrollToTop.background = RippleDrawable(
-                        ColorStateList.valueOf(Color.argb(64, 255, 255, 255)),
+                        ColorStateList.valueOf(ColorUtils.setAlphaComponent(onTheme, 0x40)),
                         scrollBackground, scrollMask
                     )
+                    binding.scrollToTop.setTint(onTheme)
 
-                    // Unread badge follows the theme color (keeping its white border)
+                    // Toolbar content: search icon, unread envelope and its count badge all sit on the
+                    // themed toolbar, so they take the same color as the status-bar icons above them.
+                    binding.toolbarSearchIcon.setTint(onTheme)
+                    binding.toolbarUnreadIcon.setTint(onTheme)
+                    binding.toolbarUnreadCount.setTextColor(onTheme)
+                    // The badge is filled with the theme color on a toolbar of that same color, so its
+                    // border is the only thing that separates the two: it has to stay legible too.
                     (binding.toolbarUnreadCount.background as? GradientDrawable)?.apply {
                         mutate()
                         setColor(theme.theme)
+                        setStroke((1.5f * density).toInt(), onTheme)
                     }
+
+                    // The drawer arrow / hamburger is drawn by ActionBarDrawerToggle, outside the
+                    // toolbar's own icon tinting, so it needs the color applied here as well.
+                    toggle.drawerArrowDrawable.color = onTheme
 
                     // Gradient only for the default violet brand color; all custom colors use solid fill
                     binding.drawer.drawerHeader.background = if (useGradient) {
@@ -599,7 +616,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override fun showBackButton(show: Boolean) =
         toggle.let {
             it.onDrawerSlide(binding.drawer.root, if (show) 1f else 0f)
-            it.drawerArrowDrawable.color = Color.WHITE
+            it.drawerArrowDrawable.color = toolbarContentColor
         }
 
     override fun requestDefaultSms() =

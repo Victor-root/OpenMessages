@@ -98,8 +98,9 @@ class QkSwitch @JvmOverloads constructor(
         val outline = ContextCompat.getColor(context, R.color.m3SwitchOutline)
         val disabledAlpha = 0x61
 
-        // Checked: solid theme track + white thumb. Unchecked: surfaceContainerHighest track + outline
-        // thumb. The state order is disabled, checked, default — first match wins.
+        // Checked: solid theme track, with a thumb that contrasts against it the same way the toolbar
+        // icons do (white on a dark theme color, dark on a light one). Unchecked: surfaceContainerHighest
+        // track + outline thumb. The state order is disabled, checked, default — first match wins.
         trackTintList = ColorStateList(states, intArrayOf(
             trackOff.withAlpha(disabledAlpha),
             themeColor,
@@ -107,7 +108,7 @@ class QkSwitch @JvmOverloads constructor(
 
         thumbTintList = ColorStateList(states, intArrayOf(
             outline.withAlpha(disabledAlpha),
-            Color.WHITE,
+            colors.contentColorOnTheme(themeColor),
             outline))
 
         // The track outline ring shows only when unchecked; the filled (checked) track has none.

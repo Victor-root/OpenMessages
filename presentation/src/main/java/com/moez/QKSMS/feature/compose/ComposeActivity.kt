@@ -27,7 +27,6 @@ import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -507,10 +506,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     Preferences.HEADER_ACTION_BLOCK -> R.drawable.ic_block_white_24dp to R.string.main_menu_block
                     else -> R.drawable.ic_delete_white_24dp to R.string.main_menu_delete
                 }
-                // Menu icons are auto-tinted white by QkThemedActivity, but only when the shared
+                // Menu icons are auto-tinted by QkThemedActivity, but only when the shared
                 // `menu`/`theme` observable fires; reassigning the drawable here (a fresh instance,
-                // since the action can change) needs its own tint so it doesn't render black.
-                icon = ContextCompat.getDrawable(this@ComposeActivity, iconRes)?.apply { setTint(Color.WHITE) }
+                // since the action can change) needs its own tint so it doesn't render untinted.
+                icon = ContextCompat.getDrawable(this@ComposeActivity, iconRes)
+                        ?.apply { setTint(toolbarContentColor) }
                 title = getString(titleRes)
             }
         }

@@ -28,6 +28,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -55,6 +56,15 @@ abstract class QkActivity : AppCompatActivity() {
 
     protected val toolbar: Toolbar? get() = findViewById(R.id.toolbar)
     protected val toolbarTitle: TextView? get() = findViewById(R.id.toolbarTitle)
+
+    /**
+     * Colour for everything drawn on the themed toolbar, kept in step with the status-bar icons.
+     * Refreshed by [applyToolbarContentColor]; screens that tint a toolbar view outside the theme
+     * subscription (a menu icon rebuilt at render time, a drawer arrow) read it from here instead of
+     * hard-coding white.
+     */
+    protected var toolbarContentColor: Int = Color.WHITE
+        private set
 
     /** Whether this screen participates in edge-to-edge. Floating/dialog windows opt out. */
     protected open val supportsEdgeToEdge: Boolean get() = true
@@ -111,6 +121,24 @@ abstract class QkActivity : AppCompatActivity() {
             controller.isAppearanceLightStatusBars = darkIcons
             controller.isAppearanceLightNavigationBars = darkIcons
         }
+    }
+
+    /**
+     * Repaints the toolbar chrome for [barColor] — the same colour [applySystemBars] gets, so the
+     * navigation icon, the overflow icon and the title always resolve light or dark exactly like the
+     * status-bar icons immediately above them. Subclasses tinting their own toolbar views afterwards
+     * read [toolbarContentColor].
+     */
+    protected fun applyToolbarContentColor(barColor: Int) {
+        toolbarContentColor = colors.contentColorOnTheme(barColor)
+        toolbar?.navigationIcon?.setTint(toolbarContentColor)
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(toolbarContentColor) }
+        toolbarTitle?.setTextColor(toolbarContentColor)
+        // The subtitle ("3 of 9 results") is deliberately dimmer than the title, so it follows the
+        // same colour at reduced alpha rather than the theme's tertiary text, which is picked for the
+        // window background and not for the toolbar.
+        findViewById<TextView>(R.id.toolbarSubtitle)
+                ?.setTextColor(ColorUtils.setAlphaComponent(toolbarContentColor, 0xB3))
     }
 
     private fun installEdgeToEdgeInsets() {
@@ -194,7 +222,7 @@ abstract class QkActivity : AppCompatActivity() {
 
     protected open fun showBackButton(show: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
-        toolbar?.navigationIcon?.setTint(Color.WHITE)
+        toolbar?.navigationIcon?.setTint(toolbarContentColor)
     }
 
     private fun disableScreenshots(disableScreenshots: Boolean) {
