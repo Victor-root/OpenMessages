@@ -26,6 +26,7 @@ import com.uber.autodispose.autoDisposable
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
@@ -62,18 +63,28 @@ class NotificationPrefsViewModel @Inject constructor(
         val previewLabels = context.resources.getStringArray(R.array.notification_preview_options)
         disposables += previews.asObservable()
                 .subscribe { previewId ->
-                    newState { copy(previewSummary = previewLabels[previewId], previewId = previewId) }
+                    val summary = previewLabels.labelFor(previewId, previews.defaultValue())
+                    newState { copy(previewSummary = summary, previewId = previewId) }
                 }
 
         val actionLabels = context.resources.getStringArray(R.array.notification_actions)
         disposables += prefs.notifAction1.asObservable()
-                .subscribe { previewId -> newState { copy(action1Summary = actionLabels[previewId]) } }
+                .subscribe { action ->
+                    val summary = actionLabels.labelFor(action, prefs.notifAction1.defaultValue())
+                    newState { copy(action1Summary = summary) }
+                }
 
         disposables += prefs.notifAction2.asObservable()
-                .subscribe { previewId -> newState { copy(action2Summary = actionLabels[previewId]) } }
+                .subscribe { action ->
+                    val summary = actionLabels.labelFor(action, prefs.notifAction2.defaultValue())
+                    newState { copy(action2Summary = summary) }
+                }
 
         disposables += prefs.notifAction3.asObservable()
-                .subscribe { previewId -> newState { copy(action3Summary = actionLabels[previewId]) } }
+                .subscribe { action ->
+                    val summary = actionLabels.labelFor(action, prefs.notifAction3.defaultValue())
+                    newState { copy(action3Summary = summary) }
+                }
 
         disposables += wake.asObservable()
                 .subscribe { enabled -> newState { copy(wakeEnabled = enabled) } }

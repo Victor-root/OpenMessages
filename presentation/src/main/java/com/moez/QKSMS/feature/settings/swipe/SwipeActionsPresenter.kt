@@ -24,6 +24,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.openmessages.R
 import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.util.Preferences
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
@@ -37,10 +38,16 @@ class SwipeActionsPresenter @Inject constructor(
         val actionLabels = context.resources.getStringArray(R.array.settings_swipe_actions)
 
         disposables += prefs.swipeRight.asObservable()
-                .subscribe { action -> newState { copy(rightLabel = actionLabels[action], rightIcon = iconForAction(action)) } }
+                .subscribe { action ->
+                    val label = actionLabels.labelFor(action, prefs.swipeRight.defaultValue())
+                    newState { copy(rightLabel = label, rightIcon = iconForAction(action)) }
+                }
 
         disposables += prefs.swipeLeft.asObservable()
-                .subscribe { action -> newState { copy(leftLabel = actionLabels[action], leftIcon = iconForAction(action)) } }
+                .subscribe { action ->
+                    val label = actionLabels.labelFor(action, prefs.swipeLeft.defaultValue())
+                    newState { copy(leftLabel = label, leftIcon = iconForAction(action)) }
+                }
     }
 
     override fun bindIntents(view: SwipeActionsView) {
