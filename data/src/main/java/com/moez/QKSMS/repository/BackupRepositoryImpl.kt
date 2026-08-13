@@ -611,14 +611,16 @@ class BackupRepositoryImpl @Inject constructor(
     @SuppressLint("Recycle") // InputStream is closed by Okio BufferedSource
     private fun <T> readJson(file: DocumentFile, adapter: JsonAdapter<T>): T? {
         return try {
-            context.contentResolver.openInputStream(file.uri)
-                    ?.source()
-                    ?.buffer()
-                    ?.use(adapter::fromJson)
+            val stream = context.contentResolver.openInputStream(file.uri)
+            if (stream == null) {
+                Timber.w("readJson: no input stream for ${file.uri}")
+                return null
+            }
+            stream.source().buffer().use(adapter::fromJson)
         } catch (e: Exception) {
             // Some third-party file-manager SAF providers hand back URIs we are not allowed to read
             // (SecurityException). Skip the file instead of letting the restore screen crash.
-            Timber.w(e)
+            Timber.w(e, "readJson: failed to read ${file.uri}")
             null
         }
     }
@@ -790,27 +792,48 @@ class BackupRepositoryImpl @Inject constructor(
             if (uri.scheme == "file") uri.path?.let { path -> DocumentFile.fromFile(File(path)) }
             else DocumentFile.fromTreeUri(context, uri)
 
+    /**
+     * Every way this can come back empty shows the user the same "backup could not be read" message,
+     * so each one says which it was: the caller has no other way to tell an unreadable folder from a
+     * folder that simply holds no backup.
+     */
     override fun listBackups(folder: Uri): List<BackupFolder> {
         return try {
-            val tree = documentTree(folder) ?: return emptyList()
+            val tree = documentTree(folder)
+            if (tree == null) {
+                Timber.w("listBackups: no document tree for $folder")
+                return emptyList()
+            }
             val adapter = moshi.adapter(BackupManifest::class.java)
 
             // If the user picked a single backup sub-folder directly, it holds the manifest itself.
             tree.findFile("manifest.json")?.let { manifest ->
-                return listOfNotNull(toBackupFolder(manifest, folderName = "", adapter))
+                val backup = toBackupFolder(manifest, folderName = "", adapter)
+                if (backup == null) Timber.w("listBackups: unusable manifest in ${manifest.uri}")
+                return listOfNotNull(backup)
             }
 
             // Otherwise the user picked the parent folder: each date-and-time sub-folder is one backup.
-            tree.listFiles()
+            val entries = tree.listFiles()
+            val backups = entries
                     .filter { file -> file.isDirectory }
                     .mapNotNull { dir ->
                         val name = dir.name ?: return@mapNotNull null
-                        val manifest = dir.findFile("manifest.json") ?: return@mapNotNull null
+                        val manifest = dir.findFile("manifest.json")
+                        if (manifest == null) {
+                            Timber.w("listBackups: no manifest.json in $name")
+                            return@mapNotNull null
+                        }
                         toBackupFolder(manifest, folderName = name, adapter)
                     }
                     .sortedByDescending { backup -> backup.date }
+            if (backups.isEmpty()) {
+                Timber.w("listBackups: no backup set under $folder, among ${entries.size} entries " +
+                        "(${entries.count { it.isDirectory }} folders)")
+            }
+            backups
         } catch (e: Exception) {
-            Timber.w(e)
+            Timber.w(e, "listBackups: failed on $folder")
             emptyList()
         }
     }
@@ -824,7 +847,11 @@ class BackupRepositoryImpl @Inject constructor(
         val categories = manifest.files.keys
                 .mapNotNull { categoryName -> BackupCategory.values().firstOrNull { it.name == categoryName } }
                 .toSet()
-        return if (categories.isEmpty()) null else BackupFolder(folderName, manifest.createdAt, categories)
+        if (categories.isEmpty()) {
+            Timber.w("toBackupFolder: manifest names no known category, keys were ${manifest.files.keys}")
+            return null
+        }
+        return BackupFolder(folderName, manifest.createdAt, categories)
     }
 
     override fun performRestore(folder: Uri, folderName: String, categories: Set<BackupCategory>) {
