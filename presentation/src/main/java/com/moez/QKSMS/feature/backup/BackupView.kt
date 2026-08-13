@@ -45,6 +45,18 @@ interface BackupView : QkViewContract<BackupState> {
 
     fun selectedBackupErrorClicks(): Observable<*>
 
+    /** Emits when the user accepts applying the launcher icon a restore brought back. */
+    fun iconChangeConfirmClicks(): Observable<*>
+
+    /** Emits when the user declines that icon change for now; the theme picker can still apply it. */
+    fun iconChangeDismissClicks(): Observable<*>
+
+    /**
+     * Swaps the launcher icon to [color] and closes the app, which is the only way the swap can land
+     * without the task being left rooted on a disabled alias.
+     */
+    fun applyIconAndClose(color: Int)
+
     fun exactAlarmGrantClicks(): Observable<*>
     fun exactAlarmSkipClicks(): Observable<*>
 

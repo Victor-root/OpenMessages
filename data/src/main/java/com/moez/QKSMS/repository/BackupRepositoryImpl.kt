@@ -119,6 +119,11 @@ class BackupRepositoryImpl @Inject constructor(
         // Device-local prefs that must not travel through a backup: the backup folder is per-device,
         // and "have we asked for notification permission" tracks a prompt shown on this device only
         // (restoring it as true makes a fresh install skip the system dialog and jump to settings).
+        //
+        // The launcher icon colour deliberately stays in the backup: it is the user's choice, and the
+        // backup screen applies it once the restore is done. LauncherIconManager reads the enabled
+        // alias from the package manager rather than from that preference, so the two can no longer
+        // disagree in the meantime.
         private val SETTINGS_DENYLIST = setOf("backupDirectory", "hasAskedForNotificationPermission")
     }
 

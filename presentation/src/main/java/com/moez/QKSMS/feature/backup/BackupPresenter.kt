@@ -26,6 +26,7 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.LauncherIconManager
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.interactor.PerformBackup
 import io.openmessages.manager.BillingManager
@@ -47,6 +48,7 @@ class BackupPresenter @Inject constructor(
     private val billingManager: BillingManager,
     private val context: Context,
     private val dateFormatter: DateFormatter,
+    private val launcherIconManager: LauncherIconManager,
     private val navigator: Navigator,
     private val performBackup: PerformBackup,
     private val permissionManager: PermissionManager,
@@ -66,6 +68,14 @@ class BackupPresenter @Inject constructor(
                 .sample(16, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe { progress -> newState { copy(restoreProgress = progress) } }
+
+        // Once a restore is done, the settings it brought back may ask for a launcher icon this install
+        // isn't showing. Offer to apply it here, where an activity is available to close the app; the
+        // restore itself runs in a service and could not do it.
+        disposables += backupRepo.getRestoreProgress()
+                .filter { progress -> progress is BackupRepository.Progress.Finished }
+                .filter { launcherIconManager.isIconChangeNeeded(launcherIconManager.desiredColor()) }
+                .subscribe { newState { copy(showIconChangeDialog = true) } }
 
         disposables += billingManager.upgradeStatus
                 .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
@@ -229,6 +239,18 @@ class BackupPresenter @Inject constructor(
         view.selectedBackupErrorClicks()
                 .autoDisposable(view.scope())
                 .subscribe { newState { copy(showSelectedBackupError = false) } }
+
+        // A restore brings back the icon colour the user had, but it cannot enable the matching
+        // launcher alias by itself: that swap has to close the app, so it is offered here once the
+        // restore is done rather than done behind the user's back.
+        view.iconChangeConfirmClicks()
+                .doOnNext { newState { copy(showIconChangeDialog = false) } }
+                .autoDisposable(view.scope())
+                .subscribe { view.applyIconAndClose(launcherIconManager.desiredColor()) }
+
+        view.iconChangeDismissClicks()
+                .autoDisposable(view.scope())
+                .subscribe { newState { copy(showIconChangeDialog = false) } }
 
         view.stopRestoreClicks()
                 .autoDisposable(view.scope())

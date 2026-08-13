@@ -28,6 +28,9 @@ data class BackupState(
     val showStopRestoreDialog: Boolean = false,
     val showExactAlarmDialog: Boolean = false,
 
+    /** A finished restore asked for a launcher icon the install isn't showing yet. */
+    val showIconChangeDialog: Boolean = false,
+
     val backupLocation: String = "",
     val autoBackupFrequency: Int = 0,
     val zipEnabled: Boolean = false,

@@ -40,6 +40,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
+import io.openmessages.common.util.LauncherIconManager
 import io.openmessages.common.util.extensions.getLabel
 import io.openmessages.common.util.extensions.setNegativeButton
 import io.openmessages.common.util.extensions.setPositiveButton
@@ -63,8 +64,12 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
     @Inject override lateinit var presenter: BackupPresenter
     @Inject lateinit var colors: Colors
+    @Inject lateinit var launcherIconManager: LauncherIconManager
 
     private val restoreErrorConfirmSubject: Subject<Unit> = PublishSubject.create()
+
+    private val iconChangeConfirmSubject: Subject<Unit> = PublishSubject.create()
+    private val iconChangeDismissSubject: Subject<Unit> = PublishSubject.create()
 
     private val exactAlarmGrantSubject: Subject<Unit> = PublishSubject.create()
     private val exactAlarmSkipSubject: Subject<Unit> = PublishSubject.create()
@@ -90,6 +95,17 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
                 .setMessage(R.string.backup_restore_stop_message)
                 .setPositiveButton(R.string.button_stop, stopRestoreConfirmSubject)
                 .setNegativeButton(R.string.button_cancel, stopRestoreCancelSubject)
+                .setCancelable(false)
+                .create()
+                .themeButtons(colors.theme().theme)
+    }
+
+    private val iconChangeDialog by lazy {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_icon_change_title)
+                .setMessage(R.string.backup_icon_change_message)
+                .setPositiveButton(R.string.backup_icon_change_confirm, iconChangeConfirmSubject)
+                .setNegativeButton(R.string.backup_icon_change_later, iconChangeDismissSubject)
                 .setCancelable(false)
                 .create()
                 .themeButtons(colors.theme().theme)
@@ -235,6 +251,8 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
 
         selectedBackupErrorDialog.setShowing(state.showSelectedBackupError)
 
+        iconChangeDialog.setShowing(state.showIconChangeDialog)
+
         exactAlarmDialog.setShowing(state.showExactAlarmDialog)
 
         stopRestoreDialog.setShowing(state.showStopRestoreDialog)
@@ -257,6 +275,17 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     override fun restoreClicks(): Observable<*> = binding.restore.clicks()
 
     override fun selectedBackupErrorClicks(): Observable<*> = restoreErrorConfirmSubject
+
+    override fun iconChangeConfirmClicks(): Observable<*> = iconChangeConfirmSubject
+
+    override fun iconChangeDismissClicks(): Observable<*> = iconChangeDismissSubject
+
+    override fun applyIconAndClose(color: Int) {
+        // Capture the activity now: commitIconForColor answers a moment later, once the launcher has
+        // repainted, and the controller may already be detached by then.
+        val host = activity ?: return
+        launcherIconManager.commitIconForColor(color) { host.finishAffinity() }
+    }
 
     override fun exactAlarmGrantClicks(): Observable<*> = exactAlarmGrantSubject
 

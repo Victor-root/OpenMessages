@@ -212,6 +212,10 @@
     <string name="backup_title">Sauvegarde et restauration</string>
     <string name="backup_backing_up">Sauvegarde des messages</string>
     <string name="backup_failed_title">Échec de la sauvegarde</string>
+    <string name="backup_icon_change_title">Restaurer l’icône de l’application ?</string>
+    <string name="backup_icon_change_message">Votre sauvegarde a été faite avec une autre couleur d’icône. Android ne sait changer l’icône que si l’application est fermée : Open Messages va donc se fermer dès que vous confirmez.</string>
+    <string name="backup_icon_change_confirm">Appliquer et fermer</string>
+    <string name="backup_icon_change_later">Pas maintenant</string>
     <string name="backup_restoring">Restaurer à partir d’une sauvegarde</string>
     <string name="backup_loading">Chargement…</string>
     <string name="backup_never">Jamais</string>

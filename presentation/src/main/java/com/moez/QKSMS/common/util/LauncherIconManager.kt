@@ -51,6 +51,11 @@ class LauncherIconManager @Inject constructor(
         // non-existent component and the enable/disable call would silently do nothing.
         private const val COMPONENT_PACKAGE = "io.openmessages"
 
+        // The one alias the manifest ships with android:enabled="true". Every other alias is disabled
+        // there, so a component we have never explicitly toggled reports COMPONENT_ENABLED_STATE_DEFAULT
+        // and means "enabled" only for this one.
+        private const val MANIFEST_DEFAULT_SUFFIX = "Violet"
+
         // After our package's ACTION_PACKAGE_CHANGED arrives, how long to let the launcher finish
         // repainting behind the still-visible app before closing it.
         private const val ICON_SETTLE_MS = 300L
@@ -99,9 +104,39 @@ class LauncherIconManager @Inject constructor(
         }
     }
 
+    /**
+     * The colour of the alias the launcher is *actually* showing, asked of the package manager rather
+     * than read from [Preferences.appIconColor].
+     *
+     * The preference records what the user picked; only the enabled alias says what is on screen. The
+     * two can drift — a restored backup rewrites the preference on an install whose alias it cannot
+     * touch — and trusting the preference then made [isIconChangeNeeded] answer "nothing to do" while
+     * the launcher still showed the old icon, leaving no way to fix it from the picker.
+     */
+    fun currentAliasColor(): Int {
+        val pm = context.packageManager
+        return ICON_ALIASES.firstOrNull { (_, suffix) ->
+            when (runCatching { pm.getComponentEnabledSetting(aliasComponent(suffix)) }.getOrNull()) {
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED -> true
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED -> false
+                else -> suffix == MANIFEST_DEFAULT_SUFFIX
+            }
+        }?.first ?: ICON_ALIASES.first { it.second == MANIFEST_DEFAULT_SUFFIX }.first
+    }
+
+    /**
+     * The icon colour the user's settings ask for: the theme colour when the icon is set to follow it,
+     * otherwise the colour picked in the app-icon tab. Shared by the theme picker and by the post-restore
+     * check so both resolve it the same way.
+     */
+    fun desiredColor(): Int = when {
+        prefs.linkIconToTheme.get() -> prefs.theme().get()
+        else -> prefs.appIconColor.get()
+    }
+
     /** Whether applying [themeColor] would switch the launcher to a different icon than the active one. */
     fun isIconChangeNeeded(themeColor: Int): Boolean =
-        nearestAliasColor(themeColor) != prefs.appIconColor.get()
+        nearestAliasColor(themeColor) != currentAliasColor()
 
     /**
      * Switches the launcher activity-alias to the icon closest to [themeColor], then invokes

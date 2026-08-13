@@ -302,8 +302,12 @@ class ThemePickerDialog : DialogFragment() {
     private fun saveIconChoice() {
         val followTheme = binding.iconFollowTheme.isChecked
         prefs.linkIconToTheme.set(followTheme)
-        // The icon either tracks the theme colour or uses the colour picked in the app-icon tab.
-        val color = if (followTheme) selectedColor else selectedIconColor
+        // Record the independently-picked colour even when no swap follows, so it survives as the user's
+        // choice (it is part of the backup, and the grid reopens on it).
+        if (!followTheme) prefs.appIconColor.set(selectedIconColor)
+        // The theme preference was written just above by the OK handler, so this resolves to the same
+        // colour the dialog is showing while keeping one definition of "which icon do the settings ask for".
+        val color = launcherIconManager.desiredColor()
         // Nothing to do if the chosen icon colour already maps to the active alias — this is also what
         // keeps a plain theme tweak (icon left on a custom colour that didn't change) from closing the app.
         if (!launcherIconManager.isIconChangeNeeded(color)) return
