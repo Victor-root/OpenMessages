@@ -33,7 +33,6 @@ android {
         // versionCode by 1 and update versionName for each release.
         versionCode 1
         versionName '1.0.0'
-        setProperty("archivesBaseName", "OpenMessages-v${versionName}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -117,19 +116,19 @@ android {
         buildConfig true
         viewBinding true
     }
+}
 
-    // Name every built APK after the version, e.g. OpenMessages-v1.0.0.apk, so the signed release
-    // never needs renaming by hand. Debug keeps its -debug suffix (from versionNameSuffix), so the
-    // two never collide.
-    //
-    // This uses the old variant API, deprecated on AGP 8 and removed in AGP 9. It fails loudly when
-    // that day comes ("could not find method applicationVariants"), so there is nothing silent to
-    // guard against; replace it then, together with the rest of that upgrade.
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-            output.outputFileName = "OpenMessages-v${variant.versionName}.apk"
-        }
-    }
+// Names every built file after the version: OpenMessages-v1.0.0-release.apk and
+// OpenMessages-v1.0.0-debug.apk, so a signed release never needs renaming by hand and the two never
+// collide.
+//
+// The build type is part of the name rather than absent from the release one, because the only way
+// to control the file name exactly is the old variant API: deprecated on AGP 8, removed in AGP 9,
+// and with nothing public to replace it (the new VariantOutput carries no file name, and the class
+// that does is internal). Taking the suffix is what buys a build that has no deprecated API left in
+// it and nothing to repair on the day of that upgrade.
+base {
+    archivesName = "OpenMessages-v${android.defaultConfig.versionName}"
 }
 
 configurations {
