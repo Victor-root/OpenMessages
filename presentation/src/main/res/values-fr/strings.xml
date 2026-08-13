@@ -410,7 +410,7 @@
     <string name="blocking_source_flag_block_summary">Envoie les messages étiquetés « spam potentiel » directement dans la liste des bloqués au lieu de seulement les signaler dans la boîte de réception</string>
     <string name="blocking_source_status_updating">Mise à jour…</string>
     <string name="blocking_source_status_updated">À jour · %1$d entrées</string>
-    <string name="blocking_source_status_failed">Échec de la mise à jour</string>
+    <string name="blocking_source_status_failed">Échec du téléchargement, la source reste désactivée. Vérifiez votre connexion et réessayez.</string>
 
     <string name="blocking_manager_title">Gestionnaire de blocage</string>
     <string name="blocking_manager_qksms_summary">Fonction de blocage intégrée dans Open Messages</string>

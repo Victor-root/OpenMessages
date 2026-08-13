@@ -61,6 +61,13 @@ class BlockingPresenter @Inject constructor(
         disposables += prefs.drop.asObservable()
                 .subscribe { enabled -> newState { copy(dropEnabled = enabled) } }
 
+        // The source is only on if there is a list to match against. It can be stored as on with no
+        // list behind it — a download that failed on an older build, or a restore onto a device the
+        // list was never fetched on — and the switch would then claim a protection that isn't there.
+        if (prefs.blockSourcePhishing.get() && !downloader.phishingDownloaded()) {
+            prefs.blockSourcePhishing.set(false)
+        }
+
         newState { copy(phishingSummary = phishingSummary()) }
     }
 
@@ -123,6 +130,9 @@ class BlockingPresenter @Inject constructor(
                         newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_updated, count)) }
                     }, { error ->
                         Timber.w(error, "Phishing list download failed")
+                        // Nothing was stored, so nothing can be matched: switch back off rather than
+                        // sit there enabled and filtering nothing. Toggling it again retries.
+                        prefs.blockSourcePhishing.set(false)
                         newState { copy(phishingSummary = context.getString(R.string.blocking_source_status_failed)) }
                     })
         } else {

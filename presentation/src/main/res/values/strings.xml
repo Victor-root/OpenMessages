@@ -460,7 +460,7 @@
     <string name="blocking_source_flag_block_summary">Send messages tagged as potential spam straight to the blocked list instead of just labelling them in the inbox</string>
     <string name="blocking_source_status_updating">Updating…</string>
     <string name="blocking_source_status_updated">Up to date · %1$d entries</string>
-    <string name="blocking_source_status_failed">Update failed</string>
+    <string name="blocking_source_status_failed">Download failed, the source stays off. Check your connection and try again.</string>
 
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_qksms_summary">Built-in blocking functionality in Open Messages</string>
