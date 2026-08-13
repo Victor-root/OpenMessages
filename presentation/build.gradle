@@ -46,10 +46,12 @@ android {
                 keystoreProps.load(new FileInputStream(keystorePropsFile))
                 // storeFile is resolved relative to the repo root (where keystore.properties lives),
                 // so an entry like storeFile=my-release-key.jks just works. Absolute paths also work.
-                storeFile rootProject.file(keystoreProps['storeFile'])
-                storePassword keystoreProps['storePassword']
-                keyAlias keystoreProps['keyAlias']
-                keyPassword keystoreProps['keyPassword']
+                // Each entry is set only when present, so a file missing one of them is reported by
+                // the signing check at the bottom of this file rather than failing here on a null.
+                if (keystoreProps['storeFile'] != null) storeFile rootProject.file(keystoreProps['storeFile'])
+                if (keystoreProps['storePassword'] != null) storePassword keystoreProps['storePassword']
+                if (keystoreProps['keyAlias'] != null) keyAlias keystoreProps['keyAlias']
+                if (keystoreProps['keyPassword'] != null) keyPassword keystoreProps['keyPassword']
             }
             // Sign with the legacy JAR scheme (v1, for API < 24) plus the modern full-APK schemes
             // (v2 for API 24+, v3 for API 28+ key rotation) when building the release variant via
@@ -90,6 +92,9 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             resValue("string", "app_name", "Open Messages Debug")
+            // The launcher entries are labelled with launcher_name, not app_name, so overriding
+            // app_name alone left both installed versions showing the same name on the home screen.
+            resValue("string", "launcher_name", "Messages Debug")
             resValue("string", "application_id", defaultConfig.applicationId)
             signingConfig signingConfigs.debug
         }
@@ -128,12 +133,6 @@ android {
         variant.outputs.all { output ->
             output.outputFileName = "OpenMessages-v${variant.versionName}.apk"
         }
-    }
-
-    if (System.getenv("CI") == "true") {
-        signingConfigs.release.storePassword = System.getenv("keystore_password")
-        signingConfigs.release.keyAlias = System.getenv("key_alias")
-        signingConfigs.release.keyPassword = System.getenv("key_password")
     }
 }
 
@@ -244,12 +243,25 @@ dependencies {
     implementation project(':domain')
 
 }
-// Check to make sure that the keystore file is present when building a release
+// An unsigned release APK installs nowhere, and nothing along the way says so: the build succeeds
+// and the file looks normal. Fail as soon as the task graph is known instead, before spending a
+// full build on it. This checks the signing configuration itself rather than the presence of
+// keystore.properties, so it holds for every way the credentials can arrive.
 gradle.taskGraph.whenReady { taskGraph ->
-    if ((taskGraph.hasTask(':assembleRelease') ||
-            taskGraph.allTasks.any { it.name == 'assembleRelease' }) &&
-            !rootProject.file('keystore.properties').exists() &&
-            System.getenv("CI") != "true") {
-        throw new GradleException("Keystore properties file not found")
+    if (!taskGraph.allTasks.any { it.name ==~ /^(assemble|bundle|install)(Release|Fdroid)$/ }) {
+        return
+    }
+    def signing = android.signingConfigs.release
+    def missing = [storeFile    : signing.storeFile,
+                   storePassword: signing.storePassword,
+                   keyAlias     : signing.keyAlias,
+                   keyPassword  : signing.keyPassword]
+            .findAll { entry -> entry.value == null }
+            .keySet()
+    if (!missing.isEmpty()) {
+        throw new GradleException(
+                "Release signing is incomplete, missing: ${missing.join(', ')}.\n" +
+                "Create keystore.properties at the repository root with storeFile, storePassword, " +
+                "keyAlias and keyPassword. storeFile is resolved from the repository root.")
     }
 }

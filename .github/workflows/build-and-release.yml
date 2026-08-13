@@ -109,11 +109,16 @@ jobs:
           echo "$KEYSTORE_B64" | base64 -d > presentation/my-release-key.keystore
           chmod 600 presentation/my-release-key.keystore
 
+          # The build reads its signing credentials from keystore.properties, the same file a local
+          # release build uses. Passing them as environment variables instead left storeFile unset,
+          # and the build then produced an unsigned APK without saying so.
+          umask 077
           {
-            echo "keystore_password=$KEYSTORE_PASSWORD"
-            echo "key_alias=$KEY_ALIAS"
-            echo "key_password=$KEY_PASSWORD"
-          } >> "$GITHUB_ENV"
+            printf 'storeFile=%s\n' 'presentation/my-release-key.keystore'
+            printf 'storePassword=%s\n' "$KEYSTORE_PASSWORD"
+            printf 'keyAlias=%s\n' "$KEY_ALIAS"
+            printf 'keyPassword=%s\n' "$KEY_PASSWORD"
+          } > keystore.properties
 
       - name: Capture version metadata
         id: version
@@ -266,5 +271,5 @@ jobs:
 
       - name: Cleanup signing key
         if: always()
-        run: rm -f presentation/my-release-key.keystore
+        run: rm -f presentation/my-release-key.keystore keystore.properties
 
