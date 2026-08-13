@@ -269,7 +269,13 @@ class ComposeViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation ->
                     val messages = messageRepo.getMessages(conversation.id)
-                    newState { copy(threadId = conversation.id, messages = Pair(conversation, messages)) }
+                    // Scheduled messages come from their own collection, shown after the real ones.
+                    val scheduled = scheduledMessageRepo.getScheduledMessagesForConversation(conversation.id)
+                    newState {
+                        copy(threadId = conversation.id,
+                                messages = Pair(conversation, messages),
+                                scheduledMessages = scheduled)
+                    }
                     messages
                 }
                 .switchMap { messages -> messages.asObservable() }
@@ -457,14 +463,13 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { newState { copy() } }
 
-        // Show scheduled messages
-        view.optionsItemIntent
-            .filter {it == R.id.viewScheduledMessages}
-            .withLatestFrom(state, conversation)
+        // Show scheduled messages, from the toolbar or by tapping one of them in the conversation
+        Observable.merge(
+                view.optionsItemIntent.filter { it == R.id.viewScheduledMessages }.map { Unit },
+                view.scheduledMessageClickIntent.map { Unit })
+            .withLatestFrom(conversation, BiFunction { _: Unit, conversation: Conversation -> conversation.id })
             .autoDisposable(view.scope())
-            .subscribe { (_, _, conversation) ->
-                navigator.showScheduled(conversation.id)
-            }
+            .subscribe { conversationId -> navigator.showScheduled(conversationId) }
 
         // toggle select all / select none
         view.optionsItemIntent

@@ -667,6 +667,12 @@
     <string name="snippet_audio">Audio</string>
     <string name="snippet_contact_card">Carte de contact</string>
     <string name="compose_scheduled_view">Messages programmés pour cette conversation</string>
+    <string name="compose_scheduled_bubble">Envoi prévu à %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d pièce jointe</item>
+        <item quantity="many">%d pièces jointes</item>
+        <item quantity="other">%d pièces jointes</item>
+    </plurals>
     <string name="scheduled_send_cd">Programmer l\'envoi de ce message</string>
     <string name="message_content_filters_title">Filtres de contenu des messages</string>
     <string name="message_content_filters_empty">Les filtres de contenu des messages apparaîtront ici</string>

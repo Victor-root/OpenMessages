@@ -168,6 +168,12 @@
     <string name="compose_scheduled_plus">You must unlock Open Messages+ to use scheduled messaging</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_scheduled_view">Scheduled messages for this conversation</string>
+    <!-- Caption under a message shown in the conversation while it waits for its send time -->
+    <string name="compose_scheduled_bubble">Sending at %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d attachment</item>
+        <item quantity="other">%d attachments</item>
+    </plurals>
     <string name="compose_hint">Write a message…</string>
     <string name="compose_expand_cd">Expand to full screen</string>
     <string name="compose_collapse_cd">Collapse</string>

@@ -55,6 +55,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -112,6 +113,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
+    @Inject lateinit var scheduledMessagesAdapter: ScheduledMessagesAdapter
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var blockingDialog: BlockingDialog
@@ -185,6 +187,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val clearCurrentMessageIntent: Subject<Boolean> = PublishSubject.create()
     override val messageLinkAskIntent: Subject<Uri> by lazy { messageAdapter.messageLinkClicks }
     override val reactionClickIntent: Subject<Long> by lazy { messageAdapter.reactionClicks }
+    override val scheduledMessageClickIntent: Subject<Long> by lazy { scheduledMessagesAdapter.clicks }
     override val speechRecogniserIntent by lazy { binding.speechToTextIcon.clicks() }
     override val shadeIntent by lazy { binding.shadeBackground.clicks() }
     override val recordAudioStartStopRecording: Subject<Boolean> = PublishSubject.create()
@@ -248,7 +251,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             messageAdapter.emptyView = binding.messagesEmpty
 
             binding.messageList.setHasFixedSize(true)
-            binding.messageList.adapter = messageAdapter
+            // Two lists in one: the conversation's messages, then the ones still waiting for their
+            // send time. Scheduled messages are always in the future, so appending them keeps them
+            // last without anything having to reorder when a message is sent in the meantime.
+            binding.messageList.adapter = ConcatAdapter(messageAdapter, scheduledMessagesAdapter)
 
             binding.messageAttachments.adapter = composeAttachmentAdapter
 
@@ -575,6 +581,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.messageList.setVisible(!state.editingMode || state.sendAsGroup || state.selectedChips.size == 1)
         messageAdapter.data = state.messages
         messageAdapter.highlight = state.searchSelectionId
+        scheduledMessagesAdapter.updateData(state.scheduledMessages)
 
         binding.scheduledGroup.isVisible = state.scheduled != 0L
         binding.scheduledTime.text = dateFormatter.getScheduledTimestamp(state.scheduled)

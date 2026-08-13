@@ -86,6 +86,8 @@ interface ComposeView : QkView<ComposeState> {
     val clearCurrentMessageIntent: Subject<Boolean>
     val messageLinkAskIntent: Observable<Uri>
     val reactionClickIntent: Subject<Long>
+    /** The scheduled message tapped in the conversation. */
+    val scheduledMessageClickIntent: Observable<Long>
     val speechRecogniserIntent: Observable<*>
     val shadeIntent: Observable<Unit>
     val recordAudioStartStopRecording: Subject<Boolean>
