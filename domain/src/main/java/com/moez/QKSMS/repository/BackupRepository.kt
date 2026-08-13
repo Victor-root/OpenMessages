@@ -34,6 +34,8 @@ interface BackupRepository {
         class Saving : Progress(true)
         class Syncing : Progress(true)
         class Finished : Progress(true, false)
+        /** The backup could not be written (no space, folder gone, permission revoked). */
+        class Failed : Progress(true, false)
     }
 
     fun getDefaultBackupPath(): String
@@ -47,8 +49,12 @@ interface BackupRepository {
 
     fun persistBackupDirectory(directory: Uri)
 
-    /** Writes a date-and-time named sub-folder with a manifest and one file per selected category. */
-    fun performBackup(categories: Set<BackupCategory>)
+    /**
+     * Writes a date-and-time named sub-folder with a manifest and one file per selected category.
+     * Returns false if the backup could not be written, so a caller running unattended (the automatic
+     * backup worker) can ask to be retried instead of recording a success that never happened.
+     */
+    fun performBackup(categories: Set<BackupCategory>): Boolean
 
     fun getBackupProgress(): Observable<Progress>
 

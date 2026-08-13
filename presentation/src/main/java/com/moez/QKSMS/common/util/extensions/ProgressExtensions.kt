@@ -29,6 +29,7 @@ fun BackupRepository.Progress.getLabel(context: Context): String? {
         is BackupRepository.Progress.Saving -> context.getString(R.string.backup_progress_saving)
         is BackupRepository.Progress.Syncing -> context.getString(R.string.backup_progress_syncing)
         is BackupRepository.Progress.Finished -> context.getString(R.string.backup_progress_finished)
+        is BackupRepository.Progress.Failed -> context.getString(R.string.backup_progress_failed)
         else -> null
     }
 }

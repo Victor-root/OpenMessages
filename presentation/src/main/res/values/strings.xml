@@ -249,6 +249,7 @@
 
     <string name="backup_title">Backup and restore</string>
     <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_failed_title">Backup failed</string>
     <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
@@ -316,6 +317,7 @@
     <string name="backup_progress_saving">Saving backup…</string>
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_failed">The backup could not be written. Check the space left and the backup folder.</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
 
     <string name="clipboard_too_large_to_copy">Data size exceeds clipboard limit</string>

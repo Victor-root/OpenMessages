@@ -73,8 +73,14 @@ class AutoBackupWorker(appContext: Context, workerParams: WorkerParameters)
 
     override fun doWork(): Result {
         return try {
-            backupRepo.performBackup(BackupCategory.values().toSet())
-            Result.success()
+            // A failure here is usually transient (no space left, the backup folder temporarily
+            // unavailable), so ask to be retried rather than recording a success that never happened.
+            if (backupRepo.performBackup(BackupCategory.values().toSet())) {
+                Result.success()
+            } else {
+                Timber.w("Automatic backup did not complete")
+                Result.retry()
+            }
         } catch (e: Exception) {
             Timber.w(e)
             Result.failure()

@@ -211,6 +211,7 @@
     <string name="gallery_toast_saved">Enregistré dans la galerie</string>
     <string name="backup_title">Sauvegarde et restauration</string>
     <string name="backup_backing_up">Sauvegarde des messages</string>
+    <string name="backup_failed_title">Échec de la sauvegarde</string>
     <string name="backup_restoring">Restaurer à partir d’une sauvegarde</string>
     <string name="backup_loading">Chargement…</string>
     <string name="backup_never">Jamais</string>
@@ -278,6 +279,7 @@
     <string name="backup_progress_saving">Enregistrement de la sauvegarde…</string>
     <string name="backup_progress_syncing">Synchronisation des messages…</string>
     <string name="backup_progress_finished">Terminé !</string>
+    <string name="backup_progress_failed">La sauvegarde n’a pas pu être écrite. Vérifiez l’espace disponible et le dossier de sauvegarde.</string>
     <string name="backup_notification_channel_name">Sauvegarde et restauration</string>
     <string name="clipboard_too_large_to_copy">La taille des données dépasse la limite du presse-papier</string>
     <string name="clipboard_unable_to_copy_to">Impossible de copier dans le presse-papier</string>

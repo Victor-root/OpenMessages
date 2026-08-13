@@ -108,6 +108,9 @@ class BackupRepositoryImpl @Inject constructor(
         /** Cache sub-folder a picked .zip backup is extracted into before it's restored. */
         private const val RESTORE_TEMP_DIR = "restore-backup"
 
+        /** How long a failed backup stays on screen before the panel returns to idle. */
+        private const val FAILED_LINGER_MS = 4000L
+
         /**
          * Preference keys that are device-specific or internal and must never be carried across a
          * restore (e.g. the SAF tree Uri of the backup folder, which is meaningless on another
@@ -294,9 +297,9 @@ class BackupRepositoryImpl @Inject constructor(
         Timber.v("Updated backup directory: $directory")
     }
 
-    override fun performBackup(categories: Set<BackupCategory>) {
+    override fun performBackup(categories: Set<BackupCategory>): Boolean {
         // If a backup or restore is already running, or nothing was selected, don't do anything
-        if (isBackupOrRestoreRunning() || categories.isEmpty()) return
+        if (isBackupOrRestoreRunning() || categories.isEmpty()) return false
 
         val createdAt = now()
         val folderName = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.getDefault()).format(createdAt)
@@ -413,12 +416,20 @@ class BackupRepositoryImpl @Inject constructor(
             // Finalise the set (closes the .zip archive; a no-op for folder destinations).
             destination.finish()
         } catch (e: Exception) {
-            Timber.w(e)
+            // Anything here means the set was never completed: no manifest was written, so the
+            // half-written folder is ignored by listBackups(). Report the failure instead of the
+            // unconditional "Finished!" this used to end on, which claimed success for a backup that
+            // does not exist.
+            Timber.w(e, "Backup failed")
+            backupProgress.onNext(BackupRepository.Progress.Failed())
+            Timer().schedule(FAILED_LINGER_MS) { backupProgress.onNext(BackupRepository.Progress.Idle()) }
+            return false
         }
 
         // Mark the task finished, and set it as Idle a second later
         backupProgress.onNext(BackupRepository.Progress.Finished())
         Timer().schedule(1000) { backupProgress.onNext(BackupRepository.Progress.Idle()) }
+        return true
     }
 
     /** Snapshots every stored preference (minus the device-specific denylist) grouped by type. */

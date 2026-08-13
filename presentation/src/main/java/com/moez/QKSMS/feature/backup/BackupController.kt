@@ -186,14 +186,18 @@ class BackupController : QkController<BackupControllerBinding, BackupView, Backu
     override fun render(state: BackupState) {
         when {
             state.backupProgress.running -> {
+                // A failed backup keeps the panel up for a few seconds, but says so plainly and drops
+                // the progress bar rather than posing as a backup still in progress.
+                val failed = state.backupProgress is BackupRepository.Progress.Failed
                 binding.progressIcon.setImageResource(R.drawable.ic_file_upload_black_24dp)
-                binding.progressTitle.setText(R.string.backup_backing_up)
+                binding.progressTitle.setText(
+                    if (failed) R.string.backup_failed_title else R.string.backup_backing_up)
                 binding.progressSummary.text = state.backupProgress.getLabel(activity!!)
                 binding.progressSummary.isVisible = binding.progressSummary.text.isNotEmpty()
                 binding.progressCancel.isVisible = false
                 val running = (state.backupProgress as? BackupRepository.Progress.Running)
-                binding.progressBar.isVisible =
-                    state.backupProgress.indeterminate || (running?.max ?: 0) > 0
+                binding.progressBar.isVisible = !failed &&
+                    (state.backupProgress.indeterminate || (running?.max ?: 0) > 0)
                 binding.progressBar.isIndeterminate = state.backupProgress.indeterminate
                 binding.progressBar.max = running?.max ?: 0
                 binding.progressBar.progress = running?.count ?: 0
