@@ -1,8 +1,8 @@
 <p align="center"><strong>📱 Screenshots</strong></p>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/94f53cd8-d569-4cec-b7a0-c38e97471f28" width="250" alt="OpenMessages mobile home screen"/>
-  <img src="https://github.com/user-attachments/assets/65b431b9-7fef-42a4-b139-50ef798c25cf" width="250" alt="OpenMessages mobile home screen"/>
-  <img src="https://github.com/user-attachments/assets/70d8da96-81df-4ea2-8b5c-dc7e3a40324b" width="250" alt="OpenMessages mobile home screen"/>
+  <img src="https://github.com/user-attachments/assets/013c6d76-7f17-42dc-b044-dab0b88634b2" width="250" alt="OpenMessages mobile home screen"/>
+  <img src="https://github.com/user-attachments/assets/b765262f-3b5b-4172-9e8f-e44b901f1074" width="250" alt="OpenMessages mobile home screen"/>
+  <img src="https://github.com/user-attachments/assets/4242ba35-a054-48c1-931c-fa1b163e337b" width="250" alt="OpenMessages mobile home screen"/>
 </p>
 
 ## ✨ What's different from upstream
@@ -110,12 +110,3 @@ some projects are still more focused on ***how*** code is written than on the **
 contribution itself**. I disagree with that approach: good code should be judged on the final result,
 maintainability, and whether the contributor understands what they are shipping, not on whether
 modern tools were involved. So instead of stopping there, I decided to maintain my own fork.
-
----
-
-## 💭 Philosophy
-
-**Open source is freedom.**
-
-Sometimes that means contributing upstream.
-Sometimes that means building your own path.
