@@ -708,10 +708,18 @@ open class MessageRepositoryImpl @Inject constructor(
     : Message {
         val threadId = TelephonyCompat.getOrCreateThreadId(context, address)
 
+        // One reception time, written to both stores. Left out of the values below, the provider
+        // stamps its own System.currentTimeMillis() at insert, while the Realm copy read another one
+        // a few milliseconds later: the same message then carried two different dates until the next
+        // full sync rebuilt Realm from the provider. Anything comparing the two — the restore's
+        // already-present check, for one — could never match them up.
+        val receivedTime = System.currentTimeMillis()
+
         // insert the message to the native content provider
         val values = contentValuesOf(
             Sms.ADDRESS to address,
             Sms.BODY to body,
+            Sms.DATE to receivedTime,
             Sms.DATE_SENT to sentTime,
             Sms.THREAD_ID to threadId
         )
@@ -733,7 +741,7 @@ open class MessageRepositoryImpl @Inject constructor(
             this.threadId = threadId
             this.subId = subId
 
-            date = System.currentTimeMillis()
+            date = receivedTime
 
             contentId = providerContentId
             boxId = Sms.MESSAGE_TYPE_INBOX
@@ -923,10 +931,14 @@ open class MessageRepositoryImpl @Inject constructor(
                 .equalTo("id", messageId)
                 .findFirst()
                 ?.let { message ->
+                    // Read the clock once: the two stores must record the same instant, not two
+                    // readings a few milliseconds apart (see insertReceivedSms).
+                    val deliveredTime = System.currentTimeMillis()
+
                     // Update the message in realm
                     realm.executeTransaction {
                         message.deliveryStatus = Sms.STATUS_COMPLETE
-                        message.dateSent = System.currentTimeMillis()
+                        message.dateSent = deliveredTime
                         message.read = true
                     }
 
@@ -935,7 +947,7 @@ open class MessageRepositoryImpl @Inject constructor(
                         message.getUri(),
                         contentValuesOf(
                             Sms.STATUS to Sms.STATUS_COMPLETE,
-                            Sms.DATE_SENT to System.currentTimeMillis(),
+                            Sms.DATE_SENT to deliveredTime,
                             Sms.READ to true,
                         ),
                         null,
@@ -955,10 +967,13 @@ open class MessageRepositoryImpl @Inject constructor(
                 .equalTo("id", messageId)
                 .findFirst()
                 ?.let { message ->
+                    // Same single clock reading as markDelivered above.
+                    val failedTime = System.currentTimeMillis()
+
                     // Update the message in realm
                     realm.executeTransaction {
                         message.deliveryStatus = Sms.STATUS_FAILED
-                        message.dateSent = System.currentTimeMillis()
+                        message.dateSent = failedTime
                         message.read = true
                         message.errorCode = resultCode
                     }
@@ -968,7 +983,7 @@ open class MessageRepositoryImpl @Inject constructor(
                         message.getUri(),
                         contentValuesOf(
                             Sms.STATUS to Sms.STATUS_FAILED,
-                            Sms.DATE_SENT to System.currentTimeMillis(),
+                            Sms.DATE_SENT to failedTime,
                             Sms.READ to true,
                             Sms.ERROR_CODE to resultCode,
                         ),
