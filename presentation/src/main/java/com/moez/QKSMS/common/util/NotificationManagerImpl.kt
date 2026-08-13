@@ -417,8 +417,8 @@ class NotificationManagerImpl @Inject constructor(
         }
     }
 
-    override fun notifyFailed(threadId: Long) {
-        val message = messageRepo.getMessage(threadId)
+    override fun notifyFailed(msgId: Long) {
+        val message = messageRepo.getMessage(msgId)
 
         if (message == null || !message.isFailedMessage()) {
             return
@@ -430,6 +430,10 @@ class NotificationManagerImpl @Inject constructor(
                 phoneNumberUtils.compare(recipient.address, lastMessage.address)
             }
         } ?: conversation.recipients.firstOrNull()
+
+        // Everything below identifies the *conversation*: the screen to open, the notification id,
+        // its channel and its ringtone. Only the resend action uses the message id.
+        val threadId = conversation.id
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
