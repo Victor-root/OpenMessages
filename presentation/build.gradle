@@ -98,14 +98,6 @@ android {
             resValue("string", "application_id", defaultConfig.applicationId)
             signingConfig signingConfigs.debug
         }
-        fdroid {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            matchingFallbacks = ['release']
-            applicationIdSuffix ".fdroid"
-        }
     }
 
     compileOptions {
@@ -129,6 +121,10 @@ android {
     // Name every built APK after the version, e.g. OpenMessages-v1.0.0.apk, so the signed release
     // never needs renaming by hand. Debug keeps its -debug suffix (from versionNameSuffix), so the
     // two never collide.
+    //
+    // This uses the old variant API, deprecated on AGP 8 and removed in AGP 9. It fails loudly when
+    // that day comes ("could not find method applicationVariants"), so there is nothing silent to
+    // guard against; replace it then, together with the rest of that upgrade.
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             output.outputFileName = "OpenMessages-v${variant.versionName}.apk"
@@ -139,7 +135,6 @@ android {
 configurations {
     debug
     release
-    fdroid
 }
 
 dependencies {
@@ -248,7 +243,7 @@ dependencies {
 // full build on it. This checks the signing configuration itself rather than the presence of
 // keystore.properties, so it holds for every way the credentials can arrive.
 gradle.taskGraph.whenReady { taskGraph ->
-    if (!taskGraph.allTasks.any { it.name ==~ /^(assemble|bundle|install)(Release|Fdroid)$/ }) {
+    if (!taskGraph.allTasks.any { it.name ==~ /^(assemble|bundle|install)Release$/ }) {
         return
     }
     def signing = android.signingConfigs.release
