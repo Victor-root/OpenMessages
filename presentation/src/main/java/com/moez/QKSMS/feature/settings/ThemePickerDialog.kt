@@ -89,6 +89,13 @@ class ThemePickerDialog : DialogFragment() {
         private const val ARG_RECIPIENT_ID = "recipientId"
         private const val ARG_INITIAL_COLOR = "initialColor"
 
+        // What the user has chosen but not yet confirmed. A rotation destroys and rebuilds the
+        // dialog, and without these it came back on the saved theme as if it had just been opened.
+        private const val STATE_SELECTED_COLOR = "selectedColor"
+        private const val STATE_SELECTED_ICON_COLOR = "selectedIconColor"
+        private const val STATE_ICON_FOLLOWS_THEME = "iconFollowsTheme"
+        private const val STATE_TAB = "tab"
+
         /**
          * [initialColor], when provided, is the colour the dialog opens on (selection, live preview
          * and chrome). Pass the conversation's *resolved* colour for a per-conversation picker, since
@@ -106,10 +113,12 @@ class ThemePickerDialog : DialogFragment() {
         appComponent.inject(this)
         recipientId = arguments?.getLong(ARG_RECIPIENT_ID) ?: 0L
         val themePref = prefs.theme(recipientId)
-        selectedColor = if (arguments?.containsKey(ARG_INITIAL_COLOR) == true) {
-            arguments!!.getInt(ARG_INITIAL_COLOR)
-        } else {
-            themePref.get()
+        // Non-null only when this dialog is coming back from a rotation, in which case the pending
+        // choice wins over both the opening colour and the saved one.
+        val restored = savedInstanceState?.takeIf { it.containsKey(STATE_SELECTED_COLOR) }
+        selectedColor = restored?.getInt(STATE_SELECTED_COLOR) ?: when {
+            arguments?.containsKey(ARG_INITIAL_COLOR) == true -> arguments!!.getInt(ARG_INITIAL_COLOR)
+            else -> themePref.get()
         }
 
         val inflater = LayoutInflater.from(requireContext())
@@ -166,20 +175,25 @@ class ThemePickerDialog : DialogFragment() {
         // The launcher icon is a global, app-wide concept, so the icon tab is only shown when theming
         // the whole app — a per-conversation colour drops it and keeps just Presets + Custom.
         if (recipientId == 0L) {
-            selectedIconColor = prefs.appIconColor.get()
+            selectedIconColor = restored?.getInt(STATE_SELECTED_ICON_COLOR) ?: prefs.appIconColor.get()
             iconColorAdapter = ColorGridAdapter(
                 LauncherIconManager.ICON_ALIASES.map { it.first }, selectedIconColor
             ) { color -> selectIconColor(color) }
             binding.iconColorGrid.layoutManager = GridLayoutManager(requireContext(), 4)
             binding.iconColorGrid.adapter = iconColorAdapter
             binding.iconColorGrid.itemAnimator = null
-            binding.iconFollowTheme.isChecked = prefs.linkIconToTheme.get()
+            binding.iconFollowTheme.isChecked =
+                restored?.getBoolean(STATE_ICON_FOLLOWS_THEME) ?: prefs.linkIconToTheme.get()
             binding.iconFollowTheme.setOnCheckedChangeListener { _, _ -> updateIconGridVisibility() }
             updateIconGridVisibility()
         } else {
             binding.tabLayout.getTabAt(2)?.let { binding.tabLayout.removeTab(it) }
             binding.iconPage.isVisible = false
         }
+
+        // Once the tab set is final: come back on the tab the user was on. Selecting it runs the
+        // listener above, which shows the matching page.
+        restored?.getInt(STATE_TAB)?.let { index -> binding.tabLayout.getTabAt(index)?.select() }
 
         // Wallpaper color (API 27+, no permission required)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -220,6 +234,17 @@ class ThemePickerDialog : DialogFragment() {
                 }
             }
             .create()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(STATE_SELECTED_COLOR, selectedColor)
+        outState.putInt(STATE_TAB, binding.tabLayout.selectedTabPosition)
+        // Written under the same condition they are read back, so the icon tab exists in both.
+        if (recipientId == 0L) {
+            outState.putInt(STATE_SELECTED_ICON_COLOR, selectedIconColor)
+            outState.putBoolean(STATE_ICON_FOLLOWS_THEME, binding.iconFollowTheme.isChecked)
+        }
     }
 
     override fun onStart() {
