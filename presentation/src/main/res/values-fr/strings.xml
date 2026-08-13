@@ -18,6 +18,7 @@
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="app_name" translatable="false">Open Messages</string>
+    <string name="app_tagline">Une messagerie simple et open source</string>
     <string name="shortcut_compose_long_label">Nouvelle conversation</string>
     <string name="shortcut_compose_short_label">Rédiger</string>
     <string name="shortcut_compose_disabled_message">Raccourci désactivé</string>
@@ -37,6 +38,7 @@
     <string name="theme_icon_change_title">Changer l’icône de l’application ?</string>
     <string name="theme_icon_change_message">La couleur de l’icône de l’application va changer. Android ne sait changer l’icône que si l’application est fermée : Open Messages va donc se fermer dès que vous confirmez.</string>
     <string name="title_conversations">Rechercher dans les conversations…</string>
+    <string name="title_search">Recherche</string>
     <string name="title_compose">Entrer un nom ou un numéro</string>
     <string name="title_qksms_plus" translatable="false">If you see this, send in an issue please!</string>
     <string name="setup_skip">Ignorer</string>
@@ -298,6 +300,11 @@
     <string name="scheduled_empty_message_3_timestamp">Envoyé le 23 décembre </string>
     <string name="scheduled_compose_cd">Programmer un message</string>
     <string name="scheduled_options_title">Message programmé</string>
+    <string-array name="scheduled_options">
+        <item>Envoyer maintenant</item>
+        <item>Copier le texte</item>
+        <item>Supprimer</item>
+    </string-array>
     <string name="attachment_missing">Manquant</string>
     <string name="settings_category_appearance">Apparence</string>
     <string name="settings_category_general">Général</string>
@@ -676,6 +683,7 @@
         <item quantity="many">%d conversations désarchivées</item>
         <item quantity="other">%d conversations désarchivées</item>
     </plurals>
+    <string name="notification_foreground_worker_channel_name">Réception des messages</string>
     <string name="notification_message_failed_action">Réenvoyer</string>
     <string name="compose_send_group_summary_on">Les destinataires et les réponses seront visibles de tous</string>
     <string name="compose_send_group_summary_off">Les messages seront envoyés séparément à tous les destinataires</string>
