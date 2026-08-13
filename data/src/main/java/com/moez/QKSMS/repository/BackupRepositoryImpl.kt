@@ -987,6 +987,59 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     /**
+     * Identity of an SMS for restore purposes: sender, exact timestamp, direction and text. Every one
+     * of these is written back verbatim by the restore, so a message that is already on the device
+     * produces the same key. Strict on purpose — skipping a message that is not really a duplicate
+     * would lose it, while missing one only leaves the duplicate that exists today.
+     */
+    private fun smsKey(address: String?, date: Long, boxId: Int, body: String?) =
+            "${address.orEmpty()}|$date|$boxId|${body.orEmpty()}"
+
+    /**
+     * Same for an MMS, keyed on thread, timestamp (the provider stores seconds) and direction. The
+     * thread matters: sending one MMS to several people individually produces messages sharing a
+     * second and a box, and they must not cancel each other out.
+     */
+    private fun mmsKey(threadId: Long, dateSeconds: Long, boxId: Int) = "$threadId|$dateSeconds|$boxId"
+
+    /** Keys of the SMS already on the device, read in one pass so the restore can skip them. */
+    private fun existingSmsKeys(): MutableSet<String> {
+        val projection = arrayOf(Telephony.Sms.ADDRESS, Telephony.Sms.DATE, Telephony.Sms.TYPE, Telephony.Sms.BODY)
+        return try {
+            context.contentResolver.query(Telephony.Sms.CONTENT_URI, projection, null, null, null)
+                    ?.use { cursor ->
+                        val keys = HashSet<String>(cursor.count)
+                        while (cursor.moveToNext()) {
+                            keys.add(smsKey(cursor.getString(0), cursor.getLong(1), cursor.getInt(2), cursor.getString(3)))
+                        }
+                        keys
+                    } ?: HashSet()
+        } catch (e: Exception) {
+            // Without the list we simply restore everything, which is the previous behaviour.
+            Timber.w(e, "Could not list existing SMS, restoring without duplicate checks")
+            HashSet()
+        }
+    }
+
+    /** Keys of the MMS already on the device. */
+    private fun existingMmsKeys(): MutableSet<String> {
+        val projection = arrayOf(Telephony.Mms.THREAD_ID, Telephony.Mms.DATE, Telephony.Mms.MESSAGE_BOX)
+        return try {
+            context.contentResolver.query(Telephony.Mms.CONTENT_URI, projection, null, null, null)
+                    ?.use { cursor ->
+                        val keys = HashSet<String>(cursor.count)
+                        while (cursor.moveToNext()) {
+                            keys.add(mmsKey(cursor.getLong(0), cursor.getLong(1), cursor.getInt(2)))
+                        }
+                        keys
+                    } ?: HashSet()
+        } catch (e: Exception) {
+            Timber.w(e, "Could not list existing MMS, restoring without duplicate checks")
+            HashSet()
+        }
+    }
+
+    /**
      * Restores SMS and MMS messages into the system provider, then triggers a sync. Returns false if
      * the user cancelled part-way through (so the caller can leave the progress at Idle).
      */
@@ -999,6 +1052,14 @@ class BackupRepositoryImpl @Inject constructor(
 
         val total = backup.messages.size + backup.mms.size
         var errorCount = 0
+        var skippedCount = 0
+
+        // What the device already holds, read once up front: restoring onto a phone that still has
+        // these messages used to insert a second copy of every one of them. Kept as sets so each
+        // check is immediate, and grown as we insert so a backup containing the same message twice
+        // does not reintroduce the problem on a clean device.
+        val existingSms = existingSmsKeys()
+        val existingMms = existingMmsKeys()
 
         backup.messages.forEachIndexed { index, message ->
             if (stopFlag) {
@@ -1008,6 +1069,12 @@ class BackupRepositoryImpl @Inject constructor(
 
             // Update the progress
             restoreProgress.onNext(BackupRepository.Progress.Running(total, index))
+
+            val key = smsKey(message.address, message.date, message.type, message.body)
+            if (!existingSms.add(key)) {
+                skippedCount++
+                return@forEachIndexed
+            }
 
             try {
                 val values = contentValuesOf(
@@ -1046,7 +1113,7 @@ class BackupRepositoryImpl @Inject constructor(
             restoreProgress.onNext(BackupRepository.Progress.Running(total, backup.messages.size + index))
 
             try {
-                restoreMms(mms, attachmentsDir)
+                if (!restoreMms(mms, attachmentsDir, existingMms)) skippedCount++
             } catch (e: Exception) {
                 Timber.w(e)
                 errorCount++
@@ -1055,6 +1122,9 @@ class BackupRepositoryImpl @Inject constructor(
 
         if (errorCount > 0) {
             Timber.w(Exception("Failed to restore $errorCount/$total messages"))
+        }
+        if (skippedCount > 0) {
+            Timber.i("Skipped %d/%d messages already on the device", skippedCount, total)
         }
 
         // Sync the messages, then wait for it to finish. syncMessages() does its Realm work on a
@@ -1100,18 +1170,26 @@ class BackupRepositoryImpl @Inject constructor(
      * message row, then its parts (text inline, binary written to the part's output stream), then its
      * address rows. The thread is re-resolved from the recipient list, and dates go back to seconds.
      */
-    private fun restoreMms(mms: BackupMmsMessage, attachmentsDir: DocumentFile?) {
+    private fun restoreMms(
+        mms: BackupMmsMessage,
+        attachmentsDir: DocumentFile?,
+        existingMms: MutableSet<String>
+    ): Boolean {
         val recipients = mms.recipients.ifEmpty { fallbackRecipients(mms) }
         if (recipients.isEmpty()) {
             Timber.w("MMS skipped: no recipients (box=${mms.boxId}, parts=${mms.parts.size})")
-            return
+            return true
         }
 
         val threadId = TelephonyCompat.getOrCreateThreadId(context, recipients)
         if (threadId <= 0L) {
             Timber.w("MMS skipped: couldn't resolve a thread for $recipients")
-            return
+            return true
         }
+
+        // The thread is only known here, so the already-present check happens now rather than in the
+        // caller. Returning false says "this one was already on the device", nothing was written.
+        if (!existingMms.add(mmsKey(threadId, mms.date / 1000L, mms.boxId))) return false
 
         val values = ContentValues().apply {
             put(Telephony.Mms.THREAD_ID, threadId)
@@ -1137,7 +1215,7 @@ class BackupRepositoryImpl @Inject constructor(
         val mmsUri = context.contentResolver.insert(Telephony.Mms.CONTENT_URI, values)
         if (mmsUri == null) {
             Timber.w("MMS insert refused (box=${mms.boxId}, thread=$threadId, parts=${mms.parts.size})")
-            return
+            return true
         }
         val mmsId = ContentUris.parseId(mmsUri)
 
@@ -1174,6 +1252,7 @@ class BackupRepositoryImpl @Inject constructor(
             }
             context.contentResolver.insert(addrUri, addrValues)
         }
+        return true
     }
 
     /**
