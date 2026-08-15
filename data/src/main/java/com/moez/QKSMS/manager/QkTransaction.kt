@@ -501,6 +501,11 @@ object QkTransaction {
                 FileOutputStream(mSendFile).use {
                     it.write(PduComposer(context, sendPdu).make())
                 }
+
+                // The two things a refused MMS is usually traced back to: how big it ended up once
+                // composed, against whatever ceiling the carrier enforces, and which SIM carried it.
+                Timber.v("mms composed: ${mSendFile.length()} bytes, subscription $subscriptionId")
+
                 (Uri.Builder())
                     .authority(context.packageName + ".MmsFileProvider")
                     .path(fileName)
