@@ -458,18 +458,26 @@ open class MessageRepositoryImpl @Inject constructor(
                 ?.let(SmsManagerFactory::createSmsManager)
                 ?: SmsManager.getDefault()
 
+            // A carrier config answers 0 for anything it doesn't carry, which is what a device
+            // gets when the config never loaded or the carrier is not one it knows. Zero is not a
+            // limit: as a size it scales the image away to nothing, which Glide refuses outright,
+            // and as a budget it leaves no room for the message at all. Only a positive number
+            // states a limit, so anything else is read as none being known, which is the same
+            // position the app is in when the user set the size themselves.
             val maxWidth = smsManager.carrierConfigValues
                 .getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_WIDTH)
-                .takeIf { prefs.mmsSize.get() == -1 }
+                .takeIf { prefs.mmsSize.get() == -1 && it > 0 }
                 ?: Int.MAX_VALUE
 
             val maxHeight = smsManager.carrierConfigValues
                 .getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_HEIGHT)
-                .takeIf { prefs.mmsSize.get() == -1 }
+                .takeIf { prefs.mmsSize.get() == -1 && it > 0 }
                 ?: Int.MAX_VALUE
 
             var remainingBytes = when (prefs.mmsSize.get()) {
                 -1 -> smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
+                    .takeIf { it > 0 }
+                    ?: (300 * 1024) // what Android settles on when a carrier states no maximum
                 0 -> Int.MAX_VALUE
                 else -> prefs.mmsSize.get() * 1024
             } * 0.9 // Ugly, but buys us a bit of wiggle room

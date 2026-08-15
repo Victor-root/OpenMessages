@@ -20,6 +20,7 @@ package io.openmessages.mapper
 
 import android.content.Context
 import android.database.Cursor
+import android.provider.Telephony.CanonicalAddressesColumns
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.Recipient
 import javax.inject.Inject
@@ -33,6 +34,15 @@ class CursorToRecipientImpl @Inject constructor(
     companion object {
         val URI = "content://mms-sms/canonical-addresses".toUri()
 
+        // Asked for by name, because the two below are positions and nothing obliges a provider to
+        // lay its table out the way this one expects. Letting the provider pick the columns, as
+        // this did, leaves those positions resting on a convention rather than on anything stated,
+        // and a recipient read off the wrong column is a wrong number to send to.
+        private val PROJECTION = arrayOf(
+                CanonicalAddressesColumns._ID,
+                CanonicalAddressesColumns.ADDRESS
+        )
+
         const val COLUMN_ID = 0
         const val COLUMN_ADDRESS = 1
     }
@@ -44,13 +54,14 @@ class CursorToRecipientImpl @Inject constructor(
 
     override fun getRecipientCursor(): Cursor? {
         return when (permissionManager.hasReadSms()) {
-            true -> context.contentResolver.query(URI, null, null, null, null)
+            true -> context.contentResolver.query(URI, PROJECTION, null, null, null)
             false -> null
         }
     }
 
     override fun getRecipientCursor(id: Long): Cursor? {
-        return context.contentResolver.query(URI, null, "_id = ?", arrayOf(id.toString()), null)
+        return context.contentResolver.query(URI, PROJECTION,
+                "${CanonicalAddressesColumns._ID} = ?", arrayOf(id.toString()), null)
     }
 
 }
