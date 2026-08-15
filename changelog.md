@@ -1,5 +1,16 @@
 # 📋 Changelog
 
+## 🚀 v1.0.1 (2026-08-15)
+
+A bug-fix release. Every issue below is a pre-existing bug from the original QUIK/QKSMS codebase, not a regression introduced during the Open Messages rebrand: all five were already present in the code this project forked from, and only ever showed up on certain phones or certain settings, which is why they went unnoticed until now.
+
+### 🐛 Fixed
+- 📥 **(inherited from upstream) Conversations imported from another SMS app** no longer land in the inbox if they were archived there before switching to Open Messages.
+- 📷 **(inherited from upstream) MMS (photo/video) sends failing instantly** on some phones, where the app mistook a missing SIM preference for subscription "0" and tried to send over a SIM that doesn't exist.
+- 📇 **(inherited from upstream) Recipients possibly resolving to the wrong number** on phones whose system address book doesn't lay out its columns in the same order Android's reference implementation does.
+- 📏 **(inherited from upstream) MMS sends failing when the "Automatic" size setting was used** and the carrier reported no known limit, which the app mistook for a limit of zero.
+- 🗂️ **(inherited from upstream) The navigation drawer getting stuck reopening itself** right after closing it, during the first sync after installing.
+
 ## 🚀 v1.0.0 (2026-08-13)
 
 First public release of Open Messages, a rebrand and continued development of QUIK (itself a fork of QKSMS). Everything below is relative to the original QUIK/QKSMS this project started from.
