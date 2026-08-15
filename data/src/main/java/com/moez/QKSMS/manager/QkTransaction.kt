@@ -413,7 +413,7 @@ object QkTransaction {
         )
             ?.use { cursor ->
                 if (cursor.moveToFirst()) {
-                    cursor.getInt(0)
+                    cursor.getInt(0).orDefaultSubscription()
                 } else {
                     Timber.e("sub id provider db query returned no rows")
                     return retVal
@@ -446,6 +446,23 @@ object QkTransaction {
         return retVal
     }
 
+    /**
+     * The subscription an MMS row in the provider names, as a value [SmsManagerFactory] can act on.
+     *
+     * [PduPersister] only writes the column when a SIM was actually picked, so a message sent with
+     * no preference, which is every message on a single SIM phone, leaves it unwritten and the
+     * provider answers with its own default of 0. That is not a subscription any device hands out,
+     * and passing it on pins the send to one with no data network behind it, which the platform
+     * turns down as MMS_ERROR_NO_DATA_NETWORK without trying anything. Sending an SMS never hits
+     * this, because that path writes the column itself whatever the value, which is why a phone
+     * this happens on still texts perfectly well.
+     *
+     * A device that really did number a subscription 0 loses nothing: the default SMS subscription
+     * is that same SIM.
+     */
+    private fun Int.orDefaultSubscription(): Int =
+        takeIf { it > 0 } ?: Utils.getDefaultSubscriptionId()
+
     private fun sendMmsMessage(context: Context, messageUri: Uri, sentIntent: Intent): Boolean {
         try {
             Timber.v("send mms message uri $messageUri")
@@ -473,15 +490,15 @@ object QkTransaction {
                 ?.use { cursor ->
                     if (cursor.moveToFirst()) {
                         id = cursor.getInt(0)
-                        subscriptionId = cursor.getInt(1)
+                        subscriptionId = cursor.getInt(1).orDefaultSubscription()
                     } else {
                         Timber.e("sub id provider db query returned no rows")
-                        Utils.getDefaultSubscriptionId()
+                        subscriptionId = Utils.getDefaultSubscriptionId()
                     }
                 }
                 ?: let {
                     Timber.e("sub id provider db query failed")
-                    Utils.getDefaultSubscriptionId()
+                    subscriptionId = Utils.getDefaultSubscriptionId()
                 }
 
             // load message from provider db as a generic pdu
