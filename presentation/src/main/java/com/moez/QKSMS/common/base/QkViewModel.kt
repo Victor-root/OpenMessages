@@ -34,7 +34,10 @@ abstract class QkViewModel<in View : QkView<State>, State: Any>(initialState: St
     protected val disposables = CompositeDisposable()
     protected val state: Subject<State> = BehaviorSubject.createDefault(initialState)
 
-    private val stateReducer: Subject<State.() -> State> = PublishSubject.create()
+    // Reducers can arrive from more than one thread at once (e.g. a sampled background
+    // observable racing a UI event), and a plain Subject doesn't allow that: onNext must be
+    // serialized, or an update can be silently dropped.
+    private val stateReducer: Subject<State.() -> State> = PublishSubject.create<State.() -> State>().toSerialized()
 
     init {
         // If we accidentally push a realm object into the state on the wrong thread, switching
