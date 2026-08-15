@@ -112,6 +112,13 @@ class SyncRepositoryImpl @Inject constructor(
                         .findAll()
                 ).associateBy { conversation -> conversation.id }.toMutableMap()
 
+                // Archiving is only ever written to Realm, never back to the system provider, so
+                // the provider's flag is whatever the messaging app used before this one left
+                // there. It is the only thing to go on while migrating an inbox into a fresh
+                // install, and misleading from then on: a conversation unarchived here drops out
+                // of persistedData, and reading the provider again would archive it right back.
+                val isFirstSync = realm.where(SyncLog::class.java).count() == 0L
+
                 removeOldMessages(realm)
 
                 keys.reset()
@@ -187,6 +194,11 @@ class SyncRepositoryImpl @Inject constructor(
                                 )
                             )
                             val conversation = cursorToConversation.map(cursor).apply {
+                                // Past that first sync, persistedData is the only source for it
+                                if (!isFirstSync) {
+                                    archived = false
+                                }
+
                                 persistedData[id]?.let { persistedConversation ->
                                     archived = persistedConversation.archived
                                     blocked = persistedConversation.blocked

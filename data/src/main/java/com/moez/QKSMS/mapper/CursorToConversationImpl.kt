@@ -25,6 +25,7 @@ import android.provider.Telephony.Threads
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
+import io.openmessages.util.tryOrNull
 import javax.inject.Inject
 
 class CursorToConversationImpl @Inject constructor(
@@ -36,8 +37,16 @@ class CursorToConversationImpl @Inject constructor(
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
         val PROJECTION = arrayOf(
                 Threads._ID,
+                Threads.RECIPIENT_IDS,
+                Threads.ARCHIVED
+        )
+
+        private val PROJECTION_WITHOUT_ARCHIVED = arrayOf(
+                Threads._ID,
                 Threads.RECIPIENT_IDS
         )
+
+        private const val SORT_ORDER = "date desc"
 
         const val ID = 0
         const val RECIPIENT_IDS = 1
@@ -46,6 +55,12 @@ class CursorToConversationImpl @Inject constructor(
     override fun map(from: Cursor): Conversation {
         return Conversation().apply {
             id = from.getLong(ID)
+
+            // Read by name, not by position: the column is absent when the fallback projection
+            // was the one that went through.
+            val archivedColumn = from.getColumnIndex(Threads.ARCHIVED)
+            archived = archivedColumn != -1 && from.getInt(archivedColumn) != 0
+
             recipients.addAll(from.getString(RECIPIENT_IDS)
                     .split(" ")
                     .filter { it.isNotBlank() }
@@ -55,10 +70,17 @@ class CursorToConversationImpl @Inject constructor(
     }
 
     override fun getConversationsCursor(): Cursor? {
-        return when (permissionManager.hasReadSms()) {
-            true -> context.contentResolver.query(URI, PROJECTION, null, null, "date desc")
-            false -> null
+        if (!permissionManager.hasReadSms()) {
+            return null
         }
+
+        // Threads.ARCHIVED carries the archived state left behind by whichever messaging app owned
+        // the inbox before, but only providers that follow AOSP have the column. Asking an OEM
+        // provider that doesn't for it fails the entire query, which would leave the conversation
+        // list empty rather than merely unarchived, so fall back to the columns we cannot do
+        // without.
+        return tryOrNull { context.contentResolver.query(URI, PROJECTION, null, null, SORT_ORDER) }
+                ?: context.contentResolver.query(URI, PROJECTION_WITHOUT_ARCHIVED, null, null, SORT_ORDER)
     }
 
 }
