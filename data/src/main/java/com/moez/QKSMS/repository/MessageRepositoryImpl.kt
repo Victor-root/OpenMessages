@@ -82,6 +82,7 @@ import kotlin.math.sqrt
 open class MessageRepositoryImpl @Inject constructor(
     private val activeConversationManager: ActiveConversationManager,
     private val context: Context,
+    private val conversationRepo: ConversationRepository,
     private val messageIds: KeyManager,
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
@@ -450,6 +451,17 @@ open class MessageRepositoryImpl @Inject constructor(
                 }
 
                 Timber.v("sync back: $stableUri is message id $id on thread $threadId")
+
+                // The provider decides which thread a message ends up on, and it is free to pick
+                // one other than the thread the conversation was opened against: the addresses are
+                // resolved once to open the conversation and again, normalised, to write the
+                // message, and the two need not agree. Whichever thread it chose, the message is on
+                // it now, so the conversation for that thread has to exist. Without this the
+                // refresh that follows a send looks for a conversation that was never created,
+                // quietly does nothing, and the conversation stays out of the list for good while
+                // the message itself goes out. The sync path has always done this; sending had not.
+                conversationRepo.getOrCreateConversation(threadId)
+
                 insertOrUpdate()
             }
         } ?: run {
