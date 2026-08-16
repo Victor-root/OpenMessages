@@ -1375,8 +1375,10 @@ class ComposeViewModel @Inject constructor(
                         // send message
                         else -> {
                             sendNewMessage.execute(
-                                SendNewMessage.Params(subId, 0, addresses, body.toString(),
-                                    sendAsGroup, state.attachments.toList(), delay)
+                                // The conversation this was written in, so the message joins it
+                                // rather than whichever one the addresses resolve to next.
+                                SendNewMessage.Params(subId, conversationId, addresses,
+                                    body.toString(), sendAsGroup, state.attachments.toList(), delay)
                             )
                             playSentSound()
                         }

@@ -47,15 +47,18 @@ class SendNewMessage @Inject constructor(
 
     override fun buildObservable(params: Params): Flowable<*> = Flowable.just(Unit)
         .mapNotNull {
-            // if addresses are provided, prefer them over the thread id because from a user
-            // perspective it is more important that the intended recipients are messaged rather
-            // than that messages go to a thread id
+            // A thread id is a conversation that has already been settled on, normally the one the
+            // message was written in, so it is taken as given. Working the addresses out again
+            // instead can arrive somewhere else: the provider is not obliged to name the same
+            // thread twice for a conversation that holds no message yet, and where it does not,
+            // the message leaves for a conversation nobody is looking at. Addresses remain the
+            // answer when there is no thread to go on.
             when {
-                params.addresses.isNotEmpty() ->
-                    conversationRepo.getOrCreateConversation(params.addresses)
-
                 (params.threadId > 0) ->
                     conversationRepo.getOrCreateConversation(params.threadId)
+
+                params.addresses.isNotEmpty() ->
+                    conversationRepo.getOrCreateConversation(params.addresses)
 
                 else -> null
             }
