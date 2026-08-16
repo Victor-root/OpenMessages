@@ -18,6 +18,7 @@ A bug-fix release. Every issue below is marked with where it comes from. All but
 - 🐢 **(inherited from upstream) Several photos in one message taking a long time to appear**, each having been encoded at full size only to be discarded, then shrunk by fixed steps that overshot.
 - 🖼️ **(inherited from upstream) Photos in MMS coming out far smaller than they needed to be.** The app asked for a sensible image quality and the request was ignored, so every photo was saved at maximum quality and had to give up most of its pixels to fit the size limit.
 - 👤 **(inherited from upstream) Conversation shortcuts and share targets showing a coloured initial** in place of the contact's photo.
+- 💥 **(inherited from upstream) The app crashing on leaving the conversation details screen**, where the spacing of a row being removed was worked out from a position that row no longer had.
 - 🔤 **(introduced in v1.0.0, not inherited) A message holding several photos reading "Picture" untranslated** in the conversation list. Search results, the home-screen widget and notifications never translated it at all.
 
 ## 🚀 v1.0.0 (2026-08-13)
