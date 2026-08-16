@@ -30,6 +30,7 @@ import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.extensions.removeAccents
 import io.openmessages.model.SearchResult
@@ -77,9 +78,10 @@ class SearchAdapter @Inject constructor(
             true -> {
                 holder.binding.date.setVisible(true)
                 holder.binding.date.text = dateFormatter.getConversationTimestamp(result.conversation.date)
+                val snippet = context.localiseSummary(result.conversation.snippet)
                 holder.binding.snippet.text = when (result.conversation.me) {
-                    true -> context.getString(R.string.main_sender_you, result.conversation.snippet)
-                    false -> result.conversation.snippet
+                    true -> context.getString(R.string.main_sender_you, snippet)
+                    false -> snippet
                 }
             }
 

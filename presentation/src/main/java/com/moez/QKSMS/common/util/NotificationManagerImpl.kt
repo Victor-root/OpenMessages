@@ -39,6 +39,7 @@ import androidx.core.content.getSystemService
 import io.openmessages.R
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.fromRecipient
+import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.common.util.extensions.toPerson
 import io.openmessages.extensions.isImage
 import io.openmessages.feature.compose.ComposeActivity
@@ -225,7 +226,8 @@ class NotificationManagerImpl @Inject constructor(
                     person.fromRecipient(recipient, context, colors)
             }
 
-            NotificationCompat.MessagingStyle.Message(message.getSummary(), message.date, person.build()).apply {
+            val summary = context.localiseSummary(message.getSummary())
+            NotificationCompat.MessagingStyle.Message(summary, message.date, person.build()).apply {
                 message.parts.firstOrNull { it.isImage() }?.let { part ->
                     setData(part.type, ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id))
                 }
