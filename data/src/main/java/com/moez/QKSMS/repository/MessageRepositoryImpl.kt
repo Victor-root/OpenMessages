@@ -98,6 +98,9 @@ open class MessageRepositoryImpl @Inject constructor(
 
     companion object {
         const val TELEPHONY_UPDATE_CHUNK_SIZE = 200
+
+        /** Enough for the estimate below to settle; a stop in case it never does. */
+        private const val MAX_COMPRESSION_ATTEMPTS = 6
     }
 
     private fun getMessagesBase(threadId: Long, query: String) =
@@ -595,11 +598,17 @@ open class MessageRepositoryImpl @Inject constructor(
                     // has nothing to compare against yet, so the first pass below is taken.
                     var scaledBytes = imageBytesByAttachment[attachment]
 
+                    // The area to try next, as a fraction of the original. The opening guess takes
+                    // a file's weight to follow its area, which is near enough to start from and
+                    // not near enough to land on, so each attempt corrects it by what it actually
+                    // produced. Stepping blindly down a fixed ladder instead, as this did, took
+                    // five attempts to fit a photo and finished at half the size allowed: slow, and
+                    // paid for in the picture. Aiming a little under each time settles it just
+                    // below the mark rather than circling it.
+                    var scale = maxBytes / originalSize * 0.9
+
                     while (scaledBytes == null || scaledBytes.size > maxBytes) {
-                        // Estimate how much we need to scale the image down by. If it's still
-                        // too big, we'll need to try smaller and smaller values
-                        val scale = maxBytes / originalSize * (0.9 - attempts * 0.2)
-                        if (scale <= 0) {
+                        if (scale <= 0 || attempts >= MAX_COMPRESSION_ATTEMPTS) {
                             Timber.w(
                                 "Failed to compress ${
                                     originalSize / 1024
@@ -629,6 +638,13 @@ open class MessageRepositoryImpl @Inject constructor(
                         val newWidth = sqrt(newArea * aspectRatio).toInt()
                         val newHeight = (newWidth / aspectRatio).toInt()
 
+                        // Nothing to ask for below a pixel, and asking is an error rather than a
+                        // small image.
+                        if (newWidth < 1 || newHeight < 1) {
+                            scale = 0.0
+                            continue
+                        }
+
                         attempts++
                         scaledBytes = when (attachment.getType(context) == "image/gif") {
                             true -> ImageUtils.getScaledGif(
@@ -647,6 +663,9 @@ open class MessageRepositoryImpl @Inject constructor(
                                 newHeight
                             })"
                         )
+
+                        // How far off it landed is how far the next guess has to move.
+                        scale *= maxBytes / scaledBytes.size * 0.9
 
                         // release the attachment hold on the image bytes so the GC can reclaim
                         attachment.releaseResourceBytes()
