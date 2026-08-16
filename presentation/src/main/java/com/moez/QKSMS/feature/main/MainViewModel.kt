@@ -324,12 +324,11 @@ class MainViewModel @Inject constructor(
                 .subscribe()
 
         view.drawerToggledIntent
-            .doOnNext {
-                newState { copy(drawerOpen = it) }
-                view.drawerToggled(it)
-            }
             .autoDisposable(view.scope())
-            .subscribe { open -> newState { copy(drawerOpen = open) } }
+            .subscribe { open ->
+                newState { copy(drawerOpen = open) }
+                view.drawerToggled(open)
+            }
 
         view.navigationIntent
                 .withLatestFrom(state) { drawerItem, state ->
