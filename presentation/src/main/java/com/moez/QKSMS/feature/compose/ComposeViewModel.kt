@@ -210,14 +210,23 @@ class ComposeViewModel @Inject constructor(
             .distinctUntilChanged()
             .doOnNext { newState { copy(loading = true) } }
             .observeOn(Schedulers.io())  // background thread for possible long telephony running
-            .doOnNext { addresses -> conversationRepo.getOrCreateConversation(addresses) }
+            // Keep what this resolves to. It is the provider's answer, and the one the message
+            // will be written against, so holding on to it is what ties this screen to the
+            // conversation the message actually joins.
+            .mapNotNull { addresses -> conversationRepo.getOrCreateConversation(addresses)?.id }
             .observeOn(AndroidSchedulers.mainThread())
-            .switchMap { addresses ->
-                // monitors convos and triggers when wanted convo is present
-                conversationRepo.getConversations(false)
+            .switchMap { threadId ->
+                // Watch that conversation, so the first message to arrive on it appears here.
+                //
+                // Watching the conversation list and picking out of it by address instead, as this
+                // did, cannot work for a conversation being started: that list only carries
+                // conversations that already have a message or a draft, so a new one is absent
+                // from it, and the search by address is loose enough to answer with a different
+                // conversation or with none. Hence a message that flickered and then left the
+                // screen empty until it was reopened from the list.
+                conversationRepo.getConversationAsync(threadId)
                     .asObservable()
-                    .filter { conversations -> conversations.isLoaded && conversations.isValid}
-                    .mapNotNull { conversationRepo.getConversation(addresses) }
+                    .filter { conversation -> conversation.isLoaded }
                     .doOnNext { newState { copy(loading = false) } }
             }
             .doOnError { e ->
