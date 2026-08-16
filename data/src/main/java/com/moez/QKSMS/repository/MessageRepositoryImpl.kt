@@ -72,6 +72,7 @@ import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.Sort
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -412,14 +413,14 @@ open class MessageRepositoryImpl @Inject constructor(
             // Returning null here loses the message to the app while leaving it in the provider,
             // so it still goes out and simply never appears. Worth saying out loud.
             else -> {
-                Timber.w("sync back: $uri names neither sms nor mms")
+                if (BuildConfig.DEBUG) Timber.w("sync back: $uri names neither sms nor mms")
                 return null
             }
         }
 
         // if uri doesn't have a valid id, fail
         val contentId = tryOrNull(false) { ContentUris.parseId(uri) } ?: run {
-            Timber.w("sync back: no id to read in $uri")
+            if (BuildConfig.DEBUG) Timber.w("sync back: no id to read in $uri")
             return null
         }
 
@@ -433,7 +434,8 @@ open class MessageRepositoryImpl @Inject constructor(
         )?.use { cursor ->
             // if there are no rows, return null. else, move to the first row
             if (!cursor.moveToFirst()) {
-                Timber.w("sync back: $stableUri was written but reads back with no row")
+                if (BuildConfig.DEBUG)
+                    Timber.w("sync back: $stableUri was written but reads back with no row")
                 return null
             }
 
@@ -450,7 +452,8 @@ open class MessageRepositoryImpl @Inject constructor(
                     }
                 }
 
-                Timber.v("sync back: $stableUri is message id $id on thread $threadId")
+                if (BuildConfig.DEBUG)
+                    Timber.v("sync back: $stableUri is message id $id on thread $threadId")
 
                 // The provider decides which thread a message ends up on, and it is free to pick
                 // one other than the thread the conversation was opened against: the addresses are
@@ -465,7 +468,7 @@ open class MessageRepositoryImpl @Inject constructor(
                 insertOrUpdate()
             }
         } ?: run {
-            Timber.w("sync back: $stableUri was written but cannot be queried")
+            if (BuildConfig.DEBUG) Timber.w("sync back: $stableUri was written but cannot be queried")
             null
         }
     }
@@ -513,7 +516,7 @@ open class MessageRepositoryImpl @Inject constructor(
             // What the message is allowed to weigh and what is being asked to fit in it. Only
             // images are ever shrunk, so an attachment reported as anything else goes in whole
             // however large it is, and the type below is what decides that.
-            Timber.v("mms budget ${remainingBytes.toInt()} bytes (size setting " +
+            if (BuildConfig.DEBUG) Timber.v("mms budget ${remainingBytes.toInt()} bytes (size setting " +
                     "${prefs.mmsSize.get()}), attachments: " +
                     attachments.joinToString { attachment ->
                         "${attachment.getType(context)} ${attachment.getSize(context)} bytes" +
@@ -637,7 +640,7 @@ open class MessageRepositoryImpl @Inject constructor(
 
         // What actually goes out, after any shrinking. Against the budget logged above, this says
         // whether the message was brought down to size or simply never was.
-        Timber.v("mms parts ready: ${parts.size} part(s), " +
+        if (BuildConfig.DEBUG) Timber.v("mms parts ready: ${parts.size} part(s), " +
                 "${parts.sumOf { part -> part.Data?.size ?: 0 }} bytes")
 
         Timber.v("create os provider message")
@@ -753,7 +756,7 @@ open class MessageRepositoryImpl @Inject constructor(
                 .orEmpty()
 
             if (attachments.isNotEmpty() && addresses.isNotEmpty()) {
-                Timber.v("rebuilding failed message $messageId from " +
+                if (BuildConfig.DEBUG) Timber.v("rebuilding failed message $messageId from " +
                         "${attachments.size} attachment(s) before retrying")
 
                 val rebuilt = sendNewMessages(message.subId, message.threadId, addresses,
@@ -766,7 +769,8 @@ open class MessageRepositoryImpl @Inject constructor(
                     return rebuilt
                 }
 
-                Timber.w("rebuilding message $messageId produced nothing, sending it as it stands")
+                if (BuildConfig.DEBUG)
+                    Timber.w("rebuilding message $messageId produced nothing, sending it as it stands")
             }
         }
 

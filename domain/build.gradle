@@ -34,6 +34,11 @@ android {
         targetSdkVersion 33
     }
     namespace 'io.openmessages.domain'
+    // For BuildConfig.DEBUG, which keeps the diagnostic
+    // logging in this module out of release builds.
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {

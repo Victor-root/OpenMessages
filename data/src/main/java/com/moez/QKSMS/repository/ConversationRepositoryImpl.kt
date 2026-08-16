@@ -43,6 +43,7 @@ import io.realm.Realm
 import io.realm.RealmQuery
 import io.realm.RealmResults
 import io.realm.Sort
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -373,7 +374,7 @@ class ConversationRepositoryImpl @Inject constructor(
         Realm.getDefaultInstance().use { realm ->
             // This is what gives a conversation the last message the list requires to show it, so
             // an empty set here means whatever was just sent leaves its conversation invisible.
-            Timber.v("refreshing the last message of conversations $threadIds")
+            if (BuildConfig.DEBUG) Timber.v("refreshing the last message of conversations $threadIds")
 
             realm.refresh()
 
@@ -589,7 +590,7 @@ class ConversationRepositoryImpl @Inject constructor(
 
                         // The list only shows a conversation that has recipients and a last
                         // message, so both counts decide whether it is ever seen.
-                        Timber.v("conversation $threadId built from the provider: " +
+                        if (BuildConfig.DEBUG) Timber.v("conversation $threadId built from the provider: " +
                                 "${conversation.recipients.size} recipient(s), " +
                                 "last message ${conversation.lastMessage?.id ?: "none"}, " +
                                 "archived ${conversation.archived}")
@@ -628,7 +629,7 @@ class ConversationRepositoryImpl @Inject constructor(
                     if (recipients.size <= 1) false
                     else sendAsGroup
             }
-            Timber.v("conversation $threadId was not in the provider, built from the addresses " +
+            if (BuildConfig.DEBUG) Timber.v("conversation $threadId was not in the provider, built from the addresses " +
                     "given: ${matchedRecipients.size} recipient(s)")
 
             realm.executeTransaction { it.copyToRealmOrUpdate(conversation) }

@@ -28,6 +28,7 @@ import dagger.android.AndroidInjection
 import io.openmessages.interactor.MarkFailed
 import io.openmessages.interactor.MarkSent
 import io.openmessages.repository.MessageRepository
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -71,14 +72,13 @@ class MessageSentReceiver : BroadcastReceiver() {
 
                     else -> {
                         // A failed send recorded nothing but a bare number, which says neither
-                        // what went wrong nor whether the carrier was even reached. Reported at
-                        // warn rather than verbose so it reaches the file the logging setting
-                        // writes, which is the only way to read this off someone else's phone.
+                        // what went wrong nor whether the carrier was even reached.
                         val result = describeResult(pendingResult.resultCode, mmsFilePath != null)
                         val httpStatus = intent.getIntExtra(SmsManager.EXTRA_MMS_HTTP_STATUS, 0)
                         val httpStatusText =
                             if (httpStatus != 0) ", http status $httpStatus" else ""
-                        Timber.w("send failed for message $messageId: $result$httpStatusText")
+                        if (BuildConfig.DEBUG)
+                            Timber.w("send failed for message $messageId: $result$httpStatusText")
 
                         markFailed.execute(
                             MarkFailed.Params(messageId, pendingResult.resultCode)

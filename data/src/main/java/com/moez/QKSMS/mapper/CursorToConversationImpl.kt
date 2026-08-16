@@ -25,6 +25,7 @@ import android.provider.Telephony.Threads
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -98,8 +99,9 @@ class CursorToConversationImpl @Inject constructor(
                 return context.contentResolver.query(URI, PROJECTION, null, null, SORT_ORDER)
             } catch (e: Exception) {
                 archivedColumnPresent = false
-                Timber.i(e, "the conversations provider has no ${Threads.ARCHIVED} column, so a " +
-                        "conversation archived in another app cannot be recognised as archived here")
+                if (BuildConfig.DEBUG)
+                    Timber.i(e, "the conversations provider has no ${Threads.ARCHIVED} column, so " +
+                            "a conversation archived in another app is not recognised as archived here")
             }
         }
 

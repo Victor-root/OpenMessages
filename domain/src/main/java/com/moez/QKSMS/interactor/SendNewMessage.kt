@@ -25,6 +25,7 @@ import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.openmessages.domain.BuildConfig
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -65,7 +66,7 @@ class SendNewMessage @Inject constructor(
             ?:let { Timber.e("unable to get or create a conversation record"); null }
         }
         .map { conversation ->
-            Timber.v("sending into conversation ${conversation.id} with " +
+            if (BuildConfig.DEBUG) Timber.v("sending into conversation ${conversation.id} with " +
                     "${conversation.recipients.size} recipient(s)")
 
             // send the message
@@ -78,7 +79,7 @@ class SendNewMessage @Inject constructor(
             // nothing is refreshed: the conversation keeps a null last message, and the list,
             // which only shows conversations that have one, never displays it. The message can
             // still have gone out, since the provider record is written before this point.
-            if (messages.isEmpty()) {
+            if (messages.isEmpty() && BuildConfig.DEBUG) {
                 Timber.e("no message record came back from sending, " +
                         "the conversation will stay out of the list")
             }

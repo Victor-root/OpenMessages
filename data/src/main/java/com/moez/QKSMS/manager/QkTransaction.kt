@@ -69,6 +69,7 @@ import com.klinker.android.send_message.MmsSentReceiver
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Utils
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -540,7 +541,8 @@ object QkTransaction {
 
                 // The two things a refused MMS is usually traced back to: how big it ended up once
                 // composed, against whatever ceiling the carrier enforces, and which SIM carried it.
-                Timber.v("mms composed: ${mSendFile.length()} bytes, subscription $subscriptionId")
+                if (BuildConfig.DEBUG)
+                    Timber.v("mms composed: ${mSendFile.length()} bytes, subscription $subscriptionId")
 
                 (Uri.Builder())
                     .authority(context.packageName + ".MmsFileProvider")
