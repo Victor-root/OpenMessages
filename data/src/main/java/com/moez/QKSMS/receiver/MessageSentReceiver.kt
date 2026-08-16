@@ -28,7 +28,6 @@ import dagger.android.AndroidInjection
 import io.openmessages.interactor.MarkFailed
 import io.openmessages.interactor.MarkSent
 import io.openmessages.repository.MessageRepository
-import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -62,7 +61,13 @@ class MessageSentReceiver : BroadcastReceiver() {
 
         intent.extras?.getLong(EXTRA_OPENMESSAGES_MESSAGE_ID)?.takeIf { it > 0 }
             ?.let { messageId ->
-                Timber.v("resultcode: $resultCode")
+                // The bare number this recorded says neither what went wrong nor whether the
+                // carrier was even reached, and a send that failed is what this line gets read
+                // for.
+                val httpStatus = intent.getIntExtra(SmsManager.EXTRA_MMS_HTTP_STATUS, 0)
+                val httpStatusText = if (httpStatus != 0) ", http status $httpStatus" else ""
+                Timber.v("resultcode: ${describeResult(resultCode, mmsFilePath != null)}" +
+                        httpStatusText)
 
                 val pendingResult = goAsync()
 
@@ -70,22 +75,12 @@ class MessageSentReceiver : BroadcastReceiver() {
                     Activity.RESULT_OK ->
                         markSent.execute(messageId) { pendingResult.finish() }
 
-                    else -> {
-                        // A failed send recorded nothing but a bare number, which says neither
-                        // what went wrong nor whether the carrier was even reached.
-                        val result = describeResult(pendingResult.resultCode, mmsFilePath != null)
-                        val httpStatus = intent.getIntExtra(SmsManager.EXTRA_MMS_HTTP_STATUS, 0)
-                        val httpStatusText =
-                            if (httpStatus != 0) ", http status $httpStatus" else ""
-                        if (BuildConfig.DEBUG)
-                            Timber.w("send failed for message $messageId: $result$httpStatusText")
-
+                    else ->
                         markFailed.execute(
                             MarkFailed.Params(messageId, pendingResult.resultCode)
                         ) {
                             pendingResult.finish()
                         }
-                    }
                 }
             } ?: let { Timber.e("couldn't get message id") }
     }
@@ -97,6 +92,8 @@ class MessageSentReceiver : BroadcastReceiver() {
      */
     private fun describeResult(resultCode: Int, isMms: Boolean): String {
         val name = when {
+            resultCode == Activity.RESULT_OK -> "RESULT_OK"
+
             isMms -> when (resultCode) {
                 SmsManager.MMS_ERROR_UNSPECIFIED -> "MMS_ERROR_UNSPECIFIED"
                 SmsManager.MMS_ERROR_INVALID_APN -> "MMS_ERROR_INVALID_APN"
