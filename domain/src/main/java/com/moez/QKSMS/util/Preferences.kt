@@ -181,7 +181,11 @@ class Preferences @Inject constructor(
     val mobileOnly = rxPrefs.getBoolean("mobileOnly", false)
     val autoDelete = rxPrefs.getInteger("autoDelete", 0)
     val longAsMms = rxPrefs.getBoolean("longAsMms", false)
-    val mmsSize = rxPrefs.getInteger("mmsSize", 300)
+    // Automatic, meaning whatever the carrier says it accepts. A fixed figure was guesswork about
+    // someone else's network: too high and the carrier refuses the message outright, too low and
+    // the picture is cut down further than it ever needed to be. Where a carrier states nothing,
+    // the automatic setting falls back to the same figure this used to name.
+    val mmsSize = rxPrefs.getInteger("mmsSize", -1)
     val messageLinkHandling = rxPrefs.getInteger("messageLinkHandling", MESSAGE_LINK_HANDLING_ASK)
     val disableScreenshots = rxPrefs.getBoolean("disableScreenshots", false)
     val logging = rxPrefs.getBoolean("logging", false)
