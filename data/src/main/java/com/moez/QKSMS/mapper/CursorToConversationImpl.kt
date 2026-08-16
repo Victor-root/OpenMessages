@@ -25,7 +25,7 @@ import android.provider.Telephony.Threads
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
-import io.openmessages.util.tryOrNull
+import timber.log.Timber
 import javax.inject.Inject
 
 class CursorToConversationImpl @Inject constructor(
@@ -50,6 +50,16 @@ class CursorToConversationImpl @Inject constructor(
 
         const val ID = 0
         const val RECIPIENT_IDS = 1
+
+        /**
+         * Whether the provider answers for [Threads.ARCHIVED].
+         *
+         * Kept for the process rather than per instance, because it is a fact about the device and
+         * this class is not a singleton: a device without the column would otherwise pay for
+         * finding out again on every instance that ever asks.
+         */
+        @Volatile
+        private var archivedColumnPresent = true
     }
 
     override fun map(from: Cursor): Conversation {
@@ -75,12 +85,25 @@ class CursorToConversationImpl @Inject constructor(
         }
 
         // Threads.ARCHIVED carries the archived state left behind by whichever messaging app owned
-        // the inbox before, but only providers that follow AOSP have the column. Asking an OEM
-        // provider that doesn't for it fails the entire query, which would leave the conversation
-        // list empty rather than merely unarchived, so fall back to the columns we cannot do
-        // without.
-        return tryOrNull { context.contentResolver.query(URI, PROJECTION, null, null, SORT_ORDER) }
-                ?: context.contentResolver.query(URI, PROJECTION_WITHOUT_ARCHIVED, null, null, SORT_ORDER)
+        // the inbox before, but only providers that follow AOSP have the column. Asking one that
+        // doesn't for it fails the entire query, which would leave the conversation list empty
+        // rather than merely unarchived, so what cannot be done without is asked for on its own
+        // instead.
+        //
+        // Asked once. Finding out costs a rejected query and the stack trace that comes with it,
+        // and this runs every time a conversation is drawn or created, so a device without the
+        // column was paying that repeatedly for an answer that cannot change.
+        if (archivedColumnPresent) {
+            try {
+                return context.contentResolver.query(URI, PROJECTION, null, null, SORT_ORDER)
+            } catch (e: Exception) {
+                archivedColumnPresent = false
+                Timber.i(e, "the conversations provider has no ${Threads.ARCHIVED} column, so a " +
+                        "conversation archived in another app cannot be recognised as archived here")
+            }
+        }
+
+        return context.contentResolver.query(URI, PROJECTION_WITHOUT_ARCHIVED, null, null, SORT_ORDER)
     }
 
 }

@@ -348,7 +348,23 @@ class ConversationRepositoryImpl @Inject constructor(
         getConversation(threadId) ?: createConversation(threadId, sendAsGroup, onCreate)
 
     override fun getOrCreateConversation(addresses: Collection<String>, sendAsGroup: Boolean) =
-        getConversation(addresses) ?: createConversation(addresses, sendAsGroup)
+        // Which thread these addresses belong to is the provider's to answer, and it answers it
+        // again, on its own, when the message is written. Asking it here is what keeps the
+        // conversation opened on screen and the message that follows on the same thread.
+        //
+        // Searching Realm by address instead, as this did, compares numbers loosely enough to
+        // settle on a conversation the provider does not agree with. The screen then watches one
+        // thread while the message lands on another, and stays empty until it is left and reopened
+        // on the right one. Realm is still searched, by thread id, so a conversation already known
+        // is not rebuilt; only the question of which thread that is has changed hands.
+        TelephonyCompat.getOrCreateThreadId(context, addresses.toSet())
+            .takeIf { it != 0L }
+            ?.let { providerThreadId ->
+                getConversation(providerThreadId)
+                    ?: createConversationFromCp(providerThreadId, sendAsGroup)
+                    ?: createEmptyConversation(providerThreadId, addresses, sendAsGroup)
+            }
+            ?: getConversation(addresses)
 
     override fun saveDraft(threadId: Long, draft: String) =
         Realm.getDefaultInstance().use { realm ->
