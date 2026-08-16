@@ -62,11 +62,25 @@ class SendNewMessage @Inject constructor(
             ?:let { Timber.e("unable to get or create a conversation record"); null }
         }
         .map { conversation ->
+            Timber.v("sending into conversation ${conversation.id} with " +
+                    "${conversation.recipients.size} recipient(s)")
+
             // send the message
             messageRepo.sendNewMessages(params.subId, conversation.recipients.map { it.address },
                 params.body, params.attachments, params.sendAsGroup, params.delay)
         }
-        .map { messages -> messages.map { it.threadId } }
+        .map { messages ->
+            // The thread ids below are what the refresh runs on, so nothing coming back means
+            // nothing is refreshed: the conversation keeps a null last message, and the list,
+            // which only shows conversations that have one, never displays it. The message can
+            // still have gone out, since the provider record is written before this point.
+            if (messages.isEmpty()) {
+                Timber.e("no message record came back from sending, " +
+                        "the conversation will stay out of the list")
+            }
+
+            messages.map { it.threadId }
+        }
         .doOnNext { threadIds ->
             conversationRepo.updateConversations(threadIds)
             conversationRepo.markUnarchived(threadIds)

@@ -408,11 +408,19 @@ open class MessageRepositoryImpl @Inject constructor(
         val type = when {
             uri.toString().contains(TYPE_MMS) -> TYPE_MMS
             uri.toString().contains(TYPE_SMS) -> TYPE_SMS
-            else -> return null
+            // Returning null here loses the message to the app while leaving it in the provider,
+            // so it still goes out and simply never appears. Worth saying out loud.
+            else -> {
+                Timber.w("sync back: $uri names neither sms nor mms")
+                return null
+            }
         }
 
         // if uri doesn't have a valid id, fail
-        val contentId = tryOrNull(false) { ContentUris.parseId(uri) } ?: return null
+        val contentId = tryOrNull(false) { ContentUris.parseId(uri) } ?: run {
+            Timber.w("sync back: no id to read in $uri")
+            return null
+        }
 
         val stableUri = when (type) {
             TYPE_MMS -> ContentUris.withAppendedId(Mms.CONTENT_URI, contentId)
@@ -423,8 +431,10 @@ open class MessageRepositoryImpl @Inject constructor(
             stableUri, null, null, null, null
         )?.use { cursor ->
             // if there are no rows, return null. else, move to the first row
-            if (!cursor.moveToFirst())
+            if (!cursor.moveToFirst()) {
+                Timber.w("sync back: $stableUri was written but reads back with no row")
                 return null
+            }
 
             cursorToMessage.map(Pair(cursor, CursorToMessage.MessageColumns(cursor))).apply {
                 this.sendAsGroup = sendAsGroup
@@ -439,8 +449,12 @@ open class MessageRepositoryImpl @Inject constructor(
                     }
                 }
 
+                Timber.v("sync back: $stableUri is message id $id on thread $threadId")
                 insertOrUpdate()
             }
+        } ?: run {
+            Timber.w("sync back: $stableUri was written but cannot be queried")
+            null
         }
     }
 
