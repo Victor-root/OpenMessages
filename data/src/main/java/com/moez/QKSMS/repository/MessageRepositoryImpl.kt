@@ -484,6 +484,16 @@ open class MessageRepositoryImpl @Inject constructor(
 
             remainingBytes -= body.takeIf { it.isNotEmpty() }?.toByteArray()?.size ?: 0
 
+            // What the message is allowed to weigh and what is being asked to fit in it. Only
+            // images are ever shrunk, so an attachment reported as anything else goes in whole
+            // however large it is, and the type below is what decides that.
+            Timber.v("mms budget ${remainingBytes.toInt()} bytes (size setting " +
+                    "${prefs.mmsSize.get()}), attachments: " +
+                    attachments.joinToString { attachment ->
+                        "${attachment.getType(context)} ${attachment.getSize(context)} bytes" +
+                                if (attachment.isImage(context)) " (shrinkable)" else " (as is)"
+                    })
+
             // Attach those that can't be compressed (ie. everything but images)
             parts += attachments
                 // filter in non-images only
@@ -598,6 +608,11 @@ open class MessageRepositoryImpl @Inject constructor(
                 }
             }
         }
+
+        // What actually goes out, after any shrinking. Against the budget logged above, this says
+        // whether the message was brought down to size or simply never was.
+        Timber.v("mms parts ready: ${parts.size} part(s), " +
+                "${parts.sumOf { part -> part.Data?.size ?: 0 }} bytes")
 
         Timber.v("create os provider message")
 
