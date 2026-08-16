@@ -67,6 +67,7 @@ import com.uber.autodispose.ObservableSubscribeProxy
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
+import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkThemedActivity
@@ -102,6 +103,7 @@ import io.reactivex.subjects.Subject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -588,6 +590,21 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         binding.messageAttachments.setVisible(state.attachments.isNotEmpty())
         composeAttachmentAdapter.data = state.attachments
+
+        // Temporary, chasing the attachment row that shows itself when a message is merely being
+        // selected: what the state holds, then what the row has become once the layout pass has
+        // had its own say about it.
+        if (BuildConfig.DEBUG) {
+            Timber.v("render: ${state.attachments.size} attachment(s) " +
+                    "[${state.attachments.joinToString { it.uri.toString() }}], " +
+                    "${state.selectedMessages} selected, " +
+                    "row visibility ${binding.messageAttachments.visibility}")
+            binding.messageAttachments.post {
+                Timber.v("after layout: row visibility " +
+                        "${binding.messageAttachments.visibility}, " +
+                        "${composeAttachmentAdapter.itemCount} item(s) in it")
+            }
+        }
 
         binding.shadeBackground.apply {
             if (state.audioMsgRecording) {
