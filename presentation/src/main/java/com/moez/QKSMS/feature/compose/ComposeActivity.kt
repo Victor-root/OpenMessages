@@ -592,17 +592,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         composeAttachmentAdapter.data = state.attachments
 
         // Temporary, chasing the attachment row that shows itself when a message is merely being
-        // selected: what the state holds, then what the row has become once the layout pass has
-        // had its own say about it.
+        // selected. Read once the layout pass has had its own say about the row, and only worth a
+        // line when the row is showing or holding something, which is the whole anomaly.
         if (BuildConfig.DEBUG) {
-            Timber.v("render: ${state.attachments.size} attachment(s) " +
-                    "[${state.attachments.joinToString { it.uri.toString() }}], " +
-                    "${state.selectedMessages} selected, " +
-                    "row visibility ${binding.messageAttachments.visibility}")
             binding.messageAttachments.post {
-                Timber.v("after layout: row visibility " +
-                        "${binding.messageAttachments.visibility}, " +
-                        "${composeAttachmentAdapter.itemCount} item(s) in it")
+                val visible = binding.messageAttachments.isVisible
+                if (visible || composeAttachmentAdapter.itemCount > 0) {
+                    Timber.v("attachment row visible=$visible holding " +
+                            "${composeAttachmentAdapter.itemCount} item(s) " +
+                            "[${state.attachments.joinToString { it.uri.toString() }}], " +
+                            "${state.selectedMessages} message(s) selected")
+                }
             }
         }
 
