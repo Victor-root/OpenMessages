@@ -735,10 +735,45 @@ open class MessageRepositoryImpl @Inject constructor(
         return retVal
     }
 
-    override fun sendMessage(messageId: Long) =
-        getMessage(messageId)
-            ?.let { message -> sendMessage(message) }
+    override fun sendMessage(messageId: Long): Collection<Message> {
+        val message = getUnmanagedMessage(messageId) ?: return listOf()
+
+        // Retrying used to hand the stored record back to the provider untouched, so a message it
+        // had already refused could only be refused again, however many times it was tried. That is
+        // what an MMS too large for the carrier does: nothing about it changes between attempts, and
+        // shrinking only ever happens while a message is being built. Build it again from its own
+        // attachments and let it through the same shrinking a first send gets, so a retry is one.
+        if (message.isMms() && message.isFailedMessage()) {
+            val attachments = message.parts
+                .filter { part -> part.type.startsWith("image/") || part.type.startsWith("video/") }
+                .map { part -> Attachment(context, part.getUri()) }
+
+            val addresses = conversationRepo.getConversation(message.threadId)
+                ?.recipients?.map { recipient -> recipient.address }
+                .orEmpty()
+
+            if (attachments.isNotEmpty() && addresses.isNotEmpty()) {
+                Timber.v("rebuilding failed message $messageId from " +
+                        "${attachments.size} attachment(s) before retrying")
+
+                val rebuilt = sendNewMessages(message.subId, message.threadId, addresses,
+                    message.getText(withSubject = false), attachments, message.sendAsGroup)
+
+                // Only once the replacement exists, so a rebuild that comes to nothing leaves the
+                // message where it was rather than losing it.
+                if (rebuilt.isNotEmpty()) {
+                    deleteMessages(listOf(messageId))
+                    return rebuilt
+                }
+
+                Timber.w("rebuilding message $messageId produced nothing, sending it as it stands")
+            }
+        }
+
+        return getMessage(messageId)
+            ?.let { managed -> sendMessage(managed) }
             ?: listOf()
+    }
 
     override fun cancelDelayedSmsAlarm(messageId: Long) =
         (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
