@@ -543,11 +543,20 @@ open class MessageRepositoryImpl @Inject constructor(
                     part
                 }
 
-            val imageBytesByAttachment = attachments
+            val images = attachments
                 // filter in images only
                 .filter { it.isImage(context) }
                 // filter in only items that exist (user may have deleted the file)
                 .filter { it.uri.resourceExists(context) }
+
+            // Encoding an image at full size is the slowest thing here, and the result is thrown
+            // away whenever it lands over budget, which for a photo off a phone camera it always
+            // does. A file already heavier on its own than the whole message may weigh cannot come
+            // out under it, so that much is settled from the file and the encoding is not done:
+            // the shrinking below starts from the image's dimensions, which is where it was headed
+            // anyway.
+            val imageBytesByAttachment = images
+                .filter { attachment -> attachment.getSize(context) <= remainingBytes }
                 .associateWith {
                     when (it.getType(context) == "image/gif") {
                         true -> ImageUtils.getScaledGif(context, it.uri, maxWidth, maxHeight)
@@ -556,11 +565,18 @@ open class MessageRepositoryImpl @Inject constructor(
                 }
                 .toMutableMap()
 
-            val imageByteCount = imageBytesByAttachment.values.sumOf { it.size }
+            // What each image counts as while the budget is divided between them: what it encoded
+            // to where that was worth finding out, the size of the file itself where it was not.
+            val imageSizes = images.associateWith { attachment ->
+                imageBytesByAttachment[attachment]?.size?.toLong() ?: attachment.getSize(context)
+            }
+
+            val imageByteCount = imageSizes.values.sum()
             if (imageByteCount > remainingBytes) {
-                imageBytesByAttachment.forEach { (attachment, originalBytes) ->
+                images.forEach { attachment ->
                     val uri = attachment.uri
-                    val maxBytes = originalBytes.size / imageByteCount.toFloat() * remainingBytes
+                    val originalSize = imageSizes.getValue(attachment)
+                    val maxBytes = originalSize / imageByteCount.toFloat() * remainingBytes
 
                     // Get the image dimensions
                     val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -574,18 +590,38 @@ open class MessageRepositoryImpl @Inject constructor(
                     val aspectRatio = width.toFloat() / height.toFloat()
 
                     var attempts = 0
-                    var scaledBytes = originalBytes
 
-                    while (scaledBytes.size > maxBytes) {
+                    // Null where the image was never encoded, which is the whole point above: it
+                    // has nothing to compare against yet, so the first pass below is taken.
+                    var scaledBytes = imageBytesByAttachment[attachment]
+
+                    while (scaledBytes == null || scaledBytes.size > maxBytes) {
                         // Estimate how much we need to scale the image down by. If it's still
                         // too big, we'll need to try smaller and smaller values
-                        val scale = maxBytes / originalBytes.size * (0.9 - attempts * 0.2)
+                        val scale = maxBytes / originalSize * (0.9 - attempts * 0.2)
                         if (scale <= 0) {
                             Timber.w(
                                 "Failed to compress ${
-                                    originalBytes.size / 1024
+                                    originalSize / 1024
                                 }Kb to ${maxBytes.toInt() / 1024}Kb"
                             )
+
+                            // Give up on shrinking it, but not on sending it: an image that was
+                            // never encoded has no bytes to fall back on yet, and leaving it out
+                            // would drop it from the message without a word.
+                            if (scaledBytes == null) {
+                                imageBytesByAttachment[attachment] =
+                                    when (attachment.getType(context) == "image/gif") {
+                                        true -> ImageUtils.getScaledGif(
+                                            context, uri, maxWidth, maxHeight
+                                        )
+
+                                        false -> ImageUtils.getScaledImage(
+                                            context, uri, maxWidth, maxHeight
+                                        )
+                                    }
+                            }
+
                             return@forEach
                         }
 
@@ -616,14 +652,17 @@ open class MessageRepositoryImpl @Inject constructor(
                         attachment.releaseResourceBytes()
                     }
 
+                    // Non-null by here: the loop above only ends once there are bytes that fit.
+                    val compressedBytes = scaledBytes ?: return@forEach
+
                     Timber.v(
-                        "Compressed ${originalBytes.size / 1024}Kb to ${
-                            scaledBytes.size / 1024
+                        "Compressed ${originalSize / 1024}Kb to ${
+                            compressedBytes.size / 1024
                         }Kb with a target size of ${
                             maxBytes.toInt() / 1024
                         }Kb in $attempts attempts"
                     )
-                    imageBytesByAttachment[attachment] = scaledBytes
+                    imageBytesByAttachment[attachment] = compressedBytes
                 }
             }
 
