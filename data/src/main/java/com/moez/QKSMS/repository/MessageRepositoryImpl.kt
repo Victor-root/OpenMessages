@@ -101,6 +101,15 @@ open class MessageRepositoryImpl @Inject constructor(
 
         /** Enough for the estimate below to settle; a stop in case it never does. */
         private const val MAX_COMPRESSION_ATTEMPTS = 6
+
+        /**
+         * What an image that has to be shrunk is encoded at.
+         *
+         * Under the default because an image losing most of its pixels to fit cannot also afford to
+         * spend what it has left on detail nobody will make out at that size. Every byte not spent
+         * on it is a pixel kept, and pixels are what was actually missing.
+         */
+        private const val COMPRESSED_IMAGE_QUALITY = 75
     }
 
     private fun getMessagesBase(threadId: Long, query: String) =
@@ -626,7 +635,8 @@ open class MessageRepositoryImpl @Inject constructor(
                                         )
 
                                         false -> ImageUtils.getScaledImage(
-                                            context, uri, maxWidth, maxHeight
+                                            context, uri, maxWidth, maxHeight,
+                                            COMPRESSED_IMAGE_QUALITY
                                         )
                                     }
                             }
@@ -652,7 +662,8 @@ open class MessageRepositoryImpl @Inject constructor(
                             )
 
                             false -> ImageUtils.getScaledImage(
-                                context, attachment.uri, newWidth, newHeight
+                                context, attachment.uri, newWidth, newHeight,
+                                COMPRESSED_IMAGE_QUALITY
                             )
                         }
 

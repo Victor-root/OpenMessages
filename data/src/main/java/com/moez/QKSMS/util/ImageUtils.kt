@@ -19,6 +19,7 @@
 package io.openmessages.util
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -41,10 +42,21 @@ object ImageUtils {
         return outputStream.toByteArray()
     }
 
+    /**
+     * Scales the image at [uri] to fit within [maxWidth] by [maxHeight] and returns it as JPEG
+     * bytes encoded at [quality].
+     *
+     * The encoding is done here rather than left to Glide. Asking Glide for bytes hands the bitmap
+     * to a converter that was built with a quality of its own and pays no attention to the one the
+     * request carries, so whatever was asked for, every image came out at quality 100. That is
+     * several times the weight of a quality the eye cannot tell apart, and against a message size
+     * limit that weight is paid for in pixels: the picture ends up a thumbnail so that detail
+     * nobody can see may be kept.
+     */
     fun getScaledImage(context: Context, uri: Uri, maxWidth: Int, maxHeight: Int, quality: Int = 90): ByteArray {
-        return GlideApp
+        val target = GlideApp
             .with(context)
-            .`as`(ByteArray::class.java)
+            .asBitmap()
             .load(uri)
             .apply(
                 RequestOptions()
@@ -52,9 +64,18 @@ object ImageUtils {
                 .skipMemoryCache(true)
             )
             .centerInside()
-            .encodeQuality(quality)
             .submit(maxWidth, maxHeight)
-            .get()
+
+        try {
+            val outputStream = ByteArrayOutputStream()
+            target.get().compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+            return outputStream.toByteArray()
+        } finally {
+            // Hands the bitmap back, which is what Glide did for itself when it was the one
+            // encoding. These run to full camera resolution, so holding them until the collector
+            // notices is not free.
+            GlideApp.with(context).clear(target)
+        }
     }
 
 }
