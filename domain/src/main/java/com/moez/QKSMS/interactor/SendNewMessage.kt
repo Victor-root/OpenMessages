@@ -69,8 +69,9 @@ class SendNewMessage @Inject constructor(
                     "${conversation.recipients.size} recipient(s)")
 
             // send the message
-            messageRepo.sendNewMessages(params.subId, conversation.recipients.map { it.address },
-                params.body, params.attachments, params.sendAsGroup, params.delay)
+            messageRepo.sendNewMessages(params.subId, conversation.id,
+                conversation.recipients.map { it.address }, params.body, params.attachments,
+                params.sendAsGroup, params.delay)
         }
         .map { messages ->
             // The thread ids below are what the refresh runs on, so nothing coming back means

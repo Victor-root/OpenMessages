@@ -103,6 +103,7 @@ object QkTransaction {
     fun createMessage(
         context: Context,
         subscriptionId: Int,
+        threadId: Long,
         body: String?,
         signature: String,
         toAddresses: Array<String>,
@@ -126,10 +127,10 @@ object QkTransaction {
             RateController.init(context)
             DownloadManager.init(context)
 
-            return createMmsMessage(context, subscriptionId, text, toAddresses, parts)
+            return createMmsMessage(context, subscriptionId, threadId, text, toAddresses, parts)
         }
 
-        return createSmsMessage(context, subscriptionId, text, toAddresses)
+        return createSmsMessage(context, subscriptionId, threadId, text, toAddresses)
     }
 
     fun explodeMessage(context: Context, messageUri: Uri, asGroup: Boolean): Collection<Uri> {
@@ -209,9 +210,13 @@ object QkTransaction {
     }
 
     private fun createSmsMessage(
-        context: Context, subscriptionId: Int, body: String?, addresses: Array<String>
+        context: Context, subscriptionId: Int, threadId: Long, body: String?,
+        addresses: Array<String>
     ): Uri {
-        val threadId = Utils.getOrCreateThreadId(context, addresses.toSet())
+        // Nought means no conversation was named, which is the group split below sending each
+        // recipient their own message: those do belong wherever the addresses lead.
+        val messageThreadId = threadId.takeIf { it > 0 }
+                ?: Utils.getOrCreateThreadId(context, addresses.toSet())
 
         val cal = Calendar.getInstance()
         val values = ContentValues()
@@ -221,7 +226,7 @@ object QkTransaction {
         values.put(Telephony.Sms.DATE, cal.timeInMillis.toString() + "")
         values.put(Telephony.Sms.READ, 1)
         values.put(Telephony.Sms.TYPE, 4)
-        values.put(Telephony.Sms.THREAD_ID, threadId)
+        values.put(Telephony.Sms.THREAD_ID, messageThreadId)
         values.put(Telephony.Sms.SUBSCRIPTION_ID, subscriptionId)
 
         val messageUri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
@@ -272,7 +277,7 @@ object QkTransaction {
 
         // create individual messages
         for (address in addresses)
-            retVal.add(createSmsMessage(context, subscriptionId, body, arrayOf(address)))
+            retVal.add(createSmsMessage(context, subscriptionId, 0, body, arrayOf(address)))
 
         return retVal
     }
@@ -356,8 +361,8 @@ object QkTransaction {
     }
 
     private fun createMmsMessage(
-        context: Context, subscriptionId: Int, text: String?, addresses: Array<String>,
-        parts: MutableCollection<MMSPart>
+        context: Context, subscriptionId: Int, threadId: Long, text: String?,
+        addresses: Array<String>, parts: MutableCollection<MMSPart>
     ): Uri {
         // add text to the end of the part and send
         if (!text.isNullOrEmpty())
@@ -368,11 +373,25 @@ object QkTransaction {
             })
 
         try {
-            return PduPersister.getPduPersister(context).persist(
+            val messageUri = PduPersister.getPduPersister(context).persist(
                 buildPdu(context, subscriptionId, addresses, ArrayList(parts)),
                 Telephony.Mms.Outbox.CONTENT_URI, true, true,
                 null, subscriptionId
             )
+
+            // PduPersister files the message under whatever thread the addresses lead it to, and
+            // that need not be the conversation it was written in: the provider does not always
+            // name the same thread twice for the same recipient. Say which one it belongs to, as
+            // sending an SMS already does, so the message joins the conversation on screen instead
+            // of one nobody is looking at.
+            if (threadId > 0) {
+                SqliteWrapper.update(
+                    context, context.contentResolver, messageUri,
+                    contentValuesOf(Telephony.Mms.THREAD_ID to threadId), null, null
+                )
+            }
+
+            return messageUri
         } catch (e: Exception) {
             Timber.e(e, "failed to create mms message")
         }

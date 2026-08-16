@@ -84,8 +84,14 @@ interface MessageRepository {
 
     fun markDeliveryFailed(messageId: Long, resultCode: Int)
 
+    /**
+     * [threadId] is the conversation the message belongs to. It is stated rather than worked out
+     * again from [toAddresses], because the provider does not always name the same thread twice for
+     * the same recipient, and a message filed under a thread nobody is looking at is a message that
+     * never appears.
+     */
     fun sendNewMessages(
-        subId: Int, toAddresses: Collection<String>, body: String,
+        subId: Int, threadId: Long, toAddresses: Collection<String>, body: String,
         attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int = 0
     ): Collection<Message>
 

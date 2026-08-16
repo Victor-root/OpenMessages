@@ -471,7 +471,7 @@ open class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun sendNewMessages(
-        subId: Int, toAddresses: Collection<String>, body: String,
+        subId: Int, threadId: Long, toAddresses: Collection<String>, body: String,
         attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int
     ): Collection<Message> {
         Timber.v("sending message(s)")
@@ -645,7 +645,7 @@ open class MessageRepositoryImpl @Inject constructor(
         // 3 stage sending process - stage 1, create records in os provider
         val group = (sendAsGroup && (toAddresses.size > 1))
         val messageUri = QkTransaction.createMessage(
-            context, subId, body, prefs.signature.get(),
+            context, subId, threadId, body, prefs.signature.get(),
             toAddresses.map(phoneNumberUtils::normalizeNumber).toTypedArray(),
             parts, group, prefs.longAsMms.get(), prefs.unicode.get()
         )
