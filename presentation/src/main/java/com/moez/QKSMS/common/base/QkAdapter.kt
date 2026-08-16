@@ -90,6 +90,17 @@ abstract class QkAdapter<T, VHT : RecyclerView.ViewHolder> : RecyclerView.Adapte
         return data[position]
     }
 
+    /**
+     * The item at [position], or null where the list holds none.
+     *
+     * For the positions a view reports about itself, which are not always positions the list has.
+     * A view being taken out of the list reports no position at all, which reads as -1, and one
+     * whose list has changed since it was last laid out reports where it used to be. Asking
+     * [getItem] either of those is an error rather than an empty answer, and thrown from a touch
+     * handler or a layout pass it takes the screen down with it.
+     */
+    fun getItemOrNull(position: Int): T? = data.getOrNull(position)
+
     override fun getItemCount(): Int {
         return data.size
     }

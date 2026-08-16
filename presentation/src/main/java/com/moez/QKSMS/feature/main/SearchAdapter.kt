@@ -50,7 +50,7 @@ class SearchAdapter @Inject constructor(
         val binding = SearchListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             itemView.setOnClickListener {
-                val result = getItem(adapterPosition)
+                val result = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 navigator.showConversation(result.conversation.id, result.query.takeIf { result.messages > 0 })
             }
         }

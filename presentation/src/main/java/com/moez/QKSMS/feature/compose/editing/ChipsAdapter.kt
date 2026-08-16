@@ -40,7 +40,7 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Recipient, QkBindingViewHol
         val binding = ContactChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val chip = getItem(adapterPosition)
+                val chip = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 showDetailedChip(binding.root.context, chip)
             }
         }

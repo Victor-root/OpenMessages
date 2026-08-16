@@ -41,10 +41,10 @@ class GridSpacingItemDecoration(
         // nothing after it. Both were asked of the list all the same, and the list answered by
         // bringing the screen down mid-layout.
         val position = parent.getChildAdapterPosition(view)
-        val item = adapter.data.getOrNull(position) ?: return
+        val item = adapter.getItemOrNull(position) ?: return
 
         if (item is ConversationInfoRecipient &&
-            adapter.data.getOrNull(position + 1) !is ConversationInfoRecipient
+            adapter.getItemOrNull(position + 1) !is ConversationInfoRecipient
         ) {
             outRect.bottom = 8.dpToPx(context)
         } else if (item is ConversationInfoMedia) {
