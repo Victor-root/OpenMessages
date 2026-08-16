@@ -132,6 +132,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         // context, so wrap the activity the same way the other Material components here do.
         BottomSheetDialog(ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context)).apply {
             setContentView(attachSheetBinding.root)
+            // The sheet opens over a keyboard that is on its way out, and a window that makes room
+            // for a keyboard is measured when it appears rather than when the keyboard finally
+            // goes. It was therefore given the height the screen had while the keyboard was still
+            // up, and kept it: the sheet sat marooned in mid-screen with the dimmed conversation
+            // showing underneath where the keyboard used to be. It asks for the keyboard to be put
+            // away as it opens, and for its own height to take no notice of the keyboard either
+            // way.
+            window?.setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN or
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
+            )
             // Dragging down closes rather than snapping back to the half-open height, which for a
             // seven-item menu is only ever a truncated version of the same thing.
             behavior.skipCollapsed = true
