@@ -90,9 +90,12 @@ class SendNewMessage @Inject constructor(
             conversationRepo.updateConversations(threadIds)
             conversationRepo.markUnarchived(threadIds)
 
-            AndroidSchedulers.mainThread().scheduleDirect {
-                threadIds.forEach { shortcutManager.getOrCreateShortcut(it) }
-            }
+            // Left where the rest of this runs, off the main thread, because building a shortcut
+            // reads the contact's photo and the image library refuses to be asked for one on the
+            // main thread. Asked there anyway, it threw every time, the failure was swallowed, and
+            // the shortcut settled for a coloured initial instead of the face. The same call on the
+            // receiving side has always run off the main thread and has always had the photo.
+            threadIds.forEach { shortcutManager.getOrCreateShortcut(it) }
 
             // delete attachment local files, if any, because they're saved to mms db by now
             params.attachments.forEach { it.removeCacheFile() }
