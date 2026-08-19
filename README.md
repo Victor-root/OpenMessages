@@ -5,6 +5,19 @@
   <img src="https://github.com/user-attachments/assets/4242ba35-a054-48c1-931c-fa1b163e337b" width="250" alt="OpenMessages mobile home screen"/>
 </p>
 
+## 📥 Installation
+
+<p align="center">
+  <a href="https://victor-root.github.io/Omnify/add.html?url=https%3A%2F%2Fgithub.com%2FVictor-root%2FOpenMessages"><img src="https://victor-root.github.io/Omnify/assets/get-it-on-omnify.svg" alt="Get it on Omnify"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/Victor-root/OpenMessages/releases"><img src="images/get-it-on-github.svg" alt="Get it on GitHub"/></a>
+</p>
+
+### APK Certificate Signing Key Hash
+
+```
+io.openmessages
+F2:2B:D7:B4:63:D8:D8:9C:A1:AC:3B:6C:41:DB:0B:25:AA:C7:7B:86:24:C9:70:E4:52:81:2D:32:19:42:A9:71
+```
+
 ## ✨ What's different from upstream
 
 Open Messages is a rebrand of QUIK (itself a fork of QKSMS), package `io.openmessages`, with UX,
