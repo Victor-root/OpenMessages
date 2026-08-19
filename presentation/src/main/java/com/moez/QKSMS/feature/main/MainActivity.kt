@@ -112,6 +112,9 @@ class MainActivity : QkThemedActivity(), MainView {
     private var scrollToTopVisible = false
     private var statusBarScrimListener: AppBarLayout.OnOffsetChangedListener? = null
 
+    /** What the drawer was last told to do, so that it is only ever told when that changes. */
+    private var appliedDrawerOpen: Boolean? = null
+
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
     override val activityResumedIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent by lazy { binding.toolbarSearch.textChanges() }
@@ -547,10 +550,22 @@ class MainActivity : QkThemedActivity(), MainView {
         binding.drawer.inbox.isActivated = state.page is Inbox
         binding.drawer.archived.isActivated = state.page is Archived
 
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START) && !state.drawerOpen)
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-        else if (!binding.drawerLayout.isDrawerVisible(GravityCompat.START) && state.drawerOpen)
-            binding.drawerLayout.openDrawer(GravityCompat.START)
+        // The drawer is worked by the user as much as by the app, so what is applied here is a
+        // change of mind, not the state of mind itself.
+        //
+        // Restating it on every draw meant asking the drawer to match a state that is only told
+        // where the drawer went once the drawer has finished going there. A draw landing in that
+        // gap, which a sync makes constant, found the drawer already gone and the state still
+        // saying open, and pulled it back out. The two then disagreed the other way round, and
+        // since the reopening was read as neither open nor closed while it lasted, nothing put it
+        // back: the drawer stayed out and refused to close again.
+        if (state.drawerOpen != appliedDrawerOpen) {
+            appliedDrawerOpen = state.drawerOpen
+            when (state.drawerOpen) {
+                true -> binding.drawerLayout.openDrawer(GravityCompat.START)
+                false -> binding.drawerLayout.closeDrawer(GravityCompat.START)
+            }
+        }
 
         when (state.syncing) {
             is SyncRepository.SyncProgress.Idle -> {

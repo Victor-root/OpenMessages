@@ -25,6 +25,7 @@ import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.openmessages.domain.BuildConfig
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -47,33 +48,54 @@ class SendNewMessage @Inject constructor(
 
     override fun buildObservable(params: Params): Flowable<*> = Flowable.just(Unit)
         .mapNotNull {
-            // if addresses are provided, prefer them over the thread id because from a user
-            // perspective it is more important that the intended recipients are messaged rather
-            // than that messages go to a thread id
+            // A thread id is a conversation that has already been settled on, normally the one the
+            // message was written in, so it is taken as given. Working the addresses out again
+            // instead can arrive somewhere else: the provider is not obliged to name the same
+            // thread twice for a conversation that holds no message yet, and where it does not,
+            // the message leaves for a conversation nobody is looking at. Addresses remain the
+            // answer when there is no thread to go on.
             when {
-                params.addresses.isNotEmpty() ->
-                    conversationRepo.getOrCreateConversation(params.addresses)
-
                 (params.threadId > 0) ->
                     conversationRepo.getOrCreateConversation(params.threadId)
+
+                params.addresses.isNotEmpty() ->
+                    conversationRepo.getOrCreateConversation(params.addresses)
 
                 else -> null
             }
             ?:let { Timber.e("unable to get or create a conversation record"); null }
         }
         .map { conversation ->
+            if (BuildConfig.DEBUG) Timber.v("sending into conversation ${conversation.id} with " +
+                    "${conversation.recipients.size} recipient(s)")
+
             // send the message
-            messageRepo.sendNewMessages(params.subId, conversation.recipients.map { it.address },
-                params.body, params.attachments, params.sendAsGroup, params.delay)
+            messageRepo.sendNewMessages(params.subId, conversation.id,
+                conversation.recipients.map { it.address }, params.body, params.attachments,
+                params.sendAsGroup, params.delay)
         }
-        .map { messages -> messages.map { it.threadId } }
+        .map { messages ->
+            // The thread ids below are what the refresh runs on, so nothing coming back means
+            // nothing is refreshed: the conversation keeps a null last message, and the list,
+            // which only shows conversations that have one, never displays it. The message can
+            // still have gone out, since the provider record is written before this point.
+            if (messages.isEmpty() && BuildConfig.DEBUG) {
+                Timber.e("no message record came back from sending, " +
+                        "the conversation will stay out of the list")
+            }
+
+            messages.map { it.threadId }
+        }
         .doOnNext { threadIds ->
             conversationRepo.updateConversations(threadIds)
             conversationRepo.markUnarchived(threadIds)
 
-            AndroidSchedulers.mainThread().scheduleDirect {
-                threadIds.forEach { shortcutManager.getOrCreateShortcut(it) }
-            }
+            // Left where the rest of this runs, off the main thread, because building a shortcut
+            // reads the contact's photo and the image library refuses to be asked for one on the
+            // main thread. Asked there anyway, it threw every time, the failure was swallowed, and
+            // the shortcut settled for a coloured initial instead of the face. The same call on the
+            // receiving side has always run off the main thread and has always had the photo.
+            threadIds.forEach { shortcutManager.getOrCreateShortcut(it) }
 
             // delete attachment local files, if any, because they're saved to mms db by now
             params.attachments.forEach { it.removeCacheFile() }

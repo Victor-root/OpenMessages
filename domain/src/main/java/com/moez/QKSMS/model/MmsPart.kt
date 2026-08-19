@@ -30,6 +30,18 @@ import java.io.File
 
 open class MmsPart : RealmObject() {
 
+    companion object {
+        /**
+         * What [getSummary] stands a part in for when the part is not text it can quote. They are
+         * named here because whatever puts a summary in front of the reader has to turn them into
+         * the reader's language, and doing that means recognising them.
+         */
+        const val SUMMARY_CONTACT_CARD = "Contact card"
+        const val SUMMARY_PICTURE = "Picture"
+        const val SUMMARY_VIDEO = "Video"
+        const val SUMMARY_AUDIO = "Audio"
+    }
+
     @PrimaryKey var id: Long = 0
     @Index var messageId: Long = 0
     var type: String = ""
@@ -58,10 +70,10 @@ open class MmsPart : RealmObject() {
     fun getSummary(): String? = when {
         type == "application/smil" -> null
         type == "text/plain" -> text
-        type == "text/x-vcard" -> "Contact card"
-        type.startsWith("image") -> "Picture"
-        type.startsWith("video") -> "Video"
-        type.startsWith("audio") -> "Audio"
+        type == "text/x-vcard" -> SUMMARY_CONTACT_CARD
+        type.startsWith("image") -> SUMMARY_PICTURE
+        type.startsWith("video") -> SUMMARY_VIDEO
+        type.startsWith("audio") -> SUMMARY_AUDIO
         else -> type.substring(type.indexOf('/') + 1)
     }
 

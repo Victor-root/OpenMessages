@@ -72,6 +72,7 @@ import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmResults
 import io.realm.Sort
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -82,6 +83,7 @@ import kotlin.math.sqrt
 open class MessageRepositoryImpl @Inject constructor(
     private val activeConversationManager: ActiveConversationManager,
     private val context: Context,
+    private val conversationRepo: ConversationRepository,
     private val messageIds: KeyManager,
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
@@ -96,6 +98,18 @@ open class MessageRepositoryImpl @Inject constructor(
 
     companion object {
         const val TELEPHONY_UPDATE_CHUNK_SIZE = 200
+
+        /** Enough for the estimate below to settle; a stop in case it never does. */
+        private const val MAX_COMPRESSION_ATTEMPTS = 6
+
+        /**
+         * What an image that has to be shrunk is encoded at.
+         *
+         * Under the default because an image losing most of its pixels to fit cannot also afford to
+         * spend what it has left on detail nobody will make out at that size. Every byte not spent
+         * on it is a pixel kept, and pixels are what was actually missing.
+         */
+        private const val COMPRESSED_IMAGE_QUALITY = 75
     }
 
     private fun getMessagesBase(threadId: Long, query: String) =
@@ -408,11 +422,19 @@ open class MessageRepositoryImpl @Inject constructor(
         val type = when {
             uri.toString().contains(TYPE_MMS) -> TYPE_MMS
             uri.toString().contains(TYPE_SMS) -> TYPE_SMS
-            else -> return null
+            // Returning null here loses the message to the app while leaving it in the provider,
+            // so it still goes out and simply never appears. Worth saying out loud.
+            else -> {
+                if (BuildConfig.DEBUG) Timber.w("sync back: $uri names neither sms nor mms")
+                return null
+            }
         }
 
         // if uri doesn't have a valid id, fail
-        val contentId = tryOrNull(false) { ContentUris.parseId(uri) } ?: return null
+        val contentId = tryOrNull(false) { ContentUris.parseId(uri) } ?: run {
+            if (BuildConfig.DEBUG) Timber.w("sync back: no id to read in $uri")
+            return null
+        }
 
         val stableUri = when (type) {
             TYPE_MMS -> ContentUris.withAppendedId(Mms.CONTENT_URI, contentId)
@@ -423,8 +445,11 @@ open class MessageRepositoryImpl @Inject constructor(
             stableUri, null, null, null, null
         )?.use { cursor ->
             // if there are no rows, return null. else, move to the first row
-            if (!cursor.moveToFirst())
+            if (!cursor.moveToFirst()) {
+                if (BuildConfig.DEBUG)
+                    Timber.w("sync back: $stableUri was written but reads back with no row")
                 return null
+            }
 
             cursorToMessage.map(Pair(cursor, CursorToMessage.MessageColumns(cursor))).apply {
                 this.sendAsGroup = sendAsGroup
@@ -439,13 +464,29 @@ open class MessageRepositoryImpl @Inject constructor(
                     }
                 }
 
+                if (BuildConfig.DEBUG)
+                    Timber.v("sync back: $stableUri is message id $id on thread $threadId")
+
+                // The provider decides which thread a message ends up on, and it is free to pick
+                // one other than the thread the conversation was opened against: the addresses are
+                // resolved once to open the conversation and again, normalised, to write the
+                // message, and the two need not agree. Whichever thread it chose, the message is on
+                // it now, so the conversation for that thread has to exist. Without this the
+                // refresh that follows a send looks for a conversation that was never created,
+                // quietly does nothing, and the conversation stays out of the list for good while
+                // the message itself goes out. The sync path has always done this; sending had not.
+                conversationRepo.getOrCreateConversation(threadId)
+
                 insertOrUpdate()
             }
+        } ?: run {
+            if (BuildConfig.DEBUG) Timber.w("sync back: $stableUri was written but cannot be queried")
+            null
         }
     }
 
     override fun sendNewMessages(
-        subId: Int, toAddresses: Collection<String>, body: String,
+        subId: Int, threadId: Long, toAddresses: Collection<String>, body: String,
         attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int
     ): Collection<Message> {
         Timber.v("sending message(s)")
@@ -458,23 +499,41 @@ open class MessageRepositoryImpl @Inject constructor(
                 ?.let(SmsManagerFactory::createSmsManager)
                 ?: SmsManager.getDefault()
 
+            // A carrier config answers 0 for anything it doesn't carry, which is what a device
+            // gets when the config never loaded or the carrier is not one it knows. Zero is not a
+            // limit: as a size it scales the image away to nothing, which Glide refuses outright,
+            // and as a budget it leaves no room for the message at all. Only a positive number
+            // states a limit, so anything else is read as none being known, which is the same
+            // position the app is in when the user set the size themselves.
             val maxWidth = smsManager.carrierConfigValues
                 .getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_WIDTH)
-                .takeIf { prefs.mmsSize.get() == -1 }
+                .takeIf { prefs.mmsSize.get() == -1 && it > 0 }
                 ?: Int.MAX_VALUE
 
             val maxHeight = smsManager.carrierConfigValues
                 .getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_HEIGHT)
-                .takeIf { prefs.mmsSize.get() == -1 }
+                .takeIf { prefs.mmsSize.get() == -1 && it > 0 }
                 ?: Int.MAX_VALUE
 
             var remainingBytes = when (prefs.mmsSize.get()) {
                 -1 -> smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
+                    .takeIf { it > 0 }
+                    ?: (300 * 1024) // what Android settles on when a carrier states no maximum
                 0 -> Int.MAX_VALUE
                 else -> prefs.mmsSize.get() * 1024
             } * 0.9 // Ugly, but buys us a bit of wiggle room
 
             remainingBytes -= body.takeIf { it.isNotEmpty() }?.toByteArray()?.size ?: 0
+
+            // What the message is allowed to weigh and what is being asked to fit in it. Only
+            // images are ever shrunk, so an attachment reported as anything else goes in whole
+            // however large it is, and the type below is what decides that.
+            if (BuildConfig.DEBUG) Timber.v("mms budget ${remainingBytes.toInt()} bytes (size setting " +
+                    "${prefs.mmsSize.get()}), attachments: " +
+                    attachments.joinToString { attachment ->
+                        "${attachment.getType(context)} ${attachment.getSize(context)} bytes" +
+                                if (attachment.isImage(context)) " (shrinkable)" else " (as is)"
+                    })
 
             // Attach those that can't be compressed (ie. everything but images)
             parts += attachments
@@ -496,11 +555,20 @@ open class MessageRepositoryImpl @Inject constructor(
                     part
                 }
 
-            val imageBytesByAttachment = attachments
+            val images = attachments
                 // filter in images only
                 .filter { it.isImage(context) }
                 // filter in only items that exist (user may have deleted the file)
                 .filter { it.uri.resourceExists(context) }
+
+            // Encoding an image at full size is the slowest thing here, and the result is thrown
+            // away whenever it lands over budget, which for a photo off a phone camera it always
+            // does. A file already heavier on its own than the whole message may weigh cannot come
+            // out under it, so that much is settled from the file and the encoding is not done:
+            // the shrinking below starts from the image's dimensions, which is where it was headed
+            // anyway.
+            val imageBytesByAttachment = images
+                .filter { attachment -> attachment.getSize(context) <= remainingBytes }
                 .associateWith {
                     when (it.getType(context) == "image/gif") {
                         true -> ImageUtils.getScaledGif(context, it.uri, maxWidth, maxHeight)
@@ -509,11 +577,18 @@ open class MessageRepositoryImpl @Inject constructor(
                 }
                 .toMutableMap()
 
-            val imageByteCount = imageBytesByAttachment.values.sumOf { it.size }
+            // What each image counts as while the budget is divided between them: what it encoded
+            // to where that was worth finding out, the size of the file itself where it was not.
+            val imageSizes = images.associateWith { attachment ->
+                imageBytesByAttachment[attachment]?.size?.toLong() ?: attachment.getSize(context)
+            }
+
+            val imageByteCount = imageSizes.values.sum()
             if (imageByteCount > remainingBytes) {
-                imageBytesByAttachment.forEach { (attachment, originalBytes) ->
+                images.forEach { attachment ->
                     val uri = attachment.uri
-                    val maxBytes = originalBytes.size / imageByteCount.toFloat() * remainingBytes
+                    val originalSize = imageSizes.getValue(attachment)
+                    val maxBytes = originalSize / imageByteCount.toFloat() * remainingBytes
 
                     // Get the image dimensions
                     val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -527,24 +602,58 @@ open class MessageRepositoryImpl @Inject constructor(
                     val aspectRatio = width.toFloat() / height.toFloat()
 
                     var attempts = 0
-                    var scaledBytes = originalBytes
 
-                    while (scaledBytes.size > maxBytes) {
-                        // Estimate how much we need to scale the image down by. If it's still
-                        // too big, we'll need to try smaller and smaller values
-                        val scale = maxBytes / originalBytes.size * (0.9 - attempts * 0.2)
-                        if (scale <= 0) {
+                    // Null where the image was never encoded, which is the whole point above: it
+                    // has nothing to compare against yet, so the first pass below is taken.
+                    var scaledBytes = imageBytesByAttachment[attachment]
+
+                    // The area to try next, as a fraction of the original. The opening guess takes
+                    // a file's weight to follow its area, which is near enough to start from and
+                    // not near enough to land on, so each attempt corrects it by what it actually
+                    // produced. Stepping blindly down a fixed ladder instead, as this did, took
+                    // five attempts to fit a photo and finished at half the size allowed: slow, and
+                    // paid for in the picture. Aiming a little under each time settles it just
+                    // below the mark rather than circling it.
+                    var scale = maxBytes / originalSize * 0.9
+
+                    while (scaledBytes == null || scaledBytes.size > maxBytes) {
+                        if (scale <= 0 || attempts >= MAX_COMPRESSION_ATTEMPTS) {
                             Timber.w(
                                 "Failed to compress ${
-                                    originalBytes.size / 1024
+                                    originalSize / 1024
                                 }Kb to ${maxBytes.toInt() / 1024}Kb"
                             )
+
+                            // Give up on shrinking it, but not on sending it: an image that was
+                            // never encoded has no bytes to fall back on yet, and leaving it out
+                            // would drop it from the message without a word.
+                            if (scaledBytes == null) {
+                                imageBytesByAttachment[attachment] =
+                                    when (attachment.getType(context) == "image/gif") {
+                                        true -> ImageUtils.getScaledGif(
+                                            context, uri, maxWidth, maxHeight
+                                        )
+
+                                        false -> ImageUtils.getScaledImage(
+                                            context, uri, maxWidth, maxHeight,
+                                            COMPRESSED_IMAGE_QUALITY
+                                        )
+                                    }
+                            }
+
                             return@forEach
                         }
 
                         val newArea = scale * width * height
                         val newWidth = sqrt(newArea * aspectRatio).toInt()
                         val newHeight = (newWidth / aspectRatio).toInt()
+
+                        // Nothing to ask for below a pixel, and asking is an error rather than a
+                        // small image.
+                        if (newWidth < 1 || newHeight < 1) {
+                            scale = 0.0
+                            continue
+                        }
 
                         attempts++
                         scaledBytes = when (attachment.getType(context) == "image/gif") {
@@ -553,7 +662,8 @@ open class MessageRepositoryImpl @Inject constructor(
                             )
 
                             false -> ImageUtils.getScaledImage(
-                                context, attachment.uri, newWidth, newHeight
+                                context, attachment.uri, newWidth, newHeight,
+                                COMPRESSED_IMAGE_QUALITY
                             )
                         }
 
@@ -565,18 +675,24 @@ open class MessageRepositoryImpl @Inject constructor(
                             })"
                         )
 
+                        // How far off it landed is how far the next guess has to move.
+                        scale *= maxBytes / scaledBytes.size * 0.9
+
                         // release the attachment hold on the image bytes so the GC can reclaim
                         attachment.releaseResourceBytes()
                     }
 
+                    // Non-null by here: the loop above only ends once there are bytes that fit.
+                    val compressedBytes = scaledBytes ?: return@forEach
+
                     Timber.v(
-                        "Compressed ${originalBytes.size / 1024}Kb to ${
-                            scaledBytes.size / 1024
+                        "Compressed ${originalSize / 1024}Kb to ${
+                            compressedBytes.size / 1024
                         }Kb with a target size of ${
                             maxBytes.toInt() / 1024
                         }Kb in $attempts attempts"
                     )
-                    imageBytesByAttachment[attachment] = scaledBytes
+                    imageBytesByAttachment[attachment] = compressedBytes
                 }
             }
 
@@ -591,12 +707,17 @@ open class MessageRepositoryImpl @Inject constructor(
             }
         }
 
+        // What actually goes out, after any shrinking. Against the budget logged above, this says
+        // whether the message was brought down to size or simply never was.
+        if (BuildConfig.DEBUG) Timber.v("mms parts ready: ${parts.size} part(s), " +
+                "${parts.sumOf { part -> part.Data?.size ?: 0 }} bytes")
+
         Timber.v("create os provider message")
 
         // 3 stage sending process - stage 1, create records in os provider
         val group = (sendAsGroup && (toAddresses.size > 1))
         val messageUri = QkTransaction.createMessage(
-            context, subId, body, prefs.signature.get(),
+            context, subId, threadId, body, prefs.signature.get(),
             toAddresses.map(phoneNumberUtils::normalizeNumber).toTypedArray(),
             parts, group, prefs.longAsMms.get(), prefs.unicode.get()
         )
@@ -686,10 +807,46 @@ open class MessageRepositoryImpl @Inject constructor(
         return retVal
     }
 
-    override fun sendMessage(messageId: Long) =
-        getMessage(messageId)
-            ?.let { message -> sendMessage(message) }
+    override fun sendMessage(messageId: Long): Collection<Message> {
+        val message = getUnmanagedMessage(messageId) ?: return listOf()
+
+        // Retrying used to hand the stored record back to the provider untouched, so a message it
+        // had already refused could only be refused again, however many times it was tried. That is
+        // what an MMS too large for the carrier does: nothing about it changes between attempts, and
+        // shrinking only ever happens while a message is being built. Build it again from its own
+        // attachments and let it through the same shrinking a first send gets, so a retry is one.
+        if (message.isMms() && message.isFailedMessage()) {
+            val attachments = message.parts
+                .filter { part -> part.type.startsWith("image/") || part.type.startsWith("video/") }
+                .map { part -> Attachment(context, part.getUri()) }
+
+            val addresses = conversationRepo.getConversation(message.threadId)
+                ?.recipients?.map { recipient -> recipient.address }
+                .orEmpty()
+
+            if (attachments.isNotEmpty() && addresses.isNotEmpty()) {
+                if (BuildConfig.DEBUG) Timber.v("rebuilding failed message $messageId from " +
+                        "${attachments.size} attachment(s) before retrying")
+
+                val rebuilt = sendNewMessages(message.subId, message.threadId, addresses,
+                    message.getText(withSubject = false), attachments, message.sendAsGroup)
+
+                // Only once the replacement exists, so a rebuild that comes to nothing leaves the
+                // message where it was rather than losing it.
+                if (rebuilt.isNotEmpty()) {
+                    deleteMessages(listOf(messageId))
+                    return rebuilt
+                }
+
+                if (BuildConfig.DEBUG)
+                    Timber.w("rebuilding message $messageId produced nothing, sending it as it stands")
+            }
+        }
+
+        return getMessage(messageId)
+            ?.let { managed -> sendMessage(managed) }
             ?: listOf()
+    }
 
     override fun cancelDelayedSmsAlarm(messageId: Long) =
         (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager)

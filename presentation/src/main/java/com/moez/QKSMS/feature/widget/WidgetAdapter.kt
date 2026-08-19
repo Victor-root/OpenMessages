@@ -33,6 +33,7 @@ import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.getColorCompat
+import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.injection.appComponent
 import io.openmessages.model.Contact
 import io.openmessages.model.Conversation
@@ -150,14 +151,15 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         remoteViews.setTextViewText(R.id.date, boldText(timestamp, conversation.unread))
 
         // Snippet
+        val localSnippet = context.localiseSummary(conversation.snippet)
         val snippet = when {
             conversation.draft.isNotEmpty() -> context.getString(
                 R.string.main_sender_draft,
                 conversation.draft
             )
 
-            conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
-            else -> conversation.snippet
+            conversation.me -> context.getString(R.string.main_sender_you, localSnippet)
+            else -> localSnippet
         }
         remoteViews.setTextColor(R.id.snippet, if (conversation.unread) textPrimary else textTertiary)
         remoteViews.setTextViewText(R.id.snippet, boldText(snippet, conversation.unread))

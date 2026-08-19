@@ -69,6 +69,7 @@ import com.klinker.android.send_message.MmsSentReceiver
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Utils
+import io.openmessages.data.BuildConfig
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -103,6 +104,7 @@ object QkTransaction {
     fun createMessage(
         context: Context,
         subscriptionId: Int,
+        threadId: Long,
         body: String?,
         signature: String,
         toAddresses: Array<String>,
@@ -126,10 +128,10 @@ object QkTransaction {
             RateController.init(context)
             DownloadManager.init(context)
 
-            return createMmsMessage(context, subscriptionId, text, toAddresses, parts)
+            return createMmsMessage(context, subscriptionId, threadId, text, toAddresses, parts)
         }
 
-        return createSmsMessage(context, subscriptionId, text, toAddresses)
+        return createSmsMessage(context, subscriptionId, threadId, text, toAddresses)
     }
 
     fun explodeMessage(context: Context, messageUri: Uri, asGroup: Boolean): Collection<Uri> {
@@ -209,9 +211,13 @@ object QkTransaction {
     }
 
     private fun createSmsMessage(
-        context: Context, subscriptionId: Int, body: String?, addresses: Array<String>
+        context: Context, subscriptionId: Int, threadId: Long, body: String?,
+        addresses: Array<String>
     ): Uri {
-        val threadId = Utils.getOrCreateThreadId(context, addresses.toSet())
+        // Nought means no conversation was named, which is the group split below sending each
+        // recipient their own message: those do belong wherever the addresses lead.
+        val messageThreadId = threadId.takeIf { it > 0 }
+                ?: Utils.getOrCreateThreadId(context, addresses.toSet())
 
         val cal = Calendar.getInstance()
         val values = ContentValues()
@@ -221,7 +227,7 @@ object QkTransaction {
         values.put(Telephony.Sms.DATE, cal.timeInMillis.toString() + "")
         values.put(Telephony.Sms.READ, 1)
         values.put(Telephony.Sms.TYPE, 4)
-        values.put(Telephony.Sms.THREAD_ID, threadId)
+        values.put(Telephony.Sms.THREAD_ID, messageThreadId)
         values.put(Telephony.Sms.SUBSCRIPTION_ID, subscriptionId)
 
         val messageUri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
@@ -272,7 +278,7 @@ object QkTransaction {
 
         // create individual messages
         for (address in addresses)
-            retVal.add(createSmsMessage(context, subscriptionId, body, arrayOf(address)))
+            retVal.add(createSmsMessage(context, subscriptionId, 0, body, arrayOf(address)))
 
         return retVal
     }
@@ -356,8 +362,8 @@ object QkTransaction {
     }
 
     private fun createMmsMessage(
-        context: Context, subscriptionId: Int, text: String?, addresses: Array<String>,
-        parts: MutableCollection<MMSPart>
+        context: Context, subscriptionId: Int, threadId: Long, text: String?,
+        addresses: Array<String>, parts: MutableCollection<MMSPart>
     ): Uri {
         // add text to the end of the part and send
         if (!text.isNullOrEmpty())
@@ -368,11 +374,25 @@ object QkTransaction {
             })
 
         try {
-            return PduPersister.getPduPersister(context).persist(
+            val messageUri = PduPersister.getPduPersister(context).persist(
                 buildPdu(context, subscriptionId, addresses, ArrayList(parts)),
                 Telephony.Mms.Outbox.CONTENT_URI, true, true,
                 null, subscriptionId
             )
+
+            // PduPersister files the message under whatever thread the addresses lead it to, and
+            // that need not be the conversation it was written in: the provider does not always
+            // name the same thread twice for the same recipient. Say which one it belongs to, as
+            // sending an SMS already does, so the message joins the conversation on screen instead
+            // of one nobody is looking at.
+            if (threadId > 0) {
+                SqliteWrapper.update(
+                    context, context.contentResolver, messageUri,
+                    contentValuesOf(Telephony.Mms.THREAD_ID to threadId), null, null
+                )
+            }
+
+            return messageUri
         } catch (e: Exception) {
             Timber.e(e, "failed to create mms message")
         }
@@ -413,7 +433,7 @@ object QkTransaction {
         )
             ?.use { cursor ->
                 if (cursor.moveToFirst()) {
-                    cursor.getInt(0)
+                    cursor.getInt(0).orDefaultSubscription()
                 } else {
                     Timber.e("sub id provider db query returned no rows")
                     return retVal
@@ -446,6 +466,23 @@ object QkTransaction {
         return retVal
     }
 
+    /**
+     * The subscription an MMS row in the provider names, as a value [SmsManagerFactory] can act on.
+     *
+     * [PduPersister] only writes the column when a SIM was actually picked, so a message sent with
+     * no preference, which is every message on a single SIM phone, leaves it unwritten and the
+     * provider answers with its own default of 0. That is not a subscription any device hands out,
+     * and passing it on pins the send to one with no data network behind it, which the platform
+     * turns down as MMS_ERROR_NO_DATA_NETWORK without trying anything. Sending an SMS never hits
+     * this, because that path writes the column itself whatever the value, which is why a phone
+     * this happens on still texts perfectly well.
+     *
+     * A device that really did number a subscription 0 loses nothing: the default SMS subscription
+     * is that same SIM.
+     */
+    private fun Int.orDefaultSubscription(): Int =
+        takeIf { it > 0 } ?: Utils.getDefaultSubscriptionId()
+
     private fun sendMmsMessage(context: Context, messageUri: Uri, sentIntent: Intent): Boolean {
         try {
             Timber.v("send mms message uri $messageUri")
@@ -473,15 +510,15 @@ object QkTransaction {
                 ?.use { cursor ->
                     if (cursor.moveToFirst()) {
                         id = cursor.getInt(0)
-                        subscriptionId = cursor.getInt(1)
+                        subscriptionId = cursor.getInt(1).orDefaultSubscription()
                     } else {
                         Timber.e("sub id provider db query returned no rows")
-                        Utils.getDefaultSubscriptionId()
+                        subscriptionId = Utils.getDefaultSubscriptionId()
                     }
                 }
                 ?: let {
                     Timber.e("sub id provider db query failed")
-                    Utils.getDefaultSubscriptionId()
+                    subscriptionId = Utils.getDefaultSubscriptionId()
                 }
 
             // load message from provider db as a generic pdu
@@ -501,6 +538,12 @@ object QkTransaction {
                 FileOutputStream(mSendFile).use {
                     it.write(PduComposer(context, sendPdu).make())
                 }
+
+                // The two things a refused MMS is usually traced back to: how big it ended up once
+                // composed, against whatever ceiling the carrier enforces, and which SIM carried it.
+                if (BuildConfig.DEBUG)
+                    Timber.v("mms composed: ${mSendFile.length()} bytes, subscription $subscriptionId")
+
                 (Uri.Builder())
                     .authority(context.packageName + ".MmsFileProvider")
                     .path(fileName)

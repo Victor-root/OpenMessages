@@ -37,10 +37,15 @@ class GridSpacingItemDecoration(
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
 
+        // A row on its way out of the list has no position in it any more, and a row at the end has
+        // nothing after it. Both were asked of the list all the same, and the list answered by
+        // bringing the screen down mid-layout.
         val position = parent.getChildAdapterPosition(view)
-        val item = adapter.getItem(position)
+        val item = adapter.getItemOrNull(position) ?: return
 
-        if (item is ConversationInfoRecipient && adapter.getItem(position + 1) !is ConversationInfoRecipient) {
+        if (item is ConversationInfoRecipient &&
+            adapter.getItemOrNull(position + 1) !is ConversationInfoRecipient
+        ) {
             outRect.bottom = 8.dpToPx(context)
         } else if (item is ConversationInfoMedia) {
             val firstPartIndex = adapter.data.indexOfFirst { it is ConversationInfoMedia }

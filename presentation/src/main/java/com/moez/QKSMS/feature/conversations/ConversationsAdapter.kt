@@ -34,6 +34,8 @@ import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.common.base.QkRealmAdapter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.isPictureSummary
+import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.ConversationListItemBinding
@@ -122,13 +124,7 @@ class ConversationsAdapter @Inject constructor(
         }
         binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
 
-        val localSnippet = when (conversation.snippet) {
-            "Picture" -> context.getString(R.string.snippet_picture)
-            "Video" -> context.getString(R.string.snippet_video)
-            "Audio" -> context.getString(R.string.snippet_audio)
-            "Contact card" -> context.getString(R.string.snippet_contact_card)
-            else -> conversation.snippet
-        }
+        val localSnippet = context.localiseSummary(conversation.snippet)
         val snippetText = when {
             conversation.draft.isNotEmpty() -> context.getString(R.string.main_sender_draft, conversation.draft)
             conversation.me -> context.getString(R.string.main_sender_you, localSnippet)
@@ -150,12 +146,13 @@ class ConversationsAdapter @Inject constructor(
         // Make the preview in italics if draft
         if (conversation.draft.isNotEmpty()) binding.snippet.setTypeface(null, Typeface.ITALIC)
 
-        val mediaIcon = when (conversation.snippet) {
-            "Picture" -> ContextCompat.getDrawable(context, R.drawable.ic_tabler_photo)?.mutate()?.also {
-                val size = binding.snippet.textSize.toInt()
-                it.setBounds(0, 0, size, size)
-                it.setTint(binding.snippet.currentTextColor)
-            }
+        val mediaIcon = when {
+            isPictureSummary(conversation.snippet) ->
+                ContextCompat.getDrawable(context, R.drawable.ic_tabler_photo)?.mutate()?.also {
+                    val size = binding.snippet.textSize.toInt()
+                    it.setBounds(0, 0, size, size)
+                    it.setTint(binding.snippet.currentTextColor)
+                }
             else -> null
         }
         binding.snippet.setCompoundDrawablesRelative(mediaIcon, null, null, null)

@@ -43,6 +43,8 @@ import io.realm.Realm
 import io.realm.RealmQuery
 import io.realm.RealmResults
 import io.realm.Sort
+import io.openmessages.data.BuildConfig
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -347,6 +349,11 @@ class ConversationRepositoryImpl @Inject constructor(
         getConversation(threadId) ?: createConversation(threadId, sendAsGroup, onCreate)
 
     override fun getOrCreateConversation(addresses: Collection<String>, sendAsGroup: Boolean) =
+        // What is already known wins, and the provider is only asked for addresses never seen
+        // before. Asking it every time looks tidier but is not safe: it does not always answer the
+        // same thread twice for a conversation that has no message in it yet, so on a device that
+        // behaves that way every call would hand back a new thread and leave a trail of empty
+        // conversations behind it.
         getConversation(addresses) ?: createConversation(addresses, sendAsGroup)
 
     override fun saveDraft(threadId: Long, draft: String) =
@@ -365,6 +372,10 @@ class ConversationRepositoryImpl @Inject constructor(
 
     override fun updateConversations(threadIds: Collection<Long>) =
         Realm.getDefaultInstance().use { realm ->
+            // This is what gives a conversation the last message the list requires to show it, so
+            // an empty set here means whatever was just sent leaves its conversation invisible.
+            if (BuildConfig.DEBUG) Timber.v("refreshing the last message of conversations $threadIds")
+
             realm.refresh()
 
             realm.where(Conversation::class.java)
@@ -577,6 +588,13 @@ class ConversationRepositoryImpl @Inject constructor(
                         // query would briefly observe (which caused blocked spam to flash in the list).
                         onCreate?.invoke(conversation)
 
+                        // The list only shows a conversation that has recipients and a last
+                        // message, so both counts decide whether it is ever seen.
+                        if (BuildConfig.DEBUG) Timber.v("conversation $threadId built from the provider: " +
+                                "${conversation.recipients.size} recipient(s), " +
+                                "last message ${conversation.lastMessage?.id ?: "none"}, " +
+                                "archived ${conversation.archived}")
+
                         realm.executeTransaction { it.insertOrUpdate(conversation) }
                     }
                 }
@@ -611,6 +629,9 @@ class ConversationRepositoryImpl @Inject constructor(
                     if (recipients.size <= 1) false
                     else sendAsGroup
             }
+            if (BuildConfig.DEBUG) Timber.v("conversation $threadId was not in the provider, built from the addresses " +
+                    "given: ${matchedRecipients.size} recipient(s)")
+
             realm.executeTransaction { it.copyToRealmOrUpdate(conversation) }
             return conversation
         }

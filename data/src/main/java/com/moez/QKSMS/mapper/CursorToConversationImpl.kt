@@ -25,6 +25,8 @@ import android.provider.Telephony.Threads
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
+import io.openmessages.data.BuildConfig
+import timber.log.Timber
 import javax.inject.Inject
 
 class CursorToConversationImpl @Inject constructor(
@@ -36,16 +38,40 @@ class CursorToConversationImpl @Inject constructor(
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
         val PROJECTION = arrayOf(
                 Threads._ID,
+                Threads.RECIPIENT_IDS,
+                Threads.ARCHIVED
+        )
+
+        private val PROJECTION_WITHOUT_ARCHIVED = arrayOf(
+                Threads._ID,
                 Threads.RECIPIENT_IDS
         )
 
+        private const val SORT_ORDER = "date desc"
+
         const val ID = 0
         const val RECIPIENT_IDS = 1
+
+        /**
+         * Whether the provider answers for [Threads.ARCHIVED].
+         *
+         * Kept for the process rather than per instance, because it is a fact about the device and
+         * this class is not a singleton: a device without the column would otherwise pay for
+         * finding out again on every instance that ever asks.
+         */
+        @Volatile
+        private var archivedColumnPresent = true
     }
 
     override fun map(from: Cursor): Conversation {
         return Conversation().apply {
             id = from.getLong(ID)
+
+            // Read by name, not by position: the column is absent when the fallback projection
+            // was the one that went through.
+            val archivedColumn = from.getColumnIndex(Threads.ARCHIVED)
+            archived = archivedColumn != -1 && from.getInt(archivedColumn) != 0
+
             recipients.addAll(from.getString(RECIPIENT_IDS)
                     .split(" ")
                     .filter { it.isNotBlank() }
@@ -55,10 +81,31 @@ class CursorToConversationImpl @Inject constructor(
     }
 
     override fun getConversationsCursor(): Cursor? {
-        return when (permissionManager.hasReadSms()) {
-            true -> context.contentResolver.query(URI, PROJECTION, null, null, "date desc")
-            false -> null
+        if (!permissionManager.hasReadSms()) {
+            return null
         }
+
+        // Threads.ARCHIVED carries the archived state left behind by whichever messaging app owned
+        // the inbox before, but only providers that follow AOSP have the column. Asking one that
+        // doesn't for it fails the entire query, which would leave the conversation list empty
+        // rather than merely unarchived, so what cannot be done without is asked for on its own
+        // instead.
+        //
+        // Asked once. Finding out costs a rejected query and the stack trace that comes with it,
+        // and this runs every time a conversation is drawn or created, so a device without the
+        // column was paying that repeatedly for an answer that cannot change.
+        if (archivedColumnPresent) {
+            try {
+                return context.contentResolver.query(URI, PROJECTION, null, null, SORT_ORDER)
+            } catch (e: Exception) {
+                archivedColumnPresent = false
+                if (BuildConfig.DEBUG)
+                    Timber.i(e, "the conversations provider has no ${Threads.ARCHIVED} column, so " +
+                            "a conversation archived in another app is not recognised as archived here")
+            }
+        }
+
+        return context.contentResolver.query(URI, PROJECTION_WITHOUT_ARCHIVED, null, null, SORT_ORDER)
     }
 
 }

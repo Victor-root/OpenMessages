@@ -67,6 +67,7 @@ import com.uber.autodispose.ObservableSubscribeProxy
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
+import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkThemedActivity
@@ -102,6 +103,7 @@ import io.reactivex.subjects.Subject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -130,6 +132,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         // context, so wrap the activity the same way the other Material components here do.
         BottomSheetDialog(ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context)).apply {
             setContentView(attachSheetBinding.root)
+            // The sheet opens over a keyboard that is on its way out, and a window that makes room
+            // for a keyboard is measured when it appears rather than when the keyboard finally
+            // goes. It was therefore given the height the screen had while the keyboard was still
+            // up, and kept it: the sheet sat marooned in mid-screen with the dimmed conversation
+            // showing underneath where the keyboard used to be. It asks for the keyboard to be put
+            // away as it opens, and for its own height to take no notice of the keyboard either
+            // way.
+            window?.setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN or
+                        WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
+            )
             // Dragging down closes rather than snapping back to the half-open height, which for a
             // seven-item menu is only ever a truncated version of the same thing.
             behavior.skipCollapsed = true
@@ -588,6 +601,21 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         binding.messageAttachments.setVisible(state.attachments.isNotEmpty())
         composeAttachmentAdapter.data = state.attachments
+
+        // Temporary, chasing the attachment row that shows itself when a message is merely being
+        // selected. Read once the layout pass has had its own say about the row, and only worth a
+        // line when the row is showing or holding something, which is the whole anomaly.
+        if (BuildConfig.DEBUG) {
+            binding.messageAttachments.post {
+                val visible = binding.messageAttachments.isVisible
+                if (visible || composeAttachmentAdapter.itemCount > 0) {
+                    Timber.v("attachment row visible=$visible holding " +
+                            "${composeAttachmentAdapter.itemCount} item(s) " +
+                            "[${state.attachments.joinToString { it.uri.toString() }}], " +
+                            "${state.selectedMessages} message(s) selected")
+                }
+            }
+        }
 
         binding.shadeBackground.apply {
             if (state.audioMsgRecording) {

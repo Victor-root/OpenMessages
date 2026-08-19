@@ -1,5 +1,27 @@
 # 📋 Changelog
 
+## 🚀 v1.0.1 (2026-08-19)
+
+A bug-fix release. Every issue below is marked with where it comes from. Most are pre-existing bugs from the original QUIK/QKSMS codebase rather than regressions introduced during the Open Messages rebrand: they were already present in the code this project forked from, and only ever showed up on certain phones or with certain settings, which is why they went unnoticed until now. The two that came in with v1.0.0 say so.
+
+### 🔄 Changed
+- 📏 **The maximum MMS size now defaults to "Automatic"**, meaning whatever limit the carrier itself reports, instead of a fixed 300 KB guessed on its behalf. Where a carrier reports no limit, 300 KB is still what's used, so nothing is lost by asking first. Anyone who has already picked a size keeps it.
+
+### 🐛 Fixed
+- 📥 **(inherited from upstream) Conversations imported from another SMS app** no longer land in the inbox if they were archived there before switching to Open Messages.
+- 📷 **(inherited from upstream) MMS (photo/video) sends failing instantly** on some phones, where the app mistook a missing SIM preference for subscription "0" and tried to send over a SIM that doesn't exist.
+- 📇 **(inherited from upstream) Recipients possibly resolving to the wrong number** on phones whose system address book doesn't lay out its columns in the same order Android's reference implementation does.
+- 📏 **(inherited from upstream) MMS sends failing when the "Automatic" size setting was used** and the carrier reported no known limit, which the app mistook for a limit of zero.
+- 🗂️ **(inherited from upstream) The navigation drawer getting stuck reopening itself** right after closing it, during the first sync after installing.
+- 💬 **(inherited from upstream) A conversation started with a photo staying empty** and missing from the conversation list until the app was left and reopened, because the message was filed under a different conversation from the one on screen.
+- 🔁 **(inherited from upstream) Retrying a failed MMS** resending it untouched instead of rebuilding it, so a message that failed for its size failed again at the same size.
+- 🐢 **(inherited from upstream) Several photos in one message taking a long time to appear**, each having been encoded at full size only to be discarded, then shrunk by fixed steps that overshot.
+- 🖼️ **(inherited from upstream) Photos in MMS coming out far smaller than they needed to be.** The app asked for a sensible image quality and the request was ignored, so every photo was saved at maximum quality and had to give up most of its pixels to fit the size limit.
+- 👤 **(inherited from upstream) Conversation shortcuts and share targets showing a coloured initial** in place of the contact's photo.
+- 💥 **(inherited from upstream) The app crashing on leaving the conversation details screen**, where the spacing of a row being removed was worked out from a position that row no longer had. The same fault was found and fixed in eleven other lists, where it would have been reached by tapping a row at the moment its list changed.
+- 🔤 **(introduced in v1.0.0, not inherited) A message holding several photos reading "Picture" untranslated** in the conversation list. Search results, the home-screen widget and notifications never translated it at all.
+- 📎 **(introduced in v1.0.0, not inherited) The attachment menu opening in mid-screen** when the keyboard was up, left where the keyboard had been instead of settling at the bottom of the screen.
+
 ## 🚀 v1.0.0 (2026-08-13)
 
 First public release of Open Messages, a rebrand and continued development of QUIK (itself a fork of QKSMS). Everything below is relative to the original QUIK/QKSMS this project started from.
