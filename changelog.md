@@ -1,6 +1,6 @@
 # 📋 Changelog
 
-## 🚀 v1.0.1 (2026-08-16)
+## 🚀 v1.0.1 (2026-08-19)
 
 A bug-fix release. Every issue below is marked with where it comes from. Most are pre-existing bugs from the original QUIK/QKSMS codebase rather than regressions introduced during the Open Messages rebrand: they were already present in the code this project forked from, and only ever showed up on certain phones or with certain settings, which is why they went unnoticed until now. The two that came in with v1.0.0 say so.
 
