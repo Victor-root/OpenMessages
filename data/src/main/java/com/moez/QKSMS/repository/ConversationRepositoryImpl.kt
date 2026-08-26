@@ -225,37 +225,39 @@ class ConversationRepositoryImpl @Inject constructor(
                 }
         }
 
-    override fun getUnseenIds(archived: Boolean) =
-        ArrayList<Long>().apply {
-            Realm.getDefaultInstance()
-                .where(Conversation::class.java)
+    override fun getUnseenIds(archived: Boolean) = idsOfConversationsWhoseLastMessageIs(
+        field = "lastMessage.seen",
+        archived = archived
+    )
+
+    override fun getUnreadIds(archived: Boolean) = idsOfConversationsWhoseLastMessageIs(
+        field = "lastMessage.read",
+        archived = archived
+    )
+
+    /**
+     * Ids of the conversations whose last message has [field] still false, newest first.
+     *
+     * The query is a blocking one on purpose. Its asynchronous counterpart hands back an empty
+     * result that fills in later off the calling thread's looper, so every caller here, all of them
+     * on a background thread with no looper, read it while it was still empty and saw no unread
+     * conversation at all.
+     */
+    private fun idsOfConversationsWhoseLastMessageIs(field: String, archived: Boolean): List<Long> =
+        Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+
+            realm.where(Conversation::class.java)
                 .notEqualTo("id", 0L)
                 .equalTo("archived", archived)
                 .equalTo("blocked", false)
-                .equalTo("lastMessage.seen", false)
+                .equalTo(field, false)
                 .sort(
                     arrayOf("lastMessage.date"),
                     arrayOf(Sort.DESCENDING)
                 )
-                .findAllAsync()
-                .forEach { conversation -> add(conversation.id) }
-        }
-
-
-    override fun getUnreadIds(archived: Boolean) =
-        ArrayList<Long>().apply {
-            Realm.getDefaultInstance()
-                .where(Conversation::class.java)
-                .notEqualTo("id", 0L)
-                .equalTo("archived", archived)
-                .equalTo("blocked", false)
-                .equalTo("lastMessage.read", false)
-                .sort(
-                    arrayOf("lastMessage.date"),
-                    arrayOf(Sort.DESCENDING)
-                )
-                .findAllAsync()
-                .forEach { conversation -> add(conversation.id) }
+                .findAll()
+                .map { conversation -> conversation.id }
         }
 
     override fun getConversationAndLastSenderContactName(threadId: Long): Pair<Conversation?, String?>? =

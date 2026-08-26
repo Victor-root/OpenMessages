@@ -22,18 +22,25 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.android.AndroidInjection
+import io.openmessages.interactor.RestoreNotifications
 import io.openmessages.interactor.UpdateScheduledMessageAlarms
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 class BootReceiver : BroadcastReceiver() {
 
     @Inject lateinit var updateScheduledMessageAlarms: UpdateScheduledMessageAlarms
+    @Inject lateinit var restoreNotifications: RestoreNotifications
 
     override fun onReceive(context: Context, intent: Intent?) {
         AndroidInjection.inject(this, context)
 
         val result = goAsync()
-        updateScheduledMessageAlarms.execute(Unit) { result.finish() }
+        val pending = AtomicInteger(2)
+        val finishWhenBothAreDone = { if (pending.decrementAndGet() == 0) result.finish() }
+
+        updateScheduledMessageAlarms.execute(Unit, finishWhenBothAreDone)
+        restoreNotifications.execute(Unit, finishWhenBothAreDone)
     }
 
 }
