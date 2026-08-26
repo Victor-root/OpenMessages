@@ -62,6 +62,7 @@ import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
 import io.openmessages.util.tryOrNull
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 import androidx.core.net.toUri
@@ -88,6 +89,9 @@ class NotificationManagerImpl @Inject constructor(
         val MARK_TYPE_COUNT = MessageMarkReceiver.MarkType.values().size
 
         val VIBRATE_PATTERN = longArrayOf(0, 200, 0, 200)
+
+        /** How long the contact photo is given to decode before the notification goes out without it. */
+        const val AVATAR_TIMEOUT_MS = 3000L
     }
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -123,7 +127,7 @@ class NotificationManagerImpl @Inject constructor(
     /**
      * Updates the notification for a particular conversation
      */
-    override fun update(threadId: Long) {
+    override fun update(threadId: Long, alert: Boolean) {
         // If notifications are disabled, don't do anything
         if (!prefs.notifications(threadId).get()) {
             return
@@ -181,7 +185,11 @@ class NotificationManagerImpl @Inject constructor(
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
                 .setAutoCancel(true)
-                .setOnlyAlertOnce(true)
+                // Alerting only once would silence every message after the first one in a
+                // conversation whose notification is still showing: it would be added to the
+                // notification without a sound, a vibration or a heads-up, which reads as the
+                // message never having arrived.
+                .setOnlyAlertOnce(!alert)
                 .setContentIntent(contentPI)
                 .setDeleteIntent(seenPI)
                 .setLights(Color.WHITE, 500, 2000)
@@ -251,7 +259,10 @@ class NotificationManagerImpl @Inject constructor(
                             .load(photoUri)
                             .submit(64.dpToPx(context), 64.dpToPx(context))
                 }
-                ?.let { futureGet -> tryOrNull(false) { futureGet.get() } }
+                // Bounded: an untimed get() would hold the notification back for as long as the
+                // photo took to decode, and a message announces itself late or not at all over a
+                // picture that was only ever decoration.
+                ?.let { futureGet -> tryOrNull(false) { futureGet.get(AVATAR_TIMEOUT_MS, TimeUnit.MILLISECONDS) } }
 
         // Bind the notification contents based on the notification preview mode
         when (prefs.notificationPreviews(threadId).get()) {
@@ -402,7 +413,10 @@ class NotificationManagerImpl @Inject constructor(
 
             context.startActivity(intent)
         }
-        val sc = shortcutManager.getOrCreateShortcut(threadId)
+        // The shortcut is what files the notification under "Conversations", but the launcher can
+        // refuse to publish it (its own rate limit, no room left). That must cost the notification
+        // its heading, never its delivery.
+        val sc = tryOrNull { shortcutManager.getOrCreateShortcut(threadId) }
         notification.setShortcutInfo(sc)
         notificationManager.notify(threadId.toInt(), notification.build())
 
@@ -520,6 +534,9 @@ class NotificationManagerImpl @Inject constructor(
                     lightColor = Color.WHITE
                     enableVibration(true)
                     vibrationPattern = VIBRATE_PATTERN
+                    // What launchers read to decide whether the app icon carries a badge, and the
+                    // only route to the unread counter on the ones that draw a number.
+                    setShowBadge(true)
                 },
                 NotificationChannel(
                     RECEIVING_WORKER_CHANNEL_ID,
@@ -528,6 +545,9 @@ class NotificationManagerImpl @Inject constructor(
                 ).apply {
                     enableLights(false)
                     enableVibration(false)
+                    // Purely technical: it says a message is being fetched, so it must not add to
+                    // the unread count on the icon.
+                    setShowBadge(false)
                 },
             )
 
@@ -543,6 +563,7 @@ class NotificationManagerImpl @Inject constructor(
                         enableVibration(true)
                         vibrationPattern = VIBRATE_PATTERN
                         lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                        setShowBadge(true)
                         setSound(prefs.ringtone().get().let(Uri::parse), AudioAttributes.Builder()
                                 .setUsage(AudioAttributes.USAGE_NOTIFICATION)
                                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)

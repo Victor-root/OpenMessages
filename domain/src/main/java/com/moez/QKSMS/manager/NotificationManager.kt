@@ -25,7 +25,16 @@ interface NotificationManager {
 
     fun getForegroundNotificationForWorkersOnOlderAndroids(): Notification
 
-    fun update(threadId: Long)
+    /**
+     * Rebuilds the notification for a conversation from its unread and unseen messages.
+     *
+     * [alert] tells the system whether this is worth interrupting the user for: a message that just
+     * arrived is, so it rings, vibrates and pops up even when the conversation already had a
+     * notification standing. A rebuild that follows something else (a deletion, a message being
+     * marked read, notifications restored after a reboot) is not, and updates the notification in
+     * place without alerting again.
+     */
+    fun update(threadId: Long, alert: Boolean = true)
 
     fun notifyFailed(threadId: Long)
 

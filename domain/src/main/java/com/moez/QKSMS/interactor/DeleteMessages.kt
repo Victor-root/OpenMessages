@@ -40,7 +40,7 @@ class DeleteMessages @Inject constructor(
 
                 conversationRepo.updateConversations(listOf(params.threadId))
 
-                notificationManager.update(params.threadId)
+                notificationManager.update(params.threadId, alert = false)
             }
             .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
