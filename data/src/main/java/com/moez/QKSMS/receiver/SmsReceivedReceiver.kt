@@ -28,6 +28,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import dagger.android.AndroidInjection
 import io.openmessages.repository.MessageRepository
+import io.openmessages.util.tryOrNull
 import io.openmessages.worker.ReceiveSmsWorker
 import io.openmessages.worker.ReceiveSmsWorker.Companion.INPUT_DATA_KEY_MESSAGE_ID
 import io.reactivex.Single
@@ -57,12 +58,18 @@ class SmsReceivedReceiver : BroadcastReceiver() {
                     ).id
                 }
                 .subscribe({ messageId ->
-                    WorkManager.getInstance(context).enqueue(
-                        OneTimeWorkRequestBuilder<ReceiveSmsWorker>()
-                            .setInputData(workDataOf(INPUT_DATA_KEY_MESSAGE_ID to messageId))
-                            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-                            .build()
-                    )
+                    // Waited on rather than fired and forgotten: the request is written to
+                    // WorkManager's own database off this thread, and reporting the broadcast done
+                    // before that lands leaves the message with no notification at all should the
+                    // process be reclaimed in between.
+                    tryOrNull {
+                        WorkManager.getInstance(context).enqueue(
+                            OneTimeWorkRequestBuilder<ReceiveSmsWorker>()
+                                .setInputData(workDataOf(INPUT_DATA_KEY_MESSAGE_ID to messageId))
+                                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                                .build()
+                        ).result.get()
+                    }
                     pendingResult.finish()
                 }, { error ->
                     Timber.e(error, "error receiving new sms")
