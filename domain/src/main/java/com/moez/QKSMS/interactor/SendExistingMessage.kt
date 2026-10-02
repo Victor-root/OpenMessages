@@ -30,10 +30,11 @@ class SendExistingMessage @Inject constructor(
     override fun buildObservable(params: Long): Flowable<Long> =
         Flowable.just(params)
             .doOnNext { messageId ->
-                val message = messageRepo.getMessage(messageId)
+                // Read before sending: retrying a failed MMS replaces the stored message, after
+                // which this one can no longer be read.
+                val threadId = messageRepo.getMessage(messageId)!!.threadId
                 messageRepo.sendMessage(messageId)
 
-                val threadId = message!!.threadId
                 notificationManager.cancel(threadId.toInt() + 100000)
             }
 }
