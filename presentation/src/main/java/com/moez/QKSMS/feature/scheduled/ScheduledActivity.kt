@@ -21,6 +21,7 @@ package io.openmessages.feature.scheduled
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -65,6 +66,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         setTitle(R.string.scheduled_title)
         showBackButton(true)
         viewModel.bindView(this)
+        onBackPressedDispatcher.addCallback(this) { backPressedIntent.onNext(Unit) }
 
         scheduledMessageAdapter.emptyView = binding.empty
         binding.messages.adapter = scheduledMessageAdapter
@@ -102,8 +104,6 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
         // show compose button
         binding.compose.isVisible = state.conversationId == null
     }
-
-    override fun onBackPressed() = backPressedIntent.onNext(Unit)
 
     override fun clearSelection() = scheduledMessageAdapter.clearSelection()
 

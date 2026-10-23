@@ -15,6 +15,7 @@ import android.os.PowerManager;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 
+import androidx.core.content.ContextCompat;
 import com.android.mms.MmsConfig;
 import timber.log.Timber;
 
@@ -53,7 +54,8 @@ public class DownloadManager {
         mMap.put(location, receiver);
 
         // Use unique action in order to avoid cancellation of notifying download result.
-        context.getApplicationContext().registerReceiver(receiver, new IntentFilter(receiver.mAction));
+        ContextCompat.registerReceiver(context.getApplicationContext(), receiver,
+                new IntentFilter(receiver.mAction), ContextCompat.RECEIVER_NOT_EXPORTED);
 
         Timber.v("receiving with system method");
         final String fileName = "download." + Math.abs(new Random().nextLong()) + ".dat";

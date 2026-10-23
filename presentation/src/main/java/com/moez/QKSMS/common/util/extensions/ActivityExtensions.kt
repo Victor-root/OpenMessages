@@ -21,6 +21,9 @@ package io.openmessages.common.util.extensions
 import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.ComponentActivity
+import androidx.activity.addCallback
+import com.bluelinelabs.conductor.Router
 
 fun Activity.dismissKeyboard() {
     window.currentFocus?.let { focus ->
@@ -28,5 +31,19 @@ fun Activity.dismissKeyboard() {
         imm.hideSoftInputFromWindow(focus.windowToken, 0)
 
         focus.clearFocus()
+    }
+}
+
+/**
+ * Hands the back gesture to the controllers of [router] first, and to the activity once they have
+ * nothing left to go back from
+ */
+fun ComponentActivity.handleBackThrough(router: Router) {
+    onBackPressedDispatcher.addCallback(this) {
+        if (!router.handleBack()) {
+            isEnabled = false
+            onBackPressedDispatcher.onBackPressed()
+            isEnabled = true
+        }
     }
 }

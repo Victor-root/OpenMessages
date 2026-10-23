@@ -25,6 +25,7 @@ import android.os.Build;
 import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.util.ArrayMap;
+import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 import java.util.List;
@@ -80,7 +81,7 @@ public class MmsConfigManager {
                     new IntentFilter("LOADED");
 
             try {
-                context.registerReceiver(mReceiver, intentFilterLoaded);
+                ContextCompat.registerReceiver(context, mReceiver, intentFilterLoaded, ContextCompat.RECEIVER_NOT_EXPORTED);
             } catch (Exception e) {
 
             }

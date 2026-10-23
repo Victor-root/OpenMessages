@@ -21,6 +21,7 @@ package io.openmessages.feature.templates
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -69,6 +70,7 @@ class TemplatesActivity : QkThemedActivity(), TemplatesView {
         setTitle(R.string.templates_title)
         showBackButton(true)
         viewModel.bindView(this)
+        onBackPressedDispatcher.addCallback(this) { backPressedIntent.onNext(Unit) }
 
         templatesAdapter.emptyView = binding.empty
         binding.templates.adapter = templatesAdapter
@@ -113,8 +115,6 @@ class TemplatesActivity : QkThemedActivity(), TemplatesView {
 
         dialog.show()
     }
-
-    override fun onBackPressed() = backPressedIntent.onNext(Unit)
 
     override fun finishActivity() {
         finish()

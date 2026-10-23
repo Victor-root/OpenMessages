@@ -31,6 +31,7 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
 
+import androidx.core.content.ContextCompat;
 import com.android.mms.MmsConfig;
 import com.android.mms.service_alt.MmsNetworkManager;
 import com.android.mms.service_alt.MmsRequestManager;
@@ -494,7 +495,7 @@ public class Transaction {
 
                 };
 
-                context.registerReceiver(receiver, filter);
+                ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
             } catch (Throwable e) {
                 Timber.e(e, "exception thrown");
             }

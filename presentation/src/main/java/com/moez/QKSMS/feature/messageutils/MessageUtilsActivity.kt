@@ -24,6 +24,7 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
 import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.handleBackThrough
 import io.openmessages.databinding.ContainerActivityBinding
 
 class MessageUtilsActivity : QkThemedActivity() {
@@ -40,12 +41,6 @@ class MessageUtilsActivity : QkThemedActivity() {
         if (!router.hasRootController()) {
             router.setRoot(RouterTransaction.with(MessageUtilsController()))
         }
-    }
-
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        if (!router.handleBack()) {
-            super.onBackPressed()
-        }
+        handleBackThrough(router)
     }
 }

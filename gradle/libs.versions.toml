@@ -1,7 +1,7 @@
 [versions]
 android-compileSdk = "37"
 android-minSdk = "23"
-android-targetSdk = "33"
+android-targetSdk = "36"
 agp = "9.4.1"
 androidx-appcompat = "1.8.0"
 androidx-constraintlayout = "2.2.2"
