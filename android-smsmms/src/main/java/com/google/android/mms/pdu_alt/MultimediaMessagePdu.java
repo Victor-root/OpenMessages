@@ -16,7 +16,6 @@
 
 package com.google.android.mms.pdu_alt;
 
-import com.google.android.mms.InvalidHeaderValueException;
 
 /**
  * Multimedia message PDU.

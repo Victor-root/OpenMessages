@@ -27,7 +27,7 @@ import android.view.ViewGroup
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
-import com.google.android.mms.ContentType
+import com.google.android.mms.pdu_alt.ContentType
 import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkViewHolder

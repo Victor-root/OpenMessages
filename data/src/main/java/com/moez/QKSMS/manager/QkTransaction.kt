@@ -47,13 +47,13 @@ import android.telephony.SmsMessage
 import androidx.core.content.contentValuesOf
 import androidx.core.net.toUri
 import com.android.mms.dom.smil.parser.SmilXmlSerializer
-import com.google.android.mms.ContentType
-import com.google.android.mms.InvalidHeaderValueException
 import com.google.android.mms.MMSPart
-import com.google.android.mms.MmsException
 import com.google.android.mms.pdu_alt.CharacterSets
+import com.google.android.mms.pdu_alt.ContentType
 import com.google.android.mms.pdu_alt.EncodedStringValue
 import com.google.android.mms.pdu_alt.GenericPdu
+import com.google.android.mms.pdu_alt.InvalidHeaderValueException
+import com.google.android.mms.pdu_alt.MmsException
 import com.google.android.mms.pdu_alt.PduBody
 import com.google.android.mms.pdu_alt.PduComposer
 import com.google.android.mms.pdu_alt.PduHeaders

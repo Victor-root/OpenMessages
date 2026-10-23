@@ -18,7 +18,7 @@
  */
 package io.openmessages.extensions
 
-import com.google.android.mms.ContentType
+import com.google.android.mms.pdu_alt.ContentType
 import io.openmessages.model.MmsPart
 
 fun MmsPart.isSmil() = ContentType.APP_SMIL.lowercase() == type.lowercase()

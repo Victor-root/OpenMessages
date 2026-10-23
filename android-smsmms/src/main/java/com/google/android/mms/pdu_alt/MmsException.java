@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.google.android.mms;
+package com.google.android.mms.pdu_alt;
 
 /**
  * A generic exception that is thrown by the Mms client.

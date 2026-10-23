@@ -35,7 +35,7 @@ import androidx.core.content.getSystemService
 import androidx.core.net.toFile
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import com.google.android.mms.ContentType
+import com.google.android.mms.pdu_alt.ContentType
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.contentproviders.MmsPartProvider
 import io.openmessages.manager.BluetoothMicManager

@@ -21,7 +21,6 @@ import android.text.TextUtils;
 
 import timber.log.Timber;
 
-import com.google.android.mms.InvalidHeaderValueException;
 import com.klinker.android.send_message.Utils;
 
 public class SendReq extends MultimediaMessagePdu {

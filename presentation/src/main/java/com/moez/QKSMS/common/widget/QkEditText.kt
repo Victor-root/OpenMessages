@@ -29,7 +29,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.ContentInfoCompat
 import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
-import com.google.android.mms.ContentType
+import com.google.android.mms.pdu_alt.ContentType
 import io.openmessages.common.util.TextViewStyler
 import io.openmessages.injection.appComponent
 import io.reactivex.rxjava3.subjects.PublishSubject

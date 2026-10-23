@@ -35,7 +35,7 @@ import android.provider.Telephony.Sms
 import android.telephony.SmsManager
 import android.webkit.MimeTypeMap
 import androidx.core.content.contentValuesOf
-import com.google.android.mms.ContentType
+import com.google.android.mms.pdu_alt.ContentType
 import com.klinker.android.send_message.SmsManagerFactory
 import io.openmessages.common.util.extensions.now
 import io.openmessages.compat.TelephonyCompat
