@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.telephony.SmsManager;
-import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -39,35 +38,17 @@ public class Utils {
      * The number of this phone on the subscription, or on the default one for
      * {@link #DEFAULT_SUBSCRIPTION_ID}, or null when it isn't known
      */
-    public static String getMyPhoneNumberFromSubscription(Context context, int subscriptionId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            int id = DEFAULT_SUBSCRIPTION_ID == subscriptionId
-                    || !SubscriptionManager.isValidSubscriptionId(subscriptionId)
-                    ? SubscriptionManager.getDefaultSubscriptionId()
-                    : subscriptionId;
-            // Asking about no subscription at all is an error rather than an empty answer
-            if (!SubscriptionManager.isValidSubscriptionId(id)) {
-                return null;
-            }
-            String number = context.getSystemService(SubscriptionManager.class).getPhoneNumber(id);
-            return TextUtils.isEmpty(number) ? null : number;
-        }
-        return getLegacyPhoneNumber(context, subscriptionId);
-    }
-
-    /**
-     * Before Android 13, the number is read from the line or the subscription
-     */
+    // Its replacement, SubscriptionManager.getPhoneNumber, demands READ_PHONE_NUMBERS, where this
+    // one is open to the default SMS app through READ_SMS
     @SuppressWarnings("deprecation")
-    private static String getLegacyPhoneNumber(Context context, int subscriptionId) {
-        if (DEFAULT_SUBSCRIPTION_ID != subscriptionId) {
-            SubscriptionInfo subscriptionInfo = context.getSystemService(SubscriptionManager.class)
-                    .getActiveSubscriptionInfo(subscriptionId);
-            if (subscriptionInfo != null) {
-                return subscriptionInfo.getNumber();
-            }
+    public static String getMyPhoneNumberFromSubscription(Context context, int subscriptionId) {
+        TelephonyManager telephonyManager = context.getSystemService(TelephonyManager.class);
+        if (DEFAULT_SUBSCRIPTION_ID != subscriptionId
+                && SubscriptionManager.isValidSubscriptionId(subscriptionId)) {
+            telephonyManager = telephonyManager.createForSubscriptionId(subscriptionId);
         }
-        return context.getSystemService(TelephonyManager.class).getLine1Number();
+        String number = telephonyManager.getLine1Number();
+        return TextUtils.isEmpty(number) ? null : number;
     }
 
     /**

@@ -31,6 +31,7 @@ import io.openmessages.extensions.isAudio
 import io.openmessages.extensions.isContact
 import io.openmessages.extensions.isImage
 import io.openmessages.extensions.isVCard
+import io.openmessages.extensions.isVideo
 
 
 class Attachment (
@@ -50,6 +51,8 @@ class Attachment (
     fun isAudio(context: Context): Boolean = uri.isAudio(context)
 
     fun isImage(context: Context): Boolean = uri.isImage(context)
+
+    fun isVideo(context: Context): Boolean = uri.isVideo(context)
 
     fun getType(context: Context): String = uri.getType(context)
 

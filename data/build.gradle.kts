@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.documentfile)
 
+    // media3, to bring videos down to the size an MMS may weigh
+    implementation(libs.media3.transformer)
+    implementation(libs.media3.effect)
+
     // glide
     implementation(libs.glide)
     ksp(libs.glide.ksp)
