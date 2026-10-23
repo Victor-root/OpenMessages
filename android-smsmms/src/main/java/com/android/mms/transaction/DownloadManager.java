@@ -20,7 +20,7 @@ import com.android.mms.MmsConfig;
 import timber.log.Timber;
 
 import com.klinker.android.send_message.BroadcastUtils;
-import com.klinker.android.send_message.MmsReceivedReceiver;
+import com.klinker.android.send_message.MmsIntents;
 import com.klinker.android.send_message.SmsManagerFactory;
 
 import java.io.File;
@@ -45,7 +45,7 @@ public class DownloadManager {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public void downloadMultimediaMessage(final Context context, final String location, Uri uri, boolean byPush, int subscriptionId) {
+    public void downloadMultimediaMessage(final Context context, final String location, Uri uri, int subscriptionId) {
         if (location == null || mMap.get(location) != null) {
             return;
         }
@@ -66,11 +66,10 @@ public class DownloadManager {
                 .scheme(ContentResolver.SCHEME_CONTENT)
                 .build();
         Intent download = new Intent(receiver.mAction);
-        download.putExtra(MmsReceivedReceiver.EXTRA_FILE_PATH, mDownloadFile.getPath());
-        download.putExtra(MmsReceivedReceiver.EXTRA_LOCATION_URL, location);
-        download.putExtra(MmsReceivedReceiver.EXTRA_TRIGGER_PUSH, byPush);
-        download.putExtra(MmsReceivedReceiver.EXTRA_URI, uri);
-        download.putExtra(MmsReceivedReceiver.SUBSCRIPTION_ID, subscriptionId);
+        download.putExtra(MmsIntents.EXTRA_FILE_PATH, mDownloadFile.getPath());
+        download.putExtra(MmsIntents.EXTRA_LOCATION_URL, location);
+        download.putExtra(MmsIntents.EXTRA_URI, uri);
+        download.putExtra(MmsIntents.EXTRA_SUBSCRIPTION_ID, subscriptionId);
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 0, download, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
@@ -112,8 +111,8 @@ public class DownloadManager {
             wakeLock.acquire(60 * 1000);
 
             Intent newIntent = (Intent) intent.clone();
-            newIntent.setAction(MmsReceivedReceiver.MMS_RECEIVED);
-            BroadcastUtils.sendExplicitBroadcast(context, newIntent, MmsReceivedReceiver.MMS_RECEIVED);
+            newIntent.setAction(MmsIntents.MMS_RECEIVED);
+            BroadcastUtils.sendExplicitBroadcast(context, newIntent, MmsIntents.MMS_RECEIVED);
         }
     }
 

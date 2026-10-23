@@ -19,7 +19,6 @@ import android.content.Context;
 import android.drm.DrmConvertedStatus;
 import android.drm.DrmManagerClient;
 import timber.log.Timber;
-import android.provider.Downloads;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,6 +26,12 @@ import java.io.RandomAccessFile;
 
 
 public class DrmConvertSession {
+    /** The results of {@link #close}, the status codes the system's download provider uses */
+    public static final int STATUS_SUCCESS = 200;
+    public static final int STATUS_NOT_ACCEPTABLE = 406;
+    public static final int STATUS_UNKNOWN_ERROR = 491;
+    public static final int STATUS_FILE_ERROR = 492;
+
     private DrmManagerClient mDrmClient;
     private int mConvertSessionId;
 
@@ -111,37 +116,37 @@ public class DrmConvertSession {
      * Ends a conversion session of a file.
      *
      * @param filename The filename of the converted file.
-     * @return Downloads.Impl.STATUS_SUCCESS if execution is ok.
-     *         Downloads.Impl.STATUS_FILE_ERROR in case converted file can not
-     *         be accessed. Downloads.Impl.STATUS_NOT_ACCEPTABLE if a problem
+     * @return STATUS_SUCCESS if execution is ok.
+     *         STATUS_FILE_ERROR in case converted file can not
+     *         be accessed. STATUS_NOT_ACCEPTABLE if a problem
      *         occurs when accessing drm framework.
-     *         Downloads.Impl.STATUS_UNKNOWN_ERROR if a general error occurred.
+     *         STATUS_UNKNOWN_ERROR if a general error occurred.
      */
     public int close(String filename) {
         DrmConvertedStatus convertedStatus = null;
-        int result = Downloads.Impl.STATUS_UNKNOWN_ERROR;
+        int result = STATUS_UNKNOWN_ERROR;
         if (mDrmClient != null && mConvertSessionId >= 0) {
             try {
                 convertedStatus = mDrmClient.closeConvertSession(mConvertSessionId);
                 if (convertedStatus == null ||
                         convertedStatus.statusCode != DrmConvertedStatus.STATUS_OK ||
                         convertedStatus.convertedData == null) {
-                    result = Downloads.Impl.STATUS_NOT_ACCEPTABLE;
+                    result = STATUS_NOT_ACCEPTABLE;
                 } else {
                     RandomAccessFile rndAccessFile = null;
                     try {
                         rndAccessFile = new RandomAccessFile(filename, "rw");
                         rndAccessFile.seek(convertedStatus.offset);
                         rndAccessFile.write(convertedStatus.convertedData);
-                        result = Downloads.Impl.STATUS_SUCCESS;
+                        result = STATUS_SUCCESS;
                     } catch (FileNotFoundException e) {
-                        result = Downloads.Impl.STATUS_FILE_ERROR;
+                        result = STATUS_FILE_ERROR;
                         Timber.w(e, "File: " + filename + " could not be found.");
                     } catch (IOException e) {
-                        result = Downloads.Impl.STATUS_FILE_ERROR;
+                        result = STATUS_FILE_ERROR;
                         Timber.w(e, "Could not access File: " + filename + " .");
                     } catch (IllegalArgumentException e) {
-                        result = Downloads.Impl.STATUS_FILE_ERROR;
+                        result = STATUS_FILE_ERROR;
                         Timber.w(e, "Could not open file in mode: rw");
                     } catch (SecurityException e) {
                         Timber.w(e, "Access to File: " + filename +
@@ -151,7 +156,7 @@ public class DrmConvertSession {
                             try {
                                 rndAccessFile.close();
                             } catch (IOException e) {
-                                result = Downloads.Impl.STATUS_FILE_ERROR;
+                                result = STATUS_FILE_ERROR;
                                 Timber.w(e, "Failed to close File:" + filename
                                         + ".");
                             }

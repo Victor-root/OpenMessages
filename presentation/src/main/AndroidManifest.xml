@@ -454,7 +454,6 @@
         </receiver>
         <receiver android:name=".receiver.StartActivityFromWidgetReceiver" />
 
-        <service android:name="com.android.mms.transaction.TransactionService" />
         <service
             android:name=".feature.backup.RestoreBackupService"
             android:foregroundServiceType="dataSync" />

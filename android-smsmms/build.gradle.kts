@@ -28,7 +28,6 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 
-    useLibrary("org.apache.http.legacy")
     lint {
         abortOnError = false
     }
@@ -37,6 +36,4 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.timber)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.urlconnection)
 }
