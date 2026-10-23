@@ -22,13 +22,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ExoPlayerFactory
-import com.google.android.exoplayer2.source.ExtractorMediaSource
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.util.Util
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
 import com.google.android.mms.ContentType
 import io.openmessages.R
 import io.openmessages.common.base.QkRealmAdapter
@@ -110,16 +105,12 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
 
             VIEW_TYPE_VIDEO -> {
                 val binding = GalleryVideoPageBinding.bind(holder.itemView)
-                @Suppress("DEPRECATION")
-                val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
-                val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
-                val exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
+                val exoPlayer = ExoPlayer.Builder(context).build()
                 binding.video.player = exoPlayer
                 exoPlayers.add(exoPlayer)
 
-                val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "Open Messages"))
-                val videoSource = ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(part.getUri())
-                exoPlayer?.prepare(videoSource)
+                exoPlayer.setMediaItem(MediaItem.fromUri(part.getUri()))
+                exoPlayer.prepare()
             }
         }
     }

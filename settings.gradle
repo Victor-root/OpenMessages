@@ -8,7 +8,6 @@ dependencyResolutionManagement {
             content {
                 includeGroup "com.github.chrisbanes"
                 includeGroup "com.github.google"
-                includeGroup "com.github.google.ExoPlayer"
                 includeGroup "com.github.realm"
             }
         }
