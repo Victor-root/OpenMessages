@@ -18,6 +18,7 @@
  */
 package io.openmessages.database
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -27,6 +28,19 @@ import androidx.room.Upsert
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
 import io.reactivex.Flowable
+
+/**
+ * The messages that can be emoji reactions: an SMS with a body, or an MMS that is not a notification
+ * and has a part with text
+ */
+private const val REACTION_CANDIDATE = """
+    ((type = 'sms' AND body != '')
+    OR (type = 'mms' AND messageType != 130 AND id IN (
+        SELECT message_part.messageId FROM message_part
+        INNER JOIN mms_part ON mms_part.id = message_part.partId
+        WHERE mms_part.text IS NOT NULL AND mms_part.text != ''
+    )))
+"""
 
 @Dao
 abstract class MessageDao {
@@ -44,9 +58,6 @@ abstract class MessageDao {
         val attachmentTypeString: String
     )
 
-    /** The text of a message, or of one of its parts, along with where it belongs */
-    class MessageText(val messageId: Long, val threadId: Long, val text: String?)
-
     @Transaction
     @Query("SELECT * FROM message WHERE threadId = :threadId AND isEmojiReaction = 0 ORDER BY date")
     abstract fun observeMessages(threadId: Long): Flowable<List<MessageWithRelations>>
@@ -59,9 +70,13 @@ abstract class MessageDao {
     @Query("SELECT * FROM message WHERE threadId = :threadId ORDER BY date DESC")
     abstract fun getMessagesNewestFirst(threadId: Long): List<MessageWithRelations>
 
+    @Query("SELECT COUNT(*) FROM message WHERE type = :type")
+    abstract fun countOfType(type: String): Int
+
+    /** The messages of the type oldest first, [limit] of them from [offset] on */
     @Transaction
-    @Query("SELECT * FROM message WHERE type = :type ORDER BY date")
-    abstract fun getAllOfType(type: String): List<MessageWithRelations>
+    @Query("SELECT * FROM message WHERE type = :type ORDER BY date, id LIMIT :limit OFFSET :offset")
+    abstract fun getPageOfType(type: String, limit: Int, offset: Int): List<MessageWithRelations>
 
     @Transaction
     @Query("SELECT * FROM message WHERE threadId = :threadId ORDER BY date DESC LIMIT 1")
@@ -73,7 +88,12 @@ abstract class MessageDao {
 
     @Transaction
     @Query("SELECT * FROM message WHERE id IN (:ids)")
-    abstract fun get(ids: Collection<Long>): List<MessageWithRelations>
+    protected abstract fun getIn(ids: List<Long>): List<MessageWithRelations>
+
+    @Transaction
+    open fun get(ids: Collection<Long>): List<MessageWithRelations> {
+        return ids.chunked(MAX_IN_LIST).flatMap(::getIn)
+    }
 
     @Transaction
     @Query("""
@@ -109,23 +129,19 @@ abstract class MessageDao {
         mmsBoxes: List<Int>
     ): Flowable<List<MessageWithRelations>>
 
+    @Query("SELECT COUNT(*) FROM message WHERE $REACTION_CANDIDATE")
+    abstract fun countReactionCandidates(): Int
+
+    @Query("SELECT DISTINCT threadId FROM message WHERE $REACTION_CANDIDATE")
+    abstract fun getReactionCandidateThreadIds(): List<Long>
+
     /**
-     * The messages that can be emoji reactions: an SMS with a body, or an MMS that is not a
-     * notification and has a part with text. Oldest first, the order reactions and their removal
-     * have to be read in.
+     * The messages of the conversation that can be emoji reactions, oldest first, the order
+     * reactions and their removal have to be read in
      */
     @Transaction
-    @Query("""
-        SELECT * FROM message
-        WHERE (type = 'sms' AND body != '')
-        OR (type = 'mms' AND messageType != 130 AND id IN (
-            SELECT message_part.messageId FROM message_part
-            INNER JOIN mms_part ON mms_part.id = message_part.partId
-            WHERE mms_part.text IS NOT NULL AND mms_part.text != ''
-        ))
-        ORDER BY date
-    """)
-    abstract fun getReactionCandidates(): List<MessageWithRelations>
+    @Query("SELECT * FROM message WHERE threadId = :threadId AND $REACTION_CANDIDATE ORDER BY date")
+    abstract fun getReactionCandidates(threadId: Long): List<MessageWithRelations>
 
     @Transaction
     @Query("SELECT * FROM message WHERE threadId = :threadId AND seen = 0 AND read = 0 ORDER BY date")
@@ -154,16 +170,20 @@ abstract class MessageDao {
     @Query("SELECT id, address, dateSent, boxId, body, attachmentTypeString FROM message ORDER BY id")
     abstract fun getSignatures(): List<MessageSignature>
 
-    @Query("SELECT id AS messageId, threadId, body AS text FROM message WHERE body != ''")
-    abstract fun getBodies(): List<MessageText>
-
+    /**
+     * The text of every message as rows of messageId, threadId and text: the body of an SMS, and
+     * each part with text of an MMS. A cursor, so that the texts can be gone through one at a time
+     * rather than all held at once.
+     */
     @Query("""
-        SELECT message.id AS messageId, message.threadId, mms_part.text FROM message
+        SELECT id AS messageId, threadId, body AS text FROM message WHERE body != ''
+        UNION ALL
+        SELECT message.id, message.threadId, mms_part.text FROM message
         INNER JOIN message_part ON message_part.messageId = message.id
         INNER JOIN mms_part ON mms_part.id = message_part.partId
         WHERE mms_part.text IS NOT NULL AND mms_part.text != ''
     """)
-    abstract fun getPartTexts(): List<MessageText>
+    abstract fun getTexts(): Cursor
 
     @Query("SELECT MAX(id) FROM message")
     abstract fun getMaxId(): Long?
@@ -187,20 +207,35 @@ abstract class MessageDao {
     abstract fun getPartsOfMms(contentId: Long): List<MmsPart>
 
     @Query("UPDATE message SET seen = 1 WHERE seen = 0 AND threadId IN (:threadIds)")
-    abstract fun markSeen(threadIds: Collection<Long>)
+    protected abstract fun markSeenIn(threadIds: List<Long>)
+
+    @Transaction
+    open fun markSeen(threadIds: Collection<Long>) {
+        threadIds.chunked(MAX_IN_LIST).forEach(::markSeenIn)
+    }
 
     @Query("UPDATE message SET seen = 1 WHERE seen = 0")
     abstract fun markAllSeen()
 
     @Query("UPDATE message SET seen = 1, read = 1 WHERE (read = 0 OR seen = 0) AND threadId IN (:threadIds)")
-    abstract fun markRead(threadIds: Collection<Long>)
+    protected abstract fun markReadIn(threadIds: List<Long>)
 
-    /** Marks the last message of each of these conversations unread */
+    @Transaction
+    open fun markRead(threadIds: Collection<Long>) {
+        threadIds.chunked(MAX_IN_LIST).forEach(::markReadIn)
+    }
+
     @Query("""
         UPDATE message SET read = 0
         WHERE read = 1 AND id IN (SELECT lastMessageId FROM conversation WHERE id IN (:threadIds))
     """)
-    abstract fun markLastMessagesUnread(threadIds: Collection<Long>)
+    protected abstract fun markLastMessagesUnreadIn(threadIds: List<Long>)
+
+    /** Marks the last message of each of these conversations unread */
+    @Transaction
+    open fun markLastMessagesUnread(threadIds: Collection<Long>) {
+        threadIds.chunked(MAX_IN_LIST).forEach(::markLastMessagesUnreadIn)
+    }
 
     @Query("UPDATE message SET date = :date WHERE id = :id")
     abstract fun setDate(id: Long, date: Long)
@@ -236,16 +271,16 @@ abstract class MessageDao {
     protected abstract fun insertMessageParts(links: List<MessagePart>)
 
     @Query("DELETE FROM message_part WHERE messageId IN (:messageIds)")
-    protected abstract fun deleteMessageParts(messageIds: Collection<Long>)
+    protected abstract fun deleteMessageParts(messageIds: List<Long>)
 
     @Query("DELETE FROM message WHERE id IN (:ids)")
-    protected abstract fun deleteMessageRows(ids: Collection<Long>)
+    protected abstract fun deleteMessageRows(ids: List<Long>)
 
     @Query("DELETE FROM emoji_reaction WHERE targetMessageId IN (:messageIds)")
-    protected abstract fun deleteReactionsTo(messageIds: Collection<Long>)
+    protected abstract fun deleteReactionsTo(messageIds: List<Long>)
 
     @Query("UPDATE conversation SET lastMessageId = NULL WHERE lastMessageId IN (:messageIds)")
-    protected abstract fun clearLastMessage(messageIds: Collection<Long>)
+    protected abstract fun clearLastMessage(messageIds: List<Long>)
 
     /**
      * Saves the messages along with their parts, replacing the parts stored for them before
@@ -253,7 +288,9 @@ abstract class MessageDao {
     @Transaction
     open fun upsert(messages: List<Message>) {
         upsertMessageRows(messages)
-        deleteMessageParts(messages.map { message -> message.id })
+        messages.map { message -> message.id }
+            .chunked(MAX_IN_LIST)
+            .forEach(::deleteMessageParts)
         upsertParts(messages.flatMap { message -> message.parts })
         insertMessageParts(messages.flatMap { message ->
             message.parts.map { part -> MessagePart(message.id, part.id) }
@@ -270,17 +307,12 @@ abstract class MessageDao {
      */
     @Transaction
     open fun delete(ids: Collection<Long>) {
-        ids.chunked(CHUNK_SIZE).forEach { chunk ->
+        ids.chunked(MAX_IN_LIST).forEach { chunk ->
             deleteMessageParts(chunk)
             deleteReactionsTo(chunk)
             clearLastMessage(chunk)
             deleteMessageRows(chunk)
         }
-    }
-
-    companion object {
-        /** Keeps the IN lists of a query under SQLite's limit on bound parameters */
-        private const val CHUNK_SIZE = 500
     }
 
 }

@@ -84,13 +84,23 @@ class ConversationRepositoryImpl @Inject constructor(
         val conversationsById = conversations.associateBy { conversation -> conversation.id }
 
         // The text of a message is its body for an SMS and the text of its parts for an MMS, and a
-        // message counts once however many of its parts match
-        val matchingMessages = (messageDao.getBodies() + messageDao.getPartTexts())
-            .filter { message -> message.text?.contains(searchQuery, ignoreCase = true) == true }
-            .distinctBy { message -> message.messageId }
+        // message counts once however many of its parts match. Only the matches are kept, as the
+        // conversation each of them belongs to.
+        val threadIdsOfMatches = messageDao.getTexts().use { cursor ->
+            val messageId = cursor.getColumnIndexOrThrow("messageId")
+            val threadId = cursor.getColumnIndexOrThrow("threadId")
+            val text = cursor.getColumnIndexOrThrow("text")
+            buildMap {
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(text).contains(searchQuery, ignoreCase = true)) {
+                        put(cursor.getLong(messageId), cursor.getLong(threadId))
+                    }
+                }
+            }
+        }
 
-        val messagesByConversation = matchingMessages
-            .groupingBy { message -> message.threadId }
+        val messagesByConversation = threadIdsOfMatches.values
+            .groupingBy { threadId -> threadId }
             .eachCount()
             .mapNotNull { (threadId, count) ->
                 conversationsById[threadId]?.let { conversation -> SearchResult(searchQuery, conversation, count) }

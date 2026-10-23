@@ -34,6 +34,7 @@ import io.openmessages.model.Message
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.util.ActiveSubscriptionObservable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function3
 import io.reactivex.rxkotlin.Observables
@@ -70,9 +71,10 @@ class QkReplyViewModel @Inject constructor(
         disposables += markRead
         disposables += sendNewMessage
 
+        // Handed on from the main thread, where the view can be told about it
         disposables += conversationRepo.observeConversation(threadId)
                 .mapNotNull { conversation -> conversation.value }
-                .distinctUntilChanged()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(conversation::onNext)
 
         disposables += expanded

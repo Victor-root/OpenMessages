@@ -99,11 +99,16 @@ class ConversationWithRelations(
         )
     )
     val recipients: List<RecipientWithContact>,
+    @Relation(parentColumn = "id", entityColumn = "conversationId")
+    val recipientLinks: List<ConversationRecipient>,
     @Relation(parentColumn = "lastMessageId", entityColumn = "id", entity = Message::class)
     val lastMessage: MessageWithRelations?
 ) {
     fun toModel(): Conversation = conversation.also {
-        it.recipients = recipients.map(RecipientWithContact::toModel)
+        val positions = recipientLinks.associate { link -> link.recipientId to link.position }
+        it.recipients = recipients
+            .sortedBy { recipient -> positions[recipient.recipient.id] }
+            .map(RecipientWithContact::toModel)
         it.lastMessage = lastMessage?.toModel()
     }
 }

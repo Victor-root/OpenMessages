@@ -129,7 +129,12 @@ abstract class ConversationDao {
 
     @Transaction
     @Query("SELECT * FROM conversation WHERE id IN (:ids)")
-    abstract fun get(ids: Collection<Long>): List<ConversationWithRelations>
+    protected abstract fun getIn(ids: List<Long>): List<ConversationWithRelations>
+
+    @Transaction
+    open fun get(ids: Collection<Long>): List<ConversationWithRelations> {
+        return ids.chunked(MAX_IN_LIST).flatMap(::getIn)
+    }
 
     @Transaction
     @Query("SELECT * FROM conversation")
@@ -190,7 +195,12 @@ abstract class ConversationDao {
         SET lastMessageId = (SELECT id FROM message WHERE threadId = conversation.id ORDER BY date DESC LIMIT 1)
         WHERE id IN (:ids)
     """)
-    abstract fun updateLastMessage(ids: Collection<Long>)
+    protected abstract fun updateLastMessageIn(ids: List<Long>)
+
+    @Transaction
+    open fun updateLastMessage(ids: Collection<Long>) {
+        ids.chunked(MAX_IN_LIST).forEach(::updateLastMessageIn)
+    }
 
     /** Points every conversation at its newest message, or at none when it has none */
     @Query("""
@@ -200,10 +210,20 @@ abstract class ConversationDao {
     abstract fun updateAllLastMessages()
 
     @Query("UPDATE conversation SET archived = :archived WHERE id IN (:ids)")
-    abstract fun setArchived(ids: Collection<Long>, archived: Boolean)
+    protected abstract fun setArchivedIn(ids: List<Long>, archived: Boolean)
+
+    @Transaction
+    open fun setArchived(ids: Collection<Long>, archived: Boolean) {
+        ids.chunked(MAX_IN_LIST).forEach { chunk -> setArchivedIn(chunk, archived) }
+    }
 
     @Query("UPDATE conversation SET pinned = :pinned WHERE id IN (:ids)")
-    abstract fun setPinned(ids: Collection<Long>, pinned: Boolean)
+    protected abstract fun setPinnedIn(ids: List<Long>, pinned: Boolean)
+
+    @Transaction
+    open fun setPinned(ids: Collection<Long>, pinned: Boolean) {
+        ids.chunked(MAX_IN_LIST).forEach { chunk -> setPinnedIn(chunk, pinned) }
+    }
 
     /** Blocking supersedes the soft "suspected spam" flag, so it is cleared along the way */
     @Query("""
@@ -211,20 +231,40 @@ abstract class ConversationDao {
         SET blocked = 1, blockingClient = :blockingClient, blockReason = :blockReason, flagged = 0, flagReason = NULL
         WHERE blocked = 0 AND id IN (:ids)
     """)
-    abstract fun markBlocked(ids: Collection<Long>, blockingClient: Int, blockReason: String?)
+    protected abstract fun markBlockedIn(ids: List<Long>, blockingClient: Int, blockReason: String?)
+
+    @Transaction
+    open fun markBlocked(ids: Collection<Long>, blockingClient: Int, blockReason: String?) {
+        ids.chunked(MAX_IN_LIST).forEach { chunk -> markBlockedIn(chunk, blockingClient, blockReason) }
+    }
 
     @Query("UPDATE conversation SET blocked = 0, blockingClient = NULL, blockReason = NULL WHERE id IN (:ids)")
-    abstract fun markUnblocked(ids: Collection<Long>)
+    protected abstract fun markUnblockedIn(ids: List<Long>)
+
+    @Transaction
+    open fun markUnblocked(ids: Collection<Long>) {
+        ids.chunked(MAX_IN_LIST).forEach(::markUnblockedIn)
+    }
 
     /** A flag that carries no reason leaves the existing one in place */
     @Query("""
         UPDATE conversation SET flagged = 1, flagReason = COALESCE(:flagReason, flagReason)
         WHERE id IN (:ids)
     """)
-    abstract fun markFlagged(ids: Collection<Long>, flagReason: String?)
+    protected abstract fun markFlaggedIn(ids: List<Long>, flagReason: String?)
+
+    @Transaction
+    open fun markFlagged(ids: Collection<Long>, flagReason: String?) {
+        ids.chunked(MAX_IN_LIST).forEach { chunk -> markFlaggedIn(chunk, flagReason) }
+    }
 
     @Query("UPDATE conversation SET flagged = 0, flagReason = NULL WHERE flagged = 1 AND id IN (:ids)")
-    abstract fun markUnflagged(ids: Collection<Long>)
+    protected abstract fun markUnflaggedIn(ids: List<Long>)
+
+    @Transaction
+    open fun markUnflagged(ids: Collection<Long>) {
+        ids.chunked(MAX_IN_LIST).forEach(::markUnflaggedIn)
+    }
 
     @Upsert
     protected abstract fun upsertConversationRows(conversations: List<Conversation>)
@@ -236,13 +276,13 @@ abstract class ConversationDao {
     protected abstract fun insertConversationRecipients(links: List<ConversationRecipient>)
 
     @Query("DELETE FROM conversation_recipient WHERE conversationId IN (:ids)")
-    protected abstract fun deleteConversationRecipients(ids: Collection<Long>)
+    protected abstract fun deleteConversationRecipients(ids: List<Long>)
 
     @Query("DELETE FROM conversation WHERE id IN (:ids)")
-    protected abstract fun deleteConversationRows(ids: Collection<Long>)
+    protected abstract fun deleteConversationRows(ids: List<Long>)
 
     @Query("SELECT id FROM message WHERE threadId IN (:threadIds)")
-    protected abstract fun getMessageIds(threadIds: Collection<Long>): List<Long>
+    protected abstract fun getMessageIds(threadIds: List<Long>): List<Long>
 
     /**
      * Saves the conversations along with their recipients, replacing the recipients stored for
@@ -253,10 +293,14 @@ abstract class ConversationDao {
         conversations.forEach { conversation -> conversation.lastMessageId = conversation.lastMessage?.id }
         upsertConversationRows(conversations)
 
-        deleteConversationRecipients(conversations.map { conversation -> conversation.id })
+        conversations.map { conversation -> conversation.id }
+            .chunked(MAX_IN_LIST)
+            .forEach(::deleteConversationRecipients)
         upsertRecipients(conversations.flatMap { conversation -> conversation.recipients })
         insertConversationRecipients(conversations.flatMap { conversation ->
-            conversation.recipients.map { recipient -> ConversationRecipient(conversation.id, recipient.id) }
+            conversation.recipients.mapIndexed { position, recipient ->
+                ConversationRecipient(conversation.id, recipient.id, position)
+            }
         })
     }
 
@@ -275,9 +319,11 @@ abstract class ConversationDao {
      */
     @Transaction
     open fun delete(ids: Collection<Long>, messages: MessageDao) {
-        messages.delete(getMessageIds(ids))
-        deleteConversationRecipients(ids)
-        deleteConversationRows(ids)
+        ids.chunked(MAX_IN_LIST).forEach { chunk ->
+            messages.delete(getMessageIds(chunk))
+            deleteConversationRecipients(chunk)
+            deleteConversationRows(chunk)
+        }
     }
 
 }

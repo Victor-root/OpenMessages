@@ -231,13 +231,15 @@ class ComposeViewModel @Inject constructor(
 
         // Merges two potential conversation sources (constructor threadId and contact selection)
         // into a single stream of conversations. If the conversation was deleted, notify the
-        // activity to shut down
+        // activity to shut down. The database answers on its own thread, and the conversation is
+        // handed on from the main one, where the view can be told about it.
         disposables += selectedConversation
             .mergeWith(initialConversation)
             .mapNotNull { (conversation) ->
                 if (conversation == null) newState { copy(hasError = true) }
                 conversation
             }
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(conversation::onNext)
 
         if (addresses.isNotEmpty())
@@ -259,12 +261,9 @@ class ComposeViewModel @Inject constructor(
 
         // update recipient count whenever conversation changes
         disposables += conversation
-            .observeOn(Schedulers.io())
+            .map { conversation -> conversation.recipients.size }
             .distinctUntilChanged()
-            .doOnNext { conversation ->
-                newState { copy (recipientCount = conversation.recipients.size) }
-            }
-            .subscribe()
+            .subscribe { recipientCount -> newState { copy(recipientCount = recipientCount) } }
 
         // When the conversation changes, update the threadId and the messages for the adapter, which
         // shows them along with the conversation as it stands
@@ -305,6 +304,7 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(state, BiFunction { id, state -> messageRepo.getMessages(id, state.query) })
                 .switchMap { messages -> messages }
                 .takeUntil(state.map { it.query }.filter { it.isEmpty() })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(searchResults::onNext)
 
         // on conversation change/init, work out how many non-me participants of the conversation

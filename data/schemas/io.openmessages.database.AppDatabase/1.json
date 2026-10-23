@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b37d4d8d2d0d495eb9647c460bdb65d4",
+    "identityHash": "c43f3d999ce7925b186ef3ea28d17c01",
     "entities": [
       {
         "tableName": "conversation",
@@ -139,7 +139,7 @@
       },
       {
         "tableName": "conversation_recipient",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`conversationId` INTEGER NOT NULL, `recipientId` INTEGER NOT NULL, PRIMARY KEY(`conversationId`, `recipientId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`conversationId` INTEGER NOT NULL, `recipientId` INTEGER NOT NULL, `position` INTEGER NOT NULL, PRIMARY KEY(`conversationId`, `recipientId`))",
         "fields": [
           {
             "fieldPath": "conversationId",
@@ -150,6 +150,12 @@
           {
             "fieldPath": "recipientId",
             "columnName": "recipientId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "position",
+            "columnName": "position",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -663,7 +669,7 @@
       },
       {
         "tableName": "emoji_reaction",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `reactionMessageId` INTEGER NOT NULL, `targetMessageId` INTEGER, `senderAddress` TEXT NOT NULL, `emoji` TEXT NOT NULL, `originalMessageText` TEXT NOT NULL, `threadId` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `reactionMessageId` INTEGER NOT NULL, `targetMessageId` INTEGER, `senderAddress` TEXT NOT NULL, `emoji` TEXT NOT NULL, `originalMessageText` TEXT NOT NULL, `threadId` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -708,7 +714,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
             "id"
           ]
@@ -944,7 +950,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b37d4d8d2d0d495eb9647c460bdb65d4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c43f3d999ce7925b186ef3ea28d17c01')"
     ]
   }
 }
