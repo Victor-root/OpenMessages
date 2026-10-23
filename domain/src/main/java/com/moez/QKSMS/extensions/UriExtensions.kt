@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
@@ -38,6 +39,21 @@ fun Uri.isVCard(context: Context): Boolean = getType(context) == "text/x-vcard"
 fun Uri.isAudio(context: Context): Boolean = getType(context).startsWith("audio/")
 
 fun Uri.isImage(context: Context): Boolean = getType(context).startsWith("image/")
+
+/**
+ * How long the video or audio lasts, in milliseconds, or null where it can't be read
+ */
+fun Uri.getDuration(context: Context): Long? {
+    val retriever = MediaMetadataRetriever()
+    return try {
+        retriever.setDataSource(context, this)
+        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLongOrNull()
+    } catch (e: RuntimeException) {
+        null
+    } finally {
+        retriever.release()
+    }
+}
 
 fun Uri.isVideo(context: Context): Boolean = getType(context).startsWith("video/")
 
