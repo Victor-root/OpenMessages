@@ -1,1 +1,19 @@
+dependencyResolutionManagement {
+    repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://jitpack.io"
+            content {
+                includeGroup "com.github.chrisbanes"
+                includeGroup "com.github.google"
+                includeGroup "com.github.google.ExoPlayer"
+                includeGroup "com.github.pengrad"
+                includeGroup "com.github.realm"
+            }
+        }
+    }
+}
+
 include ':presentation', ':android-smsmms', ':domain', ':data', ':common'
