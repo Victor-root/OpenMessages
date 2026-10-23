@@ -100,9 +100,6 @@ open class MessageRepositoryImpl @Inject constructor(
     companion object {
         const val TELEPHONY_UPDATE_CHUNK_SIZE = 200
 
-        /** Keeps the id lists read from the database under SQLite's limit on bound parameters */
-        private const val DATABASE_CHUNK_SIZE = 500
-
         /** Enough for the estimate below to settle; a stop in case it never does. */
         private const val MAX_COMPRESSION_ATTEMPTS = 6
 
@@ -969,7 +966,7 @@ open class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun deleteMessages(messageIds: Collection<Long>) {
-        val messages = messageIds.chunked(DATABASE_CHUNK_SIZE).flatMap { ids -> dao.get(ids) }
+        val messages = dao.get(messageIds)
 
         messages.forEach { message ->
             val uri = message.message.getUri()

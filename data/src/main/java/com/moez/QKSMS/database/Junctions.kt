@@ -32,7 +32,9 @@ import androidx.room.Index
 )
 data class ConversationRecipient(
     val conversationId: Long,
-    val recipientId: Long
+    val recipientId: Long,
+    /** Where the recipient comes in the conversation, which is the order the provider lists them in */
+    val position: Int
 )
 
 /**

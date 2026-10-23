@@ -40,7 +40,6 @@ import io.openmessages.common.util.extensions.now
 import io.openmessages.compat.TelephonyCompat
 import io.openmessages.database.AppDatabase
 import io.openmessages.database.ConversationWithRelations
-import io.openmessages.database.MessageWithRelations
 import io.openmessages.manager.AlarmManager
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
@@ -102,6 +101,9 @@ class BackupRepositoryImpl @Inject constructor(
 
         /** Sub-folder of a backup set that holds the MMS attachment binaries, one file per part. */
         private const val ATTACHMENTS_DIR = "attachments"
+
+        /** How many messages a backup reads from the database at a time. */
+        private const val MESSAGE_PAGE_SIZE = 500
 
         /** Cache sub-folder a picked .zip backup is extracted into before it's restored. */
         private const val RESTORE_TEMP_DIR = "restore-backup"
@@ -320,8 +322,8 @@ class BackupRepositoryImpl @Inject constructor(
             if (BackupCategory.MESSAGES in categories) {
                 val backup = run {
                     val messageDao = db.messageDao()
-                    val smsMessages = messageDao.getAllOfType(Message.TYPE_SMS).map(MessageWithRelations::toModel)
-                    val mmsMessages = messageDao.getAllOfType(Message.TYPE_MMS).map(MessageWithRelations::toModel)
+                    val smsCount = messageDao.countOfType(Message.TYPE_SMS)
+                    val mmsCount = messageDao.countOfType(Message.TYPE_MMS)
 
                     // The addresses of each conversation, read once however many of its messages need them
                     val recipientsByThread = HashMap<Long, List<String>>()
@@ -334,13 +336,13 @@ class BackupRepositoryImpl @Inject constructor(
                         }
                     }
 
-                    val total = smsMessages.size + mmsMessages.size
-                    val sms = smsMessages.mapIndexed { index, message ->
+                    val total = smsCount + mmsCount
+                    val sms = mapMessagesOfType(Message.TYPE_SMS) { index, message ->
                         backupProgress.onNext(BackupRepository.Progress.Running(total, index))
                         messageToBackupMessage(message)
                     }
-                    val mms = mmsMessages.mapIndexed { index, message ->
-                        backupProgress.onNext(BackupRepository.Progress.Running(total, smsMessages.size + index))
+                    val mms = mapMessagesOfType(Message.TYPE_MMS) { index, message ->
+                        backupProgress.onNext(BackupRepository.Progress.Running(total, smsCount + index))
                         messageToBackupMms(message, recipientsOf(message.threadId), destination)
                     }
                     Backup(sms.size, sms, mms.size, mms)
@@ -625,6 +627,19 @@ class BackupRepositoryImpl @Inject constructor(
     private fun <T> readJson(tree: DocumentFile, fileName: String, adapter: JsonAdapter<T>): T? {
         val file = tree.findFile(fileName) ?: return null
         return readJson(file, adapter)
+    }
+
+    /**
+     * Maps the messages of the type, oldest first, read a page at a time so that they are never all
+     * held at once
+     */
+    private fun <T> mapMessagesOfType(type: String, transform: (index: Int, message: Message) -> T): List<T> {
+        val results = ArrayList<T>()
+        do {
+            val page = db.messageDao().getPageOfType(type, MESSAGE_PAGE_SIZE, results.size)
+            page.forEach { message -> results += transform(results.size, message.toModel()) }
+        } while (page.size == MESSAGE_PAGE_SIZE)
+        return results
     }
 
     private fun messageToBackupMessage(message: Message): BackupMessage = BackupMessage(

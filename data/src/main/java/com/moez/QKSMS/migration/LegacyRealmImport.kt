@@ -68,7 +68,10 @@ class LegacyRealmImport @Inject constructor(
                 }
             }
             imported = true
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
+            // Errors too, such as Realm's native library failing to load or the copy running out of
+            // memory: whatever goes wrong here, Room must still end up with a database it can open,
+            // or the app could never start again
             Timber.e(e, "Could not copy the Realm database into Room")
             TABLES.forEach { table -> db.execSQL("DELETE FROM $table") }
         }
@@ -122,10 +125,10 @@ class LegacyRealmImport @Inject constructor(
         )
         db.insertAll(
             "conversation_recipient",
-            listOf("conversationId", "recipientId"),
+            listOf("conversationId", "recipientId", "position"),
             conversations.asSequence().flatMap { conversation ->
-                conversation.getList("recipients").map { recipient ->
-                    listOf(conversation.getLong("id"), recipient.getLong("id"))
+                conversation.getList("recipients").mapIndexed { position, recipient ->
+                    listOf(conversation.getLong("id"), recipient.getLong("id"), position)
                 }
             }
         )

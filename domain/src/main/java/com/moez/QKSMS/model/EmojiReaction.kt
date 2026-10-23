@@ -27,7 +27,8 @@ import androidx.room.PrimaryKey
     indices = [Index("reactionMessageId"), Index("targetMessageId"), Index("threadId")]
 )
 data class EmojiReaction(
-    @PrimaryKey var id: Long = 0,
+    /** Numbered by the database, apart from the ids handed out to messages */
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
 
     /** The reaction message ID itself */
     var reactionMessageId: Long = 0,

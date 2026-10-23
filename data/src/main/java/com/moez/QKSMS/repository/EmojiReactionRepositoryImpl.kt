@@ -22,7 +22,6 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import io.openmessages.database.AppDatabase
 import io.openmessages.database.MessageWithRelations
-import io.openmessages.manager.KeyManager
 import io.openmessages.model.EmojiReaction
 import io.openmessages.model.Message
 import io.openmessages.util.EmojiPatternStrings
@@ -32,7 +31,6 @@ import javax.inject.Inject
 class EmojiReactionRepositoryImpl @Inject constructor(
     private val context: Context,
     private val db: AppDatabase,
-    private val keyManager: KeyManager,
     private val moshi: Moshi,
 ) : EmojiReactionRepository {
     private val messageDao = db.messageDao()
@@ -253,7 +251,6 @@ class EmojiReactionRepositoryImpl @Inject constructor(
             .orEmpty()
 
         val reaction = EmojiReaction(
-            id = keyManager.newId(),
             reactionMessageId = reactionMessage.id,
             targetMessageId = targetMessage?.id,
             senderAddress = reactionMessage.address,
@@ -279,38 +276,37 @@ class EmojiReactionRepositoryImpl @Inject constructor(
         reactionDao.deleteAll()
         messageDao.clearEmojiReactionFlags()
 
-        val allMessages = messageDao.getReactionCandidates().map(MessageWithRelations::toModel)
-
-        val max = allMessages.size
+        val max = messageDao.countReactionCandidates()
         var progress = 0
 
-        // The messages a reaction can point at, read once for each conversation that has reactions
-        val messagesByThread = HashMap<Long, List<Message>>()
+        // A reaction only ever points at a message of its own conversation, so the messages are read
+        // one conversation at a time rather than all at once
+        messageDao.getReactionCandidateThreadIds().forEach { threadId ->
+            // The messages a reaction can point at, read once the conversation turns out to have one
+            val targets by lazy { getMessagesNewestFirst(threadId) }
 
-        allMessages.forEach { message ->
-            val text = message.getText(false)
-            val parsedReaction = parseEmojiReaction(text)
-            if (parsedReaction != null) {
-                val targetMessage = findTargetMessage(
-                    messagesByThread.getOrPut(message.threadId) { getMessagesNewestFirst(message.threadId) },
-                    parsedReaction.originalMessage
-                )
-                saveEmojiReaction(
-                    message,
-                    parsedReaction,
-                    targetMessage,
-                )
-                progress++
-                // Update the progress every 25 messages, and then at completion
-                // that way we don't spam the UI
-                if (progress % 25 == 0 || progress == max) {
-                    onProgress(
-                        SyncRepository.SyncProgress.ParsingEmojis(
-                            max = max,
-                            progress = progress,
-                            indeterminate = false
-                        )
+            messageDao.getReactionCandidates(threadId).map(MessageWithRelations::toModel).forEach { message ->
+                val text = message.getText(false)
+                val parsedReaction = parseEmojiReaction(text)
+                if (parsedReaction != null) {
+                    val targetMessage = findTargetMessage(targets, parsedReaction.originalMessage)
+                    saveEmojiReaction(
+                        message,
+                        parsedReaction,
+                        targetMessage,
                     )
+                    progress++
+                    // Update the progress every 25 messages, and then at completion
+                    // that way we don't spam the UI
+                    if (progress % 25 == 0 || progress == max) {
+                        onProgress(
+                            SyncRepository.SyncProgress.ParsingEmojis(
+                                max = max,
+                                progress = progress,
+                                indeterminate = false
+                            )
+                        )
+                    }
                 }
             }
         }
