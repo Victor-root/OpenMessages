@@ -14,3 +14,12 @@ Moez Bhatti (https://github.com/moezbhatti/qksms). The original copyright
 notices are retained throughout the source tree, as required by the GPL.
 The 2026 copyright above covers the changes made as part of the OpenMessages
 fork (https://github.com/victor-root/openmessages).
+
+Third-party font
+----------------
+
+The Lato typeface (presentation/src/main/res/font/lato.ttf) is
+Copyright (c) 2010-2011 by tyPoland Lukasz Dziedzic, with Reserved Font
+Name "Lato", and is licensed under the SIL Open Font License, Version 1.1.
+Its license ships with the app in
+presentation/src/main/assets/licenses/Lato-OFL.txt.
