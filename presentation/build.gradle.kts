@@ -34,8 +34,8 @@ android {
         // First Open Messages release. The rebrand to the io.openmessages package means it installs
         // fresh, never over the app it was forked from, so the counter restarts at 1. Bump
         // versionCode by 1 and update versionName for each release.
-        versionCode = 2
-        versionName = "1.0.1"
+        versionCode = 3
+        versionName = "2.0.0"
     }
 
     signingConfigs {
