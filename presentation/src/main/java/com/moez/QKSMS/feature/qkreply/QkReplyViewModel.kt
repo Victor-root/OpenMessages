@@ -35,9 +35,9 @@ import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.util.ActiveSubscriptionObservable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.functions.Function3
-import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.kotlin.withLatestFrom
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -88,7 +88,7 @@ class QkReplyViewModel @Inject constructor(
 
         // When the set of messages changes, update the state
         // If we're ever showing an empty set of messages, then it's time to shut down to activity
-        disposables += Observables
+        disposables += Observable
                 .combineLatest(messages, conversation) { messages, conversation ->
                     newState { copy(data = Pair(conversation, messages)) }
                     messages
@@ -106,7 +106,7 @@ class QkReplyViewModel @Inject constructor(
                 .distinctUntilChanged()
 
         val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
-        disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
+        disposables += Observable.combineLatest(latestSubId, subscriptions) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()

@@ -125,6 +125,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.sharetarget)
     implementation(libs.androidx.viewpager2)
     implementation(libs.material)
     implementation(libs.androidx.work.runtime.ktx)

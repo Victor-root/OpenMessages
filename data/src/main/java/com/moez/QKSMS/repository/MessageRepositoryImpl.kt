@@ -389,9 +389,7 @@ open class MessageRepositoryImpl @Inject constructor(
 
         if (attachments.isNotEmpty()) {
             Timber.v("has attachments")
-            val smsManager = subId.takeIf { it != -1 }
-                ?.let(SmsManagerFactory::createSmsManager)
-                ?: SmsManager.getDefault()
+            val smsManager = SmsManagerFactory.createSmsManager(context, subId)
 
             // A carrier config answers 0 for anything it doesn't carry, which is what a device
             // gets when the config never loaded or the carrier is not one it knows. Zero is not a
@@ -576,8 +574,7 @@ open class MessageRepositoryImpl @Inject constructor(
                         attachment.releaseResourceBytes()
                     }
 
-                    // Non-null by here: the loop above only ends once there are bytes that fit.
-                    val compressedBytes = scaledBytes ?: return@forEach
+                    val compressedBytes = scaledBytes
 
                     Timber.v(
                         "Compressed ${originalSize / 1024}Kb to ${

@@ -34,7 +34,6 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -703,14 +702,14 @@ class MainActivity : QkThemedActivity(), MainView {
 
     private fun updateSearchVisibility(state: MainState? = lastState) {
         if (state == null) return
-        val isInbox = state.page is Inbox && (state.page as Inbox).selected == 0
+        val isInbox = state.page is Inbox && state.page.selected == 0
         val isSearching = state.page is Searching
         val showInboxIcons = isInbox && !searchExpanded && !isSearching
         binding.toolbarSearch.setVisible(isSearching || (isInbox && searchExpanded))
         binding.toolbarSearchIcon.setVisible(showInboxIcons)
         binding.toolbarLogoGroup.setVisible(!isSearching && !(isInbox && searchExpanded))
         val unreadCount = if (showInboxIcons) {
-            (state.page as? Inbox)?.data?.count { conversation -> conversation.unread } ?: 0
+            state.page.data?.count { conversation -> conversation.unread } ?: 0
         } else 0
         if (showInboxIcons) {
             binding.toolbarUnreadCount.text = "$unreadCount"
@@ -750,11 +749,10 @@ class MainActivity : QkThemedActivity(), MainView {
             ): Int = (boxStart + (boxEnd - boxStart) / 2) - (viewStart + (viewEnd - viewStart) / 2)
         }
 
-        var idleListener: RecyclerView.OnScrollListener? = null
-        idleListener = object : RecyclerView.OnScrollListener() {
+        val idleListener = object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    recyclerView.removeOnScrollListener(idleListener!!)
+                    recyclerView.removeOnScrollListener(this)
                     flashTarget()
                 }
             }
@@ -766,7 +764,7 @@ class MainActivity : QkThemedActivity(), MainView {
         // Fallback: if item is already at the target (no scroll needed), animate immediately
         binding.recyclerView.post {
             if (binding.recyclerView.scrollState == RecyclerView.SCROLL_STATE_IDLE) {
-                binding.recyclerView.removeOnScrollListener(idleListener!!)
+                binding.recyclerView.removeOnScrollListener(idleListener)
                 flashTarget()
             }
         }

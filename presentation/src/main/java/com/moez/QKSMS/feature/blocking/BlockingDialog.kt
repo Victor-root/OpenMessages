@@ -23,8 +23,7 @@ import io.openmessages.interactor.MarkBlocked
 import io.openmessages.interactor.MarkUnblocked
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,7 +40,8 @@ class BlockingDialog @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val prefs: Preferences,
     private val markBlocked: MarkBlocked,
-    private val markUnblocked: MarkUnblocked
+    private val markUnblocked: MarkUnblocked,
+    private val applicationScope: CoroutineScope
 ) {
 
     /**
@@ -49,12 +49,11 @@ class BlockingDialog @Inject constructor(
      * applied. Callers use it to react to the change, e.g. closing the conversation that was just
      * blocked. It is never invoked for a conversation with no recipient to act on.
      */
-    @OptIn(DelicateCoroutinesApi::class)
     fun show(
         conversationIds: List<Long>,
         block: Boolean,
         onComplete: (() -> Unit)? = null
-    ) = GlobalScope.launch {
+    ) = applicationScope.launch {
         val addresses = conversationIds.toLongArray()
                 .let { conversationRepo.getConversations(*it) }
                 .flatMap { conversation -> conversation.recipients }

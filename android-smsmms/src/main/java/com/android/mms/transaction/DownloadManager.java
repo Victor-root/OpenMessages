@@ -73,7 +73,7 @@ public class DownloadManager {
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 0, download, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        final SmsManager smsManager = SmsManagerFactory.createSmsManager(subscriptionId);
+        final SmsManager smsManager = SmsManagerFactory.createSmsManager(context, subscriptionId);
 
         Bundle configOverrides = new Bundle();
         String httpParams = MmsConfig.getHttpParams();

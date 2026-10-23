@@ -70,11 +70,11 @@ class ComposeItemAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val item = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val item = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 clicks.onNext(item)
             }
             binding.root.setOnLongClickListener {
-                val item = getItemOrNull(adapterPosition) ?: return@setOnLongClickListener true
+                val item = getItemOrNull(bindingAdapterPosition) ?: return@setOnLongClickListener true
                 longClicks.onNext(item)
                 true
             }

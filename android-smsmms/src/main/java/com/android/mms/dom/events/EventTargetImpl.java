@@ -16,7 +16,6 @@
 
 package com.android.mms.dom.events;
 
-import com.android.mms.logs.LogTag;
 
 import java.util.ArrayList;
 

@@ -70,6 +70,9 @@ class WidgetProvider : AppWidgetProvider() {
     /**
      * Notify all the widgets that they should update their adapter data
      */
+    // Android 15 favours handing the rows over in the update itself, but they all travel in one
+    // binder transaction, and 25 rows with their contact photos are well past its 1 MB limit
+    @Suppress("DEPRECATION")
     private fun updateData(context: Context) {
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val appWidgetIds = appWidgetManager.getAppWidgetIds(ComponentName(context, WidgetProvider::class.java))
@@ -139,6 +142,8 @@ class WidgetProvider : AppWidgetProvider() {
                 .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                 .putExtra("small_widget", smallWidget)
         intent.data = intent.toUri(Intent.URI_INTENT_SCHEME).toUri()
+        // The rows come from WidgetService rather than the update itself, see updateData
+        @Suppress("DEPRECATION")
         remoteViews.setRemoteAdapter(R.id.conversations, intent)
 
         // compose new message image color and on click intent

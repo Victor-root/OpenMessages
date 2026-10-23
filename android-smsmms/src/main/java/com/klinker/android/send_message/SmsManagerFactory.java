@@ -1,32 +1,39 @@
 package com.klinker.android.send_message;
 
+import android.content.Context;
 import android.os.Build;
 import android.telephony.SmsManager;
 
+import timber.log.Timber;
+
 public class SmsManagerFactory {
 
-    public static SmsManager createSmsManager(Settings settings) {
-        return createSmsManager(settings.getSubscriptionId());
+    /**
+     * The SMS manager of the subscription, or of the default one for
+     * {@link Settings#DEFAULT_SUBSCRIPTION_ID}
+     */
+    public static SmsManager createSmsManager(Context context, int subscriptionId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            SmsManager manager = context.getSystemService(SmsManager.class);
+            return subscriptionId == Settings.DEFAULT_SUBSCRIPTION_ID
+                    ? manager
+                    : manager.createForSubscriptionId(subscriptionId);
+        }
+        return createLegacySmsManager(subscriptionId);
     }
 
-    public static SmsManager createSmsManager(int subscriptionId) {
-        if (subscriptionId != Settings.DEFAULT_SUBSCRIPTION_ID &&
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            SmsManager manager = null;
-
+    /**
+     * Before Android 12, the static getters are the only way to an SMS manager
+     */
+    @SuppressWarnings("deprecation")
+    private static SmsManager createLegacySmsManager(int subscriptionId) {
+        if (subscriptionId != Settings.DEFAULT_SUBSCRIPTION_ID) {
             try {
-                manager = SmsManager.getSmsManagerForSubscriptionId(subscriptionId);
+                return SmsManager.getSmsManagerForSubscriptionId(subscriptionId);
             } catch (Exception e) {
-                e.printStackTrace();
+                Timber.w(e);
             }
-
-            if (manager != null) {
-                return manager;
-            } else {
-                return SmsManager.getDefault();
-            }
-        } else {
-            return SmsManager.getDefault();
         }
+        return SmsManager.getDefault();
     }
 }

@@ -57,7 +57,7 @@ class ScheduledMessagesAdapter @Inject constructor(
         val binding = ScheduledMessageBubbleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val message = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 clicks.onNext(message.id)
             }
         }

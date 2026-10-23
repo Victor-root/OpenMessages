@@ -21,7 +21,6 @@ package io.openmessages.feature.blocking.filters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.model.MessageContentFilter
@@ -37,7 +36,7 @@ class MessageContentFiltersAdapter : QkAdapter<MessageContentFilter, QkBindingVi
         val binding = MessageContentFilterListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             binding.removeFilter.setOnClickListener {
-                val filter = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val filter = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 removeMessageContentFilter.onNext(filter.id)
             }
         }

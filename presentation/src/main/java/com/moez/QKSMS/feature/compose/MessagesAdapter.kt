@@ -36,7 +36,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
 import com.jakewharton.rxbinding4.view.clicks
@@ -175,18 +174,18 @@ class MessagesAdapter @Inject constructor(
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                getItemOrNull(adapterPosition)?.let {
+                getItemOrNull(bindingAdapterPosition)?.let {
                     when (toggleSelection(it.id, false)) {
                         true -> view.isActivated = isSelected(it.id)
                         false -> {
                             expanded[it.id] = status.visibility != View.VISIBLE
-                            notifyItemChanged(adapterPosition)
+                            notifyItemChanged(bindingAdapterPosition)
                         }
                     }
                 }
             }
             view.setOnLongClickListener {
-                getItemOrNull(adapterPosition)?.let {
+                getItemOrNull(bindingAdapterPosition)?.let {
                     toggleSelection(it.id)
                     view.isActivated = isSelected(it.id)
                 }

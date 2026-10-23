@@ -53,14 +53,14 @@ class BlockedMessagesAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val conversation = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val conversation = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
                     true -> binding.root.isActivated = isSelected(conversation.id)
                     false -> clicks.onNext(conversation.id)
                 }
             }
             binding.root.setOnLongClickListener {
-                val conversation = getItemOrNull(adapterPosition) ?: return@setOnLongClickListener true
+                val conversation = getItemOrNull(bindingAdapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(conversation.id)
                 binding.root.isActivated = isSelected(conversation.id)
                 true

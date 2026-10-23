@@ -95,11 +95,11 @@ class QkRealmMigration @Inject constructor(
 
         if (version == 6L) {
             realm.schema.get("Conversation")
-                ?.addField("blockingClient", Integer::class.java)
+                ?.addField("blockingClient", Int::class.javaObjectType)
                 ?.addField("blockReason", String::class.java)
 
             realm.schema.get("MmsPart")
-                ?.addField("seq", Integer::class.java, FieldAttribute.REQUIRED)
+                ?.addField("seq", Int::class.javaObjectType, FieldAttribute.REQUIRED)
                 ?.addField("name", String::class.java)
 
             version++
@@ -107,7 +107,7 @@ class QkRealmMigration @Inject constructor(
 
         if (version == 7L) {
             realm.schema.get("Conversation")
-                ?.addRealmObjectField("lastMessage", realm.schema.get("Message"))
+                ?.addRealmObjectField("lastMessage", requireNotNull(realm.schema.get("Message")))
                 ?.removeField("count")
                 ?.removeField("date")
                 ?.removeField("snippet")
@@ -137,7 +137,7 @@ class QkRealmMigration @Inject constructor(
             realm.schema.create("ContactGroup")
                 .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
                 .addField("title", String::class.java, FieldAttribute.REQUIRED)
-                .addRealmListField("contacts", realm.schema.get("Contact"))
+                .addRealmListField("contacts", requireNotNull(realm.schema.get("Contact")))
 
             realm.schema.get("PhoneNumber")
                 ?.addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)

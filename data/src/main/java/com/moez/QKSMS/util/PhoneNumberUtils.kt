@@ -45,6 +45,9 @@ class PhoneNumberUtils @Inject constructor(context: Context) {
             return true
         }
 
+        // The cheap, loose check that spares most pairs the slow one below. Its replacement,
+        // areSamePhoneNumber, is itself built on libphonenumber, so it would cost what this saves.
+        @Suppress("DEPRECATION")
         if (PhoneNumberUtils.compare(first, second)) {
             val matchType = phoneNumberUtil.isNumberMatch(normalizedFirst, normalizedSecond)
             if (matchType >= PhoneNumberUtil.MatchType.SHORT_NSN_MATCH) {

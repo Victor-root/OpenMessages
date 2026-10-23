@@ -136,7 +136,7 @@ public class PushReceiver extends BroadcastReceiver {
                 case MESSAGE_TYPE_NOTIFICATION_IND: {
                     NotificationInd nInd = (NotificationInd) pdu;
 
-                    Bundle configOverrides = SmsManagerFactory.createSmsManager(subId).getCarrierConfigValues();
+                    Bundle configOverrides = SmsManagerFactory.createSmsManager(context, subId).getCarrierConfigValues();
                     boolean appendTransactionId = configOverrides.getBoolean(SmsManager.MMS_CONFIG_APPEND_TRANSACTION_ID);
 
                     if (appendTransactionId) {

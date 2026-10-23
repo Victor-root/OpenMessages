@@ -24,10 +24,10 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.os.IBinder
 import android.os.Message
 import android.os.Messenger
-import androidx.core.os.bundleOf
 import io.openmessages.common.util.extensions.isInstalled
 import io.openmessages.util.tryOrNull
 import io.reactivex.rxjava3.core.Completable
@@ -120,7 +120,7 @@ class ShouldIAnswerBlockingClient @Inject constructor(
 
             val message = Message().apply {
                 what = GET_NUMBER_RATING
-                data = bundleOf("number" to address)
+                data = Bundle().apply { putString("number", address) }
                 replyTo = Messenger(IncomingHandler { response ->
                     subject.onSuccess(response.rating == RATING_NEGATIVE || response.wantBlock)
 
@@ -140,7 +140,7 @@ class ShouldIAnswerBlockingClient @Inject constructor(
         }
     }
 
-    private class IncomingHandler(private val callback: (response: Response) -> Unit) : Handler() {
+    private class IncomingHandler(private val callback: (response: Response) -> Unit) : Handler(Looper.getMainLooper()) {
         class Response(bundle: Bundle) {
             val rating: Int = bundle.getInt("rating")
             val wantBlock = bundle.getInt("wantBlock") == 1

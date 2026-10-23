@@ -38,7 +38,6 @@ import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.rx3.awaitFirst
@@ -92,7 +91,7 @@ class ContactsViewModel @Inject constructor(
 
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected
-        Observables
+        Observable
                 .combineLatest(
                         view.queryChangedIntent, recents, starredContacts, contactGroups, contacts, selectedChips
                 ) { query, recents, starredContacts, contactGroups, contacts, selectedChips ->
@@ -180,7 +179,7 @@ class ContactsViewModel @Inject constructor(
                 .map { (composeItem, force) ->
                     HashMap(composeItem.getContacts().associate { contact ->
                         if (contact.numbers.size == 1 || contact.getDefaultNumber() != null && !force) {
-                            val address = contact.getDefaultNumber()?.address ?: contact.numbers[0]!!.address
+                            val address = contact.getDefaultNumber()?.address ?: contact.numbers[0].address
                             address to contact.lookupKey
                         } else {
                             runBlocking {

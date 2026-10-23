@@ -49,10 +49,12 @@ import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
@@ -229,14 +231,47 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     private var cameraDestination: Uri? = null
 
-    /** Window soft-input mode to restore after closing the full-screen editor. */
-    private var savedSoftInputMode = 0
+    private val contactPicker = launcher { data -> data?.data?.let(contactSelectedIntent::onNext) }
+
+    private val chipsPicker = launcher { data -> chipsSelectedIntent.onNext(ContactsActivity.getChips(data)) }
+
+    private val speechRecognizer = launcher { data ->
+        // check returned results are good
+        val match = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+        if ((match !== null) && (match.size > 0) && (!match[0].isNullOrEmpty())) {
+            // populate message box with data returned by STT, set cursor to end, and focus
+            binding.message.append(match[0])
+            binding.message.setSelection(binding.message.text?.length ?: 0)
+            binding.message.requestFocus()
+        }
+    }
+
+    private val camera = launcher { cameraDestination?.let(attachAnyFileSelectedIntent::onNext) }
+
+    private val gallery = launcher { data ->
+        data?.clipData?.itemCount
+            ?.let { count -> 0 until count }
+            ?.mapNotNull { i -> data.clipData?.getItemAt(i)?.uri }
+            ?.forEach(attachAnyFileSelectedIntent::onNext)
+            ?: data?.data?.let(attachAnyFileSelectedIntent::onNext)
+    }
+
+    private val templatePicker = launcher { data ->
+        data?.getStringExtra(TemplatesActivity.EXTRA_BODY)?.let(::insertIntoMessage)
+    }
 
     private fun getSeekBarUpdater(): ObservableSubscribeProxy<Long> {
         return Observable.interval(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(scope())
+    }
+
+    /**
+     * Starts activities for a result, handing [onResult] what they return when they succeed
+     */
+    private fun launcher(onResult: (Intent?) -> Unit) = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) onResult(result.data)
     }
 
     private fun isSpeechRecognitionAvailable(): Boolean {
@@ -289,7 +324,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             attachSheetBinding.sheetTemplates.setOnClickListener { templateIntent.onNext(Unit); attachSheet.dismiss() }
 
             // Full-screen editor: the expand chevron opens it; collapse/send sync back to the bubble.
-            savedSoftInputMode = window.attributes.softInputMode
             binding.expand.clicks()
                 .autoDispose(scope())
                 .subscribe { showFullscreen() }
@@ -722,32 +756,29 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             Manifest.permission.SEND_SMS), 0)
     }
 
-    @Suppress("DEPRECATION")
     override fun requestContact() {
         val intent = Intent(Intent.ACTION_PICK)
             .setType(ContactsContract.Contacts.CONTENT_TYPE)
 
-        startActivityForResult(Intent.createChooser(intent, null), ComposeView.ATTACH_CONTACT_REQUEST_CODE)
+        contactPicker.launch(Intent.createChooser(intent, null))
     }
 
-    @Suppress("DEPRECATION")
     override fun showContacts(sharing: Boolean, chips: List<Recipient>) {
         binding.message.hideKeyboard()
         val serialized = HashMap(chips.associate { chip -> chip.address to chip.contact?.lookupKey })
         val intent = Intent(this, ContactsActivity::class.java)
             .putExtra(ContactsActivity.SHARING_KEY, sharing)
             .putExtra(ContactsActivity.CHIPS_KEY, serialized)
-        startActivityForResult(intent, ComposeView.SELECT_CONTACT_REQUEST_CODE)
+        chipsPicker.launch(intent)
     }
 
-    @Suppress("DEPRECATION")
     override fun startSpeechRecognition() {
         if (isSpeechRecognitionAvailable()) {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             }
             try {
-                startActivityForResult(intent, ComposeView.SPEECH_RECOGNITION_REQUEST_CODE)
+                speechRecognizer.launch(intent)
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(this, getString(R.string.error_stt_toast), Toast.LENGTH_SHORT).show()
             }
@@ -764,7 +795,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }, 200)
     }
 
-    @Suppress("DEPRECATION")
     override fun requestCamera() {
         cameraDestination = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             .let { timestamp -> ContentValues().apply { put(MediaStore.Images.Media.TITLE, timestamp) } }
@@ -772,18 +802,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             .putExtra(MediaStore.EXTRA_OUTPUT, cameraDestination)
-        startActivityForResult(Intent.createChooser(intent, null), ComposeView.TAKE_PHOTOS_REQUEST_CODE)
+        camera.launch(Intent.createChooser(intent, null))
     }
 
-    @Suppress("DEPRECATION")
-    override fun requestGallery(mimeType: String, requestCode: Int) {
+    override fun requestGallery(mimeType: String) {
         val intent = Intent(Intent.ACTION_PICK)
             .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
             .putExtra(Intent.EXTRA_LOCAL_ONLY, false)
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             .setType(mimeType)
-        startActivityForResult(Intent.createChooser(intent, null), requestCode)
+        gallery.launch(Intent.createChooser(intent, null))
     }
 
     override fun setDraft(draft: String) {
@@ -791,12 +820,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.message.setSelection(draft.length)
     }
 
-    /** Opens the full Templates screen in pick mode; the chosen template returns via onActivityResult. */
+    /** Opens the full Templates screen in pick mode; the chosen template returns to [templatePicker]. */
     override fun showTemplatePicker() {
-        startActivityForResult(
-            Intent(this, TemplatesActivity::class.java).putExtra(TemplatesActivity.EXTRA_PICK, true),
-            ComposeView.TEMPLATE_REQUEST_CODE
-        )
+        templatePicker.launch(Intent(this, TemplatesActivity::class.java).putExtra(TemplatesActivity.EXTRA_PICK, true))
     }
 
     /** Show/hide the bubble's expand chevron — only useful once the message spans multiple lines. */
@@ -808,7 +834,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     private fun showFullscreen() {
         binding.fullscreenMessage.setText(binding.message.text)
         binding.fullscreenMessage.setSelection(binding.fullscreenMessage.length())
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         binding.fullscreenEditor.isVisible = true
         binding.fullscreenMessage.requestFocus()
         binding.fullscreenMessage.showKeyboard()
@@ -819,7 +844,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.message.setText(binding.fullscreenMessage.text)
         binding.message.setSelection(binding.message.length())
         binding.fullscreenEditor.isVisible = false
-        window.setSoftInputMode(savedSoftInputMode)
         binding.message.requestFocus()
     }
 
@@ -827,7 +851,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     private fun sendFromFullscreen() {
         binding.message.setText(binding.fullscreenMessage.text)
         binding.fullscreenEditor.isVisible = false
-        window.setSoftInputMode(savedSoftInputMode)
         binding.send.performClick()
     }
 
@@ -881,7 +904,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             .setTitle(R.string.messageLinkHandling_dialog_title)
             .setMessage(getString(R.string.messageLinkHandling_dialog_body, spec.uri.toString()))
             .setPositiveButton(R.string.messageLinkHandling_dialog_positive) { _, _ ->
-                ContextCompat.startActivity(this, Intent(Intent.ACTION_VIEW).setData(spec.uri), null)
+                startActivity(Intent(Intent.ACTION_VIEW).setData(spec.uri))
             }
             .setNegativeButton(R.string.messageLinkHandling_dialog_negative, null)
             .create()
@@ -945,62 +968,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         return true
     }
 
-    @Suppress("DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_OK)
-            return
-
-        when (requestCode) {
-            ComposeView.SELECT_CONTACT_REQUEST_CODE -> {
-                @Suppress("UNCHECKED_CAST")
-                chipsSelectedIntent.onNext(data?.getSerializableExtra(ContactsActivity.CHIPS_KEY)
-                    ?.let { serializable -> serializable as? HashMap<String, String?> }
-                    ?: hashMapOf())
-            }
-
-            ComposeView.TAKE_PHOTOS_REQUEST_CODE -> {
-                cameraDestination?.let(attachAnyFileSelectedIntent::onNext)
-            }
-
-            ComposeView.ATTACH_FILE_REQUEST_CODE -> {
-                data?.clipData?.itemCount
-                    ?.let { count -> 0 until count }
-                    ?.mapNotNull { i -> data.clipData?.getItemAt(i)?.uri }
-                    ?.forEach(attachAnyFileSelectedIntent::onNext)
-                    ?: data?.data?.let(attachAnyFileSelectedIntent::onNext)
-            }
-
-            ComposeView.ATTACH_CONTACT_REQUEST_CODE -> {
-                data?.data?.let(contactSelectedIntent::onNext)
-            }
-
-            ComposeView.SPEECH_RECOGNITION_REQUEST_CODE -> {
-                // check returned results are good
-                val match = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                if ((match !== null) && (match.size > 0) && (!match[0].isNullOrEmpty())) {
-                    // populate message box with data returned by STT, set cursor to end, and focus
-                    binding.message.append(match[0])
-                    binding.message.setSelection(binding.message.text?.length ?: 0)
-                    binding.message.requestFocus()
-                }
-            }
-
-            ComposeView.TEMPLATE_REQUEST_CODE -> {
-                data?.getStringExtra(TemplatesActivity.EXTRA_BODY)?.let(::insertIntoMessage)
-            }
-
-            else -> super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelable(ComposeView.CAMERA_DESTINATION_KEY, cameraDestination)
         super.onSaveInstanceState(outState)
     }
 
-    @Suppress("DEPRECATION")
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        cameraDestination = savedInstanceState.getParcelable(ComposeView.CAMERA_DESTINATION_KEY)
+        cameraDestination = BundleCompat.getParcelable(savedInstanceState, ComposeView.CAMERA_DESTINATION_KEY, Uri::class.java)
         super.onRestoreInstanceState(savedInstanceState)
     }
 

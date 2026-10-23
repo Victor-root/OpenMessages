@@ -22,7 +22,6 @@ import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
 import io.openmessages.common.QKApplication
 import io.openmessages.common.QkDialog
-import io.openmessages.common.util.QkChooserTargetService
 import io.openmessages.common.widget.AvatarView
 import io.openmessages.common.widget.PagerTitleView
 import io.openmessages.common.widget.PreferenceView
@@ -79,11 +78,6 @@ interface AppComponent {
     fun inject(dialog: QkDialog)
 
     fun inject(service: WidgetAdapter)
-
-    /**
-     * This can't use AndroidInjection, or else it will crash on pre-marshmallow devices
-     */
-    fun inject(service: QkChooserTargetService)
 
     fun inject(view: AvatarView)
     fun inject(view: DetailedChipView)

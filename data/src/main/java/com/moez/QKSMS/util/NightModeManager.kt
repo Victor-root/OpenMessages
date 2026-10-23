@@ -143,12 +143,12 @@ class NightModeManager @Inject constructor(
      */
     fun parseTime(time: String): Calendar {
         return tryOrNull {
-            val parsedTime = SimpleDateFormat("H:mm", Locale.US).parse(time)
-            Calendar.getInstance().apply { this.time = parsedTime }
+            SimpleDateFormat("H:mm", Locale.US).parse(time)
+                ?.let { parsedTime -> Calendar.getInstance().apply { this.time = parsedTime } }
         } ?: tryOrNull {
             // Parse the legacy timestamp format (<=3.1.3)
-            val parsedTime = SimpleDateFormat("h:mm a", Locale.US).parse(time)
-            Calendar.getInstance().apply { this.time = parsedTime }
+            SimpleDateFormat("h:mm a", Locale.US).parse(time)
+                ?.let { parsedTime -> Calendar.getInstance().apply { this.time = parsedTime } }
         } ?: Calendar.getInstance().apply { set(Calendar.HOUR_OF_DAY, 18) }
     }
 

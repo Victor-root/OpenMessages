@@ -501,8 +501,7 @@ class BackupRepositoryImpl @Inject constructor(
             return context.contentResolver.openOutputStream(uri)
                     ?: throw Exception("Failed to open output stream for $name")
         }
-        @Suppress("DEPRECATION")
-        val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), BACKUP_DIR)
+        val dir = legacyBackupDir()
         if (!dir.exists() && !dir.mkdirs()) throw Exception("Failed to create backup directory $dir")
         return File(dir, name).outputStream()
     }
@@ -562,10 +561,8 @@ class BackupRepositoryImpl @Inject constructor(
     }
 
     /** Android 9 and below: write straight to the public Documents directory (legacy storage). */
-    @Suppress("DEPRECATION")
     private inner class LegacyBackupDestination(folderName: String) : BackupDestination {
-        private val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
-                "$BACKUP_DIR/$folderName").apply {
+        private val dir = File(legacyBackupDir(), folderName).apply {
             if (!exists() && !mkdirs()) throw Exception("Failed to create backup directory $this")
         }
 
@@ -1480,6 +1477,7 @@ class BackupRepositoryImpl @Inject constructor(
 
     // Legacy public storage (Android 9 and below)
 
+    // Only reached before Android 10, which has no other way to the public Documents directory
     @Suppress("DEPRECATION")
     private fun legacyBackupDir() =
             File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), BACKUP_DIR)

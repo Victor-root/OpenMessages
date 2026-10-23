@@ -50,6 +50,7 @@ androidx-emoji2-bundled = { module = "androidx.emoji2:emoji2-bundled", version.r
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidx-exifinterface" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
+androidx-sharetarget = { module = "androidx.sharetarget:sharetarget", version = "1.2.0" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 material = { module = "com.google.android.material:material", version.ref = "material" }

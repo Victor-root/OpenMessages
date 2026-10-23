@@ -42,6 +42,11 @@ class ShortcutManagerImpl @Inject constructor(
     private val colors: Colors
 ) : io.openmessages.manager.ShortcutManager {
 
+    companion object {
+        /** Puts a conversation among the share targets, declared in res/xml/shortcuts.xml */
+        private const val SHARE_TARGET_CATEGORY = "io.openmessages.category.SHARE_TARGET"
+    }
+
     override fun updateBadge() {
         val count = messageRepo.getUnreadCount().toInt()
         ShortcutBadger.applyCount(context, count)
@@ -85,7 +90,7 @@ class ShortcutManagerImpl @Inject constructor(
 
         val icon = when {
             conversation.recipients.size == 1 -> {
-                val recipient = conversation.recipients.first()!!
+                val recipient = conversation.recipients.first()
                 recipient.getThemedIcon(
                     context,
                     colors.theme(recipient),
@@ -117,6 +122,7 @@ class ShortcutManagerImpl @Inject constructor(
             .setIntent(intent)
             .setPersons(persons)
             .setLongLived(true)
+            .setCategories(setOf(SHARE_TARGET_CATEGORY))
             .build()
 
         return sc

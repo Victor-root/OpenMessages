@@ -29,6 +29,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.content.pm.PackageInfoCompat
 import io.openmessages.util.tryOrNull
 
 fun Context.getColorCompat(colorRes: Int): Int {
@@ -88,11 +89,12 @@ fun Context.isInstalled(packageName: String): Boolean {
 
 val Context.versionCode: Int
     get() {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).longVersionCode.toInt()
+        val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
         } else {
-            packageManager.getPackageInfo(packageName, 0).versionCode
+            packageManager.getPackageInfo(packageName, 0)
         }
+        return PackageInfoCompat.getLongVersionCode(info).toInt()
     }
 val Context.jobScheduler: JobScheduler
     get() = getSystemService()!!

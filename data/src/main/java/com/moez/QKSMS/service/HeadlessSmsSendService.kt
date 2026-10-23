@@ -18,23 +18,53 @@
  */
 package io.openmessages.service
 
-import android.app.IntentService
+import android.app.Service
 import android.content.Intent
 import android.net.Uri
+import android.os.IBinder
 import android.telephony.TelephonyManager
 import dagger.android.AndroidInjection
 import io.openmessages.interactor.SendNewMessage
 import io.openmessages.repository.ConversationRepository
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
+/**
+ * Sends the quick replies offered to an incoming call
+ */
+class HeadlessSmsSendService : Service() {
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var sendNewMessage: SendNewMessage
 
-    override fun onHandleIntent(intent: Intent?) {
+    // One at a time, in the order they came, so the service only stops once the last is through
+    private val executor = Executors.newSingleThreadExecutor()
+
+    override fun onCreate() {
+        AndroidInjection.inject(this)
+        super.onCreate()
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        executor.execute {
+            try {
+                respond(intent)
+            } finally {
+                stopSelf(startId)
+            }
+        }
+        return START_NOT_STICKY
+    }
+
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    override fun onDestroy() {
+        executor.shutdown()
+        super.onDestroy()
+    }
+
+    private fun respond(intent: Intent?) {
         if (intent?.action != TelephonyManager.ACTION_RESPOND_VIA_MESSAGE) return
 
-        AndroidInjection.inject(this)
         intent.extras?.getString(Intent.EXTRA_TEXT)?.takeIf { it.isNotBlank() }?.let { body ->
             val recipients = intent.data?.let(::getRecipients)?.split(";") ?: return@let
 

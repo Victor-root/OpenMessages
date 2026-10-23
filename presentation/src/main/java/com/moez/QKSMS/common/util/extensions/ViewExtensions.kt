@@ -46,7 +46,7 @@ var ViewGroup.animateLayoutChanges: Boolean
 fun EditText.showKeyboard() {
     requestFocus()
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    imm.showSoftInput(this, 0)
 }
 
 fun EditText.hideKeyboard() {

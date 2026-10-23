@@ -20,7 +20,6 @@ package io.openmessages.feature.blocking.numbers
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.model.BlockedNumber
@@ -36,7 +35,7 @@ class BlockedNumbersAdapter : QkAdapter<BlockedNumber, QkBindingViewHolder<Block
         val binding = BlockedNumberListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             binding.unblock.setOnClickListener {
-                val number = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val number = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 unblockAddress.onNext(number.id)
             }
         }

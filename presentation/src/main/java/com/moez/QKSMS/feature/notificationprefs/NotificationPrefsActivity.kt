@@ -24,6 +24,8 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.core.content.IntentCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import autodispose2.androidx.lifecycle.scope
@@ -128,28 +130,27 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     override fun showPreviewModeDialog() = previewModeDialog.show(this)
 
-    @Suppress("DEPRECATION")
+    private val ringtonePicker = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uri = result.data?.let { data ->
+                IntentCompat.getParcelableExtra(data, RingtoneManager.EXTRA_RINGTONE_PICKED_URI, Uri::class.java)
+            }
+            ringtoneSelectedIntent.onNext(uri?.toString() ?: "")
+        }
+    }
+
     override fun showRingtonePicker(default: Uri?) {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, true)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, default)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
-        startActivityForResult(intent, 123)
+        ringtonePicker.launch(intent)
     }
 
     override fun showActionDialog(selected: Int) {
         actionsDialog.adapter.selectedItem = selected
         actionsDialog.show(this)
-    }
-
-    @Suppress("DEPRECATION")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 123 && resultCode == Activity.RESULT_OK) {
-            val uri: Uri? = data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
-            ringtoneSelectedIntent.onNext(uri?.toString() ?: "")
-        }
     }
 
 }

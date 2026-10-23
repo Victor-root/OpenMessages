@@ -19,11 +19,16 @@
 package io.openmessages.compat
 
 import android.content.Context
+import android.os.Build
 import android.telephony.SubscriptionManager
+import androidx.core.content.ContextCompat
 import io.openmessages.manager.PermissionManager
 import javax.inject.Inject
 
-class SubscriptionManagerCompat @Inject constructor(context: Context, private val permissions: PermissionManager) {
+class SubscriptionManagerCompat @Inject constructor(
+    private val context: Context,
+    private val permissions: PermissionManager
+) {
 
     private val subscriptionManager: SubscriptionManager?
         get() = field?.takeIf { permissions.hasPhone() }
@@ -45,11 +50,18 @@ class SubscriptionManagerCompat @Inject constructor(context: Context, private va
         }
 
     init {
-        subscriptionManager = SubscriptionManager.from(context)
+        subscriptionManager = context.getSystemService(SubscriptionManager::class.java)
     }
 
     fun addOnSubscriptionsChangedListener(listener: OnSubscriptionsChangedListener) {
-        subscriptionManager?.addOnSubscriptionsChangedListener(listener.listener)
+        val subscriptionManager = subscriptionManager ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            subscriptionManager.addOnSubscriptionsChangedListener(ContextCompat.getMainExecutor(context), listener.listener)
+        } else {
+            // Before Android 11, the listener can only be called back on the caller's thread
+            @Suppress("DEPRECATION")
+            subscriptionManager.addOnSubscriptionsChangedListener(listener.listener)
+        }
     }
 
     fun removeOnSubscriptionsChangedListener(listener: OnSubscriptionsChangedListener) {

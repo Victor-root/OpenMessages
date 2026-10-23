@@ -319,15 +319,21 @@ public class PduHeaders {
     public static final int STORE_STATUS_ERROR_END                              = 0xFF;
 
     /**
-     * The map contains the value of all headers.
+     * The map contains the value of all headers, but the address lists.
      */
     private HashMap<Integer, Object> mHeaderMap = null;
+
+    /**
+     * The TO, CC and BCC address lists.
+     */
+    private HashMap<Integer, ArrayList<EncodedStringValue>> mAddressMap = null;
 
     /**
      * Constructor of PduHeaders.
      */
     public PduHeaders() {
         mHeaderMap = new HashMap<Integer, Object>();
+        mAddressMap = new HashMap<Integer, ArrayList<EncodedStringValue>>();
     }
 
     /**
@@ -559,8 +565,7 @@ public class PduHeaders {
      *          with specified header field
      */
     protected EncodedStringValue[] getEncodedStringValues(int field) {
-        ArrayList<EncodedStringValue> list =
-                (ArrayList<EncodedStringValue>) mHeaderMap.get(field);
+        ArrayList<EncodedStringValue> list = mAddressMap.get(field);
         if (null == list) {
             return null;
         }
@@ -637,7 +642,7 @@ public class PduHeaders {
         for (int i = 0; i < value.length; i++) {
             list.add(value[i]);
         }
-        mHeaderMap.put(field, list);
+        mAddressMap.put(field, list);
     }
 
     /**
@@ -662,13 +667,12 @@ public class PduHeaders {
                 throw new RuntimeException("Invalid header field!");
         }
 
-        ArrayList<EncodedStringValue> list =
-            (ArrayList<EncodedStringValue>) mHeaderMap.get(field);
+        ArrayList<EncodedStringValue> list = mAddressMap.get(field);
         if (null == list) {
             list  = new ArrayList<EncodedStringValue>();
         }
         list.add(value);
-        mHeaderMap.put(field, list);
+        mAddressMap.put(field, list);
     }
 
     /**

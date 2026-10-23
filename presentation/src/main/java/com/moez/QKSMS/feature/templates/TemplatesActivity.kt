@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -50,6 +51,17 @@ class TemplatesActivity : QkThemedActivity(), TemplatesView {
 
     /** Body of the template awaiting a recipient, held between the picker launch and its result. */
     private var pendingTemplateBody: String? = null
+
+    private val recipientPicker = registerForActivityResult(StartActivityForResult()) { result ->
+        val body = pendingTemplateBody
+        pendingTemplateBody = null
+        // The picker always returns RESULT_OK; a cancel just carries an empty chip set, in which
+        // case we stay on Templates. A real pick hands off to the composer with the recipient(s).
+        val addresses = ContactsActivity.getChips(result.data).keys.toList()
+        if (result.resultCode == Activity.RESULT_OK && addresses.isNotEmpty()) {
+            navigator.showCompose(body = body, addresses = addresses)
+        }
+    }
 
     override val templateClicksIntent by lazy { templatesAdapter.clicks }
     override val templateLongClicksIntent by lazy { templatesAdapter.longClicks }
@@ -125,38 +137,19 @@ class TemplatesActivity : QkThemedActivity(), TemplatesView {
         finish()
     }
 
-    @Suppress("DEPRECATION")
     override fun pickRecipientForTemplate(body: String) {
         pendingTemplateBody = body
         val intent = Intent(this, ContactsActivity::class.java)
             .putExtra(ContactsActivity.SHARING_KEY, false)
             .putExtra(ContactsActivity.CHIPS_KEY, hashMapOf<String, String?>())
             .putExtra(ContactsActivity.STANDALONE_KEY, true)
-        startActivityForResult(intent, REQUEST_PICK_RECIPIENT)
-    }
-
-    @Suppress("DEPRECATION", "UNCHECKED_CAST")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_PICK_RECIPIENT) {
-            val body = pendingTemplateBody
-            pendingTemplateBody = null
-            // The picker always returns RESULT_OK; a cancel just carries an empty chip set, in which
-            // case we stay on Templates. A real pick hands off to the composer with the recipient(s).
-            val addresses = (data?.getSerializableExtra(ContactsActivity.CHIPS_KEY) as? HashMap<String, String?>)
-                ?.keys?.toList().orEmpty()
-            if (resultCode == Activity.RESULT_OK && addresses.isNotEmpty()) {
-                navigator.showCompose(body = body, addresses = addresses)
-            }
-            return
-        }
-        super.onActivityResult(requestCode, resultCode, data)
+        recipientPicker.launch(intent)
     }
 
     companion object {
         /** When true, tapping a template returns it (via setResult) instead of opening the composer. */
         const val EXTRA_PICK = "pick"
         const val EXTRA_BODY = "body"
-        private const val REQUEST_PICK_RECIPIENT = 4001
     }
 
 }

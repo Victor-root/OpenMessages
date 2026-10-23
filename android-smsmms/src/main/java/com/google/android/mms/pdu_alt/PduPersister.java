@@ -24,10 +24,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteException;
-import android.drm.DrmManagerClient;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.provider.Telephony;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Addr;
@@ -36,24 +33,21 @@ import android.provider.Telephony.MmsSms;
 import android.provider.Telephony.MmsSms.PendingMessages;
 import android.provider.Telephony.Threads;
 import android.telephony.PhoneNumberUtils;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.android.mms.service_alt.SubscriptionIdChecker;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.InvalidHeaderValueException;
 import com.google.android.mms.MmsException;
-import com.google.android.mms.util_alt.DownloadDrmHelper;
-import com.google.android.mms.util_alt.DrmConvertSession;
 import com.google.android.mms.util_alt.PduCache;
 import com.google.android.mms.util_alt.PduCacheEntry;
 import com.google.android.mms.util_alt.SqliteWrapper;
 import timber.log.Timber;
 
 import com.klinker.android.send_message.Settings;
+import com.klinker.android.send_message.Utils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -280,15 +274,10 @@ public class PduPersister {
 
     private final Context mContext;
     private final ContentResolver mContentResolver;
-    private final DrmManagerClient mDrmManagerClient;
-    private final TelephonyManager mTelephonyManager;
 
     private PduPersister(Context context) {
         mContext = context;
         mContentResolver = context.getContentResolver();
-        mDrmManagerClient = new DrmManagerClient(context);
-        mTelephonyManager = (TelephonyManager)context
-                .getSystemService(Context.TELEPHONY_SERVICE);
      }
 
     /** Get(or create if not exist) an instance of PduPersister */
@@ -815,9 +804,7 @@ public class PduPersister {
             throws MmsException {
         OutputStream os = null;
         InputStream is = null;
-        DrmConvertSession drmConvertSession = null;
         Uri dataUri = null;
-        String path = null;
 
         try {
             byte[] data = part.getData();
@@ -842,35 +829,6 @@ public class PduPersister {
                     }
                 }
             } else {
-                boolean isDrm = DownloadDrmHelper.isDrmConvertNeeded(contentType);
-                if (isDrm) {
-                    if (uri != null) {
-                        try {
-                            path = convertUriToPath(mContext, uri);
-                            if (LOCAL_LOGV) {
-                                Timber.v("drm uri: " + uri + " path: " + path);
-                            }
-                            File f = new File(path);
-                            long len = f.length();
-                            if (LOCAL_LOGV) {
-                                Timber.v("drm path: " + path + " len: " + len);
-                            }
-                            if (len > 0) {
-                                // we're not going to re-persist and re-encrypt an already
-                                // converted drm file
-                                return;
-                            }
-                        } catch (Exception e) {
-                            Timber.e(e, "Can't get file info for: %s", part.getDataUri());
-                        }
-                    }
-                    // We haven't converted the file yet, start the conversion
-                    drmConvertSession = DrmConvertSession.open(mContext, contentType);
-                    if (drmConvertSession == null) {
-                        throw new MmsException("Mimetype " + contentType +
-                                " can not be converted.");
-                    }
-                }
                 // uri can look like:
                 // content://mms/part/98
                 os = mContentResolver.openOutputStream(uri);
@@ -895,32 +853,13 @@ public class PduPersister {
 
                     byte[] buffer = new byte[8192];
                     for (int len = 0; (len = is.read(buffer)) != -1; ) {
-                        if (!isDrm) {
-                            os.write(buffer, 0, len);
-                        } else {
-                            byte[] convertedData = drmConvertSession.convert(buffer, len);
-                            if (convertedData != null) {
-                                os.write(convertedData, 0, convertedData.length);
-                            } else {
-                                throw new MmsException("Error converting drm data.");
-                            }
-                        }
+                        os.write(buffer, 0, len);
                     }
                 } else {
                     if (LOCAL_LOGV) {
                         Timber.v("Saving data to: %s", uri);
                     }
-                    if (!isDrm) {
-                        os.write(data);
-                    } else {
-                        dataUri = uri;
-                        byte[] convertedData = drmConvertSession.convert(data, data.length);
-                        if (convertedData != null) {
-                            os.write(convertedData, 0, convertedData.length);
-                        } else {
-                            throw new MmsException("Error converting drm data.");
-                        }
-                    }
+                    os.write(data);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -944,65 +883,7 @@ public class PduPersister {
                     Timber.e(e, "IOException while closing: %s", is);
                 } // Ignore
             }
-            if (drmConvertSession != null) {
-                drmConvertSession.close(path);
-
-                // Reset the permissions on the encrypted part file so everyone has only read
-                // permission.
-                File f = new File(path);
-                ContentValues values = new ContentValues(0);
-                SqliteWrapper.update(mContext, mContentResolver,
-                                     Uri.parse("content://mms/resetFilePerm/" + f.getName()),
-                                     values, null, null);
-            }
         }
-    }
-
-    /**
-     * This method expects uri in the following format
-     *     content://media/<table_name>/<row_index> (or)
-     *     file://sdcard/test.mp4
-     *     http://test.com/test.mp4
-     *
-     * Here <table_name> shall be "video" or "audio" or "images"
-     * <row_index> the index of the content in given table
-     */
-    static public String convertUriToPath(Context context, Uri uri) {
-        String path = null;
-        if (null != uri) {
-            String scheme = uri.getScheme();
-            if (null == scheme || scheme.equals("") ||
-                    scheme.equals(ContentResolver.SCHEME_FILE)) {
-                path = uri.getPath();
-
-            } else if (scheme.equals("http")) {
-                path = uri.toString();
-
-            } else if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
-                String[] projection = new String[] {MediaStore.MediaColumns.DATA};
-                Cursor cursor = null;
-                try {
-                    cursor = context.getContentResolver().query(uri, projection, null,
-                            null, null);
-                    if (null == cursor || 0 == cursor.getCount() || !cursor.moveToFirst()) {
-                        throw new IllegalArgumentException("Given Uri could not be found" +
-                                " in media store");
-                    }
-                    int pathIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-                    path = cursor.getString(pathIndex);
-                } catch (SQLiteException e) {
-                    throw new IllegalArgumentException("Given Uri is not formatted in a way " +
-                            "so that it can be found in media store.");
-                } finally {
-                    if (null != cursor) {
-                        cursor.close();
-                    }
-                }
-            } else {
-                throw new IllegalArgumentException("Given Uri scheme is not supported");
-            }
-        }
-        return path;
     }
 
     private void updateAddress(
@@ -1515,6 +1396,9 @@ public class PduPersister {
      * @param addressMap a HashMap of the addresses from the ADDRESS_FIELDS header
      * @param excludeMyNumber if true, the number of this phone will be excluded from recipients
      */
+    // The loose comparison is the point: the own number turns up in all sorts of formats. Its
+    // replacement, areSamePhoneNumber, is a strict one.
+    @SuppressWarnings("deprecation")
     private void loadRecipients(int addressType, HashSet<String> recipients,
             HashMap<Integer, EncodedStringValue[]> addressMap, boolean excludeMyNumber) {
         EncodedStringValue[] array = addressMap.get(addressType);
@@ -1528,7 +1412,7 @@ public class PduPersister {
         if (excludeMyNumber && array.length == 1 && addressType == PduHeaders.TO) {
             return;
         }
-        String myNumber = excludeMyNumber ? mTelephonyManager.getLine1Number() : null;
+        String myNumber = excludeMyNumber ? Utils.getMyPhoneNumber(mContext) : null;
         for (EncodedStringValue v : array) {
             if (v != null) {
                 String number = v.getString();

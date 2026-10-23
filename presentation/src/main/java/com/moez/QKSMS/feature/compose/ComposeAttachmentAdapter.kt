@@ -61,7 +61,7 @@ class ComposeAttachmentAdapter @Inject constructor(
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val attachment = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val attachment = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 attachmentDeleted.onNext(attachment)
             }
         }
