@@ -79,7 +79,6 @@ dependencies {
     implementation(libs.rx.preferences)
     implementation(libs.timber)
     implementation(libs.moshi)
-    kapt(libs.moshi.kotlin.codegen)
     implementation(libs.okhttp3)
     implementation(libs.libphonenumber)
 

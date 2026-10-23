@@ -192,7 +192,6 @@ dependencies {
     // moshi
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
-    kapt(libs.moshi.kotlin.codegen)
 
     // coroutines
     implementation(libs.coroutines.core)
