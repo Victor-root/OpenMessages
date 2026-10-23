@@ -34,7 +34,6 @@ import dagger.Provides
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.BlockingManager
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.util.BillingManagerImpl
 import io.openmessages.common.util.NotificationManagerImpl
 import io.openmessages.common.util.ShortcutManagerImpl
 import io.openmessages.feature.conversationinfo.injection.ConversationInfoComponent
@@ -45,7 +44,6 @@ import io.openmessages.manager.ActiveConversationManager
 import io.openmessages.manager.ActiveConversationManagerImpl
 import io.openmessages.manager.AlarmManager
 import io.openmessages.manager.AlarmManagerImpl
-import io.openmessages.manager.BillingManager
 import io.openmessages.manager.ChangelogManager
 import io.openmessages.manager.ChangelogManagerImpl
 import io.openmessages.manager.KeyManager
@@ -54,8 +52,6 @@ import io.openmessages.manager.NotificationManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.manager.PermissionManagerImpl
 import io.openmessages.manager.RatingManager
-import io.openmessages.manager.ReferralManager
-import io.openmessages.manager.ReferralManagerImpl
 import io.openmessages.manager.ShortcutManager
 import io.openmessages.manager.WidgetManager
 import io.openmessages.manager.WidgetManagerImpl
@@ -140,9 +136,6 @@ class AppModule(private var application: Application) {
     // Manager
 
     @Provides
-    fun provideBillingManager(manager: BillingManagerImpl): BillingManager = manager
-
-    @Provides
     fun provideActiveConversationManager(manager: ActiveConversationManagerImpl): ActiveConversationManager = manager
 
     @Provides
@@ -168,9 +161,6 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideShortcutManager(manager: ShortcutManagerImpl): ShortcutManager = manager
-
-    @Provides
-    fun provideReferralManager(manager: ReferralManagerImpl): ReferralManager = manager
 
     @Provides
     fun provideWidgetManager(manager: WidgetManagerImpl): WidgetManager = manager

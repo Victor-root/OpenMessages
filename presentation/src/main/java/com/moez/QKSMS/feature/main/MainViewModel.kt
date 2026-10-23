@@ -38,7 +38,6 @@ import io.openmessages.interactor.SpeakThreads
 import io.openmessages.interactor.SyncContacts
 import io.openmessages.interactor.SyncMessages
 import io.openmessages.listener.ContactAddedListener
-import io.openmessages.manager.BillingManager
 import io.openmessages.manager.ChangelogManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.manager.RatingManager
@@ -63,7 +62,6 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    billingManager: BillingManager,
     contactAddedListener: ContactAddedListener,
     markAllSeen: MarkAllSeen,
     migratePreferences: MigratePreferences,
@@ -106,10 +104,6 @@ class MainViewModel @Inject constructor(
                 .sample(16, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
                 .subscribe { syncing -> newState { copy(syncing = syncing) } }
-
-        // Update the upgraded status
-        disposables += billingManager.upgradeStatus
-                .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
 
         // Show the rating UI
         disposables += ratingManager.shouldShowRating
@@ -351,7 +345,6 @@ class MainViewModel @Inject constructor(
                         NavItem.TEMPLATES -> navigator.showTemplates()
                         NavItem.SETTINGS -> navigator.showSettings()
                         NavItem.ABOUT -> navigator.showAbout()
-//                        NavItem.PLUS -> navigator.showQksmsPlusActivity("main_menu")
 //                        NavItem.HELP -> navigator.showSupport()
                         NavItem.INVITE -> navigator.showInvite()
                         else -> Unit
@@ -472,13 +465,6 @@ class MainViewModel @Inject constructor(
             .subscribe { conversation ->
                 newState { copy(dialog = MainDialog.RenameConversation(conversation.id, conversation.name)) }
             }
-
-//        view.plusBannerIntent
-//                .autoDisposable(view.scope())
-//                .subscribe {
-//                    newState { copy(drawerOpen = false) }
-//                    navigator.showQksmsPlusActivity("main_banner")
-//                }
 
         view.rateIntent
                 .autoDisposable(view.scope())

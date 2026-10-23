@@ -40,11 +40,9 @@ import io.openmessages.feature.gallery.GalleryActivity
 import io.openmessages.feature.main.MainActivity
 import io.openmessages.feature.messageutils.MessageUtilsActivity
 import io.openmessages.feature.notificationprefs.NotificationPrefsActivity
-import io.openmessages.feature.plus.PlusActivity
 import io.openmessages.feature.scheduled.ScheduledActivity
 import io.openmessages.feature.settings.SettingsActivity
 import io.openmessages.feature.templates.TemplatesActivity
-import io.openmessages.manager.BillingManager
 import io.openmessages.manager.NotificationManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.ScheduledMessage
@@ -54,7 +52,6 @@ import javax.inject.Singleton
 @Singleton
 class Navigator @Inject constructor(
     private val context: Context,
-    private val billingManager: BillingManager,
     private val notificationManager: NotificationManager,
     private val permissions: PermissionManager
 ) {
@@ -70,16 +67,6 @@ class Navigator @Inject constructor(
         } else {
             startActivity(Intent.createChooser(intent, null))
         }
-    }
-
-    /**
-     * @param source String to indicate where this plus-features screen was launched from. This should be
-     * one of [main_menu, compose_schedule, settings_night, settings_theme]
-     */
-    @Suppress("UNUSED_PARAMETER")
-    fun showQksmsPlusActivity(source: String) {
-        val intent = Intent(context, PlusActivity::class.java)
-        startActivity(intent)
     }
 
     /**

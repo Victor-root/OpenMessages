@@ -21,10 +21,8 @@ package io.openmessages.feature.themepicker
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.Colors
-import io.openmessages.manager.BillingManager
 import io.openmessages.manager.WidgetManager
 import io.openmessages.util.Preferences
 import io.reactivex.rxkotlin.Observables
@@ -34,9 +32,7 @@ import javax.inject.Named
 class ThemePickerPresenter @Inject constructor(
     prefs: Preferences,
     @Named("recipientId") private val recipientId: Long,
-    private val billingManager: BillingManager,
     private val colors: Colors,
-    private val navigator: Navigator,
     private val widgetManager: WidgetManager
 ) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(recipientId = recipientId)) {
 
@@ -75,23 +71,13 @@ class ThemePickerPresenter @Inject constructor(
         // Update the theme, when apply is clicked
         view.applyHsvThemeClicks()
                 .withLatestFrom(view.hsvThemeSelected()) { _, color -> color }
-                .withLatestFrom(billingManager.upgradeStatus) { color, upgraded ->
-                    if (!upgraded) {
-                        view.showQksmsPlusSnackbar()
-                    } else {
-                        theme.set(color)
-                        if (recipientId == 0L) {
-                            widgetManager.updateTheme()
-                        }
+                .autoDisposable(view.scope())
+                .subscribe { color ->
+                    theme.set(color)
+                    if (recipientId == 0L) {
+                        widgetManager.updateTheme()
                     }
                 }
-                .autoDisposable(view.scope())
-                .subscribe()
-
-        // Show plus features activity
-        view.viewQksmsPlusClicks()
-                .autoDisposable(view.scope())
-                .subscribe { navigator.showQksmsPlusActivity("settings_theme") }
 
         // Reset the theme
         view.clearHsvThemeClicks()

@@ -23,7 +23,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkController
@@ -35,8 +34,6 @@ import io.openmessages.databinding.ThemePickerControllerBinding
 import io.openmessages.feature.themepicker.injection.ThemePickerModule
 import io.openmessages.injection.appComponent
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
 class ThemePickerController(
@@ -51,8 +48,6 @@ class ThemePickerController(
     @Inject lateinit var colors: Colors
     @Inject lateinit var themeAdapter: ThemeAdapter
     @Inject lateinit var themePagerAdapter: ThemePagerAdapter
-
-    private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
 
     init {
         appComponent
@@ -92,14 +87,6 @@ class ThemePickerController(
         }
     }
 
-    override fun showQksmsPlusSnackbar() {
-        Snackbar.make(binding.contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
-            setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
-            setActionTextColor(colors.theme().theme)
-            show()
-        }
-    }
-
     override fun themeSelected(): Observable<Int> = themeAdapter.colorSelected
 
     override fun hsvThemeSelected(): Observable<Int> = binding.hsvPicker.picker.selectedColor
@@ -108,7 +95,6 @@ class ThemePickerController(
 
     override fun applyHsvThemeClicks(): Observable<*> = binding.hsvPicker.apply.clicks()
 
-    override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
 
     override fun render(state: ThemePickerState) {
         binding.tabs.setRecipientId(state.recipientId)

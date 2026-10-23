@@ -9,17 +9,14 @@ import io.openmessages.common.base.QkViewModel
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.interactor.DeleteScheduledMessages
 import io.openmessages.interactor.SendScheduledMessage
-import io.openmessages.manager.BillingManager
 import io.openmessages.repository.ScheduledMessageRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
 class ScheduledViewModel @Inject constructor(
     @Named("conversationId") private val conversationId: Long?,
-    billingManager: BillingManager,
     private val context: Context,
     private val navigator: Navigator,
     private val scheduledMessageRepo: ScheduledMessageRepository,
@@ -32,8 +29,6 @@ class ScheduledViewModel @Inject constructor(
 
     init {
         loadMessages(conversationId)
-        disposables += billingManager.upgradeStatus
-            .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
     }
 
     override fun bindView(view: ScheduledView) {
@@ -159,10 +154,6 @@ class ScheduledViewModel @Inject constructor(
                 navigator.showCompose(mode = "scheduling")
                 view.clearSelection()
             }
-
-        view.upgradeIntent
-            .autoDisposable(view.scope())
-            .subscribe { navigator.showQksmsPlusActivity("schedule_fab") }
     }
 
     private fun loadMessages(conversationId: Long?) {

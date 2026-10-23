@@ -34,8 +34,6 @@ import io.openmessages.feature.main.MainActivityModule
 import io.openmessages.feature.messageutils.MessageUtilsActivity
 import io.openmessages.feature.notificationprefs.NotificationPrefsActivity
 import io.openmessages.feature.notificationprefs.NotificationPrefsActivityModule
-import io.openmessages.feature.plus.PlusActivity
-import io.openmessages.feature.plus.PlusActivityModule
 import io.openmessages.feature.qkreply.QkReplyActivity
 import io.openmessages.feature.qkreply.QkReplyActivityModule
 import io.openmessages.feature.scheduled.ScheduledActivity
@@ -52,10 +50,6 @@ abstract class ActivityBuilderModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = [MainActivityModule::class])
     abstract fun bindMainActivity(): MainActivity
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [PlusActivityModule::class])
-    abstract fun bindPlusActivity(): PlusActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [])

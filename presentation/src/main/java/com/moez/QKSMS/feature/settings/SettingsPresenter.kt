@@ -29,7 +29,6 @@ import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.interactor.SyncMessages
-import io.openmessages.manager.BillingManager
 import io.openmessages.repository.SyncRepository
 import io.openmessages.util.NightModeManager
 import io.openmessages.util.Preferences
@@ -43,7 +42,6 @@ class SettingsPresenter @Inject constructor(
     colors: Colors,
     syncRepo: SyncRepository,
     private val context: Context,
-    private val billingManager: BillingManager,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
@@ -286,19 +284,8 @@ class SettingsPresenter @Inject constructor(
                 }
 
         view.nightModeSelected()
-                .withLatestFrom(billingManager.upgradeStatus) { mode, _ ->
-//                    if (!upgraded && mode == Preferences.NIGHT_MODE_AUTO) {
-//                        view.showQksmsPlusSnackbar()
-//                    } else {
-                        nightModeManager.updateNightMode(mode)
-//                    }
-                }
                 .autoDisposable(view.scope())
-                .subscribe()
-
-        view.viewQksmsPlusClicks()
-                .autoDisposable(view.scope())
-                .subscribe { navigator.showQksmsPlusActivity("settings_night") }
+                .subscribe { mode -> nightModeManager.updateNightMode(mode) }
 
         view.nightStartSelected()
                 .autoDisposable(view.scope())
@@ -313,15 +300,8 @@ class SettingsPresenter @Inject constructor(
                 .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
-                .withLatestFrom(billingManager.upgradeStatus) { duration, _ ->
-//                    if (!upgraded && duration != 0) {
-//                        view.showQksmsPlusSnackbar()
-//                    } else {
-                        prefs.sendDelay.set(duration)
-//                    }
-                }
                 .autoDisposable(view.scope())
-                .subscribe()
+                .subscribe(prefs.sendDelay::set)
 
         view.headerQuickActionSelected()
                 .autoDisposable(view.scope())

@@ -33,7 +33,5 @@ data class BackupState(
 
     val backupLocation: String = "",
     val autoBackupFrequency: Int = 0,
-    val zipEnabled: Boolean = false,
-
-    val upgraded: Boolean = true
+    val zipEnabled: Boolean = false
 )

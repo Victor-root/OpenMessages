@@ -59,7 +59,6 @@ import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.openmessages.common.QkMediaPlayer
@@ -193,7 +192,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val changeSimIntent by lazy { binding.sim.clicks() }
     override val scheduleCancelIntent by lazy { binding.scheduledCancel.clicks() }
     override val sendIntent by lazy {  Observable.merge(binding.send.clicks(), binding.scheduledSend.clicks()) }
-    override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
     override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
     override val confirmDeleteConversationIntent: Subject<Long> = PublishSubject.create()
@@ -842,14 +840,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             ?.indexOfLast { message -> message.id == id }
             ?.takeIf { position -> position != -1 }
             ?.let(binding.messageList::scrollToPosition)
-    }
-
-    override fun showQksmsPlusSnackbar(message: Int) {
-        Snackbar.make(binding.contentView, message, Snackbar.LENGTH_LONG).run {
-            setAction(R.string.button_more) { viewQksmsPlusIntent.onNext(Unit) }
-            setActionTextColor(colors.theme().theme)
-            show()
-        }
     }
 
     private fun buildDialog(spec: ComposeDialog): Dialog = when (spec) {

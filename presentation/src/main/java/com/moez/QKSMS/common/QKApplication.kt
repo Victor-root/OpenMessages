@@ -39,8 +39,6 @@ import io.openmessages.common.util.FileLoggingTree
 import io.openmessages.injection.AppComponentManager
 import io.openmessages.injection.appComponent
 import io.openmessages.interactor.SpeakThreads
-import io.openmessages.manager.BillingManager
-import io.openmessages.manager.ReferralManager
 import io.openmessages.migration.QkMigration
 import io.openmessages.migration.QkRealmMigration
 import io.openmessages.util.NightModeManager
@@ -49,10 +47,6 @@ import io.openmessages.worker.AutoBackupWorker
 import io.openmessages.worker.HousekeepingWorker
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -64,7 +58,6 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Suppress("unused")
     @Inject lateinit var qkMigration: QkMigration
 
-    @Inject lateinit var billingManager: BillingManager
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
@@ -72,7 +65,6 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var nightModeManager: NightModeManager
     @Inject lateinit var prefs: Preferences
     @Inject lateinit var realmMigration: QkRealmMigration
-    @Inject lateinit var referralManager: ReferralManager
     @Inject lateinit var workerFactory: WorkerFactory
 
     override fun onCreate() {
@@ -92,13 +84,6 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
                 .build())
 
         qkMigration.performMigration()
-
-        @OptIn(DelicateCoroutinesApi::class)
-        GlobalScope.launch(Dispatchers.IO) {
-            referralManager.trackReferrer()
-            billingManager.checkForPurchases()
-            billingManager.queryProducts()
-        }
 
         nightModeManager.updateCurrentTheme()
 

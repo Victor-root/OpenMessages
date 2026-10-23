@@ -68,7 +68,6 @@ import io.openmessages.common.util.extensions.autoScrollToStart
 import io.openmessages.common.util.extensions.dismissKeyboard
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.scrapViews
-import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.util.extensions.themeButtons
@@ -97,7 +96,6 @@ class MainActivity : QkThemedActivity(), MainView {
     @Inject lateinit var disposables: CompositeDisposable
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
-    @Inject lateinit var drawerBadgesExperiment: DrawerBadgesExperiment
     @Inject lateinit var searchAdapter: SearchAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -135,12 +133,10 @@ class MainActivity : QkThemedActivity(), MainView {
                 binding.drawer.templates.clicks().map { NavItem.TEMPLATES },
                 binding.drawer.settings.clicks().map { NavItem.SETTINGS },
                 binding.drawer.about.clicks().map { NavItem.ABOUT },
-//                plus.clicks().map { NavItem.PLUS },
 //                help.clicks().map { NavItem.HELP },
                 binding.drawer.invite.clicks().map { NavItem.INVITE }))
     }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
-//    override val plusBannerIntent by lazy { plusBanner.clicks() }
     override val dismissRatingIntent by lazy { binding.drawer.rateDismiss.clicks() }
     override val rateIntent by lazy { binding.drawer.rateOkay.clicks() }
     override val conversationsSelectedIntent by lazy { conversationsAdapter.selectionChanges }
@@ -302,13 +298,8 @@ class MainActivity : QkThemedActivity(), MainView {
                     }
 
                     // Progress bar and misc drawer views
-                    listOf(binding.drawer.plusBadge1, binding.drawer.plusBadge2).forEach { badge ->
-                        badge.setBackgroundTint(theme.theme)
-                        badge.setTextColor(theme.textPrimary)
-                    }
                     syncingBinding.syncingProgress.progressTintList = ColorStateList.valueOf(theme.theme)
                     syncingBinding.syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
-                    binding.drawer.plusIcon.setTint(theme.theme)
                     binding.drawer.rateIcon.setTint(theme.theme)
 
                     // Compose FAB — brand gradient (rounded rect) for the default color, solid otherwise
@@ -481,11 +472,6 @@ class MainActivity : QkThemedActivity(), MainView {
             findItem(R.id.rename)?.isVisible = selectedConversations == 1
         }
 
-        listOf(binding.drawer.plusBadge1, binding.drawer.plusBadge2).forEach { badge ->
-            badge.isVisible = drawerBadgesExperiment.variant && !state.upgraded
-        }
-//        plus.isVisible = state.upgraded
-        binding.drawer.plusBanner.isVisible = !state.upgraded
         // rate dialog permanently hidden
 
         binding.compose.setVisible(state.page is Inbox || state.page is Archived)
