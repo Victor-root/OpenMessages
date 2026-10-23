@@ -23,6 +23,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.core.net.toFile
 import io.openmessages.extensions.contactToVCard
+import io.openmessages.extensions.getDuration
 import io.openmessages.extensions.getName
 import io.openmessages.extensions.getResourceBytes
 import io.openmessages.extensions.getSize
@@ -59,6 +60,8 @@ class Attachment (
     fun getName(context: Context): String = uri.getName(context) ?: "unknown"
 
     fun getSize(context: Context): Long = uri.getSize(context)
+
+    fun getDuration(context: Context): Long? = uri.getDuration(context)
 
     fun hasDisplayableImage(context: Context): Boolean {
         val mimeType = getType(context)

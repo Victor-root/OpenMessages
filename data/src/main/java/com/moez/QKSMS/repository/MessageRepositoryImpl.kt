@@ -380,6 +380,23 @@ open class MessageRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getMaxVideoDuration(subId: Int): Long {
+        return VideoUtils.maxDuration(getMmsBudget(SmsManagerFactory.createSmsManager(context, subId)).toLong())
+    }
+
+    /**
+     * What an MMS sent through [smsManager] may weigh
+     */
+    private fun getMmsBudget(smsManager: SmsManager): Double {
+        return when (prefs.mmsSize.get()) {
+            -1 -> smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
+                .takeIf { it > 0 }
+                ?: (300 * 1024) // what Android settles on when a carrier states no maximum
+            0 -> Int.MAX_VALUE
+            else -> prefs.mmsSize.get() * 1024
+        } * 0.9 // Ugly, but buys us a bit of wiggle room
+    }
+
     override fun sendNewMessages(
         subId: Int, threadId: Long, toAddresses: Collection<String>, body: String,
         attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int
@@ -408,13 +425,7 @@ open class MessageRepositoryImpl @Inject constructor(
                 .takeIf { prefs.mmsSize.get() == -1 && it > 0 }
                 ?: Int.MAX_VALUE
 
-            var remainingBytes = when (prefs.mmsSize.get()) {
-                -1 -> smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
-                    .takeIf { it > 0 }
-                    ?: (300 * 1024) // what Android settles on when a carrier states no maximum
-                0 -> Int.MAX_VALUE
-                else -> prefs.mmsSize.get() * 1024
-            } * 0.9 // Ugly, but buys us a bit of wiggle room
+            var remainingBytes = getMmsBudget(smsManager)
 
             remainingBytes -= body.takeIf { it.isNotEmpty() }?.toByteArray()?.size ?: 0
 

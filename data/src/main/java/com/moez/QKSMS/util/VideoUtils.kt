@@ -57,6 +57,15 @@ object VideoUtils {
 
     private const val TIMEOUT_MINUTES = 3L
 
+    /** What the MP4 container takes for itself */
+    private const val CONTAINER_SHARE = 0.9
+
+    /**
+     * The longest video, in milliseconds, that still fits in [maxBytes] at a watchable quality
+     */
+    fun maxDuration(maxBytes: Long): Long =
+        (maxBytes * 8 * 1000 * CONTAINER_SHARE / (MIN_VIDEO_BITRATE + AUDIO_BITRATE)).toLong()
+
     /**
      * The video re-encoded as H.264 and AAC in MP4, weighing no more than [maxBytes], or null when
      * it can't: unreadable, or too long to fit at a quality still worth watching
@@ -81,16 +90,18 @@ object VideoUtils {
             retriever.release()
         }
 
+        if (durationMs > maxDuration(maxBytes)) {
+            Timber.w("A ${durationMs / 1000}s video can't fit in ${maxBytes / 1024}Kb")
+            return null
+        }
+
         // What the file may carry each second, less a share for what the MP4 container adds
-        var totalBitrate = (maxBytes * 8 * 1000 / durationMs * 0.9).toInt()
+        var totalBitrate = (maxBytes * 8 * 1000 / durationMs * CONTAINER_SHARE).toInt()
         val output = File(context.cacheDir, "video-${UUID.randomUUID()}.mp4")
         try {
             repeat(MAX_ATTEMPTS) { attempt ->
                 val videoBitrate = totalBitrate - AUDIO_BITRATE
-                if (videoBitrate < MIN_VIDEO_BITRATE) {
-                    Timber.w("A ${durationMs / 1000}s video can't fit in ${maxBytes / 1024}Kb")
-                    return null
-                }
+                if (videoBitrate < MIN_VIDEO_BITRATE) return null
 
                 val shortSide = minOf(shortSideFor(videoBitrate), sourceShortSide)
                 if (!transcode(context, uri, output, videoBitrate, shortSide)) return null

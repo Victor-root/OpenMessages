@@ -180,6 +180,11 @@
     <string name="compose_attach_templates">Modèles</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) sélectionnée</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Cette vidéo est trop longue pour un MMS. Elle peut durer jusqu\'à %d seconde.</item>
+        <item quantity="many">Cette vidéo est trop longue pour un MMS. Elle peut durer jusqu\'à %d secondes.</item>
+        <item quantity="other">Cette vidéo est trop longue pour un MMS. Elle peut durer jusqu\'à %d secondes.</item>
+    </plurals>
     <string name="compose_sim_cd">%s sélectionné, changer la carte SIM</string>
     <string name="compose_send_cd">Envoyer un message</string>
     <string name="compose_record_audio_msg_cd">Enregistrer un message audio</string>

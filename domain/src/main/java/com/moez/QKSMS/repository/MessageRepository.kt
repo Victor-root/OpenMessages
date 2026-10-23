@@ -101,6 +101,12 @@ interface MessageRepository {
 
     fun sendMessage(message: Message): Collection<Message>
 
+    /**
+     * The longest video, in milliseconds, that can still be brought down to the size an MMS on
+     * this SIM may weigh
+     */
+    fun getMaxVideoDuration(subId: Int): Long
+
     fun sendMessage(messageId: Long): Collection<Message>
 
     fun cancelDelayedSmsAlarm(messageId: Long)

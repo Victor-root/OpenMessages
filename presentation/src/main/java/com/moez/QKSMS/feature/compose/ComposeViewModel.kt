@@ -196,8 +196,13 @@ class ComposeViewModel @Inject constructor(
         if (sharedSendAsGroup != null)
             newState { copy(sendAsGroup = sharedSendAsGroup) }
 
-        // set shared attachments into state
-        newState { copy(attachments = sharedAttachments) }
+        // set shared attachments into state, once the videos among them are known to fit
+        disposables += Observable.fromIterable(sharedAttachments)
+            .subscribeOn(Schedulers.io())
+            .filter { attachment -> fitsInMms(attachment, -1) }
+            .toList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { kept -> newState { copy(attachments = kept + attachments) } }
 
         val initialConversation = threadId.takeIf { it != 0L }
             ?.let(conversationRepo::observeConversation)
@@ -951,10 +956,15 @@ class ComposeViewModel @Inject constructor(
 
         // an attachment was picked by the user
         Observable.merge(view.attachAnyFileSelectedIntent, view.inputContentIntent)
-            .map { uri -> Attachment(context, uri) }
+            .observeOn(Schedulers.io())
+            .withLatestFrom(state) { uri, state ->
+                Attachment(context, uri) to (state.subscription?.subscriptionId ?: -1)
+            }
+            .filter { (attachment, subId) -> fitsInMms(attachment, subId) }
+            .observeOn(AndroidSchedulers.mainThread())
             .autoDispose(view.scope())
-            .subscribe {
-                newState { copy(attachments = attachments + it, attaching = false) }
+            .subscribe { (attachment) ->
+                newState { copy(attachments = attachments + attachment, attaching = false) }
             }
 
         // Set the scheduled time
@@ -1410,6 +1420,22 @@ class ComposeViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         sentSoundPool.release()
+    }
+
+    /**
+     * Whether [attachment] can go in an MMS on [subId]: anything but a video too long to be brought
+     * down to size, which is turned away with the longest one that would fit
+     */
+    private fun fitsInMms(attachment: Attachment, subId: Int): Boolean {
+        if (!attachment.isVideo(context)) return true
+
+        val maxDuration = messageRepo.getMaxVideoDuration(subId)
+        if ((attachment.getDuration(context) ?: 0) <= maxDuration) return true
+
+        val seconds = (maxDuration / 1000).toInt()
+        val message = context.resources.getQuantityString(R.plurals.compose_video_too_long, seconds, seconds)
+        AndroidSchedulers.mainThread().scheduleDirect { context.makeToast(message, Toast.LENGTH_LONG) }
+        return false
     }
 
     /**
