@@ -27,8 +27,8 @@ import android.text.TextUtils;
 import com.android.mms.MmsConfig;
 import timber.log.Timber;
 
-import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.GenericPdu;
+import com.google.android.mms.pdu_alt.MmsException;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;

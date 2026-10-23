@@ -36,9 +36,6 @@ import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 
 import com.android.mms.service_alt.SubscriptionIdChecker;
-import com.google.android.mms.ContentType;
-import com.google.android.mms.InvalidHeaderValueException;
-import com.google.android.mms.MmsException;
 import com.google.android.mms.util_alt.PduCache;
 import com.google.android.mms.util_alt.PduCacheEntry;
 import com.google.android.mms.util_alt.SqliteWrapper;

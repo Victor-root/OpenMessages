@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package com.google.android.mms;
+package com.google.android.mms.pdu_alt;
 
 import java.util.ArrayList;
 

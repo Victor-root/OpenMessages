@@ -17,8 +17,6 @@
 package com.google.android.mms.pdu_alt;
 
 import com.android.mms.util.ExternalLogger;
-import com.google.android.mms.ContentType;
-import com.google.android.mms.InvalidHeaderValueException;
 
 import android.util.Log;
 
