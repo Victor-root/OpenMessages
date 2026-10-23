@@ -43,7 +43,7 @@ class ActionDelayedMessage @Inject constructor(
             // cancel the timer before doing anything else
             messageRepo.cancelDelayedSmsAlarm(params.messageId)
 
-            messageRepo.getUnmanagedMessage(params.messageId)?.let { message ->
+            messageRepo.getMessage(params.messageId)?.let { message ->
                 when (params.action) {
                     Action.Cancel -> {
                         messageRepo.deleteMessages(listOf(message.id))

@@ -19,7 +19,6 @@
 package io.openmessages.common.base
 
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.common.util.extensions.setVisible
@@ -38,11 +37,18 @@ abstract class QkAdapter<T, VHT : RecyclerView.ViewHolder> : RecyclerView.Adapte
 
             val diff = DiffUtil.calculateDiff(getDiffUtilCallback(field, value))
             field = value
+            loaded = true
             diff.dispatchUpdatesTo(this)
             onDatasetChanged()
 
             emptyView?.setVisible(value.isEmpty())
         }
+
+    /**
+     * Whether a list has been handed to [data] yet. Until one has, the list is not known to be
+     * empty, only not loaded, and the [emptyView] stays hidden.
+     */
+    private var loaded = false
 
     /**
      * This view can be set, and the adapter will automatically control the visibility of this view
@@ -51,10 +57,10 @@ abstract class QkAdapter<T, VHT : RecyclerView.ViewHolder> : RecyclerView.Adapte
     var emptyView: View? = null
         set(value) {
             field = value
-            field?.isVisible = data.isEmpty()
+            field?.setVisible(loaded && data.isEmpty())
         }
 
-    private val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
+    val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
 
     private val selection = mutableListOf<Long>()
 
@@ -83,6 +89,22 @@ abstract class QkAdapter<T, VHT : RecyclerView.ViewHolder> : RecyclerView.Adapte
     fun clearSelection() {
         selection.clear()
         selectionChanges.onNext(selection)
+        notifyDataSetChanged()
+    }
+
+    fun toggleSelectAll() {
+        val needToSelectAll = (selection.size != itemCount)
+
+        selection.clear()
+
+        if (needToSelectAll) {
+            for (position in 0 until itemCount)
+                selection += getItemId(position)
+        }
+
+        // fire a single change event now
+        selectionChanges.onNext(selection)
+
         notifyDataSetChanged()
     }
 

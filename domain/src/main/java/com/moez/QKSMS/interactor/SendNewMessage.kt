@@ -24,7 +24,6 @@ import io.openmessages.model.Attachment
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.openmessages.domain.BuildConfig
 import timber.log.Timber
 import javax.inject.Inject
@@ -100,7 +99,6 @@ class SendNewMessage @Inject constructor(
             // delete attachment local files, if any, because they're saved to mms db by now
             params.attachments.forEach { it.removeCacheFile() }
         }
-        .observeOn(AndroidSchedulers.mainThread())
         .flatMap { updateBadge.buildObservable(Unit) } // Update the widget
 
 }

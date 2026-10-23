@@ -19,8 +19,7 @@
 package io.openmessages.feature.blocking.numbers
 
 import io.openmessages.model.BlockedNumber
-import io.realm.RealmResults
 
 data class BlockedNumbersState(
-    val numbers: RealmResults<BlockedNumber>? = null
+    val numbers: List<BlockedNumber>? = null
 )

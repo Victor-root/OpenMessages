@@ -19,7 +19,7 @@
 package io.openmessages.repository
 
 import io.openmessages.model.AllowedNumber
-import io.realm.RealmResults
+import io.reactivex.Observable
 
 /**
  * Stores addresses that the user has explicitly approved (an allowlist).
@@ -32,7 +32,7 @@ interface AllowlistRepository {
 
     fun allowNumber(vararg addresses: String)
 
-    fun getAllowedNumbers(): RealmResults<AllowedNumber>
+    fun getAllowedNumbers(): Observable<List<AllowedNumber>>
 
     fun getAllowedNumber(id: Long): AllowedNumber?
 

@@ -39,8 +39,7 @@ abstract class QkPresenter<View : QkViewContract<State>, State : Any>(initialSta
     private val stateReducer: Subject<State.() -> State> = PublishSubject.create<State.() -> State>().toSerialized()
 
     init {
-        // If we accidentally push a realm object into the state on the wrong thread, switching
-        // to mainThread right here should immediately alert us of the issue
+        // Views render on the main thread, so the state is reduced there too
         disposables += stateReducer
                 .observeOn(AndroidSchedulers.mainThread())
                 .scan(initialState) { state, reducer -> reducer(state) }

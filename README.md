@@ -87,18 +87,6 @@ theming and privacy improvements layered on top. The highlights:
 
 ---
 
-## 🗺️ Roadmap
-
-* **Migrate the local database from Realm to Room.** Realm Java, which this app still runs on, was
-  deprecated by MongoDB in September 2024 and no longer receives fixes; a 16 KB
-  device page-size crash already had to be worked around for that reason. Room is Google's actively
-  maintained equivalent, ships in every modern Android app (including on F-Droid), needs no Google
-  account or Play Services to run, and removes this dependency risk for good. This isn't urgent (the
-  current setup works and has no known issue left open), but it's the direction this project is
-  headed: a sizeable, dedicated migration, not something to rush.
-
----
-
 ## 🎯 OpenMessages will simply be a place where I can
 
 * 🔧 implement changes upstream does not want

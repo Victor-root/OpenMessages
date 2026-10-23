@@ -18,13 +18,17 @@
  */
 package io.openmessages.model
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
-open class PhoneNumber(
+@Entity(tableName = "phone_number", indices = [Index("contactLookupKey")])
+data class PhoneNumber(
     @PrimaryKey var id: Long = 0,
     var accountType: String? = "",
     var address: String = "",
     var type: String = "",
-    var isDefault: Boolean = false
-) : RealmObject()
+    var isDefault: Boolean = false,
+    /** The [Contact.lookupKey] of the contact this number belongs to */
+    var contactLookupKey: String = ""
+)

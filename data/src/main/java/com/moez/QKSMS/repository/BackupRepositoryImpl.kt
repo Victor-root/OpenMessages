@@ -38,23 +38,20 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import io.openmessages.common.util.extensions.now
 import io.openmessages.compat.TelephonyCompat
+import io.openmessages.database.AppDatabase
+import io.openmessages.database.ConversationWithRelations
+import io.openmessages.database.MessageWithRelations
 import io.openmessages.manager.AlarmManager
-import io.openmessages.model.AllowedNumber
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
 import io.openmessages.model.BackupItem
-import io.openmessages.model.BlockedNumber
-import io.openmessages.model.Conversation
 import io.openmessages.model.Message
-import io.openmessages.model.MessageContentFilter
 import io.openmessages.model.MessageContentFilterData
 import io.openmessages.model.MmsPart
-import io.openmessages.model.ScheduledMessage
 import io.openmessages.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import io.realm.Realm
 import okio.buffer
 import okio.source
 import timber.log.Timber
@@ -76,6 +73,7 @@ import kotlin.concurrent.schedule
 @Singleton
 class BackupRepositoryImpl @Inject constructor(
     private val context: Context,
+    private val db: AppDatabase,
     private val moshi: Moshi,
     private val prefs: Preferences,
     private val sharedPrefs: SharedPreferences,
@@ -320,17 +318,21 @@ class BackupRepositoryImpl @Inject constructor(
             val counts = linkedMapOf<String, Int>()
 
             if (BackupCategory.MESSAGES in categories) {
-                val backup = Realm.getDefaultInstance().use { realm ->
-                    val smsMessages = realm.where(Message::class.java)
-                            .equalTo("type", Message.TYPE_SMS)
-                            .sort("date")
-                            .findAll()
-                            .createSnapshot()
-                    val mmsMessages = realm.where(Message::class.java)
-                            .equalTo("type", Message.TYPE_MMS)
-                            .sort("date")
-                            .findAll()
-                            .createSnapshot()
+                val backup = run {
+                    val messageDao = db.messageDao()
+                    val smsMessages = messageDao.getAllOfType(Message.TYPE_SMS).map(MessageWithRelations::toModel)
+                    val mmsMessages = messageDao.getAllOfType(Message.TYPE_MMS).map(MessageWithRelations::toModel)
+
+                    // The addresses of each conversation, read once however many of its messages need them
+                    val recipientsByThread = HashMap<Long, List<String>>()
+                    val recipientsOf = { threadId: Long ->
+                        recipientsByThread.getOrPut(threadId) {
+                            db.conversationDao().get(threadId)?.toModel()
+                                    ?.recipients
+                                    ?.mapNotNull { recipient -> recipient.address.takeIf { it.isNotBlank() } }
+                                    ?: emptyList()
+                        }
+                    }
 
                     val total = smsMessages.size + mmsMessages.size
                     val sms = smsMessages.mapIndexed { index, message ->
@@ -339,7 +341,7 @@ class BackupRepositoryImpl @Inject constructor(
                     }
                     val mms = mmsMessages.mapIndexed { index, message ->
                         backupProgress.onNext(BackupRepository.Progress.Running(total, smsMessages.size + index))
-                        messageToBackupMms(message, realm, destination)
+                        messageToBackupMms(message, recipientsOf(message.threadId), destination)
                     }
                     Backup(sms.size, sms, mms.size, mms)
                 }
@@ -357,14 +359,12 @@ class BackupRepositoryImpl @Inject constructor(
             }
 
             if (BackupCategory.BLOCKING in categories) {
-                val blocking = Realm.getDefaultInstance().use { realm ->
-                    BlockingBackup(
-                            blockedNumbers = realm.where(BlockedNumber::class.java).findAll().map { it.address },
-                            allowedNumbers = realm.where(AllowedNumber::class.java).findAll().map { it.address },
-                            contentFilters = realm.where(MessageContentFilter::class.java).findAll().map { filter ->
-                                ContentFilterBackup(filter.value, filter.caseSensitive, filter.isRegex, filter.includeContacts)
-                            })
-                }
+                val blocking = BlockingBackup(
+                        blockedNumbers = db.blockedNumberDao().getAll().map { it.address },
+                        allowedNumbers = db.allowedNumberDao().getAll().map { it.address },
+                        contentFilters = db.messageContentFilterDao().getAll().map { filter ->
+                            ContentFilterBackup(filter.value, filter.caseSensitive, filter.isRegex, filter.includeContacts)
+                        })
                 val bytes = moshi.adapter(BlockingBackup::class.java).indent("\t").toJson(blocking).toByteArray()
                 payloads[BackupCategory.BLOCKING] = "blocking.json" to bytes
                 counts[BackupCategory.BLOCKING.name] =
@@ -372,18 +372,17 @@ class BackupRepositoryImpl @Inject constructor(
             }
 
             if (BackupCategory.CONVERSATIONS in categories) {
-                val conversations = Realm.getDefaultInstance().use { realm ->
-                    realm.where(Conversation::class.java).findAll()
-                            .filter { it.archived || it.pinned || it.blocked || it.flagged || it.name.isNotBlank() }
-                            .mapNotNull { conversation ->
-                                val addresses = conversation.recipients
-                                        .mapNotNull { recipient -> recipient.address.takeIf { addr -> addr.isNotBlank() } }
-                                if (addresses.isEmpty()) null
-                                else ConversationBackup(addresses, conversation.archived, conversation.pinned,
-                                        conversation.blocked, conversation.name, conversation.blockingClient,
-                                        conversation.blockReason, conversation.flagged, conversation.flagReason)
-                            }
-                }
+                val conversations = db.conversationDao().getAll()
+                        .map(ConversationWithRelations::toModel)
+                        .filter { it.archived || it.pinned || it.blocked || it.flagged || it.name.isNotBlank() }
+                        .mapNotNull { conversation ->
+                            val addresses = conversation.recipients
+                                    .mapNotNull { recipient -> recipient.address.takeIf { addr -> addr.isNotBlank() } }
+                            if (addresses.isEmpty()) null
+                            else ConversationBackup(addresses, conversation.archived, conversation.pinned,
+                                    conversation.blocked, conversation.name, conversation.blockingClient,
+                                    conversation.blockReason, conversation.flagged, conversation.flagReason)
+                        }
                 val bytes = moshi.adapter(ConversationsBackup::class.java).indent("\t")
                         .toJson(ConversationsBackup(conversations)).toByteArray()
                 payloads[BackupCategory.CONVERSATIONS] = "conversations.json" to bytes
@@ -391,11 +390,9 @@ class BackupRepositoryImpl @Inject constructor(
             }
 
             if (BackupCategory.SCHEDULED in categories) {
-                val scheduled = Realm.getDefaultInstance().use { realm ->
-                    realm.where(ScheduledMessage::class.java).findAll().map { message ->
-                        ScheduledMessageBackup(message.date, message.subId, message.recipients.toList(),
-                                message.sendAsGroup, message.body, message.attachments.toList())
-                    }
+                val scheduled = db.scheduledMessageDao().getAll().map { message ->
+                    ScheduledMessageBackup(message.date, message.subId, message.recipients,
+                            message.sendAsGroup, message.body, message.attachments)
                 }
                 val bytes = moshi.adapter(ScheduledBackup::class.java).indent("\t")
                         .toJson(ScheduledBackup(scheduled)).toByteArray()
@@ -650,14 +647,11 @@ class BackupRepositoryImpl @Inject constructor(
      * their own file under the attachments/ sub-folder and referenced by name; text and SMIL parts keep
      * their text inline.
      */
-    private fun messageToBackupMms(message: Message, realm: Realm, destination: BackupDestination): BackupMmsMessage {
-        val recipients = realm.where(Conversation::class.java)
-                .equalTo("id", message.threadId)
-                .findFirst()
-                ?.recipients
-                ?.mapNotNull { recipient -> recipient.address.takeIf { it.isNotBlank() } }
-                ?: emptyList()
-
+    private fun messageToBackupMms(
+        message: Message,
+        recipients: List<String>,
+        destination: BackupDestination
+    ): BackupMmsMessage {
         val parts = message.parts.map { part ->
             // Only these live in the provider's TEXT column; everything else (images, audio recordings,
             // video, vCards, PDFs, ...) is a binary file, matching how the platform's PduPersister
@@ -1154,9 +1148,9 @@ class BackupRepositoryImpl @Inject constructor(
             Timber.i("Skipped %d/%d messages already on the device", skippedCount, total)
         }
 
-        // Sync the messages, then wait for it to finish. syncMessages() does its Realm work on a
+        // Sync the messages, then wait for it to finish. syncMessages() does its database work on a
         // background thread, so without this wait the conversation-overlay restore that follows would
-        // race an empty Realm (and the restore would report "finished" while the import is still going).
+        // race an empty database (and the restore would report "finished" while the import is still going).
         restoreProgress.onNext(BackupRepository.Progress.Syncing())
         syncRepo.syncMessages()
         awaitSyncCompletion()

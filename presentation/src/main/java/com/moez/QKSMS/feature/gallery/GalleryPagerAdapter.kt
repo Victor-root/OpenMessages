@@ -28,7 +28,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import com.google.android.mms.ContentType
 import io.openmessages.R
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkViewHolder
 import io.openmessages.databinding.GalleryImagePageBinding
 import io.openmessages.databinding.GalleryVideoPageBinding
@@ -41,7 +41,7 @@ import io.reactivex.subjects.Subject
 import java.util.*
 import javax.inject.Inject
 
-class GalleryPagerAdapter @Inject constructor(private val context: Context) : QkRealmAdapter<MmsPart, QkViewHolder>() {
+class GalleryPagerAdapter @Inject constructor(private val context: Context) : QkAdapter<MmsPart, QkViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_INVALID = 0
@@ -89,7 +89,7 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val part = getItem(position) ?: return
+        val part = getItem(position)
         when (getItemViewType(position)) {
             VIEW_TYPE_IMAGE -> {
                 val binding = GalleryImagePageBinding.bind(holder.itemView)
@@ -122,8 +122,8 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
     override fun getItemViewType(position: Int): Int {
         val part = getItem(position)
         return when {
-            part?.isImage() == true -> VIEW_TYPE_IMAGE
-            part?.isVideo() == true -> VIEW_TYPE_VIDEO
+            part.isImage() -> VIEW_TYPE_IMAGE
+            part.isVideo() -> VIEW_TYPE_VIDEO
             else -> VIEW_TYPE_INVALID
         }
     }

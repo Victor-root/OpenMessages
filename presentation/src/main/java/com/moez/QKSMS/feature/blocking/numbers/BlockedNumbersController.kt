@@ -72,7 +72,7 @@ class BlockedNumbersController : QkController<BlockedNumbersControllerBinding, B
     }
 
     override fun render(state: BlockedNumbersState) {
-        adapter.updateData(state.numbers)
+        state.numbers?.let { adapter.data = it }
     }
 
     override fun unblockAddress(): Observable<Long> = adapter.unblockAddress

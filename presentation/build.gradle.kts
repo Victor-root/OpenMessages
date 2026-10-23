@@ -20,7 +20,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("realm-android") // Realm needs to be before Kotlin or the build will fail
     id("kotlin-android")
     id("kotlin-kapt")
 }
@@ -167,11 +166,6 @@ dependencies {
         exclude(group = "org.freemarker", module = "freemarker")
         exclude(group = "com.fasterxml.jackson.core", module = "jackson-core")
     }
-
-    // realm
-    implementation(libs.realm.adapters)
-    kapt(libs.realm.annotations)
-    kapt(libs.realm.annotations.processor)
 
     // rxjava
     implementation(libs.rxandroid)

@@ -26,6 +26,7 @@ import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.interactor.DeleteConversations
 import io.openmessages.repository.ConversationRepository
+import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 class BlockedMessagesPresenter @Inject constructor(
@@ -33,9 +34,12 @@ class BlockedMessagesPresenter @Inject constructor(
     private val blockingClient: BlockingClient,
     private val deleteConversations: DeleteConversations,
     private val navigator: Navigator
-) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState(
-        data = conversationRepo.getBlockedConversationsAsync()
-)) {
+) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState()) {
+
+    init {
+        disposables += conversationRepo.observeBlockedConversations()
+                .subscribe { conversations -> newState { copy(data = conversations) } }
+    }
 
     override fun bindIntents(view: BlockedMessagesView) {
         super.bindIntents(view)

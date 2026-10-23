@@ -18,10 +18,8 @@
  */
 package io.openmessages.repository
 
-import io.openmessages.model.Recipient
 import io.openmessages.model.ScheduledMessage
-import io.realm.RealmList
-import io.realm.RealmResults
+import io.reactivex.Observable
 
 interface ScheduledMessageRepository {
 
@@ -46,7 +44,12 @@ interface ScheduledMessageRepository {
     /**
      * Returns all of the scheduled messages, sorted chronologically
      */
-    fun getScheduledMessages(): RealmResults<ScheduledMessage>
+    fun getScheduledMessages(): Observable<List<ScheduledMessage>>
+
+    /**
+     * Get a list of all scheduled messages (in scheduled date order)
+     */
+    fun getScheduledMessagesSnapshot(): List<ScheduledMessage>
 
     /**
      * Returns the scheduled message with the given [id]
@@ -56,7 +59,7 @@ interface ScheduledMessageRepository {
     /**
      * Returns all scheduled messages with the given [conversationId]
      */
-    fun getScheduledMessagesForConversation(conversationId: Long): RealmResults<ScheduledMessage>
+    fun getScheduledMessagesForConversation(conversationId: Long): Observable<List<ScheduledMessage>>
 
     /**
      * Deletes the scheduled message with the given [id]

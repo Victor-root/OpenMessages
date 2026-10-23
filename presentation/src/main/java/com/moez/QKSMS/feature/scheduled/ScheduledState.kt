@@ -18,11 +18,12 @@
  */
 package io.openmessages.feature.scheduled
 
+import io.openmessages.model.Contact
 import io.openmessages.model.ScheduledMessage
-import io.realm.RealmResults
 
 data class ScheduledState(
-    val scheduledMessages: RealmResults<ScheduledMessage>? = null,
+    val scheduledMessages: List<ScheduledMessage>? = null,
+    val contacts: List<Contact> = emptyList(),
     val selectedMessages: Int = 0,
     val conversationId: Long? = null,
 )

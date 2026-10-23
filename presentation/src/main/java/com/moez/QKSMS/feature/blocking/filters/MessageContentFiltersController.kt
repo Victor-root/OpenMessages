@@ -73,7 +73,7 @@ class MessageContentFiltersController : QkController<MessageContentFiltersContro
     }
 
     override fun render(state: MessageContentFiltersState) {
-        adapter.updateData(state.filters)
+        state.filters?.let { adapter.data = it }
     }
 
     override fun removeFilter(): Observable<Long> = adapter.removeMessageContentFilter

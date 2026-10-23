@@ -20,13 +20,13 @@ package io.openmessages.repository
 
 import io.openmessages.model.MessageContentFilter
 import io.openmessages.model.MessageContentFilterData
-import io.realm.RealmResults
+import io.reactivex.Observable
 
 interface MessageContentFilterRepository {
 
     fun createFilter(data: MessageContentFilterData)
 
-    fun getMessageContentFilters(): RealmResults<MessageContentFilter>
+    fun getMessageContentFilters(): Observable<List<MessageContentFilter>>
 
     fun getMessageContentFilter(id: Long): MessageContentFilter?
 

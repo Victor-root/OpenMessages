@@ -1,16 +1,17 @@
 package io.openmessages.model
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-open class MessageContentFilter(
+@Entity(tableName = "message_content_filter")
+data class MessageContentFilter(
         @PrimaryKey var id: Long = 0,
 
         var value: String = "",
         var caseSensitive: Boolean = false,
         var isRegex: Boolean = false,
         var includeContacts: Boolean = false
-) : RealmObject()
+)
 
 data class MessageContentFilterData(
         var value: String = "",

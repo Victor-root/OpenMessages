@@ -24,7 +24,6 @@ import io.openmessages.model.Conversation
 import io.openmessages.model.Message
 import io.openmessages.model.Recipient
 import io.openmessages.model.ScheduledMessage
-import io.realm.RealmResults
 
 data class ComposeState(
     val hasError: Boolean = false,
@@ -38,9 +37,9 @@ data class ComposeState(
     val searchSelectionId: Long = -1,
     val searchSelectionPosition: Int = 0,
     val searchResults: Int = 0,
-    val messages: Pair<Conversation, RealmResults<Message>>? = null,
+    val messages: Pair<Conversation, List<Message>>? = null,
     /** Waiting for their send time, shown after [messages] since they are always in the future. */
-    val scheduledMessages: RealmResults<ScheduledMessage>? = null,
+    val scheduledMessages: List<ScheduledMessage>? = null,
     val selectedMessages: Int = 0,
     val selectedMessagesHaveText: Boolean = false,
     val scheduled: Long = 0,

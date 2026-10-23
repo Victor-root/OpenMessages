@@ -21,14 +21,21 @@ package io.openmessages.model
 import android.content.ContentResolver
 import android.net.Uri
 import android.webkit.MimeTypeMap
-import io.realm.RealmObject
-import io.realm.RealmResults
-import io.realm.annotations.Index
-import io.realm.annotations.LinkingObjects
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import java.io.File
 
-open class MmsPart : RealmObject() {
+@Entity(tableName = "mms_part", indices = [Index("messageId")])
+data class MmsPart(
+    @PrimaryKey var id: Long = 0,
+    var messageId: Long = 0,
+    var type: String = "",
+    var seq: Int = -1,
+    var name: String? = null,
+    var text: String? = null
+) {
 
     companion object {
         /**
@@ -42,15 +49,8 @@ open class MmsPart : RealmObject() {
         const val SUMMARY_AUDIO = "Audio"
     }
 
-    @PrimaryKey var id: Long = 0
-    @Index var messageId: Long = 0
-    var type: String = ""
-    var seq: Int = -1
-    var name: String? = null
-    var text: String? = null
-
-    @LinkingObjects("parts")
-    val messages: RealmResults<Message>? = null
+    /** The messages holding this part */
+    @Ignore var messages: List<Message> = emptyList()
 
     fun getUri(): Uri = Uri
         .Builder()

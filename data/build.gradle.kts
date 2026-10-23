@@ -20,6 +20,8 @@ plugins {
     id("com.android.library")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
+    id("androidx.room")
 }
 
 android {
@@ -36,6 +38,10 @@ android {
     buildFeatures {
         buildConfig = true
     }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
@@ -81,6 +87,13 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.okhttp3)
     implementation(libs.libphonenumber)
+
+    // room, and the Realm library that still reads the database Room took over from. Room is part
+    // of what this module hands out, since the app provides the database it builds.
+    api(libs.room.runtime)
+    implementation(libs.room.rxjava2)
+    ksp(libs.room.compiler)
+    implementation(libs.realm)
 
     // work manager
     implementation(libs.androidx.work.runtime.ktx)

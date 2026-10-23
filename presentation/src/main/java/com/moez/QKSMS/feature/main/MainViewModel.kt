@@ -41,18 +41,21 @@ import io.openmessages.listener.ContactAddedListener
 import io.openmessages.manager.ChangelogManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.manager.RatingManager
-import io.openmessages.model.EmojiSyncNeeded
-import io.openmessages.model.SyncLog
+import io.openmessages.model.Conversation
 import io.openmessages.repository.ConversationRepository
-import io.openmessages.repository.EmojiReactionRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.repository.ScheduledMessageRepository
 import io.openmessages.repository.SyncRepository
 import io.openmessages.util.Preferences
+import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
-import io.realm.Realm
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -82,13 +85,16 @@ class MainViewModel @Inject constructor(
     private val permissionManager: PermissionManager,
     private val prefs: Preferences,
     private val ratingManager: RatingManager,
-    private val reactions: EmojiReactionRepository,
     private val syncContacts: SyncContacts,
     private val syncMessages: SyncMessages
-) : QkViewModel<MainView, MainState>(
-    MainState(page = Inbox(data = conversationRepo.getConversations(prefs.unreadAtTop.get())))
-) {
+) : QkViewModel<MainView, MainState>(MainState()) {
     private var lastArchivedThreadIds = listOf<Long>(0)
+
+    /**
+     * Whether the conversation list shows the archived conversations rather than the inbox. Every
+     * value starts the list over, so that a page shown again is filled again.
+     */
+    private val archivedShown: Subject<Boolean> = BehaviorSubject.createDefault(false)
 
     init {
         disposables += deleteConversations
@@ -109,9 +115,25 @@ class MainViewModel @Inject constructor(
         disposables += ratingManager.shouldShowRating
                 .subscribe { show -> newState { copy(showRating = show) } }
 
+        // Fill the inbox or the archive, whichever is shown, and keep it up to date
+        disposables += Observables
+            .combineLatest(archivedShown, prefs.unreadAtTop.asObservable().distinctUntilChanged())
+            .switchMap { (archived, unreadAtTop) ->
+                conversationRepo.getConversations(unreadAtTop, archived)
+                    .map { conversations -> archived to conversations }
+            }
+            .subscribe { (archived, conversations) ->
+                newState {
+                    when {
+                        !archived && page is Inbox -> copy(page = page.copy(data = conversations))
+                        archived && page is Archived -> copy(page = page.copy(data = conversations))
+                        else -> this
+                    }
+                }
+            }
+
         // Fetch scheduled messages and assign it to hasScheduledMessage
         disposables += scheduledMessageRepo.getScheduledMessages()
-            .asFlowable()
             .map { messages ->
                 messages.map { it.conversationId }.toSet()
             }
@@ -123,21 +145,20 @@ class MainViewModel @Inject constructor(
         migratePreferences.execute(Unit)
 
 
-        // If we have all permissions and we've never run a sync, run a sync. This will be the case
-        // when upgrading from 2.7.3, or if the app's data was cleared
-        val lastSync = Realm.getDefaultInstance().use { realm -> realm.where(SyncLog::class.java)?.max("date") ?: 0 }
-        if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasReadSms() && permissionManager.hasContacts()) {
-            syncMessages.execute(Unit)
-        }
+        disposables += Completable
+            .fromAction {
+                // If we have all permissions and we've never run a sync, run a sync. This will be
+                // the case when upgrading from 2.7.3, or if the app's data was cleared
+                if (!syncRepository.hasSyncedMessages() && permissionManager.isDefaultSms() &&
+                    permissionManager.hasReadSms() && permissionManager.hasContacts()) {
+                    syncMessages.execute(Unit)
+                }
 
-        // This is only used when we update to a version that newly supports emoji reactions
-        Realm.getDefaultInstance().executeTransactionAsync { realm ->
-            val emojiSyncNeeded = realm.where(EmojiSyncNeeded::class.java).findFirst()
-            if (emojiSyncNeeded != null) {
-                reactions.deleteAndReparseAllEmojiReactions(realm) { /* No progress ui needed here */ }
-                emojiSyncNeeded.deleteFromRealm()
+                // This is only used when we update to a version that newly supports emoji reactions
+                syncRepository.reparseEmojiReactionsIfNeeded()
             }
-        }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
 
         // Sync contacts when we detect a change
         if (permissionManager.hasContacts()) {
@@ -159,24 +180,6 @@ class MainViewModel @Inject constructor(
             !permissionManager.hasReadSms() || !permissionManager.hasContacts() -> view.requestPermissions()
         }
 
-
-        // when unreadAtTop preference changes, reload the model view data to refresh view
-        prefs.unreadAtTop.asObservable()
-            .skip(1)
-            .debounce(400, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .withLatestFrom(state) { _, state ->
-                if (state.page is Inbox)
-                    newState {
-                        copy(page = Inbox(data = conversationRepo.getConversations(prefs.unreadAtTop.get())))
-                    }
-                else if (state.page is Archived)
-                    newState {
-                        copy(page = Inbox(data = conversationRepo.getConversations(prefs.unreadAtTop.get(), true)))
-                    }
-            }
-            .autoDispose(view.scope())
-            .subscribe()
 
         // If the default SMS state changes, reflect it in the State
         view.activityResumedIntent
@@ -269,7 +272,7 @@ class MainViewModel @Inject constructor(
                 .map { query -> query.trim() }
                 .withLatestFrom(state) { query, state ->
                     if (query.isEmpty() && state.page is Searching) {
-                        newState { copy(page = Inbox(data = conversationRepo.getConversations(prefs.unreadAtTop.get()))) }
+                        showConversations(archived = false)
                     }
                     query
                 }
@@ -333,9 +336,7 @@ class MainViewModel @Inject constructor(
                             state.page is Searching -> view.clearSearch()
                             state.page is Inbox && state.page.selected > 0 -> view.clearSelection()
                             state.page is Archived && state.page.selected > 0 -> view.clearSelection()
-                            state.page !is Inbox -> {
-                                newState { copy(page = Inbox(data = conversationRepo.getConversations(prefs.unreadAtTop.get()))) }
-                            }
+                            state.page !is Inbox -> showConversations(archived = false)
                             else -> newState { copy(hasError = true) }
                         }
                         NavItem.BACKUP -> navigator.showBackup()
@@ -354,8 +355,8 @@ class MainViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .doOnNext { drawerItem ->
                     when (drawerItem) {
-                        NavItem.INBOX -> newState { copy(page = Inbox(data = conversationRepo.getConversations(prefs.unreadAtTop.get()))) }
-                        NavItem.ARCHIVED -> newState { copy(page = Archived(data = conversationRepo.getConversations(prefs.unreadAtTop.get(), true))) }
+                        NavItem.INBOX -> showConversations(archived = false)
+                        NavItem.ARCHIVED -> showConversations(archived = true)
                         else -> Unit
                     }
                 }
@@ -399,12 +400,12 @@ class MainViewModel @Inject constructor(
 
         view.optionsItemIntent
                 .filter { itemId -> itemId == R.id.add }
-                .withLatestFrom(view.conversationsSelectedIntent) { _, conversations -> conversations }
+                .withLatestFrom(view.conversationsSelectedIntent, state) { _, selection, state ->
+                    state.conversations(selection)
+                }
                 .doOnNext { view.clearSelection() }
                 .filter { conversations -> conversations.size == 1 }
-                .map { conversations -> conversations.first() }
-                .mapNotNull(conversationRepo::getConversation)
-                .map { conversation -> conversation.recipients }
+                .map { conversations -> conversations.first().recipients }
                 .mapNotNull { recipients -> recipients[0]?.address?.takeIf { recipients.size == 1 } }
                 .doOnNext(navigator::addContact)
                 .autoDispose(view.scope())
@@ -459,8 +460,10 @@ class MainViewModel @Inject constructor(
 
         view.optionsItemIntent
             .filter { itemId -> itemId == R.id.rename }
-            .withLatestFrom(view.conversationsSelectedIntent) { _, conversationIds -> conversationIds.first() }
-            .mapNotNull { conversationId -> conversationRepo.getConversation(conversationId) }
+            .withLatestFrom(view.conversationsSelectedIntent, state) { _, selection, state ->
+                state.conversations(selection.take(1))
+            }
+            .mapNotNull { conversations -> conversations.firstOrNull() }
             .autoDispose(view.scope())
             .subscribe { conversation ->
                 newState { copy(dialog = MainDialog.RenameConversation(conversation.id, conversation.name)) }
@@ -479,7 +482,7 @@ class MainViewModel @Inject constructor(
 
         view.conversationsSelectedIntent
                 .withLatestFrom(state) { selection, state ->
-                    val conversations = selection.mapNotNull(conversationRepo::getConversation)
+                    val conversations = state.conversations(selection)
                     val add = conversations.firstOrNull()
                             ?.takeIf { conversations.size == 1 }
                             ?.takeIf { conversation -> conversation.recipients.size == 1 }
@@ -493,18 +496,13 @@ class MainViewModel @Inject constructor(
                     }
                     val selected = selection.size
 
-                    when (state.page) {
-                        is Inbox -> {
-                            val page = state.page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected)
-                            newState { copy(page = page) }
+                    // The page is copied as it stands by then, so that a list arriving meanwhile is kept
+                    newState {
+                        when (page) {
+                            is Inbox -> copy(page = page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected))
+                            is Archived -> copy(page = page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected))
+                            is Searching -> this
                         }
-
-                        is Archived -> {
-                            val page = state.page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected)
-                            newState { copy(page = page) }
-                        }
-
-                        is Searching -> {} // Ignore
                     }
                 }
                 .autoDispose(view.scope())
@@ -539,8 +537,10 @@ class MainViewModel @Inject constructor(
             .subscribe()
 
         view.swipeConversationIntent
+                .withLatestFrom(state) { swipe, state -> swipe to state }
                 .autoDispose(view.scope())
-                .subscribe { (threadId, direction) ->
+                .subscribe { (swipe, state) ->
+                    val (threadId, direction) = swipe
                     val action =
                         if (direction == ItemTouchHelper.RIGHT) prefs.swipeRight.get()
                         else prefs.swipeLeft.get()
@@ -554,18 +554,22 @@ class MainViewModel @Inject constructor(
                             newState { copy(dialog = MainDialog.DeleteConversations(listOf(threadId))) }
                         Preferences.SWIPE_ACTION_BLOCK ->
                             view.showBlockingDialog(listOf(threadId), true)
-                        Preferences.SWIPE_ACTION_CALL -> {
-                            (
-                                messageRepo.getMessagesSync(threadId).lastOrNull { !it.isMe() }
-                                    ?.address // most recent non-me msg address
-                                ?: conversationRepo.getConversation(threadId)
-                                    ?.recipients?.firstOrNull()?.address  // first recipient in convo
-                            )?.let(navigator::makePhoneCall)
-                        }
+                        Preferences.SWIPE_ACTION_CALL ->
+                            Maybe
+                                .fromCallable<String> {
+                                    messageRepo.getMessagesSync(threadId).lastOrNull { !it.isMe() }
+                                        ?.address // most recent non-me msg address
+                                        ?: state.conversations(listOf(threadId)).firstOrNull()
+                                            ?.recipients?.firstOrNull()?.address  // first recipient in convo
+                                }
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .autoDispose(view.scope())
+                                .subscribe(navigator::makePhoneCall)
                         Preferences.SWIPE_ACTION_READ -> markRead.execute(listOf(threadId))
                         Preferences.SWIPE_ACTION_UNREAD -> markUnread.execute(listOf(threadId))
                         Preferences.SWIPE_ACTION_TOGGLE_READ ->
-                            if (conversationRepo.getConversation(threadId)?.unread == true) {
+                            if (state.conversations(listOf(threadId)).firstOrNull()?.unread == true) {
                                 markRead.execute(listOf(threadId))
                             } else {
                                 markUnread.execute(listOf(threadId))
@@ -599,6 +603,23 @@ class MainViewModel @Inject constructor(
                 }
                 .autoDispose(view.scope())
                 .subscribe()
+    }
+
+    private fun showConversations(archived: Boolean) {
+        newState { copy(page = if (archived) Archived() else Inbox()) }
+        archivedShown.onNext(archived)
+    }
+
+    /**
+     * The conversations of the list on screen with these ids, which are the ones it can select
+     */
+    private fun MainState.conversations(ids: Collection<Long>): List<Conversation> {
+        val conversations = when (page) {
+            is Inbox -> page.data
+            is Archived -> page.data
+            is Searching -> null
+        }
+        return conversations.orEmpty().filter { conversation -> conversation.id in ids }
     }
 
 }

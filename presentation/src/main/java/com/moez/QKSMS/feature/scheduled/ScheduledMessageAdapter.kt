@@ -25,14 +25,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.databinding.ScheduledMessageListItemBinding
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.model.Contact
 import io.openmessages.model.Recipient
 import io.openmessages.model.ScheduledMessage
-import io.openmessages.repository.ContactRepository
 import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -40,12 +39,22 @@ import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(
     private val context: Context,
-    private val contactRepo: ContactRepository,
     private val dateFormatter: DateFormatter,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkRealmAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageListItemBinding>>() {
+) : QkAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageListItemBinding>>() {
 
-    private val contacts by lazy { contactRepo.getContacts() }
+    /**
+     * The contacts the recipients are named after
+     */
+    var contacts: List<Contact> = emptyList()
+        set(value) {
+            if (field == value) return
+
+            field = value
+            contactCache.clear()
+            notifyDataSetChanged()
+        }
+
     private val contactCache = ContactCache()
     private val imagesViewPool = RecyclerView.RecycledViewPool()
 
@@ -61,12 +70,12 @@ class ScheduledMessageAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val message = getItem(adapterPosition) ?: return@setOnClickListener
+                val message = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 if (toggleSelection(message.id, false))
                     binding.root.isActivated = isSelected(message.id)
             }
             binding.root.setOnClickListener {
-                val message = getItem(adapterPosition) ?: return@setOnClickListener
+                val message = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 toggleSelection(message.id)
                 binding.root.isActivated = isSelected(message.id)
             }
@@ -74,7 +83,7 @@ class ScheduledMessageAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkBindingViewHolder<ScheduledMessageListItemBinding>, position: Int) {
-        val message = getItem(position) ?: return
+        val message = getItemOrNull(position) ?: return
 
         // GroupAvatarView only accepts recipients, so map the phone numbers to recipients
         holder.binding.avatars.recipients =
@@ -88,15 +97,17 @@ class ScheduledMessageAdapter @Inject constructor(
         holder.binding.body.text = message.body
 
         // update the selected/highlighted state
-        holder.binding.root.isActivated = isSelected(message.id) || highlight == message.id
+        holder.binding.root.isActivated = isSelected(message.id)
 
         val adapter = holder.binding.attachments.adapter as ScheduledMessageAttachmentAdapter
         adapter.data = message.attachments.map(Uri::parse)
         holder.binding.attachments.isVisible = message.attachments.isNotEmpty()
     }
 
+    override fun areItemsTheSame(old: ScheduledMessage, new: ScheduledMessage) = old.id == new.id
+
     override fun getItemId(position: Int): Long {
-        return getItem(position)?.id ?: -1
+        return getItemOrNull(position)?.id ?: -1
     }
 
     /**
@@ -106,14 +117,15 @@ class ScheduledMessageAdapter @Inject constructor(
     private inner class ContactCache : HashMap<String, Contact?>() {
 
         override fun get(key: String): Contact? {
-            if (super.get(key)?.isValid != true) {
-                set(key, contacts.firstOrNull { contact ->
+            if (!containsKey(key)) {
+                put(key, contacts.firstOrNull { contact ->
                     contact.numbers.any {
                         phoneNumberUtils.compare(it.address, key)
                     }
                 })
             }
-            return super.get(key)?.takeIf { it.isValid }
+
+            return super.get(key)
         }
     }
 }

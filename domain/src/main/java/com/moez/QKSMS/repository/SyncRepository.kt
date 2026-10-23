@@ -38,4 +38,14 @@ interface SyncRepository {
 
     fun syncContacts()
 
+    /**
+     * Whether the messages have been read in from the system provider at least once
+     */
+    fun hasSyncedMessages(): Boolean
+
+    /**
+     * Parses every emoji reaction again, if an update has asked for it since the last time
+     */
+    fun reparseEmojiReactionsIfNeeded()
+
 }

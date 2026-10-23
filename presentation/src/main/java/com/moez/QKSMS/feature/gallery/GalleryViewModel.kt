@@ -26,13 +26,13 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.common.util.extensions.makeToast
-import io.openmessages.extensions.mapNotNull
 import io.openmessages.interactor.SaveImage
 import io.openmessages.manager.PermissionManager
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -46,16 +46,17 @@ class GalleryViewModel @Inject constructor(
     private val permissions: PermissionManager
 ) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
     init {
-        disposables += Flowable.just(partId)
-                .mapNotNull(messageRepo::getMessageForPart)
-                .mapNotNull { message -> message.threadId }
-                .doOnNext { threadId -> newState { copy(parts = messageRepo.getPartsForConversation(threadId)) } }
-                .doOnNext { threadId ->
-                    newState {
-                        copy(title = conversationRepo.getConversation(threadId)?.getTitle())
-                    }
-                }
-                .subscribe()
+        val threadId = Maybe.fromCallable { messageRepo.getMessageForPart(partId)?.threadId }
+                .subscribeOn(Schedulers.io())
+                .cache()
+
+        disposables += threadId
+                .flatMapObservable(messageRepo::getPartsForConversation)
+                .subscribe { parts -> newState { copy(parts = parts) } }
+
+        disposables += threadId
+                .flatMapObservable(conversationRepo::observeConversation)
+                .subscribe { conversation -> newState { copy(title = conversation.value?.getTitle()) } }
     }
 
     override fun bindView(view: GalleryView) {

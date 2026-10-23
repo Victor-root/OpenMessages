@@ -34,6 +34,7 @@ import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.BlockingManager
 import io.openmessages.common.util.NotificationManagerImpl
 import io.openmessages.common.util.ShortcutManagerImpl
+import io.openmessages.database.AppDatabase
 import io.openmessages.feature.conversationinfo.injection.ConversationInfoComponent
 import io.openmessages.feature.themepicker.injection.ThemePickerComponent
 import io.openmessages.listener.ContactAddedListener
@@ -68,6 +69,7 @@ import io.openmessages.mapper.CursorToPartImpl
 import io.openmessages.mapper.CursorToRecipient
 import io.openmessages.mapper.CursorToRecipientImpl
 import io.openmessages.mapper.RatingManagerImpl
+import io.openmessages.migration.LegacyRealmImport
 import io.openmessages.repository.AllowlistRepository
 import io.openmessages.repository.AllowlistRepositoryImpl
 import io.openmessages.repository.BackupRepository
@@ -113,6 +115,12 @@ class AppModule(private var application: Application) {
     @Singleton
     fun provideRxPreferences(preferences: SharedPreferences): RxSharedPreferences {
         return RxSharedPreferences.create(preferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(context: Context, legacyRealmImport: LegacyRealmImport): AppDatabase {
+        return AppDatabase.build(context, legacyRealmImport)
     }
 
     @Provides

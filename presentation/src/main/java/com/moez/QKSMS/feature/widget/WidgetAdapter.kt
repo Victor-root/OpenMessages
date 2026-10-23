@@ -37,7 +37,6 @@ import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.injection.appComponent
 import io.openmessages.model.Contact
 import io.openmessages.model.Conversation
-import io.openmessages.model.PhoneNumber
 import io.openmessages.receiver.StartActivityFromWidgetReceiver
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.GlideApp
@@ -120,7 +119,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         remoteViews.setInt(R.id.avatarMask, "setColorFilter", background)
 
         val contact = conversation.recipients.map { recipient ->
-            recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }
+            recipient.contact ?: Contact.forAddress(recipient.address)
         }.firstOrNull()
 
         // Use the icon if there's no name, otherwise show an initial

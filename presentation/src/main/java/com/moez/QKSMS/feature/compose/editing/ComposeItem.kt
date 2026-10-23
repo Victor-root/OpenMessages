@@ -21,8 +21,6 @@ package io.openmessages.feature.compose.editing
 import io.openmessages.model.Contact
 import io.openmessages.model.ContactGroup
 import io.openmessages.model.Conversation
-import io.openmessages.model.PhoneNumber
-import io.realm.RealmList
 
 sealed class ComposeItem {
 
@@ -34,7 +32,7 @@ sealed class ComposeItem {
 
     data class Recent(val value: Conversation) : ComposeItem() {
         override fun getContacts(): List<Contact> = value.recipients.map { recipient ->
-            recipient.contact ?: Contact(numbers = RealmList(PhoneNumber(address = recipient.address)))
+            recipient.contact ?: Contact.forAddress(recipient.address)
         }
     }
 

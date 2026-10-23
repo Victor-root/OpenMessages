@@ -72,11 +72,11 @@ class CursorToConversationImpl @Inject constructor(
             val archivedColumn = from.getColumnIndex(Threads.ARCHIVED)
             archived = archivedColumn != -1 && from.getInt(archivedColumn) != 0
 
-            recipients.addAll(from.getString(RECIPIENT_IDS)
+            recipients = from.getString(RECIPIENT_IDS)
                     .split(" ")
                     .filter { it.isNotBlank() }
                     .map { recipientId -> recipientId.toLong() }
-                    .map { recipientId -> Recipient().apply { id = recipientId } })
+                    .map { recipientId -> Recipient().apply { id = recipientId } }
         }
     }
 

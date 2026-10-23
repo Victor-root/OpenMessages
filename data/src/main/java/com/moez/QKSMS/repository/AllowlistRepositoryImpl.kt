@@ -18,85 +18,59 @@
  */
 package io.openmessages.repository
 
-import io.openmessages.extensions.anyOf
+import io.openmessages.database.AppDatabase
 import io.openmessages.model.AllowedNumber
 import io.openmessages.util.PhoneNumberUtils
-import io.realm.Realm
-import io.realm.RealmResults
+import io.reactivex.Observable
 import javax.inject.Inject
 
 class AllowlistRepositoryImpl @Inject constructor(
+    private val db: AppDatabase,
     private val phoneNumberUtils: PhoneNumberUtils
 ) : AllowlistRepository {
 
-    override fun allowNumber(vararg addresses: String) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.refresh()
+    private val dao = db.allowedNumberDao()
 
-            val allowedNumbers = realm.where(AllowedNumber::class.java).findAll()
+    override fun allowNumber(vararg addresses: String) {
+        db.runInTransaction {
+            val allowedNumbers = dao.getAll()
             val newAddresses = addresses.filter { address ->
                 allowedNumbers.none { number -> phoneNumberUtils.compare(number.address, address) }
             }
 
-            val maxId = realm.where(AllowedNumber::class.java)
-                    .max("id")?.toLong() ?: -1
+            val maxId = dao.getMaxId() ?: -1
 
-            realm.executeTransaction {
-                realm.insert(newAddresses.mapIndexed { index, address ->
-                    AllowedNumber(maxId + 1 + index, address)
-                })
-            }
+            dao.insert(newAddresses.mapIndexed { index, address ->
+                AllowedNumber(maxId + 1 + index, address)
+            })
         }
     }
 
-    override fun getAllowedNumbers(): RealmResults<AllowedNumber> {
-        return Realm.getDefaultInstance()
-                .where(AllowedNumber::class.java)
-                .findAllAsync()
+    override fun getAllowedNumbers(): Observable<List<AllowedNumber>> {
+        return dao.observeAll().toObservable()
     }
 
     override fun getAllowedNumber(id: Long): AllowedNumber? {
-        return Realm.getDefaultInstance()
-                .where(AllowedNumber::class.java)
-                .equalTo("id", id)
-                .findFirst()
+        return dao.get(id)
     }
 
     override fun isAllowed(address: String): Boolean {
-        return Realm.getDefaultInstance().use { realm ->
-            realm.where(AllowedNumber::class.java)
-                    .findAll()
-                    .any { number -> phoneNumberUtils.compare(number.address, address) }
-        }
+        return dao.getAll().any { number -> phoneNumberUtils.compare(number.address, address) }
     }
 
     override fun removeNumber(id: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                realm.where(AllowedNumber::class.java)
-                        .equalTo("id", id)
-                        .findAll()
-                        .deleteAllFromRealm()
-            }
-        }
+        dao.delete(listOf(id))
     }
 
     override fun removeNumbers(vararg addresses: String) {
-        Realm.getDefaultInstance().use { realm ->
-            val ids = realm.where(AllowedNumber::class.java)
-                    .findAll()
+        db.runInTransaction {
+            val ids = dao.getAll()
                     .filter { number ->
                         addresses.any { address -> phoneNumberUtils.compare(number.address, address) }
                     }
                     .map { number -> number.id }
-                    .toLongArray()
 
-            realm.executeTransaction {
-                realm.where(AllowedNumber::class.java)
-                        .anyOf("id", ids)
-                        .findAll()
-                        .deleteAllFromRealm()
-            }
+            dao.delete(ids)
         }
     }
 

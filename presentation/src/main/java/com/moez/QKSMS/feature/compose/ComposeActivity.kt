@@ -590,9 +590,12 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         )
 
         binding.messageList.setVisible(!state.editingMode || state.sendAsGroup || state.selectedChips.size == 1)
-        messageAdapter.data = state.messages
+        state.messages?.let { (conversation, messages) ->
+            messageAdapter.conversation = conversation
+            messageAdapter.data = messages
+        }
         messageAdapter.highlight = state.searchSelectionId
-        scheduledMessagesAdapter.updateData(state.scheduledMessages)
+        state.scheduledMessages?.let { scheduledMessagesAdapter.data = it }
 
         binding.scheduledGroup.isVisible = state.scheduled != 0L
         binding.scheduledTime.text = dateFormatter.getScheduledTimestamp(state.scheduled)
@@ -836,9 +839,9 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun scrollToMessage(id: Long) {
-        messageAdapter.data?.second
-            ?.indexOfLast { message -> message.id == id }
-            ?.takeIf { position -> position != -1 }
+        messageAdapter.data
+            .indexOfLast { message -> message.id == id }
+            .takeIf { position -> position != -1 }
             ?.let(binding.messageList::scrollToPosition)
     }
 

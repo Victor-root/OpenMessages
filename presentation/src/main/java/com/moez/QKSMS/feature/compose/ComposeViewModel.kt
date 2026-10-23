@@ -50,7 +50,6 @@ import io.openmessages.common.util.sendSoundRes
 import io.openmessages.common.widget.MicInputCloudView
 import io.openmessages.common.widget.QkContextMenuRecyclerView
 import io.openmessages.compat.SubscriptionManagerCompat
-import io.openmessages.extensions.asObservable
 import io.openmessages.extensions.isImage
 import io.openmessages.extensions.isSmil
 import io.openmessages.extensions.isText
@@ -198,8 +197,7 @@ class ComposeViewModel @Inject constructor(
         newState { copy(attachments = sharedAttachments) }
 
         val initialConversation = threadId.takeIf { it != 0L }
-            ?.let(conversationRepo::getConversationAsync)
-            ?.asObservable()
+            ?.let(conversationRepo::observeConversation)
             ?: Observable.empty()
 
         val selectedConversation = selectedChips
@@ -222,9 +220,7 @@ class ComposeViewModel @Inject constructor(
                 // from it, and the search by address is loose enough to answer with a different
                 // conversation or with none. Hence a message that flickered and then left the
                 // screen empty until it was reopened from the list.
-                conversationRepo.getConversationAsync(threadId)
-                    .asObservable()
-                    .filter { conversation -> conversation.isLoaded }
+                conversationRepo.observeConversation(threadId)
                     .doOnNext { newState { copy(loading = false) } }
             }
             .doOnError { e ->
@@ -238,9 +234,9 @@ class ComposeViewModel @Inject constructor(
         // activity to shut down
         disposables += selectedConversation
             .mergeWith(initialConversation)
-            .filter { it.isLoaded }
-            .filter { conversation ->
-                conversation.isValid.also { if (!it) newState { copy(hasError = true) } }
+            .mapNotNull { (conversation) ->
+                if (conversation == null) newState { copy(hasError = true) }
+                conversation
             }
             .subscribe(conversation::onNext)
 
@@ -270,23 +266,18 @@ class ComposeViewModel @Inject constructor(
             }
             .subscribe()
 
-        // When the conversation changes, mark read, and update the recipientId and the messages for the adapter
+        // When the conversation changes, update the threadId and the messages for the adapter, which
+        // shows them along with the conversation as it stands
         disposables += conversation
                 .distinctUntilChanged { conversation -> conversation.id }
-                .observeOn(AndroidSchedulers.mainThread())
-                .map { conversation ->
-                    val messages = messageRepo.getMessages(conversation.id)
-                    // Scheduled messages come from their own collection, shown after the real ones.
-                    val scheduled = scheduledMessageRepo.getScheduledMessagesForConversation(conversation.id)
-                    newState {
-                        copy(threadId = conversation.id,
-                                messages = Pair(conversation, messages),
-                                scheduledMessages = scheduled)
-                    }
-                    messages
+                .switchMap { current ->
+                    Observables.combineLatest(
+                        conversation.filter { conversation -> conversation.id == current.id },
+                        messageRepo.getMessages(current.id).doOnNext(messages::onNext))
                 }
-                .switchMap { messages -> messages.asObservable() }
-                .subscribe(messages::onNext)
+                .subscribe { (conversation, messages) ->
+                    newState { copy(threadId = conversation.id, messages = Pair(conversation, messages)) }
+                }
 
         // A phone-number title (no saved contact name, no custom conversation name) can optionally
         // drop the country code to save space in the toolbar, e.g. "+33 6 ..." -> "06 ...".
@@ -312,10 +303,8 @@ class ComposeViewModel @Inject constructor(
                 .map { conversation -> conversation.id }
                 .distinctUntilChanged()
                 .withLatestFrom(state, BiFunction { id, state -> messageRepo.getMessages(id, state.query) })
-                .switchMap { messages -> messages.asObservable() }
+                .switchMap { messages -> messages }
                 .takeUntil(state.map { it.query }.filter { it.isEmpty() })
-                .filter { messages -> messages.isLoaded }
-                .filter { messages -> messages.isValid }
                 .subscribe(searchResults::onNext)
 
         // on conversation change/init, work out how many non-me participants of the conversation
@@ -355,20 +344,14 @@ class ComposeViewModel @Inject constructor(
             newState { copy(subscription = sub) }
         }.subscribe()
 
-        // checks if there are any scheduled messages in convo
+        // Scheduled messages come from their own collection, shown after the real ones
         disposables += conversation
             .distinctUntilChanged { conversation -> conversation.id }
-            .observeOn(AndroidSchedulers.mainThread())
             .switchMap { conversation ->
-                scheduledMessageRepo
-                    .getScheduledMessagesForConversation(conversation.id)
-                    .asFlowable()
-                    .toObservable()
+                scheduledMessageRepo.getScheduledMessagesForConversation(conversation.id)
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { liveResults ->
-                val hasAny = liveResults.isNotEmpty()
-                newState { copy(hasScheduledMessages = hasAny) }
+            .subscribe { scheduled ->
+                newState { copy(scheduledMessages = scheduled, hasScheduledMessages = scheduled.isNotEmpty()) }
             }
 
         // actions
@@ -426,17 +409,20 @@ class ComposeViewModel @Inject constructor(
                     }
                 })
                 .filter { hashmap -> hashmap.isNotEmpty() }
+                .observeOn(Schedulers.io())
                 .map { hashmap ->
+                    val recipients = conversationRepo.getRecipients()
                     hashmap.map { (address, lookupKey) ->
-                        conversationRepo.getRecipients()
+                        recipients
                                 .asSequence()
                                 .filter { recipient -> recipient.contact?.lookupKey == lookupKey }
                                 .firstOrNull { recipient -> phoneNumberUtils.compare(recipient.address, address) }
-                                ?: Recipient(
-                                        address = address,
-                                        contact = lookupKey?.let(contactRepo::getUnmanagedContact))
+                                ?: Recipient(address = address).apply {
+                                    contact = lookupKey?.let(contactRepo::getUnmanagedContact)
+                                }
                     }
                 }
+                .observeOn(AndroidSchedulers.mainThread())
                 .autoDispose(view.scope())
                 .subscribe { chips ->
                     chipsReducer.onNext { list -> list + chips }
@@ -498,7 +484,7 @@ class ComposeViewModel @Inject constructor(
 
         // Header quick-action button: perform whichever action is configured in Settings. Archive
         // and delete leave nothing to look at, so they close the screen (delete does so via the
-        // existing `conversation.isValid` watch above, once the underlying row is actually gone).
+        // existing watch on the conversation above, once the underlying row is actually gone).
         view.optionsItemIntent
             .filter { it == R.id.headerQuickAction }
             .withLatestFrom(conversation, BiFunction { _, conversation -> conversation.id })
@@ -528,15 +514,9 @@ class ComposeViewModel @Inject constructor(
         // Copy the message contents
         view.optionsItemIntent
                 .filter { it == R.id.copy }
-                .withLatestFrom(view.messagesSelectedIntent, BiFunction { _, messageIds ->
-                    ClipboardUtils.copy(
-                        context,
-                        messageIds
-                            .mapNotNull(messageRepo::getMessage)
-                            .sortedBy { it.date }
-                            .getText()
-                    )
-                })
+                .withLatestFrom(view.messagesSelectedIntent, messages) { _, messageIds, messages ->
+                    ClipboardUtils.copy(context, messages.withIds(messageIds).getText())
+                }
                 .autoDispose(view.scope())
                 .subscribe { view.clearSelection() }
 
@@ -544,8 +524,10 @@ class ComposeViewModel @Inject constructor(
         view.optionsItemIntent
             .filter { it == R.id.share }
             .observeOn(Schedulers.io())
-            .withLatestFrom(view.messagesSelectedIntent, BiFunction { _, messageIds -> messageIds })
-            .mapNotNull { messageIds ->
+            .withLatestFrom(view.messagesSelectedIntent, messages) { _, messageIds, messages ->
+                messages.withIds(messageIds)
+            }
+            .mapNotNull { selectedMessages ->
                 val filename = "$SAVED_MESSAGE_TEXT_FILE_PREFIX${
                     SimpleDateFormat(
                         "yyyy-MM-dd-HH-mm-ss",
@@ -560,11 +542,7 @@ class ComposeViewModel @Inject constructor(
                         FileUtils.Location.Cache,
                         filename,
                         mimeType,
-                        messageIds
-                            .mapNotNull(messageRepo::getMessage)
-                            .sortedBy { it.date }
-                            .getText()
-                            .toByteArray()
+                        selectedMessages.getText().toByteArray()
                     )
 
                 if (e is Exception)
@@ -602,9 +580,10 @@ class ComposeViewModel @Inject constructor(
         // Show the message details
         view.optionsItemIntent
                 .filter { it == R.id.details }
-                .withLatestFrom(view.messagesSelectedIntent, BiFunction { _, messages -> messages })
+                .withLatestFrom(view.messagesSelectedIntent, messages) { _, messageIds, messages ->
+                    messages.withIds(messageIds.take(1))
+                }
                 .mapNotNull { messages -> messages.firstOrNull().also { view.clearSelection() } }
-                .mapNotNull(messageRepo::getMessage)
                 .map(messageDetailsFormatter::format)
                 .autoDispose(view.scope())
                 .subscribe { details -> newState { copy(dialog = ComposeDialog.MessageDetails(details)) } }
@@ -628,15 +607,15 @@ class ComposeViewModel @Inject constructor(
         // Forward the message
         view.optionsItemIntent
             .filter { it == R.id.forward }
-            .withLatestFrom(view.messagesSelectedIntent, BiFunction { _, messages ->
-                messages.firstOrNull()?.let { messageRepo.getMessage(it) }?.let { message ->
+            .withLatestFrom(view.messagesSelectedIntent, messages) { _, messageIds, messages ->
+                messages.withIds(messageIds.take(1)).firstOrNull()?.let { message ->
                     navigator.showCompose(
                         message.getText(),
                         message.parts.filter { !it.isSmil() }.mapNotNull { it.getUri() }
                     )
                 }
                 Unit
-            })
+            }
             .autoDispose(view.scope())
             .subscribe { view.clearSelection() }
 
@@ -761,33 +740,28 @@ class ComposeViewModel @Inject constructor(
                 .autoDispose(view.scope())
                 .subscribe()
 
-        // Media attachment clicks
+        // Attachment clicks: media opens in the gallery, anything else in the app that handles it
         view.messagePartClickIntent
+                .observeOn(Schedulers.io())
                 .mapNotNull(messageRepo::getPart)
-                .filter { part -> part.isImage() || part.isVideo() }
+                .observeOn(AndroidSchedulers.mainThread())
                 .autoDispose(view.scope())
-                .subscribe { part -> navigator.showMedia(part.id) }
-
-        // Non-media attachment clicks
-        view.messagePartClickIntent
-                .mapNotNull(messageRepo::getPart)
-                .filter { part -> !part.isImage() && !part.isVideo() }
-                .autoDispose(view.scope())
-                .subscribe {
-                    navigator.viewFile(
-                        MmsPartProvider().getUriForMmsPartId(context, it.id, it.getBestFilename()),
-                        it.type
-                    )
+                .subscribe { part ->
+                    when {
+                        part.isImage() || part.isVideo() -> navigator.showMedia(part.id)
+                        else -> navigator.viewFile(
+                            MmsPartProvider().getUriForMmsPartId(context, part.id, part.getBestFilename()),
+                            part.type
+                        )
+                    }
                 }
 
         // Update the State when the message selected count changes
         view.messagesSelectedIntent
-                .map { selectedMessageIds ->
+                .withLatestFrom(messages) { selectedMessageIds, messages ->
                     Pair(
                         selectedMessageIds.size,
-                        selectedMessageIds.any {
-                            messageRepo.getMessage(it)?.hasNonWhitespaceText() ?: false
-                        }
+                        messages.withIds(selectedMessageIds).any { it.hasNonWhitespaceText() }
                     )
                 }
                 .autoDispose(view.scope())
@@ -804,16 +778,13 @@ class ComposeViewModel @Inject constructor(
         // cancel sending a delayed message
         view.cancelDelayedIntent
             // most important thing first - cancel the send timer
-            .map {
-                messageId -> messageRepo.cancelDelayedSmsAlarm(messageId)
-
-                messageRepo.getUnmanagedMessage(messageId).also {
-                    // copy text from copy of message being cancelled
-                    view.setDraft(it?.getText(false) ?: "")
-                }
-            }
+            .doOnNext(messageRepo::cancelDelayedSmsAlarm)
+            .withLatestFrom(messages) { messageId, messages -> messages.withIds(listOf(messageId)) }
+            .mapNotNull { messages -> messages.firstOrNull() }
+            // copy text from copy of message being cancelled
+            .doOnNext { message -> view.setDraft(message.getText(false)) }
             .observeOn(Schedulers.io())
-            .map { unmanagedMessage ->
+            .map { message ->
                 // get attachments from copy of message and save locally to be attached to current
                 // message. it's done this way because the original message is being deleted and
                 // it's mms:// provider attachment uris will go away from
@@ -822,19 +793,19 @@ class ComposeViewModel @Inject constructor(
                 // in, hopefully, rare cases they could become ridiculously low res if sent and
                 // cancelled multiple times with other attachments that force them small.
                 // but what can you do.
-                unmanagedMessage.parts.filter { !(it.isSmil() || it.isText()) }
-                    .mapNotNull { unmanagedMessagePart ->
+                message.parts.filter { !(it.isSmil() || it.isText()) }
+                    .mapNotNull { messagePart ->
                         try {
                             // get best name of attachment uri
-                            val filename = unmanagedMessagePart.getBestFilename()
+                            val filename = messagePart.getBestFilename()
 
                             val (cacheFileUri, e) = FileUtils.createAndWrite(
                                 context,
                                 FileUtils.Location.Cache,
                                 "$DELAY_CANCELLED_CACHED_ATTACHMENTS_FILE_PREFIX-" +
                                                     "${UUID.randomUUID()}/${filename}",
-                                unmanagedMessagePart.type,
-                                unmanagedMessagePart.getUri().getResourceBytes(context)
+                                messagePart.type,
+                                messagePart.getUri().getResourceBytes(context)
                             )
                             if (e is Exception)
                                 throw e
@@ -848,7 +819,7 @@ class ComposeViewModel @Inject constructor(
                         listOfAttachments -> newState { copy(attachments = listOfAttachments) }
                     }
 
-                unmanagedMessage.id
+                message.id
             }
             .autoDispose(view.scope())
             .subscribe { messageId ->
@@ -870,7 +841,8 @@ class ComposeViewModel @Inject constructor(
 
         // resend a failed message
         view.resendIntent
-            .mapNotNull(messageRepo::getMessage)
+            .withLatestFrom(messages) { messageId, messages -> messages.withIds(listOf(messageId)) }
+            .mapNotNull { messages -> messages.firstOrNull() }
             .filter { message -> message.isFailedMessage() }
             .doOnNext { message ->
                 sendExistingMessage.execute(message.id)
@@ -886,9 +858,8 @@ class ComposeViewModel @Inject constructor(
 
         // Show reaction details popup
         view.reactionClickIntent
-            .mapNotNull { messageId -> messageRepo.getMessage(messageId) }
-            .withLatestFrom(conversation, BiFunction { message, conv ->
-                message.emojiReactions.map { reaction ->
+            .withLatestFrom(messages, conversation) { messageId, messages, conv ->
+                messages.withIds(listOf(messageId)).flatMap { message -> message.emojiReactions }.map { reaction ->
                     val contactName = conv.recipients
                         .firstOrNull { recipient ->
                             phoneNumberUtils.compare(recipient.address, reaction.senderAddress)
@@ -897,7 +868,7 @@ class ComposeViewModel @Inject constructor(
                         ?: reaction.senderAddress
                     "${reaction.emoji} $contactName"
                 }
-            })
+            }
             .autoDispose(view.scope())
             .subscribe { reactions -> newState { copy(dialog = ComposeDialog.Reactions(reactions)) } }
 
@@ -905,9 +876,7 @@ class ComposeViewModel @Inject constructor(
         Observables
                 .combineLatest(
                         view.activityVisibleIntent.distinctUntilChanged(),
-                        conversation.mapNotNull { conversation ->
-                            conversation.takeIf { it.isValid }?.id
-                        }.distinctUntilChanged())
+                        conversation.map { conversation -> conversation.id }.distinctUntilChanged())
                 { visible, threadId ->
                     when (visible) {
                         true -> {
@@ -924,8 +893,7 @@ class ComposeViewModel @Inject constructor(
         // Save draft when the activity goes into the background
         view.activityVisibleIntent
                 .filter { visible -> !visible }
-                .withLatestFrom(conversation, BiFunction { _, conversation -> conversation })
-                .mapNotNull { conversation -> conversation.takeIf { it.isValid }?.id }
+                .withLatestFrom(conversation, BiFunction { _, conversation -> conversation.id })
                 .observeOn(Schedulers.io())
                 .withLatestFrom(view.textChangedIntent, state, Function3 { threadId, draftText, state ->
                     if (state.saveDraft)
@@ -1445,6 +1413,13 @@ class ComposeViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         sentSoundPool.release()
+    }
+
+    /**
+     * The messages with these ids, in the order of the conversation
+     */
+    private fun List<Message>.withIds(ids: Collection<Long>): List<Message> {
+        return filter { message -> message.id in ids }
     }
 
 }

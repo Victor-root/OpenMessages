@@ -182,9 +182,8 @@ class ComposeItemAdapter @Inject constructor(
     }
 
     private fun createRecipient(contact: Contact): Recipient {
-        return recipients[contact.lookupKey] ?: Recipient(
-            address = contact.numbers.firstOrNull()?.address ?: "",
-            contact = contact)
+        return recipients[contact.lookupKey]
+            ?: Recipient(address = contact.numbers.firstOrNull()?.address ?: "").apply { this.contact = contact }
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

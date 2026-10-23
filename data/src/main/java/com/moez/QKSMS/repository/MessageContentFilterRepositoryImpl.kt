@@ -18,69 +18,53 @@
  */
 package io.openmessages.repository
 
+import io.openmessages.database.AppDatabase
 import io.openmessages.model.MessageContentFilter
 import io.openmessages.model.MessageContentFilterData
-import io.realm.Realm
-import io.realm.RealmResults
+import io.reactivex.Observable
 import javax.inject.Inject
 
-class MessageContentFilterRepositoryImpl @Inject constructor() : MessageContentFilterRepository {
-    override fun createFilter(data: MessageContentFilterData) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.refresh()
-            val maxId = realm.where(MessageContentFilter::class.java)
-                .max("id")?.toLong() ?: -1
+class MessageContentFilterRepositoryImpl @Inject constructor(
+    private val db: AppDatabase
+) : MessageContentFilterRepository {
 
-            realm.executeTransaction {
-                realm.insert(MessageContentFilter(maxId + 1, data.value, data.caseSensitive, data.isRegex, data.includeContacts))
-            }
+    private val dao = db.messageContentFilterDao()
+
+    override fun createFilter(data: MessageContentFilterData) {
+        db.runInTransaction {
+            val maxId = dao.getMaxId() ?: -1
+            dao.insert(MessageContentFilter(maxId + 1, data.value, data.caseSensitive, data.isRegex, data.includeContacts))
         }
     }
 
-    override fun getMessageContentFilters(): RealmResults<MessageContentFilter> {
-        return Realm.getDefaultInstance()
-            .where(MessageContentFilter::class.java)
-            .findAllAsync()
+    override fun getMessageContentFilters(): Observable<List<MessageContentFilter>> {
+        return dao.observeAll().toObservable()
     }
 
     override fun getMessageContentFilter(id: Long): MessageContentFilter? {
-        return Realm.getDefaultInstance()
-            .where(MessageContentFilter::class.java)
-            .equalTo("id", id)
-            .findFirst()
+        return dao.get(id)
     }
 
     override fun isBlocked(messageBody: String, address: String, contactsRepo: ContactRepository): Boolean {
         val isContact = contactsRepo.isContact(address)
 
-        return Realm.getDefaultInstance().use { realm ->
-            realm.where(MessageContentFilter::class.java)
-                .findAll()
-                .any { filter ->
-                    if (isContact && !filter.includeContacts) {
-                        false
-                    } else if (filter.isRegex) {
-                        Regex(filter.value).matches(messageBody)
-                    } else if (filter.caseSensitive) {
-                        val regexp = "[\\s\\S]*\\b" + Regex.escape(filter.value) + "\\b[\\s\\S]*"
-                        Regex(regexp).matches(messageBody)
-                    } else {
-                        val regexp = "[\\s\\S]*\\b" + Regex.escape(filter.value.lowercase()) + "\\b[\\s\\S]*"
-                        Regex(regexp).matches(messageBody.lowercase())
-                    }
-                }
+        return dao.getAll().any { filter ->
+            if (isContact && !filter.includeContacts) {
+                false
+            } else if (filter.isRegex) {
+                Regex(filter.value).matches(messageBody)
+            } else if (filter.caseSensitive) {
+                val regexp = "[\\s\\S]*\\b" + Regex.escape(filter.value) + "\\b[\\s\\S]*"
+                Regex(regexp).matches(messageBody)
+            } else {
+                val regexp = "[\\s\\S]*\\b" + Regex.escape(filter.value.lowercase()) + "\\b[\\s\\S]*"
+                Regex(regexp).matches(messageBody.lowercase())
+            }
         }
     }
 
     override fun removeFilter(id: Long) {
-        Realm.getDefaultInstance().use { realm ->
-            realm.executeTransaction {
-                realm.where(MessageContentFilter::class.java)
-                    .equalTo("id", id)
-                    .findAll()
-                    .deleteAllFromRealm()
-            }
-        }
+        dao.delete(id)
     }
 
 }

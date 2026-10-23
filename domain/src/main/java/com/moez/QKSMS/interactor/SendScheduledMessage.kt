@@ -26,7 +26,6 @@ import io.openmessages.model.Attachment
 import io.openmessages.repository.ScheduledMessageRepository
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.toFlowable
-import io.realm.RealmList
 import javax.inject.Inject
 
 class SendScheduledMessage @Inject constructor(
@@ -43,7 +42,7 @@ class SendScheduledMessage @Inject constructor(
                 if (message.sendAsGroup) {
                     listOf(message)
                 } else {
-                    message.recipients.map { recipient -> message.copy(recipients = RealmList(recipient)) }
+                    message.recipients.map { recipient -> message.copy(recipients = listOf(recipient)) }
                 }.toFlowable()
             }
             .map { message ->

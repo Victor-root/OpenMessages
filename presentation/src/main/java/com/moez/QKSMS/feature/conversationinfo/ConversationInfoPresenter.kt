@@ -27,7 +27,6 @@ import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.common.util.extensions.makeToast
-import io.openmessages.extensions.asObservable
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.feature.conversationinfo.ConversationInfoItem.ConversationInfoMedia
 import io.openmessages.feature.conversationinfo.ConversationInfoItem.ConversationInfoRecipient
@@ -66,15 +65,11 @@ class ConversationInfoPresenter @Inject constructor(
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
 
     init {
-        disposables += conversationRepo.getConversationAsync(threadId)
-                .asObservable()
-                .filter { conversation -> conversation.isLoaded }
-                .doOnNext { conversation ->
-                    if (!conversation.isValid) {
-                        newState { copy(hasError = true) }
-                    }
+        disposables += conversationRepo.observeConversation(threadId)
+                .mapNotNull { (conversation) ->
+                    if (conversation == null) newState { copy(hasError = true) }
+                    conversation
                 }
-                .filter { conversation -> conversation.isValid }
                 .filter { conversation -> conversation.id != 0L }
                 .subscribe(conversation::onNext)
 
@@ -85,14 +80,9 @@ class ConversationInfoPresenter @Inject constructor(
         disposables += Observables
                 .combineLatest(
                         conversation,
-                        messageRepo.getPartsForConversation(threadId).asObservable()
+                        messageRepo.getPartsForConversation(threadId)
                 ) { conversation, parts ->
                     val data = mutableListOf<ConversationInfoItem>()
-
-                    // If some data was deleted, this isn't the place to handle it
-                    if (!conversation.isLoaded || !conversation.isValid || !parts.isLoaded || !parts.isValid) {
-                        return@combineLatest
-                    }
 
                     data += conversation.recipients.map(::ConversationInfoRecipient)
                     data += ConversationInfoItem.ConversationInfoSettings(
@@ -112,7 +102,10 @@ class ConversationInfoPresenter @Inject constructor(
 
         // Add or display the contact
         view.recipientClicks()
-                .mapNotNull(conversationRepo::getRecipient)
+                .withLatestFrom(conversation) { recipientId, conversation -> recipientId to conversation }
+                .mapNotNull { (recipientId, conversation) ->
+                    conversation.recipients.firstOrNull { recipient -> recipient.id == recipientId }
+                }
                 .doOnNext { recipient ->
                     recipient.contact?.lookupKey?.let(navigator::showContact)
                             ?: navigator.addContact(recipient.address)
@@ -122,7 +115,10 @@ class ConversationInfoPresenter @Inject constructor(
 
         // Copy phone number
         view.recipientLongClicks()
-                .mapNotNull(conversationRepo::getRecipient)
+                .withLatestFrom(conversation) { recipientId, conversation -> recipientId to conversation }
+                .mapNotNull { (recipientId, conversation) ->
+                    conversation.recipients.firstOrNull { recipient -> recipient.id == recipientId }
+                }
                 .map { recipient -> recipient.address }
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDispose(view.scope())
@@ -202,5 +198,4 @@ class ConversationInfoPresenter @Inject constructor(
                 .autoDispose(view.scope())
                 .subscribe(navigator::showMedia)
     }
-
 }

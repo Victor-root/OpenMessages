@@ -28,6 +28,7 @@ import io.openmessages.interactor.MarkRead
 import io.openmessages.interactor.SendNewMessage
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {
@@ -44,23 +45,32 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
         val bundle = intent.extras ?: return
 
         val threadId = bundle.getLong("threadId")
+        val body = remoteInput.getCharSequence("body").toString()
 
         markRead.execute(listOf(threadId))
 
-        val lastMessage = messageRepo.getMessages(threadId).lastOrNull()
-        val conversation = conversationRepo.getConversation(threadId)
+        val pendingResult = goAsync()
 
-        val pendingRepository = goAsync()
-        sendNewMessage.execute(
-            SendNewMessage.Params(
-                subscriptionManager.activeSubscriptionInfoList
-                    .firstOrNull { it.subscriptionId == lastMessage?.subId }
-                    ?.subscriptionId ?: -1,
-                0,
-                conversation?.recipients?.map { it.address } ?: return,
-                remoteInput.getCharSequence("body").toString(),
-                conversation.sendAsGroup
-            )
-        ) { pendingRepository.finish() }
+        // The conversation is read off the main thread, which the database does not allow
+        Schedulers.io().scheduleDirect {
+            val lastMessage = messageRepo.getMessagesSync(threadId).lastOrNull()
+            val conversation = conversationRepo.getConversation(threadId)
+            if (conversation == null) {
+                pendingResult.finish()
+                return@scheduleDirect
+            }
+
+            sendNewMessage.execute(
+                SendNewMessage.Params(
+                    subscriptionManager.activeSubscriptionInfoList
+                        .firstOrNull { it.subscriptionId == lastMessage?.subId }
+                        ?.subscriptionId ?: -1,
+                    0,
+                    conversation.recipients.map { it.address },
+                    body,
+                    conversation.sendAsGroup
+                )
+            ) { pendingResult.finish() }
+        }
     }
 }

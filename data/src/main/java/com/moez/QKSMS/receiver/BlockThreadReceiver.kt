@@ -27,6 +27,7 @@ import io.openmessages.blocking.BlockingClient
 import io.openmessages.interactor.MarkBlocked
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
+import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -44,29 +45,27 @@ class BlockThreadReceiver : BroadcastReceiver() {
 
         Timber.v("received")
 
+        val pendingResult = goAsync()
         val threadId = intent.getLongExtra("threadId", 0)
 
-        blockingClient
-            .block(
-                conversationRepo.getConversation(threadId)
-                    ?.recipients
-                    ?.map { it.address }
-                    ?: listOf()
-            )
-            .subscribeOn(Schedulers.io())
+        // Deferred, so that the conversation is read off the main thread, which the database does
+        // not allow
+        Completable
+            .defer {
+                blockingClient.block(
+                    conversationRepo.getConversation(threadId)
+                        ?.recipients
+                        ?.map { it.address }
+                        ?: listOf()
+                )
+            }
             .andThen(
                 markBlocked.buildObservable(
                     MarkBlocked.Params(listOf(threadId), prefs.blockingManager.get(), null)
                 )
             )
-            .subscribe(
-                {
-                    goAsync().finish()
-                },
-                { error ->
-                    Timber.e("BlockThreadReceiver", "blocking failed")
-                    goAsync().finish()
-                }
-            )
+            .subscribeOn(Schedulers.io())
+            .doFinally { pendingResult.finish() }
+            .subscribe({}, { error -> Timber.e(error, "blocking failed") })
     }
 }

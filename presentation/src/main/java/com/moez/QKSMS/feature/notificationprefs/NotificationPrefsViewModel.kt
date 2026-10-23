@@ -28,9 +28,11 @@ import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.extensions.mapNotNull
+import io.openmessages.manager.NotificationManager
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -41,6 +43,7 @@ class NotificationPrefsViewModel @Inject constructor(
     private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val navigator: Navigator,
+    private val notificationManager: NotificationManager,
     private val prefs: Preferences
 ) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
@@ -117,12 +120,19 @@ class NotificationPrefsViewModel @Inject constructor(
     override fun bindView(view: NotificationPrefsView) {
         super.bindView(view)
 
+        // The channel of a conversation is made on demand, from the conversation's title
+        view.preferenceClickIntent
+                .filter { preferenceView -> preferenceView.id == R.id.notificationsO }
+                .observeOn(Schedulers.io())
+                .doOnNext { if (threadId != 0L) notificationManager.createNotificationChannel(threadId) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDispose(view.scope())
+                .subscribe { navigator.showNotificationChannel(threadId) }
+
         view.preferenceClickIntent
                 .autoDispose(view.scope())
                 .subscribe { preferenceView ->
                     when (preferenceView.id) {
-                        R.id.notificationsO -> navigator.showNotificationChannel(threadId)
-
                         R.id.notifications -> notifications.set(!notifications.get())
 
                         R.id.previews -> view.showPreviewModeDialog()

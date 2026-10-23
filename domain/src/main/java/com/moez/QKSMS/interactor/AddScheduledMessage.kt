@@ -28,7 +28,6 @@ import io.openmessages.repository.ScheduledMessageRepository
 import io.openmessages.util.Constants
 import io.openmessages.util.FileUtils
 import io.reactivex.Flowable
-import io.realm.RealmList
 import java.util.UUID
 import javax.inject.Inject
 
@@ -65,29 +64,27 @@ class AddScheduledMessage @Inject constructor(
             }
             .map { scheduledMessage ->
                 // step 2 - copy attachments to app local storage
-                scheduledMessage.attachments = RealmList(
-                    *params.attachments.map { attachmentUri ->
-                        try {
-                            // get filename of input uri or use random uuid on fail to get
-                            val filename = attachmentUri.getName(context) ?: UUID.randomUUID()
+                scheduledMessage.attachments = params.attachments.map { attachmentUri ->
+                    try {
+                        // get filename of input uri or use random uuid on fail to get
+                        val filename = attachmentUri.getName(context) ?: UUID.randomUUID()
 
-                            val (localUri, e) = FileUtils.createAndWrite(
-                                context,
-                                FileUtils.Location.Files,  // files dir so not deleted if app cache wiped by user
-                                "${Constants.SCHEDULED_MESSAGE_FILE_PREFIX}-${scheduledMessage.id}/" +
-                                                    "${UUID.randomUUID()}/${filename}",
-                                "",
-                                attachmentUri.getResourceBytes(context)
-                            )
-                            if (e is Exception)
-                                throw e
+                        val (localUri, e) = FileUtils.createAndWrite(
+                            context,
+                            FileUtils.Location.Files,  // files dir so not deleted if app cache wiped by user
+                            "${Constants.SCHEDULED_MESSAGE_FILE_PREFIX}-${scheduledMessage.id}/" +
+                                                "${UUID.randomUUID()}/${filename}",
+                            "",
+                            attachmentUri.getResourceBytes(context)
+                        )
+                        if (e is Exception)
+                            throw e
 
-                            localUri.toString()
-                        } catch (e: Exception) {
-                            attachmentUri.toString()  // on any error, use original uri string
-                        }
-                    }.toTypedArray()
-                )
+                        localUri.toString()
+                    } catch (e: Exception) {
+                        attachmentUri.toString()  // on any error, use original uri string
+                    }
+                }
 
                 // step 3 - update scheduled message with new attachment uris
                 scheduledMessageRepo.updateScheduledMessage(scheduledMessage)

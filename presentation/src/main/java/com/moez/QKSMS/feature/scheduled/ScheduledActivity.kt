@@ -78,7 +78,8 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
     }
 
     override fun render(state: ScheduledState) {
-        scheduledMessageAdapter.updateData(state.scheduledMessages)
+        scheduledMessageAdapter.contacts = state.contacts
+        state.scheduledMessages?.let { scheduledMessageAdapter.data = it }
 
         setTitle(when {
             (state.selectedMessages > 0) ->

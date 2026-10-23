@@ -22,14 +22,18 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDispose
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.repository.MessageContentFilterRepository
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MessageContentFiltersPresenter @Inject constructor(
     private val filterRepo: MessageContentFilterRepository,
-) : QkPresenter<MessageContentFiltersView, MessageContentFiltersState>(
-        MessageContentFiltersState(filters = filterRepo.getMessageContentFilters())
-) {
+) : QkPresenter<MessageContentFiltersView, MessageContentFiltersState>(MessageContentFiltersState()) {
+
+    init {
+        disposables += filterRepo.getMessageContentFilters()
+                .subscribe { filters -> newState { copy(filters = filters) } }
+    }
 
     override fun bindIntents(view: MessageContentFiltersView) {
         super.bindIntents(view)

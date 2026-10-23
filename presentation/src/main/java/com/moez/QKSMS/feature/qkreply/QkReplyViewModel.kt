@@ -25,11 +25,11 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.compat.SubscriptionManagerCompat
-import io.openmessages.extensions.asObservable
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.interactor.DeleteMessages
 import io.openmessages.interactor.MarkRead
 import io.openmessages.interactor.SendNewMessage
+import io.openmessages.model.Conversation
 import io.openmessages.model.Message
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
@@ -42,7 +42,6 @@ import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmResults
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
@@ -58,20 +57,32 @@ class QkReplyViewModel @Inject constructor(
     private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState(threadId = threadId)) {
 
-    private val conversation by lazy {
-        conversationRepo.getConversationAsync(threadId)
-                .asObservable()
-                .filter { it.isLoaded }
-                .filter { it.isValid }
-                .distinctUntilChanged()
-    }
+    private val conversation: Subject<Conversation> = BehaviorSubject.create()
 
-    private val messages: Subject<RealmResults<Message>> =
-            BehaviorSubject.createDefault(messageRepo.getUnreadMessages(threadId))
+    /**
+     * Whether every message of the conversation is shown, rather than the unread ones only
+     */
+    private val expanded: Subject<Boolean> = BehaviorSubject.createDefault(false)
+
+    private val messages: Subject<List<Message>> = BehaviorSubject.create()
 
     init {
         disposables += markRead
         disposables += sendNewMessage
+
+        disposables += conversationRepo.observeConversation(threadId)
+                .mapNotNull { conversation -> conversation.value }
+                .distinctUntilChanged()
+                .subscribe(conversation::onNext)
+
+        disposables += expanded
+                .switchMap { expanded ->
+                    when (expanded) {
+                        true -> messageRepo.getMessages(threadId)
+                        false -> messageRepo.observeUnreadMessages(threadId)
+                    }
+                }
+                .subscribe(messages::onNext)
 
         // When the set of messages changes, update the state
         // If we're ever showing an empty set of messages, then it's time to shut down to activity
@@ -80,9 +91,6 @@ class QkReplyViewModel @Inject constructor(
                     newState { copy(data = Pair(conversation, messages)) }
                     messages
                 }
-                .switchMap { messages -> messages.asObservable() }
-                .filter { it.isLoaded }
-                .filter { it.isValid }
                 .filter { it.isEmpty() }
                 .subscribe { newState { copy(hasError = true) } }
 
@@ -135,18 +143,20 @@ class QkReplyViewModel @Inject constructor(
         // Show all messages
         view.menuItemIntent
                 .filter { id -> id == R.id.expand }
-                .map { messageRepo.getMessages(threadId) }
-                .doOnNext(messages::onNext)
                 .autoDispose(view.scope())
-                .subscribe { newState { copy(expanded = true) } }
+                .subscribe {
+                    expanded.onNext(true)
+                    newState { copy(expanded = true) }
+                }
 
         // Show unread messages only
         view.menuItemIntent
                 .filter { id -> id == R.id.collapse }
-                .map { messageRepo.getUnreadMessages(threadId) }
-                .doOnNext(messages::onNext)
                 .autoDispose(view.scope())
-                .subscribe { newState { copy(expanded = false) } }
+                .subscribe {
+                    expanded.onNext(false)
+                    newState { copy(expanded = false) }
+                }
 
         // Delete new messages
         view.menuItemIntent

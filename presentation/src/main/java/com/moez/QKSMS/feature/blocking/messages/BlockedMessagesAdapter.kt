@@ -25,8 +25,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import io.openmessages.R
 import io.openmessages.common.base.QkBindingViewHolder
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.databinding.BlockedListItemBinding
 import io.openmessages.model.Conversation
@@ -37,7 +38,7 @@ import javax.inject.Inject
 class BlockedMessagesAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter
-) : QkRealmAdapter<Conversation, QkBindingViewHolder<BlockedListItemBinding>>() {
+) : QkAdapter<Conversation, QkBindingViewHolder<BlockedListItemBinding>>() {
 
     val clicks: PublishSubject<Long> = PublishSubject.create()
 
@@ -52,14 +53,14 @@ class BlockedMessagesAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val conversation = getItem(adapterPosition) ?: return@setOnClickListener
+                val conversation = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
                     true -> binding.root.isActivated = isSelected(conversation.id)
                     false -> clicks.onNext(conversation.id)
                 }
             }
             binding.root.setOnLongClickListener {
-                val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
+                val conversation = getItemOrNull(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(conversation.id)
                 binding.root.isActivated = isSelected(conversation.id)
                 true
@@ -68,7 +69,7 @@ class BlockedMessagesAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkBindingViewHolder<BlockedListItemBinding>, position: Int) {
-        val conversation = getItem(position) ?: return
+        val conversation = getItem(position)
         val binding = holder.binding
 
         holder.itemView.isActivated = isSelected(conversation.id)
@@ -90,8 +91,11 @@ class BlockedMessagesAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        val conversation = getItem(position)
-        return if (conversation?.unread == false) 1 else 0
+        return if (getItem(position).unread) 0 else 1
     }
+
+    override fun areItemsTheSame(old: Conversation, new: Conversation) = old.id == new.id
+
+    override fun areContentsTheSame(old: Conversation, new: Conversation) = old.looksLike(new)
 
 }

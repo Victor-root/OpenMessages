@@ -203,7 +203,7 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
                         }
 
                         // Create/refresh the conversation row *before* applying the block/flag
-                        // state. A message from a brand-new sender has no Realm conversation yet at
+                        // state. A message from a brand-new sender has no conversation row yet at
                         // this point, so marking it blocked/flagged first would no-op and the row
                         // created afterwards would default to not-blocked, letting spam through.
                         //
