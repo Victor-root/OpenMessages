@@ -487,7 +487,7 @@ class MainActivity : QkThemedActivity(), MainView {
                         else getString(R.string.main_title_selected, state.page.selected)
                 if (binding.recyclerView.adapter !== conversationsAdapter)
                     binding.recyclerView.adapter = conversationsAdapter
-                conversationsAdapter.updateData(state.page.data)
+                state.page.data?.let { conversationsAdapter.data = it }
                 itemTouchHelper.attachToRecyclerView(binding.recyclerView)
                 binding.empty.setText(R.string.inbox_empty_text)
             }
@@ -508,7 +508,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 }
                 if (binding.recyclerView.adapter !== conversationsAdapter)
                     binding.recyclerView.adapter = conversationsAdapter
-                conversationsAdapter.updateData(state.page.data)
+                state.page.data?.let { conversationsAdapter.data = it }
                 itemTouchHelper.attachToRecyclerView(null)
                 binding.empty.setText(R.string.archived_empty_text)
             }
@@ -699,12 +699,8 @@ class MainActivity : QkThemedActivity(), MainView {
         binding.toolbarSearch.setVisible(isSearching || (isInbox && searchExpanded))
         binding.toolbarSearchIcon.setVisible(showInboxIcons)
         binding.toolbarLogoGroup.setVisible(!isSearching && !(isInbox && searchExpanded))
-        // Counted by Realm rather than by walking the list. This runs on every change to the list
-        // and on every redraw of the screen, and counting in Kotlin built a Conversation object per
-        // row just to read one flag. "unread" is lastMessage.read == false, the same query the
-        // conversation repository already uses for it.
         val unreadCount = if (showInboxIcons) {
-            (state.page as? Inbox)?.data?.where()?.equalTo("lastMessage.read", false)?.count()?.toInt() ?: 0
+            (state.page as? Inbox)?.data?.count { conversation -> conversation.unread } ?: 0
         } else 0
         if (showInboxIcons) {
             binding.toolbarUnreadCount.text = "$unreadCount"
@@ -719,7 +715,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
     private fun scrollToNextUnread() {
         val unreadPositions = (0 until conversationsAdapter.itemCount)
-            .filter { conversationsAdapter.getItem(it)?.unread == true }
+            .filter { conversationsAdapter.getItem(it).unread }
         if (unreadPositions.isEmpty()) return
 
         val targetPos = unreadPositions[nextUnreadIndex % unreadPositions.size]

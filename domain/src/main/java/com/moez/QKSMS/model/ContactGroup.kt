@@ -18,12 +18,16 @@
  */
 package io.openmessages.model
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 
-open class ContactGroup(
+@Entity(tableName = "contact_group")
+data class ContactGroup(
     @PrimaryKey var id: Long = 0,
-    var title: String = "",
-    var contacts: RealmList<Contact> = RealmList()
-) : RealmObject()
+    var title: String = ""
+) {
+
+    @Ignore var contacts: List<Contact> = emptyList()
+
+}

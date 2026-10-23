@@ -64,3 +64,15 @@ fun Conversation.getThemedIcon(context: Context, width: Int, height: Int): IconC
         IconCompat.createWithResource(context, R.mipmap.ic_shortcut_people)
     }
 }
+
+/**
+ * Whether a row showing this conversation shows the same thing as one showing [other]: what it
+ * shows comes from the conversation, its last message and the contacts of its recipients
+ */
+fun Conversation.looksLike(other: Conversation): Boolean {
+    return this == other &&
+            lastMessage == other.lastMessage &&
+            lastMessage?.parts == other.lastMessage?.parts &&
+            recipients == other.recipients &&
+            recipients.map { it.contact } == other.recipients.map { it.contact }
+}

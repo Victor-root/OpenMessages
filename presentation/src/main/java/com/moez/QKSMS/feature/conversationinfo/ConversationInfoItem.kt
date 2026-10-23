@@ -2,7 +2,6 @@ package io.openmessages.feature.conversationinfo
 
 import io.openmessages.model.MmsPart
 import io.openmessages.model.Recipient
-import io.realm.RealmList
 
 sealed class ConversationInfoItem {
 
@@ -10,7 +9,7 @@ sealed class ConversationInfoItem {
 
     data class ConversationInfoSettings(
         val name: String,
-        val recipients: RealmList<Recipient>,
+        val recipients: List<Recipient>,
         val archived: Boolean,
         val blocked: Boolean
     ) : ConversationInfoItem()

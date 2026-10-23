@@ -35,13 +35,10 @@ import io.openmessages.injection.AppComponentManager
 import io.openmessages.injection.appComponent
 import io.openmessages.interactor.SpeakThreads
 import io.openmessages.migration.QkMigration
-import io.openmessages.migration.QkRealmMigration
 import io.openmessages.util.NightModeManager
 import io.openmessages.util.Preferences
 import io.openmessages.worker.AutoBackupWorker
 import io.openmessages.worker.HousekeepingWorker
-import io.realm.Realm
-import io.realm.RealmConfiguration
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -57,7 +54,6 @@ class QKApplication : Application(), HasAndroidInjector {
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
     @Inject lateinit var prefs: Preferences
-    @Inject lateinit var realmMigration: QkRealmMigration
     @Inject lateinit var workerFactory: WorkerFactory
 
     override fun onCreate() {
@@ -68,13 +64,6 @@ class QKApplication : Application(), HasAndroidInjector {
 
         AppComponentManager.init(this)
         appComponent.inject(this)
-
-        Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration.Builder()
-                .compactOnLaunch()
-                .migration(realmMigration)
-                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
-                .build())
 
         qkMigration.performMigration()
 

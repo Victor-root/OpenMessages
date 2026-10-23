@@ -37,8 +37,8 @@ import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.extensions.Optional
-import io.openmessages.extensions.asObservable
 import io.openmessages.extensions.mapNotNull
+import io.openmessages.model.Conversation
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.util.PhoneNumberUtils
@@ -75,15 +75,25 @@ abstract class QkThemedActivity : QkActivity() {
     val theme: Observable<Colors.Theme> = threadId
             .distinctUntilChanged()
             .switchMap { threadId ->
-                val conversation = conversationRepo.getConversation(threadId)
+                // 0 is no conversation, so the default theme can be applied before the first frame
+                // rather than once the database has answered
+                when (threadId) {
+                    0L -> Observable.just(Optional<Conversation>(null))
+
+                    else -> conversationRepo.observeConversation(threadId)
+                            .distinctUntilChanged { old, new -> old.value?.recipients == new.value?.recipients }
+                            .observeOn(AndroidSchedulers.mainThread())
+                }
+            }
+            .switchMap { (conversation) ->
                 when {
                     conversation == null -> Observable.just(Optional(null))
 
                     conversation.recipients.size == 1 -> Observable.just(Optional(conversation.recipients.first()))
 
-                    else -> messageRepo.getLastIncomingMessage(conversation.id)
-                            .asObservable()
-                            .mapNotNull { messages -> messages.firstOrNull() }
+                    else -> messageRepo.observeLastIncomingMessage(conversation.id)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .mapNotNull { message -> message.value }
                             .distinctUntilChanged { message -> message.address }
                             .mapNotNull { message ->
                                 conversation.recipients.find { recipient ->

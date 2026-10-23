@@ -9,8 +9,11 @@ import io.openmessages.common.base.QkViewModel
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.interactor.DeleteScheduledMessages
 import io.openmessages.interactor.SendScheduledMessage
+import io.openmessages.repository.ContactRepository
 import io.openmessages.repository.ScheduledMessageRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
@@ -19,16 +22,23 @@ class ScheduledViewModel @Inject constructor(
     @Named("conversationId") private val conversationId: Long?,
     private val context: Context,
     private val navigator: Navigator,
+    private val contactRepo: ContactRepository,
     private val scheduledMessageRepo: ScheduledMessageRepository,
     private val sendScheduledMessageInteractor: SendScheduledMessage,
     private val deleteScheduledMessagesInteractor: DeleteScheduledMessages,
-) : QkViewModel<ScheduledView, ScheduledState>(ScheduledState(
-    scheduledMessages = scheduledMessageRepo.getScheduledMessages(),
-    conversationId = conversationId
-)) {
+) : QkViewModel<ScheduledView, ScheduledState>(ScheduledState(conversationId = conversationId)) {
 
     init {
-        loadMessages(conversationId)
+        val messages = if (conversationId != null)
+            scheduledMessageRepo.getScheduledMessagesForConversation(conversationId)
+        else
+            scheduledMessageRepo.getScheduledMessages()
+
+        disposables += messages
+            .subscribe { messages -> newState { copy(scheduledMessages = messages) } }
+
+        disposables += contactRepo.observeContacts()
+            .subscribe { contacts -> newState { copy(contacts = contacts) } }
     }
 
     override fun bindView(view: ScheduledView) {
@@ -49,23 +59,21 @@ class ScheduledViewModel @Inject constructor(
         // show the delete message dialog if one or more messages selected
         view.optionsItemIntent
             .filter { it == R.id.delete }
-            .withLatestFrom(view.messagesSelectedIntent) { _, selectedMessages ->
-                selectedMessages }
-            .autoDispose(view.scope())
-            .subscribe { it ->
-                val ids = it.mapNotNull(scheduledMessageRepo::getScheduledMessage)
+            .withLatestFrom(view.messagesSelectedIntent, state) { _, selectedMessages, state ->
+                state.scheduledMessages.orEmpty()
+                    .filter { it.id in selectedMessages }
                     .map { it.id }
-                view.showDeleteDialog(ids)
             }
+            .autoDispose(view.scope())
+            .subscribe(view::showDeleteDialog)
 
 
         // copy the selected message text to the clipboard
         view.optionsItemIntent
             .filter { it == R.id.copy }
-            .withLatestFrom(view.messagesSelectedIntent) { _, selectedMessageIds ->
-                selectedMessageIds  // same order as messages on screen
-                    .mapNotNull(scheduledMessageRepo::getScheduledMessage)
-                    .sortedBy { it.date }
+            .withLatestFrom(view.messagesSelectedIntent, state) { _, selectedMessageIds, state ->
+                state.scheduledMessages.orEmpty()  // same order as messages on screen
+                    .filter { it.id in selectedMessageIds }
                     .let { scheduledMessages ->
                         ClipboardUtils.copy(
                             context,
@@ -154,13 +162,5 @@ class ScheduledViewModel @Inject constructor(
                 navigator.showCompose(mode = "scheduling")
                 view.clearSelection()
             }
-    }
-
-    private fun loadMessages(conversationId: Long?) {
-        val results = if (conversationId != null)
-            scheduledMessageRepo.getScheduledMessagesForConversation(conversationId)
-        else
-            scheduledMessageRepo.getScheduledMessages()
-        newState { copy(scheduledMessages = results) }
     }
 }

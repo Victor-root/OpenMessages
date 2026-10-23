@@ -18,7 +18,6 @@
  */
 plugins {
     id("com.android.library")
-    id("realm-android") // Realm needs to be before Kotlin or the build will fail
     id("kotlin-android")
     id("kotlin-kapt")
 }
@@ -47,9 +46,8 @@ dependencies {
     kapt(libs.dagger.compiler)
     implementation(libs.javax.annotation.api)
 
-    // realm
-    kapt(libs.realm.annotations)
-    kapt(libs.realm.annotations.processor)
+    // room
+    implementation(libs.room.common)
 
     // rxjava
     implementation(libs.rxandroid)

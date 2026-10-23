@@ -19,16 +19,22 @@
 package io.openmessages.model
 
 import android.telephony.PhoneNumberUtils
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import java.util.Locale
 
-open class Recipient(
+@Entity(tableName = "recipient", indices = [Index("contactLookupKey")])
+data class Recipient(
     @PrimaryKey var id: Long = 0,
     var address: String = "",
-    var contact: Contact? = null,
+    /** The [Contact.lookupKey] of the contact this address belongs to, if any */
+    var contactLookupKey: String? = null,
     var lastUpdate: Long = 0
-) : RealmObject() {
+) {
+
+    @Ignore var contact: Contact? = null
 
     /**
      * Return a string that can be displayed to represent the name of this contact

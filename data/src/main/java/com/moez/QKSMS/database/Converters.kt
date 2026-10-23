@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2026 OpenMessages contributors
  *
  * This file is part of Open Messages.
  *
@@ -16,27 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.openmessages.common.util
+package io.openmessages.database
 
-import androidx.lifecycle.LiveData
-import io.realm.RealmChangeListener
-import io.realm.RealmModel
-import io.realm.RealmResults
+import androidx.room.TypeConverter
+import org.json.JSONArray
 
-class LiveRealmData<T : RealmModel>(private val results: RealmResults<T>) : LiveData<RealmResults<T>>() {
+/**
+ * Stores a list of strings, such as the recipients and attachments of a scheduled message, as a
+ * JSON array, which keeps any character an address or a URI can hold.
+ */
+class Converters {
 
-    private val listener: RealmChangeListener<RealmResults<T>> = RealmChangeListener { results ->
-        value = results
-    }
+    @TypeConverter
+    fun fromStringList(values: List<String>): String = JSONArray(values).toString()
 
-    override fun onActive() {
-        super.onActive()
-        results.addChangeListener(listener)
-    }
-
-    override fun onInactive() {
-        super.onInactive()
-        results.removeChangeListener(listener)
+    @TypeConverter
+    fun toStringList(json: String): List<String> {
+        val array = JSONArray(json)
+        return List(array.length()) { index -> array.getString(index) }
     }
 
 }

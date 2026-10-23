@@ -19,12 +19,12 @@
 package io.openmessages.repository
 
 import android.net.Uri
+import io.openmessages.extensions.Optional
 import io.openmessages.model.Attachment
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
 import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.realm.RealmResults
 
 interface MessageRepository {
     sealed class DeduplicationProgress {
@@ -40,31 +40,35 @@ interface MessageRepository {
 
     val deduplicationProgress: Observable<DeduplicationProgress>
 
-    fun getMessages(threadId: Long, query: String = ""): RealmResults<Message>
+    fun getMessages(threadId: Long, query: String = ""): Observable<List<Message>>
 
-    fun getMessagesSync(threadId: Long, query: String = ""): RealmResults<Message>
+    fun getMessagesSync(threadId: Long, query: String = ""): List<Message>
 
     fun getMessage(messageId: Long): Message?
 
-    fun getUnmanagedMessage(messageId: Long): Message?
-
-    fun getMessages(messageIds: Collection<Long>): RealmResults<Message>
+    fun getMessages(messageIds: Collection<Long>): List<Message>
 
     fun getMessageForPart(id: Long): Message?
 
-    fun getLastIncomingMessage(threadId: Long): RealmResults<Message>
+    /**
+     * The latest message received in the conversation as it changes, or an empty [Optional] while
+     * nothing has been received in it
+     */
+    fun observeLastIncomingMessage(threadId: Long): Observable<Optional<Message>>
 
     fun getUnreadCount(): Long
 
     fun getPart(id: Long): MmsPart?
 
-    fun getPartsForConversation(threadId: Long): RealmResults<MmsPart>
+    fun getPartsForConversation(threadId: Long): Observable<List<MmsPart>>
 
     fun savePart(id: Long): Uri?
 
-    fun getUnreadUnseenMessages(threadId: Long): RealmResults<Message>
+    fun getUnreadUnseenMessages(threadId: Long): List<Message>
 
-    fun getUnreadMessages(threadId: Long): RealmResults<Message>
+    fun getUnreadMessages(threadId: Long): List<Message>
+
+    fun observeUnreadMessages(threadId: Long): Observable<List<Message>>
 
     fun markAllSeen(): Int
 

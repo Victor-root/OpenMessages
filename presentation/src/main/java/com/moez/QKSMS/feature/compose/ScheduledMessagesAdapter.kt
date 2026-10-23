@@ -23,7 +23,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
 import io.openmessages.common.base.QkBindingViewHolder
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -45,7 +45,7 @@ class ScheduledMessagesAdapter @Inject constructor(
     private val context: Context,
     private val colors: Colors,
     private val dateFormatter: DateFormatter
-) : QkRealmAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageBubbleBinding>>() {
+) : QkAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageBubbleBinding>>() {
 
     /** Emits the id of the scheduled message tapped, so the screen can offer to act on it. */
     val clicks: Subject<Long> = PublishSubject.create()
@@ -57,14 +57,14 @@ class ScheduledMessagesAdapter @Inject constructor(
         val binding = ScheduledMessageBubbleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val message = getItem(adapterPosition) ?: return@setOnClickListener
+                val message = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 clicks.onNext(message.id)
             }
         }
     }
 
     override fun onBindViewHolder(holder: QkBindingViewHolder<ScheduledMessageBubbleBinding>, position: Int) {
-        val message = getItem(position) ?: return
+        val message = getItemOrNull(position) ?: return
 
         // Outgoing colours: a scheduled message is always one of the user's own.
         val theme = colors.theme()

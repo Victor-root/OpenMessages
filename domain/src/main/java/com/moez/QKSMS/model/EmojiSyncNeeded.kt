@@ -18,8 +18,11 @@
  */
 package io.openmessages.model
 
-import io.realm.RealmObject
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-open class EmojiSyncNeeded : RealmObject() {
+@Entity(tableName = "emoji_sync_needed")
+data class EmojiSyncNeeded(
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var createdAt: Long = System.currentTimeMillis()
-}
+)

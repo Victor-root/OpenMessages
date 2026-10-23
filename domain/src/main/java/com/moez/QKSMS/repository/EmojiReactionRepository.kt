@@ -19,24 +19,19 @@
 package io.openmessages.repository
 
 import io.openmessages.model.Message
-import io.realm.Realm
 
 data class ParsedEmojiReaction(val emoji: String, val originalMessage: String, val isRemoval: Boolean = false)
 
 interface EmojiReactionRepository {
     fun parseEmojiReaction(body: String): ParsedEmojiReaction?
 
-    fun findTargetMessage(threadId: Long, originalMessageText: String, realm: Realm): Message?
+    fun findTargetMessage(threadId: Long, originalMessageText: String): Message?
 
     fun saveEmojiReaction(
         reactionMessage: Message,
         parsedReaction: ParsedEmojiReaction,
         targetMessage: Message?,
-        realm: Realm,
     )
 
-    fun deleteAndReparseAllEmojiReactions(
-        realm: Realm,
-        onProgress: (SyncRepository.SyncProgress) -> Unit
-    )
+    fun deleteAndReparseAllEmojiReactions(onProgress: (SyncRepository.SyncProgress) -> Unit)
 }

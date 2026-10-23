@@ -31,11 +31,12 @@ import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkBindingViewHolder
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.isPictureSummary
 import io.openmessages.common.util.extensions.localiseSummary
+import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.ConversationListItemBinding
@@ -50,7 +51,7 @@ class ConversationsAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkRealmAdapter<Conversation, QkBindingViewHolder<ConversationListItemBinding>>() {
+) : QkAdapter<Conversation, QkBindingViewHolder<ConversationListItemBinding>>() {
     private val disposables = CompositeDisposable()
 
     var hasScheduledConversation: Set<Long> = emptySet()
@@ -86,14 +87,14 @@ class ConversationsAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val conversation = getItem(adapterPosition) ?: return@setOnClickListener
+                val conversation = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
                     true -> binding.root.isActivated = isSelected(conversation.id)
                     false -> navigator.showConversation(conversation.id)
                 }
             }
             binding.root.setOnLongClickListener {
-                val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
+                val conversation = getItemOrNull(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(conversation.id)
                 binding.root.isActivated = isSelected(conversation.id)
                 true
@@ -102,7 +103,7 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkBindingViewHolder<ConversationListItemBinding>, position: Int) {
-        val conversation = getItem(position) ?: return
+        val conversation = getItemOrNull(position) ?: return
         val binding = holder.binding
 
         // If the last message wasn't incoming, then the colour doesn't really matter anyway
@@ -164,16 +165,20 @@ class ConversationsAdapter @Inject constructor(
         binding.unread.setTint(theme)
     }
 
+    override fun areItemsTheSame(old: Conversation, new: Conversation) = old.id == new.id
+
+    override fun areContentsTheSame(old: Conversation, new: Conversation) = old.looksLike(new)
+
     override fun getItemId(position: Int): Long {
-        return getItem(position)?.id ?: -1
+        return getItemOrNull(position)?.id ?: -1
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position)?.unread == false) 0 else 1
+        return if (getItemOrNull(position)?.unread == false) 0 else 1
     }
 
     /** Whether the conversation at [position] is currently unread, for state-aware swipe icons. */
-    fun unreadAt(position: Int): Boolean = getItem(position)?.unread == true
+    fun unreadAt(position: Int): Boolean = getItemOrNull(position)?.unread == true
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)

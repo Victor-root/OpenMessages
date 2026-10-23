@@ -42,7 +42,7 @@ import androidx.core.net.toUri
 import com.jakewharton.rxbinding2.view.clicks
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.R
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
@@ -73,7 +73,6 @@ import io.openmessages.util.Preferences
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.RealmResults
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -88,7 +87,7 @@ class MessagesAdapter @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val textViewStyler: TextViewStyler,
-) : QkRealmAdapter<Message, QkViewHolder>() {
+) : QkAdapter<Message, QkViewHolder>() {
     class AudioState(
         var partId: Long = -1,
         var state: QkMediaPlayer.PlayingState = QkMediaPlayer.PlayingState.Stopped,
@@ -112,21 +111,27 @@ class MessagesAdapter @Inject constructor(
     val partContextMenuRegistrar: Subject<View> = PublishSubject.create()
     val reactionClicks: Subject<Long> = PublishSubject.create()
 
-    var data: Pair<Conversation, RealmResults<Message>>? = null
+    /**
+     * The conversation the messages belong to
+     */
+    var conversation: Conversation? = null
         set(value) {
             if (field === value) return
 
             field = value
             contactCache.clear()
-
-            updateData(value?.second)
         }
 
     /**
-     * Safely return the conversation, if available
+     * Mark this message as highlighted
      */
-    private val conversation: Conversation?
-        get() = data?.first?.takeIf { it.isValid }
+    var highlight: Long = -1L
+        set(value) {
+            if (field == value) return
+
+            field = value
+            notifyDataSetChanged()
+        }
 
     private val contactCache = ContactCache()
     private val expanded = HashMap<Long, Boolean>()
@@ -170,7 +175,7 @@ class MessagesAdapter @Inject constructor(
 
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                getItem(adapterPosition)?.let {
+                getItemOrNull(adapterPosition)?.let {
                     when (toggleSelection(it.id, false)) {
                         true -> view.isActivated = isSelected(it.id)
                         false -> {
@@ -181,7 +186,7 @@ class MessagesAdapter @Inject constructor(
                 }
             }
             view.setOnLongClickListener {
-                getItem(adapterPosition)?.let {
+                getItemOrNull(adapterPosition)?.let {
                     toggleSelection(it.id)
                     view.isActivated = isSelected(it.id)
                 }
@@ -191,9 +196,9 @@ class MessagesAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val message = getItem(position) ?: return
-        val previous = if (position == 0) null else getItem(position - 1)
-        val next = if (position == itemCount - 1) null else getItem(position + 1)
+        val message = getItemOrNull(position) ?: return
+        val previous = if (position == 0) null else getItemOrNull(position - 1)
+        val next = if (position == itemCount - 1) null else getItemOrNull(position + 1)
 
         val theme = when (message.isOutgoingMessage()) {
             true -> colors.theme()
@@ -510,12 +515,17 @@ class MessagesAdapter @Inject constructor(
         }
     }
 
+    override fun areItemsTheSame(old: Message, new: Message) = old.id == new.id
+
+    override fun areContentsTheSame(old: Message, new: Message) =
+        old == new && old.parts == new.parts && old.emojiReactions == new.emojiReactions
+
     override fun getItemId(position: Int): Long {
-        return getItem(position)?.id ?: -1
+        return getItemOrNull(position)?.id ?: -1
     }
 
     override fun getItemViewType(position: Int): Int {
-        val message = getItem(position) ?: return -1
+        val message = getItemOrNull(position) ?: return -1
         return when (message.isMe()) {
             true -> VIEW_TYPE_MESSAGE_OUT
             false -> VIEW_TYPE_MESSAGE_IN
@@ -533,15 +543,13 @@ class MessagesAdapter @Inject constructor(
      */
     private inner class ContactCache : HashMap<String, Recipient?>() {
         override fun get(key: String): Recipient? {
-            if (super.get(key)?.isValid != true)
-                set(
-                    key,
-                    conversation?.recipients?.firstOrNull {
-                        phoneNumberUtils.compare(it.address, key)
-                    }
-                )
+            if (!containsKey(key)) {
+                put(key, conversation?.recipients?.firstOrNull {
+                    phoneNumberUtils.compare(it.address, key)
+                })
+            }
 
-            return super.get(key)?.takeIf { it.isValid }
+            return super.get(key)
         }
 
     }

@@ -1,10 +1,11 @@
 package io.openmessages.model
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-open class BlockedNumber(
+@Entity(tableName = "blocked_number")
+data class BlockedNumber(
         @PrimaryKey var id: Long = 0,
 
         var address: String = ""
-) : RealmObject()
+)

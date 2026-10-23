@@ -24,6 +24,7 @@ import io.openmessages.common.base.QkPresenter
 import io.openmessages.interactor.MarkUnblocked
 import io.openmessages.repository.BlockingRepository
 import io.openmessages.repository.ConversationRepository
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -31,9 +32,12 @@ class BlockedNumbersPresenter @Inject constructor(
     private val blockingRepo: BlockingRepository,
     private val conversationRepo: ConversationRepository,
     private val markUnblocked: MarkUnblocked
-) : QkPresenter<BlockedNumbersView, BlockedNumbersState>(
-        BlockedNumbersState(numbers = blockingRepo.getBlockedNumbers())
-) {
+) : QkPresenter<BlockedNumbersView, BlockedNumbersState>(BlockedNumbersState()) {
+
+    init {
+        disposables += blockingRepo.getBlockedNumbers()
+                .subscribe { numbers -> newState { copy(numbers = numbers) } }
+    }
 
     override fun bindIntents(view: BlockedNumbersView) {
         super.bindIntents(view)

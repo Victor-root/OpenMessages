@@ -18,16 +18,16 @@
  */
 package io.openmessages.repository
 
+import io.openmessages.extensions.Optional
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
 import io.openmessages.model.SearchResult
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.realm.RealmResults
 
 interface ConversationRepository {
 
-    fun getConversations(unreadAtTop: Boolean, archived: Boolean = false): RealmResults<Conversation>
+    fun getConversations(unreadAtTop: Boolean, archived: Boolean = false): Observable<List<Conversation>>
 
     fun getConversationsSnapshot(unreadAtTop: Boolean): List<Conversation>
 
@@ -37,11 +37,15 @@ interface ConversationRepository {
 
     fun searchConversations(query: CharSequence): List<SearchResult>
 
-    fun getBlockedConversations(): RealmResults<Conversation>
+    fun getBlockedConversations(): List<Conversation>
 
-    fun getBlockedConversationsAsync(): RealmResults<Conversation>
+    fun observeBlockedConversations(): Observable<List<Conversation>>
 
-    fun getConversationAsync(threadId: Long): Conversation
+    /**
+     * The conversation as it changes, or an empty [Optional] for as long as there is none with
+     * this id, which is also what a deleted conversation turns into
+     */
+    fun observeConversation(threadId: Long): Observable<Optional<Conversation>>
 
     fun getConversation(threadId: Long): Conversation?
 
@@ -53,11 +57,11 @@ interface ConversationRepository {
 
     fun getConversationAndLastSenderContactName(threadId: Long): Pair<Conversation?, String?>?
 
-    fun getConversations(vararg threadIds: Long): RealmResults<Conversation>
+    fun getConversations(vararg threadIds: Long): List<Conversation>
 
     fun getUnmanagedConversations(): Observable<List<Conversation>>
 
-    fun getRecipients(): RealmResults<Recipient>
+    fun getRecipients(): List<Recipient>
 
     fun getUnmanagedRecipients(): Observable<List<Recipient>>
 

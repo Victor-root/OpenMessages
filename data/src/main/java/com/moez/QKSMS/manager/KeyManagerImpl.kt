@@ -18,13 +18,12 @@
  */
 package io.openmessages.manager
 
-import io.openmessages.model.Message
-import io.realm.Realm
+import io.openmessages.database.AppDatabase
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class KeyManagerImpl @Inject constructor() : KeyManager {
+class KeyManagerImpl @Inject constructor(private val db: AppDatabase) : KeyManager {
 
     private var initialized = false
     private var maxValue: Long = 0
@@ -42,9 +41,7 @@ class KeyManagerImpl @Inject constructor() : KeyManager {
      */
     override fun newId(): Long {
         if (!initialized) {
-            maxValue = Realm.getDefaultInstance().use { realm ->
-                realm.where(Message::class.java).max("id")?.toLong() ?: 0L
-            }
+            maxValue = db.messageDao().getMaxId() ?: 0L
             initialized = true
         }
 

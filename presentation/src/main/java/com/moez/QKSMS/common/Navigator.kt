@@ -322,12 +322,11 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
+    /**
+     * Opens the system settings of the notification channel of [threadId], which must exist by then
+     */
     fun showNotificationChannel(threadId: Long = 0) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (threadId != 0L) {
-                notificationManager.createNotificationChannel(threadId)
-            }
-
             val channelId = notificationManager.buildNotificationChannelId(threadId)
             val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, channelId)

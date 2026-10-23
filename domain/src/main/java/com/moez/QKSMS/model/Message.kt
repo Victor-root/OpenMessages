@@ -24,12 +24,51 @@ import android.provider.Telephony.Mms
 import android.provider.Telephony.MmsSms
 import android.provider.Telephony.Sms
 import io.openmessages.extensions.joinTo
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
-open class Message : RealmObject() {
+@Entity(tableName = "message", indices = [Index("threadId", "date"), Index("type", "contentId")])
+data class Message(
+    @PrimaryKey var id: Long = 0,
+
+    var threadId: Long = 0,
+
+    // The MMS-SMS content provider returns messages where duplicate ids can exist. This is because
+    // SMS and MMS are stored in separate tables. We can't use these ids as our message id since
+    // it's our primary key for the single message object, so we'll store the original id in case
+    // we need to access the original message item in the content provider
+    var contentId: Long = 0,
+    var address: String = "",
+    var boxId: Int = 0,
+    var type: String = "",
+    var date: Long = 0,
+    var dateSent: Long = 0,
+    var seen: Boolean = false,
+    var read: Boolean = false,
+    var locked: Boolean = false,
+    var subId: Int = -1,
+
+    // SMS only
+    var body: String = "",
+    var errorCode: Int = 0,
+    var deliveryStatus: Int = Sms.STATUS_NONE,
+
+    // MMS only
+    var attachmentTypeString: String = AttachmentType.NOT_LOADED.toString(),
+    var mmsDeliveryStatusString: String = "",
+    var readReportString: String = "",
+    var errorType: Int = 0,
+    var messageSize: Int = 0,
+    var messageType: Int = 0,
+    var mmsStatus: Int = 0,
+    var subject: String = "",
+    var textContentType: String = "",
+    var isEmojiReaction: Boolean = false,
+
+    var sendAsGroup: Boolean = false
+) {
     companion object {
         const val TYPE_SMS = "sms"
         const val TYPE_MMS = "mms"
@@ -37,51 +76,14 @@ open class Message : RealmObject() {
 
     enum class AttachmentType { TEXT, IMAGE, VIDEO, AUDIO, SLIDESHOW, NOT_LOADED }
 
-    @PrimaryKey var id: Long = 0
-
-    @Index var threadId: Long = 0
-
-    // The MMS-SMS content provider returns messages where duplicate ids can exist. This is because
-    // SMS and MMS are stored in separate tables. We can't use these ids as our realm message id
-    // since it's our primary key for the single message object, so we'll store the original id in
-    // case we need to access the original message item in the content provider
-    var contentId: Long = 0
-    var address: String = ""
-    var boxId: Int = 0
-    var type: String = ""
-    var date: Long = 0
-    var dateSent: Long = 0
-    var seen: Boolean = false
-    var read: Boolean = false
-    var locked: Boolean = false
-    var subId: Int = -1
-
-    // SMS only
-    var body: String = ""
-    var errorCode: Int = 0
-    var deliveryStatus: Int = Sms.STATUS_NONE
-
-    // MMS only
-    var attachmentTypeString: String = AttachmentType.NOT_LOADED.toString()
     var attachmentType: AttachmentType
         get() = AttachmentType.valueOf(attachmentTypeString)
         set(value) {
             attachmentTypeString = value.toString()
         }
 
-    var mmsDeliveryStatusString: String = ""
-    var readReportString: String = ""
-    var errorType: Int = 0
-    var messageSize: Int = 0
-    var messageType: Int = 0
-    var mmsStatus: Int = 0
-    var subject: String = ""
-    var textContentType: String = ""
-    var parts: RealmList<MmsPart> = RealmList()
-    var isEmojiReaction: Boolean = false
-    val emojiReactions: RealmList<EmojiReaction> = RealmList()
-
-    var sendAsGroup: Boolean = false
+    @Ignore var parts: List<MmsPart> = emptyList()
+    @Ignore var emojiReactions: List<EmojiReaction> = emptyList()
 
     fun getUri(): Uri {
         if (contentId == 0L)

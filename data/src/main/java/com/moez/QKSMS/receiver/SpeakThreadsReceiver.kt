@@ -24,6 +24,7 @@ import android.content.Intent
 import dagger.android.AndroidInjection
 import io.openmessages.interactor.SpeakThreads
 import io.openmessages.repository.ConversationRepository
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SpeakThreadsReceiver : BroadcastReceiver() {
@@ -38,13 +39,16 @@ class SpeakThreadsReceiver : BroadcastReceiver() {
         val pendingResult = goAsync()
         val threadId = intent.getLongExtra("threadId", 0)
 
-        val threads = when {
-            (threadId == -1L) -> conversationRepo.getUnseenIds()
-            (threadId == -2L) -> conversationRepo.getUnreadIds()
-            else -> listOf(threadId)
-        }
+        // The conversations are read off the main thread, which the database does not allow
+        Schedulers.io().scheduleDirect {
+            val threads = when {
+                (threadId == -1L) -> conversationRepo.getUnseenIds()
+                (threadId == -2L) -> conversationRepo.getUnreadIds()
+                else -> listOf(threadId)
+            }
 
-        speakThread.execute(threads) { pendingResult.finish() }
+            speakThread.execute(threads) { pendingResult.finish() }
+        }
     }
 
 }

@@ -28,7 +28,7 @@ import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 /**
- * Listens for a contact being added, and then syncs it to Realm
+ * Listens for a contact being added, and then syncs it to the database
  */
 class ContactAddedListenerImpl @Inject constructor(
     private val context: Context

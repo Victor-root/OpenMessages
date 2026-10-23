@@ -21,14 +21,14 @@ package io.openmessages.feature.blocking.numbers
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkRealmAdapter
+import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.model.BlockedNumber
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.openmessages.databinding.BlockedNumberListItemBinding
 
-class BlockedNumbersAdapter : QkRealmAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
+class BlockedNumbersAdapter : QkAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
 
     val unblockAddress: Subject<Long> = PublishSubject.create()
 
@@ -36,14 +36,14 @@ class BlockedNumbersAdapter : QkRealmAdapter<BlockedNumber, QkBindingViewHolder<
         val binding = BlockedNumberListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return QkBindingViewHolder(binding).apply {
             binding.unblock.setOnClickListener {
-                val number = getItem(adapterPosition) ?: return@setOnClickListener
+                val number = getItemOrNull(adapterPosition) ?: return@setOnClickListener
                 unblockAddress.onNext(number.id)
             }
         }
     }
 
     override fun onBindViewHolder(holder: QkBindingViewHolder<BlockedNumberListItemBinding>, position: Int) {
-        val item = getItem(position)!!
+        val item = getItem(position)
 
         holder.binding.number.text = item.address
     }

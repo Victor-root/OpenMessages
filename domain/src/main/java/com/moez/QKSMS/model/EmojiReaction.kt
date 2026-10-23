@@ -18,25 +18,32 @@
  */
 package io.openmessages.model
 
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
-open class EmojiReaction : RealmObject() {
-    @PrimaryKey var id: Long = 0
+@Entity(
+    tableName = "emoji_reaction",
+    indices = [Index("reactionMessageId"), Index("targetMessageId"), Index("threadId")]
+)
+data class EmojiReaction(
+    @PrimaryKey var id: Long = 0,
 
     /** The reaction message ID itself */
-    @Index var reactionMessageId: Long = 0
+    var reactionMessageId: Long = 0,
+
+    /** The ID of the message reacted to, null when it could not be found */
+    var targetMessageId: Long? = null,
 
     /** The sender's address (phone number) */
-    var senderAddress: String = ""
+    var senderAddress: String = "",
 
     /** The emoji used in the reaction */
-    var emoji: String = ""
+    var emoji: String = "",
 
     /** The original message text that was reacted to */
-    var originalMessageText: String = ""
+    var originalMessageText: String = "",
 
     /** Thread ID for easier querying */
-    @Index var threadId: Long = 0
-}
+    var threadId: Long = 0
+)

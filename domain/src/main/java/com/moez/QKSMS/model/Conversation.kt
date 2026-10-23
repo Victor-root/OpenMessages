@@ -18,18 +18,22 @@
  */
 package io.openmessages.model
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.Index
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
-open class Conversation(
+@Entity(
+    tableName = "conversation",
+    indices = [Index("archived"), Index("blocked"), Index("pinned"), Index("flagged"), Index("lastMessageId")]
+)
+data class Conversation(
     @PrimaryKey var id: Long = 0,
-    @Index var archived: Boolean = false,
-    @Index var blocked: Boolean = false,
-    @Index var pinned: Boolean = false,
-    var recipients: RealmList<Recipient> = RealmList(),
-    var lastMessage: Message? = null,
+    var archived: Boolean = false,
+    var blocked: Boolean = false,
+    var pinned: Boolean = false,
+    /** The [Message.id] of the latest message in the conversation */
+    var lastMessageId: Long? = null,
     var draft: String = "",
     var draftDate: Long = 0,
 
@@ -38,13 +42,16 @@ open class Conversation(
 
     // Soft "suspected spam" state: the message stays in the inbox but the conversation is tagged.
     // Cleared when the user approves the sender (see AllowlistRepository).
-    @Index var flagged: Boolean = false,
+    var flagged: Boolean = false,
     var flagReason: String? = null,
 
     var name: String = "", // custom title
 
     var sendAsGroup: Boolean = true,
-) : RealmObject() {
+) {
+
+    @Ignore var recipients: List<Recipient> = emptyList()
+    @Ignore var lastMessage: Message? = null
 
     val date: Long get() = lastMessage?.date ?: if (draft.isNotEmpty()) draftDate else 0
     val snippet: String? get() = lastMessage?.getSummary()

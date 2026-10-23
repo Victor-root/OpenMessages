@@ -73,10 +73,11 @@ class GalleryActivity : QkActivity(), GalleryView {
             }
         })
 
+        // Open on the part that was tapped, once the parts have come in
         pagerAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                pagerAdapter.data?.takeIf { pagerAdapter.itemCount > 0 }
-                        ?.indexOfFirst { part -> part.id == partId }
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                pagerAdapter.data.indexOfFirst { part -> part.id == partId }
+                        .takeIf { index -> index != -1 }
                         ?.let { index ->
                             onPageSelected(index)
                             binding.pager.setCurrentItem(index, false)
@@ -87,18 +88,18 @@ class GalleryActivity : QkActivity(), GalleryView {
     }
 
     fun onPageSelected(position: Int) {
-        binding.toolbarSubtitle.text = pagerAdapter.getItem(position)?.messages?.firstOrNull()?.date
+        binding.toolbarSubtitle.text = pagerAdapter.getItemOrNull(position)?.messages?.firstOrNull()?.date
                 ?.let(dateFormatter::getDetailedTimestamp)
         binding.toolbarSubtitle.isVisible = binding.toolbarTitle.text.isNotBlank()
 
-        pagerAdapter.getItem(position)?.run(pageChangedSubject::onNext)
+        pagerAdapter.getItemOrNull(position)?.run(pageChangedSubject::onNext)
     }
 
     override fun render(state: GalleryState) {
         toolbar?.setVisible(state.navigationVisible)
 
         title = state.title
-        pagerAdapter.updateData(state.parts)
+        state.parts?.let { pagerAdapter.data = it }
     }
 
     override fun optionsItemSelected(): Observable<Int> = optionsItemSubject

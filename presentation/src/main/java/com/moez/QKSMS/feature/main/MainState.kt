@@ -21,7 +21,6 @@ package io.openmessages.feature.main
 import io.openmessages.model.Conversation
 import io.openmessages.model.SearchResult
 import io.openmessages.repository.SyncRepository
-import io.realm.RealmResults
 
 data class MainState(
     val hasError: Boolean = false,
@@ -43,7 +42,7 @@ data class Inbox(
     val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
-    val data: RealmResults<Conversation>? = null,
+    val data: List<Conversation>? = null,
     val selected: Int = 0
 ) : MainPage()
 
@@ -56,6 +55,6 @@ data class Archived(
     val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
-    val data: RealmResults<Conversation>? = null,
+    val data: List<Conversation>? = null,
     val selected: Int = 0
 ) : MainPage()

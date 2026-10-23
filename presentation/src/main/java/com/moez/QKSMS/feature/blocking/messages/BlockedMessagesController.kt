@@ -93,7 +93,7 @@ class BlockedMessagesController : QkController<BlockedMessagesControllerBinding,
     }
 
     override fun render(state: BlockedMessagesState) {
-        blockedMessagesAdapter.updateData(state.data)
+        state.data?.let { blockedMessagesAdapter.data = it }
 
         val toolbarMenu = themedActivity?.findViewById<Toolbar>(R.id.toolbar)?.menu
         toolbarMenu?.findItem(R.id.block)?.isVisible = state.selected > 0

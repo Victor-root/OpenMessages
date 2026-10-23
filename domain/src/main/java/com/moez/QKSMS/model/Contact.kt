@@ -18,19 +18,32 @@
  */
 package io.openmessages.model
 
-import io.realm.RealmList
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 
-open class Contact(
+@Entity(tableName = "contact")
+data class Contact(
     @PrimaryKey var lookupKey: String = "",
-    var numbers: RealmList<PhoneNumber> = RealmList(),
     var name: String = "",
     var photoUri: String? = null,
     var starred: Boolean = false,
     var lastUpdate: Long = 0
-) : RealmObject() {
+) {
+
+    @Ignore var numbers: List<PhoneNumber> = emptyList()
 
     fun getDefaultNumber(): PhoneNumber? = numbers.find { number -> number.isDefault }
+
+    companion object {
+
+        /**
+         * A contact standing in for an [address] that none of the contacts has
+         */
+        fun forAddress(address: String): Contact {
+            return Contact().apply { numbers = listOf(PhoneNumber(address = address)) }
+        }
+
+    }
 
 }

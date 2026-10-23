@@ -13,7 +13,8 @@ buildscript {
     dependencies {
         classpath(libs.android.gradle.plugin)
         classpath(libs.kotlin.gradle.plugin)
-        classpath(libs.realm.gradle.plugin)
+        classpath(libs.ksp.gradle.plugin)
+        classpath(libs.room.gradle.plugin)
     }
 }
 
