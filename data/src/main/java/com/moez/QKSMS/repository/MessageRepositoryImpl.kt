@@ -64,6 +64,7 @@ import io.openmessages.receiver.SendDelayedMessageReceiver.Companion.MESSAGE_ID_
 import io.openmessages.util.ImageUtils
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
+import io.openmessages.util.VideoUtils
 import io.openmessages.util.sha256
 import io.openmessages.util.tryOrNull
 import io.openmessages.data.BuildConfig
@@ -418,19 +419,19 @@ open class MessageRepositoryImpl @Inject constructor(
             remainingBytes -= body.takeIf { it.isNotEmpty() }?.toByteArray()?.size ?: 0
 
             // What the message is allowed to weigh and what is being asked to fit in it. Only
-            // images are ever shrunk, so an attachment reported as anything else goes in whole
-            // however large it is, and the type below is what decides that.
+            // images and videos are ever shrunk, so an attachment reported as anything else goes
+            // in whole however large it is, and the type below is what decides that.
             if (BuildConfig.DEBUG) Timber.v("mms budget ${remainingBytes.toInt()} bytes (size setting " +
                     "${prefs.mmsSize.get()}), attachments: " +
                     attachments.joinToString { attachment ->
                         "${attachment.getType(context)} ${attachment.getSize(context)} bytes" +
-                                if (attachment.isImage(context)) " (shrinkable)" else " (as is)"
+                                if (attachment.isImage(context) || attachment.isVideo(context)) " (shrinkable)"
+                                else " (as is)"
                     })
 
-            // Attach those that can't be compressed (ie. everything but images)
+            // Attach those that can't be compressed (ie. everything but images and videos)
             parts += attachments
-                // filter in non-images only
-                .filter { !it.isImage(context) }
+                .filter { !it.isImage(context) && !it.isVideo(context) }
                 // filter in only items that exist (user may have deleted the file)
                 .filter { it.uri.resourceExists(context) }
                 .map {
@@ -452,6 +453,28 @@ open class MessageRepositoryImpl @Inject constructor(
                 .filter { it.isImage(context) }
                 // filter in only items that exist (user may have deleted the file)
                 .filter { it.uri.resourceExists(context) }
+
+            // Each video gets an even share of what is left, alongside the images, which then
+            // shrink to whatever the videos didn't take. One already within its share goes as it is.
+            val videos = attachments
+                .filter { it.isVideo(context) }
+                .filter { it.uri.resourceExists(context) }
+            val videoShare = remainingBytes.toLong() / (videos.size + images.size).coerceAtLeast(1)
+            parts += videos.map { video ->
+                val size = video.getSize(context)
+                val scaled = if (size in 0..videoShare) null
+                    else VideoUtils.getScaledVideo(context, video.uri, videoShare)
+                val bytes = scaled ?: video.getResourceBytes(context)
+                remainingBytes -= bytes.size
+                video.releaseResourceBytes()
+
+                com.google.android.mms.MMSPart().apply {
+                    MimeType = if (scaled != null) ContentType.VIDEO_MP4 else video.getType(context)
+                    Name = video.getName(context)
+                        .let { name -> if (scaled != null) name.substringBeforeLast('.') + ".mp4" else name }
+                    Data = bytes
+                }
+            }
 
             // Encoding an image at full size is the slowest thing here, and the result is thrown
             // away whenever it lands over budget, which for a photo off a phone camera it always
