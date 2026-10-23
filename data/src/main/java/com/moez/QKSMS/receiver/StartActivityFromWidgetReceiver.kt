@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import dagger.android.AndroidInjection
-import io.openmessages.util.nonDebugPackageName
 
 class StartActivityFromWidgetReceiver : BroadcastReceiver() {
     // why does this shim class exist rather than the widget launching activities more directly?
@@ -52,7 +51,7 @@ class StartActivityFromWidgetReceiver : BroadcastReceiver() {
         }
 
         context.startActivity(
-            Intent(context, Class.forName(nonDebugPackageName(context.packageName) + activityToStartName))
+            Intent(context, Class.forName(context.packageName + activityToStartName))
                 .setFlags(FLAG_ACTIVITY_NEW_TASK)
                 .putExtra("threadId", intent.getLongExtra("threadId", 0L))
         )
