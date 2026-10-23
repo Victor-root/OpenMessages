@@ -22,12 +22,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdk 34
+    compileSdk libs.versions.android.compileSdk.get().toInteger()
 
     defaultConfig {
         applicationId 'io.openmessages'
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdk libs.versions.android.minSdk.get().toInteger()
+        targetSdk libs.versions.android.targetSdk.get().toInteger()
         // First Open Messages release. The rebrand to the io.openmessages package means it installs
         // fresh, never over the app it was forked from, so the counter restarts at 1. Bump
         // versionCode by 1 and update versionName for each release.
@@ -68,18 +68,6 @@ android {
         includeInBundle = false
     }
 
-    // 16 KB page-size devices require uncompressed native libraries (e.g. Realm's) to be stored at a
-    // 16 KB-aligned offset inside the APK zip; AGP only does that automatically from 8.5.1 onward
-    // (we're on 8.2.2). Until that upgrade, fall back to Google's documented workaround: compress the
-    // native libraries instead, which sidesteps the zip-alignment requirement entirely (they're
-    // extracted to disk on install like before Android 6, at the cost of a slightly larger install size).
-    // https://developer.android.com/guide/practices/page-sizes
-    packagingOptions {
-        jniLibs {
-            useLegacyPackaging true
-        }
-    }
-    
     buildTypes {
         release {
             minifyEnabled true
@@ -100,15 +88,6 @@ android {
             resValue("string", "application_id", defaultConfig.applicationId)
             signingConfig signingConfigs.debug
         }
-    }
-
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     lint {
@@ -202,7 +181,6 @@ dependencies {
     implementation libs.rxkotlin
     implementation libs.rxdogtag
     implementation libs.rxdogtag.autodispose
-
 
     // testing
     androidTestImplementation(libs.androidx.test.espresso.core) {

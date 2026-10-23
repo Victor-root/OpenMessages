@@ -20,11 +20,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 34
+    compileSdk libs.versions.android.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdk libs.versions.android.minSdk.get().toInteger()
     }
 
     useLibrary 'org.apache.http.legacy'
