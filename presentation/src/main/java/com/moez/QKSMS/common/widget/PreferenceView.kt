@@ -24,6 +24,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.R as AppCompatR
 import androidx.appcompat.widget.LinearLayoutCompat
 import io.openmessages.R
 import io.openmessages.common.util.extensions.resolveThemeAttribute
@@ -77,7 +78,7 @@ class PreferenceView @JvmOverloads constructor(
         }
 
         layout = PreferenceViewBinding.inflate(LayoutInflater.from(context), this)
-        setBackgroundResource(context.resolveThemeAttribute(R.attr.selectableItemBackground))
+        setBackgroundResource(context.resolveThemeAttribute(AppCompatR.attr.selectableItemBackground))
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 

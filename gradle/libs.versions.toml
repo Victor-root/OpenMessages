@@ -1,11 +1,11 @@
 [versions]
-android-compileSdk = "36"
+android-compileSdk = "37"
 android-minSdk = "23"
 android-targetSdk = "33"
-agp = "8.13.2"
+agp = "9.4.1"
 androidx-appcompat = "1.8.0"
 androidx-constraintlayout = "2.2.2"
-androidx-core = "1.18.0"
+androidx-core = "1.19.1"
 androidx-documentfile = "1.1.0"
 androidx-emoji2 = "1.6.0"
 androidx-exifinterface = "1.4.2"
@@ -19,16 +19,16 @@ autodispose = "1.4.1"
 conductor = "2.1.5"
 coroutines = "1.11.0"
 dagger = "2.60.1"
-glide = "4.16.0"
+glide = "5.0.9"
 junit = "4.12"
-kotlin = "2.3.21"
+kotlin = "2.4.21"
 ksp = "2.3.12"
 material = "1.14.0"
 media3 = "1.11.1"
 mockito = "2.18.3"
 moshi = "1.15.2"
 okhttp = "2.5.0"
-okhttp3 = "4.12.0"
+okhttp3 = "5.5.1"
 realm = "10.19.0"
 room = "2.8.5"
 rx-preferences = "2.0.1"
@@ -94,7 +94,7 @@ conductor = { module = "com.bluelinelabs:conductor", version.ref = "conductor" }
 conductor-archlifecycle = { module = "com.bluelinelabs:conductor-archlifecycle", version.ref = "conductor" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version = "3.0.0" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
-glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 photoview = { module = "io.getstream:photoview", version = "1.0.3" }

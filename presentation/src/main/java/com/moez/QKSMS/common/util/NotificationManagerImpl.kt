@@ -36,6 +36,7 @@ import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.getSystemService
+import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.fromRecipient
@@ -56,7 +57,6 @@ import io.openmessages.receiver.SpeakThreadsReceiver
 import io.openmessages.repository.ContactRepository
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.openmessages.util.GlideApp
 import io.openmessages.util.OtpCodeExtractor
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
@@ -245,7 +245,7 @@ class NotificationManagerImpl @Inject constructor(
         val avatar = conversation.recipients.takeIf { it.size == 1 }
                 ?.first()?.contact?.photoUri
                 ?.let { photoUri ->
-                    GlideApp.with(context)
+                    Glide.with(context)
                             .asBitmap()
                             .circleCrop()
                             .load(photoUri)

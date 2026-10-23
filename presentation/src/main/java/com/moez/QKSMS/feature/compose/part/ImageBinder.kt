@@ -19,6 +19,7 @@
 package io.openmessages.feature.compose.part
 
 import android.content.Context
+import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.base.QkViewHolder
 import io.openmessages.common.util.Colors
@@ -29,7 +30,6 @@ import io.openmessages.extensions.isImage
 import io.openmessages.extensions.isVideo
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.openmessages.util.GlideApp
 import io.openmessages.util.tryOrNull
 import javax.inject.Inject
 
@@ -59,7 +59,7 @@ class ImageBinder @Inject constructor(colors: Colors, private val context: Conte
         }
 
         tryOrNull(true) {
-            GlideApp.with(context).load(part.getUri()).fitCenter().into(binding.thumbnail)
+            Glide.with(context).load(part.getUri()).fitCenter().into(binding.thumbnail)
         }
     }
 

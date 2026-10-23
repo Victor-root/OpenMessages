@@ -18,8 +18,6 @@
  */
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
     id("com.google.devtools.ksp")
     id("androidx.room")
 }
@@ -53,13 +51,13 @@ dependencies {
 
     // glide
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.ksp)
 
     // dagger
     implementation(libs.dagger)
     implementation(libs.dagger.android.support)
-    kapt(libs.dagger.android.processor)
-    kapt(libs.dagger.compiler)
+    ksp(libs.dagger.android.processor)
+    ksp(libs.dagger.compiler)
     implementation(libs.javax.annotation.api)
 
     // rxjava

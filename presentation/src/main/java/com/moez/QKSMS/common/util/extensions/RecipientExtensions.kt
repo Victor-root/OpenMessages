@@ -18,11 +18,11 @@ import androidx.core.app.Person
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.IconCompat
 import androidx.core.widget.TextViewCompat
+import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.widget.QkTextView
 import io.openmessages.model.Recipient
-import io.openmessages.util.GlideApp
 import io.openmessages.util.tryOrNull
 import timber.log.Timber
 
@@ -31,7 +31,7 @@ fun Recipient.getThemedIcon(context: Context, theme: Colors.Theme, width: Int, h
     var icon : IconCompat? = null
     val photoUri = contact?.photoUri
     if (photoUri != null) {
-        val req = GlideApp.with(context)
+        val req = Glide.with(context)
             .asBitmap()
             .circleCrop()
             .load(photoUri)

@@ -26,6 +26,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import com.bumptech.glide.Glide
 import com.google.android.mms.ContentType
 import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
@@ -35,7 +36,6 @@ import io.openmessages.databinding.GalleryVideoPageBinding
 import io.openmessages.extensions.isImage
 import io.openmessages.extensions.isVideo
 import io.openmessages.model.MmsPart
-import io.openmessages.util.GlideApp
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.util.*
@@ -95,12 +95,12 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
                 val binding = GalleryImagePageBinding.bind(holder.itemView)
                 // We need to explicitly request a gif from glide for animations to work
                 when (part.getUri().let(contentResolver::getType)) {
-                    ContentType.IMAGE_GIF -> GlideApp.with(context)
+                    ContentType.IMAGE_GIF -> Glide.with(context)
                             .asGif()
                             .load(part.getUri())
                             .into(binding.image)
 
-                    else -> GlideApp.with(context)
+                    else -> Glide.with(context)
                             .asBitmap()
                             .load(part.getUri())
                             .into(binding.image)
