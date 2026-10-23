@@ -48,8 +48,6 @@ import androidx.core.content.contentValuesOf
 import androidx.core.net.toUri
 import com.android.mms.MmsConfig
 import com.android.mms.dom.smil.parser.SmilXmlSerializer
-import com.android.mms.util.DownloadManager
-import com.android.mms.util.RateController
 import com.google.android.mms.ContentType
 import com.google.android.mms.InvalidHeaderValueException
 import com.google.android.mms.MMSPart
@@ -65,7 +63,7 @@ import com.google.android.mms.pdu_alt.PduPersister
 import com.google.android.mms.pdu_alt.SendReq
 import com.google.android.mms.smil.SmilHelper
 import com.google.android.mms.util_alt.SqliteWrapper
-import com.klinker.android.send_message.MmsSentReceiver
+import com.klinker.android.send_message.MmsIntents
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Utils
@@ -125,9 +123,6 @@ object QkTransaction {
             text = StripAccents.stripAccents(text)
 
         if (checkMMS(text, toAddresses.size, parts.size, asGroup, longAsMms, stripUnicode)) {
-            RateController.init(context)
-            DownloadManager.init(context)
-
             return createMmsMessage(context, subscriptionId, threadId, text, toAddresses, parts)
         }
 
@@ -560,7 +555,7 @@ object QkTransaction {
                 id,
                 sentIntent
                     .setData(messageUri)
-                    .putExtra(MmsSentReceiver.EXTRA_FILE_PATH, mSendFile.path),
+                    .putExtra(MmsIntents.EXTRA_FILE_PATH, mSendFile.path),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 

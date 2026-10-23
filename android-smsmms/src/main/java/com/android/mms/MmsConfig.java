@@ -63,6 +63,8 @@ public class MmsConfig {
     private static int mHttpSocketTimeout = 60*1000;            // default to 1 min
     private static int mMinimumSlideElementDuration = 7;        // default to 7 sec
     private static boolean mNotifyWapMMSC = false;
+    // Whether the carrier's MMS can carry the Content-Disposition header of their parts
+    private static boolean mSupportMmsContentDisposition = true;
     private static boolean mAllowAttachAudio = true;
 
     // If mEnableMultipartSMS is true, long sms messages are always sent as multi-part sms
@@ -166,6 +168,10 @@ public class MmsConfig {
         return mNotifyWapMMSC;
     }
 
+    public static boolean getSupportMmsContentDisposition() {
+        return mSupportMmsContentDisposition;
+    }
+
     public static final void beginDocument(XmlPullParser parser, String firstElementName) throws XmlPullParserException, IOException
     {
         int type;
@@ -225,6 +231,8 @@ public class MmsConfig {
                             mTransIdEnabled = "true".equalsIgnoreCase(text);
                         } else if ("enabledNotifyWapMMSC".equalsIgnoreCase(value)) {
                             mNotifyWapMMSC = "true".equalsIgnoreCase(text);
+                        } else if ("supportMmsContentDisposition".equalsIgnoreCase(value)) {
+                            mSupportMmsContentDisposition = "true".equalsIgnoreCase(text);
                         } else if ("aliasEnabled".equalsIgnoreCase(value)) {
                             mAliasEnabled = "true".equalsIgnoreCase(text);
                         } else if ("allowAttachAudio".equalsIgnoreCase(value)) {

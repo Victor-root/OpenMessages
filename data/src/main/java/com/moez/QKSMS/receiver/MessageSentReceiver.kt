@@ -23,7 +23,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.telephony.SmsManager
-import com.klinker.android.send_message.MmsSentReceiver.EXTRA_FILE_PATH
+import com.klinker.android.send_message.MmsIntents.EXTRA_FILE_PATH
 import dagger.android.AndroidInjection
 import io.openmessages.interactor.MarkFailed
 import io.openmessages.interactor.MarkSent

@@ -44,10 +44,10 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_FILE_PATH
-import com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_LOCATION_URL
-import com.klinker.android.send_message.MmsReceivedReceiver.EXTRA_URI
-import com.klinker.android.send_message.MmsReceivedReceiver.SUBSCRIPTION_ID
+import com.klinker.android.send_message.MmsIntents.EXTRA_FILE_PATH
+import com.klinker.android.send_message.MmsIntents.EXTRA_LOCATION_URL
+import com.klinker.android.send_message.MmsIntents.EXTRA_SUBSCRIPTION_ID
+import com.klinker.android.send_message.MmsIntents.EXTRA_URI
 import com.klinker.android.send_message.Utils
 import io.openmessages.worker.ReceiveMmsWorker
 import io.openmessages.worker.ReceiveMmsWorker.Companion.INPUT_DATA_EXTRA_FILE_PATH
@@ -67,7 +67,7 @@ class MmsReceivedReceiver : BroadcastReceiver() {
                 .setInputData(
                     workDataOf(
                         INPUT_DATA_SUBSCRIPTION_ID to intent.getIntExtra(
-                            SUBSCRIPTION_ID,
+                            EXTRA_SUBSCRIPTION_ID,
                             Utils.getDefaultSubscriptionId()
                         ),
                         INPUT_DATA_EXTRA_FILE_PATH to intent.getStringExtra(EXTRA_FILE_PATH),

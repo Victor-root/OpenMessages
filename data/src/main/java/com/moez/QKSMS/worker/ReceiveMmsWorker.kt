@@ -28,9 +28,8 @@ import androidx.core.net.toUri
 import androidx.work.ForegroundInfo
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.android.mms.service_alt.DownloadRequest
-import com.android.mms.service_alt.MmsConfig
-import com.android.mms.service_alt.MmsConfig.Overridden
+import com.android.mms.MmsConfig
+import com.android.mms.service_alt.DownloadedMms
 import com.android.mms.transaction.DownloadManager
 import com.google.android.mms.pdu_alt.AcknowledgeInd
 import com.google.android.mms.pdu_alt.EncodedStringValue
@@ -40,7 +39,7 @@ import com.google.android.mms.pdu_alt.PduComposer
 import com.google.android.mms.pdu_alt.PduHeaders
 import com.google.android.mms.pdu_alt.PduPersister
 import com.google.android.mms.util_alt.SqliteWrapper
-import com.klinker.android.send_message.MmsSentReceiver
+import com.klinker.android.send_message.MmsIntents
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.Utils
 import io.openmessages.blocking.BlockingClient
@@ -132,16 +131,15 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
             Timber.v("response buffered length: ${mmsData.size}")
 
             if (mmsData.isNotEmpty()) {
-                // build notification ind (beware this must be done prior to downloadrequest.persist)
+                // build notification ind (beware this must be done prior to DownloadedMms.persist)
                 val notificationInd =
                     PduPersister.getPduPersister(applicationContext).load(extraUri.toUri())
                             as NotificationInd
 
                 // persist message
-                val messageUri = DownloadRequest.persist(
-                    applicationContext, mmsData,
-                    Overridden(MmsConfig(applicationContext), null),
-                    locationUrl, subscriptionId, null
+                MmsConfig.init(applicationContext)
+                val messageUri = DownloadedMms.persist(
+                    applicationContext, mmsData, locationUrl, subscriptionId, null
                 )
 
                 handleHttpError(
@@ -334,7 +332,7 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
             Timber.e(e, "error writing notify send file")
         }
 
-        val useWapMmsc = com.android.mms.MmsConfig.getNotifyWapMMSC()
+        val useWapMmsc = MmsConfig.getNotifyWapMMSC()
         if (useWapMmsc)
             Timber.v("using content location for wap mmsc")
 
@@ -346,7 +344,7 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
                 context, 0,
                 Intent(context, MessageSentReceiver::class.java)
                     .setData(contentUri) // this is only used to make pending intent unique
-                    .putExtra(MmsSentReceiver.EXTRA_FILE_PATH, fileName)
+                    .putExtra(MmsIntents.EXTRA_FILE_PATH, fileName)
                     .putExtra(MessageSentReceiver.EXTRA_IS_NOTIFY, 1),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
