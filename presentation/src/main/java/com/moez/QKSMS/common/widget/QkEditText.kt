@@ -19,20 +19,19 @@
 package io.openmessages.common.widget
 
 import android.content.Context
-import android.os.Build
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputConnectionWrapper
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.view.inputmethod.EditorInfoCompat
-import androidx.core.view.inputmethod.InputConnectionCompat
-import androidx.core.view.inputmethod.InputContentInfoCompat
+import androidx.core.view.ContentInfoCompat
+import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.ViewCompat
 import com.google.android.mms.ContentType
 import io.openmessages.common.util.TextViewStyler
 import io.openmessages.injection.appComponent
-import io.openmessages.util.tryOrNull
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
@@ -47,11 +46,31 @@ import javax.inject.Inject
 class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
     : AppCompatEditText(context, attrs) {
 
+    companion object {
+        private val INPUT_CONTENT_MIME_TYPES = arrayOf(
+                ContentType.IMAGE_JPEG,
+                ContentType.IMAGE_JPG,
+                ContentType.IMAGE_PNG,
+                ContentType.IMAGE_GIF)
+    }
+
     @Inject lateinit var textViewStyler: TextViewStyler
 
     val backspaces: Subject<Unit> = PublishSubject.create()
-    val inputContentSelected: Subject<InputContentInfoCompat> = PublishSubject.create()
+    /** The images taken in from the keyboard or the clipboard */
+    val inputContentSelected: Subject<Uri> = PublishSubject.create()
+
+    /** Whether images are taken in, as attachments to the message */
     var supportsInputContent: Boolean = false
+        set(value) {
+            field = value
+            if (value) {
+                ViewCompat.setOnReceiveContentListener(this, INPUT_CONTENT_MIME_TYPES,
+                        OnReceiveContentListener { _, payload -> receiveContent(payload) })
+            } else {
+                ViewCompat.setOnReceiveContentListener(this, null, null)
+            }
+        }
 
     init {
         if (!isInEditMode) {
@@ -63,8 +82,7 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection {
-
-        val inputConnection = object : InputConnectionWrapper(super.onCreateInputConnection(editorInfo), true) {
+        return object : InputConnectionWrapper(super.onCreateInputConnection(editorInfo), true) {
             override fun sendKeyEvent(event: KeyEvent): Boolean {
                 if (event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL) {
                     backspaces.onNext(Unit)
@@ -80,32 +98,19 @@ class QkEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 return super.deleteSurroundingText(beforeLength, afterLength)
             }
         }
+    }
 
-        if (supportsInputContent) {
-            EditorInfoCompat.setContentMimeTypes(editorInfo, arrayOf(
-                    ContentType.IMAGE_JPEG,
-                    ContentType.IMAGE_JPG,
-                    ContentType.IMAGE_PNG,
-                    ContentType.IMAGE_GIF))
+    /**
+     * Takes the images out of [payload], leaving the rest, like text, for the field to insert
+     */
+    private fun receiveContent(payload: ContentInfoCompat): ContentInfoCompat? {
+        if (INPUT_CONTENT_MIME_TYPES.none(payload.clip.description::hasMimeType)) return payload
+
+        val split = payload.partition { item -> item.uri != null }
+        split.first?.clip?.let { clip ->
+            (0 until clip.itemCount).mapNotNull { i -> clip.getItemAt(i).uri }.forEach(inputContentSelected::onNext)
         }
-
-        val callback = InputConnectionCompat.OnCommitContentListener { inputContentInfo, flags, _ ->
-            val grantReadPermission = flags and InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION != 0
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && grantReadPermission) {
-                return@OnCommitContentListener tryOrNull {
-                    inputContentInfo.requestPermission()
-                    inputContentSelected.onNext(inputContentInfo)
-                    true
-                } ?: false
-
-            }
-
-            true
-        }
-
-        @Suppress("DEPRECATION")
-        return InputConnectionCompat.createWrapper(inputConnection, editorInfo, callback)
+        return split.second
     }
 
 }

@@ -20,6 +20,7 @@ package io.openmessages.common.util.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.ComponentActivity
 import androidx.activity.addCallback
@@ -45,5 +46,20 @@ fun ComponentActivity.handleBackThrough(router: Router) {
             onBackPressedDispatcher.onBackPressed()
             isEnabled = true
         }
+    }
+}
+
+/**
+ * Closes the activity without its exit animation
+ */
+fun Activity.finishWithoutAnimation() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, 0, 0)
+        finish()
+    } else {
+        finish()
+        // The only way to skip it before Android 14
+        @Suppress("DEPRECATION")
+        overridePendingTransition(0, 0)
     }
 }

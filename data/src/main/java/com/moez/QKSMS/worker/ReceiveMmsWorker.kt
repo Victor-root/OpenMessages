@@ -336,7 +336,7 @@ class ReceiveMmsWorker(appContext: Context, workerParams: WorkerParameters)
         if (useWapMmsc)
             Timber.v("using content location for wap mmsc")
 
-        SmsManagerFactory.createSmsManager(subscriptionId).sendMultimediaMessage(
+        SmsManagerFactory.createSmsManager(context, subscriptionId).sendMultimediaMessage(
             context, contentUri,
             if (useWapMmsc) String(contentLocation) else null,
             null,

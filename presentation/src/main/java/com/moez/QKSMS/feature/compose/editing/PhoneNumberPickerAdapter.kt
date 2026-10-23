@@ -53,7 +53,7 @@ class PhoneNumberPickerAdapter @Inject constructor(
             binding.number.radioButton.forwardTouches(itemView)
 
             binding.root.setOnClickListener {
-                val phoneNumber = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val phoneNumber = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 selectedItem = phoneNumber.id
             }
         }

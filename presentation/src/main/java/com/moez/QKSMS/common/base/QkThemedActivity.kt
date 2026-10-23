@@ -44,7 +44,6 @@ import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preference
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.util.concurrent.TimeUnit
@@ -131,7 +130,7 @@ abstract class QkThemedActivity : QkActivity() {
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        Observables.combineLatest(menu, theme) { menu, theme ->
+        Observable.combineLatest(menu, theme) { menu, theme ->
             menu.iterator().forEach { menuItem ->
                 val tint = when (menuItem.itemId) {
                     in getColoredMenuItems() -> theme.theme
@@ -174,6 +173,7 @@ abstract class QkThemedActivity : QkActivity() {
                         .setBackgroundColor(theme.theme)
                         .build())
                 } else {
+                    // The only way to it before Android 13
                     @Suppress("DEPRECATION")
                     setTaskDescription(ActivityManager.TaskDescription(
                         getString(R.string.app_name), null, theme.theme))

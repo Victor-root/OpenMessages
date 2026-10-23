@@ -206,8 +206,8 @@ class NotificationManagerImpl @Inject constructor(
             notification.setSound(ringtone)
 
     // Tell the notification if it's a group message
-        @Suppress("DEPRECATION")
-        val messagingStyle = NotificationCompat.MessagingStyle("Me")
+        val me = Person.Builder().setName(context.getString(R.string.notification_me)).build()
+        val messagingStyle = NotificationCompat.MessagingStyle(me)
         if (conversation.recipients.size >= 2) {
             messagingStyle.isGroupConversation = true
             messagingStyle.conversationTitle = conversation.getTitle()
@@ -371,7 +371,7 @@ class NotificationManagerImpl @Inject constructor(
                         }
 
                         Preferences.NOTIFICATION_ACTION_CALL -> {
-                            val address = conversation.recipients[0]?.address
+                            val address = conversation.recipients[0].address
                             val intentAction = if (permissions.hasCalling()) Intent.ACTION_CALL else Intent.ACTION_DIAL
                             val intent = Intent(intentAction, "tel:$address".toUri())
                             val pi = PendingIntent.getActivity(context, threadId.toInt(), intent,
@@ -410,6 +410,7 @@ class NotificationManagerImpl @Inject constructor(
         if (prefs.wakeScreen(threadId).get()) {
             context.getSystemService<PowerManager>()?.let { powerManager ->
                 if (!powerManager.isInteractive) {
+                    // Nothing has replaced it for lighting the screen from outside an activity
                     @Suppress("DEPRECATION")
                     val flags = PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP
                     val wakeLock = powerManager.newWakeLock(flags, context.packageName)
@@ -419,8 +420,8 @@ class NotificationManagerImpl @Inject constructor(
         }
     }
 
-    override fun notifyFailed(msgId: Long) {
-        val message = messageRepo.getMessage(msgId)
+    override fun notifyFailed(messageId: Long) {
+        val message = messageRepo.getMessage(messageId)
 
         if (message == null || !message.isFailedMessage()) {
             return

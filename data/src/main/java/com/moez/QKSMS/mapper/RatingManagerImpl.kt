@@ -20,7 +20,7 @@ package io.openmessages.mapper
 
 import io.openmessages.manager.RatingManager
 import io.openmessages.util.RxSharedPreferences
-import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class RatingManagerImpl @Inject constructor(
@@ -35,7 +35,7 @@ class RatingManagerImpl @Inject constructor(
     private val rated = rxPrefs.getBoolean("rated", false)
     private val dismissed = rxPrefs.getBoolean("dismissed", false)
 
-    override val shouldShowRating = Observables.combineLatest(
+    override val shouldShowRating = Observable.combineLatest(
             sessions.asObservable(),
             rated.asObservable(),
             dismissed.asObservable()

@@ -27,7 +27,7 @@ import androidx.core.net.toFile
 import io.openmessages.util.FileUtils
 import java.util.UUID
 
-object MediaRecorderManager : MediaRecorder() {
+object MediaRecorderManager {
 
     enum class RecordingState {
         Initial,
@@ -45,12 +45,14 @@ object MediaRecorderManager : MediaRecorder() {
     var uri: Uri = Uri.EMPTY
         private set
 
+    private var recorder: MediaRecorder? = null
+
     fun stopRecording(): Uri {
         return try {
             if (recordingState == RecordingState.Recording)
-                stop()
+                recorder?.stop()
 
-            reset()
+            recorder?.reset()
             recordingState = RecordingState.Initial
 
             uri
@@ -76,28 +78,40 @@ object MediaRecorderManager : MediaRecorder() {
             // ensure stopped before using again
             stopRecording()
 
+            val recorder = recorder ?: newRecorder(context).also { recorder = it }
+
             // configure
-            setAudioSource(AudioSource.MIC)
-            setOutputFormat(OutputFormat.THREE_GPP)
-            setAudioEncoder(AudioEncoder.AMR_WB)
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                preferredDevice = preferredAudioDevice
+                recorder.preferredDevice = preferredAudioDevice
 
             recordingState = RecordingState.DataSourceConfigured
 
-            setOutputFile(uri.toFile().path)
+            recorder.setOutputFile(uri.toFile().path)
 
-            prepare()
+            recorder.prepare()
             recordingState = RecordingState.Prepared
 
-            start()
+            recorder.start()
             recordingState = RecordingState.Recording
 
             uri
         }
         catch (e: Exception) {
             Uri.EMPTY
+        }
+    }
+
+    private fun newRecorder(context: Context): MediaRecorder {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            MediaRecorder(context.applicationContext)
+        } else {
+            // The only constructor before Android 12
+            @Suppress("DEPRECATION")
+            MediaRecorder()
         }
     }
 

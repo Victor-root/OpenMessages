@@ -114,8 +114,6 @@ class Preferences @Inject constructor(
     val backupFrequency = rxPrefs.getInteger("backupFrequency", BACKUP_FREQUENCY_NEVER)
     // Write each backup as a single .zip archive instead of a folder of files (easier to transfer)
     val backupZip = rxPrefs.getBoolean("backupZip", false)
-    @Deprecated("This should only be accessed when migrating to @blockingManager")
-    val sia = rxPrefs.getBoolean("sia", false)
 
     // User configurable
     val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)

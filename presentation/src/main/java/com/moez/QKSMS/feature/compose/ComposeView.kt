@@ -21,7 +21,6 @@ package io.openmessages.feature.compose
 import android.net.Uri
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.inputmethod.InputContentInfoCompat
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.common.base.QkView
 import io.openmessages.common.widget.MicInputCloudView
@@ -33,13 +32,6 @@ import io.reactivex.rxjava3.subjects.Subject
 interface ComposeView : QkView<ComposeState> {
 
     companion object {
-        const val SELECT_CONTACT_REQUEST_CODE = 0
-        const val TAKE_PHOTOS_REQUEST_CODE = 1
-        const val ATTACH_CONTACT_REQUEST_CODE = 3
-        const val ATTACH_FILE_REQUEST_CODE = 4
-        const val SPEECH_RECOGNITION_REQUEST_CODE = 5
-        const val TEMPLATE_REQUEST_CODE = 6
-
         const val CAMERA_DESTINATION_KEY = "camera_destination"
     }
 
@@ -69,7 +61,7 @@ interface ComposeView : QkView<ComposeState> {
     val flaggedBlockIntent: Observable<*>
     val attachAnyFileSelectedIntent: Observable<Uri>
     val contactSelectedIntent: Observable<Uri>
-    val inputContentIntent: Observable<InputContentInfoCompat>
+    val inputContentIntent: Observable<Uri>
     /** The year, month and day picked in the date step of scheduling; the time step follows. */
     val scheduleDateSelectedIntent: Observable<Triple<Int, Int, Int>>
     val scheduleSelectedIntent: Observable<Long>
@@ -110,7 +102,7 @@ interface ComposeView : QkView<ComposeState> {
     fun themeChanged()
     fun showKeyboard()
     fun requestCamera()
-    fun requestGallery(mimeType: String, requestCode: Int)
+    fun requestGallery(mimeType: String)
     fun requestContact()
     fun setDraft(draft: String)
     fun showTemplatePicker()

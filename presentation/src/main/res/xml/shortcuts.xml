@@ -36,4 +36,10 @@
 
     </shortcut>
 
+    <!-- The conversations offered when sharing, see ShortcutManagerImpl.SHARE_TARGET_CATEGORY -->
+    <share-target android:targetClass="io.openmessages.feature.compose.ComposeActivity">
+        <data android:mimeType="*/*" />
+        <category android:name="io.openmessages.category.SHARE_TARGET" />
+    </share-target>
+
 </shortcuts>

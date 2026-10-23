@@ -32,12 +32,9 @@ class ContactsActivityModule {
         return activity.intent.extras?.getBoolean(ContactsActivity.SHARING_KEY, false) ?: false
     }
 
-    @Suppress("DEPRECATION", "UNCHECKED_CAST")
     @Provides
     fun provideChips(activity: ContactsActivity): HashMap<String, String?> {
-        return activity.intent.extras?.getSerializable(ContactsActivity.CHIPS_KEY)
-                ?.let { serializable -> serializable as? HashMap<String, String?> }
-                ?: hashMapOf()
+        return ContactsActivity.getChips(activity.intent)
     }
 
     @Provides

@@ -38,8 +38,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Parcelable
 import android.telephony.SmsManager
+import androidx.core.content.IntentCompat
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
@@ -77,7 +77,7 @@ class MmsReceivedReceiver : BroadcastReceiver() {
                             0
                         ),
                         INPUT_DATA_EXTRA_URI to
-                                (intent.getParcelableExtra<Parcelable>(EXTRA_URI) as Uri?)?.toString()
+                                IntentCompat.getParcelableExtra(intent, EXTRA_URI, Uri::class.java)?.toString()
                     )
                 )
                 .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)

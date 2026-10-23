@@ -24,8 +24,11 @@ import android.media.AudioAttributes
 import android.media.AudioDeviceInfo
 import android.media.SoundPool
 import android.net.Uri
+import android.os.Build
+import android.os.VibrationEffect
 import android.os.Vibrator
 import android.telephony.SmsMessage
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
@@ -280,7 +283,7 @@ class ComposeViewModel @Inject constructor(
 
         // A phone-number title (no saved contact name, no custom conversation name) can optionally
         // drop the country code to save space in the toolbar, e.g. "+33 6 ..." -> "06 ...".
-        disposables += Observables.combineLatest(conversation, prefs.hideCountryCode.asObservable()) {
+        disposables += Observable.combineLatest(conversation, prefs.hideCountryCode.asObservable()) {
             conversation, hideCountryCode ->
             val unknownSingleRecipient = conversation.recipients.singleOrNull()?.takeIf { it.contact == null }
             when {
@@ -339,7 +342,7 @@ class ComposeViewModel @Inject constructor(
                 .distinctUntilChanged()
 
         val subscriptions = ActiveSubscriptionObservable(subscriptionManager)
-        disposables += Observables.combineLatest(latestSubId, subscriptions) { subId, subs ->
+        disposables += Observable.combineLatest(latestSubId, subscriptions) { subId, subs ->
             val sub = if (subs.size > 1) subs.firstOrNull { it.subscriptionId == subId } ?: subs[0] else null
             newState { copy(subscription = sub) }
         }.subscribe()
@@ -664,56 +667,46 @@ class ComposeViewModel @Inject constructor(
             .filter { it.itemId == R.id.save }
             .filter { permissionManager.hasStorage().also { if (!it) view.requestStoragePermission() } }
             .autoDispose(view.scope())
-            .subscribe {
-                @Suppress("UNCHECKED_CAST")
-                val menuInfo = it.menuInfo as QkContextMenuRecyclerView.ContextMenuInfo<Long, MmsPart>
-                if (menuInfo.viewHolderValue != null)
-                    saveImage.execute(menuInfo.viewHolderValue.id) {
+            .subscribe { item ->
+                item.mmsPart?.let { part ->
+                    saveImage.execute(part.id) {
                         context.makeToast(R.string.gallery_toast_saved)
                     }
+                }
             }
 
         // message part context menu item selected - share
         view.contextItemIntent
             .filter { it.itemId == R.id.share }
             .autoDispose(view.scope())
-            .subscribe {
-                @Suppress("UNCHECKED_CAST")
-                val menuInfo = it.menuInfo as QkContextMenuRecyclerView.ContextMenuInfo<Long, MmsPart>
-                if (menuInfo.viewHolderValue != null)
+            .subscribe { item ->
+                item.mmsPart?.let { part ->
                     navigator.shareFile(
-                        MmsPartProvider().getUriForMmsPartId(
-                            context, menuInfo.viewHolderValue.id,
-                            menuInfo.viewHolderValue.getBestFilename()),
-                        menuInfo.viewHolderValue.type
+                        MmsPartProvider().getUriForMmsPartId(context, part.id, part.getBestFilename()),
+                        part.type
                     )
+                }
             }
 
         // message part context menu item selected - forward
         view.contextItemIntent
             .filter { it.itemId == R.id.forward }
             .autoDispose(view.scope())
-            .subscribe {
-                @Suppress("UNCHECKED_CAST")
-                val menuInfo = it.menuInfo as QkContextMenuRecyclerView.ContextMenuInfo<Long, MmsPart>
-                if (menuInfo.viewHolderValue != null)
-                    navigator.showCompose("", listOf(menuInfo.viewHolderValue.getUri()))
+            .subscribe { item ->
+                item.mmsPart?.let { part -> navigator.showCompose("", listOf(part.getUri())) }
             }
 
         // message part context menu item selected - open externally
         view.contextItemIntent
             .filter { it.itemId == R.id.openExternally }
             .autoDispose(view.scope())
-            .subscribe {
-                @Suppress("UNCHECKED_CAST")
-                val menuInfo = it.menuInfo as QkContextMenuRecyclerView.ContextMenuInfo<Long, MmsPart>
-                if (menuInfo.viewHolderValue != null)
+            .subscribe { item ->
+                item.mmsPart?.let { part ->
                     navigator.viewFile(
-                        MmsPartProvider().getUriForMmsPartId(
-                            context, menuInfo.viewHolderValue.id,
-                            menuInfo.viewHolderValue.getBestFilename()),
-                        menuInfo.viewHolderValue.type
+                        MmsPartProvider().getUriForMmsPartId(context, part.id, part.getBestFilename()),
+                        part.type
                     )
+                }
             }
 
         // toggle the group sending mode and update the conversation saved value
@@ -873,7 +866,7 @@ class ComposeViewModel @Inject constructor(
             .subscribe { reactions -> newState { copy(dialog = ComposeDialog.Reactions(reactions)) } }
 
         // Set the current conversation
-        Observables
+        Observable
                 .combineLatest(
                         view.activityVisibleIntent.distinctUntilChanged(),
                         conversation.map { conversation -> conversation.id }.distinctUntilChanged())
@@ -920,13 +913,13 @@ class ComposeViewModel @Inject constructor(
         view.attachImageFileIntent
             .doOnNext { newState { copy(attaching = false) } }
             .autoDispose(view.scope())
-            .subscribe { view.requestGallery("image/*", ComposeView.ATTACH_FILE_REQUEST_CODE) }
+            .subscribe { view.requestGallery("image/*") }
 
         // pick any file from any provider apps
         view.attachAnyFileIntent
             .doOnNext { newState { copy(attaching = false) } }
             .autoDispose(view.scope())
-            .subscribe { view.requestGallery("*/*", ComposeView.ATTACH_FILE_REQUEST_CODE) }
+            .subscribe { view.requestGallery("*/*") }
 
         // Choose a time to schedule the message
         view.scheduleIntent
@@ -957,10 +950,8 @@ class ComposeViewModel @Inject constructor(
                 }
 
         // an attachment was picked by the user
-        Observable.merge(
-            view.attachAnyFileSelectedIntent.map { uri -> Attachment(context, uri) },
-            view.inputContentIntent.map { inputContent -> Attachment(context, inputContent = inputContent) }
-        )
+        Observable.merge(view.attachAnyFileSelectedIntent, view.inputContentIntent)
+            .map { uri -> Attachment(context, uri) }
             .autoDispose(view.scope())
             .subscribe {
                 newState { copy(attachments = attachments + it, attaching = false) }
@@ -1080,8 +1071,14 @@ class ComposeViewModel @Inject constructor(
                     }
 
                     if (subscription != null) {
-                        @Suppress("DEPRECATION")
-                        context.getSystemService<Vibrator>()?.vibrate(40)
+                        val vibrator = context.getSystemService<Vibrator>()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            vibrator?.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+                        } else {
+                            // The only way before Android 8
+                            @Suppress("DEPRECATION")
+                            vibrator?.vibrate(40)
+                        }
                         context.makeToast(context.getString(R.string.compose_sim_changed_toast,
                                 subscription.simSlotIndex + 1, subscription.displayName))
                     }
@@ -1421,5 +1418,11 @@ class ComposeViewModel @Inject constructor(
     private fun List<Message>.withIds(ids: Collection<Long>): List<Message> {
         return filter { message -> message.id in ids }
     }
+
+    /**
+     * The MMS part whose context menu this item belongs to
+     */
+    private val MenuItem.mmsPart: MmsPart?
+        get() = (menuInfo as? QkContextMenuRecyclerView.ContextMenuInfo<*, *>)?.viewHolderValue as? MmsPart
 
 }

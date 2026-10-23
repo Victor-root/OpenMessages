@@ -24,7 +24,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.databinding.ScheduledMessageListItemBinding
@@ -70,12 +69,12 @@ class ScheduledMessageAdapter @Inject constructor(
 
         return QkBindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
-                val message = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 if (toggleSelection(message.id, false))
                     binding.root.isActivated = isSelected(message.id)
             }
             binding.root.setOnClickListener {
-                val message = getItemOrNull(adapterPosition) ?: return@setOnClickListener
+                val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 toggleSelection(message.id)
                 binding.root.isActivated = isSelected(message.id)
             }

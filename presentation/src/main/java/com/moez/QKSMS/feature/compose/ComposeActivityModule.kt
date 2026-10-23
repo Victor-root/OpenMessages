@@ -20,6 +20,8 @@ package io.openmessages.feature.compose
 
 import android.content.Intent
 import android.net.Uri
+import androidx.core.content.IntentCompat
+import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.lifecycle.ViewModel
 import dagger.Module
 import dagger.Provides
@@ -37,7 +39,11 @@ class ComposeActivityModule {
 
     @Provides
     @Named("threadId")
-    fun provideThreadId(activity: ComposeActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
+    fun provideThreadId(activity: ComposeActivity): Long {
+        // A conversation picked from the share sheet is named by the id of its shortcut
+        val shortcutId = activity.intent.getStringExtra(ShortcutManagerCompat.EXTRA_SHORTCUT_ID)
+        return shortcutId?.toLongOrNull() ?: activity.intent.extras?.getLong("threadId") ?: 0L
+    }
 
     @Provides
     @Named("addresses")
@@ -82,17 +88,17 @@ class ComposeActivityModule {
         return retVal.toString()
     }
 
-    @Suppress("DEPRECATION")
     @Provides
     @Named("attachments")
     fun provideSharedAttachments(activity: ComposeActivity): List<Attachment> {
         val uris = mutableListOf<Uri>()
         when (activity.intent.action) {
             Intent.ACTION_SEND -> {
-                activity.intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.run(uris::add)
+                IntentCompat.getParcelableExtra(activity.intent, Intent.EXTRA_STREAM, Uri::class.java)?.run(uris::add)
             }
             Intent.ACTION_SEND_MULTIPLE -> {
-                activity.intent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.run(uris::addAll)
+                IntentCompat.getParcelableArrayListExtra(activity.intent, Intent.EXTRA_STREAM, Uri::class.java)
+                    ?.run(uris::addAll)
             }
         }
         return uris.map { Attachment(activity, it) }

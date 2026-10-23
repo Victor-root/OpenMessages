@@ -29,6 +29,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -187,13 +188,7 @@ class LauncherIconManager @Inject constructor(
         registeredReceiver = receiver
         val filter = IntentFilter(Intent.ACTION_PACKAGE_CHANGED).apply { addDataScheme("package") }
         // ACTION_PACKAGE_CHANGED is a protected system broadcast, so NOT_EXPORTED still receives it
-        // while satisfying Android 14's registration rule should targetSdk ever be raised to 34+.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            @Suppress("UnspecifiedRegisterReceiverFlag")
-            context.registerReceiver(receiver, filter)
-        }
+        ContextCompat.registerReceiver(context, receiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED)
 
         // Off the main thread: rewriting twenty component states is a single binder round-trip into
         // PackageManagerService that persists them and fires the broadcast, and the system re-checks

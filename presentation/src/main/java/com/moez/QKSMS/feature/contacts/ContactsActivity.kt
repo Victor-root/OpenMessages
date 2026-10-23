@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.IntentCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.jakewharton.rxbinding4.view.clicks
@@ -31,6 +32,7 @@ import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.util.extensions.finishWithoutAnimation
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.showKeyboard
 import io.openmessages.common.widget.QkDialog
@@ -54,6 +56,17 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         // finish() knows how to animate: a direct pick hands off to the composer next, a direct cancel
         // slides normally back to the caller.
         const val STANDALONE_KEY = "standalone"
+
+        /**
+         * The chips [intent] carries under [CHIPS_KEY]: the address of each, with the lookup key of
+         * its contact
+         */
+        fun getChips(intent: Intent?): HashMap<String, String?> {
+            val chips = intent?.let { IntentCompat.getSerializableExtra(it, CHIPS_KEY, HashMap::class.java) }
+            return chips.orEmpty().entries
+                .mapNotNull { (address, lookupKey) -> (address as? String)?.let { it to lookupKey as? String } }
+                .toMap(HashMap())
+        }
     }
 
     private lateinit var binding: ContactsActivityBinding
@@ -132,16 +145,16 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         binding.search.hideKeyboard()
         val intent = Intent().putExtra(CHIPS_KEY, result)
         setResult(Activity.RESULT_OK, intent)
-        finish()
-        if (getIntent().getBooleanExtra(STANDALONE_KEY, false)) {
+        val animate = if (getIntent().getBooleanExtra(STANDALONE_KEY, false)) {
             // Opened directly (e.g. from Templates): a pick hands straight off to the composer, so
             // skip the flash back to the caller; a cancel slides normally back to it.
-            if (result.isNotEmpty()) overridePendingTransition(0, 0)
+            result.isEmpty()
         } else {
             // Opened by the composer: on cancel the composer closes itself right after, so skip this
             // exit animation to avoid a doubled/janky back transition (a real pick reveals it normally).
-            if (result.isEmpty()) overridePendingTransition(0, 0)
+            result.isNotEmpty()
         }
+        if (animate) finish() else finishWithoutAnimation()
     }
 
 }

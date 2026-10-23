@@ -18,6 +18,7 @@
  */
 package io.openmessages.feature.main
 
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
@@ -56,9 +57,6 @@ import io.reactivex.rxjava3.kotlin.withLatestFrom
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -245,8 +243,7 @@ class MainViewModel @Inject constructor(
         // Show changelog
         if (changelogManager.didUpdate()) {
             if (Locale.getDefault().language.startsWith("en")) {
-                @OptIn(DelicateCoroutinesApi::class)
-                GlobalScope.launch(Dispatchers.Main) {
+                viewModelScope.launch {
                     val changelog = changelogManager.getChangelog()
                     changelogManager.markChangelogSeen()
                     // Nothing recorded for this version means nothing to say. The dialog would
@@ -406,7 +403,7 @@ class MainViewModel @Inject constructor(
                 .doOnNext { view.clearSelection() }
                 .filter { conversations -> conversations.size == 1 }
                 .map { conversations -> conversations.first().recipients }
-                .mapNotNull { recipients -> recipients[0]?.address?.takeIf { recipients.size == 1 } }
+                .mapNotNull { recipients -> recipients[0].address.takeIf { recipients.size == 1 } }
                 .doOnNext(navigator::addContact)
                 .autoDispose(view.scope())
                 .subscribe()

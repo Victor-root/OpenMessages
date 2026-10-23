@@ -16,7 +16,6 @@
 
 package com.android.mms.layout;
 
-import com.android.mms.logs.LogTag;
 
 import android.content.Context;
 import timber.log.Timber;

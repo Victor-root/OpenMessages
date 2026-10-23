@@ -21,9 +21,7 @@ package io.openmessages.model
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import androidx.core.net.toFile
-import androidx.core.view.inputmethod.InputContentInfoCompat
 import io.openmessages.extensions.contactToVCard
 import io.openmessages.extensions.getName
 import io.openmessages.extensions.getResourceBytes
@@ -37,15 +35,11 @@ import io.openmessages.extensions.isVCard
 
 class Attachment (
     context: Context,
-    var uri: Uri = Uri.EMPTY,
-    inputContent: InputContentInfoCompat? = null
+    var uri: Uri = Uri.EMPTY
 ) {
     private var resourceBytes: ByteArray? = null
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-            uri = inputContent?.contentUri ?: uri
-
         // if constructed with a uri to a contact, convert uri to associated vcard uri
         if (uri.isContact(context))
             uri = uri.contactToVCard(context)

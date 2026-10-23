@@ -40,16 +40,16 @@ class SpeakThreads @Inject constructor(
         }
     }
 
-    override fun buildObservable(threadIds: List<Long>): Flowable<*> {
-        if (threadIds.isEmpty())
+    override fun buildObservable(params: List<Long>): Flowable<*> {
+        if (params.isEmpty())
               return Single.just(0)
                   .doOnSubscribe { speakManager.startSpeakSession(noMessagesStr) }
                   .map { speakManager.speak(noMessagesStr) }
                   .doOnTerminate { speakManager.endSpeakSession() }
                   .toFlowable()
 
-        return Flowable.fromIterable(threadIds)
-            .doOnSubscribe { speakManager.startSpeakSession("threads:" + threadIds.sorted().joinToString()) }
+        return Flowable.fromIterable(params)
+            .doOnSubscribe { speakManager.startSpeakSession("threads:" + params.sorted().joinToString()) }
             .mapNotNull { threadId -> conversationRepo.getConversationAndLastSenderContactName(threadId) }
             .map { (conversation, sender) ->
                 if (speakManager.speakConversationLastSms(Pair(conversation, sender)) &&

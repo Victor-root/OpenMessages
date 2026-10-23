@@ -58,9 +58,8 @@ class SpeakManager @Inject constructor (private val context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 // init audio manager and audio focus request first time through only
                 localAudioManager =
-                    context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-                if (localAudioManager === null)
-                    return null
+                    context.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
+                        ?: return null
 
                 localAudioFocusRequest =
                     AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
@@ -117,7 +116,15 @@ class SpeakManager @Inject constructor (private val context: Context) {
                         audioManager?.abandonAudioFocusRequest(audioFocusRequest!!)
                 }
 
+                @Deprecated(
+                    "The system reports errors with their code",
+                    ReplaceWith("onError(utteranceId, TextToSpeech.ERROR)")
+                )
                 override fun onError(utteranceId: String) {
+                    onError(utteranceId, TextToSpeech.ERROR)
+                }
+
+                override fun onError(utteranceId: String, errorCode: Int) {
                     currentSessionId = null
 
                     // abandon audio focus

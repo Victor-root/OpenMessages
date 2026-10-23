@@ -33,8 +33,8 @@ import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.util.Preferences
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -76,7 +76,7 @@ class ConversationItemTouchCallback @Inject constructor(
 
     init {
 
-        disposables += Observables
+        disposables += Observable
                 .combineLatest(prefs.swipeRight.asObservable(), prefs.swipeLeft.asObservable(), colors.themeObservable()
                 ) { right, left, theme ->
                     rightAction = right
@@ -134,7 +134,7 @@ class ConversationItemTouchCallback @Inject constructor(
                 c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
                         dX, itemView.bottom.toFloat(), backgroundPaint)
 
-                resolveIcon(rightAction, swipeRightIcon, viewHolder.adapterPosition)?.let { icon ->
+                resolveIcon(rightAction, swipeRightIcon, viewHolder.bindingAdapterPosition)?.let { icon ->
                     val availablePx = dX.toInt() - iconLength
                     if (availablePx > 0) {
                         val src = Rect(0, 0, min(availablePx, icon.width), icon.height)
@@ -147,7 +147,7 @@ class ConversationItemTouchCallback @Inject constructor(
                 c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
                         itemView.right.toFloat(), itemView.bottom.toFloat(), backgroundPaint)
 
-                resolveIcon(leftAction, swipeLeftIcon, viewHolder.adapterPosition)?.let { icon ->
+                resolveIcon(leftAction, swipeLeftIcon, viewHolder.bindingAdapterPosition)?.let { icon ->
                     val availablePx = -dX.toInt() - iconLength
                     if (availablePx > 0) {
                         val src = Rect(max(0, icon.width - availablePx), 0, icon.width, icon.height)
@@ -169,7 +169,7 @@ class ConversationItemTouchCallback @Inject constructor(
         // This will trigger the animation back to neutral state
         val action = if (direction == ItemTouchHelper.RIGHT) rightAction else leftAction
         if (action != Preferences.SWIPE_ACTION_ARCHIVE) {
-            adapter?.notifyItemChanged(viewHolder.adapterPosition)
+            adapter?.notifyItemChanged(viewHolder.bindingAdapterPosition)
         }
     }
 

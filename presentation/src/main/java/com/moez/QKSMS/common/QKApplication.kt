@@ -37,6 +37,8 @@ import io.openmessages.util.NightModeManager
 import io.openmessages.util.Preferences
 import io.openmessages.worker.AutoBackupWorker
 import io.openmessages.worker.HousekeepingWorker
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.asExecutor
 import rxdogtag2.RxDogTag
 import rxdogtag2.autodispose2.AutoDisposeConfigurer
 import timber.log.Timber
@@ -44,10 +46,6 @@ import javax.inject.Inject
 
 class QKApplication : Application(), HasAndroidInjector {
 
-    /**
-     * Inject these so that they are forced to initialize
-     */
-    @Suppress("unused")
     @Inject lateinit var qkMigration: QkMigration
 
     @Inject lateinit var androidInjector: DispatchingAndroidInjector<Any>
@@ -74,7 +72,7 @@ class QKApplication : Application(), HasAndroidInjector {
 
         // configure emoji compatibility with bundled package
         // (bundled library works with no play-services/gsm os versions)
-        EmojiCompat.init(BundledEmojiCompatConfig(this)
+        EmojiCompat.init(BundledEmojiCompatConfig(this, Dispatchers.IO.asExecutor())
             .registerInitCallback(object: EmojiCompat.InitCallback() {
                 override fun onInitialized() {
                     super.onInitialized()

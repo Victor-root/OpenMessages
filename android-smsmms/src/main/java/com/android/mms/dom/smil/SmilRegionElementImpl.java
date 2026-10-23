@@ -16,7 +16,6 @@
 
 package com.android.mms.dom.smil;
 
-import com.android.mms.logs.LogTag;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.smil.SMILDocument;

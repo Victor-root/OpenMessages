@@ -22,6 +22,7 @@ import android.content.Context
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
+import android.os.Looper
 import android.provider.ContactsContract
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -42,7 +43,7 @@ class ContactAddedListenerImpl @Inject constructor(
         return ContactContentObserver(context).observable
     }
 
-    private class ContactContentObserver(context: Context) : ContentObserver(Handler()) {
+    private class ContactContentObserver(context: Context) : ContentObserver(Handler(Looper.getMainLooper())) {
 
         private val subject = BehaviorSubject.createDefault(Unit)
 

@@ -16,14 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-@file:Suppress("DEPRECATION")
 package io.openmessages.injection
 
 import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import androidx.work.WorkerFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -91,6 +89,9 @@ import io.openmessages.repository.SyncRepository
 import io.openmessages.repository.SyncRepositoryImpl
 import io.openmessages.util.RxSharedPreferences
 import io.openmessages.worker.InjectionWorkerFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module(subcomponents = [
@@ -102,13 +103,19 @@ class AppModule(private var application: Application) {
     @Singleton
     fun provideContext(): Context = application
 
+    /** For work that has to finish even once the screen that started it is gone */
+    @Provides
+    @Singleton
+    fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
     @Provides
     fun provideContentResolver(context: Context): ContentResolver = context.contentResolver
 
     @Provides
     @Singleton
     fun provideSharedPreferences(context: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        // The file the platform's default preferences always lived in
+        return context.getSharedPreferences("${context.packageName}_preferences", Context.MODE_PRIVATE)
     }
 
     @Provides

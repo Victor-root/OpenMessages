@@ -25,7 +25,7 @@ import io.openmessages.common.util.Colors
 import io.openmessages.manager.WidgetManager
 import io.openmessages.util.Preference
 import io.openmessages.util.Preferences
-import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -64,7 +64,7 @@ class ThemePickerPresenter @Inject constructor(
                 .subscribe()
 
         // Toggle the visibility of the apply group
-        Observables.combineLatest(theme.asObservable(), view.hsvThemeSelected()) { old, new -> old != new }
+        Observable.combineLatest(theme.asObservable(), view.hsvThemeSelected()) { old, new -> old != new }
                 .autoDispose(view.scope())
                 .subscribe { themeChanged -> newState { copy(applyThemeVisible = themeChanged) } }
 

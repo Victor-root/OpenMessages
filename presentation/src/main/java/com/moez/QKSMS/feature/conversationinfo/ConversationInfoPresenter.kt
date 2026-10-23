@@ -39,7 +39,7 @@ import io.openmessages.model.Conversation
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -77,7 +77,7 @@ class ConversationInfoPresenter @Inject constructor(
         disposables += markUnarchived
         disposables += deleteConversations
 
-        disposables += Observables
+        disposables += Observable
                 .combineLatest(
                         conversation,
                         messageRepo.getPartsForConversation(threadId)

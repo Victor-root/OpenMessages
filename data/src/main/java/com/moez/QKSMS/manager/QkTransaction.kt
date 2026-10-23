@@ -46,7 +46,6 @@ import android.telephony.SmsManager
 import android.telephony.SmsMessage
 import androidx.core.content.contentValuesOf
 import androidx.core.net.toUri
-import com.android.mms.MmsConfig
 import com.android.mms.dom.smil.parser.SmilXmlSerializer
 import com.google.android.mms.ContentType
 import com.google.android.mms.InvalidHeaderValueException
@@ -334,7 +333,7 @@ object QkTransaction {
             )
             else null
 
-        val smsManager = SmsManagerFactory.createSmsManager(subscriptionId)
+        val smsManager = SmsManagerFactory.createSmsManager(context, subscriptionId)
 
         val parts = smsManager.divideMessage(body)
 
@@ -559,7 +558,7 @@ object QkTransaction {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
-            SmsManagerFactory.createSmsManager(subscriptionId).sendMultimediaMessage(
+            SmsManagerFactory.createSmsManager(context, subscriptionId).sendMultimediaMessage(
                 context,
                 contentUri,
                 null,

@@ -75,15 +75,6 @@ public final class SqliteWrapper {
         }
     }
 
-    public static boolean requery(Context context, Cursor cursor) {
-        try {
-            return cursor.requery();
-        } catch (SQLiteException e) {
-            Timber.e(e, "Catch a SQLiteException when requery: ");
-            checkSQLiteException(context, e);
-            return false;
-        }
-    }
     public static int update(Context context, ContentResolver resolver, Uri uri,
             ContentValues values, String where, String[] selectionArgs) {
         try {

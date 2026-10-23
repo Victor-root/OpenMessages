@@ -23,7 +23,8 @@ import io.openmessages.blocking.QksmsBlockingClient
 import io.openmessages.common.util.extensions.versionCode
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
-import kotlinx.coroutines.GlobalScope
+import io.openmessages.util.RxSharedPreferences
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,11 +32,13 @@ class QkMigration @Inject constructor(
     private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val prefs: Preferences,
-    private val qksmsBlockingClient: QksmsBlockingClient
+    private val rxPrefs: RxSharedPreferences,
+    private val qksmsBlockingClient: QksmsBlockingClient,
+    private val applicationScope: CoroutineScope
 ) {
 
     fun performMigration() {
-        GlobalScope.launch {
+        applicationScope.launch {
             val oldVersion = prefs.version.get()
 
             if (oldVersion < 2199) {
@@ -51,9 +54,10 @@ class QkMigration @Inject constructor(
         prefs.changelogVersion.set(prefs.version.get())
 
         // Migrate from old SIA preference to blocking manager preference
-        if (prefs.sia.get()) {
+        val sia = rxPrefs.getBoolean("sia", false)
+        if (sia.get()) {
             prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)
-            prefs.sia.delete()
+            sia.delete()
         }
 
         // Migrate blocked conversations into QK blocking client
