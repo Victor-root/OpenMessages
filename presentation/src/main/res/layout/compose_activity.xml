@@ -607,7 +607,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="0"
                 android:contentDescription="@string/compose_record_audio_msg_play_pause_cd"
-                app:srcCompat="@drawable/exo_controls_play"
+                app:srcCompat="@drawable/ic_play_arrow_white_32dp"
                 app:tint="@color/tools_theme" />
 
             <SeekBar
@@ -673,7 +673,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
-                    app:pauseIcon="@drawable/exo_icon_stop"
+                    app:pauseIcon="@drawable/ic_stop_black_24dp"
                     app:playIcon="@android:drawable/ic_btn_speak_now"
                     app:primaryColor="@color/textPrimaryDark" />
             </FrameLayout>

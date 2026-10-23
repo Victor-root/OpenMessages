@@ -159,11 +159,9 @@ dependencies {
     implementation libs.glide
     kapt libs.glide.compiler
 
-    // exoplayer
-    implementation libs.exoplayer.core
-    implementation(libs.exoplayer.ui) {
-        exclude group: "com.android.support", module: "support-media-compat"
-    }
+    // media3
+    implementation libs.media3.exoplayer
+    implementation libs.media3.ui
 
     // rxbinding
     implementation libs.rxbinding.kotlin

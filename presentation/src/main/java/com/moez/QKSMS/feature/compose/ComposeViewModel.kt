@@ -30,7 +30,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.core.net.toFile
-import com.google.android.exoplayer2.util.MimeTypes
+import com.google.android.mms.ContentType
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.contentproviders.MmsPartProvider
 import io.openmessages.manager.BluetoothMicManager
@@ -551,7 +551,7 @@ class ComposeViewModel @Inject constructor(
                         Locale.getDefault()
                     ).format(System.currentTimeMillis())}.txt"
 
-                val mimeType = "${MimeTypes.BASE_TYPE_TEXT}/plain"
+                val mimeType = ContentType.TEXT_PLAIN
 
                 // save all messages text to a file in cache
                 val (uri, e) = FileUtils.createAndWrite(
