@@ -24,6 +24,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.R as AppCompatR
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import io.openmessages.R
@@ -80,7 +81,7 @@ class RadioPreferenceView @JvmOverloads constructor(
         }
 
         layout = RadioPreferenceViewBinding.inflate(LayoutInflater.from(context), this)
-        setBackgroundResource(context.resolveThemeAttribute(R.attr.selectableItemBackground))
+        setBackgroundResource(context.resolveThemeAttribute(AppCompatR.attr.selectableItemBackground))
 
         val states = arrayOf(
                 intArrayOf(android.R.attr.state_checked),

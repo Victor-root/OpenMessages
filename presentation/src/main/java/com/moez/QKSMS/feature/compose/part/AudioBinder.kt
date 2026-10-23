@@ -25,6 +25,7 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaMetadataRetriever.METADATA_KEY_TITLE
 import android.view.View
 import android.widget.SeekBar
+import com.bumptech.glide.Glide
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.R
 import io.openmessages.common.Navigator
@@ -41,7 +42,6 @@ import io.openmessages.extensions.resourceExists
 import io.openmessages.feature.compose.MessagesAdapter
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.openmessages.util.GlideApp
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -280,7 +280,7 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                     } else {
                         binding.frame.layoutParams.height = binding.frame.layoutParams.width
                         setTint(null)
-                        GlideApp.with(context)
+                        Glide.with(context)
                             .asBitmap()
                             .load(embeddedPicture)
                             .override(

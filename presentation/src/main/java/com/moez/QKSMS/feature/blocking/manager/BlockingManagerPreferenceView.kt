@@ -26,6 +26,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.R as AppCompatR
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.openmessages.R
 import io.openmessages.common.util.extensions.resolveThemeAttribute
@@ -79,7 +80,7 @@ class BlockingManagerPreferenceView @JvmOverloads constructor(
         }
 
     init {
-        setBackgroundResource(context.resolveThemeAttribute(R.attr.selectableItemBackground))
+        setBackgroundResource(context.resolveThemeAttribute(AppCompatR.attr.selectableItemBackground))
 
         context.obtainStyledAttributes(attrs, R.styleable.BlockingManagerPreferenceView).run {
             icon = getDrawable(R.styleable.BlockingManagerPreferenceView_icon)

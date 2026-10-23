@@ -20,8 +20,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -74,7 +73,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
         getByName("debug") {
@@ -98,6 +97,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        resValues = true
         viewBinding = true
     }
 }
@@ -136,7 +136,6 @@ dependencies {
 
     // glide
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
 
     // media3
     implementation(libs.media3.exoplayer)
@@ -156,8 +155,8 @@ dependencies {
     // dagger
     implementation(libs.dagger)
     implementation(libs.dagger.android.support)
-    kapt(libs.dagger.compiler)
-    kapt(libs.dagger.android.processor)
+    ksp(libs.dagger.compiler)
+    ksp(libs.dagger.android.processor)
     implementation(libs.javax.annotation.api)
 
     // ezvcard

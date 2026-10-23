@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding2.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
@@ -16,7 +17,6 @@ import io.openmessages.databinding.ConversationMediaListItemBinding
 import io.openmessages.databinding.ConversationRecipientListItemBinding
 import io.openmessages.extensions.isVideo
 import io.openmessages.feature.conversationinfo.ConversationInfoItem.*
-import io.openmessages.util.GlideApp
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
@@ -127,7 +127,7 @@ class ConversationInfoAdapter @Inject constructor(
                 val binding = ConversationMediaListItemBinding.bind(holder.itemView)
                 val part = item.value
 
-                GlideApp.with(context)
+                Glide.with(context)
                         .load(part.getUri())
                         .fitCenter()
                         .into(binding.thumbnail)

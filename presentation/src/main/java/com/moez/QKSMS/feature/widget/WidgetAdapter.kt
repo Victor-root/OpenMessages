@@ -28,6 +28,7 @@ import android.widget.RemoteViewsService
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.core.text.italic
+import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
@@ -39,7 +40,6 @@ import io.openmessages.model.Contact
 import io.openmessages.model.Conversation
 import io.openmessages.receiver.StartActivityFromWidgetReceiver
 import io.openmessages.repository.ConversationRepository
-import io.openmessages.util.GlideApp
 import io.openmessages.util.Preferences
 import io.openmessages.util.tryOrNull
 import javax.inject.Inject
@@ -132,7 +132,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         }
 
         remoteViews.setImageViewBitmap(R.id.photo, null)
-        val futureGet = GlideApp.with(context)
+        val futureGet = Glide.with(context)
                 .asBitmap()
                 .load(contact?.photoUri)
                 .submit(48.dpToPx(context), 48.dpToPx(context))

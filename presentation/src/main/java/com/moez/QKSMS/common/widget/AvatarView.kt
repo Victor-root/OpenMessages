@@ -22,6 +22,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.util.Colors
@@ -30,7 +31,6 @@ import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.AvatarViewBinding
 import io.openmessages.injection.appComponent
 import io.openmessages.model.Recipient
-import io.openmessages.util.GlideApp
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(
@@ -103,7 +103,7 @@ class AvatarView @JvmOverloads constructor(
 
         layout.photo.setImageDrawable(null)
         photoUri?.let { photoUri ->
-            GlideApp.with(layout.photo)
+            Glide.with(layout.photo)
                     .load(photoUri)
                     .into(layout.photo)
         }
