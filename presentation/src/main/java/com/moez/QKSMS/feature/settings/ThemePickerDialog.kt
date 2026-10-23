@@ -43,6 +43,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import io.openmessages.R
+import io.openmessages.common.base.QkActivity
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -77,8 +78,7 @@ class ThemePickerDialog : DialogFragment() {
     // 0 = the global app theme; a non-zero recipient id themes a single conversation instead.
     private var recipientId: Long = 0L
 
-    private var originalStatusColor: Int = DEFAULT_COLOR
-    private var originalNavColor: Int = DEFAULT_COLOR
+    private var originalBarColor: Int = DEFAULT_COLOR
     private var originalToolbarBackground: Drawable? = null
     private var colorSaved = false
 
@@ -249,9 +249,7 @@ class ThemePickerDialog : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val window = activity?.window
-        originalStatusColor = window?.statusBarColor ?: DEFAULT_COLOR
-        originalNavColor = window?.navigationBarColor ?: DEFAULT_COLOR
+        originalBarColor = (activity as? QkActivity)?.systemBarColor ?: DEFAULT_COLOR
         originalToolbarBackground = activity?.findViewById<Toolbar>(R.id.toolbar)?.background
         previewColor(selectedColor)
         updateButtonColors(selectedColor)
@@ -274,11 +272,7 @@ class ThemePickerDialog : DialogFragment() {
         // If the user cancelled, revert the live header/bar preview to what it was.
         // If a color was saved, the host activity's own theme subscription takes over.
         if (!colorSaved) {
-            val window = activity?.window
-            window?.statusBarColor = originalStatusColor
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                window?.navigationBarColor = originalNavColor
-            }
+            (activity as? QkActivity)?.applySystemBars(originalBarColor)
             activity?.findViewById<Toolbar>(R.id.toolbar)?.background = originalToolbarBackground
         }
     }
@@ -366,11 +360,7 @@ class ThemePickerDialog : DialogFragment() {
 
     /** Live-preview the chosen color in the status bar, navigation bar and toolbar header. */
     private fun previewColor(color: Int) {
-        val window = activity?.window ?: return
-        window.statusBarColor = color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.navigationBarColor = color
-        }
+        (activity as? QkActivity)?.applySystemBars(color)
         // Match the real header: the default violet previews as a gradient, custom colors as flat.
         activity?.findViewById<Toolbar>(R.id.toolbar)?.background = if (colors.usesBrandGradient(color)) {
             GradientDrawable(

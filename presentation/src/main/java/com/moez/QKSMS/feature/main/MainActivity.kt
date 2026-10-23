@@ -35,6 +35,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
+import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -182,6 +183,16 @@ class MainActivity : QkThemedActivity(), MainView {
         binding.toolbarSearch.setHintTextColor(resolveThemeColor(android.R.attr.textColorTertiary))
         viewModel.bindView(this)
         onNewIntentIntent.onNext(intent)
+        onBackPressedDispatcher.addCallback(this) {
+            if (searchExpanded) {
+                searchExpanded = false
+                binding.toolbarSearch.text = null
+                dismissKeyboard()
+                updateSearchVisibility()
+            } else {
+                backPressedSubject.onNext(NavItem.BACK)
+            }
+        }
 
         snackbarBinding = MainPermissionHintBinding.bind(binding.snackbar.inflate()).also {
             it.snackbarButton.clicks()
@@ -800,17 +811,6 @@ class MainActivity : QkThemedActivity(), MainView {
             }
         }
         return super.dispatchTouchEvent(ev)
-    }
-
-    override fun onBackPressed() {
-        if (searchExpanded) {
-            searchExpanded = false
-            binding.toolbarSearch.text = null
-            dismissKeyboard()
-            updateSearchVisibility()
-        } else {
-            backPressedSubject.onNext(NavItem.BACK)
-        }
     }
 
     override fun drawerToggled(opened: Boolean) {

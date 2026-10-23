@@ -48,6 +48,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
@@ -249,6 +250,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         setContentView(binding.root)
         showBackButton(true)
         viewModel.bindView(this)
+        onBackPressedDispatcher.addCallback(this) {
+            if (binding.fullscreenEditor.isVisible) collapseFullscreen()
+            else backPressedIntent.onNext(Unit)
+        }
 
         binding.contentView.layoutTransition = LayoutTransition().apply {
             disableTransitionType(LayoutTransition.CHANGING)
@@ -997,11 +1002,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         cameraDestination = savedInstanceState.getParcelable(ComposeView.CAMERA_DESTINATION_KEY)
         super.onRestoreInstanceState(savedInstanceState)
-    }
-
-    override fun onBackPressed() {
-        if (binding.fullscreenEditor.isVisible) collapseFullscreen()
-        else backPressedIntent.onNext(Unit)
     }
 
     override fun focusMessage() {

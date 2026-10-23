@@ -22,9 +22,11 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.net.Uri
 import android.os.IBinder
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import dagger.android.AndroidInjection
 import io.openmessages.common.util.extensions.getLabel
@@ -83,7 +85,8 @@ class RestoreBackupService : Service() {
     private fun start(intent: Intent) {
         val notificationManager = NotificationManagerCompat.from(this)
 
-        startForeground(NOTIFICATION_ID, notification.build())
+        ServiceCompat.startForeground(this, NOTIFICATION_ID, notification.build(),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
 
         backupRepo.getRestoreProgress()
             .sample(200, TimeUnit.MILLISECONDS, true)
@@ -127,9 +130,13 @@ class RestoreBackupService : Service() {
             }, Timber::w)
     }
 
-    @Suppress("DEPRECATION")
+    /**
+     * Android 15 stops waiting on a data sync after 6 hours, and the service has to stop then
+     */
+    override fun onTimeout(startId: Int, fgsType: Int) = stop()
+
     private fun stop() {
-        stopForeground(true)
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 

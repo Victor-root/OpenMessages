@@ -18,7 +18,12 @@
  */
 package io.openmessages.common.base
 
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.Paint
+import android.graphics.PixelFormat
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -71,6 +76,23 @@ abstract class QkActivity : AppCompatActivity() {
 
     protected fun isEdgeToEdge(): Boolean = supportsEdgeToEdge && prefs.edgeToEdge.get()
 
+    /**
+     * Whether the window draws behind the system bars: by choice in edge-to-edge, and from Android
+     * 15 on for every window that isn't floating, whatever the app asks for
+     */
+    private fun drawsBehindSystemBars(): Boolean = isEdgeToEdge() ||
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM && !window.isFloating)
+
+    /**
+     * What shows behind the navigation bar from Android 15 on, where the system no longer paints the
+     * bars and the app does: the edge-to-edge veil, or the bar colour of the original look
+     */
+    private val navigationBarBackground = BottomBarDrawable()
+
+    /** The colour last given to [applySystemBars] */
+    var systemBarColor: Int = Color.TRANSPARENT
+        private set
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (isEdgeToEdge()) {
@@ -92,34 +114,50 @@ abstract class QkActivity : AppCompatActivity() {
      * subtle self-painted veil, with icon brightness matched to whatever shows through each bar;
      * otherwise the bars are painted opaque with [barColor] (the app's original look).
      */
-    protected fun applySystemBars(barColor: Int) {
-        val controller = WindowCompat.getInsetsController(window, window.decorView)
-        if (isEdgeToEdge()) {
-            // Nav icons sit over the window background; a light background wants dark icons.
-            val lightNavIcons = colors.useDarkSystemBarIcons(resolveThemeColor(android.R.attr.windowBackground))
-            window.statusBarColor = Color.TRANSPARENT
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // Our own subtle nav-bar veil, lighter in light theme than in dark.
-                window.navigationBarColor = if (lightNavIcons) NAV_SCRIM_LIGHT else NAV_SCRIM_DARK
-            }
-            // The status bar rests over the themed toolbar, so it needs no scrim there (a screen that
-            // scrolls content behind it, like the main list, fades in its own). We paint the nav veil
-            // ourselves above, so disable the platform's automatic contrast scrim for both bars.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                window.isStatusBarContrastEnforced = false
-                window.isNavigationBarContrastEnforced = false
-            }
-            // Status icons sit over the toolbar/theme color; nav icons over the window background.
-            controller.isAppearanceLightStatusBars = colors.useDarkSystemBarIcons(barColor)
-            controller.isAppearanceLightNavigationBars = lightNavIcons
+    fun applySystemBars(barColor: Int) {
+        systemBarColor = barColor
+        val edgeToEdge = isEdgeToEdge()
+        // In edge-to-edge the nav icons sit over the window background; a light background wants dark
+        // icons. Otherwise they sit over the bar colour, like the status icons.
+        val lightNavIcons = colors.useDarkSystemBarIcons(
+                if (edgeToEdge) resolveThemeColor(android.R.attr.windowBackground) else barColor)
+        // Our own subtle nav-bar veil in edge-to-edge, lighter in light theme than in dark.
+        val navigationBarColor = when {
+            edgeToEdge -> if (lightNavIcons) NAV_SCRIM_LIGHT else NAV_SCRIM_DARK
+            else -> barColor
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            // The status bar shows the toolbar, which reaches up behind it, and the nav bar is
+            // painted over the content.
+            navigationBarBackground.color = navigationBarColor
         } else {
-            window.statusBarColor = barColor
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                window.navigationBarColor = barColor
-            }
-            val darkIcons = colors.useDarkSystemBarIcons(barColor)
-            controller.isAppearanceLightStatusBars = darkIcons
-            controller.isAppearanceLightNavigationBars = darkIcons
+            paintSystemBars(if (edgeToEdge) Color.TRANSPARENT else barColor, navigationBarColor)
+        }
+
+        // We paint the nav veil ourselves, so disable the platform's automatic contrast scrim
+        if (drawsBehindSystemBars() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isNavigationBarContrastEnforced = false
+        }
+
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
+        controller.isAppearanceLightStatusBars = colors.useDarkSystemBarIcons(barColor)
+        controller.isAppearanceLightNavigationBars = lightNavIcons
+    }
+
+    /**
+     * Has the system paint the bars, which it only does before Android 15
+     */
+    @Suppress("DEPRECATION")
+    private fun paintSystemBars(statusBarColor: Int, navigationBarColor: Int) {
+        window.statusBarColor = statusBarColor
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.navigationBarColor = navigationBarColor
+        }
+        // The status bar rests over the themed toolbar, so it needs no scrim there (a screen that
+        // scrolls content behind it, like the main list, fades in its own)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            window.isStatusBarContrastEnforced = false
         }
     }
 
@@ -143,9 +181,13 @@ abstract class QkActivity : AppCompatActivity() {
 
     private fun installEdgeToEdgeInsets() {
         val content = findViewById<View>(android.R.id.content) ?: return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            content.foreground = navigationBarBackground
+        }
         ViewCompat.setOnApplyWindowInsetsListener(content) { _, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            navigationBarBackground.height = bars.bottom
             // max(nav, ime) keeps bottom content above the keyboard once the window stops auto-resizing.
             onApplyEdgeToEdgeInsets(bars.top, maxOf(bars.bottom, ime.bottom))
             insets // returned unconsumed so DrawerLayout etc. still receive them
@@ -176,11 +218,10 @@ abstract class QkActivity : AppCompatActivity() {
         findViewById<View>(android.R.id.content)?.applyInsetPadding(bottom = bottom)
     }
 
-    @Suppress("DEPRECATION")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -192,7 +233,7 @@ abstract class QkActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         title = title // The title may have been set before layout inflation
-        if (isEdgeToEdge()) installEdgeToEdgeInsets()
+        if (drawsBehindSystemBars()) installEdgeToEdgeInsets()
     }
 
     override fun setContentView(view: View?) {
@@ -200,7 +241,7 @@ abstract class QkActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         title = title // The title may have been set before layout inflation
-        if (isEdgeToEdge()) installEdgeToEdgeInsets()
+        if (drawsBehindSystemBars()) installEdgeToEdgeInsets()
     }
 
     override fun setTitle(titleId: Int) {
@@ -232,5 +273,46 @@ abstract class QkActivity : AppCompatActivity() {
             window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
         }
     }
+
+}
+
+/**
+ * A colour over the bottom [height] pixels of what it is drawn on
+ */
+private class BottomBarDrawable : Drawable() {
+
+    private val paint = Paint()
+
+    var color: Int
+        get() = paint.color
+        set(value) {
+            paint.color = value
+            invalidateSelf()
+        }
+
+    var height: Int = 0
+        set(value) {
+            field = value
+            invalidateSelf()
+        }
+
+    override fun draw(canvas: Canvas) {
+        val bounds = bounds
+        canvas.drawRect(bounds.left.toFloat(), (bounds.bottom - height).toFloat(),
+                bounds.right.toFloat(), bounds.bottom.toFloat(), paint)
+    }
+
+    override fun setAlpha(alpha: Int) {
+        paint.alpha = alpha
+        invalidateSelf()
+    }
+
+    override fun setColorFilter(colorFilter: ColorFilter?) {
+        paint.colorFilter = colorFilter
+        invalidateSelf()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 
 }
