@@ -20,7 +20,7 @@ package io.openmessages.feature.blocking
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.BlockingListDownloader
@@ -80,11 +80,11 @@ class BlockingPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.blockingManagerIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.openBlockingManager() }
 
         view.blockedNumbersIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     if (prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_DEFAULT) {
                         // TODO: This is a hack, get rid of it once we implement AndroidX navigation
@@ -95,23 +95,23 @@ class BlockingPresenter @Inject constructor(
                 }
 
         view.phishingSourceIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { togglePhishing() }
 
         view.flagBlockSourceIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { prefs.blockFlaggedAsSpam.set(!prefs.blockFlaggedAsSpam.get()) }
 
         view.messageContentFiltersIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.openMessageContentFilters() }
 
         view.blockedMessagesIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.openBlockedMessages() }
 
         view.dropClickedIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { prefs.drop.set(!prefs.drop.get()) }
     }
 

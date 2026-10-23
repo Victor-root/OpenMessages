@@ -53,7 +53,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -64,11 +63,12 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import io.openmessages.common.QkMediaPlayer
 import com.uber.autodispose.ObservableSubscribeProxy
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import dagger.android.AndroidInjection
 import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.Navigator
+import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.DialogHost
@@ -116,7 +116,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var scheduledMessagesAdapter: ScheduledMessagesAdapter
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
     @Inject lateinit var blockingDialog: BlockingDialog
 
     private lateinit var binding: ComposeActivityBinding
@@ -235,7 +235,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         return Observable.interval(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
-            .autoDisposable(scope())
+            .autoDispose(scope())
     }
 
     private fun isSpeechRecognitionAvailable(): Boolean {
@@ -273,7 +273,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
             // "+" opens the attachment sheet; each sheet item feeds its existing intent, then closes.
             binding.attach.clicks()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { attachSheet.show() }
             attachSheetBinding.sheetGallery.setOnClickListener { attachImageFileIntent.onNext(Unit); attachSheet.dismiss() }
             attachSheetBinding.sheetCamera.setOnClickListener { cameraIntent.onNext(Unit); attachSheet.dismiss() }
@@ -286,16 +286,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             // Full-screen editor: the expand chevron opens it; collapse/send sync back to the bubble.
             savedSoftInputMode = window.attributes.softInputMode
             binding.expand.clicks()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { showFullscreen() }
             binding.fullscreenCollapse.clicks()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { collapseFullscreen() }
             binding.fullscreenSend.clicks()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { sendFromFullscreen() }
             binding.message.textChanges()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { binding.message.post { updateExpandButton() } }
 
             theme
@@ -333,13 +333,13 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
                     messageAdapter.theme = it
                 }
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe()
 
             // context menu registration for message parts
             messagePartContextMenuRegistrar
                 .mapNotNull { it }
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { registerForContextMenu(it) }
 
             // drag drop handlers for speech-to-text icon
@@ -377,7 +377,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             recordAudioChronometer
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe {
                     if (it) {
                         binding.audioMsgDuration.base = SystemClock.elapsedRealtime()
@@ -397,7 +397,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             recordAudioMsgRecordVisible
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe {
                     binding.audioMsgRecord.isVisible = it
                     binding.audioMsgDuration.isVisible =
@@ -408,7 +408,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             recordAudioPlayerVisible
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe {
                     binding.audioMsgPlayerBackground.isVisible = it
                     recordAudioPlayerConfigUI.onNext(QkMediaPlayer.PlayingState.Stopped)
@@ -417,7 +417,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             recordAudioPlayerConfigUI
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe {
                     when (it) {
                         QkMediaPlayer.PlayingState.Playing -> {

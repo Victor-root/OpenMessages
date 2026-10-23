@@ -25,14 +25,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.QkDialog
+import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setVisible
@@ -49,7 +49,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     @Inject lateinit var previewModeDialog: QkDialog
     @Inject lateinit var actionsDialog: QkDialog
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val previewModeSelectedIntent by lazy { previewModeDialog.adapter.menuItemClicks }
@@ -88,7 +88,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
                 .mapNotNull { view -> view as? PreferenceView }
                 .map { preference -> preference.clicks().map { preference } }
                 .let { Observable.merge(it) }
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe(preferenceClickIntent)
     }
 

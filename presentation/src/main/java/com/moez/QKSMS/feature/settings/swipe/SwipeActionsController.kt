@@ -24,7 +24,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.QkDialog
 import io.openmessages.common.base.QkController
@@ -73,7 +73,7 @@ class SwipeActionsController : QkController<SwipeActionsControllerBinding, Swipe
         Observable.merge(
                 binding.right.clicks().map { SwipeActionsView.Action.RIGHT },
                 binding.left.clicks().map { SwipeActionsView.Action.LEFT })
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe(actionClicks)
     }
 

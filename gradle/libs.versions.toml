@@ -3,39 +3,39 @@ android-compileSdk = "36"
 android-minSdk = "23"
 android-targetSdk = "33"
 agp = "8.13.2"
-androidx-appcompat = "1.6.1"
-androidx-constraintlayout = "1.1.3"
-androidx-core = "1.9.0"
-androidx-documentfile = "1.0.1"
-androidx-emoji2 = "1.4.0"
-androidx-exifinterface = "1.0.0"
-androidx-lifecycle = "2.1.0"
-androidx-recyclerview = "1.3.2"
+androidx-appcompat = "1.8.0"
+androidx-constraintlayout = "2.2.2"
+androidx-core = "1.18.0"
+androidx-documentfile = "1.1.0"
+androidx-emoji2 = "1.6.0"
+androidx-exifinterface = "1.4.2"
+androidx-lifecycle = "2.2.0"
+androidx-recyclerview = "1.4.0"
 androidx-test-espresso = "3.1.0-alpha3"
 androidx-test-runner = "1.1.0-alpha3"
-androidx-viewpager2 = "1.0.0-beta05"
-androidx-work = "2.8.0"
-autodispose = "1.3.0"
+androidx-viewpager2 = "1.1.0"
+androidx-work = "2.11.2"
+autodispose = "1.4.1"
 conductor = "2.1.5"
-coroutines = "1.4.3"
-dagger = "2.18"
+coroutines = "1.11.0"
+dagger = "2.60.1"
 glide = "4.16.0"
 junit = "4.12"
 kotlin = "2.3.21"
-material = "1.12.0"
-media3 = "1.4.1"
+material = "1.14.0"
+media3 = "1.11.1"
 mockito = "2.18.3"
-moshi = "1.8.0"
+moshi = "1.15.2"
 okhttp = "2.5.0"
-okhttp3 = "4.10.0"
+okhttp3 = "4.12.0"
 realm = "10.19.0"
 realm-adapters = "3.1.0"
-rx-preferences = "2.0.0-RC3"
-rxandroid = "2.0.1"
-rxbinding = "2.0.0"
-rxdogtag = "0.2.0"
-rxjava = "2.1.4"
-rxkotlin = "2.1.0"
+rx-preferences = "2.0.1"
+rxandroid = "2.1.1"
+rxbinding = "2.2.0"
+rxdogtag = "1.0.2"
+rxjava = "2.2.21"
+rxkotlin = "2.4.0"
 timber = "5.0.1"
 
 [libraries]
@@ -93,12 +93,12 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
-photoview = { module = "com.github.chrisbanes:photoview", version = "2.1.4" }
+photoview = { module = "io.getstream:photoview", version = "1.0.3" }
 shortcutbadger = { module = "me.leolin:ShortcutBadger", version = "1.1.22" }
 
 callcontrol-datashare = { module = "com.callcontrol:datashare", version = "1.3.0" }
-ez-vcard = { module = "com.googlecode.ez-vcard:ez-vcard", version = "0.10.4" }
-libphonenumber = { module = "io.michaelrocks:libphonenumber-android", version = "8.13.47" }
+ez-vcard = { module = "com.googlecode.ez-vcard:ez-vcard", version = "0.12.2" }
+libphonenumber = { module = "io.michaelrocks:libphonenumber-android", version = "9.0.40" }
 moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }

@@ -20,7 +20,7 @@ package io.openmessages.feature.settings
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
@@ -191,7 +191,7 @@ class SettingsPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.preferenceClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     Timber.v("Preference click: ${context.resources.getResourceName(it.id)}")
 
@@ -275,7 +275,7 @@ class SettingsPresenter @Inject constructor(
         view.aboutLongClicks()
                 .map { !prefs.logging.get() }
                 .doOnNext { enabled -> prefs.logging.set(enabled) }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { enabled ->
                     context.makeToast(when (enabled) {
                         true -> R.string.settings_logging_enabled
@@ -284,64 +284,64 @@ class SettingsPresenter @Inject constructor(
                 }
 
         view.nightModeSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { mode -> nightModeManager.updateNightMode(mode) }
 
         view.nightStartSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { nightModeManager.setNightStart(it.first, it.second) }
 
         view.nightEndSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { nightModeManager.setNightEnd(it.first, it.second) }
 
         view.textSizeSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe(prefs.sendDelay::set)
 
         view.headerQuickActionSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe(prefs.headerQuickAction::set)
 
         view.sendSoundSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { id ->
                     sendSoundPreviewId = id
                     if (id != Preferences.SEND_SOUND_OFF) view.previewSendSound(id, sendSoundPreviewVolume)
                 }
 
         view.sendSoundConfirmed()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { id ->
                     prefs.sendSoundId.set(id)
                     prefs.sendSoundVolume.set(sendSoundPreviewVolume)
                 }
 
         view.sendSoundVolumeChanged()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { volume -> sendSoundPreviewVolume = volume }
 
         view.sendSoundVolumeCommitted()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { volume ->
                     if (sendSoundPreviewId != Preferences.SEND_SOUND_OFF) view.previewSendSound(sendSoundPreviewId, volume)
                 }
 
         view.signatureChanged()
                 .doOnNext(prefs.signature::set)
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe()
 
         view.mmsSizeSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe(prefs.mmsSize::set)
 
         view.messageLinkHandlingSelected()
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe(prefs.messageLinkHandling::set)
     }
 

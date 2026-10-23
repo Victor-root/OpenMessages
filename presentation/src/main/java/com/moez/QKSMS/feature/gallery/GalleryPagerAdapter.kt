@@ -19,7 +19,9 @@
 package io.openmessages.feature.gallery
 
 import android.content.Context
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.media3.common.MediaItem
@@ -56,32 +58,34 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
         val inflater = LayoutInflater.from(parent.context)
         return QkViewHolder(when (viewType) {
             VIEW_TYPE_IMAGE -> {
-                val binding = GalleryImagePageBinding.inflate(inflater, parent, false)
-                // When calling the public setter, it doesn't allow the midscale to be the same as the
-                // maxscale or the minscale. We don't want 3 levels and we don't want to modify the library
-                // so let's celebrate the invention of reflection!
-                binding.image.attacher.run {
-                    javaClass.getDeclaredField("mMinScale").run {
-                        isAccessible = true
-                        setFloat(binding.image.attacher, 1f)
+                val image = GalleryImagePageBinding.inflate(inflater, parent, false).image
+                // A double tap goes straight between the fitted picture and the largest zoom, rather
+                // than through the middle step PhotoView takes by default. Handling double taps
+                // replaces PhotoView's own handling of single taps too, so the tap is passed on here.
+                image.setOnDoubleTapListener(object : GestureDetector.SimpleOnGestureListener() {
+                    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                        clicks.onNext(image)
+                        return true
                     }
-                    javaClass.getDeclaredField("mMidScale").run {
-                        isAccessible = true
-                        setFloat(binding.image.attacher, 1f)
+
+                    override fun onDoubleTap(e: MotionEvent): Boolean {
+                        val scale = when {
+                            image.scale > image.minimumScale -> image.minimumScale
+                            else -> image.maximumScale
+                        }
+                        image.setScale(scale, e.x, e.y, true)
+                        return true
                     }
-                    javaClass.getDeclaredField("mMaxScale").run {
-                        isAccessible = true
-                        setFloat(binding.image.attacher, 3f)
-                    }
-                }
-                binding.root
+                })
+                image
             }
 
             VIEW_TYPE_VIDEO -> inflater.inflate(R.layout.gallery_video_page, parent, false)
+                .apply { setOnClickListener(clicks::onNext) }
 
             else -> inflater.inflate(R.layout.gallery_invalid_page, parent, false)
-
-        }.apply { setOnClickListener(clicks::onNext) })
+                .apply { setOnClickListener(clicks::onNext) }
+        })
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {

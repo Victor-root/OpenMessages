@@ -19,7 +19,7 @@
 package io.openmessages.feature.settings.about
 
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
@@ -33,7 +33,7 @@ class AboutPresenter @Inject constructor(
         super.bindIntents(view)
 
         view.preferenceClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { preference ->
                     when (preference.id) {
                         R.id.developer -> navigator.showDeveloper()

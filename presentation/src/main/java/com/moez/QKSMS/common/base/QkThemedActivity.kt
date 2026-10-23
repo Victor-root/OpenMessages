@@ -33,7 +33,7 @@ import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.extensions.Optional
@@ -113,7 +113,7 @@ abstract class QkThemedActivity : QkActivity() {
         Observable.merge(triggers.map { it.asObservable().skip(1) })
                 .debounce(400, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { recreateWithCrossfade() }
 
     }
@@ -130,10 +130,10 @@ abstract class QkThemedActivity : QkActivity() {
 
                 menuItem.icon = menuItem.icon?.apply { setTint(tint) }
             }
-        }.autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
+        }.autoDispose(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
 
         theme
-            .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+            .autoDispose(scope(Lifecycle.Event.ON_DESTROY))
             .subscribe { theme ->
                 // Transparent bars behind content (edge-to-edge) or opaque themed bars, plus the
                 // correct light/dark icon contrast for each. See QkActivity.applySystemBars.

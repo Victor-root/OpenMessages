@@ -21,7 +21,7 @@ package io.openmessages.feature.settings.swipe
 import android.content.Context
 import androidx.annotation.DrawableRes
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.extensions.labelFor
@@ -60,7 +60,7 @@ class SwipeActionsPresenter @Inject constructor(
                         SwipeActionsView.Action.LEFT -> prefs.swipeLeft.get()
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe(view::showSwipeActions)
 
         view.actionSelected()
@@ -70,7 +70,7 @@ class SwipeActionsPresenter @Inject constructor(
                         SwipeActionsView.Action.LEFT -> prefs.swipeLeft.set(actionId)
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe()
     }
 

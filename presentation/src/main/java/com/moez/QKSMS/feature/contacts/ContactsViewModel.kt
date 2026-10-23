@@ -20,7 +20,7 @@ package io.openmessages.feature.contacts
 
 import android.view.inputmethod.EditorInfo
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.extensions.removeAccents
@@ -84,12 +84,12 @@ class ContactsViewModel @Inject constructor(
 
         // Update the state's query, so we know if we should show the cancel button
         view.queryChangedIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { query -> newState { copy(query = query.toString()) } }
 
         // Clear the query
         view.queryClearedIntent
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.clearQuery() }
 
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
@@ -166,7 +166,7 @@ class ContactsViewModel @Inject constructor(
                     composeItems
                 }
                 .subscribeOn(Schedulers.computation())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { items -> newState { copy(composeItems = items) } }
 
         // Listen for ComposeItems being selected, and then send them off to the number picker dialog in case
@@ -208,7 +208,7 @@ class ContactsViewModel @Inject constructor(
                 }
                 .filter { result -> result.isNotEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { result -> view.finish(result) }
     }
 

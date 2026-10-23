@@ -2,7 +2,7 @@ package io.openmessages.feature.messageutils
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.interactor.DeduplicateMessages
@@ -45,7 +45,7 @@ class MessageUtilsPresenter @Inject constructor(
             .flatMapSingle { view.showDeduplicationConfirmationDialog() }
             .filter { it }
             .observeOn(Schedulers.io())
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe {
                 deduplicateMessages.buildObservable(Unit)
                     .observeOn(AndroidSchedulers.mainThread())
@@ -68,11 +68,11 @@ class MessageUtilsPresenter @Inject constructor(
             }
 
         view.autoDeduplicateClickIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { prefs.autoDeduplicate.set(!prefs.autoDeduplicate.get()) }
 
         view.autoDeleteClickIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { view.showAutoDeleteDialog(prefs.autoDelete.get()) }
 
         view.autoDeleteChanged()
@@ -99,7 +99,7 @@ class MessageUtilsPresenter @Inject constructor(
                 }
             }
             .doOnNext(prefs.autoDelete::set)
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe()
     }
 }

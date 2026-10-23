@@ -25,12 +25,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import dagger.android.AndroidInjection
 import io.openmessages.R
+import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkActivity
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.setVisible
@@ -49,7 +49,7 @@ class GalleryActivity : QkActivity(), GalleryView {
     private lateinit var binding: GalleryActivityBinding
 
     @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
     @Inject lateinit var pagerAdapter: GalleryPagerAdapter
 
     val partId by lazy { intent.getLongExtra("partId", 0L) }
