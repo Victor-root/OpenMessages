@@ -7,7 +7,6 @@ dependencyResolutionManagement {
             url "https://jitpack.io"
             content {
                 includeGroup "com.github.chrisbanes"
-                includeGroup "com.github.google"
                 includeGroup "com.github.realm"
             }
         }
