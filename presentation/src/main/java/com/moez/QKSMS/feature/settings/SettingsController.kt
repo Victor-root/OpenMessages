@@ -32,7 +32,6 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
-import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.longClicks
 import io.openmessages.BuildConfig
@@ -87,7 +86,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
         SendSoundVolumeBinding.inflate(LayoutInflater.from(activity!!))
     }
 
-    private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
     private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val signatureSubject: Subject<String> = PublishSubject.create()
@@ -158,8 +156,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
             .let { preferences -> Observable.merge(preferences) }
 
     override fun aboutLongClicks(): Observable<*> = binding.about.longClicks()
-
-    override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
 
     override fun nightModeSelected(): Observable<Int> = nightModeDialog.adapter.menuItemClicks
 
@@ -271,16 +267,6 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
                 binding.syncingProgress.max = state.syncProgress.max
                 progressAnimator.apply { setIntValues(binding.syncingProgress.progress, state.syncProgress.progress) }.start()
                 binding.syncingProgress.isIndeterminate = state.syncProgress.indeterminate
-            }
-        }
-    }
-
-    override fun showQksmsPlusSnackbar() {
-        view?.run {
-            Snackbar.make(binding.contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
-                setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
-                setActionTextColor(colors.theme().theme)
-                show()
             }
         }
     }

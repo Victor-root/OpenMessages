@@ -23,13 +23,11 @@ import android.net.Uri
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.openmessages.R
-import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.LauncherIconManager
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.interactor.PerformBackup
-import io.openmessages.manager.BillingManager
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
@@ -45,11 +43,9 @@ import javax.inject.Inject
 
 class BackupPresenter @Inject constructor(
     private val backupRepo: BackupRepository,
-    private val billingManager: BillingManager,
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val launcherIconManager: LauncherIconManager,
-    private val navigator: Navigator,
     private val performBackup: PerformBackup,
     private val permissionManager: PermissionManager,
     private val prefs: Preferences
@@ -76,9 +72,6 @@ class BackupPresenter @Inject constructor(
                 .filter { progress -> progress is BackupRepository.Progress.Finished }
                 .filter { launcherIconManager.isIconChangeNeeded(launcherIconManager.desiredColor()) }
                 .subscribe { newState { copy(showIconChangeDialog = true) } }
-
-        disposables += billingManager.upgradeStatus
-                .subscribe { upgraded -> newState { copy(upgraded = upgraded) } }
 
         disposables += prefs.backupFrequency.asObservable()
                 .subscribe { frequency -> newState { copy(autoBackupFrequency = frequency) } }
@@ -147,28 +140,20 @@ class BackupPresenter @Inject constructor(
 
         // Backup writes automatically (no folder to pick), so go straight to the category picker
         view.backupClicks()
-                .withLatestFrom(billingManager.upgradeStatus) { _, upgraded -> upgraded }
                 .autoDisposable(view.scope())
-                .subscribe { upgraded ->
-                    when {
-                        !upgraded -> navigator.showQksmsPlusActivity("backup_fab")
-                        else -> view.showBackupCategoryPicker()
-                    }
-                }
+                .subscribe { view.showBackupCategoryPicker() }
 
         view.backupCategoriesSelected()
                 .autoDisposable(view.scope())
                 .subscribe { categories -> performBackup.execute(categories) }
 
-        // Restore: gate the same way, then pick the backup folder to restore from
+        // Restore: refused while a backup or a restore is running, then pick the backup folder
         view.restoreClicks()
                 .withLatestFrom(
                         backupRepo.getBackupProgress(),
-                        backupRepo.getRestoreProgress(),
-                        billingManager.upgradeStatus)
-                { _, backupProgress, restoreProgress, upgraded ->
+                        backupRepo.getRestoreProgress())
+                { _, backupProgress, restoreProgress ->
                     when {
-                        !upgraded -> context.makeToast(R.string.backup_restore_error_plus)
                         backupProgress.running -> context.makeToast(R.string.backup_restore_error_backup)
                         restoreProgress.running -> context.makeToast(R.string.backup_restore_error_restore)
                         else -> view.showRestoreSourceChoice(backupRepo.getBackupPathUriForPicker())

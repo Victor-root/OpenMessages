@@ -21,7 +21,6 @@ package io.openmessages.feature.compose
 import android.net.Uri
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.common.base.QkView
@@ -79,7 +78,6 @@ interface ComposeView : QkView<ComposeState> {
     val dialogDismissedIntent: Observable<ComposeDialog>
     val changeSimIntent: Observable<*>
     val sendIntent: Observable<Unit>
-    val viewQksmsPlusIntent: Subject<Unit>
     val backPressedIntent: Observable<Unit>
     val confirmDeleteIntent: Observable<List<Long>>
     val confirmDeleteConversationIntent: Observable<Long>
@@ -117,7 +115,6 @@ interface ComposeView : QkView<ComposeState> {
     fun setDraft(draft: String)
     fun showTemplatePicker()
     fun scrollToMessage(id: Long)
-    fun showQksmsPlusSnackbar(@StringRes message: Int)
     fun startSpeechRecognition()
     fun focusMessage()
     fun showBlockingDialog(threadIds: List<Long>, block: Boolean)
