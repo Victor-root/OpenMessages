@@ -24,7 +24,6 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.work.WorkerFactory
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.squareup.moshi.Moshi
@@ -33,7 +32,6 @@ import dagger.Module
 import dagger.Provides
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.BlockingManager
-import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.util.NotificationManagerImpl
 import io.openmessages.common.util.ShortcutManagerImpl
 import io.openmessages.feature.conversationinfo.injection.ConversationInfoComponent
@@ -124,9 +122,6 @@ class AppModule(private var application: Application) {
                 .add(KotlinJsonAdapterFactory())
                 .build()
     }
-
-    @Provides
-    fun provideViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory = factory
 
     // Listener
 

@@ -43,7 +43,6 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,10 +53,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.Navigator
+import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.androidxcompat.drawerOpen
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.DialogHost
@@ -98,7 +98,7 @@ class MainActivity : QkThemedActivity(), MainView {
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
     @Inject lateinit var searchAdapter: SearchAdapter
     @Inject lateinit var itemTouchCallback: ConversationItemTouchCallback
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     private lateinit var binding: MainActivityBinding
     private lateinit var snackbarBinding: MainPermissionHintBinding
@@ -185,7 +185,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
         snackbarBinding = MainPermissionHintBinding.bind(binding.snackbar.inflate()).also {
             it.snackbarButton.clicks()
-                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+                .autoDispose(scope(Lifecycle.Event.ON_DESTROY))
                 .subscribe(snackbarButtonIntent)
         }
 
@@ -271,11 +271,11 @@ class MainActivity : QkThemedActivity(), MainView {
         }
 
         // Don't allow clicks to pass through the drawer layout
-        binding.drawer.root.clicks().autoDisposable(scope()).subscribe()
+        binding.drawer.root.clicks().autoDispose(scope()).subscribe()
 
         // Apply the theme color to all dynamic UI elements
         theme
-                .autoDisposable(scope())
+                .autoDispose(scope())
                 .subscribe { theme ->
                     val density = resources.displayMetrics.density
                     val gradientEnd = colors.deriveGradientEndColor(theme.theme)

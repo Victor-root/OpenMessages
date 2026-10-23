@@ -19,7 +19,7 @@
 package io.openmessages.feature.templates
 
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.util.Preferences
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -47,18 +47,18 @@ class TemplatesViewModel @Inject constructor(
 
         // Add a new template
         view.addTemplateIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { view.showEditor(null) }
 
         // Long-press to edit an existing template
         view.templateLongClicksIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { template -> view.showEditor(template) }
 
         // Tap to use a template. From the picker (compose's "+") return it to the conversation;
         // otherwise open the recipient picker, then the composer once a recipient is chosen.
         view.templateClicksIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { template ->
                 if (pick) view.returnTemplate(template.body)
                 else view.pickRecipientForTemplate(template.body)
@@ -66,16 +66,16 @@ class TemplatesViewModel @Inject constructor(
 
         // Save from the editor (new or edited)
         view.saveTemplateIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { (id, title, body) -> saveTemplate(id, title, body) }
 
         // Delete from the editor
         view.deleteTemplateIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { id -> deleteTemplate(id) }
 
         view.backPressedIntent
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { view.finishActivity() }
     }
 

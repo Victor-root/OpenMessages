@@ -20,7 +20,7 @@ package io.openmessages.common.base
 
 import androidx.annotation.CallSuper
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -51,7 +51,7 @@ abstract class QkPresenter<View : QkViewContract<State>, State : Any>(initialSta
     open fun bindIntents(view: View) {
         state
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe(view::render)
     }
 

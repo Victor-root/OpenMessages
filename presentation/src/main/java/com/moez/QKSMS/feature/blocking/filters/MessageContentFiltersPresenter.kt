@@ -19,7 +19,7 @@
 package io.openmessages.feature.blocking.filters
 
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.repository.MessageContentFilterRepository
 import io.reactivex.schedulers.Schedulers
@@ -38,17 +38,17 @@ class MessageContentFiltersPresenter @Inject constructor(
             .observeOn(Schedulers.io())
             .doOnNext(filterRepo::removeFilter)
             .subscribeOn(Schedulers.io())
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe()
 
         view.addFilter()
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { view.showAddDialog() }
 
         view.saveFilter()
             .observeOn(Schedulers.io())
             .subscribeOn(Schedulers.io())
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { filterData -> filterRepo.createFilter(filterData) }
     }
 

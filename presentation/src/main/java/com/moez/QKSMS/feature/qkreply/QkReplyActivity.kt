@@ -33,13 +33,13 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import dagger.android.AndroidInjection
 import io.openmessages.R
+import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.extensions.autoScrollToStart
 import io.openmessages.common.util.extensions.setVisible
@@ -59,7 +59,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
     private lateinit var binding: QkreplyActivityBinding
 
     @Inject lateinit var adapter: MessagesAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     override val menuItemIntent: Subject<Int> = PublishSubject.create()
     override val textChangedIntent by lazy { binding.message.textChanges() }

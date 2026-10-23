@@ -18,10 +18,7 @@
  */
 package io.openmessages.common
 
-import android.app.Activity
 import android.app.Application
-import android.app.Service
-import android.content.BroadcastReceiver
 import androidx.emoji2.bundled.BundledEmojiCompatConfig
 import androidx.emoji2.text.EmojiCompat
 import androidx.work.Configuration
@@ -31,9 +28,7 @@ import com.uber.rxdogtag.RxDogTag
 import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasBroadcastReceiverInjector
-import dagger.android.HasServiceInjector
+import dagger.android.HasAndroidInjector
 import io.openmessages.R
 import io.openmessages.common.util.FileLoggingTree
 import io.openmessages.injection.AppComponentManager
@@ -50,7 +45,7 @@ import io.realm.RealmConfiguration
 import timber.log.Timber
 import javax.inject.Inject
 
-class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
+class QKApplication : Application(), HasAndroidInjector {
 
     /**
      * Inject these so that they are forced to initialize
@@ -58,9 +53,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Suppress("unused")
     @Inject lateinit var qkMigration: QkMigration
 
-    @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
-    @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-    @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
+    @Inject lateinit var androidInjector: DispatchingAndroidInjector<Any>
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
     @Inject lateinit var prefs: Preferences
@@ -124,16 +117,6 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
         AutoBackupWorker.register(applicationContext, prefs.backupFrequency.get())
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return dispatchingActivityInjector
-    }
-
-    override fun broadcastReceiverInjector(): AndroidInjector<BroadcastReceiver> {
-        return dispatchingBroadcastReceiverInjector
-    }
-
-    override fun serviceInjector(): AndroidInjector<Service> {
-        return dispatchingServiceInjector
-    }
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
 }

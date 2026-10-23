@@ -23,12 +23,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.Navigator
+import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
@@ -42,7 +42,7 @@ import javax.inject.Inject
 class TemplatesActivity : QkThemedActivity(), TemplatesView {
 
     @Inject lateinit var templatesAdapter: TemplatesAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var viewModelFactory: ViewModelFactory
     @Inject lateinit var navigator: Navigator
 
     private lateinit var binding: TemplatesActivityBinding

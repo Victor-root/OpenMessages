@@ -20,7 +20,7 @@ package io.openmessages.feature.themepicker
 
 import com.f2prateek.rx.preferences2.Preference
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.Colors
 import io.openmessages.manager.WidgetManager
@@ -42,12 +42,12 @@ class ThemePickerPresenter @Inject constructor(
         super.bindIntents(view)
 
         theme.asObservable()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { color -> view.setCurrentTheme(color) }
 
         // Update the theme when a material theme is clicked
         view.themeSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { color ->
                     theme.set(color)
                     if (recipientId == 0L) {
@@ -60,18 +60,18 @@ class ThemePickerPresenter @Inject constructor(
                 .doOnNext { color -> newState { copy(newColor = color) } }
                 .map { color -> colors.textPrimaryOnThemeForColor(color) }
                 .doOnNext { color -> newState { copy(newTextColor = color) } }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe()
 
         // Toggle the visibility of the apply group
         Observables.combineLatest(theme.asObservable(), view.hsvThemeSelected()) { old, new -> old != new }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { themeChanged -> newState { copy(applyThemeVisible = themeChanged) } }
 
         // Update the theme, when apply is clicked
         view.applyHsvThemeClicks()
                 .withLatestFrom(view.hsvThemeSelected()) { _, color -> color }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { color ->
                     theme.set(color)
                     if (recipientId == 0L) {
@@ -82,7 +82,7 @@ class ThemePickerPresenter @Inject constructor(
         // Reset the theme
         view.clearHsvThemeClicks()
                 .withLatestFrom(theme.asObservable()) { _, color -> color }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { color -> view.setCurrentTheme(color) }
     }
 

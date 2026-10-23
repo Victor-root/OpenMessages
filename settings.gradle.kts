@@ -6,7 +6,6 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://jitpack.io")
             content {
-                includeGroup("com.github.chrisbanes")
                 includeGroup("com.github.realm")
             }
         }

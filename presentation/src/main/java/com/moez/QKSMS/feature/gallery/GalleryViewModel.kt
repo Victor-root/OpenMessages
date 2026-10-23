@@ -21,7 +21,7 @@ package io.openmessages.feature.gallery
 import android.content.Context
 import io.openmessages.contentproviders.MmsPartProvider
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
@@ -65,7 +65,7 @@ class GalleryViewModel @Inject constructor(
         view.screenTouched()
                 .withLatestFrom(state) { _, state -> state.navigationVisible }
                 .map { navigationVisible -> !navigationVisible }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { navigationVisible -> newState { copy(navigationVisible = navigationVisible) } }
 
         // Save image to device
@@ -73,14 +73,14 @@ class GalleryViewModel @Inject constructor(
                 .filter { it == R.id.save }
                 .filter { permissions.hasStorage().also { if (!it) view.requestStoragePermission() } }
                 .withLatestFrom(view.pageChanged()) { _, part -> part.id }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { partId -> saveImage.execute(partId) { context.makeToast(R.string.gallery_toast_saved) } }
 
         // Share image externally
         view.optionsItemSelected()
                 .filter { it == R.id.share }
                 .withLatestFrom(view.pageChanged()) { _, part -> part }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     navigator.shareFile(
                         MmsPartProvider().getUriForMmsPartId(context, it.id, it.getBestFilename()),
@@ -92,14 +92,14 @@ class GalleryViewModel @Inject constructor(
         view.optionsItemSelected()
             .filter { it == R.id.forward }
             .withLatestFrom(view.pageChanged()) { _, part -> part }
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe { navigator.showCompose("", listOf(it.getUri())) }
 
         // message part context menu item selected - open externally
         view.optionsItemSelected()
             .filter { it == R.id.openExternally }
             .withLatestFrom(view.pageChanged()) { _, part -> part }
-            .autoDisposable(view.scope())
+            .autoDispose(view.scope())
             .subscribe {
                 navigator.viewFile(
                     MmsPartProvider().getUriForMmsPartId(context, it.id, it.getBestFilename()),

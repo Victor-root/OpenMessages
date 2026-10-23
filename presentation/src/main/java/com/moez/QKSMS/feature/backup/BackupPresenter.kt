@@ -21,7 +21,7 @@ package io.openmessages.feature.backup
 import android.content.Context
 import android.net.Uri
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.DateFormatter
@@ -88,16 +88,16 @@ class BackupPresenter @Inject constructor(
         // Optional: let the user pick a custom destination folder instead of the default
         view.setBackupLocationClicks()
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.selectFolder(backupRepo.getBackupPathUriForPicker()) }
 
         // Automatic backup: pick how often a full backup should run on its own
         view.autoBackupClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.showAutoBackupFrequencyPicker(prefs.backupFrequency.get()) }
 
         view.autoBackupFrequencySelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { frequency ->
                     prefs.backupFrequency.set(frequency)
                     AutoBackupWorker.register(context, frequency)
@@ -105,7 +105,7 @@ class BackupPresenter @Inject constructor(
 
         // Toggle whether backups are written as a single .zip archive
         view.zipClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { prefs.backupZip.set(!prefs.backupZip.get()) }
 
         // Manage backups: list the existing ones so the user can rename or delete them
@@ -113,7 +113,7 @@ class BackupPresenter @Inject constructor(
                 .observeOn(Schedulers.io())
                 .map { backupRepo.getManagedBackups() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { backups -> view.showBackupManager(backups) }
 
         view.renameBackupSelected()
@@ -122,7 +122,7 @@ class BackupPresenter @Inject constructor(
                     backupRepo.renameBackup(item, newName) to backupRepo.getManagedBackups()
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { (ok, backups) ->
                     if (!ok) context.makeToast(R.string.backup_manage_error)
                     view.showBackupManager(backups)
@@ -132,7 +132,7 @@ class BackupPresenter @Inject constructor(
                 .observeOn(Schedulers.io())
                 .map { item -> backupRepo.deleteBackup(item) to backupRepo.getManagedBackups() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { (ok, backups) ->
                     if (!ok) context.makeToast(R.string.backup_manage_error)
                     view.showBackupManager(backups)
@@ -140,11 +140,11 @@ class BackupPresenter @Inject constructor(
 
         // Backup writes automatically (no folder to pick), so go straight to the category picker
         view.backupClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.showBackupCategoryPicker() }
 
         view.backupCategoriesSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { categories -> performBackup.execute(categories) }
 
         // Restore: refused while a backup or a restore is running, then pick the backup folder
@@ -159,7 +159,7 @@ class BackupPresenter @Inject constructor(
                         else -> view.showRestoreSourceChoice(backupRepo.getBackupPathUriForPicker())
                     }
                 }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe()
 
         // A folder was picked: list the backup sets it holds off the main thread
@@ -167,7 +167,7 @@ class BackupPresenter @Inject constructor(
                 .observeOn(Schedulers.io())
                 .map { uri -> uri to backupRepo.listBackups(uri) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe({ (uri, backups) -> onBackupsListed(view, uri, backups) },
                         { newState { copy(showSelectedBackupError = true) } })
 
@@ -179,7 +179,7 @@ class BackupPresenter @Inject constructor(
                     folder to (folder?.let { backupRepo.listBackups(it) } ?: emptyList())
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe({ (folder, backups) ->
                     if (folder == null) newState { copy(showSelectedBackupError = true) }
                     else onBackupsListed(view, folder, backups)
@@ -187,14 +187,14 @@ class BackupPresenter @Inject constructor(
 
         // Several backups in the folder: the user picked which one to restore from
         view.restoreSourceSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { (uri, backup) ->
                     view.showRestoreCategoryPicker(uri, backup.folderName, backup.categories,
                             dateFormatter.getDetailedTimestamp(backup.date))
                 }
 
         view.restoreCategoriesSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { (folder, folderName, categories) ->
                     // Scheduled messages need the exact-alarm permission to fire on time; ask for it first
                     if (BackupCategory.SCHEDULED in categories && !permissionManager.hasExactAlarms()) {
@@ -209,20 +209,20 @@ class BackupPresenter @Inject constructor(
         // so the alarms are already in place. "Skip": run the restore now with the inexact-alarm fallback.
         view.exactAlarmGrantClicks()
                 .doOnNext { newState { copy(showExactAlarmDialog = false) } }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.openExactAlarmSettings() }
 
         view.exactAlarmSettingsClosed()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { startPendingRestore() }
 
         view.exactAlarmSkipClicks()
                 .doOnNext { newState { copy(showExactAlarmDialog = false) } }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { startPendingRestore() }
 
         view.selectedBackupErrorClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { newState { copy(showSelectedBackupError = false) } }
 
         // A restore brings back the icon colour the user had, but it cannot enable the matching
@@ -230,29 +230,29 @@ class BackupPresenter @Inject constructor(
         // restore is done rather than done behind the user's back.
         view.iconChangeConfirmClicks()
                 .doOnNext { newState { copy(showIconChangeDialog = false) } }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { view.applyIconAndClose(launcherIconManager.desiredColor()) }
 
         view.iconChangeDismissClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { newState { copy(showIconChangeDialog = false) } }
 
         view.stopRestoreClicks()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { newState { copy(showStopRestoreDialog = true) } }
 
         view.stopRestoreConfirmed()
                 .doOnNext { newState { copy(showStopRestoreDialog = false) } }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { backupRepo.stopRestore() }
 
         view.stopRestoreCancel()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { newState { copy(showStopRestoreDialog = false) } }
 
         // The user picked a custom destination folder: persist it and refresh the shown location
         view.documentTreeSelected()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { uri ->
                     backupRepo.persistBackupDirectory(uri)
                     newState { copy(backupLocation = backupRepo.getBackupLocationLabel()) }

@@ -2,7 +2,7 @@ package io.openmessages.feature.blocking.manager
 
 import android.content.Context
 import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
+import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.CallBlockerBlockingClient
@@ -46,26 +46,26 @@ class BlockingManagerPresenter @Inject constructor(
         view.activityResumed()
                 .map { callBlocker.isAvailable() }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { available -> newState { copy(callBlockerInstalled = available) } }
 
         view.activityResumed()
                 .map { callControl.isAvailable() }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { available -> newState { copy(callControlInstalled = available) } }
 
         view.activityResumed()
                 .map { shouldIAnswer.isAvailable() }
                 .distinctUntilChanged()
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe { available -> newState { copy(siaInstalled = available) } }
 
         view.qksmsClicked()
                 .observeOn(Schedulers.io())
                 .map { getAddressesToBlock(qksms) }
                 .switchMap { numbers -> qksms.block(numbers).andThen(Observable.just(Unit)) } // Hack
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_DEFAULT)
                 }
@@ -80,7 +80,7 @@ class BlockingManagerPresenter @Inject constructor(
                     val enabled = prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_CB
                     installed && !enabled
                 }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CB)
                 }
@@ -110,7 +110,7 @@ class BlockingManagerPresenter @Inject constructor(
                 .observeOn(Schedulers.io())
                 .map { getAddressesToBlock(callControl) } // This sucks. Can't wait to use coroutines
                 .switchMap { numbers -> callControl.block(numbers).andThen(Observable.just(Unit)) } // Hack
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     callControl.shouldBlock("callcontrol").blockingGet()
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC)
@@ -126,7 +126,7 @@ class BlockingManagerPresenter @Inject constructor(
                     val enabled = prefs.blockingManager.get() == Preferences.BLOCKING_MANAGER_SIA
                     installed && !enabled
                 }
-                .autoDisposable(view.scope())
+                .autoDispose(view.scope())
                 .subscribe {
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_SIA)
                 }
