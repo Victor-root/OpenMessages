@@ -18,8 +18,8 @@
  */
 package io.openmessages.repository
 
-import androidx.test.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import io.openmessages.util.PhoneNumberUtils
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue

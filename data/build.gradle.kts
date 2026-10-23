@@ -66,13 +66,8 @@ dependencies {
     implementation(libs.rxkotlin)
 
     // testing
-    androidTestImplementation(libs.androidx.test.espresso.core) {
-        exclude(group = "com.android.support", module = "support-annotations")
-    }
-    androidTestImplementation(libs.mockito.android)
-    testImplementation(libs.androidx.test.runner)
-    testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 
     // coroutines
     implementation(libs.coroutines.core)

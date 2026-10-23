@@ -36,7 +36,6 @@ android {
         // versionCode by 1 and update versionName for each release.
         versionCode = 2
         versionName = "1.0.1"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
@@ -172,17 +171,13 @@ dependencies {
     implementation(libs.rxdogtag.autodispose)
 
     // testing
-    androidTestImplementation(libs.androidx.test.espresso.core) {
-        exclude(group = "com.android.support", module = "support-annotations")
-    }
-    androidTestImplementation(libs.mockito.android)
-    testImplementation(libs.androidx.test.runner)
     testImplementation(libs.junit)
-    testImplementation(libs.mockito.core)
 
     // moshi
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
+    // moshi-kotlin brings kotlin-reflect 1.8; it has to match the Kotlin the app is built with
+    implementation(libs.kotlin.reflect)
 
     // coroutines
     implementation(libs.coroutines.core)
