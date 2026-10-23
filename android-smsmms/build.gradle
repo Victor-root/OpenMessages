@@ -35,20 +35,9 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation 'com.squareup.okhttp:okhttp:2.5.0'
-    implementation 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-
-repositories {
-    google()
-    maven { url "https://jitpack.io" }
-    maven { url 'https://maven.google.com' }
-    maven {
-        name 'glide-snapshot'
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-    mavenCentral()
+    implementation libs.androidx.core.ktx
+    implementation libs.timber
+    implementation libs.okhttp
+    implementation libs.okhttp.urlconnection
+    implementation libs.kotlin.stdlib
 }

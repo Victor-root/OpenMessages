@@ -32,20 +32,9 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation libs.androidx.core.ktx
+    implementation libs.timber
+    implementation libs.kotlin.stdlib
 
     implementation project(":android-smsmms")
-}
-
-repositories {
-    google()
-    maven { url "https://jitpack.io" }
-    maven { url 'https://maven.google.com' }
-    maven {
-        name 'glide-snapshot'
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-    mavenCentral()
 }

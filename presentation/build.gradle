@@ -138,100 +138,99 @@ configurations {
 
 dependencies {
     // lifecycle
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation libs.androidx.lifecycle.extensions
+    implementation libs.androidx.lifecycle.common.java8
 
     // androidx
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "androidx.emoji2:emoji2-bundled:$androidx_emoji2_version"
-    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version"
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.recyclerview:recyclerview:$androidx_recyclerview_version"
-    implementation "androidx.viewpager2:viewpager2:$androidx_viewpager_version"
-    implementation "com.google.android.material:material:$material_version"
-    implementation("androidx.work:work-runtime-ktx:$androidx_work_version")
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.emoji2.bundled
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.recyclerview
+    implementation libs.androidx.viewpager2
+    implementation libs.material
+    implementation libs.androidx.work.runtime.ktx
 
     // conductor
-    implementation "com.bluelinelabs:conductor:$conductor_version"
-    implementation "com.bluelinelabs:conductor-archlifecycle:$conductor_version"
+    implementation libs.conductor
+    implementation libs.conductor.archlifecycle
 
     // glide
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    implementation libs.glide
+    kapt libs.glide.compiler
 
     // exoplayer
-    implementation "com.github.google.ExoPlayer:exoplayer-core:$exoplayer_version"
-    implementation("com.github.google.ExoPlayer:exoplayer-ui:$exoplayer_version", {
+    implementation libs.exoplayer.core
+    implementation(libs.exoplayer.ui) {
         exclude group: "com.android.support", module: "support-media-compat"
-    })
+    }
 
     // rxbinding
-    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:$rxbinding_version"
-    implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
+    implementation libs.rxbinding.kotlin
+    implementation libs.rxbinding.support.v4.kotlin
 
     // autodispose
-    implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android-archcomponents-test:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-lifecycle:$autodispose_version"
+    implementation libs.autodispose.android.archcomponents
+    implementation libs.autodispose.android.archcomponents.test
+    implementation libs.autodispose.android
+    implementation libs.autodispose
+    implementation libs.autodispose.lifecycle
 
     // dagger
-    implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    implementation libs.dagger
+    implementation libs.dagger.android.support
+    kapt libs.dagger.compiler
+    kapt libs.dagger.android.processor
     //Resolve jdk8+ Generation Annotations - javax annotation does not exist
-    implementation 'com.github.pengrad:jdk9-deps:1ffe84c468'
-    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+    implementation libs.jdk9.deps
+    implementation libs.javax.annotation.api
 
     // ezvcard
-    implementation('com.googlecode.ez-vcard:ez-vcard:0.10.4', {
+    implementation(libs.ez.vcard) {
         exclude group: "org.jsoup", module: "jsoup"
         exclude group: "org.freemarker", module: "freemarker"
         exclude group: "com.fasterxml.jackson.core", module: "jackson-core"
-    })
+    }
 
     // realm
-    implementation "com.github.realm:realm-android-adapters:$realm_adapters_version"
-    kapt "io.realm:realm-annotations:$realm_version"
-    kapt "io.realm:realm-annotations-processor:$realm_version"
+    implementation libs.realm.adapters
+    kapt libs.realm.annotations
+    kapt libs.realm.annotations.processor
 
     // rxjava
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
-    implementation "com.uber.rxdogtag:rxdogtag:$rxdogtag_version"
-    implementation "com.uber.rxdogtag:rxdogtag-autodispose:$rxdogtag_version"
+    implementation libs.rxandroid
+    implementation libs.rxjava
+    implementation libs.rxkotlin
+    implementation libs.rxdogtag
+    implementation libs.rxdogtag.autodispose
 
 
     // testing
-    androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version", {
+    androidTestImplementation(libs.androidx.test.espresso.core) {
         exclude group: "com.android.support", module: "support-annotations"
-    })
-    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-    testImplementation "androidx.test:runner:$androidx_testrunner_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
+    }
+    androidTestImplementation libs.mockito.android
+    testImplementation libs.androidx.test.runner
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
 
     // moshi
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    debugImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+    implementation libs.moshi
+    implementation libs.moshi.kotlin
+    kapt libs.moshi.kotlin.codegen
 
     // coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutines_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutines_version"
+    implementation libs.coroutines.core
+    implementation libs.coroutines.android
+    implementation libs.coroutines.rx2
+    implementation libs.coroutines.reactive
 
-    implementation "com.github.chrisbanes:photoview:2.1.4"
-    implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
-    implementation "com.github.google:flexbox-layout:0.3.1"
-    implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
-    implementation "me.leolin:ShortcutBadger:1.1.22"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation libs.photoview
+    implementation libs.rx.preferences
+    implementation libs.flexbox
+    implementation libs.timber
+    implementation libs.shortcutbadger
+    implementation libs.kotlin.stdlib.jdk7
     implementation project(":android-smsmms")
     implementation project(":common")
     implementation project(':data')
