@@ -76,17 +76,11 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
         getByName("debug") {
-            // Built like release (R8, resource shrinking, not debuggable) so it runs as smoothly;
-            // only the package, the name and the signing key set it apart.
+            // The same app as release, built and signed the same way, so either installs over the
+            // other. Only the version name in About tells them apart, and the debug logs it keeps.
             initWith(getByName("release"))
-            applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
-            resValue("string", "app_name", "Open Messages Debug")
-            // The launcher entries are labelled with launcher_name, not app_name, so overriding
-            // app_name alone left both installed versions showing the same name on the home screen.
-            resValue("string", "launcher_name", "Messages Debug")
-            resValue("string", "application_id", "io.openmessages")
-            signingConfig = signingConfigs.getByName("debug")
+            buildConfigField("boolean", "DEBUG", "true")
         }
     }
 
@@ -194,12 +188,12 @@ dependencies {
     implementation(project(":domain"))
 }
 
-// An unsigned release APK installs nowhere, and nothing along the way says so: the build succeeds
-// and the file looks normal. Fail as soon as the task graph is known instead, before spending a
-// full build on it. This checks the signing configuration itself rather than the presence of
+// Both build types are signed with the release key. An unsigned APK installs nowhere, and nothing
+// along the way says so: the build succeeds and the file looks normal. Fail as soon as the task
+// graph is known instead, before spending a full build on it. This checks the signing configuration itself rather than the presence of
 // keystore.properties, so it holds for every way the credentials can arrive.
 gradle.taskGraph.whenReady {
-    if (allTasks.none { it.name.matches(Regex("^(assemble|bundle|install)Release$")) }) {
+    if (allTasks.none { it.name.matches(Regex("^(assemble|bundle|install)(Release|Debug)$")) }) {
         return@whenReady
     }
     val signing = android.signingConfigs.getByName("release")

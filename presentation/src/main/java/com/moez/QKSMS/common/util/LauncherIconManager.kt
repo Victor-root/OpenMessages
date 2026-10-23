@@ -46,11 +46,7 @@ class LauncherIconManager @Inject constructor(
 
     companion object {
         // Activity-alias components are declared in the manifest relative to the app's namespace,
-        // which is "io.openmessages" regardless of the installed applicationId. Debug builds append
-        // ".debug" to the applicationId, but NOT to the component class names. We must therefore
-        // build the ComponentName's class name from the namespace below — using context.packageName
-        // (the applicationId) would point at a non-existent component and the enable/disable call
-        // would silently do nothing.
+        // so their class names are built from it rather than from the installed applicationId.
         private const val COMPONENT_PACKAGE = "io.openmessages"
 
         // The one alias the manifest ships with android:enabled="true". Every other alias is disabled

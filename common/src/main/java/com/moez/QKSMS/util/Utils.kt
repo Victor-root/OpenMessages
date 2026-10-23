@@ -39,11 +39,6 @@ fun <T> tryOrNull(logOnError: Boolean = true, body: () -> T?): T? {
     }
 }
 
-fun nonDebugPackageName(packageName: String): String {
-    return if (packageName.endsWith(".debug")) packageName.removeSuffix(".debug")
-    else packageName
-}
-
 fun sha256(input: String): String {
     val digest = sha256Digest.get()
     digest!!.reset()
