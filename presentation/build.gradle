@@ -88,6 +88,9 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
+            // Built like release (R8, resource shrinking, not debuggable) so it runs as smoothly;
+            // only the package, the name and the signing key set it apart.
+            initWith release
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             resValue("string", "app_name", "Open Messages Debug")
