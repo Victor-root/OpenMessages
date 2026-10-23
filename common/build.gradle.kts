@@ -16,27 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+}
 
 android {
-    compileSdk libs.versions.android.compileSdk.get().toInteger()
+    namespace = "io.openmessages.common"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk libs.versions.android.minSdk.get().toInteger()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    useLibrary 'org.apache.http.legacy'
-    lint {
-        abortOnError false
-    }
-    namespace 'com.klinker.android.send_message'
 }
 
 dependencies {
-    implementation libs.androidx.core.ktx
-    implementation libs.timber
-    implementation libs.okhttp
-    implementation libs.okhttp.urlconnection
-    implementation libs.kotlin.stdlib
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.timber)
+
+    implementation(project(":android-smsmms"))
 }

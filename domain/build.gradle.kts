@@ -16,52 +16,53 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-apply plugin: 'com.android.library'
-apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id("com.android.library")
+    id("realm-android") // Realm needs to be before Kotlin or the build will fail
+    id("kotlin-android")
+    id("kotlin-kapt")
+}
 
 android {
-    compileSdk libs.versions.android.compileSdk.get().toInteger()
+    namespace = "io.openmessages.domain"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk libs.versions.android.minSdk.get().toInteger()
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
-    namespace 'io.openmessages.domain'
+
     // For BuildConfig.DEBUG, which keeps the diagnostic
     // logging in this module out of release builds.
     buildFeatures {
-        buildConfig true
+        buildConfig = true
     }
 }
 
 dependencies {
     // androidx
-    implementation libs.androidx.documentfile
+    implementation(libs.androidx.documentfile)
 
     // dagger
-    implementation libs.dagger
-    kapt libs.dagger.compiler
-    implementation libs.javax.annotation.api
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.javax.annotation.api)
 
     // realm
-    kapt libs.realm.annotations
-    kapt libs.realm.annotations.processor
+    kapt(libs.realm.annotations)
+    kapt(libs.realm.annotations.processor)
 
     // rxjava
-    implementation libs.rxandroid
-    implementation libs.rxjava
-    implementation libs.rxkotlin
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
+    implementation(libs.rxkotlin)
 
     // coroutines
-    implementation libs.coroutines.core
-    implementation libs.coroutines.rx2
-    implementation libs.coroutines.reactive
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.rx2)
+    implementation(libs.coroutines.reactive)
 
-    implementation libs.androidx.core.ktx
-    implementation libs.rx.preferences
-    implementation libs.timber
-    implementation libs.kotlin.stdlib
-    implementation project(":common")
-
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.rx.preferences)
+    implementation(libs.timber)
+    implementation(project(":common"))
 }

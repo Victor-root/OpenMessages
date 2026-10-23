@@ -4,13 +4,13 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url "https://jitpack.io"
+            url = uri("https://jitpack.io")
             content {
-                includeGroup "com.github.chrisbanes"
-                includeGroup "com.github.realm"
+                includeGroup("com.github.chrisbanes")
+                includeGroup("com.github.realm")
             }
         }
     }
 }
 
-include ':presentation', ':android-smsmms', ':domain', ':data', ':common'
+include(":presentation", ":android-smsmms", ":domain", ":data", ":common")
