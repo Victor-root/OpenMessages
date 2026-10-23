@@ -29,8 +29,8 @@ import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.withAlpha
 import io.openmessages.injection.appComponent
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 /**

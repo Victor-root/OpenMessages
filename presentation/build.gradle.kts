@@ -117,8 +117,7 @@ base {
 
 dependencies {
     // lifecycle
-    implementation(libs.androidx.lifecycle.extensions)
-    implementation(libs.androidx.lifecycle.common.java8)
+    implementation(libs.androidx.lifecycle.viewmodel)
 
     // androidx
     implementation(libs.androidx.appcompat)
@@ -142,15 +141,13 @@ dependencies {
     implementation(libs.media3.ui)
 
     // rxbinding
-    implementation(libs.rxbinding.kotlin)
-    implementation(libs.rxbinding.support.v4.kotlin)
+    implementation(libs.rxbinding)
+    implementation(libs.rxbinding.drawerlayout)
 
     // autodispose
-    implementation(libs.autodispose.android.archcomponents)
-    implementation(libs.autodispose.android.archcomponents.test)
+    implementation(libs.autodispose.androidx.lifecycle)
     implementation(libs.autodispose.android)
     implementation(libs.autodispose)
-    implementation(libs.autodispose.lifecycle)
 
     // dagger
     implementation(libs.dagger)
@@ -189,11 +186,9 @@ dependencies {
     // coroutines
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
-    implementation(libs.coroutines.rx2)
-    implementation(libs.coroutines.reactive)
+    implementation(libs.coroutines.rx3)
 
     implementation(libs.photoview)
-    implementation(libs.rx.preferences)
     implementation(libs.flexbox)
     implementation(libs.timber)
     implementation(libs.shortcutbadger)

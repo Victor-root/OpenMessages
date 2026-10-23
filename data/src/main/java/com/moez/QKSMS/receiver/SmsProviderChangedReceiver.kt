@@ -43,7 +43,7 @@ class SmsProviderChangedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
 
-        // Sync the message to our realm
+        // Sync the message to our database
         val pendingResult = goAsync()
         syncMessage.execute(SyncMessage.Params(intent.data ?: return)) {
             pendingResult.finish()

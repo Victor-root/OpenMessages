@@ -39,7 +39,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.net.toUri
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.common.QkMediaPlayer
 import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
@@ -70,9 +70,9 @@ import io.openmessages.databinding.MessageListItemInBinding
 import io.openmessages.databinding.MessageListItemOutBinding
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

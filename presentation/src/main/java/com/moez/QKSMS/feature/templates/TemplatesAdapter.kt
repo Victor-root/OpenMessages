@@ -24,8 +24,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.databinding.TemplateListItemBinding
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class TemplatesAdapter @Inject constructor() : QkAdapter<Template, TemplatesAdapter.ViewHolder>() {

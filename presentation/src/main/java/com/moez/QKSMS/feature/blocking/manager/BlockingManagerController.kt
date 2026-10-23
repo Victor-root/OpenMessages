@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
@@ -16,9 +16,9 @@ import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.databinding.BlockingManagerControllerBinding
 import io.openmessages.injection.appComponent
 import io.openmessages.util.Preferences
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class BlockingManagerController : QkController<BlockingManagerControllerBinding, BlockingManagerView, BlockingManagerState, BlockingManagerPresenter>(),

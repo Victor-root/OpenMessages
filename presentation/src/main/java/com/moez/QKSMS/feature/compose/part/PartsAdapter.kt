@@ -32,7 +32,7 @@ import io.openmessages.feature.compose.BubbleUtils.canGroup
 import io.openmessages.feature.compose.MessagesAdapter
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 

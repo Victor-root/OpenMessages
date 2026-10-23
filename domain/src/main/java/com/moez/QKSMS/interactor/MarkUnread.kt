@@ -19,7 +19,7 @@
 package io.openmessages.interactor
 
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class MarkUnread @Inject constructor(

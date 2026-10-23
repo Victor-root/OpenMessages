@@ -42,9 +42,9 @@ import io.openmessages.extensions.resourceExists
 import io.openmessages.feature.compose.MessagesAdapter
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

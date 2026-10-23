@@ -29,14 +29,14 @@ import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.databinding.ScheduledMessageBubbleBinding
 import io.openmessages.model.ScheduledMessage
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 /**
  * The messages of a conversation that are still waiting for their send time.
  *
- * They live in their own Realm collection rather than among the conversation's messages, so they are
+ * They live in their own table rather than among the conversation's messages, so they are
  * shown by their own adapter, concatenated after [MessagesAdapter]. Being scheduled, they are always
  * in the future and therefore always belong last: a message sent in the meantime lands before them
  * without anything having to reorder them.

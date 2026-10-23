@@ -23,8 +23,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
+import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.rxbinding4.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.Navigator
@@ -35,8 +35,8 @@ import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.TemplateEditorDialogBinding
 import io.openmessages.feature.contacts.ContactsActivity
 import io.openmessages.databinding.TemplatesActivityBinding
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class TemplatesActivity : QkThemedActivity(), TemplatesView {
@@ -58,7 +58,7 @@ class TemplatesActivity : QkThemedActivity(), TemplatesView {
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[TemplatesViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[TemplatesViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

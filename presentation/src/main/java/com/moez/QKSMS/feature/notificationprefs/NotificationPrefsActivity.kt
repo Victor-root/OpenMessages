@@ -25,10 +25,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import androidx.lifecycle.ViewModelProvider
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
+import com.jakewharton.rxbinding4.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.QkDialog
@@ -38,9 +38,9 @@ import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.databinding.NotificationPrefsActivityBinding
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
@@ -57,7 +57,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
     override val actionsSelectedIntent by lazy { actionsDialog.adapter.menuItemClicks }
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[NotificationPrefsViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[NotificationPrefsViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -20,7 +20,7 @@ package io.openmessages.interactor
 
 import io.openmessages.manager.AlarmManager
 import io.openmessages.repository.ScheduledMessageRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class UpdateScheduledMessageAlarms @Inject constructor(

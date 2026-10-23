@@ -21,14 +21,14 @@ package io.openmessages.feature.settings.about
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.databinding.AboutControllerBinding
 import io.openmessages.injection.appComponent
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class AboutController : QkController<AboutControllerBinding, AboutView, Unit, AboutPresenter>(), AboutView {

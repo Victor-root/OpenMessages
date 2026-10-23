@@ -27,8 +27,8 @@ import io.openmessages.common.base.QkView
 import io.openmessages.common.widget.MicInputCloudView
 import io.openmessages.model.Attachment
 import io.openmessages.model.Recipient
-import io.reactivex.Observable
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.Subject
 
 interface ComposeView : QkView<ComposeState> {
 

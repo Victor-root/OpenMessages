@@ -26,8 +26,8 @@ import androidx.core.database.getStringOrNull
 import com.callcontrol.datashare.CallControl
 import io.openmessages.common.util.extensions.isInstalled
 import io.openmessages.extensions.map
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import timber.log.Timber
 import javax.inject.Inject
 

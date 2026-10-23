@@ -18,10 +18,10 @@
  */
 package io.openmessages.interactor
 
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.openmessages.util.NightModeManager
 import io.openmessages.util.Preferences
-import io.reactivex.Flowable
+import io.openmessages.util.RxSharedPreferences
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 /**

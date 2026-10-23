@@ -18,9 +18,9 @@
  */
 package io.openmessages.mapper
 
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.openmessages.manager.RatingManager
-import io.reactivex.rxkotlin.Observables
+import io.openmessages.util.RxSharedPreferences
+import io.reactivex.rxjava3.kotlin.Observables
 import javax.inject.Inject
 
 class RatingManagerImpl @Inject constructor(

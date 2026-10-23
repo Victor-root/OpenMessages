@@ -20,7 +20,7 @@ package io.openmessages.feature.gallery
 
 import io.openmessages.common.base.QkView
 import io.openmessages.model.MmsPart
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface GalleryView : QkView<GalleryState> {
 

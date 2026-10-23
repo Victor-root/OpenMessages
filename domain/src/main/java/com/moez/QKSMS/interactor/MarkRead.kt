@@ -20,7 +20,7 @@ package io.openmessages.interactor
 
 import io.openmessages.manager.NotificationManager
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class MarkRead @Inject constructor(

@@ -23,7 +23,7 @@ import io.openmessages.common.base.QkViewContract
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
 import io.openmessages.model.BackupItem
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface BackupView : QkViewContract<BackupState> {
     fun setBackupLocationClicks(): Observable<*>

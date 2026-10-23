@@ -21,7 +21,7 @@ package io.openmessages.repository
 import io.openmessages.database.AppDatabase
 import io.openmessages.model.BlockedNumber
 import io.openmessages.util.PhoneNumberUtils
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class BlockingRepositoryImpl @Inject constructor(

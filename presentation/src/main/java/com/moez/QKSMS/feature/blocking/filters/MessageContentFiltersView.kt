@@ -20,7 +20,7 @@ package io.openmessages.feature.blocking.filters
 
 import io.openmessages.common.base.QkViewContract
 import io.openmessages.model.MessageContentFilterData
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface MessageContentFiltersView : QkViewContract<MessageContentFiltersState> {
 

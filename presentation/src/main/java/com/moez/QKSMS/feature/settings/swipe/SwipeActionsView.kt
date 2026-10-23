@@ -19,7 +19,7 @@
 package io.openmessages.feature.settings.swipe
 
 import io.openmessages.common.base.QkViewContract
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface SwipeActionsView : QkViewContract<SwipeActionsState> {
 

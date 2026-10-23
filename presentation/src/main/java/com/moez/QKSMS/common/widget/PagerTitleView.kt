@@ -25,8 +25,8 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
-import com.uber.autodispose.android.ViewScopeProvider
-import com.uber.autodispose.autoDispose
+import autodispose2.android.ViewScopeProvider
+import autodispose2.autoDispose
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.forEach
 import io.openmessages.common.util.extensions.resolveThemeColor
@@ -34,10 +34,10 @@ import io.openmessages.databinding.TabViewBinding
 import io.openmessages.extensions.Optional
 import io.openmessages.injection.appComponent
 import io.openmessages.repository.ConversationRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class PagerTitleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {

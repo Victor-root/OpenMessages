@@ -23,8 +23,8 @@ import io.openmessages.extensions.Optional
 import io.openmessages.model.Attachment
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.reactivex.Flowable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
 
 interface MessageRepository {
     sealed class DeduplicationProgress {

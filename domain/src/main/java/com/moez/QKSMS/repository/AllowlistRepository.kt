@@ -19,7 +19,7 @@
 package io.openmessages.repository
 
 import io.openmessages.model.AllowedNumber
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 /**
  * Stores addresses that the user has explicitly approved (an allowlist).

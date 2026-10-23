@@ -29,8 +29,8 @@ import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.within
 import io.openmessages.databinding.HsvPickerViewBinding
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 class HSVPickerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null

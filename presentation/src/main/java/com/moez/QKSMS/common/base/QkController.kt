@@ -18,6 +18,7 @@
  */
 package io.openmessages.common.base
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,7 @@ abstract class QkController<VB : ViewBinding, ViewContract : QkViewContract<Stat
 
     protected abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): VB
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedViewState: Bundle?): View {
         val vb = inflateBinding(inflater, container)
         _binding = vb
         return vb.root.also { onViewCreated() }

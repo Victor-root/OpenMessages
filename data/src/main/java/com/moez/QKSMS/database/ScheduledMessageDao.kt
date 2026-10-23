@@ -22,7 +22,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import io.openmessages.model.ScheduledMessage
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 @Dao
 interface ScheduledMessageDao {

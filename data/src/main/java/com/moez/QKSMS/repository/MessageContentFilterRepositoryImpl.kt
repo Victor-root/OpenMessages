@@ -21,7 +21,7 @@ package io.openmessages.repository
 import io.openmessages.database.AppDatabase
 import io.openmessages.model.MessageContentFilter
 import io.openmessages.model.MessageContentFilterData
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class MessageContentFilterRepositoryImpl @Inject constructor(

@@ -22,7 +22,6 @@ import android.content.ContentResolver
 import android.content.ContentUris
 import android.net.Uri
 import android.provider.Telephony
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.openmessages.database.AppDatabase
 import io.openmessages.database.ConversationWithRelations
 import io.openmessages.database.RecipientWithContact
@@ -46,12 +45,13 @@ import io.openmessages.model.PhoneNumber
 import io.openmessages.model.Recipient
 import io.openmessages.model.SyncLog
 import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.RxSharedPreferences
 import io.openmessages.util.tryOrNull
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider

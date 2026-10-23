@@ -19,7 +19,7 @@
 package io.openmessages.feature.blocking.numbers
 
 import io.openmessages.common.base.QkViewContract
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface BlockedNumbersView : QkViewContract<BlockedNumbersState> {
 

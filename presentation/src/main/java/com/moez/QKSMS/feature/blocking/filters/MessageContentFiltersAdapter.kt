@@ -25,9 +25,9 @@ import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.model.MessageContentFilter
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import io.openmessages.databinding.MessageContentFilterListItemBinding
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 class MessageContentFiltersAdapter : QkAdapter<MessageContentFilter, QkBindingViewHolder<MessageContentFilterListItemBinding>>() {
 

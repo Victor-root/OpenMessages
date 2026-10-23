@@ -1,7 +1,7 @@
 package io.openmessages.util
 
 import android.net.Uri
-import com.f2prateek.rx.preferences2.Preference.Converter
+import io.openmessages.util.Preference.Converter
 
 class UriPreferenceConverter : Converter<Uri> {
 

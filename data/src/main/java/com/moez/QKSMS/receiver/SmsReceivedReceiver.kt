@@ -30,8 +30,8 @@ import dagger.android.AndroidInjection
 import io.openmessages.repository.MessageRepository
 import io.openmessages.worker.ReceiveSmsWorker
 import io.openmessages.worker.ReceiveSmsWorker.Companion.INPUT_DATA_KEY_MESSAGE_ID
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 

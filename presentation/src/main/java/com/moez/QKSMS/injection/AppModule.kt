@@ -25,7 +25,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.work.WorkerFactory
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -90,6 +89,7 @@ import io.openmessages.repository.ScheduledMessageRepository
 import io.openmessages.repository.ScheduledMessageRepositoryImpl
 import io.openmessages.repository.SyncRepository
 import io.openmessages.repository.SyncRepositoryImpl
+import io.openmessages.util.RxSharedPreferences
 import io.openmessages.worker.InjectionWorkerFactory
 import javax.inject.Singleton
 
@@ -114,7 +114,7 @@ class AppModule(private var application: Application) {
     @Provides
     @Singleton
     fun provideRxPreferences(preferences: SharedPreferences): RxSharedPreferences {
-        return RxSharedPreferences.create(preferences)
+        return RxSharedPreferences(preferences)
     }
 
     @Provides

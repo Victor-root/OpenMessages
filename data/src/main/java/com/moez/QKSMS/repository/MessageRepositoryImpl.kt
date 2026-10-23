@@ -66,11 +66,11 @@ import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
 import io.openmessages.util.sha256
 import io.openmessages.util.tryOrNull
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 import io.openmessages.data.BuildConfig
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

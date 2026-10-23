@@ -32,9 +32,9 @@ import io.openmessages.extensions.mapNotNull
 import io.openmessages.model.Contact
 import io.openmessages.model.ContactGroup
 import io.openmessages.util.Preferences
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 

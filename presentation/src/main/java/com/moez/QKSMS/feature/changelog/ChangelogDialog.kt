@@ -25,8 +25,8 @@ import io.openmessages.R
 import io.openmessages.databinding.ChangelogDialogBinding
 import io.openmessages.feature.main.MainActivity
 import io.openmessages.manager.ChangelogManager
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 class ChangelogDialog(activity: MainActivity) {
 

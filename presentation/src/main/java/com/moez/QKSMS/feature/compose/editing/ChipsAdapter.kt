@@ -28,7 +28,7 @@ import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.databinding.ContactChipBinding
 import io.openmessages.model.Recipient
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class ChipsAdapter @Inject constructor() : QkAdapter<Recipient, QkBindingViewHolder<ContactChipBinding>>() {

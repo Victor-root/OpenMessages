@@ -27,7 +27,7 @@ import io.openmessages.extensions.getResourceBytes
 import io.openmessages.repository.ScheduledMessageRepository
 import io.openmessages.util.Constants
 import io.openmessages.util.FileUtils
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import java.util.UUID
 import javax.inject.Inject
 

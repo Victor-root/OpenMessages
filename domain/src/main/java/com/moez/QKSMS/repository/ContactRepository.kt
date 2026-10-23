@@ -21,8 +21,8 @@ package io.openmessages.repository
 import android.net.Uri
 import io.openmessages.model.Contact
 import io.openmessages.model.ContactGroup
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 interface ContactRepository {
 

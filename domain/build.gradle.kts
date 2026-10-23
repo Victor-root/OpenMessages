@@ -55,11 +55,8 @@ dependencies {
 
     // coroutines
     implementation(libs.coroutines.core)
-    implementation(libs.coroutines.rx2)
-    implementation(libs.coroutines.reactive)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.rx.preferences)
     implementation(libs.timber)
     implementation(project(":common"))
 }

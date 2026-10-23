@@ -18,14 +18,14 @@
  */
 package io.openmessages.feature.themepicker
 
-import com.f2prateek.rx.preferences2.Preference
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.Colors
 import io.openmessages.manager.WidgetManager
+import io.openmessages.util.Preference
 import io.openmessages.util.Preferences
-import io.reactivex.rxkotlin.Observables
+import io.reactivex.rxjava3.kotlin.Observables
 import javax.inject.Inject
 import javax.inject.Named
 

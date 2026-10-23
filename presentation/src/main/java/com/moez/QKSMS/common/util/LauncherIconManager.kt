@@ -31,7 +31,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.content.edit
 import io.openmessages.util.Preferences
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.abs
@@ -228,7 +228,7 @@ class LauncherIconManager @Inject constructor(
             // (e.g. switching back to the default theme would no longer prompt a change). Reusing the
             // rx-preference key keeps observers notified. A blocking write, hence off the main thread
             // along with the swap above.
-            sharedPrefs.edit(commit = true) { putInt(prefs.appIconColor.key(), targetColor) }
+            sharedPrefs.edit(commit = true) { putInt(prefs.appIconColor.key, targetColor) }
         }
 
         // Safety net: if the broadcast never comes back, close anyway so we don't hang open.

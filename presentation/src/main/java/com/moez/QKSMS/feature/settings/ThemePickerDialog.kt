@@ -54,7 +54,7 @@ import io.openmessages.common.util.LauncherIconManager
 import io.openmessages.injection.appComponent
 import io.openmessages.manager.WidgetManager
 import io.openmessages.util.Preferences
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 class ThemePickerDialog : DialogFragment() {

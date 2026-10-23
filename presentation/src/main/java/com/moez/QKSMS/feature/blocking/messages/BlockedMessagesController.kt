@@ -34,8 +34,8 @@ import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.databinding.BlockedMessagesControllerBinding
 import io.openmessages.feature.blocking.BlockingDialog
 import io.openmessages.injection.appComponent
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class BlockedMessagesController : QkController<BlockedMessagesControllerBinding, BlockedMessagesView, BlockedMessagesState, BlockedMessagesPresenter>(),
