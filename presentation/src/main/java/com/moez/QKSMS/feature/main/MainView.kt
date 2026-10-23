@@ -21,7 +21,7 @@ package io.openmessages.feature.main
 import android.content.Intent
 import io.openmessages.common.base.QkView
 import io.openmessages.manager.ChangelogManager
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface MainView : QkView<MainState> {
 

@@ -22,8 +22,8 @@ import io.openmessages.common.base.QkViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 abstract class PartBinder {
 

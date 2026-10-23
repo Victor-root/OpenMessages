@@ -33,10 +33,10 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
@@ -47,8 +47,8 @@ import io.openmessages.common.util.extensions.showKeyboard
 import io.openmessages.common.widget.QkEditText
 import io.openmessages.databinding.QkreplyActivityBinding
 import io.openmessages.feature.compose.MessagesAdapter
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class QkReplyActivity : QkThemedActivity(), QkReplyView {
@@ -66,7 +66,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
     override val changeSimIntent by lazy { binding.sim.clicks() }
     override val sendIntent by lazy { binding.send.clicks() }
 
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[QkReplyViewModel::class.java] }
+    private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[QkReplyViewModel::class.java] }
 
     private val speechResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode != Activity.RESULT_OK)

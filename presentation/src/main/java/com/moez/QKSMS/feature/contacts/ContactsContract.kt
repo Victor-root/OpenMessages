@@ -22,8 +22,8 @@ import io.openmessages.common.base.QkView
 import io.openmessages.extensions.Optional
 import io.openmessages.feature.compose.editing.ComposeItem
 import io.openmessages.feature.compose.editing.PhoneNumberAction
-import io.reactivex.Observable
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.Subject
 
 interface ContactsContract : QkView<ContactsState> {
 

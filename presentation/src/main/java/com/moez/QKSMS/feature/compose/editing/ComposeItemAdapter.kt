@@ -34,11 +34,11 @@ import io.openmessages.model.ContactGroup
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
 import io.openmessages.repository.ConversationRepository
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import io.openmessages.databinding.ContactListItemBinding
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ComposeItemAdapter @Inject constructor(

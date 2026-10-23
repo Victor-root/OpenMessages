@@ -19,9 +19,9 @@
 package io.openmessages.feature.gallery
 
 import android.content.Context
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.contentproviders.MmsPartProvider
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
@@ -30,9 +30,9 @@ import io.openmessages.interactor.SaveImage
 import io.openmessages.manager.PermissionManager
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Maybe
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 

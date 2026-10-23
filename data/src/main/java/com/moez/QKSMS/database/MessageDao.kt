@@ -27,7 +27,7 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 /**
  * The messages that can be emoji reactions: an SMS with a body, or an MMS that is not a notification

@@ -18,7 +18,7 @@
  */
 package io.openmessages.listener
 
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface ContactAddedListener {
 

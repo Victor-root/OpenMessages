@@ -33,8 +33,8 @@ import com.google.android.mms.ContentType
 import io.openmessages.common.util.TextViewStyler
 import io.openmessages.injection.appComponent
 import io.openmessages.util.tryOrNull
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 

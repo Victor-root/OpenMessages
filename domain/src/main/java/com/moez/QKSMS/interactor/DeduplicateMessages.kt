@@ -19,8 +19,8 @@
 package io.openmessages.interactor
 
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class DeduplicateMessages @Inject constructor(

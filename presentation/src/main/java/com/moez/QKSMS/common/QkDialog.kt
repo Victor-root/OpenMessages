@@ -32,8 +32,8 @@ import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.setPadding
 import io.openmessages.databinding.QkDialogActionsBinding
 import io.openmessages.injection.appComponent
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 /**

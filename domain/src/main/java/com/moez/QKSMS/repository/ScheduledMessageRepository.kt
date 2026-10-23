@@ -19,7 +19,7 @@
 package io.openmessages.repository
 
 import io.openmessages.model.ScheduledMessage
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface ScheduledMessageRepository {
 

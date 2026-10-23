@@ -42,7 +42,7 @@ import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.ConversationListItemBinding
 import io.openmessages.model.Conversation
 import io.openmessages.util.PhoneNumberUtils
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(

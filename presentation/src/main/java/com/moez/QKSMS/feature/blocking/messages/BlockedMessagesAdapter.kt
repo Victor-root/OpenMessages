@@ -32,7 +32,7 @@ import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.databinding.BlockedListItemBinding
 import io.openmessages.model.Conversation
 import io.openmessages.util.Preferences
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class BlockedMessagesAdapter @Inject constructor(

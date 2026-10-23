@@ -22,7 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
@@ -31,11 +31,11 @@ import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.injection.appComponent
 import io.openmessages.util.PhoneNumberUtils
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
 import io.openmessages.databinding.BlockedNumbersControllerBinding
 import io.openmessages.databinding.BlockedNumbersAddDialogBinding
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class BlockedNumbersController : QkController<BlockedNumbersControllerBinding, BlockedNumbersView, BlockedNumbersState, BlockedNumbersPresenter>(),

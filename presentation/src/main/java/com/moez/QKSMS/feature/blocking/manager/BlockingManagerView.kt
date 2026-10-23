@@ -1,8 +1,8 @@
 package io.openmessages.feature.blocking.manager
 
 import io.openmessages.common.base.QkViewContract
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 interface BlockingManagerView : QkViewContract<BlockingManagerState> {
 

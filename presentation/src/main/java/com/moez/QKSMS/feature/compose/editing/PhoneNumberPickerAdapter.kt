@@ -28,8 +28,8 @@ import io.openmessages.common.util.extensions.forwardTouches
 import io.openmessages.databinding.PhoneNumberListItemBinding
 import io.openmessages.extensions.Optional
 import io.openmessages.model.PhoneNumber
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class PhoneNumberPickerAdapter @Inject constructor(

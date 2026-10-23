@@ -23,8 +23,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
+import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.rxbinding4.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
@@ -33,8 +33,8 @@ import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.databinding.ScheduledActivityBinding
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 
@@ -54,7 +54,7 @@ class ScheduledActivity : QkThemedActivity(), ScheduledView {
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[ScheduledViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[ScheduledViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

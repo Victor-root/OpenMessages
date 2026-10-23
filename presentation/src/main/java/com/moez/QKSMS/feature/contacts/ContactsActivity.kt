@@ -23,10 +23,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.editorActions
-import com.jakewharton.rxbinding2.widget.textChanges
+import androidx.lifecycle.ViewModelProvider
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.editorActions
+import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
@@ -40,9 +40,9 @@ import io.openmessages.feature.compose.editing.ComposeItem
 import io.openmessages.feature.compose.editing.ComposeItemAdapter
 import io.openmessages.feature.compose.editing.PhoneNumberAction
 import io.openmessages.feature.compose.editing.PhoneNumberPickerAdapter
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ContactsActivity : QkThemedActivity(), ContactsContract {
@@ -70,7 +70,7 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     override val phoneNumberSelectedIntent: Subject<Optional<Long>> by lazy { phoneNumberAdapter.selectedItemChanges }
     override val phoneNumberActionIntent: Subject<PhoneNumberAction> = PublishSubject.create()
 
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ContactsViewModel::class.java] }
+    private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[ContactsViewModel::class.java] }
 
     private val phoneNumberDialog by lazy {
         QkDialog(this).apply {

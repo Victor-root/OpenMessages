@@ -19,7 +19,7 @@
 package io.openmessages.feature.qkreply
 
 import io.openmessages.common.base.QkView
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface QkReplyView : QkView<QkReplyState> {
 

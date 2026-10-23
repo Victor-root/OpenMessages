@@ -20,13 +20,13 @@ package io.openmessages.feature.settings.swipe
 
 import android.content.Context
 import androidx.annotation.DrawableRes
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.util.Preferences
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxjava3.kotlin.plusAssign
 import javax.inject.Inject
 
 class SwipeActionsPresenter @Inject constructor(
@@ -39,13 +39,13 @@ class SwipeActionsPresenter @Inject constructor(
 
         disposables += prefs.swipeRight.asObservable()
                 .subscribe { action ->
-                    val label = actionLabels.labelFor(action, prefs.swipeRight.defaultValue())
+                    val label = actionLabels.labelFor(action, prefs.swipeRight.defaultValue)
                     newState { copy(rightLabel = label, rightIcon = iconForAction(action)) }
                 }
 
         disposables += prefs.swipeLeft.asObservable()
                 .subscribe { action ->
-                    val label = actionLabels.labelFor(action, prefs.swipeLeft.defaultValue())
+                    val label = actionLabels.labelFor(action, prefs.swipeLeft.defaultValue)
                     newState { copy(leftLabel = label, leftIcon = iconForAction(action)) }
                 }
     }

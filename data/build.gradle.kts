@@ -76,11 +76,8 @@ dependencies {
 
     // coroutines
     implementation(libs.coroutines.core)
-    implementation(libs.coroutines.rx2)
-    implementation(libs.coroutines.reactive)
 
     implementation(libs.callcontrol.datashare)
-    implementation(libs.rx.preferences)
     implementation(libs.timber)
     implementation(libs.moshi)
     implementation(libs.okhttp3)
@@ -89,13 +86,12 @@ dependencies {
     // room, and the Realm library that still reads the database Room took over from. Room is part
     // of what this module hands out, since the app provides the database it builds.
     api(libs.room.runtime)
-    implementation(libs.room.rxjava2)
+    implementation(libs.room.rxjava3)
     ksp(libs.room.compiler)
     implementation(libs.realm)
 
     // work manager
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.androidx.work.rxjava2)
 
     implementation(project(":android-smsmms"))
     implementation(project(":common"))

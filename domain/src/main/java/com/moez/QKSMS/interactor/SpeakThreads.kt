@@ -22,8 +22,8 @@ import io.openmessages.manager.SpeakManager
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class SpeakThreads @Inject constructor(

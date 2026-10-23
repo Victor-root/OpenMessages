@@ -19,8 +19,8 @@
 package io.openmessages.feature.contacts
 
 import android.view.inputmethod.EditorInfo
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.extensions.removeAccents
@@ -36,12 +36,12 @@ import io.openmessages.model.Recipient
 import io.openmessages.repository.ContactRepository
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.PhoneNumberUtils
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Observables
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.rx2.awaitFirst
+import kotlinx.coroutines.rx3.awaitFirst
 import javax.inject.Inject
 
 class ContactsViewModel @Inject constructor(

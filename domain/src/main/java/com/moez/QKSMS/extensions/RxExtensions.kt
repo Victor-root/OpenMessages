@@ -19,19 +19,17 @@
 
 package io.openmessages.extensions
 
-import io.reactivex.Flowable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.core.Observable
 
-data class Optional<out T>(val value: T?) {
-    fun notNull() = value != null
-}
+data class Optional<out T>(val value: T?)
 
-fun <T, R> Flowable<T>.mapNotNull(mapper: (T) -> R?): Flowable<R> = map { input -> Optional(mapper(input)) }
-        .filter { optional -> optional.notNull() }
-        .map { optional -> optional.value }
+fun <T : Any, R : Any> Flowable<T>.mapNotNull(mapper: (T) -> R?): Flowable<R> =
+        concatMapMaybe { input -> mapper(input)?.let { output -> Maybe.just(output) } ?: Maybe.empty() }
 
-fun <T, R> Observable<T>.mapNotNull(mapper: (T) -> R?): Observable<R> = map { input -> Optional(mapper(input)) }
-        .filter { optional -> optional.notNull() }
-        .map { optional -> optional.value }
+fun <T : Any, R : Any> Observable<T>.mapNotNull(mapper: (T) -> R?): Observable<R> =
+        concatMapMaybe { input -> mapper(input)?.let { output -> Maybe.just(output) } ?: Maybe.empty() }
 
-fun <T> Observable<T>.toFlowable(): Flowable<T> = this.toFlowable(io.reactivex.BackpressureStrategy.BUFFER)
+fun <T : Any> Observable<T>.toFlowable(): Flowable<T> = this.toFlowable(BackpressureStrategy.BUFFER)

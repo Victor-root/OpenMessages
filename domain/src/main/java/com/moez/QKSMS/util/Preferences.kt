@@ -19,22 +19,18 @@
 package io.openmessages.util
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import com.f2prateek.rx.preferences2.Preference
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import io.openmessages.common.util.extensions.versionCode
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class Preferences @Inject constructor(
     context: Context,
-    private val rxPrefs: RxSharedPreferences,
-    private val sharedPrefs: SharedPreferences
+    private val rxPrefs: RxSharedPreferences
 ) {
 
     companion object {
@@ -222,19 +218,7 @@ class Preferences @Inject constructor(
     /**
      * Returns a stream of preference keys for changing preferences
      */
-    val keyChanges: Observable<String> = Observable.create<String> { emitter ->
-        // Making this a lambda would cause it to be GCd
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key != null)
-                emitter.onNext(key)
-        }
-
-        emitter.setCancellable {
-            sharedPrefs.unregisterOnSharedPreferenceChangeListener(listener)
-        }
-
-        sharedPrefs.registerOnSharedPreferenceChangeListener(listener)
-    }.share()
+    val keyChanges: Observable<String> = rxPrefs.keyChanges
 
     fun theme(
         recipientId: Long = 0,

@@ -19,7 +19,7 @@
 package io.openmessages.feature.blocking.messages
 
 import io.openmessages.common.base.QkViewContract
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface BlockedMessagesView : QkViewContract<BlockedMessagesState> {
 

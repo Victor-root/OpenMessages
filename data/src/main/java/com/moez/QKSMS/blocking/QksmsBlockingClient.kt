@@ -19,8 +19,8 @@
 package io.openmessages.blocking
 
 import io.openmessages.repository.BlockingRepository
-import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
 class QksmsBlockingClient @Inject constructor(

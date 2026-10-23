@@ -18,13 +18,13 @@
  */
 package io.openmessages.feature.templates
 
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.common.base.QkViewModel
 import io.openmessages.util.Preferences
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 

@@ -38,8 +38,8 @@ import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.applyInsetTop
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.util.Preferences
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 // Translucent veils painted behind the (otherwise transparent) navigation bar in edge-to-edge, so the

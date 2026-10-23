@@ -19,7 +19,7 @@
 package io.openmessages.interactor
 
 import io.openmessages.repository.ConversationRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class MarkUnblocked @Inject constructor(private val conversationRepo: ConversationRepository) : Interactor<List<Long>>() {

@@ -20,7 +20,7 @@ package io.openmessages.interactor
 
 import io.openmessages.model.BackupCategory
 import io.openmessages.repository.BackupRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class PerformBackup @Inject constructor(

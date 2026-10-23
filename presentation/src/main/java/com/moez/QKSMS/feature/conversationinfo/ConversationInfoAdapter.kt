@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkViewHolder
@@ -17,8 +17,8 @@ import io.openmessages.databinding.ConversationMediaListItemBinding
 import io.openmessages.databinding.ConversationRecipientListItemBinding
 import io.openmessages.extensions.isVideo
 import io.openmessages.feature.conversationinfo.ConversationInfoItem.*
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ConversationInfoAdapter @Inject constructor(

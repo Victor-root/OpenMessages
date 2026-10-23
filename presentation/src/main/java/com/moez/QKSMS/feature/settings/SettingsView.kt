@@ -20,7 +20,7 @@ package io.openmessages.feature.settings
 
 import io.openmessages.common.base.QkViewContract
 import io.openmessages.common.widget.PreferenceView
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface SettingsView : QkViewContract<SettingsState> {
     fun preferenceClicks(): Observable<PreferenceView>

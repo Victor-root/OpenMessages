@@ -34,8 +34,8 @@ import io.openmessages.feature.extensions.LoadBestIconIntoImageView
 import io.openmessages.feature.extensions.loadBestIconIntoImageView
 import io.openmessages.model.Attachment
 import ezvcard.Ezvcard
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 

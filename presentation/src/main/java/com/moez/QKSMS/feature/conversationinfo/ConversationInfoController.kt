@@ -23,8 +23,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkController
@@ -37,9 +37,9 @@ import io.openmessages.feature.blocking.BlockingDialog
 import io.openmessages.feature.conversationinfo.injection.ConversationInfoModule
 import io.openmessages.feature.settings.ThemePickerDialog
 import io.openmessages.injection.appComponent
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ConversationInfoController(

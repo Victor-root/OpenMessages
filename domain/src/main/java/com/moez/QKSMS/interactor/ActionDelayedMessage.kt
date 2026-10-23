@@ -20,7 +20,7 @@ package io.openmessages.interactor
 
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import timber.log.Timber
 import javax.inject.Inject
 

@@ -32,8 +32,8 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.longClicks
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.view.longClicks
 import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.MenuItem
@@ -56,9 +56,9 @@ import io.openmessages.feature.settings.swipe.SwipeActionsController
 import io.openmessages.injection.appComponent
 import io.openmessages.repository.SyncRepository
 import io.openmessages.util.Preferences
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class SettingsController : QkController<SettingsControllerBinding, SettingsView, SettingsState, SettingsPresenter>(), SettingsView {

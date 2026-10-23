@@ -24,8 +24,6 @@ import androidx.emoji2.text.EmojiCompat
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
-import com.uber.rxdogtag.RxDogTag
-import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -39,6 +37,8 @@ import io.openmessages.util.NightModeManager
 import io.openmessages.util.Preferences
 import io.openmessages.worker.AutoBackupWorker
 import io.openmessages.worker.HousekeepingWorker
+import rxdogtag2.RxDogTag
+import rxdogtag2.autodispose2.AutoDisposeConfigurer
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -88,7 +88,7 @@ class QKApplication : Application(), HasAndroidInjector {
             })
         )
 
-        // rxdogtag provides 'look-back' for exceptions in rxjava2 'chains'
+        // rxdogtag provides 'look-back' for exceptions in rxjava 'chains'
         RxDogTag.builder()
                 .configureWith(AutoDisposeConfigurer::configure)
                 .install()

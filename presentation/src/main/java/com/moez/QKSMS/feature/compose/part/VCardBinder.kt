@@ -35,9 +35,9 @@ import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
 import io.openmessages.util.tryOrNull
 import ezvcard.Ezvcard
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class VCardBinder @Inject constructor(colors: Colors, private val context: Context) : PartBinder() {
@@ -62,7 +62,7 @@ class VCardBinder @Inject constructor(colors: Colors, private val context: Conte
 
         tryOrNull(true) {
             Observable.just(part.getUri())
-                .map(context.contentResolver::openInputStream)
+                .mapNotNull(context.contentResolver::openInputStream)
                 .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
                 .map { vcard -> vcard.getDisplayName() ?: "" }
                 .subscribeOn(Schedulers.computation())

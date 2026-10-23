@@ -20,7 +20,7 @@ package io.openmessages.repository
 
 import android.net.Uri
 import io.openmessages.model.Message
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface SyncRepository {
 

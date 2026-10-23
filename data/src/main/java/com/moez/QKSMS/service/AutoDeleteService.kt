@@ -9,8 +9,8 @@ import android.content.Context
 import dagger.android.AndroidInjection
 import io.openmessages.common.util.extensions.jobScheduler
 import io.openmessages.interactor.DeleteOldMessages
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.plusAssign
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

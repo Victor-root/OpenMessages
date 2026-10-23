@@ -33,8 +33,8 @@ import io.openmessages.model.Contact
 import io.openmessages.model.Recipient
 import io.openmessages.model.ScheduledMessage
 import io.openmessages.util.PhoneNumberUtils
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(

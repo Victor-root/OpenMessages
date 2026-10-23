@@ -26,7 +26,7 @@ import androidx.room.Transaction
 import androidx.room.Upsert
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 /**
  * The conversations the inbox shows: a conversation with an id, recipients and either a message or

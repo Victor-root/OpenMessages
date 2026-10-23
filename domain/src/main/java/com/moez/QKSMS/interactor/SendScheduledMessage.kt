@@ -24,8 +24,8 @@ import io.openmessages.compat.TelephonyCompat
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.model.Attachment
 import io.openmessages.repository.ScheduledMessageRepository
-import io.reactivex.Flowable
-import io.reactivex.rxkotlin.toFlowable
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.kotlin.toFlowable
 import javax.inject.Inject
 
 class SendScheduledMessage @Inject constructor(

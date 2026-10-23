@@ -22,8 +22,8 @@ import io.openmessages.extensions.Optional
 import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
 import io.openmessages.model.SearchResult
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 
 interface ConversationRepository {
 

@@ -31,9 +31,8 @@ import android.widget.ImageView
 import androidx.core.view.drawToBitmap
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
-import com.f2prateek.rx.preferences2.Preference
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.extensions.Optional
@@ -42,11 +41,12 @@ import io.openmessages.model.Conversation
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.util.PhoneNumberUtils
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Observables
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import io.openmessages.util.Preference
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.Observables
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -101,7 +101,7 @@ abstract class QkThemedActivity : QkActivity() {
                                 }
                             }
                             .map { recipient -> Optional(recipient) }
-                            .startWith(Optional(conversation.recipients.firstOrNull()))
+                            .startWithItem(Optional(conversation.recipients.firstOrNull()))
                             .distinctUntilChanged()
                 }
             }

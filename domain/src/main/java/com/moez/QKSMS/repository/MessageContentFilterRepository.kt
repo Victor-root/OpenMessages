@@ -20,7 +20,7 @@ package io.openmessages.repository
 
 import io.openmessages.model.MessageContentFilter
 import io.openmessages.model.MessageContentFilterData
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 
 interface MessageContentFilterRepository {
 

@@ -31,8 +31,8 @@ import io.openmessages.common.util.extensions.getLabel
 import io.openmessages.manager.NotificationManager
 import io.openmessages.model.BackupCategory
 import io.openmessages.repository.BackupRepository
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

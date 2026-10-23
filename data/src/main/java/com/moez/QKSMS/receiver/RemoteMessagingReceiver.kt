@@ -28,7 +28,7 @@ import io.openmessages.interactor.MarkRead
 import io.openmessages.interactor.SendNewMessage
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class RemoteMessagingReceiver : BroadcastReceiver() {

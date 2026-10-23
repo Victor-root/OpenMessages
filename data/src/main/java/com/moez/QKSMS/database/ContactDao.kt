@@ -25,7 +25,7 @@ import androidx.room.Upsert
 import io.openmessages.model.Contact
 import io.openmessages.model.ContactGroup
 import io.openmessages.model.PhoneNumber
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 @Dao
 abstract class ContactDao {

@@ -18,7 +18,7 @@
  */
 package io.openmessages.blocking
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber

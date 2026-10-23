@@ -43,22 +43,22 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.textChanges
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import com.jakewharton.rxbinding4.drawerlayout.drawerOpen
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.androidxcompat.drawerOpen
 import io.openmessages.common.base.QkThemedActivity
 import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.applyInsetBottomMargin
@@ -81,10 +81,10 @@ import io.openmessages.feature.conversations.ConversationItemTouchCallback
 import io.openmessages.feature.conversations.ConversationsAdapter
 import io.openmessages.manager.ChangelogManager
 import io.openmessages.repository.SyncRepository
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 // Peak opacity of the dynamic status-bar scrim once the toolbar is fully collapsed (a subtle veil).
@@ -149,7 +149,7 @@ class MainActivity : QkThemedActivity(), MainView {
     override val snackbarButtonIntent: Subject<Unit> = PublishSubject.create()
 
     private val viewModel by lazy {
-        ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
+        ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
     }
     private val toggle by lazy {
         ActionBarDrawerToggle(
@@ -228,8 +228,7 @@ class MainActivity : QkThemedActivity(), MainView {
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(binding.recyclerView)
 
-        // Recount unread whenever the adapter updates (Realm writes are async, so render()
-        // may fire before the write completes; this observer catches the post-write notification).
+        // Recount unread whenever the list on screen changes
         conversationsAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() = updateSearchVisibility()
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int) = updateSearchVisibility()

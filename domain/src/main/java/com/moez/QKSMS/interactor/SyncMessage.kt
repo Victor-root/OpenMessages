@@ -22,7 +22,7 @@ import android.net.Uri
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.SyncRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class SyncMessage @Inject constructor(

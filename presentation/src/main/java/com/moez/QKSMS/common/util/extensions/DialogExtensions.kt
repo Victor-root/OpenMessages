@@ -28,7 +28,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.Subject
 
 /**
  * Tints the dialog's buttons (positive/negative/neutral) with [color] so dialogs follow the user's

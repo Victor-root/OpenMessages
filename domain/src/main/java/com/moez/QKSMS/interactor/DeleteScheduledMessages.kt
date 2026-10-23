@@ -20,7 +20,7 @@ package io.openmessages.interactor
 
 import android.content.Context
 import io.openmessages.repository.ScheduledMessageRepository
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject

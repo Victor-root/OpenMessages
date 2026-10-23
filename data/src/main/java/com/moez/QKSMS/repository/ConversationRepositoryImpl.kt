@@ -36,9 +36,9 @@ import io.openmessages.model.Recipient
 import io.openmessages.model.SearchResult
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.tryOrNull
-import io.reactivex.Completable
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject

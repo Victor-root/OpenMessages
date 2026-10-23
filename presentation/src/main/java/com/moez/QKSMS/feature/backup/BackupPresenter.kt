@@ -20,8 +20,8 @@ package io.openmessages.feature.backup
 
 import android.content.Context
 import android.net.Uri
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.common.util.DateFormatter
@@ -35,9 +35,9 @@ import io.openmessages.model.BackupItem
 import io.openmessages.repository.BackupRepository
 import io.openmessages.util.Preferences
 import io.openmessages.worker.AutoBackupWorker
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

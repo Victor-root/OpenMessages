@@ -19,8 +19,8 @@
 package io.openmessages.feature.settings
 
 import android.content.Context
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
@@ -32,7 +32,7 @@ import io.openmessages.interactor.SyncMessages
 import io.openmessages.repository.SyncRepository
 import io.openmessages.util.NightModeManager
 import io.openmessages.util.Preferences
-import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxjava3.kotlin.plusAssign
 import timber.log.Timber
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
@@ -65,7 +65,7 @@ class SettingsPresenter @Inject constructor(
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
                 .subscribe { nightMode ->
-                    val summary = nightModeLabels.labelFor(nightMode, prefs.nightMode.defaultValue())
+                    val summary = nightModeLabels.labelFor(nightMode, prefs.nightMode.defaultValue)
                     newState { copy(nightModeSummary = summary, nightModeId = nightMode) }
                 }
 
@@ -93,7 +93,7 @@ class SettingsPresenter @Inject constructor(
         val delayedSendingLabels = context.resources.getStringArray(R.array.delayed_sending_labels)
         disposables += prefs.sendDelay.asObservable()
                 .subscribe { id ->
-                    val summary = delayedSendingLabels.labelFor(id, prefs.sendDelay.defaultValue())
+                    val summary = delayedSendingLabels.labelFor(id, prefs.sendDelay.defaultValue)
                     newState { copy(sendDelaySummary = summary, sendDelayId = id) }
                 }
 
@@ -104,14 +104,14 @@ class SettingsPresenter @Inject constructor(
         val sendSoundIds = context.resources.getIntArray(R.array.send_sound_ids)
         disposables += prefs.sendSoundId.asObservable()
             .subscribe { id ->
-                val summary = sendSoundLabels.labelFor(id, prefs.sendSoundId.defaultValue(), sendSoundIds)
+                val summary = sendSoundLabels.labelFor(id, prefs.sendSoundId.defaultValue, sendSoundIds)
                 newState { copy(sendSoundSummary = summary) }
             }
 
         val headerQuickActionLabels = context.resources.getStringArray(R.array.header_quick_action_labels)
         disposables += prefs.headerQuickAction.asObservable()
             .subscribe { id ->
-                val summary = headerQuickActionLabels.labelFor(id, prefs.headerQuickAction.defaultValue())
+                val summary = headerQuickActionLabels.labelFor(id, prefs.headerQuickAction.defaultValue)
                 newState { copy(headerQuickActionSummary = summary, headerQuickActionId = id) }
             }
 
@@ -124,7 +124,7 @@ class SettingsPresenter @Inject constructor(
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize ->
-                    val summary = textSizeLabels.labelFor(textSize, prefs.textSize.defaultValue())
+                    val summary = textSizeLabels.labelFor(textSize, prefs.textSize.defaultValue)
                     newState { copy(textSizeSummary = summary, textSizeId = textSize) }
                 }
 
@@ -159,7 +159,7 @@ class SettingsPresenter @Inject constructor(
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
         disposables += prefs.mmsSize.asObservable()
                 .subscribe { maxMmsSize ->
-                    val summary = mmsSizeLabels.labelFor(maxMmsSize, prefs.mmsSize.defaultValue(), mmsSizeIds)
+                    val summary = mmsSizeLabels.labelFor(maxMmsSize, prefs.mmsSize.defaultValue, mmsSizeIds)
                     newState { copy(maxMmsSizeSummary = summary, maxMmsSizeId = maxMmsSize) }
                 }
 
@@ -168,7 +168,7 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.messageLinkHandling.asObservable()
             .subscribe { messageLinkHandlingId ->
                 val summary = messageLinkHandlingLabels.labelFor(
-                    messageLinkHandlingId, prefs.messageLinkHandling.defaultValue(), messageLinkHandlingIds)
+                    messageLinkHandlingId, prefs.messageLinkHandling.defaultValue, messageLinkHandlingIds)
                 newState {
                     copy(
                         messageLinkHandlingSummary = summary,

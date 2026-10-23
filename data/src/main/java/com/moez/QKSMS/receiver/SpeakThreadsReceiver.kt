@@ -24,7 +24,7 @@ import android.content.Intent
 import dagger.android.AndroidInjection
 import io.openmessages.interactor.SpeakThreads
 import io.openmessages.repository.ConversationRepository
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class SpeakThreadsReceiver : BroadcastReceiver() {

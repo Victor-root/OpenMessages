@@ -21,8 +21,8 @@ package io.openmessages.feature.notificationprefs
 import android.content.Context
 import android.media.RingtoneManager
 import android.net.Uri
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkViewModel
@@ -31,10 +31,10 @@ import io.openmessages.extensions.mapNotNull
 import io.openmessages.manager.NotificationManager
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -66,26 +66,26 @@ class NotificationPrefsViewModel @Inject constructor(
         val previewLabels = context.resources.getStringArray(R.array.notification_preview_options)
         disposables += previews.asObservable()
                 .subscribe { previewId ->
-                    val summary = previewLabels.labelFor(previewId, previews.defaultValue())
+                    val summary = previewLabels.labelFor(previewId, previews.defaultValue)
                     newState { copy(previewSummary = summary, previewId = previewId) }
                 }
 
         val actionLabels = context.resources.getStringArray(R.array.notification_actions)
         disposables += prefs.notifAction1.asObservable()
                 .subscribe { action ->
-                    val summary = actionLabels.labelFor(action, prefs.notifAction1.defaultValue())
+                    val summary = actionLabels.labelFor(action, prefs.notifAction1.defaultValue)
                     newState { copy(action1Summary = summary) }
                 }
 
         disposables += prefs.notifAction2.asObservable()
                 .subscribe { action ->
-                    val summary = actionLabels.labelFor(action, prefs.notifAction2.defaultValue())
+                    val summary = actionLabels.labelFor(action, prefs.notifAction2.defaultValue)
                     newState { copy(action2Summary = summary) }
                 }
 
         disposables += prefs.notifAction3.asObservable()
                 .subscribe { action ->
-                    val summary = actionLabels.labelFor(action, prefs.notifAction3.defaultValue())
+                    val summary = actionLabels.labelFor(action, prefs.notifAction3.defaultValue)
                     newState { copy(action3Summary = summary) }
                 }
 

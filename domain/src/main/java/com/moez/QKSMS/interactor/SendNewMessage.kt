@@ -23,8 +23,8 @@ import io.openmessages.extensions.mapNotNull
 import io.openmessages.model.Attachment
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Flowable
 import io.openmessages.domain.BuildConfig
+import io.reactivex.rxjava3.core.Flowable
 import timber.log.Timber
 import javax.inject.Inject
 

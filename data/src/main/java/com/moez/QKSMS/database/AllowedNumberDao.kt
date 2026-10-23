@@ -22,7 +22,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import io.openmessages.model.AllowedNumber
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 
 @Dao
 interface AllowedNumberDao {

@@ -53,17 +53,17 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
+import autodispose2.ObservableSubscribeProxy
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
 import io.openmessages.common.QkMediaPlayer
-import com.uber.autodispose.ObservableSubscribeProxy
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
 import dagger.android.AndroidInjection
 import io.openmessages.BuildConfig
 import io.openmessages.R
@@ -90,15 +90,15 @@ import io.openmessages.feature.contacts.ContactsActivity
 import io.openmessages.feature.templates.TemplatesActivity
 import io.openmessages.model.Attachment
 import io.openmessages.model.Recipient
-import io.openmessages.util.Preferences
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import io.openmessages.databinding.ComposeActivityBinding
 import io.openmessages.databinding.ComposeAttachSheetBinding
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.openmessages.util.Preferences
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -224,7 +224,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     private var seekBarUpdater: Disposable? = null
 
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
+    private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[ComposeViewModel::class.java] }
 
     private var cameraDestination: Uri? = null
 

@@ -9,14 +9,14 @@ androidx-core = "1.19.1"
 androidx-documentfile = "1.1.0"
 androidx-emoji2 = "1.6.0"
 androidx-exifinterface = "1.4.2"
-androidx-lifecycle = "2.2.0"
+androidx-lifecycle = "2.11.0"
 androidx-recyclerview = "1.4.0"
 androidx-test-espresso = "3.1.0-alpha3"
 androidx-test-runner = "1.1.0-alpha3"
 androidx-viewpager2 = "1.1.0"
 androidx-work = "2.11.2"
-autodispose = "1.4.1"
-conductor = "2.1.5"
+autodispose = "2.2.1"
+conductor = "3.2.0"
 coroutines = "1.11.0"
 dagger = "2.60.1"
 glide = "5.0.9"
@@ -31,12 +31,11 @@ okhttp = "2.5.0"
 okhttp3 = "5.5.1"
 realm = "10.19.0"
 room = "2.8.5"
-rx-preferences = "2.0.1"
-rxandroid = "2.1.1"
-rxbinding = "2.2.0"
-rxdogtag = "1.0.2"
-rxjava = "2.2.21"
-rxkotlin = "2.4.0"
+rxandroid = "3.0.2"
+rxbinding = "4.0.0"
+rxdogtag = "2.0.2"
+rxjava = "3.1.12"
+rxkotlin = "3.0.1"
 timber = "5.0.1"
 
 [libraries]
@@ -50,32 +49,26 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-documentfile = { module = "androidx.documentfile:documentfile", version.ref = "androidx-documentfile" }
 androidx-emoji2-bundled = { module = "androidx.emoji2:emoji2-bundled", version.ref = "androidx-emoji2" }
 androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidx-exifinterface" }
-androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "androidx-lifecycle" }
-androidx-lifecycle-extensions = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "androidx-recyclerview" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
-androidx-work-rxjava2 = { module = "androidx.work:work-rxjava2", version.ref = "androidx-work" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 
-autodispose = { module = "com.uber.autodispose:autodispose", version.ref = "autodispose" }
-autodispose-android = { module = "com.uber.autodispose:autodispose-android", version.ref = "autodispose" }
-autodispose-android-archcomponents = { module = "com.uber.autodispose:autodispose-android-archcomponents", version.ref = "autodispose" }
-autodispose-android-archcomponents-test = { module = "com.uber.autodispose:autodispose-android-archcomponents-test", version.ref = "autodispose" }
-autodispose-lifecycle = { module = "com.uber.autodispose:autodispose-lifecycle", version.ref = "autodispose" }
-rx-preferences = { module = "com.f2prateek.rx.preferences2:rx-preferences", version.ref = "rx-preferences" }
-rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
-rxbinding-kotlin = { module = "com.jakewharton.rxbinding2:rxbinding-kotlin", version.ref = "rxbinding" }
-rxbinding-support-v4-kotlin = { module = "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin", version.ref = "rxbinding" }
-rxdogtag = { module = "com.uber.rxdogtag:rxdogtag", version.ref = "rxdogtag" }
-rxdogtag-autodispose = { module = "com.uber.rxdogtag:rxdogtag-autodispose", version.ref = "rxdogtag" }
-rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
-rxkotlin = { module = "io.reactivex.rxjava2:rxkotlin", version.ref = "rxkotlin" }
+autodispose = { module = "com.uber.autodispose2:autodispose", version.ref = "autodispose" }
+autodispose-android = { module = "com.uber.autodispose2:autodispose-android", version.ref = "autodispose" }
+autodispose-androidx-lifecycle = { module = "com.uber.autodispose2:autodispose-androidx-lifecycle", version.ref = "autodispose" }
+rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
+rxbinding = { module = "com.jakewharton.rxbinding4:rxbinding", version.ref = "rxbinding" }
+rxbinding-drawerlayout = { module = "com.jakewharton.rxbinding4:rxbinding-drawerlayout", version.ref = "rxbinding" }
+rxdogtag = { module = "com.uber.rxdogtag2:rxdogtag", version.ref = "rxdogtag" }
+rxdogtag-autodispose = { module = "com.uber.rxdogtag2:rxdogtag-autodispose", version.ref = "rxdogtag" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+rxkotlin = { module = "io.reactivex.rxjava3:rxkotlin", version.ref = "rxkotlin" }
 
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "coroutines" }
-coroutines-rx2 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2", version.ref = "coroutines" }
+coroutines-rx3 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3", version.ref = "coroutines" }
 
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-android-processor = { module = "com.google.dagger:dagger-android-processor", version.ref = "dagger" }
@@ -88,7 +81,7 @@ room-common = { module = "androidx.room:room-common", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-gradle-plugin = { module = "androidx.room:room-gradle-plugin", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "room" }
+room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "room" }
 
 conductor = { module = "com.bluelinelabs:conductor", version.ref = "conductor" }
 conductor-archlifecycle = { module = "com.bluelinelabs:conductor-archlifecycle", version.ref = "conductor" }

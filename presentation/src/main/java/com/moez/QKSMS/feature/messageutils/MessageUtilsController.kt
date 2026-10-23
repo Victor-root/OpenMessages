@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
 import io.openmessages.common.base.QkController
 import io.openmessages.common.util.Colors
@@ -18,10 +18,10 @@ import io.openmessages.databinding.MessageUtilsControllerBinding
 import io.openmessages.feature.settings.autodelete.AutoDeleteDialog
 import io.openmessages.injection.appComponent
 import io.openmessages.repository.MessageRepository
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext

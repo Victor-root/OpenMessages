@@ -20,7 +20,7 @@ package io.openmessages.interactor
 
 import io.openmessages.manager.ShortcutManager
 import io.openmessages.manager.WidgetManager
-import io.reactivex.Flowable
+import io.reactivex.rxjava3.core.Flowable
 import javax.inject.Inject
 
 class UpdateBadge @Inject constructor(

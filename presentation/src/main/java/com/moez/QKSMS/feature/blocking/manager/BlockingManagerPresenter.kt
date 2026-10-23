@@ -1,8 +1,8 @@
 package io.openmessages.feature.blocking.manager
 
 import android.content.Context
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDispose
+import autodispose2.androidx.lifecycle.scope
+import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.CallBlockerBlockingClient
@@ -13,10 +13,10 @@ import io.openmessages.common.Navigator
 import io.openmessages.common.base.QkPresenter
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.plusAssign
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 class BlockingManagerPresenter @Inject constructor(
