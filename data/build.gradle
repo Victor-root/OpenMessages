@@ -21,16 +21,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdk 34
-
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
+    compileSdk libs.versions.android.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk 23
-        targetSdkVersion 33
+        minSdk libs.versions.android.minSdk.get().toInteger()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

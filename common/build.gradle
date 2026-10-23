@@ -20,11 +20,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 33
+    compileSdk libs.versions.android.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdk 23
-        targetSdkVersion 33
+        minSdk libs.versions.android.minSdk.get().toInteger()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }

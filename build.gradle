@@ -18,23 +18,13 @@ tasks.register('clean', Delete) {
 }
 
 subprojects {
-    afterEvaluate {
-        if (project.hasProperty('kapt')) {
-            kapt {
-                // we expect this closure to run over a org.jetbrains.kotlin.gradle.plugin.KaptExtension
-                javacOptions {
-                    option("-source", "8")
-                    option("-target", "8")
-                }
-            }
+    plugins.withId('com.android.base') {
+        android.compileOptions {
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
         }
-
-        // Skip the release "lintVital" check across all Android modules. AGP 8.2's lint analyzer
-        // crashes during setup on some JDK/JBR versions (NoClassDefFoundError: UastFacade /
-        // "Already disposed: MessageBus"), which would otherwise break assembleRelease even though
-        // there is no real lint problem. Lint can still be run on demand with the lint* tasks.
-        if (project.extensions.findByName('android') != null) {
-            project.android.lint.checkReleaseBuilds = false
-        }
+    }
+    plugins.withId('org.jetbrains.kotlin.android') {
+        kotlin.compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 }
