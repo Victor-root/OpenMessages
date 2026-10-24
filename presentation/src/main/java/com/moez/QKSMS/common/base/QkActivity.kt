@@ -94,6 +94,9 @@ abstract class QkActivity : AppCompatActivity() {
     var systemBarColor: Int = Color.TRANSPARENT
         private set
 
+    /** What shows behind the status bar where that isn't [systemBarColor], see [setStatusBarBackdrop] */
+    private var statusBarBackdrop: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (isEdgeToEdge()) {
@@ -141,9 +144,23 @@ abstract class QkActivity : AppCompatActivity() {
             window.isNavigationBarContrastEnforced = false
         }
 
-        val controller = WindowCompat.getInsetsController(window, window.decorView)
-        controller.isAppearanceLightStatusBars = colors.useDarkSystemBarIcons(barColor)
-        controller.isAppearanceLightNavigationBars = lightNavIcons
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = lightNavIcons
+        applyStatusBarIcons()
+    }
+
+    /**
+     * Tells the status bar what shows behind it, for its icons to stay legible: [color] where the
+     * screen scrolls something else than the bar colour under it, null for the bar colour
+     */
+    protected fun setStatusBarBackdrop(color: Int?) {
+        if (statusBarBackdrop == color) return
+        statusBarBackdrop = color
+        applyStatusBarIcons()
+    }
+
+    private fun applyStatusBarIcons() {
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
+                colors.useDarkSystemBarIcons(statusBarBackdrop ?: systemBarColor)
     }
 
     /**
