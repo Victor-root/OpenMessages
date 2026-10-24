@@ -18,12 +18,10 @@
  */
 package io.openmessages.model
 
-import android.telephony.PhoneNumberUtils
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.util.Locale
 
 @Entity(tableName = "recipient", indices = [Index("contactLookupKey")])
 data class Recipient(
@@ -35,12 +33,5 @@ data class Recipient(
 ) {
 
     @Ignore var contact: Contact? = null
-
-    /**
-     * Return a string that can be displayed to represent the name of this contact
-     */
-    fun getDisplayName(): String = contact?.name?.takeIf { it.isNotBlank() }
-            ?: PhoneNumberUtils.formatNumber(address, Locale.getDefault().country) // TODO: Use our own PhoneNumberUtils
-            ?: address
 
 }

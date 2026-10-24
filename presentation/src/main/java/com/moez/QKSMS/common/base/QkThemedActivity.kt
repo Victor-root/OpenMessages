@@ -117,7 +117,8 @@ abstract class QkThemedActivity : QkActivity() {
         // back-stacked, alias-launched activity must not be relaunched while the icon may be changing.
         // The 400ms debounce guarantees the theme picker dialog has dismissed before the rebuild.
         val triggers: List<Preference<*>> =
-                listOf<Preference<*>>(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont, prefs.edgeToEdge) +
+                listOf<Preference<*>>(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont, prefs.edgeToEdge,
+                        prefs.hideCountryCode) +
                         recreateOnThemeChangeTriggers()
         Observable.merge(triggers.map { it.asObservable().skip(1) })
                 .debounce(400, TimeUnit.MILLISECONDS)

@@ -31,11 +31,13 @@ import io.openmessages.feature.compose.ComposeActivity
 import io.openmessages.model.Conversation
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
+import io.openmessages.util.DisplayNames
 import me.leolin.shortcutbadger.ShortcutBadger
 import timber.log.Timber
 import javax.inject.Inject
 
 class ShortcutManagerImpl @Inject constructor(
+    private val displayNames: DisplayNames,
     private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val messageRepo: MessageRepository,
@@ -108,7 +110,7 @@ class ShortcutManagerImpl @Inject constructor(
             }
         }
 
-        val persons = conversation.recipients.map { it.toPerson(context, colors) }.toTypedArray()
+        val persons = conversation.recipients.map { it.toPerson(context, colors, displayNames) }.toTypedArray()
 
         val intent = Intent(context, ComposeActivity::class.java)
             .setAction(Intent.ACTION_VIEW)
@@ -116,8 +118,8 @@ class ShortcutManagerImpl @Inject constructor(
             .putExtra("fromShortcut", true)
 
         val sc = ShortcutInfoCompat.Builder(context, "${conversation.id}")
-            .setShortLabel(conversation.getTitle())
-            .setLongLabel(conversation.getTitle())
+            .setShortLabel(displayNames.of(conversation))
+            .setLongLabel(displayNames.of(conversation))
             .setIcon(icon)
             .setIntent(intent)
             .setPersons(persons)

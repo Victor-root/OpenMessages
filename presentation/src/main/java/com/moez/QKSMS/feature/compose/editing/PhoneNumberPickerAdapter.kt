@@ -28,11 +28,13 @@ import io.openmessages.common.util.extensions.forwardTouches
 import io.openmessages.databinding.PhoneNumberListItemBinding
 import io.openmessages.extensions.Optional
 import io.openmessages.model.PhoneNumber
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class PhoneNumberPickerAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     private val context: Context
 ) : QkAdapter<PhoneNumber, QkBindingViewHolder<PhoneNumberListItemBinding>>() {
 
@@ -64,7 +66,7 @@ class PhoneNumberPickerAdapter @Inject constructor(
         val phoneNumber = getItem(position)
 
         binding.number.radioButton.isChecked = phoneNumber.id == selectedItem
-        binding.number.titleView.text = phoneNumber.address
+        binding.number.titleView.text = displayNames.number(phoneNumber.address)
         binding.number.summaryView.text = when (phoneNumber.isDefault) {
             true -> context.getString(R.string.compose_number_picker_default, phoneNumber.type)
             false -> phoneNumber.type

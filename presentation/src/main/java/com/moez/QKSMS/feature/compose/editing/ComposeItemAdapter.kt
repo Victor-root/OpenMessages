@@ -35,6 +35,7 @@ import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.databinding.ContactListItemBinding
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -42,6 +43,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ComposeItemAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     private val colors: Colors,
     private val conversationRepo: ConversationRepository
 ) : QkAdapter<ComposeItem, QkBindingViewHolder<ContactListItemBinding>>() {
@@ -65,7 +67,7 @@ class ComposeItemAdapter @Inject constructor(
         binding.icon.setTint(colors.theme().theme)
 
         binding.numbers.setRecycledViewPool(numbersViewPool)
-        binding.numbers.adapter = PhoneNumberAdapter()
+        binding.numbers.adapter = PhoneNumberAdapter(displayNames)
         binding.numbers.forwardTouches(binding.root)
 
         return QkBindingViewHolder(binding).apply {
@@ -100,7 +102,7 @@ class ComposeItemAdapter @Inject constructor(
 
         binding.avatar.recipients = listOf(createRecipient(contact))
 
-        binding.title.text = contact.numbers.joinToString { it.address }
+        binding.title.text = contact.numbers.joinToString { displayNames.number(it.address) }
 
         binding.subtitle.isVisible = false
 
@@ -115,7 +117,7 @@ class ComposeItemAdapter @Inject constructor(
 
         binding.avatar.recipients = conversation.recipients
 
-        binding.title.text = conversation.getTitle()
+        binding.title.text = displayNames.of(conversation)
 
         binding.subtitle.isVisible = conversation.recipients.size > 1 && conversation.name.isBlank()
         binding.subtitle.text = conversation.recipients.joinToString(", ") { recipient ->

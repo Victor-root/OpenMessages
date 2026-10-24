@@ -24,10 +24,13 @@ import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.model.BlockedNumber
 import io.openmessages.databinding.BlockedNumberListItemBinding
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 
-class BlockedNumbersAdapter : QkAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
+class BlockedNumbersAdapter(
+    private val displayNames: DisplayNames
+) : QkAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
 
     val unblockAddress: Subject<Long> = PublishSubject.create()
 
@@ -44,7 +47,7 @@ class BlockedNumbersAdapter : QkAdapter<BlockedNumber, QkBindingViewHolder<Block
     override fun onBindViewHolder(holder: QkBindingViewHolder<BlockedNumberListItemBinding>, position: Int) {
         val item = getItem(position)
 
-        holder.binding.number.text = item.address
+        holder.binding.number.text = displayNames.number(item.address)
     }
 
 }

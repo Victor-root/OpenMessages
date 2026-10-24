@@ -67,6 +67,7 @@ import io.openmessages.model.Message
 import io.openmessages.model.Recipient
 import io.openmessages.databinding.MessageListItemInBinding
 import io.openmessages.databinding.MessageListItemOutBinding
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.disposables.Disposable
@@ -78,6 +79,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class MessagesAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     subscriptionManager: SubscriptionManagerCompat,
     private val context: Context,
     private val colors: Colors,
@@ -486,7 +488,7 @@ class MessagesAdapter @Inject constructor(
                 bodyTextTruncated -> context.getString(R.string.message_body_too_long_to_display)
                 (!message.isMe() && (conversation?.recipients?.size ?: 0) > 1) ->
                     // incoming group message
-                    "${contactCache[message.address]?.getDisplayName()} • ${
+                    "${contactCache[message.address]?.let(displayNames::of)} • ${
                         dateFormatter.getTimestamp(message.date)}"
                 else -> dateFormatter.getTimestamp(message.date)
             }

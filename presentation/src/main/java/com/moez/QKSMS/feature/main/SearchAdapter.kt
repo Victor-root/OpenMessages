@@ -35,9 +35,11 @@ import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.extensions.removeAccents
 import io.openmessages.model.SearchResult
 import io.openmessages.databinding.SearchListItemBinding
+import io.openmessages.util.DisplayNames
 import javax.inject.Inject
 
 class SearchAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     colors: Colors,
     private val context: Context,
     private val dateFormatter: DateFormatter,
@@ -63,7 +65,7 @@ class SearchAdapter @Inject constructor(
         holder.binding.resultsHeader.setVisible(result.messages > 0 && previous?.messages == 0)
 
         val query = result.query
-        val title = SpannableString(result.conversation.getTitle())
+        val title = SpannableString(displayNames.of(result.conversation))
         var index = title.removeAccents().indexOf(query, ignoreCase = true)
 
         while (index >= 0) {

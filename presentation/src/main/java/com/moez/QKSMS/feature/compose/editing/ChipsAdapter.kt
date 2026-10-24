@@ -28,10 +28,13 @@ import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.databinding.ContactChipBinding
 import io.openmessages.model.Recipient
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
-class ChipsAdapter @Inject constructor() : QkAdapter<Recipient, QkBindingViewHolder<ContactChipBinding>>() {
+class ChipsAdapter @Inject constructor(
+    private val displayNames: DisplayNames
+) : QkAdapter<Recipient, QkBindingViewHolder<ContactChipBinding>>() {
 
     var view: RecyclerView? = null
     val chipDeleted: PublishSubject<Recipient> = PublishSubject.create()
@@ -51,7 +54,7 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Recipient, QkBindingViewHol
 
         // No avatar here: the chip mirrors an existing conversation's plain-text title (see
         // contact_chip.xml). The avatar still appears in the detailed chip popup when tapped.
-        holder.binding.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
+        holder.binding.name.text = displayNames.of(recipient)
     }
 
     /**

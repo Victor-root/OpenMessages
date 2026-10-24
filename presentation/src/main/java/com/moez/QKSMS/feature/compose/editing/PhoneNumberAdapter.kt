@@ -25,8 +25,11 @@ import io.openmessages.common.base.QkAdapter
 import io.openmessages.common.base.QkBindingViewHolder
 import io.openmessages.databinding.ContactNumberListItemBinding
 import io.openmessages.model.PhoneNumber
+import io.openmessages.util.DisplayNames
 
-class PhoneNumberAdapter : QkAdapter<PhoneNumber, QkBindingViewHolder<ContactNumberListItemBinding>>() {
+class PhoneNumberAdapter(
+    private val displayNames: DisplayNames
+) : QkAdapter<PhoneNumber, QkBindingViewHolder<ContactNumberListItemBinding>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ContactNumberListItemBinding> {
         val binding = ContactNumberListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -36,7 +39,7 @@ class PhoneNumberAdapter : QkAdapter<PhoneNumber, QkBindingViewHolder<ContactNum
     override fun onBindViewHolder(holder: QkBindingViewHolder<ContactNumberListItemBinding>, position: Int) {
         val number = getItem(position)
 
-        holder.binding.address.text = number.address
+        holder.binding.address.text = displayNames.number(number.address)
         holder.binding.type.text = number.type
     }
 

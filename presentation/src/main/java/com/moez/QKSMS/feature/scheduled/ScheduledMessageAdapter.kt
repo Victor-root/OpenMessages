@@ -31,12 +31,14 @@ import io.openmessages.common.util.DateFormatter
 import io.openmessages.model.Contact
 import io.openmessages.model.Recipient
 import io.openmessages.model.ScheduledMessage
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val phoneNumberUtils: PhoneNumberUtils
@@ -89,7 +91,7 @@ class ScheduledMessageAdapter @Inject constructor(
             message.recipients.map { address -> Recipient(address = address) }
 
         holder.binding.recipients.text = message.recipients.joinToString(",") { address ->
-            contactCache[address]?.name?.takeIf { it.isNotBlank() } ?: address
+            contactCache[address]?.name?.takeIf { it.isNotBlank() } ?: displayNames.number(address)
         }
 
         holder.binding.date.text = dateFormatter.getScheduledTimestamp(message.date)

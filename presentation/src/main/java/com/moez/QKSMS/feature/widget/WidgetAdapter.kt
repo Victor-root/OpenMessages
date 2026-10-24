@@ -40,6 +40,7 @@ import io.openmessages.model.Contact
 import io.openmessages.model.Conversation
 import io.openmessages.receiver.StartActivityFromWidgetReceiver
 import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.Preferences
 import io.openmessages.util.tryOrNull
 import javax.inject.Inject
@@ -52,6 +53,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
     @Inject lateinit var context: Context
     @Inject lateinit var colors: Colors
+    @Inject lateinit var displayNames: DisplayNames
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var prefs: Preferences
@@ -141,7 +143,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         // Name
         remoteViews.setTextColor(R.id.name, textPrimary)
         remoteViews.setTextViewText(R.id.name, boldText(buildSpannedString {
-            append(conversation.getTitle())
+            append(displayNames.of(conversation))
         }, conversation.unread))
 
         // Date
