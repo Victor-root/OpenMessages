@@ -37,6 +37,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.applyInsetPadding
@@ -45,6 +46,7 @@ import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
+import timber.log.Timber
 import javax.inject.Inject
 
 // Translucent veils painted behind the (otherwise transparent) navigation bar in edge-to-edge, so the
@@ -99,7 +101,9 @@ abstract class QkActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (isEdgeToEdge()) {
+        // From Android 15 on, the original look is painted by the app too, so the window has to
+        // leave both bars to it rather than keep any of them for itself
+        if (drawsBehindSystemBars()) {
             WindowCompat.setDecorFitsSystemWindows(window, false)
         }
         applySystemBars(prefs.theme().get())
@@ -207,6 +211,9 @@ abstract class QkActivity : AppCompatActivity() {
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
             systemBarsBackground.topHeight = if (isEdgeToEdge()) 0 else bars.top
             systemBarsBackground.bottomHeight = bars.bottom
+            if (BuildConfig.DEBUG) Timber.v("${javaClass.simpleName} system bars: top ${bars.top}, " +
+                    "bottom ${bars.bottom}, edge-to-edge ${isEdgeToEdge()}, " +
+                    "colour ${Integer.toHexString(systemBarsBackground.color)}")
             // max(nav, ime) keeps bottom content above the keyboard once the window stops auto-resizing.
             onApplyEdgeToEdgeInsets(bars.top, maxOf(bars.bottom, ime.bottom))
             insets // returned unconsumed so DrawerLayout etc. still receive them
