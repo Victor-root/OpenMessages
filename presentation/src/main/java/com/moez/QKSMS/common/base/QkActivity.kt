@@ -84,10 +84,11 @@ abstract class QkActivity : AppCompatActivity() {
             (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM && !window.isFloating)
 
     /**
-     * What shows behind the navigation bar from Android 15 on, where the system no longer paints the
-     * bars and the app does: the edge-to-edge veil, or the bar colour of the original look
+     * What shows behind the system bars from Android 15 on, where the system no longer paints them
+     * and the app does: the veil behind the navigation bar in edge-to-edge, or the bar colour behind
+     * both bars in the original look
      */
-    private val navigationBarBackground = BottomBarDrawable()
+    private val systemBarsBackground = SystemBarsDrawable()
 
     /** The colour last given to [applySystemBars] */
     var systemBarColor: Int = Color.TRANSPARENT
@@ -128,9 +129,9 @@ abstract class QkActivity : AppCompatActivity() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            // The status bar shows the toolbar, which reaches up behind it, and the nav bar is
-            // painted over the content.
-            navigationBarBackground.color = navigationBarColor
+            // Painted over the content: the nav bar always, the status bar only in the original
+            // look, which in edge-to-edge shows the toolbar reaching up behind it.
+            systemBarsBackground.color = navigationBarColor
         } else {
             paintSystemBars(if (edgeToEdge) Color.TRANSPARENT else barColor, navigationBarColor)
         }
@@ -182,12 +183,13 @@ abstract class QkActivity : AppCompatActivity() {
     private fun installEdgeToEdgeInsets() {
         val content = findViewById<View>(android.R.id.content) ?: return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            content.foreground = navigationBarBackground
+            content.foreground = systemBarsBackground
         }
         ViewCompat.setOnApplyWindowInsetsListener(content) { _, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
-            navigationBarBackground.height = bars.bottom
+            systemBarsBackground.topHeight = if (isEdgeToEdge()) 0 else bars.top
+            systemBarsBackground.bottomHeight = bars.bottom
             // max(nav, ime) keeps bottom content above the keyboard once the window stops auto-resizing.
             onApplyEdgeToEdgeInsets(bars.top, maxOf(bars.bottom, ime.bottom))
             insets // returned unconsumed so DrawerLayout etc. still receive them
@@ -209,13 +211,19 @@ abstract class QkActivity : AppCompatActivity() {
     }
 
     /**
-     * Applies the system-bar insets. The default pushes the toolbar's themed background behind the
-     * status bar and lifts all content above the nav bar / keyboard. Screens whose content should
-     * draw behind the nav bar (e.g. the main conversation list) override this.
+     * Applies the system-bar insets. In edge-to-edge the default pushes the toolbar's themed
+     * background behind the status bar and lifts all content above the nav bar / keyboard; screens
+     * whose content should draw behind the nav bar (e.g. the main conversation list) override this.
+     * In the original look the content keeps clear of both bars, which are painted.
      */
     protected open fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
-        toolbar?.applyInsetTop(top)
-        findViewById<View>(android.R.id.content)?.applyInsetPadding(bottom = bottom)
+        val content = findViewById<View>(android.R.id.content)
+        if (isEdgeToEdge()) {
+            toolbar?.applyInsetTop(top)
+            content?.applyInsetPadding(bottom = bottom)
+        } else {
+            content?.applyInsetPadding(top = top, bottom = bottom)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -277,9 +285,9 @@ abstract class QkActivity : AppCompatActivity() {
 }
 
 /**
- * A colour over the bottom [height] pixels of what it is drawn on
+ * A colour over the top [topHeight] and the bottom [bottomHeight] pixels of what it is drawn on
  */
-private class BottomBarDrawable : Drawable() {
+private class SystemBarsDrawable : Drawable() {
 
     private val paint = Paint()
 
@@ -290,7 +298,13 @@ private class BottomBarDrawable : Drawable() {
             invalidateSelf()
         }
 
-    var height: Int = 0
+    var topHeight: Int = 0
+        set(value) {
+            field = value
+            invalidateSelf()
+        }
+
+    var bottomHeight: Int = 0
         set(value) {
             field = value
             invalidateSelf()
@@ -298,7 +312,9 @@ private class BottomBarDrawable : Drawable() {
 
     override fun draw(canvas: Canvas) {
         val bounds = bounds
-        canvas.drawRect(bounds.left.toFloat(), (bounds.bottom - height).toFloat(),
+        canvas.drawRect(bounds.left.toFloat(), bounds.top.toFloat(),
+                bounds.right.toFloat(), (bounds.top + topHeight).toFloat(), paint)
+        canvas.drawRect(bounds.left.toFloat(), (bounds.bottom - bottomHeight).toFloat(),
                 bounds.right.toFloat(), bounds.bottom.toFloat(), paint)
     }
 
