@@ -23,14 +23,13 @@ import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.Paint
 import android.graphics.PixelFormat
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +38,6 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.applyInsetPadding
@@ -48,7 +46,6 @@ import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
-import timber.log.Timber
 import javax.inject.Inject
 
 // Translucent veils painted behind the (otherwise transparent) navigation bar in edge-to-edge, so the
@@ -56,9 +53,6 @@ import javax.inject.Inject
 // more transparent veil than dark theme.
 private const val NAV_SCRIM_LIGHT = 0x1A000000
 private const val NAV_SCRIM_DARK = 0x4D000000
-
-// Temporary: logcat tag of the navigation bar investigation
-private const val BARS_TAG = "OMBars"
 
 abstract class QkActivity : AppCompatActivity() {
     @Inject lateinit var prefs: Preferences
@@ -156,52 +150,6 @@ abstract class QkActivity : AppCompatActivity() {
 
         controller.isAppearanceLightNavigationBars = lightNavIcons
         applyStatusBarIcons()
-        logSystemBars("applySystemBars")
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) window.decorView.post { logSystemBars("focus") }
-    }
-
-    /**
-     * Temporary: everything that decides what shows behind the navigation bar, and every view drawn
-     * over it, while it stays white in the original look
-     */
-    @Suppress("DEPRECATION")
-    private fun logSystemBars(where: String) {
-        if (!BuildConfig.DEBUG) return
-        val decor = window.decorView
-        val content = findViewById<View>(android.R.id.content)
-        val insets = ViewCompat.getRootWindowInsets(decor)
-        val nav = insets?.getInsets(WindowInsetsCompat.Type.navigationBars())
-        val tappable = insets?.getInsets(WindowInsetsCompat.Type.tappableElement())
-        val contentAt = IntArray(2).also { content?.getLocationOnScreen(it) }
-        val contrast = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) window.isNavigationBarContrastEnforced else null
-        Timber.tag(BARS_TAG).d("$where ${javaClass.simpleName}: sdk ${Build.VERSION.SDK_INT}, " +
-                "edgeToEdge ${isEdgeToEdge()}, drawsBehind ${drawsBehindSystemBars()}, floating ${window.isFloating}, " +
-                "contrastEnforced $contrast, windowNavColor ${Integer.toHexString(window.navigationBarColor)}, " +
-                "windowStatusColor ${Integer.toHexString(window.statusBarColor)}, " +
-                "flags ${Integer.toHexString(window.attributes.flags)}, decor ${decor.width}x${decor.height}, " +
-                "content y ${contentAt[1]} ${content?.width}x${content?.height} " +
-                "padding top ${content?.paddingTop} bottom ${content?.paddingBottom}, " +
-                "ourForeground ${content?.foreground === systemBarsBackground} (${content?.foreground?.javaClass?.simpleName}), " +
-                "paint ${Integer.toHexString(systemBarsBackground.color)} top ${systemBarsBackground.topHeight} " +
-                "bottom ${systemBarsBackground.bottomHeight} bounds ${systemBarsBackground.bounds}, " +
-                "navInsets $nav, tappable $tappable")
-        if (nav != null && decor.height > 0) logViewsOver(decor, decor.height - nav.bottom, 0)
-    }
-
-    /** Temporary: the views reaching into the navigation bar, from the decor down */
-    private fun logViewsOver(view: View, navTop: Int, depth: Int) {
-        val at = IntArray(2).also { view.getLocationOnScreen(it) }
-        if (at[1] + view.height <= navTop || view.visibility != View.VISIBLE) return
-        val id = if (view.id != View.NO_ID) runCatching { resources.getResourceEntryName(view.id) }.getOrNull() else null
-        val background = (view.background as? ColorDrawable)?.color?.let(Integer::toHexString)
-                ?: view.background?.javaClass?.simpleName
-        Timber.tag(BARS_TAG).d("${"  ".repeat(depth)}${view.javaClass.simpleName} #$id y ${at[1]}..${at[1] + view.height} " +
-                "bg $background fg ${view.foreground?.javaClass?.simpleName} alpha ${view.alpha} z ${view.z}")
-        if (view is ViewGroup) for (i in 0 until view.childCount) logViewsOver(view.getChildAt(i), navTop, depth + 1)
     }
 
     /**
@@ -257,6 +205,9 @@ abstract class QkActivity : AppCompatActivity() {
         val content = findViewById<View>(android.R.id.content) ?: return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             content.foreground = systemBarsBackground
+            // The content frame lays its foreground out by its gravity, and one without a height of
+            // its own came out at -1 tall: the nav bar strip was drawn above the screen
+            content.foregroundGravity = Gravity.FILL
         }
         ViewCompat.setOnApplyWindowInsetsListener(content) { _, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -265,7 +216,6 @@ abstract class QkActivity : AppCompatActivity() {
             systemBarsBackground.bottomHeight = bars.bottom
             // max(nav, ime) keeps bottom content above the keyboard once the window stops auto-resizing.
             onApplyEdgeToEdgeInsets(bars.top, maxOf(bars.bottom, ime.bottom))
-            logSystemBars("insets")
             insets // returned unconsumed so DrawerLayout etc. still receive them
         }
         // Request insets once attached: during onCreate the window has none yet, so an early pass
@@ -384,19 +334,8 @@ private class SystemBarsDrawable : Drawable() {
             invalidateSelf()
         }
 
-    /** Temporary: what the last logged draw painted, so a draw is only logged when that changes */
-    private var lastDrawn = ""
-
     override fun draw(canvas: Canvas) {
         val bounds = bounds
-        if (BuildConfig.DEBUG) {
-            val drawn = "bounds $bounds colour ${Integer.toHexString(paint.color)} alpha ${paint.alpha} " +
-                    "top $topHeight bottom $bottomHeight clip ${canvas.clipBounds}"
-            if (drawn != lastDrawn) {
-                lastDrawn = drawn
-                Timber.tag(BARS_TAG).d("draw $drawn")
-            }
-        }
         canvas.drawRect(bounds.left.toFloat(), bounds.top.toFloat(),
                 bounds.right.toFloat(), (bounds.top + topHeight).toFloat(), paint)
         canvas.drawRect(bounds.left.toFloat(), (bounds.bottom - bottomHeight).toFloat(),
