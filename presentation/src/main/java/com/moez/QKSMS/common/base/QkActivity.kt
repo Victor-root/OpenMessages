@@ -99,9 +99,7 @@ abstract class QkActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // From Android 15 on, the original look is painted by the app too, so the window has to
-        // leave both bars to it rather than keep any of them for itself
-        if (drawsBehindSystemBars()) {
+        if (isEdgeToEdge()) {
             WindowCompat.setDecorFitsSystemWindows(window, false)
         }
         applySystemBars(prefs.theme().get())
@@ -122,6 +120,9 @@ abstract class QkActivity : AppCompatActivity() {
      */
     fun applySystemBars(barColor: Int) {
         systemBarColor = barColor
+        // Building the window's decor reads the bar settings from the theme, over anything set on
+        // the window before it, so it is built first: the first call comes before setContentView
+        val controller = WindowCompat.getInsetsController(window, window.decorView)
         val edgeToEdge = isEdgeToEdge()
         // In edge-to-edge the nav icons sit over the window background; a light background wants dark
         // icons. Otherwise they sit over the bar colour, like the status icons.
@@ -146,7 +147,7 @@ abstract class QkActivity : AppCompatActivity() {
             window.isNavigationBarContrastEnforced = false
         }
 
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = lightNavIcons
+        controller.isAppearanceLightNavigationBars = lightNavIcons
         applyStatusBarIcons()
     }
 
