@@ -34,6 +34,7 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -41,6 +42,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -104,6 +106,11 @@ class MainActivity : QkThemedActivity(), MainView {
     private var lastState: MainState? = null
     private var nextUnreadIndex = 0
     private var scrollToTopVisible = false
+
+    /** What decides what shows behind the status bar, see [updateStatusBarBackdrop] */
+    private var statusBarHeight = 0
+    private var appBarOffset = 0
+    private var drawerOffset = 0f
 
     /** What the drawer was last told to do, so that it is only ever told when that changes. */
     private var appliedDrawerOpen: Boolean? = null
@@ -187,6 +194,17 @@ class MainActivity : QkThemedActivity(), MainView {
                 backPressedSubject.onNext(NavItem.BACK)
             }
         }
+
+        binding.appBarLayout.addOnOffsetChangedListener { _, offset ->
+            appBarOffset = offset
+            updateStatusBarBackdrop()
+        }
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                drawerOffset = slideOffset
+                updateStatusBarBackdrop()
+            }
+        })
 
         snackbarBinding = MainPermissionHintBinding.bind(binding.snackbar.inflate()).also {
             it.snackbarButton.clicks()
@@ -385,21 +403,36 @@ class MainActivity : QkThemedActivity(), MainView {
                 }
     }
 
-    // Edge-to-edge: the toolbar's themed background extends behind the status bar; the list draws
-    // behind the transparent nav bar (clipToPadding is already false) while everything interactive
-    // is lifted above it. Without it, the screen keeps clear of both bars like any other.
+    // Edge-to-edge: the toolbar's themed background, and the drawer header's, extend behind the
+    // status bar; the list draws behind the transparent nav bar (clipToPadding is already false)
+    // while everything interactive is lifted above it. Without it, the screen keeps clear of both
+    // bars like any other.
     override fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
         if (!isEdgeToEdge()) {
             super.onApplyEdgeToEdgeInsets(top, bottom)
             return
         }
+        statusBarHeight = top
         binding.toolbar.applyInsetTop(top)
+        binding.drawer.drawerHeader.applyInsetTop(top)
         binding.recyclerView.applyInsetPadding(bottom = bottom)
         binding.compose.applyInsetBottomMargin(bottom)
         binding.scrollToTop.applyInsetBottomMargin(bottom)
         binding.drawer.root.applyInsetPadding(bottom = bottom)
         if (::snackbarBinding.isInitialized) snackbarBinding.root.applyInsetPadding(bottom = bottom)
         if (::syncingBinding.isInitialized) syncingBinding.root.applyInsetPadding(bottom = bottom)
+        updateStatusBarBackdrop()
+    }
+
+    /**
+     * In edge-to-edge the status bar shows the toolbar or the drawer header, both in the theme
+     * colour, until the toolbar scrolls away from under it with the drawer closed, leaving the list
+     */
+    private fun updateStatusBarBackdrop() {
+        val listBehind = isEdgeToEdge() && drawerOffset < 0.5f &&
+                // Set by the insets ahead of any layout, unlike the measured height
+                binding.toolbar.layoutParams.height + appBarOffset < statusBarHeight / 2
+        setStatusBarBackdrop(if (listBehind) resolveThemeColor(android.R.attr.windowBackground) else null)
     }
 
     override fun onNewIntent(intent: Intent?) =
