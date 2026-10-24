@@ -71,9 +71,16 @@ class PhoneNumberUtils @Inject constructor(context: Context) {
         return PhoneNumberUtils.formatNumber(number.toString(), countryCode) ?: number.toString()
     }
 
-    /** Same as [formatNumber], but in the device's national format (no country code), e.g. "+33 6 ..." -> "06 ...". */
+    /**
+     * Same as [formatNumber], but a number of the device's own country loses its country code,
+     * e.g. "+33 6 ..." -> "06 ...". A foreign number keeps it, or it would pass for a local one, and
+     * a sender name is left alone rather than read as letters on a keypad.
+     */
     fun formatNumberNational(number: CharSequence): String {
-        val parsed = parse(number) ?: return formatNumber(number)
+        val parsed = number.takeIf { it.none(Char::isLetter) }
+                ?.let(::parse)
+                ?.takeIf { it.countryCode == phoneNumberUtil.getCountryCodeForRegion(countryCode) }
+                ?: return formatNumber(number)
         return phoneNumberUtil.format(parsed, PhoneNumberUtil.PhoneNumberFormat.NATIONAL)
     }
 

@@ -34,6 +34,7 @@ import io.openmessages.model.Message
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.util.ActiveSubscriptionObservable
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
@@ -48,6 +49,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class QkReplyViewModel @Inject constructor(
+    private val displayNames: DisplayNames,
     @Named("threadId") private val threadId: Long,
     private val conversationRepo: ConversationRepository,
     private val deleteMessages: DeleteMessages,
@@ -97,7 +99,7 @@ class QkReplyViewModel @Inject constructor(
                 .subscribe { newState { copy(hasError = true) } }
 
         disposables += conversation
-                .map { conversation -> conversation.getTitle() }
+                .map(displayNames::of)
                 .distinctUntilChanged()
                 .subscribe { title -> newState { copy(title = title) } }
 

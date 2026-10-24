@@ -30,6 +30,7 @@ import io.openmessages.interactor.SaveImage
 import io.openmessages.manager.PermissionManager
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -37,6 +38,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class GalleryViewModel @Inject constructor(
+    private val displayNames: DisplayNames,
     conversationRepo: ConversationRepository,
     @Named("partId") private val partId: Long,
     private val context: Context,
@@ -56,7 +58,7 @@ class GalleryViewModel @Inject constructor(
 
         disposables += threadId
                 .flatMapObservable(conversationRepo::observeConversation)
-                .subscribe { conversation -> newState { copy(title = conversation.value?.getTitle()) } }
+                .subscribe { conversation -> newState { copy(title = conversation.value?.let(displayNames::of)) } }
     }
 
     override fun bindView(view: GalleryView) {

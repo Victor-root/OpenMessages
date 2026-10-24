@@ -31,11 +31,13 @@ import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.databinding.BlockedListItemBinding
 import io.openmessages.model.Conversation
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
 class BlockedMessagesAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     private val context: Context,
     private val dateFormatter: DateFormatter
 ) : QkAdapter<Conversation, QkBindingViewHolder<BlockedListItemBinding>>() {
@@ -76,7 +78,7 @@ class BlockedMessagesAdapter @Inject constructor(
 
         binding.avatars.recipients = conversation.recipients
         binding.title.collapseEnabled = conversation.recipients.size > 1
-        binding.title.text = conversation.getTitle()
+        binding.title.text = displayNames.of(conversation)
         binding.date.text = dateFormatter.getConversationTimestamp(conversation.date)
 
         binding.blocker.text = when (conversation.blockingClient) {

@@ -17,11 +17,13 @@ import io.openmessages.databinding.ConversationMediaListItemBinding
 import io.openmessages.databinding.ConversationRecipientListItemBinding
 import io.openmessages.extensions.isVideo
 import io.openmessages.feature.conversationinfo.ConversationInfoItem.*
+import io.openmessages.util.DisplayNames
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ConversationInfoAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     private val context: Context,
     private val colors: Colors
 ) : QkAdapter<ConversationInfoItem, QkViewHolder>() {
@@ -94,9 +96,9 @@ class ConversationInfoAdapter @Inject constructor(
                 val recipient = item.value
                 binding.avatar.setRecipient(recipient)
 
-                binding.name.text = recipient.contact?.name ?: recipient.address
+                binding.name.text = displayNames.of(recipient)
 
-                binding.address.text = recipient.address
+                binding.address.text = displayNames.number(recipient.address)
                 binding.address.setVisible(recipient.contact != null)
 
                 binding.add.setVisible(recipient.contact == null)

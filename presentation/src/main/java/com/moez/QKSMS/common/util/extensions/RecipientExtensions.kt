@@ -23,6 +23,7 @@ import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.widget.QkTextView
 import io.openmessages.model.Recipient
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.tryOrNull
 import timber.log.Timber
 
@@ -121,9 +122,10 @@ fun Recipient.getThemedIcon(context: Context, theme: Colors.Theme, width: Int, h
 fun Person.Builder.fromRecipient(
     recipient: Recipient,
     context: Context,
-    colors: Colors
+    colors: Colors,
+    displayNames: DisplayNames
 ): Person.Builder {
-    setName(recipient.getDisplayName())
+    setName(displayNames.of(recipient))
     setIcon(recipient.getThemedIcon(context, colors.theme(recipient), 512, 512))
 
     recipient.contact
@@ -139,7 +141,7 @@ fun Person.Builder.fromRecipient(
  * Return a Person object corresponding to this recipient
  */
 @TargetApi(29)
-fun Recipient.toPerson(context : Context, colors: Colors): Person {
-    val person = Person.Builder().fromRecipient(this, context, colors)
+fun Recipient.toPerson(context : Context, colors: Colors, displayNames: DisplayNames): Person {
+    val person = Person.Builder().fromRecipient(this, context, colors, displayNames)
     return person.build()
 }

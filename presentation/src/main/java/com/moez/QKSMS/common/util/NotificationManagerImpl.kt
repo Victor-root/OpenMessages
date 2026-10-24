@@ -57,6 +57,7 @@ import io.openmessages.receiver.SpeakThreadsReceiver
 import io.openmessages.repository.ContactRepository
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.OtpCodeExtractor
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.util.Preferences
@@ -69,6 +70,7 @@ import io.openmessages.receiver.ResendMessageReceiver
 
 @Singleton
 class NotificationManagerImpl @Inject constructor(
+    private val displayNames: DisplayNames,
     private val context: Context,
     private val colors: Colors,
     private val conversationRepo: ConversationRepository,
@@ -210,7 +212,7 @@ class NotificationManagerImpl @Inject constructor(
         val messagingStyle = NotificationCompat.MessagingStyle(me)
         if (conversation.recipients.size >= 2) {
             messagingStyle.isGroupConversation = true
-            messagingStyle.conversationTitle = conversation.getTitle()
+            messagingStyle.conversationTitle = displayNames.of(conversation)
         }
 
         // Add the messages to the notification
@@ -223,7 +225,7 @@ class NotificationManagerImpl @Inject constructor(
                 }
 
                 if(recipient != null)
-                    person.fromRecipient(recipient, context, colors)
+                    person.fromRecipient(recipient, context, colors, displayNames)
             }
 
             val summary = context.localiseSummary(message.getSummary())
@@ -264,7 +266,7 @@ class NotificationManagerImpl @Inject constructor(
             Preferences.NOTIFICATION_PREVIEWS_NAME -> {
                 notification
                         .setLargeIcon(avatar)
-                        .setContentTitle(conversation.getTitle())
+                        .setContentTitle(displayNames.of(conversation))
                         .setContentText(context.resources.getQuantityString(
                                 R.plurals.notification_new_messages, messages.size, messages.size))
             }
@@ -280,7 +282,7 @@ class NotificationManagerImpl @Inject constructor(
         // Add all of the people from this conversation to the notification, so that the system can
         // appropriately bypass DND mode
         conversation.recipients.forEach { recipient ->
-            notification.addPerson(recipient.toPerson(context, colors))
+            notification.addPerson(recipient.toPerson(context, colors, displayNames))
         }
 
         // Offer to copy a one-time / verification code straight from the notification when one is
@@ -465,7 +467,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setContentTitle(context.getString(R.string.notification_message_failed_title))
-                .setContentText(context.getString(R.string.notification_message_failed_text, conversation.getTitle()))
+                .setContentText(context.getString(R.string.notification_message_failed_text, displayNames.of(conversation)))
                 .addAction(resendAction)
                 .setColor(colors.theme(lastRecipient).theme)
                 .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
@@ -536,7 +538,7 @@ class NotificationManagerImpl @Inject constructor(
                 if (getNotificationChannel(threadId) != null) return
                 val conversation = conversationRepo.getConversation(threadId) ?: return
                 val channelId = buildNotificationChannelId(threadId)
-                val title = conversation.getTitle()
+                val title = displayNames.of(conversation)
                 listOf(
                     NotificationChannel(channelId, title, NotificationManager.IMPORTANCE_HIGH).apply {
                         enableLights(true)

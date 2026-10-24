@@ -82,6 +82,7 @@ import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.openmessages.repository.ScheduledMessageRepository
 import io.openmessages.util.ActiveSubscriptionObservable
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.FileUtils
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.extensions.getResourceBytes
@@ -109,6 +110,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ComposeViewModel @Inject constructor(
+    private val displayNames: DisplayNames,
     @Named("query") private val query: String,
     @Named("threadId") private val threadId: Long,
     @Named("addresses") private val addresses: List<String>,
@@ -286,18 +288,8 @@ class ComposeViewModel @Inject constructor(
                     newState { copy(threadId = conversation.id, messages = Pair(conversation, messages)) }
                 }
 
-        // A phone-number title (no saved contact name, no custom conversation name) can optionally
-        // drop the country code to save space in the toolbar, e.g. "+33 6 ..." -> "06 ...".
-        disposables += Observable.combineLatest(conversation, prefs.hideCountryCode.asObservable()) {
-            conversation, hideCountryCode ->
-            val unknownSingleRecipient = conversation.recipients.singleOrNull()?.takeIf { it.contact == null }
-            when {
-                conversation.name.isNotBlank() -> conversation.getTitle()
-                hideCountryCode && unknownSingleRecipient != null ->
-                    phoneNumberUtils.formatNumberNational(unknownSingleRecipient.address)
-                else -> conversation.getTitle()
-            }
-        }
+        disposables += conversation
+                .map(displayNames::of)
                 .distinctUntilChanged()
                 .subscribe { title -> newState { copy(conversationtitle = title) } }
 
@@ -862,8 +854,8 @@ class ComposeViewModel @Inject constructor(
                         .firstOrNull { recipient ->
                             phoneNumberUtils.compare(recipient.address, reaction.senderAddress)
                         }
-                        ?.getDisplayName()
-                        ?: reaction.senderAddress
+                        ?.let(displayNames::of)
+                        ?: displayNames.number(reaction.senderAddress)
                     "${reaction.emoji} $contactName"
                 }
             }

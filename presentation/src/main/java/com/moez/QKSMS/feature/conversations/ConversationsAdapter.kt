@@ -41,11 +41,13 @@ import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.ConversationListItemBinding
 import io.openmessages.model.Conversation
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.PhoneNumberUtils
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
+    private val displayNames: DisplayNames,
     private val colors: Colors,
     private val context: Context,
     private val dateFormatter: DateFormatter,
@@ -121,7 +123,7 @@ class ConversationsAdapter @Inject constructor(
         binding.avatars.recipients = conversation.recipients
         binding.title.collapseEnabled = conversation.recipients.size > 1
         binding.title.text = buildSpannedString {
-            append(conversation.getTitle())
+            append(displayNames.of(conversation))
         }
         binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
 

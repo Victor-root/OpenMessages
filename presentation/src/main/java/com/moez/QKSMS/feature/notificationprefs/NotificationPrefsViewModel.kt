@@ -30,6 +30,7 @@ import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.manager.NotificationManager
 import io.openmessages.repository.ConversationRepository
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
@@ -39,6 +40,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class NotificationPrefsViewModel @Inject constructor(
+    private val displayNames: DisplayNames,
     @Named("threadId") private val threadId: Long,
     private val context: Context,
     private val conversationRepo: ConversationRepository,
@@ -56,7 +58,7 @@ class NotificationPrefsViewModel @Inject constructor(
     init {
         disposables += Flowable.just(threadId)
                 .mapNotNull { threadId -> conversationRepo.getConversation(threadId) }
-                .map { conversation -> conversation.getTitle() }
+                .map(displayNames::of)
                 .subscribeOn(Schedulers.io())
                 .subscribe { title -> newState { copy(conversationTitle = title) } }
 

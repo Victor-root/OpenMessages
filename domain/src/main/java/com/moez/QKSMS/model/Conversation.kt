@@ -58,8 +58,4 @@ data class Conversation(
     val unread: Boolean get() = lastMessage?.read == false
     val me: Boolean get() = lastMessage?.isMe() == true
 
-    fun getTitle(): String {
-        return name.takeIf { it.isNotBlank() } ?: recipients.joinToString { recipient -> recipient.getDisplayName() }
-    }
-
 }

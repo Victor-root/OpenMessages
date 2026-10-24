@@ -29,11 +29,13 @@ import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.ContactChipDetailedBinding
 import io.openmessages.injection.appComponent
 import io.openmessages.model.Recipient
+import io.openmessages.util.DisplayNames
 import javax.inject.Inject
 
 class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var displayNames: DisplayNames
 
     private val binding: ContactChipDetailedBinding
 
@@ -51,8 +53,8 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
     fun setRecipient(recipient: Recipient) {
         binding.avatar.setRecipient(recipient)
-        binding.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
-        binding.info.text = recipient.address
+        binding.name.text = displayNames.of(recipient)
+        binding.info.text = displayNames.number(recipient.address)
 
         colors.theme(recipient).let { theme ->
             binding.card.setBackgroundTint(theme.theme)

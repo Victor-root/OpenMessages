@@ -30,6 +30,7 @@ import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.injection.appComponent
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.PhoneNumberUtils
 import io.openmessages.databinding.BlockedNumbersControllerBinding
 import io.openmessages.databinding.BlockedNumbersAddDialogBinding
@@ -44,8 +45,9 @@ class BlockedNumbersController : QkController<BlockedNumbersControllerBinding, B
     @Inject override lateinit var presenter: BlockedNumbersPresenter
     @Inject lateinit var colors: Colors
     @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
+    @Inject lateinit var displayNames: DisplayNames
 
-    private val adapter = BlockedNumbersAdapter()
+    private val adapter by lazy { BlockedNumbersAdapter(displayNames) }
     private val saveAddressSubject: Subject<String> = PublishSubject.create()
 
     init {
