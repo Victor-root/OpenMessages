@@ -54,6 +54,11 @@ abstract class BaseController<VB : ViewBinding, ViewContract : ControllerView<St
     open fun onViewCreated() {
     }
 
+    override fun onAttach(view: View) {
+        super.onAttach(view)
+        (activity as? BaseActivity)?.extendBehindNavigationBar(view)
+    }
+
     fun setTitle(@StringRes titleId: Int) {
         setTitle(activity?.getString(titleId))
     }

@@ -30,7 +30,10 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.AbsListView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -38,8 +41,13 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.children
+import androidx.core.view.doOnLayout
+import androidx.core.widget.NestedScrollView
+import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
 import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.applyInsetBottomMargin
 import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.applyInsetTop
 import io.openmessages.common.util.extensions.resolveThemeColor
@@ -47,12 +55,6 @@ import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
-
-// Translucent veils painted behind the (otherwise transparent) navigation bar in edge-to-edge, so the
-// gesture pill / 3-button controls stay legible over scrolling content. Light theme uses a lighter,
-// more transparent veil than dark theme.
-private const val NAV_SCRIM_LIGHT = 0x1A000000
-private const val NAV_SCRIM_DARK = 0x4D000000
 
 abstract class BaseActivity : AppCompatActivity() {
     @Inject lateinit var prefs: Preferences
@@ -115,9 +117,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * Single source of truth for the system bars. [barColor] is drawn behind the status bar (the
-     * toolbar / theme color). In edge-to-edge the status bar is transparent and the nav bar carries a
-     * subtle self-painted veil, with icon brightness matched to whatever shows through each bar;
-     * otherwise the bars are painted opaque with [barColor] (the app's original look).
+     * toolbar / theme color). In edge-to-edge both bars are transparent, with icon brightness matched
+     * to whatever shows through each; otherwise they are painted opaque with [barColor] (the app's
+     * original look).
      */
     fun applySystemBars(barColor: Int) {
         systemBarColor = barColor
@@ -129,11 +131,7 @@ abstract class BaseActivity : AppCompatActivity() {
         // icons. Otherwise they sit over the bar colour, like the status icons.
         val lightNavIcons = colors.useDarkSystemBarIcons(
                 if (edgeToEdge) resolveThemeColor(android.R.attr.windowBackground) else barColor)
-        // Our own subtle nav-bar veil in edge-to-edge, lighter in light theme than in dark.
-        val navigationBarColor = when {
-            edgeToEdge -> if (lightNavIcons) NAV_SCRIM_LIGHT else NAV_SCRIM_DARK
-            else -> barColor
-        }
+        val navigationBarColor = if (edgeToEdge) Color.TRANSPARENT else barColor
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             // Painted over the content: the nav bar always, the status bar only in the original
@@ -235,19 +233,70 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /**
+     * Whether, in edge-to-edge, the screen runs on behind the navigation bar, see
+     * [extendBehindNavigationBar]. A screen whose bottom holds something to type into, like a
+     * conversation, keeps clear of it instead.
+     */
+    protected open val extendsBehindNavigationBar: Boolean get() = true
+
+    /** The height of the navigation bar, or of the keyboard when it is taller, from the last insets */
+    private var bottomInset = 0
+
+    /**
      * Applies the system-bar insets. In edge-to-edge the default pushes the toolbar's themed
-     * background behind the status bar and lifts all content above the nav bar / keyboard; screens
-     * whose content should draw behind the nav bar (e.g. the main conversation list) override this.
-     * In the original look the content keeps clear of both bars, which are painted.
+     * background behind the status bar and runs the screen on behind the nav bar, or lifts all of it
+     * above the nav bar / keyboard where it doesn't; screens laid out in their own way (e.g. the main
+     * conversation list) override this. In the original look the content keeps clear of both bars,
+     * which are painted.
      */
     protected open fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
-        val content = findViewById<View>(android.R.id.content)
-        if (isEdgeToEdge()) {
-            toolbar?.applyInsetTop(top)
-            content?.applyInsetPadding(bottom = bottom)
-        } else {
-            content?.applyInsetPadding(top = top, bottom = bottom)
+        val content = findViewById<View>(android.R.id.content) ?: return
+        when {
+            !isEdgeToEdge() -> content.applyInsetPadding(top = top, bottom = bottom)
+            extendsBehindNavigationBar -> {
+                toolbar?.applyInsetTop(top)
+                bottomInset = bottom
+                extendBehindNavigationBar(content)
+            }
+            else -> {
+                toolbar?.applyInsetTop(top)
+                content.applyInsetPadding(bottom = bottom)
+            }
         }
+    }
+
+    /**
+     * In edge-to-edge, lets what [view] holds at the bottom of the screen run on behind the
+     * navigation bar and stay usable: a list scrolls behind it with room left past its last item, a
+     * bar reaches down behind it with its content above, and a view on its own, like a button, is
+     * lifted above it. For views that come after the insets, like a controller's.
+     */
+    fun extendBehindNavigationBar(view: View) {
+        if (!isEdgeToEdge() || !extendsBehindNavigationBar) return
+        val content = findViewById<View>(android.R.id.content) ?: return
+        view.doOnLayout { extendBehindNavigationBar(it, content.height) }
+    }
+
+    private fun extendBehindNavigationBar(view: View, screenBottom: Int) {
+        if (view.visibility == View.GONE) return
+        val handled = view.getTag(R.id.navigationBarInset) != null
+        val position = IntArray(2).also(view::getLocationInWindow)
+        if (!handled && position[1] + view.height < screenBottom) return
+
+        when {
+            view is RecyclerView || view is ScrollView || view is NestedScrollView || view is AbsListView -> {
+                view.clipToPadding = false
+                view.applyInsetPadding(bottom = bottomInset)
+            }
+            // A container filling the screen: what reaches the bottom is inside it
+            view is ViewGroup && view.height >= screenBottom / 2 -> {
+                view.children.forEach { child -> extendBehindNavigationBar(child, screenBottom) }
+                return
+            }
+            view is ViewGroup -> view.applyInsetPadding(bottom = bottomInset)
+            else -> view.applyInsetBottomMargin(bottomInset)
+        }
+        view.setTag(R.id.navigationBarInset, true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
