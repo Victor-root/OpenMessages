@@ -113,6 +113,9 @@ import javax.inject.Inject
 
 class ComposeActivity : ThemedActivity(), ComposeView {
 
+    // The message box sits at the bottom, so the conversation stays clear of the navigation bar
+    override val extendsBehindNavigationBar = false
+
     @Inject lateinit var composeAttachmentAdapter: ComposeAttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var dateFormatter: DateFormatter

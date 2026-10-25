@@ -5,4 +5,6 @@
     <item name="insetBasePadding" type="id" />
     <item name="insetBaseMargin" type="id" />
     <item name="insetBaseHeight" type="id" />
+    <!-- Marks a view BaseActivity.extendBehindNavigationBar has laid out around the navigation bar -->
+    <item name="navigationBarInset" type="id" />
 </resources>
