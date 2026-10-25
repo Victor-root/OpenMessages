@@ -1,1 +1,1 @@
-Avatud lähtekoodiga asendus standardsele Androidi tekstisõnumirakendusele. Varasema QKSMS-rakenduse edasiarendus.
+Avatud lähtekoodiga asendus standardsele Androidi tekstisõnumirakendusele.

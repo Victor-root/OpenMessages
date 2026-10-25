@@ -1,4 +1,4 @@
-Open-source-erstatning for den innebygde SMS-appen på Android. En gjenoppliving av QKSMS.
+Open-source-erstatning for den innebygde SMS-appen på Android.
 ## Funksjoner
 - Planlagte meldinger
 - Backup av meldinger

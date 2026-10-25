@@ -1,4 +1,4 @@
-Nyílt forráskódú alternatíva az Android alapértelmezett SMS-alkalmazása helyett. A QKSMS újjáéledése.
+Nyílt forráskódú alternatíva az Android alapértelmezett SMS-alkalmazása helyett.
 ## Funkciók
 - Üzenetek ütemezése
 - Üzenetek biztonsági mentése

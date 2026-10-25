@@ -20,8 +20,8 @@ F2:2B:D7:B4:63:D8:D8:9C:A1:AC:3B:6C:41:DB:0B:25:AA:C7:7B:86:24:C9:70:E4:52:81:2D
 
 ## ✨ What's different from upstream
 
-Open Messages is a rebrand of QUIK (itself a fork of QKSMS), package `io.openmessages`, with UX,
-theming and privacy improvements layered on top. The highlights:
+Open Messages, package `io.openmessages`, brings UX, theming and privacy improvements. The
+highlights:
 
 ### 🛡️ Privacy-first spam & phishing blocking
 * On-device blocking in two clear sections: **Integrated** (no third-party app) and **External apps**

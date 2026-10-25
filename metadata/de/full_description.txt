@@ -1,4 +1,4 @@
-Open-Source-Ersatz für die Standard-SMS-App auf Android. Eine Neuauflage von QKSMS.
+Open-Source-Ersatz für die Standard-SMS-App auf Android.
 ## Funktionen
 - Geplante Nachrichten
 - Nachrichten-Backup

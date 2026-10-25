@@ -1,4 +1,4 @@
-Open source náhrada za standardní aplikaci SMS v systému Android. Oživení pomocí aplikace QKSMS.
+Open source náhrada za standardní aplikaci SMS v systému Android.
 ## Funkce
 - Naplánované zprávy
 - Zálohování zpráv

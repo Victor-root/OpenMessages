@@ -1,4 +1,4 @@
-Remplacement open-source de l'application SMS de base sur Android. Une résurrection du projet QKSMS.
+Remplacement open-source de l'application SMS de base sur Android.
 ## Fonctionnalités
 - Messages programmés dans le temps
 - Sauvegarde des messages
