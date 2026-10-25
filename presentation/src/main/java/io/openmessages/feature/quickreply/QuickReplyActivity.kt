@@ -1,0 +1,189 @@
+/*
+ * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ *
+ * This file is part of Open Messages.
+ *
+ * Open Messages is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Open Messages is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package io.openmessages.feature.quickreply
+
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnTouchListener
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.jakewharton.rxbinding4.view.clicks
+import com.jakewharton.rxbinding4.widget.textChanges
+import dagger.android.AndroidInjection
+import io.openmessages.R
+import io.openmessages.common.ViewModelFactory
+import io.openmessages.common.base.ThemedActivity
+import io.openmessages.common.util.extensions.autoScrollToStart
+import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.extensions.showKeyboard
+import io.openmessages.common.widget.AppEditText
+import io.openmessages.databinding.QuickReplyActivityBinding
+import io.openmessages.feature.compose.MessagesAdapter
+import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.rxjava3.subjects.Subject
+import javax.inject.Inject
+
+class QuickReplyActivity : ThemedActivity(), QuickReplyView {
+
+    // Floating dialog window: keep the platform's default bars, no edge-to-edge.
+    override val supportsEdgeToEdge get() = false
+
+    private lateinit var binding: QuickReplyActivityBinding
+
+    @Inject lateinit var adapter: MessagesAdapter
+    @Inject lateinit var viewModelFactory: ViewModelFactory
+
+    override val menuItemIntent: Subject<Int> = PublishSubject.create()
+    override val textChangedIntent by lazy { binding.message.textChanges() }
+    override val changeSimIntent by lazy { binding.sim.clicks() }
+    override val sendIntent by lazy { binding.send.clicks() }
+
+    private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[QuickReplyViewModel::class.java] }
+
+    private val speechResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode != Activity.RESULT_OK)
+            return@registerForActivityResult
+
+        // check returned results are good
+        val match = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+        if ((match === null) || (match.size < 1) || (match[0].isNullOrEmpty()))
+            return@registerForActivityResult
+
+        // get the edit text view
+        val message = findViewById<AppEditText>(R.id.message)
+        if (message === null)
+            return@registerForActivityResult
+
+        // populate message box with data returned by STT, set cursor to end, and focus
+        message.setText(match[0])
+        message.setSelection(message.text?.length ?: 0)
+        message.requestFocus()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
+
+        setFinishOnTouchOutside(prefs.quickReplyTapDismiss.get())
+        binding = QuickReplyActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        window.setBackgroundDrawable(null)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        viewModel.bindView(this)
+
+        binding.toolbar.clipToOutline = true
+
+        binding.messages.adapter = adapter
+        binding.messages.adapter?.autoScrollToStart(binding.messages)
+        binding.messages.adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() = binding.messages.scrollToPosition(adapter.itemCount - 1)
+        })
+
+        binding.message.setOnTouchListener(object : OnTouchListener {
+            private val gestureDetector =
+                GestureDetector(this@QuickReplyActivity, object : SimpleOnGestureListener() {
+                    override fun onDoubleTap(e: MotionEvent): Boolean {
+                        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                            .putExtra(
+                                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                            )
+                            // include if want a custom message that the STT can (optionally) display   .putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak your message")
+                        speechResultLauncher.launch(speechRecognizerIntent)
+                        return true
+                    }
+
+                    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                        binding.message.showKeyboard()
+                        return true
+                    }
+
+                    override fun onSingleTapUp(e: MotionEvent): Boolean {
+                        return true     // don't show soft keyboard on this event
+                    }
+                })
+
+            override fun onTouch(v: View, e: MotionEvent): Boolean {
+                return gestureDetector.onTouchEvent(e)
+            }
+        })
+    }
+
+    override fun render(state: QuickReplyState) {
+        if (state.hasError) {
+            finish()
+        }
+
+        threadId.onNext(state.threadId)
+
+        title = state.title
+
+        binding.toolbar.menu.findItem(R.id.expand)?.isVisible = !state.expanded
+        binding.toolbar.menu.findItem(R.id.collapse)?.isVisible = state.expanded
+
+        state.data?.let { (conversation, messages) ->
+            adapter.conversation = conversation
+            adapter.data = messages
+        }
+
+        binding.counter.text = state.remaining
+        binding.counter.setVisible(binding.counter.text.isNotBlank())
+
+        binding.sim.setVisible(state.subscription != null)
+        binding.sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
+        binding.simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
+
+        binding.send.isEnabled = state.canSend
+        binding.send.imageAlpha = if (state.canSend) 255 else 128
+    }
+
+    override fun setDraft(draft: String) {
+        binding.message.setText(draft)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.quick_reply, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        menuItemIntent.onNext(item.itemId)
+        return true
+    }
+
+    override fun getActivityThemeRes(black: Boolean) = when {
+        black -> R.style.AppThemeDialog_Black
+        else -> R.style.AppThemeDialog
+    }
+
+}

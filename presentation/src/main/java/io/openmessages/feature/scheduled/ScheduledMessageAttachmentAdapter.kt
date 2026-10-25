@@ -24,8 +24,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.extensions.getName
 import io.openmessages.feature.extensions.LoadBestIconIntoImageView
 import io.openmessages.feature.extensions.loadBestIconIntoImageView
@@ -35,14 +35,14 @@ import javax.inject.Inject
 
 class ScheduledMessageAttachmentAdapter @Inject constructor(
     private val context: Context
-) : QkAdapter<Uri, QkBindingViewHolder<ScheduledMessageImageListItemBinding>>() {
+) : BaseAdapter<Uri, BindingViewHolder<ScheduledMessageImageListItemBinding>>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ScheduledMessageImageListItemBinding> =
-        QkBindingViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ScheduledMessageImageListItemBinding> =
+        BindingViewHolder(
             ScheduledMessageImageListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ScheduledMessageImageListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ScheduledMessageImageListItemBinding>, position: Int) {
         val uri = getItem(position)
 
         // set best image and text to use for icon

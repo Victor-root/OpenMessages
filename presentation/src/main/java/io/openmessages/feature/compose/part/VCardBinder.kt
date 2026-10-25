@@ -21,7 +21,7 @@ package io.openmessages.feature.compose.part
 import android.content.Context
 import androidx.core.view.isVisible
 import io.openmessages.R
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.getDisplayName
 import io.openmessages.common.util.extensions.resolveThemeColor
@@ -48,7 +48,7 @@ class VCardBinder @Inject constructor(colors: Colors, private val context: Conte
     override fun canBindPart(part: MmsPart) = part.isVCard()
 
     override fun bindPart(
-        holder: QkViewHolder,
+        holder: BaseViewHolder,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,

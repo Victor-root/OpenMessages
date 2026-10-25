@@ -24,11 +24,11 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import dagger.android.AndroidInjection
 import io.openmessages.R
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.handleBackThrough
 import io.openmessages.databinding.ContainerActivityBinding
 
-class BlockingActivity : QkThemedActivity() {
+class BlockingActivity : ThemedActivity() {
 
     private lateinit var router: Router
     private lateinit var binding: ContainerActivityBinding

@@ -25,7 +25,7 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.manager.NotificationManager
@@ -47,7 +47,7 @@ class NotificationPrefsViewModel @Inject constructor(
     private val navigator: Navigator,
     private val notificationManager: NotificationManager,
     private val prefs: Preferences
-) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
+) : BaseViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
     private val notifications = prefs.notifications(threadId)
     private val previews = prefs.notificationPreviews(threadId)
@@ -112,11 +112,11 @@ class NotificationPrefsViewModel @Inject constructor(
                 }
                 .subscribe { title -> newState { copy(ringtoneName = title) } }
 
-        disposables += prefs.qkreply.asObservable()
-                .subscribe { enabled -> newState { copy(qkReplyEnabled = enabled) } }
+        disposables += prefs.quickReply.asObservable()
+                .subscribe { enabled -> newState { copy(quickReplyEnabled = enabled) } }
 
-        disposables += prefs.qkreplyTapDismiss.asObservable()
-                .subscribe { enabled -> newState { copy(qkReplyTapDismiss = enabled) } }
+        disposables += prefs.quickReplyTapDismiss.asObservable()
+                .subscribe { enabled -> newState { copy(quickReplyTapDismiss = enabled) } }
     }
 
     override fun bindView(view: NotificationPrefsView) {
@@ -157,9 +157,9 @@ class NotificationPrefsViewModel @Inject constructor(
 
                         R.id.action3 -> view.showActionDialog(prefs.notifAction3.get())
 
-                        R.id.qkreply -> prefs.qkreply.set(!prefs.qkreply.get())
+                        R.id.quickReply -> prefs.quickReply.set(!prefs.quickReply.get())
 
-                        R.id.qkreplyTapDismiss -> prefs.qkreplyTapDismiss.set(!prefs.qkreplyTapDismiss.get())
+                        R.id.quickReplyTapDismiss -> prefs.quickReplyTapDismiss.set(!prefs.quickReplyTapDismiss.get())
                     }
                 }
 

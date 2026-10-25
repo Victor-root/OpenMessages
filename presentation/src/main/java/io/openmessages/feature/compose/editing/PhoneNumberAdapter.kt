@@ -21,22 +21,22 @@ package io.openmessages.feature.compose.editing
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.databinding.ContactNumberListItemBinding
 import io.openmessages.model.PhoneNumber
 import io.openmessages.util.DisplayNames
 
 class PhoneNumberAdapter(
     private val displayNames: DisplayNames
-) : QkAdapter<PhoneNumber, QkBindingViewHolder<ContactNumberListItemBinding>>() {
+) : BaseAdapter<PhoneNumber, BindingViewHolder<ContactNumberListItemBinding>>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ContactNumberListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ContactNumberListItemBinding> {
         val binding = ContactNumberListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding)
+        return BindingViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ContactNumberListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ContactNumberListItemBinding>, position: Int) {
         val number = getItem(position)
 
         holder.binding.address.text = displayNames.number(number.address)

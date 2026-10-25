@@ -58,7 +58,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -82,7 +82,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -106,7 +106,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -130,7 +130,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -160,7 +160,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -184,7 +184,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -208,7 +208,7 @@
                 android:backgroundTint="@color/tools_theme"
                 app:tint="@color/textPrimaryDark" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"

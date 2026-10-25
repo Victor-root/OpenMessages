@@ -21,15 +21,15 @@ package io.openmessages.feature.compose
 import android.net.Uri
 import android.view.MenuItem
 import android.view.View
-import io.openmessages.common.QkMediaPlayer
-import io.openmessages.common.base.QkView
+import io.openmessages.common.AppMediaPlayer
+import io.openmessages.common.base.BaseView
 import io.openmessages.common.widget.MicInputCloudView
 import io.openmessages.model.Attachment
 import io.openmessages.model.Recipient
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.Subject
 
-interface ComposeView : QkView<ComposeState> {
+interface ComposeView : BaseView<ComposeState> {
 
     companion object {
         const val CAMERA_DESTINATION_KEY = "camera_destination"
@@ -84,8 +84,8 @@ interface ComposeView : QkView<ComposeState> {
     val recordAnAudioMessage: Observable<Unit>
     val recordAudioAbort: Observable<Unit>
     val recordAudioAttach: Observable<Unit>
-    val recordAudioPlayerPlayPause: Observable<QkMediaPlayer.PlayingState>
-    val recordAudioPlayerConfigUI: Subject<QkMediaPlayer.PlayingState>
+    val recordAudioPlayerPlayPause: Observable<AppMediaPlayer.PlayingState>
+    val recordAudioPlayerConfigUI: Subject<AppMediaPlayer.PlayingState>
     val recordAudioPlayerVisible: Subject<Boolean>
     val recordAudioMsgRecordVisible: Subject<Boolean>
     val recordAudioRecord: Subject<MicInputCloudView.ViewState>

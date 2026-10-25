@@ -4,7 +4,7 @@ import android.content.Context
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.interactor.DeduplicateMessages
 import io.openmessages.interactor.DeleteOldMessages
 import io.openmessages.repository.MessageRepository
@@ -24,7 +24,7 @@ class MessageUtilsPresenter @Inject constructor(
     private val prefs: Preferences,
     private val deleteOldMessages: DeleteOldMessages,
     private val messageRepo: MessageRepository
-) : QkPresenter<MessageUtilsView, MessageUtilsState>(MessageUtilsState()) {
+) : BasePresenter<MessageUtilsView, MessageUtilsState>(MessageUtilsState()) {
     init {
         disposables += messageRepo.deduplicationProgress
             .sample(16, TimeUnit.MILLISECONDS)

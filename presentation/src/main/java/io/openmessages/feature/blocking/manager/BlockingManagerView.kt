@@ -1,13 +1,13 @@
 package io.openmessages.feature.blocking.manager
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-interface BlockingManagerView : QkViewContract<BlockingManagerState> {
+interface BlockingManagerView : ControllerView<BlockingManagerState> {
 
     fun activityResumed(): Observable<*>
-    fun qksmsClicked(): Observable<*>
+    fun builtInClicked(): Observable<*>
     fun callBlockerClicked(): Observable<*>
     fun callControlClicked(): Observable<*>
     fun siaClicked(): Observable<*>

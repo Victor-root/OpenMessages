@@ -19,13 +19,13 @@
 package io.openmessages.feature.backup
 
 import android.net.Uri
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.openmessages.model.BackupCategory
 import io.openmessages.model.BackupFolder
 import io.openmessages.model.BackupItem
 import io.reactivex.rxjava3.core.Observable
 
-interface BackupView : QkViewContract<BackupState> {
+interface BackupView : ControllerView<BackupState> {
     fun setBackupLocationClicks(): Observable<*>
     fun autoBackupClicks(): Observable<*>
     fun zipClicks(): Observable<*>

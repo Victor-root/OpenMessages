@@ -26,8 +26,8 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
-import io.openmessages.common.QkDialog
-import io.openmessages.common.base.QkController
+import io.openmessages.common.MenuDialog
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -39,13 +39,13 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class SwipeActionsController : QkController<SwipeActionsControllerBinding, SwipeActionsView, SwipeActionsState, SwipeActionsPresenter>(), SwipeActionsView {
+class SwipeActionsController : BaseController<SwipeActionsControllerBinding, SwipeActionsView, SwipeActionsState, SwipeActionsPresenter>(), SwipeActionsView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): SwipeActionsControllerBinding =
         SwipeActionsControllerBinding.inflate(inflater, container, false)
 
     @Inject override lateinit var presenter: SwipeActionsPresenter
-    @Inject lateinit var actionsDialog: QkDialog
+    @Inject lateinit var actionsDialog: MenuDialog
     @Inject lateinit var colors: Colors
 
     /**

@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">दिखावट</string>
     <string name="settings_category_general">सामान्य</string>
-    <string name="settings_category_qkreply">QK उत्तर</string>
+    <string name="settings_category_quick_reply">त्वरित उत्तर</string>
     <string name="settings_theme_title">थीम</string>
     <string name="settings_night_title">रात्रि अंदाज़</string>
     <string name="settings_black_title">शुद्ध काली रात अंदाज़</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">कंपन</string>
     <string name="settings_ringtone_title">ध्वनियाँ</string>
     <string name="settings_ringtone_none">कुछ नहीं</string>
-    <string name="settings_qkreply_title">QK जवाब</string>
-    <string name="settings_qkreply_summary">नए संदेशों के लिए पॉपअप</string>
-    <string name="settings_qkreply_tap_dismiss_title">खारिज करने के लिए टैप करें</string>
-    <string name="settings_qkreply_tap_dismiss_summary">पॉपअप को बंद करने के लिए उसके बाहर टैप करें</string>
+    <string name="settings_quick_reply_title">त्वरित उत्तर</string>
+    <string name="settings_quick_reply_summary">नए संदेशों के लिए पॉपअप</string>
+    <string name="settings_quick_reply_tap_dismiss_title">खारिज करने के लिए टैप करें</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">पॉपअप को बंद करने के लिए उसके बाहर टैप करें</string>
     <string name="settings_delayed_title">विलंबित भेजें</string>
     <string name="settings_swipe_actions">स्वाइप क्रिया</string>
     <string name="settings_swipe_actions_summary">बातचीत के लिए स्वाइप कार्रवाइयां कॉन्फ़िगर करें</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">आने वाले संदेशों को छिपाने के बजाय अवरुद्ध प्रेषकों से ड्रॉप करें</string>
     <string name="blocking_conversations">अवरुद्ध बातचीत</string>
     <string name="blocking_manager_title">अवरोध प्रबंधक</string>
-    <string name="blocking_manager_qksms_summary">Open Messages में अंतर्निहित अवरोधन कार्यक्षमता</string>
+    <string name="blocking_manager_built_in_summary">Open Messages में अंतर्निहित अवरोधन कार्यक्षमता</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">कॉपीराइट</string>
     <string name="widget_loading">तैयार हो रहा है…</string>
     <string name="widget_more">अधिक वार्तालाप देखें</string>
-    <string name="qkreply_menu_read">पढ़ा हुआ चिह्नित करें</string>
-    <string name="qkreply_menu_call">कॉल</string>
-    <string name="qkreply_menu_delete">मिटायें</string>
-    <string name="qkreply_menu_expand">अधिक दिखाएं</string>
-    <string name="qkreply_menu_collapse">कम दिखाएं</string>
-    <string name="qkreply_menu_view">वार्तालाप खोलें</string>
+    <string name="quick_reply_menu_read">पढ़ा हुआ चिह्नित करें</string>
+    <string name="quick_reply_menu_call">कॉल</string>
+    <string name="quick_reply_menu_delete">मिटायें</string>
+    <string name="quick_reply_menu_expand">अधिक दिखाएं</string>
+    <string name="quick_reply_menu_collapse">कम दिखाएं</string>
+    <string name="quick_reply_menu_view">वार्तालाप खोलें</string>
     <string name="theme_material">सामग्री</string>
     <string name="theme_hex">हेक्स रंग</string>
     <string name="theme_apply">लागू करें</string>
@@ -358,7 +358,7 @@
         <item>2000केबी</item>
         <item>कोई संपीड़न नहीं</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>ठीक</item>
         <item>एक क्षण दें</item>
         <item>रास्ते में हूं</item>

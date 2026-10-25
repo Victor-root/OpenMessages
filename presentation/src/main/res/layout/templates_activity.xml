@@ -19,7 +19,7 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                         android:src="@drawable/ic_clipboard_text"
                         app:tint="?android:attr/textColorSecondary" />
 
-                    <io.openmessages.common.widget.QkTextView
+                    <io.openmessages.common.widget.AppTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"

@@ -24,8 +24,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.extensions.getDisplayName
 import io.openmessages.databinding.AttachmentContactListItemBinding
 import io.openmessages.databinding.AttachmentFileListItemBinding
@@ -41,7 +41,7 @@ import javax.inject.Inject
 
 class ComposeAttachmentAdapter @Inject constructor(
     private val context: Context
-) : QkAdapter<Attachment, QkViewHolder>() {
+) : BaseAdapter<Attachment, BaseViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_FILE = 0
@@ -50,7 +50,7 @@ class ComposeAttachmentAdapter @Inject constructor(
 
     val attachmentDeleted: Subject<Attachment> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
         val view = if (viewType == VIEW_TYPE_CONTACT) {
@@ -59,7 +59,7 @@ class ComposeAttachmentAdapter @Inject constructor(
             AttachmentFileListItemBinding.inflate(inflater, parent, false).root
         }
 
-        return QkViewHolder(view).apply {
+        return BaseViewHolder(view).apply {
             view.setOnClickListener {
                 val attachment = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 attachmentDeleted.onNext(attachment)
@@ -67,7 +67,7 @@ class ComposeAttachmentAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val attachment = getItem(position)
 
         if (attachment.isVCard(context)) {

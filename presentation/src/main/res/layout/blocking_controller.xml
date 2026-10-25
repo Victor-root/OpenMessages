@@ -35,11 +35,11 @@
 
         <!-- Integrated blocking: Open Messages does the blocking itself, offline -->
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/blocking_category_integrated" />
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/TextSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
 
         <!-- External apps: delegate blocking to another installed app (single choice) -->
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/blocking_category_external_apps" />
 

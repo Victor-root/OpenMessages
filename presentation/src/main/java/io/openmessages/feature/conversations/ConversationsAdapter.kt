@@ -30,8 +30,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkBindingViewHolder
-import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.BindingViewHolder
+import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.isPictureSummary
@@ -53,7 +53,7 @@ class ConversationsAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkAdapter<Conversation, QkBindingViewHolder<ConversationListItemBinding>>() {
+) : BaseAdapter<Conversation, BindingViewHolder<ConversationListItemBinding>>() {
     private val disposables = CompositeDisposable()
 
     var hasScheduledConversation: Set<Long> = emptySet()
@@ -68,7 +68,7 @@ class ConversationsAdapter @Inject constructor(
         setHasStableIds(true)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ConversationListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ConversationListItemBinding> {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ConversationListItemBinding.inflate(layoutInflater, parent, false)
 
@@ -87,7 +87,7 @@ class ConversationsAdapter @Inject constructor(
             binding.date.setTextColor(textColorPrimary)
         }
 
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val conversation = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
@@ -104,7 +104,7 @@ class ConversationsAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ConversationListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ConversationListItemBinding>, position: Int) {
         val conversation = getItemOrNull(position) ?: return
         val binding = holder.binding
 

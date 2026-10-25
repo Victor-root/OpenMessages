@@ -22,8 +22,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkBindingViewHolder
-import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.BindingViewHolder
+import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -45,7 +45,7 @@ class ScheduledMessagesAdapter @Inject constructor(
     private val context: Context,
     private val colors: Colors,
     private val dateFormatter: DateFormatter
-) : QkAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageBubbleBinding>>() {
+) : BaseAdapter<ScheduledMessage, BindingViewHolder<ScheduledMessageBubbleBinding>>() {
 
     /** Emits the id of the scheduled message tapped, so the screen can offer to act on it. */
     val clicks: Subject<Long> = PublishSubject.create()
@@ -53,9 +53,9 @@ class ScheduledMessagesAdapter @Inject constructor(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): QkBindingViewHolder<ScheduledMessageBubbleBinding> {
+    ): BindingViewHolder<ScheduledMessageBubbleBinding> {
         val binding = ScheduledMessageBubbleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 clicks.onNext(message.id)
@@ -63,7 +63,7 @@ class ScheduledMessagesAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ScheduledMessageBubbleBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ScheduledMessageBubbleBinding>, position: Int) {
         val message = getItemOrNull(position) ?: return
 
         // Outgoing colours: a scheduled message is always one of the user's own.

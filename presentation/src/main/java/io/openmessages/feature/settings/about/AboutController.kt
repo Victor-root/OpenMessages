@@ -24,14 +24,14 @@ import android.view.ViewGroup
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.BuildConfig
 import io.openmessages.R
-import io.openmessages.common.base.QkController
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.widget.PreferenceView
 import io.openmessages.databinding.AboutControllerBinding
 import io.openmessages.injection.appComponent
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
-class AboutController : QkController<AboutControllerBinding, AboutView, Unit, AboutPresenter>(), AboutView {
+class AboutController : BaseController<AboutControllerBinding, AboutView, Unit, AboutPresenter>(), AboutView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): AboutControllerBinding =
         AboutControllerBinding.inflate(inflater, container, false)

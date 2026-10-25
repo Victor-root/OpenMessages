@@ -20,7 +20,7 @@ package io.openmessages.feature.blocking.numbers
 
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.interactor.MarkUnblocked
 import io.openmessages.repository.BlockingRepository
 import io.openmessages.repository.ConversationRepository
@@ -32,7 +32,7 @@ class BlockedNumbersPresenter @Inject constructor(
     private val blockingRepo: BlockingRepository,
     private val conversationRepo: ConversationRepository,
     private val markUnblocked: MarkUnblocked
-) : QkPresenter<BlockedNumbersView, BlockedNumbersState>(BlockedNumbersState()) {
+) : BasePresenter<BlockedNumbersView, BlockedNumbersState>(BlockedNumbersState()) {
 
     init {
         disposables += blockingRepo.getBlockedNumbers()

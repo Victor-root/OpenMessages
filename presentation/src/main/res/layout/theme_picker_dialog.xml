@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <io.openmessages.common.widget.QkTextView
+                    <io.openmessages.common.widget.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -85,7 +85,7 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <io.openmessages.common.widget.QkTextView
+                    <io.openmessages.common.widget.AppTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -138,7 +138,7 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

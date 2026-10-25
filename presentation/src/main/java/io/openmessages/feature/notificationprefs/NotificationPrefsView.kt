@@ -19,12 +19,12 @@
 package io.openmessages.feature.notificationprefs
 
 import android.net.Uri
-import io.openmessages.common.base.QkView
+import io.openmessages.common.base.BaseView
 import io.openmessages.common.widget.PreferenceView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.Subject
 
-interface NotificationPrefsView : QkView<NotificationPrefsState> {
+interface NotificationPrefsView : BaseView<NotificationPrefsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
     val previewModeSelectedIntent: Subject<Int>

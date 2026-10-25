@@ -184,7 +184,7 @@
     </string-array>
     <string name="settings_category_appearance">外観</string>
     <string name="settings_category_general">全般</string>
-    <string name="settings_category_qkreply">Quick Reply</string>
+    <string name="settings_category_quick_reply">Quick Reply</string>
     <string name="settings_theme_title">テーマ</string>
     <string name="settings_night_title">夜間モード</string>
     <string name="settings_black_title">ピュアブラック夜間モード</string>
@@ -205,10 +205,10 @@
     <string name="settings_vibration_title">バイブレーション</string>
     <string name="settings_ringtone_title">音</string>
     <string name="settings_ringtone_none">なし</string>
-    <string name="settings_qkreply_title">Quick Reply</string>
-    <string name="settings_qkreply_summary">新しいメッセージをポップアップ</string>
-    <string name="settings_qkreply_tap_dismiss_title">タップして閉じる</string>
-    <string name="settings_qkreply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
+    <string name="settings_quick_reply_title">Quick Reply</string>
+    <string name="settings_quick_reply_summary">新しいメッセージをポップアップ</string>
+    <string name="settings_quick_reply_tap_dismiss_title">タップして閉じる</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
     <string name="settings_delayed_title">遅延送信</string>
     <string name="settings_swipe_actions">スワイプアクション</string>
     <string name="settings_swipe_actions_summary">会話のスワイプアクションを設定</string>
@@ -256,7 +256,7 @@
     <string name="blocking_drop_summary">ブロックした送信者からの受信メッセージを非表示にする代わりにドロップします</string>
     <string name="blocking_conversations">ブロックした会話</string>
     <string name="blocking_manager_title">ブロッキングマネージャー</string>
-    <string name="blocking_manager_qksms_summary">Open Messages の内蔵ブロック機能</string>
+    <string name="blocking_manager_built_in_summary">Open Messages の内蔵ブロック機能</string>
     <string name="blocking_manager_call_blocker_summary">ブラックリストにより迷惑メッセージ、番号、不明な通話をブロック</string>
     <string name="blocking_manager_call_control_summary">1 か所で便利に通話とメッセージを自動的にフィルタリングします! Community IQ™を使用すると、コミュニティで知られているスパマーからの不要なメッセージを防ぐことができます</string>
     <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルターします</string>
@@ -288,12 +288,12 @@
     <string name="about_copyright_title">著作権</string>
     <string name="widget_loading">読み込み中...</string>
     <string name="widget_more">さらに会話を表示</string>
-    <string name="qkreply_menu_read">既読にする</string>
-    <string name="qkreply_menu_call">通話</string>
-    <string name="qkreply_menu_delete">削除</string>
-    <string name="qkreply_menu_expand">表示を増やす</string>
-    <string name="qkreply_menu_collapse">表示を減らす</string>
-    <string name="qkreply_menu_view">会話を開く</string>
+    <string name="quick_reply_menu_read">既読にする</string>
+    <string name="quick_reply_menu_call">通話</string>
+    <string name="quick_reply_menu_delete">削除</string>
+    <string name="quick_reply_menu_expand">表示を増やす</string>
+    <string name="quick_reply_menu_collapse">表示を減らす</string>
+    <string name="quick_reply_menu_view">会話を開く</string>
     <string name="theme_material">マテリアル</string>
     <string name="theme_hex">16 進数</string>
     <string name="theme_apply">適用</string>
@@ -353,7 +353,7 @@
         <item>2000KB</item>
         <item>圧縮なし</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>OK</item>
         <item>ちょっと待って</item>
         <item>今、途中です</item>

@@ -18,10 +18,10 @@
  */
 package io.openmessages.feature.scheduled
 
-import io.openmessages.common.base.QkView
+import io.openmessages.common.base.BaseView
 import io.reactivex.rxjava3.core.Observable
 
-interface ScheduledView : QkView<ScheduledState> {
+interface ScheduledView : BaseView<ScheduledState> {
 
     val composeIntent: Observable<*>
     val messagesSelectedIntent: Observable<List<Long>>

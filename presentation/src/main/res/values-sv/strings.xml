@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">Utseende</string>
     <string name="settings_category_general">Generellt</string>
-    <string name="settings_category_qkreply">QK svar</string>
+    <string name="settings_category_quick_reply">Snabbsvar</string>
     <string name="settings_theme_title">Tema</string>
     <string name="settings_night_title">Nattläge</string>
     <string name="settings_black_title">Svart nattläge</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Ljud</string>
     <string name="settings_ringtone_none">Ingen</string>
-    <string name="settings_qkreply_title">QK-svar</string>
-    <string name="settings_qkreply_summary">Popup för nya meddelanden</string>
-    <string name="settings_qkreply_tap_dismiss_title">Tryck för att avfärda</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Tryck var som helst utanför popupen för att stänga den</string>
+    <string name="settings_quick_reply_title">Snabbsvar</string>
+    <string name="settings_quick_reply_summary">Popup för nya meddelanden</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Tryck för att avfärda</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Tryck var som helst utanför popupen för att stänga den</string>
     <string name="settings_delayed_title">Fördröj skickande av meddelanden</string>
     <string name="settings_swipe_actions">Svepåtgärder</string>
     <string name="settings_swipe_actions_summary">Ställ in svep-åtgärder för konversationer</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">Avvisa inkommande meddelanden från blockerade avsändare istället för att dölja dem</string>
     <string name="blocking_conversations">Blockerade konversationer</string>
     <string name="blocking_manager_title">Blockerings-hanterare</string>
-    <string name="blocking_manager_qksms_summary">Inbyggd blockeringsfunktion i Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Inbyggd blockeringsfunktion i Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blockera spam, nummer &amp; okända samtal med svartlista &amp; schema</string>
     <string name="blocking_manager_call_control_summary">Filtrera automatiskt dina samtal och meddelanden på ett bekvämt ställe! Med Community IQ™ kan du förhindra oönskade meddelanden från gemenskapens kända spammare</string>
     <string name="blocking_manager_sia_summary">Filtrera automatiskt meddelanden från oönskade nummer genom att använda appen \"Borde jag svara\"</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">Kopieringsskydd</string>
     <string name="widget_loading">Laddar…</string>
     <string name="widget_more">Visa fler konversationer</string>
-    <string name="qkreply_menu_read">Markera som läst</string>
-    <string name="qkreply_menu_call">Ring</string>
-    <string name="qkreply_menu_delete">Ta bort</string>
-    <string name="qkreply_menu_expand">Visa mer</string>
-    <string name="qkreply_menu_collapse">Visa färre</string>
-    <string name="qkreply_menu_view">Öppna konversation</string>
+    <string name="quick_reply_menu_read">Markera som läst</string>
+    <string name="quick_reply_menu_call">Ring</string>
+    <string name="quick_reply_menu_delete">Ta bort</string>
+    <string name="quick_reply_menu_expand">Visa mer</string>
+    <string name="quick_reply_menu_collapse">Visa färre</string>
+    <string name="quick_reply_menu_view">Öppna konversation</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Verkställ</string>
@@ -358,7 +358,7 @@
         <item>2000KB</item>
         <item>Ingen komprimering</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Okej</item>
         <item>Ett ögonblick</item>
         <item>Jag är på väg</item>

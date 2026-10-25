@@ -7,8 +7,8 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
@@ -26,7 +26,7 @@ class ConversationInfoAdapter @Inject constructor(
     private val displayNames: DisplayNames,
     private val context: Context,
     private val colors: Colors
-) : QkAdapter<ConversationInfoItem, QkViewHolder>() {
+) : BaseAdapter<ConversationInfoItem, BaseViewHolder>() {
 
     val recipientClicks: Subject<Long> = PublishSubject.create()
     val recipientLongClicks: Subject<Long> = PublishSubject.create()
@@ -39,12 +39,12 @@ class ConversationInfoAdapter @Inject constructor(
     val deleteClicks: Subject<Unit> = PublishSubject.create()
     val mediaClicks: Subject<Long> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             0 -> {
                 val binding = ConversationRecipientListItemBinding.inflate(inflater, parent, false)
-                QkViewHolder(binding.root).apply {
+                BaseViewHolder(binding.root).apply {
                     itemView.setOnClickListener {
                         val item = getItemOrNull(bindingAdapterPosition) as? ConversationInfoRecipient
                         item?.value?.id?.run(recipientClicks::onNext)
@@ -65,7 +65,7 @@ class ConversationInfoAdapter @Inject constructor(
 
             1 -> {
                 val binding = ConversationInfoSettingsBinding.inflate(inflater, parent, false)
-                QkViewHolder(binding.root).apply {
+                BaseViewHolder(binding.root).apply {
                     binding.groupName.clicks().subscribe(nameClicks)
                     binding.notifications.clicks().subscribe(notificationClicks)
                     binding.markUnread.clicks().subscribe(markUnreadClicks)
@@ -77,7 +77,7 @@ class ConversationInfoAdapter @Inject constructor(
 
             2 -> {
                 val binding = ConversationMediaListItemBinding.inflate(inflater, parent, false)
-                QkViewHolder(binding.root).apply {
+                BaseViewHolder(binding.root).apply {
                     itemView.setOnClickListener {
                         val item = getItemOrNull(bindingAdapterPosition) as? ConversationInfoMedia
                         item?.value?.id?.run(mediaClicks::onNext)
@@ -89,7 +89,7 @@ class ConversationInfoAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (val item = getItem(position)) {
             is ConversationInfoRecipient -> {
                 val binding = ConversationRecipientListItemBinding.bind(holder.itemView)

@@ -25,7 +25,7 @@ import kotlin.math.ceil
 class TightTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
-) : QkTextView(context, attrs) {
+) : AppTextView(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)

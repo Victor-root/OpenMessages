@@ -18,11 +18,11 @@
  */
 package io.openmessages.feature.blocking.filters
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.openmessages.model.MessageContentFilterData
 import io.reactivex.rxjava3.core.Observable
 
-interface MessageContentFiltersView : QkViewContract<MessageContentFiltersState> {
+interface MessageContentFiltersView : ControllerView<MessageContentFiltersState> {
 
     fun removeFilter(): Observable<Long>
     fun addFilter(): Observable<*>

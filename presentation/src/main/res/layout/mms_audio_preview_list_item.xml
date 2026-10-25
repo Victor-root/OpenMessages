@@ -72,7 +72,7 @@
             app:srcCompat="@drawable/ic_play_arrow_white_32dp"
             app:tint="@color/tools_theme" />
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             android:id="@+id/metadataTitle"
             style="@style/TextPrimary"
             android:layout_width="0dp"

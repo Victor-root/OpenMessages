@@ -29,8 +29,8 @@ import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
 import com.google.android.mms.pdu_alt.ContentType
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.databinding.GalleryImagePageBinding
 import io.openmessages.databinding.GalleryVideoPageBinding
 import io.openmessages.extensions.isImage
@@ -41,7 +41,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import java.util.*
 import javax.inject.Inject
 
-class GalleryPagerAdapter @Inject constructor(private val context: Context) : QkAdapter<MmsPart, QkViewHolder>() {
+class GalleryPagerAdapter @Inject constructor(private val context: Context) : BaseAdapter<MmsPart, BaseViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_INVALID = 0
@@ -54,9 +54,9 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
     private val contentResolver = context.contentResolver
     private val exoPlayers = Collections.newSetFromMap(WeakHashMap<ExoPlayer?, Boolean>())
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return QkViewHolder(when (viewType) {
+        return BaseViewHolder(when (viewType) {
             VIEW_TYPE_IMAGE -> {
                 val image = GalleryImagePageBinding.inflate(inflater, parent, false).image
                 // A double tap goes straight between the fitted picture and the largest zoom, rather
@@ -88,7 +88,7 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
         })
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val part = getItem(position)
         when (getItemViewType(position)) {
             VIEW_TYPE_IMAGE -> {

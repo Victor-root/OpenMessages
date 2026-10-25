@@ -186,7 +186,7 @@
     </string-array>
     <string name="settings_category_appearance">Izgled</string>
     <string name="settings_category_general">Općenito</string>
-    <string name="settings_category_qkreply">QK odgovor</string>
+    <string name="settings_category_quick_reply">Brzi odgovor</string>
     <string name="settings_theme_title">Tema</string>
     <string name="settings_night_title">Noćni način</string>
     <string name="settings_black_title">Potpuno crni noćni način</string>
@@ -207,10 +207,10 @@
     <string name="settings_vibration_title">Vibracija</string>
     <string name="settings_ringtone_title">Zvuk</string>
     <string name="settings_ringtone_none">Nema</string>
-    <string name="settings_qkreply_title">QK odgovor</string>
-    <string name="settings_qkreply_summary">Skočni prozor za nove poruke</string>
-    <string name="settings_qkreply_tap_dismiss_title">Dodirnite za odbacivanje</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Dodirnite izvan skočnog prozora za zatvaranje</string>
+    <string name="settings_quick_reply_title">Brzi odgovor</string>
+    <string name="settings_quick_reply_summary">Skočni prozor za nove poruke</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Dodirnite za odbacivanje</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Dodirnite izvan skočnog prozora za zatvaranje</string>
     <string name="settings_delayed_title">Odgođeno slanje</string>
     <string name="settings_swipe_actions">Radnje poteza</string>
     <string name="settings_swipe_actions_summary">Konfigurirajte radnje poteza za razgovore</string>
@@ -260,7 +260,7 @@
     <string name="blocking_drop_summary">Odbacite dolazne poruke od blokiranih pošiljatelja umjesto da ih samo sakrivate</string>
     <string name="blocking_conversations">Blokirani razgovori</string>
     <string name="blocking_manager_title">Upravitelj za blokiranje</string>
-    <string name="blocking_manager_qksms_summary">Ugrađena funkcionalnost blokiranja u Open Messages-u</string>
+    <string name="blocking_manager_built_in_summary">Ugrađena funkcionalnost blokiranja u Open Messages-u</string>
     <string name="blocking_manager_call_blocker_summary">Blokirajte neželjene poruke, brojeve i nepoznate pozive pomoću crne liste i zakazivanja</string>
     <string name="blocking_manager_call_control_summary">Automatski filtrirajte svoje pozive i poruke na jednom mjestu! Community IQ™ omogućuje vam filtriranje neželjenih poruka od spammera poznatih zajednici</string>
     <string name="blocking_manager_sia_summary">Automatski filtrirajte poruke od neželjenih brojeva pomoću aplikacije \"Should I Answer\"</string>
@@ -296,12 +296,12 @@
     <string name="about_copyright_title">Autorska prava</string>
     <string name="widget_loading">Učitavanje…</string>
     <string name="widget_more">Prikaži više razgovora</string>
-    <string name="qkreply_menu_read">Označi kao pročitano</string>
-    <string name="qkreply_menu_call">Nazovi</string>
-    <string name="qkreply_menu_delete">Izbriši</string>
-    <string name="qkreply_menu_expand">Prikaži više</string>
-    <string name="qkreply_menu_collapse">Prikaži manje</string>
-    <string name="qkreply_menu_view">Otvori razgovor</string>
+    <string name="quick_reply_menu_read">Označi kao pročitano</string>
+    <string name="quick_reply_menu_call">Nazovi</string>
+    <string name="quick_reply_menu_delete">Izbriši</string>
+    <string name="quick_reply_menu_expand">Prikaži više</string>
+    <string name="quick_reply_menu_collapse">Prikaži manje</string>
+    <string name="quick_reply_menu_view">Otvori razgovor</string>
     <string name="theme_material">Materijalna</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Primijeni</string>
@@ -363,7 +363,7 @@
         <item>2000KB</item>
         <item>Bez kompresije</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>U redu</item>
         <item>Samo trenutak</item>
         <item>Na putu sam</item>

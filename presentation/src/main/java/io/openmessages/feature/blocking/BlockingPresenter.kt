@@ -24,7 +24,7 @@ import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.BlockingListDownloader
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -38,7 +38,7 @@ class BlockingPresenter @Inject constructor(
     private val blockingClient: BlockingClient,
     private val prefs: Preferences,
     private val downloader: BlockingListDownloader
-) : QkPresenter<BlockingView, BlockingState>(BlockingState()) {
+) : BasePresenter<BlockingView, BlockingState>(BlockingState()) {
 
     // Kept apart from the presenter's other subscriptions so turning the source off can cancel a
     // download still in flight, which would otherwise store a list for a source that is now off.

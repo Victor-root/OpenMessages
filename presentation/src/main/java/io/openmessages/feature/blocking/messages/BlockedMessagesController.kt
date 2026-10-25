@@ -28,7 +28,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import io.openmessages.R
-import io.openmessages.common.base.QkController
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.databinding.BlockedMessagesControllerBinding
@@ -38,7 +38,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class BlockedMessagesController : QkController<BlockedMessagesControllerBinding, BlockedMessagesView, BlockedMessagesState, BlockedMessagesPresenter>(),
+class BlockedMessagesController : BaseController<BlockedMessagesControllerBinding, BlockedMessagesView, BlockedMessagesState, BlockedMessagesPresenter>(),
     BlockedMessagesView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): BlockedMessagesControllerBinding =

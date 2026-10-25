@@ -34,7 +34,7 @@ interface BlockingClient {
         object Unblock : Action()
 
         // We only need these for Should I Answer, because they don't allow us to block numbers in their app directly.
-        // This means there's a good chance that if a number is blocked in QK, it won't be blocked there, so we
+        // This means there's a good chance that if a number is blocked in the app, it won't be blocked there, so we
         // shouldn't unblock the conversation in that case
         object DoNothing : Action()
 

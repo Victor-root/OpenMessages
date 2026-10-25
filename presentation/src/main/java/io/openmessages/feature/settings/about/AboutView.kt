@@ -18,11 +18,11 @@
  */
 package io.openmessages.feature.settings.about
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.openmessages.common.widget.PreferenceView
 import io.reactivex.rxjava3.core.Observable
 
-interface AboutView : QkViewContract<Unit> {
+interface AboutView : ControllerView<Unit> {
 
     fun preferenceClicks(): Observable<PreferenceView>
 

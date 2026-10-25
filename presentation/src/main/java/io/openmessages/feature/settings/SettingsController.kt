@@ -37,9 +37,9 @@ import com.jakewharton.rxbinding4.view.longClicks
 import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.MenuItem
-import io.openmessages.common.QkChangeHandler
-import io.openmessages.common.QkDialog
-import io.openmessages.common.base.QkController
+import io.openmessages.common.ScreenChangeHandler
+import io.openmessages.common.MenuDialog
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -61,20 +61,20 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class SettingsController : QkController<SettingsControllerBinding, SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
+class SettingsController : BaseController<SettingsControllerBinding, SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): SettingsControllerBinding =
         SettingsControllerBinding.inflate(inflater, container, false)
 
     @Inject lateinit var context: Context
     @Inject lateinit var colors: Colors
-    @Inject lateinit var nightModeDialog: QkDialog
-    @Inject lateinit var textSizeDialog: QkDialog
-    @Inject lateinit var sendDelayDialog: QkDialog
-    @Inject lateinit var sendSoundDialog: QkDialog
-    @Inject lateinit var headerQuickActionDialog: QkDialog
-    @Inject lateinit var mmsSizeDialog: QkDialog
-    @Inject lateinit var messageLinkHandlingDialog: QkDialog
+    @Inject lateinit var nightModeDialog: MenuDialog
+    @Inject lateinit var textSizeDialog: MenuDialog
+    @Inject lateinit var sendDelayDialog: MenuDialog
+    @Inject lateinit var sendSoundDialog: MenuDialog
+    @Inject lateinit var headerQuickActionDialog: MenuDialog
+    @Inject lateinit var mmsSizeDialog: MenuDialog
+    @Inject lateinit var messageLinkHandlingDialog: MenuDialog
 
     @Inject override lateinit var presenter: SettingsPresenter
 
@@ -295,7 +295,7 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
     override fun showSendSoundDialog(id: Int, volume: Int) {
         // Both are set only when the dialog is about to open, not from render(): the sound dialog
         // stays open while the user taps around previewing tones and drags the slider (see
-        // confirmWithButtons on QkDialog), and neither preference updates until OK is pressed, so
+        // confirmWithButtons on MenuDialog), and neither preference updates until OK is pressed, so
         // syncing on every render would snap the checkmark and the slider back to the stored values
         // as soon as anything else re-rendered the screen.
         sendSoundDialog.adapter.selectedItem = id
@@ -319,8 +319,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun showSwipeActions() {
         router.pushController(RouterTransaction.with(SwipeActionsController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
+                .pushChangeHandler(ScreenChangeHandler())
+                .popChangeHandler(ScreenChangeHandler()))
     }
 
     override fun showThemePicker() {
@@ -330,8 +330,8 @@ class SettingsController : QkController<SettingsControllerBinding, SettingsView,
 
     override fun showAbout() {
         router.pushController(RouterTransaction.with(AboutController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
+                .pushChangeHandler(ScreenChangeHandler())
+                .popChangeHandler(ScreenChangeHandler()))
     }
 
 }

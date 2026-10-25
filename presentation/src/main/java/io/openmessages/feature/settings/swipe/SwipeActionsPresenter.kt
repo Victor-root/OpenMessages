@@ -23,7 +23,7 @@ import androidx.annotation.DrawableRes
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.common.util.extensions.labelFor
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class SwipeActionsPresenter @Inject constructor(
     context: Context,
     private val prefs: Preferences
-) : QkPresenter<SwipeActionsView, SwipeActionsState>(SwipeActionsState()) {
+) : BasePresenter<SwipeActionsView, SwipeActionsState>(SwipeActionsState()) {
 
     init {
         val actionLabels = context.resources.getStringArray(R.array.settings_swipe_actions)

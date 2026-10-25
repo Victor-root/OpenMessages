@@ -32,7 +32,7 @@
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/deduplicate_messages_category" />
 
@@ -44,7 +44,7 @@
             app:summary="@string/deduplicate_messages_summary"
             app:title="@string/deduplicate_messages_title" />
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             android:id="@+id/deduplicationProgressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             app:title="@string/auto_deduplicate_messages_title"
             app:widget="@layout/settings_switch_widget" />
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/settings_category_general" />
 

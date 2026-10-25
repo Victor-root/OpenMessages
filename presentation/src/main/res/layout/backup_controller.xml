@@ -55,7 +55,7 @@
                     app:layout_constraintTop_toTopOf="@id/progressTitle"
                     tools:src="@drawable/ic_file_download_black_24dp" />
 
-                <io.openmessages.common.widget.QkTextView
+                <io.openmessages.common.widget.AppTextView
                     android:id="@+id/progressTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                     app:textSize="primary"
                     tools:text="Restoring from backup" />
 
-                <io.openmessages.common.widget.QkTextView
+                <io.openmessages.common.widget.AppTextView
                     android:id="@+id/progressSummary"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/divider" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"

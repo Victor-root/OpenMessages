@@ -189,7 +189,7 @@
     </string-array>
     <string name="settings_category_appearance">المظهر</string>
     <string name="settings_category_general">عام</string>
-    <string name="settings_category_qkreply">رد QK</string>
+    <string name="settings_category_quick_reply">رد سريع</string>
     <string name="settings_theme_title">السمة</string>
     <string name="settings_night_title">الوضع الليلي</string>
     <string name="settings_black_title">وضع ليلي بسوادٍ حالك</string>
@@ -210,10 +210,10 @@
     <string name="settings_vibration_title">الاهتزاز</string>
     <string name="settings_ringtone_title">الصوت</string>
     <string name="settings_ringtone_none">بدون نغمة </string>
-    <string name="settings_qkreply_title">رد QK</string>
-    <string name="settings_qkreply_summary">نافذة منبثقة للرسائل الجديدة</string>
-    <string name="settings_qkreply_tap_dismiss_title">إلمس للاستبعاد</string>
-    <string name="settings_qkreply_tap_dismiss_summary">إلمس خارج المنبثقة لإغلاقها</string>
+    <string name="settings_quick_reply_title">رد سريع</string>
+    <string name="settings_quick_reply_summary">نافذة منبثقة للرسائل الجديدة</string>
+    <string name="settings_quick_reply_tap_dismiss_title">إلمس للاستبعاد</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">إلمس خارج المنبثقة لإغلاقها</string>
     <string name="settings_delayed_title">الإرسال المؤخَّر</string>
     <string name="settings_swipe_actions">إجراءات السَّحْب</string>
     <string name="settings_swipe_actions_summary">ضبط إجراءات السحب بالنسبة للمحادثات</string>
@@ -266,7 +266,7 @@
     <string name="blocking_drop_summary">قم بحذف الرسائل الواردة من المرسلين المحظورين بدلاً من إخفائها</string>
     <string name="blocking_conversations">المحادثات المحظورة</string>
     <string name="blocking_manager_title">مدير المحظورات</string>
-    <string name="blocking_manager_qksms_summary">وظيفة حظر مدمجة في برنامج Open Messages</string>
+    <string name="blocking_manager_built_in_summary">وظيفة حظر مدمجة في برنامج Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">حظر الرسائل المزعجة والأرقام والمكالمات غير المعروفة باستخدام القائمة السوداء وجدولة المكالمات</string>
     <string name="blocking_manager_call_control_summary">قم بتصفية مكالماتك ورسائلك تلقائيًا في مكان واحد مناسب! تتيح لك ميزة Community IQ™ منع الرسائل غير المرغوب فيها من مرسلي الرسائل المزعجة المعروفين في مجتمعك</string>
     <string name="blocking_manager_sia_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
@@ -308,12 +308,12 @@
     <string name="about_copyright_title">حقوق النسخ</string>
     <string name="widget_loading">تحميل…</string>
     <string name="widget_more">عرض المزيد من المحادثات</string>
-    <string name="qkreply_menu_read">مقروء</string>
-    <string name="qkreply_menu_call">مكالمة</string>
-    <string name="qkreply_menu_delete">حذف</string>
-    <string name="qkreply_menu_expand">إظهار المزيد</string>
-    <string name="qkreply_menu_collapse">إظهار أقل</string>
-    <string name="qkreply_menu_view">فتح المحادثة</string>
+    <string name="quick_reply_menu_read">مقروء</string>
+    <string name="quick_reply_menu_call">مكالمة</string>
+    <string name="quick_reply_menu_delete">حذف</string>
+    <string name="quick_reply_menu_expand">إظهار المزيد</string>
+    <string name="quick_reply_menu_collapse">إظهار أقل</string>
+    <string name="quick_reply_menu_view">فتح المحادثة</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">تطبيق</string>
@@ -378,7 +378,7 @@
         <item>2000كيلوبايت</item>
         <item>بدون ضغط</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>حسنًا</item>
         <item>أمهلني بعض الوقت</item>
         <item>في طريقي</item>

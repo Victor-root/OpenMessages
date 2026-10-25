@@ -43,7 +43,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             app:textSize="secondary"
             tools:text="2 Jul 2026, 16:19" />
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             android:id="@+id/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

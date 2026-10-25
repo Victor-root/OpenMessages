@@ -22,7 +22,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -50,7 +50,7 @@ class FileBinder @Inject constructor(colors: Colors, private val context: Contex
 
     @SuppressLint("CheckResult")
     override fun bindPart(
-        holder: QkViewHolder,
+        holder: BaseViewHolder,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,

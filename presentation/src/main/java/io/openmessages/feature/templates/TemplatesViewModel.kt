@@ -20,7 +20,7 @@ package io.openmessages.feature.templates
 
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -31,7 +31,7 @@ import javax.inject.Named
 class TemplatesViewModel @Inject constructor(
     @Named("pick") private val pick: Boolean,
     private val prefs: Preferences
-) : QkViewModel<TemplatesView, TemplatesState>(TemplatesState()) {
+) : BaseViewModel<TemplatesView, TemplatesState>(TemplatesState()) {
 
     init {
         // Keep the list in sync with the persisted preference so add/edit/delete reflect immediately.

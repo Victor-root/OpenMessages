@@ -18,11 +18,11 @@
  */
 package io.openmessages.feature.gallery
 
-import io.openmessages.common.base.QkView
+import io.openmessages.common.base.BaseView
 import io.openmessages.model.MmsPart
 import io.reactivex.rxjava3.core.Observable
 
-interface GalleryView : QkView<GalleryState> {
+interface GalleryView : BaseView<GalleryState> {
 
     fun optionsItemSelected(): Observable<Int>
     fun screenTouched(): Observable<*>

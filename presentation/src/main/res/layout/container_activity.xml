@@ -28,7 +28,7 @@
         style="@style/Toolbar"
         android:elevation="8dp">
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Conversations" />

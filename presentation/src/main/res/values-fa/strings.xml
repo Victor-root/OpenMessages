@@ -183,7 +183,7 @@
     </string-array>
     <string name="settings_category_appearance">نما</string>
     <string name="settings_category_general">فراگیر</string>
-    <string name="settings_category_qkreply">پاسخ چالاک</string>
+    <string name="settings_category_quick_reply">پاسخ چالاک</string>
     <string name="settings_theme_title">پوسته</string>
     <string name="settings_night_title">سان شب</string>
     <string name="settings_black_title">سان شب مشکی ناب</string>
@@ -204,10 +204,10 @@
     <string name="settings_vibration_title">لرزش</string>
     <string name="settings_ringtone_title">صدا</string>
     <string name="settings_ringtone_none">هیچ</string>
-    <string name="settings_qkreply_title">پاسخ چالاک</string>
-    <string name="settings_qkreply_summary">برون‌پَر برای پیام‌های نو</string>
-    <string name="settings_qkreply_tap_dismiss_title">برای هلیدن بِپَرماسید</string>
-    <string name="settings_qkreply_tap_dismiss_summary">بیرون حبابک را برای بستن آن بِپَرماسید</string>
+    <string name="settings_quick_reply_title">پاسخ چالاک</string>
+    <string name="settings_quick_reply_summary">برون‌پَر برای پیام‌های نو</string>
+    <string name="settings_quick_reply_tap_dismiss_title">برای هلیدن بِپَرماسید</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">بیرون حبابک را برای بستن آن بِپَرماسید</string>
     <string name="settings_delayed_title">فرستادن با درنگ</string>
     <string name="settings_swipe_actions">کنش‌های کشیدن</string>
     <string name="settings_swipe_actions_summary">کارگذاردن کنش‌های کشیدن برای گفتگو‌ها</string>
@@ -256,7 +256,7 @@
     <string name="blocking_drop_summary">دریافتی‌های فرستنده‌های بژکم شده را به جای مخفی کردن، دور بیانداز</string>
     <string name="blocking_conversations">گفتگوهای بژکم شده</string>
     <string name="blocking_manager_title">راینیدن بژکم شدگان</string>
-    <string name="blocking_manager_qksms_summary">کارکرد بژکم کننده درونی در Open Messages</string>
+    <string name="blocking_manager_built_in_summary">کارکرد بژکم کننده درونی در Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">بژکم کردن پیام‌های هرزنامه، شماره‌ها و زنگ‌های ناشناخته با لیست سیاه اود برنامه‌ریزی</string>
     <string name="blocking_manager_call_control_summary">زنگ‌ها و پیام‌های خود را خودکار پالایش کنید! Community IQ™ به شما دسترسی می دهد تا از پیام‌های ناخواسته از هرزفرست‌های شناخته شده جلوگیری کنید</string>
     <string name="blocking_manager_sia_summary">با بکارگیری برنامه «می‌شود پاسخ دهم»، پیام‌ها را از شماره‌های ناخواسته خودکار پالایش کنید</string>
@@ -290,12 +290,12 @@
     <string name="about_copyright_title">هوده‌ی پچین</string>
     <string name="widget_loading">بارگذاری…</string>
     <string name="widget_more">دیدن گفتگوهای بیشتر</string>
-    <string name="qkreply_menu_read">چونان خوانده‌شده گذاردن</string>
-    <string name="qkreply_menu_call">زنگ‌زدن</string>
-    <string name="qkreply_menu_delete">سِتُردن</string>
-    <string name="qkreply_menu_expand">نمایش بیشتر</string>
-    <string name="qkreply_menu_collapse">نمایش کمتر</string>
-    <string name="qkreply_menu_view">بازکردن گفتگو</string>
+    <string name="quick_reply_menu_read">چونان خوانده‌شده گذاردن</string>
+    <string name="quick_reply_menu_call">زنگ‌زدن</string>
+    <string name="quick_reply_menu_delete">سِتُردن</string>
+    <string name="quick_reply_menu_expand">نمایش بیشتر</string>
+    <string name="quick_reply_menu_collapse">نمایش کمتر</string>
+    <string name="quick_reply_menu_view">بازکردن گفتگو</string>
     <string name="theme_material">متریال</string>
     <string name="theme_hex">شش‌وات</string>
     <string name="theme_apply">کاربستن</string>
@@ -356,7 +356,7 @@
         <item>۲۰۰۰ کیلوبایت</item>
         <item>بدون فشرده‌سازی</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>باشه</item>
         <item>یک لحظه لطفاً</item>
         <item>تو راهم</item>

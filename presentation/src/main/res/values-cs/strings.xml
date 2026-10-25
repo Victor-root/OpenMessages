@@ -187,7 +187,7 @@
     </string-array>
     <string name="settings_category_appearance">Vzhled</string>
     <string name="settings_category_general">Obecné</string>
-    <string name="settings_category_qkreply">Rychlá odpověď</string>
+    <string name="settings_category_quick_reply">Rychlá odpověď</string>
     <string name="settings_theme_title">Motiv vzhledu</string>
     <string name="settings_night_title">Noční režim</string>
     <string name="settings_black_title">Čistá černá, noční režim</string>
@@ -208,10 +208,10 @@
     <string name="settings_vibration_title">Vibrace</string>
     <string name="settings_ringtone_title">Vyzvánění</string>
     <string name="settings_ringtone_none">Žádné</string>
-    <string name="settings_qkreply_title">Rychlá odpověď</string>
-    <string name="settings_qkreply_summary">Vyskakovací okno pro nové zprávy</string>
-    <string name="settings_qkreply_tap_dismiss_title">Klepnutím zavřít</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Pro ukončení klepněte kamkoli mimo okno zprávy</string>
+    <string name="settings_quick_reply_title">Rychlá odpověď</string>
+    <string name="settings_quick_reply_summary">Vyskakovací okno pro nové zprávy</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Klepnutím zavřít</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Pro ukončení klepněte kamkoli mimo okno zprávy</string>
     <string name="settings_delayed_title">Zpožděné odeslání</string>
     <string name="settings_swipe_actions">Akce přejetí</string>
     <string name="settings_swipe_actions_summary">Nastavení akcí pro přejetí v konverzacích</string>
@@ -262,7 +262,7 @@
     <string name="blocking_drop_summary">Zahodit příchozí zprávy od blokovaných odesílatelů namísto jejich skrytí</string>
     <string name="blocking_conversations">Blokované konverzace</string>
     <string name="blocking_manager_title">Správce blokování</string>
-    <string name="blocking_manager_qksms_summary">Vestavěné blokování v Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Vestavěné blokování v Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blokujte spamové zprávy, čísla a neznámé hovory pomocí černé listiny a plánování</string>
     <string name="blocking_manager_call_control_summary">Automatické filtrování hovorů a zpráv na jednom místě. Community IQ™ poskytuje ochranu před nevyžádanými zprávami od komunitou označených spammerů</string>
     <string name="blocking_manager_sia_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
@@ -300,12 +300,12 @@
     <string name="about_copyright_title">Autorská práva</string>
     <string name="widget_loading">Načítání…</string>
     <string name="widget_more">Zobrazit další konverzace</string>
-    <string name="qkreply_menu_read">Označit jako přečtené</string>
-    <string name="qkreply_menu_call">Volat</string>
-    <string name="qkreply_menu_delete">Smazat</string>
-    <string name="qkreply_menu_expand">Zobrazit více</string>
-    <string name="qkreply_menu_collapse">Zobrazit méně</string>
-    <string name="qkreply_menu_view">Otevřít konverzaci</string>
+    <string name="quick_reply_menu_read">Označit jako přečtené</string>
+    <string name="quick_reply_menu_call">Volat</string>
+    <string name="quick_reply_menu_delete">Smazat</string>
+    <string name="quick_reply_menu_expand">Zobrazit více</string>
+    <string name="quick_reply_menu_collapse">Zobrazit méně</string>
+    <string name="quick_reply_menu_view">Otevřít konverzaci</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Použít</string>
@@ -368,7 +368,7 @@
         <item>2 000 kB</item>
         <item>Bez komprese</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>OK</item>
         <item>Dej mi chvíli</item>
         <item>Jsem na cestě</item>

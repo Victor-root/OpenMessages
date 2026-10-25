@@ -21,7 +21,7 @@ package io.openmessages.feature.compose.part
 import android.content.Context
 import com.bumptech.glide.Glide
 import io.openmessages.R
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.widget.BubbleImageView
@@ -41,7 +41,7 @@ class ImageBinder @Inject constructor(colors: Colors, private val context: Conte
     override fun canBindPart(part: MmsPart) = part.isImage() || part.isVideo()
 
     override fun bindPart(
-        holder: QkViewHolder,
+        holder: BaseViewHolder,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,

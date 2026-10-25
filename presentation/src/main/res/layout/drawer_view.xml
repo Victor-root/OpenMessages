@@ -80,7 +80,7 @@
                 android:src="@drawable/ic_mail_opened"
                 tools:tint="@color/tools_theme" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_inbox" />
 
@@ -96,7 +96,7 @@
                 android:src="@drawable/ic_archive_filled"
                 tools:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_archived" />
 
@@ -118,7 +118,7 @@
                 android:src="@drawable/ic_import_export_black_24dp"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/backup_title" />
 
@@ -133,7 +133,7 @@
                 android:src="@drawable/ic_calendar_event"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_scheduled" />
 
@@ -148,7 +148,7 @@
                 android:src="@drawable/ic_forbid_2"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_blocking" />
 
@@ -163,7 +163,7 @@
                 android:src="@drawable/dashboard_2_gear"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/message_management_title" />
 
@@ -178,7 +178,7 @@
                 android:src="@drawable/ic_clipboard_text"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/templates_title" />
 
@@ -200,7 +200,7 @@
                 android:src="@drawable/ic_settings_2"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_settings" />
 
@@ -215,7 +215,7 @@
                 android:src="@drawable/ic_people_black_24dp"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/drawer_invite" />
 
@@ -230,7 +230,7 @@
                 android:src="@drawable/ic_info_black_24dp"
                 app:tint="?android:attr/textColorSecondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
                 android:text="@string/settings_about_title" />
 
@@ -258,7 +258,7 @@
                 app:layout_constraintTop_toTopOf="@id/rateTitle"
                 tools:tint="@color/tools_theme" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/rateTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -273,7 +273,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:textSize="primary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/rateSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -286,7 +286,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rateTitle"
                 app:textSize="secondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/rateDismiss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
                 app:layout_constraintTop_toBottomOf="@id/rateSummary"
                 app:textSize="secondary" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/rateOkay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

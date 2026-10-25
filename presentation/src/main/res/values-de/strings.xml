@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">Aussehen</string>
     <string name="settings_category_general">Allgemein</string>
-    <string name="settings_category_qkreply">Schnellantwort</string>
+    <string name="settings_category_quick_reply">Schnellantwort</string>
     <string name="settings_theme_title">Erscheinungsbild</string>
     <string name="settings_night_title">Nachtmodus</string>
     <string name="settings_black_title">Rein schwarzer Nachtmodus</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Ton</string>
     <string name="settings_ringtone_none">Keine</string>
-    <string name="settings_qkreply_title">Schnellantwort</string>
-    <string name="settings_qkreply_summary">Popup für neue Nachrichten</string>
-    <string name="settings_qkreply_tap_dismiss_title">Zum Verwerfen tippen</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Tippe außerhalb des Popups, um es zu schließen</string>
+    <string name="settings_quick_reply_title">Schnellantwort</string>
+    <string name="settings_quick_reply_summary">Popup für neue Nachrichten</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Zum Verwerfen tippen</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Tippe außerhalb des Popups, um es zu schließen</string>
     <string name="settings_delayed_title">Verzögertes Senden</string>
     <string name="settings_swipe_actions">Wischgesten</string>
     <string name="settings_swipe_actions_summary">Konfiguriere Wischgesten für Unterhaltungen</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">Eingehende Nachrichten von blockierten Absendern verwerfen, anstatt sie auszublenden</string>
     <string name="blocking_conversations">Blockierte Unterhaltungen</string>
     <string name="blocking_manager_title">Blockierverwaltung</string>
-    <string name="blocking_manager_qksms_summary">In Open Messages integrierte Blockierfunktion</string>
+    <string name="blocking_manager_built_in_summary">In Open Messages integrierte Blockierfunktion</string>
     <string name="blocking_manager_call_blocker_summary">Spam-Nachrichten und Nummern &amp; unbekannte Anrufe mit Sperrliste &amp; Zeitplan blockieren</string>
     <string name="blocking_manager_call_control_summary">Filtere deine Anrufe und Nachrichten automatisch an einem praktischen Ort! Mit Community IQ™ kannst du unerwünschte Nachrichten von bekannten Community-Spammern verhindern</string>
     <string name="blocking_manager_sia_summary">Nachrichten von unerwünschten Nummern automatisch mit Hilfe der App \"Should I Answer?\" filtern</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">Urheberrecht</string>
     <string name="widget_loading">Lädt…</string>
     <string name="widget_more">Weitere Unterhaltungen anzeigen</string>
-    <string name="qkreply_menu_read">Als gelesen markieren</string>
-    <string name="qkreply_menu_call">Anrufen</string>
-    <string name="qkreply_menu_delete">Löschen</string>
-    <string name="qkreply_menu_expand">Mehr anzeigen</string>
-    <string name="qkreply_menu_collapse">Weniger anzeigen</string>
-    <string name="qkreply_menu_view">Unterhaltung öffnen</string>
+    <string name="quick_reply_menu_read">Als gelesen markieren</string>
+    <string name="quick_reply_menu_call">Anrufen</string>
+    <string name="quick_reply_menu_delete">Löschen</string>
+    <string name="quick_reply_menu_expand">Mehr anzeigen</string>
+    <string name="quick_reply_menu_collapse">Weniger anzeigen</string>
+    <string name="quick_reply_menu_view">Unterhaltung öffnen</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Übernehmen</string>
@@ -358,7 +358,7 @@
         <item>2000KB</item>
         <item>Keine Komprimierung</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Okay</item>
         <item>Gib mir einen Moment</item>
         <item>Ich bin auf dem Weg</item>

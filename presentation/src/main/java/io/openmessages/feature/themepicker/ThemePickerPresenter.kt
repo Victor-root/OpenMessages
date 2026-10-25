@@ -20,7 +20,7 @@ package io.openmessages.feature.themepicker
 
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.common.util.Colors
 import io.openmessages.manager.WidgetManager
 import io.openmessages.util.Preference
@@ -34,7 +34,7 @@ class ThemePickerPresenter @Inject constructor(
     @Named("recipientId") private val recipientId: Long,
     private val colors: Colors,
     private val widgetManager: WidgetManager
-) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(recipientId = recipientId)) {
+) : BasePresenter<ThemePickerView, ThemePickerState>(ThemePickerState(recipientId = recipientId)) {
 
     private val theme: Preference<Int> = prefs.theme(recipientId)
 

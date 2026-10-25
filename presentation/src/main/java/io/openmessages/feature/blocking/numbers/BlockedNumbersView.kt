@@ -18,10 +18,10 @@
  */
 package io.openmessages.feature.blocking.numbers
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.reactivex.rxjava3.core.Observable
 
-interface BlockedNumbersView : QkViewContract<BlockedNumbersState> {
+interface BlockedNumbersView : ControllerView<BlockedNumbersState> {
 
     fun unblockAddress(): Observable<Long>
     fun addAddress(): Observable<*>

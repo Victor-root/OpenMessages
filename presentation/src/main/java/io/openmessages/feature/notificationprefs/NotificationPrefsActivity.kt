@@ -33,9 +33,9 @@ import autodispose2.autoDispose
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
-import io.openmessages.common.QkDialog
+import io.openmessages.common.MenuDialog
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.widget.PreferenceView
@@ -45,12 +45,12 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
+class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
 
     private lateinit var binding: NotificationPrefsActivityBinding
 
-    @Inject lateinit var previewModeDialog: QkDialog
-    @Inject lateinit var actionsDialog: QkDialog
+    @Inject lateinit var previewModeDialog: MenuDialog
+    @Inject lateinit var actionsDialog: MenuDialog
     @Inject lateinit var viewModelFactory: ViewModelFactory
 
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
@@ -119,13 +119,13 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         binding.action3.isVisible = state.threadId == 0L
         binding.action3.summary = state.action3Summary
 
-        binding.qkreplyDivider.isVisible = state.threadId == 0L
-        binding.qkreplyTitle.isVisible = state.threadId == 0L
-        binding.qkreply.checkbox?.isChecked = state.qkReplyEnabled
-        binding.qkreply.isVisible = state.threadId == 0L
-        binding.qkreplyTapDismiss.isVisible = state.threadId == 0L
-        binding.qkreplyTapDismiss.isEnabled = state.qkReplyEnabled
-        binding.qkreplyTapDismiss.checkbox?.isChecked = state.qkReplyTapDismiss
+        binding.quickReplyDivider.isVisible = state.threadId == 0L
+        binding.quickReplyTitle.isVisible = state.threadId == 0L
+        binding.quickReply.checkbox?.isChecked = state.quickReplyEnabled
+        binding.quickReply.isVisible = state.threadId == 0L
+        binding.quickReplyTapDismiss.isVisible = state.threadId == 0L
+        binding.quickReplyTapDismiss.isEnabled = state.quickReplyEnabled
+        binding.quickReplyTapDismiss.checkbox?.isChecked = state.quickReplyTapDismiss
     }
 
     override fun showPreviewModeDialog() = previewModeDialog.show(this)

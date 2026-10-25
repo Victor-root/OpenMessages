@@ -31,11 +31,11 @@
         android:paddingBottom="8dp">
 
         <io.openmessages.feature.blocking.manager.BlockingManagerPreferenceView
-            android:id="@+id/qksms"
+            android:id="@+id/builtIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:icon="@mipmap/ic_launcher"
-            app:summary="@string/blocking_manager_qksms_summary"
+            app:summary="@string/blocking_manager_built_in_summary"
             app:title="@string/app_name"
             app:widget="@layout/blocking_manager_list_option" />
 

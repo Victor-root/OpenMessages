@@ -22,13 +22,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.BaseAdapter
 import io.openmessages.databinding.TemplateListItemBinding
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class TemplatesAdapter @Inject constructor() : QkAdapter<Template, TemplatesAdapter.ViewHolder>() {
+class TemplatesAdapter @Inject constructor() : BaseAdapter<Template, TemplatesAdapter.ViewHolder>() {
 
     val clicks: Subject<Template> = PublishSubject.create()
     val longClicks: Subject<Template> = PublishSubject.create()

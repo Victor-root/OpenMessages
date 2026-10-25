@@ -32,7 +32,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

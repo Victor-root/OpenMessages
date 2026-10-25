@@ -23,7 +23,7 @@
     android:layout_height="48dp"
     android:orientation="horizontal">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/number"
         style="@style/TextPrimary"
         android:layout_width="0dp"

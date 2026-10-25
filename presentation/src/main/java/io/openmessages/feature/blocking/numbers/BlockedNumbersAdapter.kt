@@ -20,8 +20,8 @@ package io.openmessages.feature.blocking.numbers
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.model.BlockedNumber
 import io.openmessages.databinding.BlockedNumberListItemBinding
 import io.openmessages.util.DisplayNames
@@ -30,13 +30,13 @@ import io.reactivex.rxjava3.subjects.Subject
 
 class BlockedNumbersAdapter(
     private val displayNames: DisplayNames
-) : QkAdapter<BlockedNumber, QkBindingViewHolder<BlockedNumberListItemBinding>>() {
+) : BaseAdapter<BlockedNumber, BindingViewHolder<BlockedNumberListItemBinding>>() {
 
     val unblockAddress: Subject<Long> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<BlockedNumberListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<BlockedNumberListItemBinding> {
         val binding = BlockedNumberListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.unblock.setOnClickListener {
                 val number = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 unblockAddress.onNext(number.id)
@@ -44,7 +44,7 @@ class BlockedNumbersAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<BlockedNumberListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<BlockedNumberListItemBinding>, position: Int) {
         val item = getItem(position)
 
         holder.binding.number.text = displayNames.number(item.address)

@@ -33,7 +33,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/settings_category_appearance" />
 
@@ -142,7 +142,7 @@
             android:layout_marginBottom="8dp"
             android:background="?android:attr/divider" />
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/settings_category_general" />
 

@@ -39,10 +39,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
 import com.jakewharton.rxbinding4.view.clicks
-import io.openmessages.common.QkMediaPlayer
+import io.openmessages.common.AppMediaPlayer
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.TextViewStyler
@@ -88,12 +88,12 @@ class MessagesAdapter @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val textViewStyler: TextViewStyler,
-) : QkAdapter<Message, QkViewHolder>() {
+) : BaseAdapter<Message, BaseViewHolder>() {
     class AudioState(
         var partId: Long = -1,
-        var state: QkMediaPlayer.PlayingState = QkMediaPlayer.PlayingState.Stopped,
+        var state: AppMediaPlayer.PlayingState = AppMediaPlayer.PlayingState.Stopped,
         var seekBarUpdater: Disposable? = null,
-        var viewHolder: QkViewHolder? = null
+        var viewHolder: BaseViewHolder? = null
     )
 
     companion object {
@@ -142,7 +142,7 @@ class MessagesAdapter @Inject constructor(
 
     private val audioState = AudioState()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         // Use the parent's context to inflate the layout, otherwise link clicks will crash the app
         val inflater = LayoutInflater.from(parent.context)
 
@@ -174,7 +174,7 @@ class MessagesAdapter @Inject constructor(
         // register recycler view with compose activity for context menus
         partContextMenuRegistrar.onNext(parts)
 
-        return QkViewHolder(view).apply {
+        return BaseViewHolder(view).apply {
             view.setOnClickListener {
                 getItemOrNull(bindingAdapterPosition)?.let {
                     when (toggleSelection(it.id, false)) {
@@ -196,7 +196,7 @@ class MessagesAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val message = getItemOrNull(position) ?: return
         val previous = if (position == 0) null else getItemOrNull(position - 1)
         val next = if (position == itemCount - 1) null else getItemOrNull(position + 1)

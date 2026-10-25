@@ -23,8 +23,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.databinding.ContactChipBinding
 import io.openmessages.model.Recipient
@@ -34,14 +34,14 @@ import javax.inject.Inject
 
 class ChipsAdapter @Inject constructor(
     private val displayNames: DisplayNames
-) : QkAdapter<Recipient, QkBindingViewHolder<ContactChipBinding>>() {
+) : BaseAdapter<Recipient, BindingViewHolder<ContactChipBinding>>() {
 
     var view: RecyclerView? = null
     val chipDeleted: PublishSubject<Recipient> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ContactChipBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ContactChipBinding> {
         val binding = ContactChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val chip = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 showDetailedChip(binding.root.context, chip)
@@ -49,7 +49,7 @@ class ChipsAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ContactChipBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ContactChipBinding>, position: Int) {
         val recipient = getItem(position)
 
         // No avatar here: the chip mirrors an existing conversation's plain-text title (see

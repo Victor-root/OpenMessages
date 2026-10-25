@@ -18,10 +18,10 @@
  */
 package io.openmessages.feature.templates
 
-import io.openmessages.common.base.QkView
+import io.openmessages.common.base.BaseView
 import io.reactivex.rxjava3.core.Observable
 
-interface TemplatesView : QkView<TemplatesState> {
+interface TemplatesView : BaseView<TemplatesState> {
 
     /** A template was tapped — use it (open the composer pre-filled with its body). */
     val templateClicksIntent: Observable<Template>

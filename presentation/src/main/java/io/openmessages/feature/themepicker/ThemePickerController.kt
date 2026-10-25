@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
-import io.openmessages.common.base.QkController
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -38,7 +38,7 @@ import javax.inject.Inject
 
 class ThemePickerController(
     val recipientId: Long = 0L
-) : QkController<ThemePickerControllerBinding, ThemePickerView, ThemePickerState, ThemePickerPresenter>(), ThemePickerView {
+) : BaseController<ThemePickerControllerBinding, ThemePickerView, ThemePickerState, ThemePickerPresenter>(), ThemePickerView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): ThemePickerControllerBinding =
         ThemePickerControllerBinding.inflate(inflater, container, false)

@@ -21,7 +21,7 @@ import javax.inject.Singleton
 class BlockingManager @Inject constructor(
     private val prefs: Preferences,
     private val allowlistRepo: AllowlistRepository,
-    private val qksmsBlockingClient: QksmsBlockingClient,
+    private val builtInBlockingClient: BuiltInBlockingClient,
     private val callBlockerBlockingClient: CallBlockerBlockingClient,
     private val callControlBlockingClient: CallControlBlockingClient,
     private val shouldIAnswerBlockingClient: ShouldIAnswerBlockingClient
@@ -58,7 +58,7 @@ class BlockingManager @Inject constructor(
         query: (BlockingClient) -> Single<BlockingClient.Action>
     ): Single<BlockingClient.Action> = Single.fromCallable {
         // The manual blocklist wins over everything, including the allowlist.
-        val manual = query(qksmsBlockingClient).blockingGet()
+        val manual = query(builtInBlockingClient).blockingGet()
         if (manual is BlockingClient.Action.Block) return@fromCallable manual
 
         // An approved sender is ignored by the automatic sources.
@@ -74,7 +74,7 @@ class BlockingManager @Inject constructor(
         // Blocking always lands in the manual blocklist, and overrides any previous approval.
         val operations = mutableListOf(
             Completable.fromAction { allowlistRepo.removeNumbers(*addresses.toTypedArray()) },
-            qksmsBlockingClient.block(addresses)
+            builtInBlockingClient.block(addresses)
         )
         // Best-effort sync to an external app that supports pushing numbers (not Should I Answer?).
         externalApp()
@@ -84,7 +84,7 @@ class BlockingManager @Inject constructor(
     }
 
     override fun unblock(addresses: List<String>): Completable {
-        val operations = mutableListOf(qksmsBlockingClient.unblock(addresses))
+        val operations = mutableListOf(builtInBlockingClient.unblock(addresses))
         externalApp()
             ?.takeIf { it.getClientCapability() != BlockingClient.Capability.CANT_BLOCK }
             ?.let { operations.add(it.unblock(addresses)) }

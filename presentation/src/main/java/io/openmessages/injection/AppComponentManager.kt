@@ -18,14 +18,14 @@
  */
 package io.openmessages.injection
 
-import io.openmessages.common.QKApplication
+import io.openmessages.common.OpenMessagesApplication
 
 internal lateinit var appComponent: AppComponent
     private set
 
 internal object AppComponentManager {
 
-    fun init(application: QKApplication) {
+    fun init(application: OpenMessagesApplication) {
         appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(application))
                 .build()

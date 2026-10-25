@@ -66,13 +66,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.textChanges
-import io.openmessages.common.QkMediaPlayer
+import io.openmessages.common.AppMediaPlayer
 import dagger.android.AndroidInjection
 import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.autoScrollToStart
@@ -111,7 +111,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class ComposeActivity : QkThemedActivity(), ComposeView {
+class ComposeActivity : ThemedActivity(), ComposeView {
 
     @Inject lateinit var composeAttachmentAdapter: ComposeAttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
@@ -212,8 +212,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     private val recordAudioFromSheet: Subject<Unit> = PublishSubject.create()
     override val recordAudioAbort by lazy { binding.audioMsgAbort.clicks() }
     override val recordAudioAttach by lazy { binding.audioMsgAttach.clicks() }
-    override val recordAudioPlayerPlayPause: Subject<QkMediaPlayer.PlayingState> = PublishSubject.create()
-    override val recordAudioPlayerConfigUI: Subject<QkMediaPlayer.PlayingState> = PublishSubject.create()
+    override val recordAudioPlayerPlayPause: Subject<AppMediaPlayer.PlayingState> = PublishSubject.create()
+    override val recordAudioPlayerConfigUI: Subject<AppMediaPlayer.PlayingState> = PublishSubject.create()
     override val recordAudioPlayerVisible: Subject<Boolean> = PublishSubject.create()
     override val recordAudioMsgRecordVisible: Subject<Boolean> = PublishSubject.create()
     override val recordAudioChronometer: Subject<Boolean> = PublishSubject.create()
@@ -429,7 +429,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             // audio record playback play/pause button
             binding.audioMsgPlayerPlayPause.setOnClickListener {
                 recordAudioPlayerPlayPause.onNext(
-                    binding.audioMsgPlayerPlayPause.tag as QkMediaPlayer.PlayingState
+                    binding.audioMsgPlayerPlayPause.tag as AppMediaPlayer.PlayingState
                 )
             }
 
@@ -450,7 +450,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .autoDispose(scope())
                 .subscribe {
                     binding.audioMsgPlayerBackground.isVisible = it
-                    recordAudioPlayerConfigUI.onNext(QkMediaPlayer.PlayingState.Stopped)
+                    recordAudioPlayerConfigUI.onNext(AppMediaPlayer.PlayingState.Stopped)
                 }
 
             recordAudioPlayerConfigUI
@@ -459,27 +459,27 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .autoDispose(scope())
                 .subscribe {
                     when (it) {
-                        QkMediaPlayer.PlayingState.Playing -> {
-                            binding.audioMsgPlayerPlayPause.tag = QkMediaPlayer.PlayingState.Playing
-                            QkMediaPlayer.start()
+                        AppMediaPlayer.PlayingState.Playing -> {
+                            binding.audioMsgPlayerPlayPause.tag = AppMediaPlayer.PlayingState.Playing
+                            AppMediaPlayer.start()
                             binding.audioMsgPlayerPlayPause.setImageResource(R.drawable.ic_pause_white_32dp)
                             seekBarUpdater = getSeekBarUpdater().subscribe {
-                                binding.audioMsgPlayerSeekBar.progress = QkMediaPlayer.currentPosition
-                                binding.audioMsgPlayerSeekBar.max = QkMediaPlayer.duration
+                                binding.audioMsgPlayerSeekBar.progress = AppMediaPlayer.currentPosition
+                                binding.audioMsgPlayerSeekBar.max = AppMediaPlayer.duration
                             }
                             binding.audioMsgPlayerSeekBar.isEnabled = true
                         }
 
-                        QkMediaPlayer.PlayingState.Paused -> {
-                            binding.audioMsgPlayerPlayPause.tag = QkMediaPlayer.PlayingState.Paused
-                            QkMediaPlayer.pause()
+                        AppMediaPlayer.PlayingState.Paused -> {
+                            binding.audioMsgPlayerPlayPause.tag = AppMediaPlayer.PlayingState.Paused
+                            AppMediaPlayer.pause()
                             binding.audioMsgPlayerPlayPause.setImageResource(R.drawable.ic_play_arrow_white_32dp)
                             seekBarUpdater?.dispose()
                         }
 
                         else -> {
-                            binding.audioMsgPlayerPlayPause.tag = QkMediaPlayer.PlayingState.Stopped
-                            QkMediaPlayer.reset()
+                            binding.audioMsgPlayerPlayPause.tag = AppMediaPlayer.PlayingState.Stopped
+                            AppMediaPlayer.reset()
                             binding.audioMsgPlayerPlayPause.setImageResource(R.drawable.ic_play_arrow_white_32dp)
                             seekBarUpdater?.dispose()
                             binding.audioMsgPlayerSeekBar.progress = 0
@@ -493,7 +493,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     override fun onProgressChanged(p0: SeekBar?, progress: Int, fromUser: Boolean) {
                         // if seek was initiated by the user and this part is currently playing
                         if (fromUser)
-                            QkMediaPlayer.seekTo(progress)
+                            AppMediaPlayer.seekTo(progress)
                     }
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
                     override fun onStopTrackingTouch(p0: SeekBar?) {}
@@ -527,7 +527,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         super.onDestroy()
 
         // stop any playing audio
-        QkMediaPlayer.reset()
+        AppMediaPlayer.reset()
 
         seekBarUpdater?.dispose()
 
@@ -595,7 +595,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                     Preferences.HEADER_ACTION_BLOCK -> R.drawable.ic_block_white_24dp to R.string.main_menu_block
                     else -> R.drawable.ic_delete_white_24dp to R.string.main_menu_delete
                 }
-                // Menu icons are auto-tinted by QkThemedActivity, but only when the shared
+                // Menu icons are auto-tinted by ThemedActivity, but only when the shared
                 // `menu`/`theme` observable fires; reassigning the drawable here (a fresh instance,
                 // since the action can change) needs its own tint so it doesn't render untinted.
                 icon = ContextCompat.getDrawable(this@ComposeActivity, iconRes)

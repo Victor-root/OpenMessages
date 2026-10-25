@@ -29,7 +29,7 @@
         style="@style/Toolbar"
         app:layout_constraintTop_toTopOf="parent">
 
-        <io.openmessages.common.widget.QkTextView
+        <io.openmessages.common.widget.AppTextView
             android:id="@+id/toolbarTitle"
             style="@style/ToolbarText"
             tools:text="Notifications" />
@@ -124,7 +124,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/actionsTitle"
                 style="@style/PreferenceCategory"
                 android:text="@string/settings_notification_actions_title" />
@@ -154,34 +154,34 @@
                 tools:summary="None" />
 
             <View
-                android:id="@+id/qkreplyDivider"
+                android:id="@+id/quickReplyDivider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/divider" />
 
-            <io.openmessages.common.widget.QkTextView
-                android:id="@+id/qkreplyTitle"
+            <io.openmessages.common.widget.AppTextView
+                android:id="@+id/quickReplyTitle"
                 style="@style/PreferenceCategory"
-                android:text="@string/settings_category_qkreply" />
+                android:text="@string/settings_category_quick_reply" />
 
             <io.openmessages.common.widget.PreferenceView
-                android:id="@+id/qkreply"
+                android:id="@+id/quickReply"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_quick_reply_24dp"
-                app:summary="@string/settings_qkreply_summary"
-                app:title="@string/settings_qkreply_title"
+                app:summary="@string/settings_quick_reply_summary"
+                app:title="@string/settings_quick_reply_title"
                 app:widget="@layout/settings_switch_widget" />
 
             <io.openmessages.common.widget.PreferenceView
-                android:id="@+id/qkreplyTapDismiss"
+                android:id="@+id/quickReplyTapDismiss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:icon="@drawable/ic_tap_24dp"
-                app:summary="@string/settings_qkreply_tap_dismiss_summary"
-                app:title="@string/settings_qkreply_tap_dismiss_title"
+                app:summary="@string/settings_quick_reply_tap_dismiss_summary"
+                app:title="@string/settings_quick_reply_tap_dismiss_title"
                 app:widget="@layout/settings_switch_widget" />
 
         </LinearLayout>

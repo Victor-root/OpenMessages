@@ -65,7 +65,7 @@
                 @color/text_primary explicitly: resource resolution follows night mode (not the toolbar
                 overlay), so it is dark on the light bubble and light on the dark bubble.
             -->
-            <io.openmessages.common.widget.QkEditText
+            <io.openmessages.common.widget.AppEditText
                 android:id="@+id/search"
                 style="@style/ToolbarText"
                 android:layout_marginTop="8dp"

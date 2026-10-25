@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">Ulkonäkö</string>
     <string name="settings_category_general">Yleiset</string>
-    <string name="settings_category_qkreply">QK-vastaus</string>
+    <string name="settings_category_quick_reply">Pikavastaus</string>
     <string name="settings_theme_title">Teema</string>
     <string name="settings_night_title">Yötila</string>
     <string name="settings_black_title">Musta yötilä</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">Värinä</string>
     <string name="settings_ringtone_title">Ääni</string>
     <string name="settings_ringtone_none">Ei mitään</string>
-    <string name="settings_qkreply_title">QK-vastaus</string>
-    <string name="settings_qkreply_summary">Ponnahdusikkuna uusille viesteille</string>
-    <string name="settings_qkreply_tap_dismiss_title">Sulje napauttamalla</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Sulje ponnahdusikkuna napauttamalla sen ulkopuolelle</string>
+    <string name="settings_quick_reply_title">Pikavastaus</string>
+    <string name="settings_quick_reply_summary">Ponnahdusikkuna uusille viesteille</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Sulje napauttamalla</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Sulje ponnahdusikkuna napauttamalla sen ulkopuolelle</string>
     <string name="settings_delayed_title">Lykätty lähetys</string>
     <string name="settings_swipe_actions">Pyyhkäisytoiminnot</string>
     <string name="settings_swipe_actions_summary">Muokkaa keskustelujen pyyhkäisytoimintoja</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">Pudottaa estettyjen yhteystietojen lähettämät viestit, niiden piilottamisen sijasta</string>
     <string name="blocking_conversations">Estetyt keskustelut</string>
     <string name="blocking_manager_title">Estojen hallinta</string>
-    <string name="blocking_manager_qksms_summary">Open Messages:ään sisäänrakennettu esto-toiminto</string>
+    <string name="blocking_manager_built_in_summary">Open Messages:ään sisäänrakennettu esto-toiminto</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Suodata puhelusi ja soittosi automaattisesti, yhdessä kätevässä paikassa! Community IQ™ antaa sinun estää haluamattomia viestejä, yhteisölle tutuilta roskapostin lähettäjiltä</string>
     <string name="blocking_manager_sia_summary">Suodata haluamattomien numeroin lähettämät viestit automaattisesti, \"Should I Answer\" -sovellusta käyttämällä</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">Tekijänoikeudet</string>
     <string name="widget_loading">Ladataan…</string>
     <string name="widget_more">Näytä lisää keskusteluja</string>
-    <string name="qkreply_menu_read">Merkitse luetuksi</string>
-    <string name="qkreply_menu_call">Soita</string>
-    <string name="qkreply_menu_delete">Poista</string>
-    <string name="qkreply_menu_expand">Näytä lisää</string>
-    <string name="qkreply_menu_collapse">Näytä vähemmän</string>
-    <string name="qkreply_menu_view">Avaa keskustelu</string>
+    <string name="quick_reply_menu_read">Merkitse luetuksi</string>
+    <string name="quick_reply_menu_call">Soita</string>
+    <string name="quick_reply_menu_delete">Poista</string>
+    <string name="quick_reply_menu_expand">Näytä lisää</string>
+    <string name="quick_reply_menu_collapse">Näytä vähemmän</string>
+    <string name="quick_reply_menu_view">Avaa keskustelu</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Käytä</string>
@@ -358,7 +358,7 @@
         <item>2000 kt</item>
         <item>Ei pakkausta</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Okei</item>
         <item>Anna minulle hetki</item>
         <item>Olen matkalla</item>
