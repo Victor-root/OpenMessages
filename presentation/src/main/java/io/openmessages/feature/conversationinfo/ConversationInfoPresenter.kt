@@ -24,7 +24,7 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.extensions.mapNotNull
@@ -58,7 +58,7 @@ class ConversationInfoPresenter @Inject constructor(
     private val markUnarchived: MarkUnarchived,
     private val navigator: Navigator,
     private val permissionManager: PermissionManager
-) : QkPresenter<ConversationInfoView, ConversationInfoState>(
+) : BasePresenter<ConversationInfoView, ConversationInfoState>(
         ConversationInfoState(threadId = threadId)
 ) {
 

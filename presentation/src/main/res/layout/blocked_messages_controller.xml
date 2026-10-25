@@ -24,7 +24,7 @@
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/empty"
         style="@style/TextSecondary"
         android:layout_width="match_parent"

@@ -31,7 +31,7 @@ import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.databinding.TemplateEditorDialogBinding
@@ -41,7 +41,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class TemplatesActivity : QkThemedActivity(), TemplatesView {
+class TemplatesActivity : ThemedActivity(), TemplatesView {
 
     @Inject lateinit var templatesAdapter: TemplatesAdapter
     @Inject lateinit var viewModelFactory: ViewModelFactory

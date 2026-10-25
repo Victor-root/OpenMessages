@@ -42,7 +42,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:textSize="primary"
         tools:text="Person Name" />
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

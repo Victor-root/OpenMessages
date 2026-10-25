@@ -24,7 +24,7 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.interactor.DeleteConversations
 import io.openmessages.interactor.MarkAllSeen
@@ -85,7 +85,7 @@ class MainViewModel @Inject constructor(
     private val ratingManager: RatingManager,
     private val syncContacts: SyncContacts,
     private val syncMessages: SyncMessages
-) : QkViewModel<MainView, MainState>(MainState()) {
+) : BaseViewModel<MainView, MainState>(MainState()) {
     private var lastArchivedThreadIds = listOf<Long>(0)
 
     /**

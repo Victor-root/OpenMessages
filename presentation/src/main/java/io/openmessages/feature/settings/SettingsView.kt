@@ -18,11 +18,11 @@
  */
 package io.openmessages.feature.settings
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.openmessages.common.widget.PreferenceView
 import io.reactivex.rxjava3.core.Observable
 
-interface SettingsView : QkViewContract<SettingsState> {
+interface SettingsView : ControllerView<SettingsState> {
     fun preferenceClicks(): Observable<PreferenceView>
     fun aboutLongClicks(): Observable<*>
     fun nightModeSelected(): Observable<Int>

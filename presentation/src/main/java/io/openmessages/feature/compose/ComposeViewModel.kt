@@ -36,7 +36,7 @@ import androidx.core.net.toFile
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import com.google.android.mms.pdu_alt.ContentType
-import io.openmessages.common.QkMediaPlayer
+import io.openmessages.common.AppMediaPlayer
 import io.openmessages.contentproviders.MmsPartProvider
 import io.openmessages.manager.BluetoothMicManager
 import io.openmessages.manager.MediaRecorderManager
@@ -44,14 +44,14 @@ import io.openmessages.manager.MediaRecorderManager.AUDIO_FILE_PREFIX
 import io.openmessages.manager.MediaRecorderManager.AUDIO_FILE_SUFFIX
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.common.util.MessageDetailsFormatter
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.common.util.sendSoundAudioAttributes
 import io.openmessages.common.util.sendSoundRes
 import io.openmessages.common.widget.MicInputCloudView
-import io.openmessages.common.widget.QkContextMenuRecyclerView
+import io.openmessages.common.widget.ContextMenuRecyclerView
 import io.openmessages.compat.SubscriptionManagerCompat
 import io.openmessages.extensions.isImage
 import io.openmessages.extensions.isSmil
@@ -143,7 +143,7 @@ class ComposeViewModel @Inject constructor(
     private val sendNewMessage: SendNewMessage,
     private val subscriptionManager: SubscriptionManagerCompat,
     private val saveImage: SaveImage,
-) : QkViewModel<ComposeView, ComposeState>(ComposeState(
+) : BaseViewModel<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && addresses.isEmpty(),
         threadId = threadId,
         query = query)
@@ -1107,7 +1107,7 @@ class ComposeViewModel @Inject constructor(
             .autoDispose(view.scope())
             .subscribe {
                 // stop any audio playback (ie from mms attachment or audio recorder)
-                QkMediaPlayer.reset()
+                AppMediaPlayer.reset()
 
                 // if leaving audio recording mode
                 if (!it.audioMsgRecording) {
@@ -1233,40 +1233,40 @@ class ComposeViewModel @Inject constructor(
             .autoDispose(view.scope())
             .subscribe {
                 when (it) {
-                    QkMediaPlayer.PlayingState.Paused ->
+                    AppMediaPlayer.PlayingState.Paused ->
                         view.recordAudioPlayerConfigUI.onNext(
-                            QkMediaPlayer.PlayingState.Playing
+                            AppMediaPlayer.PlayingState.Playing
                         )
-                    QkMediaPlayer.PlayingState.Playing ->
+                    AppMediaPlayer.PlayingState.Playing ->
                         view.recordAudioPlayerConfigUI.onNext(
-                            QkMediaPlayer.PlayingState.Paused
+                            AppMediaPlayer.PlayingState.Paused
                         )
                     else -> {
                         if (MediaRecorderManager.uri != Uri.EMPTY) {
-                            QkMediaPlayer.setOnPreparedListener {
+                            AppMediaPlayer.setOnPreparedListener {
                                 view.recordAudioPlayerConfigUI.onNext(
-                                    QkMediaPlayer.PlayingState.Playing
+                                    AppMediaPlayer.PlayingState.Playing
                                 )
                             }
-                            QkMediaPlayer.setOnCompletionListener {
+                            AppMediaPlayer.setOnCompletionListener {
                                 view.recordAudioPlayerConfigUI.onNext(
-                                    QkMediaPlayer.PlayingState.Stopped
+                                    AppMediaPlayer.PlayingState.Stopped
                                 )
                             }
 
                             // start the media player play sequence
-                            QkMediaPlayer.setAudioAttributes(
+                            AppMediaPlayer.setAudioAttributes(
                                 AudioAttributes.Builder()
                                     .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                                     .setUsage(AudioAttributes.USAGE_MEDIA)
                                     .build()
                             )
 
-                            QkMediaPlayer.reset()
+                            AppMediaPlayer.reset()
 
-                            QkMediaPlayer.setDataSource(context, MediaRecorderManager.uri)
+                            AppMediaPlayer.setDataSource(context, MediaRecorderManager.uri)
 
-                            QkMediaPlayer.prepareAsync()
+                            AppMediaPlayer.prepareAsync()
                         }
                     }
                 }
@@ -1441,6 +1441,6 @@ class ComposeViewModel @Inject constructor(
      * The MMS part whose context menu this item belongs to
      */
     private val MenuItem.mmsPart: MmsPart?
-        get() = (menuInfo as? QkContextMenuRecyclerView.ContextMenuInfo<*, *>)?.viewHolderValue as? MmsPart
+        get() = (menuInfo as? ContextMenuRecyclerView.ContextMenuInfo<*, *>)?.viewHolderValue as? MmsPart
 
 }

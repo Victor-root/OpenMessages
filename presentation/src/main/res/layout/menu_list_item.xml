@@ -33,7 +33,7 @@
         android:src="@drawable/radio_button"
         tools:tint="?android:attr/textColorTertiary" />
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"

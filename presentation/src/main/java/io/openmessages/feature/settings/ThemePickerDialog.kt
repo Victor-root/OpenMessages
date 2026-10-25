@@ -43,7 +43,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import io.openmessages.R
-import io.openmessages.common.base.QkActivity
+import io.openmessages.common.base.BaseActivity
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -249,7 +249,7 @@ class ThemePickerDialog : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        originalBarColor = (activity as? QkActivity)?.systemBarColor ?: DEFAULT_COLOR
+        originalBarColor = (activity as? BaseActivity)?.systemBarColor ?: DEFAULT_COLOR
         originalToolbarBackground = activity?.findViewById<Toolbar>(R.id.toolbar)?.background
         previewColor(selectedColor)
         updateButtonColors(selectedColor)
@@ -272,7 +272,7 @@ class ThemePickerDialog : DialogFragment() {
         // If the user cancelled, revert the live header/bar preview to what it was.
         // If a color was saved, the host activity's own theme subscription takes over.
         if (!colorSaved) {
-            (activity as? QkActivity)?.applySystemBars(originalBarColor)
+            (activity as? BaseActivity)?.applySystemBars(originalBarColor)
             activity?.findViewById<Toolbar>(R.id.toolbar)?.background = originalToolbarBackground
         }
     }
@@ -360,7 +360,7 @@ class ThemePickerDialog : DialogFragment() {
 
     /** Live-preview the chosen color in the status bar, navigation bar and toolbar header. */
     private fun previewColor(color: Int) {
-        (activity as? QkActivity)?.applySystemBars(color)
+        (activity as? BaseActivity)?.applySystemBars(color)
         // Match the real header: the default violet previews as a gradient, custom colors as flat.
         activity?.findViewById<Toolbar>(R.id.toolbar)?.background = if (colors.usesBrandGradient(color)) {
             GradientDrawable(

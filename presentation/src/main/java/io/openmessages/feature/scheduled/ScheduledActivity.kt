@@ -29,7 +29,7 @@ import com.jakewharton.rxbinding4.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.themeButtons
@@ -39,7 +39,7 @@ import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 
-class ScheduledActivity : QkThemedActivity(), ScheduledView {
+class ScheduledActivity : ThemedActivity(), ScheduledView {
 
     private lateinit var binding: ScheduledActivityBinding
 

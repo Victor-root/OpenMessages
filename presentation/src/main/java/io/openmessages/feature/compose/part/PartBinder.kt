@@ -18,7 +18,7 @@
  */
 package io.openmessages.feature.compose.part
 
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.model.Message
 import io.openmessages.model.MmsPart
@@ -36,7 +36,7 @@ abstract class PartBinder {
     abstract fun canBindPart(part: MmsPart): Boolean
 
     abstract fun bindPart(
-        holder: QkViewHolder,
+        holder: BaseViewHolder,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,

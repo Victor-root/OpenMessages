@@ -67,7 +67,7 @@
         Pure-black ("AMOLED") variant of the dark theme, selected by getActivityThemeRes() when the
         user turns on pure-black mode. It turns the dark-grey background surfaces true black to save
         power on OLED screens; the accent colour and the status/navigation bars are applied live in
-        QkThemedActivity, so only the background surfaces need overriding here.
+        ThemedActivity, so only the background surfaces need overriding here.
     -->
     <style name="AppTheme.Black">
         <item name="android:windowBackground">@color/black</item>

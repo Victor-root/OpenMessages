@@ -24,8 +24,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ArrayRes
 import androidx.recyclerview.widget.RecyclerView
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setVisible
@@ -37,7 +37,7 @@ import javax.inject.Inject
 
 data class MenuItem(val title: String, val actionId: Int)
 
-class MenuItemAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<MenuItem, QkBindingViewHolder<MenuListItemBinding>>() {
+class MenuItemAdapter @Inject constructor(private val context: Context, private val colors: Colors) : BaseAdapter<MenuItem, BindingViewHolder<MenuListItemBinding>>() {
 
     val menuItemClicks: Subject<Int> = PublishSubject.create()
 
@@ -61,7 +61,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
                 .mapIndexed { index, title -> MenuItem(title, valueInts?.getOrNull(index) ?: index) }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<MenuListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<MenuListItemBinding> {
         val binding = MenuListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         val states = arrayOf(
@@ -71,7 +71,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
         val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
         binding.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
 
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val menuItem = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 menuItemClicks.onNext(menuItem.actionId)
@@ -79,7 +79,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<MenuListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<MenuListItemBinding>, position: Int) {
         val menuItem = getItem(position)
 
         holder.binding.title.text = menuItem.title

@@ -26,10 +26,10 @@ import android.media.MediaMetadataRetriever.METADATA_KEY_TITLE
 import android.view.View
 import android.widget.SeekBar
 import com.bumptech.glide.Glide
-import io.openmessages.common.QkMediaPlayer
+import io.openmessages.common.AppMediaPlayer
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -59,7 +59,7 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
 
     override fun canBindPart(part: MmsPart) = part.isAudio()
 
-    var audioState = MessagesAdapter.AudioState(-1, QkMediaPlayer.PlayingState.Stopped)
+    var audioState = MessagesAdapter.AudioState(-1, AppMediaPlayer.PlayingState.Stopped)
 
     private fun startSeekBarUpdateTimer() {
         audioState.apply {
@@ -70,7 +70,7 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                 .doOnNext {
                     viewHolder?.let { holder ->
                         val binding = MmsAudioPreviewListItemBinding.bind(holder.itemView)
-                        binding.seekBar.progress = QkMediaPlayer.currentPosition
+                        binding.seekBar.progress = AppMediaPlayer.currentPosition
                     }
                 }
                 .subscribe()
@@ -78,17 +78,17 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
     }
 
     private fun uiToPlaying(binding: MmsAudioPreviewListItemBinding) {
-        binding.seekBar.max = QkMediaPlayer.duration
+        binding.seekBar.max = AppMediaPlayer.duration
         binding.seekBar.isEnabled = true
-        binding.seekBar.progress = QkMediaPlayer.currentPosition
+        binding.seekBar.progress = AppMediaPlayer.currentPosition
         binding.playPause.setImageResource(R.drawable.ic_pause_white_32dp)
-        binding.playPause.tag = QkMediaPlayer.PlayingState.Playing
+        binding.playPause.tag = AppMediaPlayer.PlayingState.Playing
         binding.metadataTitle.isSelected = true     // start marquee
     }
 
     private fun uiToPaused(binding: MmsAudioPreviewListItemBinding) {
         binding.playPause.setImageResource(R.drawable.ic_play_arrow_white_32dp)
-        binding.playPause.tag = QkMediaPlayer.PlayingState.Paused
+        binding.playPause.tag = AppMediaPlayer.PlayingState.Paused
     }
 
     private fun uiToStopped(binding: MmsAudioPreviewListItemBinding) {
@@ -96,12 +96,12 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
         binding.seekBar.max = 0
         binding.seekBar.isEnabled = false
         binding.playPause.setImageResource(R.drawable.ic_play_arrow_white_32dp)
-        binding.playPause.tag = QkMediaPlayer.PlayingState.Stopped
+        binding.playPause.tag = AppMediaPlayer.PlayingState.Stopped
         binding.metadataTitle.isSelected = false   // stop marquee
     }
 
     override fun bindPart(
-        holder: QkViewHolder,
+        holder: BaseViewHolder,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,
@@ -115,21 +115,21 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
         // play/pause button click handling
         binding.playPause.setOnClickListener {
             when (binding.playPause.tag) {
-                QkMediaPlayer.PlayingState.Playing -> {
+                AppMediaPlayer.PlayingState.Playing -> {
                     if (audioState.partId == part.id) {
-                        QkMediaPlayer.pause()
+                        AppMediaPlayer.pause()
                         uiToPaused(binding)
-                        audioState.state = QkMediaPlayer.PlayingState.Paused
+                        audioState.state = AppMediaPlayer.PlayingState.Paused
 
                         // stop progress bar update timer
                         audioState.seekBarUpdater?.dispose()
                     }
                 }
-                QkMediaPlayer.PlayingState.Paused -> {
+                AppMediaPlayer.PlayingState.Paused -> {
                     if (audioState.partId == part.id) {
-                        QkMediaPlayer.start()
+                        AppMediaPlayer.start()
                         uiToPlaying(binding)
-                        audioState.state = QkMediaPlayer.PlayingState.Playing
+                        audioState.state = AppMediaPlayer.PlayingState.Playing
 
                         // start progress bar update timer
                         startSeekBarUpdateTimer()
@@ -137,17 +137,17 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                 }
                 else -> {
                     if (part.getUri().resourceExists(context)) {
-                        QkMediaPlayer.reset() // make sure reset before trying to (re-)use
+                        AppMediaPlayer.reset() // make sure reset before trying to (re-)use
 
-                        QkMediaPlayer.setOnPreparedListener {
+                        AppMediaPlayer.setOnPreparedListener {
                             // start media playing
-                            QkMediaPlayer.start()
+                            AppMediaPlayer.start()
 
                             uiToPlaying(binding)
 
                             // set current view holder and part as active
                             audioState.apply {
-                                audioState.state = QkMediaPlayer.PlayingState.Playing
+                                audioState.state = AppMediaPlayer.PlayingState.Playing
                                 partId = part.id
                                 viewHolder = holder
                             }
@@ -156,7 +156,7 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                             startSeekBarUpdateTimer()
                         }
 
-                        QkMediaPlayer.setOnCompletionListener {   // also called on error because we don't have an onerrorlistener
+                        AppMediaPlayer.setOnCompletionListener {   // also called on error because we don't have an onerrorlistener
                             audioState.apply {
                                 // if this part is currently active, set it to stopped and inactive
                                 if ((partId == part.id) && (viewHolder != null)) {
@@ -164,23 +164,23 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                                     uiToStopped(stoppedBinding)
                                 }
 
-                                state = QkMediaPlayer.PlayingState.Stopped
+                                state = AppMediaPlayer.PlayingState.Stopped
                                 partId = -1
                                 viewHolder = null
                             }
                         }
 
                         // start the media player play sequence
-                        QkMediaPlayer.setAudioAttributes(
+                        AppMediaPlayer.setAudioAttributes(
                             AudioAttributes.Builder()
                                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)     // music, maybe?? could be voice. don't want to use CONTENT_TYPE_UNKNOWN though
                                 .setUsage(AudioAttributes.USAGE_MEDIA)
                                 .build()
                         )
 
-                        QkMediaPlayer.setDataSource(context, part.getUri())
+                        AppMediaPlayer.setDataSource(context, part.getUri())
 
-                        QkMediaPlayer.prepareAsync()
+                        AppMediaPlayer.prepareAsync()
                     }
                 }
             }
@@ -217,7 +217,7 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
                 override fun onProgressChanged(p0: SeekBar?, progress: Int, fromUser: Boolean) {
                     // if seek was initiated by the user and this part is currently playing
                     if (fromUser)
-                        QkMediaPlayer.seekTo(progress)
+                        AppMediaPlayer.seekTo(progress)
                 }
                 override fun onStartTrackingTouch(p0: SeekBar?) { /* nothing */ }
                 override fun onStopTrackingTouch(p0: SeekBar?) { /* nothing */ }
@@ -227,10 +227,10 @@ class AudioBinder @Inject constructor(colors: Colors, private val context: Conte
         // playPause button
         binding.playPause.apply {
             if ((audioState.partId == part.id) &&
-                (audioState.state == QkMediaPlayer.PlayingState.Playing))
+                (audioState.state == AppMediaPlayer.PlayingState.Playing))
                 uiToPlaying(binding)
             else if ((audioState.partId == part.id) &&
-                (audioState.state == QkMediaPlayer.PlayingState.Paused))
+                (audioState.state == AppMediaPlayer.PlayingState.Paused))
                 uiToPaused(binding)
             else
                 uiToStopped(binding)

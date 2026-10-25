@@ -24,8 +24,8 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.RouterTransaction
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
-import io.openmessages.common.QkChangeHandler
-import io.openmessages.common.base.QkController
+import io.openmessages.common.ScreenChangeHandler
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.feature.blocking.manager.BlockingManagerController
@@ -36,7 +36,7 @@ import io.openmessages.injection.appComponent
 import io.openmessages.databinding.BlockingControllerBinding
 import javax.inject.Inject
 
-class BlockingController : QkController<BlockingControllerBinding, BlockingView, BlockingState, BlockingPresenter>(), BlockingView {
+class BlockingController : BaseController<BlockingControllerBinding, BlockingView, BlockingState, BlockingPresenter>(), BlockingView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): BlockingControllerBinding =
         BlockingControllerBinding.inflate(inflater, container, false)
@@ -80,26 +80,26 @@ class BlockingController : QkController<BlockingControllerBinding, BlockingView,
 
     override fun openBlockedNumbers() {
         router.pushController(RouterTransaction.with(BlockedNumbersController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
+                .pushChangeHandler(ScreenChangeHandler())
+                .popChangeHandler(ScreenChangeHandler()))
     }
 
     override fun openMessageContentFilters() {
         router.pushController(RouterTransaction.with(MessageContentFiltersController())
-            .pushChangeHandler(QkChangeHandler())
-            .popChangeHandler(QkChangeHandler()))
+            .pushChangeHandler(ScreenChangeHandler())
+            .popChangeHandler(ScreenChangeHandler()))
     }
 
     override fun openBlockedMessages() {
         router.pushController(RouterTransaction.with(BlockedMessagesController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
+                .pushChangeHandler(ScreenChangeHandler())
+                .popChangeHandler(ScreenChangeHandler()))
     }
 
     override fun openBlockingManager() {
         router.pushController(RouterTransaction.with(BlockingManagerController())
-                .pushChangeHandler(QkChangeHandler())
-                .popChangeHandler(QkChangeHandler()))
+                .pushChangeHandler(ScreenChangeHandler())
+                .popChangeHandler(ScreenChangeHandler()))
     }
 
 }

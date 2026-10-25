@@ -21,7 +21,7 @@ package io.openmessages.feature.contacts
 import android.view.inputmethod.EditorInfo
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.extensions.removeAccents
 import io.openmessages.feature.compose.editing.ComposeItem
@@ -52,7 +52,7 @@ class ContactsViewModel @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val phoneNumberUtils: PhoneNumberUtils,
     private val setDefaultPhoneNumber: SetDefaultPhoneNumber
-) : QkViewModel<ContactsContract, ContactsState>(ContactsState()) {
+) : BaseViewModel<ContactsContract, ContactsState>(ContactsState()) {
 
     private val contactGroups: Observable<List<ContactGroup>> by lazy { contactsRepo.getUnmanagedContactGroups() }
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts() }

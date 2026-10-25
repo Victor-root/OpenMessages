@@ -46,7 +46,7 @@ import javax.inject.Inject
  */
 class LegacyRealmImport @Inject constructor(
     private val context: Context,
-    private val realmMigration: QkRealmMigration
+    private val realmMigration: LegacyRealmMigration
 ) : RoomDatabase.Callback() {
 
     private val converters = Converters()
@@ -89,13 +89,13 @@ class LegacyRealmImport @Inject constructor(
     }
 
     private fun configuration() = RealmConfiguration.Builder()
-        .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
+        .schemaVersion(LegacyRealmMigration.SCHEMA_VERSION)
         .build()
 
     private fun migrate(realm: DynamicRealm) {
         val version = realm.version
-        if (version < QkRealmMigration.SCHEMA_VERSION) {
-            realmMigration.migrate(realm, version, QkRealmMigration.SCHEMA_VERSION)
+        if (version < LegacyRealmMigration.SCHEMA_VERSION) {
+            realmMigration.migrate(realm, version, LegacyRealmMigration.SCHEMA_VERSION)
         }
     }
 

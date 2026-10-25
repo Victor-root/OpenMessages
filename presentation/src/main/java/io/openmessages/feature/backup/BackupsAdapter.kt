@@ -22,8 +22,8 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.databinding.BackupListItemBinding
 import io.openmessages.model.BackupItem
 import java.util.Date
@@ -36,14 +36,14 @@ import java.util.Date
 class BackupsAdapter(
     private val onRename: (BackupItem) -> Unit,
     private val onDelete: (BackupItem) -> Unit
-) : QkAdapter<BackupItem, QkBindingViewHolder<BackupListItemBinding>>() {
+) : BaseAdapter<BackupItem, BindingViewHolder<BackupListItemBinding>>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<BackupListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<BackupListItemBinding> {
         val binding = BackupListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding)
+        return BindingViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<BackupListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<BackupListItemBinding>, position: Int) {
         val item = getItem(position)
         val context = holder.binding.root.context
 

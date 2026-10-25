@@ -60,7 +60,7 @@ import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.applyInsetBottomMargin
 import io.openmessages.common.util.extensions.applyInsetPadding
@@ -88,7 +88,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class MainActivity : QkThemedActivity(), MainView {
+class MainActivity : ThemedActivity(), MainView {
 
     @Inject lateinit var blockingDialog: BlockingDialog
     @Inject lateinit var disposables: CompositeDisposable
@@ -305,7 +305,7 @@ class MainActivity : QkThemedActivity(), MainView {
                     val useGradient = colors.usesBrandGradient(theme.theme)
                     // Anything sitting on the theme color follows the status-bar icon rule. Computed
                     // here rather than read from toolbarContentColor: this subscription is registered
-                    // in onCreate, so it fires before QkThemedActivity's own in onPostCreate.
+                    // in onCreate, so it fires before ThemedActivity's own in onPostCreate.
                     val onTheme = colors.contentColorOnTheme(theme.theme)
 
                     // Drawer icons tint

@@ -21,20 +21,20 @@ package io.openmessages.feature.blocking.filters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.model.MessageContentFilter
 import io.openmessages.databinding.MessageContentFilterListItemBinding
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 
-class MessageContentFiltersAdapter : QkAdapter<MessageContentFilter, QkBindingViewHolder<MessageContentFilterListItemBinding>>() {
+class MessageContentFiltersAdapter : BaseAdapter<MessageContentFilter, BindingViewHolder<MessageContentFilterListItemBinding>>() {
 
     val removeMessageContentFilter: Subject<Long> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<MessageContentFilterListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<MessageContentFilterListItemBinding> {
         val binding = MessageContentFilterListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.removeFilter.setOnClickListener {
                 val filter = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 removeMessageContentFilter.onNext(filter.id)
@@ -42,7 +42,7 @@ class MessageContentFiltersAdapter : QkAdapter<MessageContentFilter, QkBindingVi
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<MessageContentFilterListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<MessageContentFilterListItemBinding>, position: Int) {
         val item = getItem(position)
         holder.binding.caseIcon.visibility = if (item.caseSensitive) View.VISIBLE else View.GONE
         holder.binding.regexIcon.visibility = if (item.isRegex) View.VISIBLE else View.GONE

@@ -25,7 +25,7 @@
     android:layout_height="match_parent"
     tools:parentTag="io.openmessages.common.widget.AvatarView">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/initial"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

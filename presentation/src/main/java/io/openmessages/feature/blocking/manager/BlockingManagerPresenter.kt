@@ -7,10 +7,10 @@ import io.openmessages.R
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.blocking.CallBlockerBlockingClient
 import io.openmessages.blocking.CallControlBlockingClient
-import io.openmessages.blocking.QksmsBlockingClient
+import io.openmessages.blocking.BuiltInBlockingClient
 import io.openmessages.blocking.ShouldIAnswerBlockingClient
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -26,9 +26,9 @@ class BlockingManagerPresenter @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val navigator: Navigator,
     private val prefs: Preferences,
-    private val qksms: QksmsBlockingClient,
+    private val builtIn: BuiltInBlockingClient,
     private val shouldIAnswer: ShouldIAnswerBlockingClient
-) : QkPresenter<BlockingManagerView, BlockingManagerState>(BlockingManagerState(
+) : BasePresenter<BlockingManagerView, BlockingManagerState>(BlockingManagerState(
         blockingManager = prefs.blockingManager.get(),
         callBlockerInstalled = callBlocker.isAvailable(),
         callControlInstalled = callControl.isAvailable(),
@@ -61,10 +61,10 @@ class BlockingManagerPresenter @Inject constructor(
                 .autoDispose(view.scope())
                 .subscribe { available -> newState { copy(siaInstalled = available) } }
 
-        view.qksmsClicked()
+        view.builtInClicked()
                 .observeOn(Schedulers.io())
-                .map { getAddressesToBlock(qksms) }
-                .switchMap { numbers -> qksms.block(numbers).andThen(Observable.just(Unit)) } // Hack
+                .map { getAddressesToBlock(builtIn) }
+                .switchMap { numbers -> builtIn.block(numbers).andThen(Observable.just(Unit)) } // Hack
                 .autoDispose(view.scope())
                 .subscribe {
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_DEFAULT)

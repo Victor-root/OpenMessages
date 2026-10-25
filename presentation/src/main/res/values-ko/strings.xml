@@ -184,7 +184,7 @@
     </string-array>
     <string name="settings_category_appearance">디자인</string>
     <string name="settings_category_general">일반 설정</string>
-    <string name="settings_category_qkreply">빠른 응답</string>
+    <string name="settings_category_quick_reply">빠른 응답</string>
     <string name="settings_theme_title">테마</string>
     <string name="settings_night_title">나이트 모드</string>
     <string name="settings_black_title">완전한 블랙 테마</string>
@@ -205,10 +205,10 @@
     <string name="settings_vibration_title">진동</string>
     <string name="settings_ringtone_title">소리</string>
     <string name="settings_ringtone_none">없음</string>
-    <string name="settings_qkreply_title">Quick Reply</string>
-    <string name="settings_qkreply_summary">새로운 메시지에 대한 팝업</string>
-    <string name="settings_qkreply_tap_dismiss_title">탭해서 닫기</string>
-    <string name="settings_qkreply_tap_dismiss_summary">아무데나 탭하면 팝업이 닫힙니다.</string>
+    <string name="settings_quick_reply_title">Quick Reply</string>
+    <string name="settings_quick_reply_summary">새로운 메시지에 대한 팝업</string>
+    <string name="settings_quick_reply_tap_dismiss_title">탭해서 닫기</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">아무데나 탭하면 팝업이 닫힙니다.</string>
     <string name="settings_delayed_title">전송 지연</string>
     <string name="settings_swipe_actions">쓸어넘기기 설정</string>
     <string name="settings_swipe_actions_summary">대화를 쓸어넘겼을 때 할 작업</string>
@@ -256,7 +256,7 @@
     <string name="blocking_drop_summary">차단된 사람으로부터 오는 메시지를 가리는 대신 삭제합니다</string>
     <string name="blocking_conversations">차단된 대화</string>
     <string name="blocking_manager_title">차단 메니저</string>
-    <string name="blocking_manager_qksms_summary">빌트인 차단기능이 있는 기본 필터.</string>
+    <string name="blocking_manager_built_in_summary">빌트인 차단기능이 있는 기본 필터.</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">자동으오 전화와 메시지를 한 곳에서 필터링하세요! Community IQ™는 커뮤니티 기반으로 원하지 않는 스팸 메시지를 차단해줍니다.</string>
     <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
@@ -288,12 +288,12 @@
     <string name="about_copyright_title">저작권</string>
     <string name="widget_loading">불러오는 중…</string>
     <string name="widget_more">더 많은 대화 보기</string>
-    <string name="qkreply_menu_read">읽음으로 표시</string>
-    <string name="qkreply_menu_call">전화하기</string>
-    <string name="qkreply_menu_delete">삭제하기</string>
-    <string name="qkreply_menu_expand">더 보기</string>
-    <string name="qkreply_menu_collapse">적게 표시</string>
-    <string name="qkreply_menu_view">대화 열기</string>
+    <string name="quick_reply_menu_read">읽음으로 표시</string>
+    <string name="quick_reply_menu_call">전화하기</string>
+    <string name="quick_reply_menu_delete">삭제하기</string>
+    <string name="quick_reply_menu_expand">더 보기</string>
+    <string name="quick_reply_menu_collapse">적게 표시</string>
+    <string name="quick_reply_menu_view">대화 열기</string>
     <string name="theme_material">Meterial</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">적용하기</string>
@@ -355,7 +355,7 @@
         <item>2000KB</item>
         <item>무압축</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>확인</item>
         <item>잠시만 기다려주세요.</item>
         <item>가고 있어요</item>

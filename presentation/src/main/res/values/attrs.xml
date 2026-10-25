@@ -40,12 +40,12 @@
         <enum name="emoji" value="5" />
     </attr>
 
-    <declare-styleable name="QkTextView">
+    <declare-styleable name="AppTextView">
         <attr name="textColor" />
         <attr name="textSize" />
     </declare-styleable>
 
-    <declare-styleable name="QkEditText">
+    <declare-styleable name="AppEditText">
         <attr name="textColor" />
         <attr name="textSize" />
     </declare-styleable>

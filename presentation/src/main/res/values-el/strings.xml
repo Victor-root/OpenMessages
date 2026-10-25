@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">Εμφάνιση</string>
     <string name="settings_category_general">Γενικά</string>
-    <string name="settings_category_qkreply">Γρήγορη απάντηση</string>
+    <string name="settings_category_quick_reply">Γρήγορη απάντηση</string>
     <string name="settings_theme_title">Θέμα εμφάνισης</string>
     <string name="settings_night_title">Νυχτερινή λειτουργία</string>
     <string name="settings_black_title">Νυχτερινή λειτουργία καθαρού μαύρου</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">Δόνηση</string>
     <string name="settings_ringtone_title">Ήχος</string>
     <string name="settings_ringtone_none">Κανένα</string>
-    <string name="settings_qkreply_title">Γρήγορη απάντηση</string>
-    <string name="settings_qkreply_summary">Αναδυόμενο παράθυρο για νέα μηνύματα</string>
-    <string name="settings_qkreply_tap_dismiss_title">Πατήστε για αγνόηση</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Πατήστε εκτός του παραθύρου για να το κλείσετε</string>
+    <string name="settings_quick_reply_title">Γρήγορη απάντηση</string>
+    <string name="settings_quick_reply_summary">Αναδυόμενο παράθυρο για νέα μηνύματα</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Πατήστε για αγνόηση</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Πατήστε εκτός του παραθύρου για να το κλείσετε</string>
     <string name="settings_delayed_title">Καθυστερημένη αποστολή</string>
     <string name="settings_swipe_actions">Ενέργειες συρσίματος στην οθόνη</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">Απόρριψη αντί για απόκρυψη μηνυμάτων από αποστολείς σε φραγή</string>
     <string name="blocking_conversations">Συζητήσεις σε φραγή</string>
     <string name="blocking_manager_title">Διαχειριστής φραγής</string>
-    <string name="blocking_manager_qksms_summary">Ενσωματωμένη λειτουργία φραγής του Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Ενσωματωμένη λειτουργία φραγής του Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">Πνευματικά δικαιώματα</string>
     <string name="widget_loading">Loading…</string>
     <string name="widget_more">View more conversations</string>
-    <string name="qkreply_menu_read">Mark read</string>
-    <string name="qkreply_menu_call">Call</string>
-    <string name="qkreply_menu_delete">Delete</string>
-    <string name="qkreply_menu_expand">Show more</string>
-    <string name="qkreply_menu_collapse">Show less</string>
-    <string name="qkreply_menu_view">Open conversation</string>
+    <string name="quick_reply_menu_read">Mark read</string>
+    <string name="quick_reply_menu_call">Call</string>
+    <string name="quick_reply_menu_delete">Delete</string>
+    <string name="quick_reply_menu_expand">Show more</string>
+    <string name="quick_reply_menu_collapse">Show less</string>
+    <string name="quick_reply_menu_view">Open conversation</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Apply</string>
@@ -358,7 +358,7 @@
         <item>2000KB</item>
         <item>No compression</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Okay</item>
         <item>Give me a moment</item>
         <item>On my way</item>

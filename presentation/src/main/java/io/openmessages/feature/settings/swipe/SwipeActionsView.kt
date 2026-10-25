@@ -18,10 +18,10 @@
  */
 package io.openmessages.feature.settings.swipe
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.reactivex.rxjava3.core.Observable
 
-interface SwipeActionsView : QkViewContract<SwipeActionsState> {
+interface SwipeActionsView : ControllerView<SwipeActionsState> {
 
     enum class Action { LEFT, RIGHT }
 

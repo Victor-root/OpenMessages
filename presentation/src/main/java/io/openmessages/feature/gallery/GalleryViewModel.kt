@@ -24,7 +24,7 @@ import autodispose2.autoDispose
 import io.openmessages.contentproviders.MmsPartProvider
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.interactor.SaveImage
 import io.openmessages.manager.PermissionManager
@@ -46,7 +46,7 @@ class GalleryViewModel @Inject constructor(
     private val navigator: Navigator,
     private val saveImage: SaveImage,
     private val permissions: PermissionManager
-) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
+) : BaseViewModel<GalleryView, GalleryState>(GalleryState()) {
     init {
         val threadId = Maybe.fromCallable { messageRepo.getMessageForPart(partId)?.threadId }
                 .subscribeOn(Schedulers.io())

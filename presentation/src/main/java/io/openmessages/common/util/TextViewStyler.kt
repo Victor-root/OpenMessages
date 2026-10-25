@@ -30,8 +30,8 @@ import io.openmessages.common.util.TextViewStyler.Companion.SIZE_SECONDARY
 import io.openmessages.common.util.TextViewStyler.Companion.SIZE_TERTIARY
 import io.openmessages.common.util.TextViewStyler.Companion.SIZE_TOOLBAR
 import io.openmessages.common.util.extensions.getColorCompat
-import io.openmessages.common.widget.QkEditText
-import io.openmessages.common.widget.QkTextView
+import io.openmessages.common.widget.AppEditText
+import io.openmessages.common.widget.AppTextView
 import io.openmessages.util.Preferences
 import javax.inject.Inject
 
@@ -62,15 +62,15 @@ class TextViewStyler @Inject constructor(
                 var textSizeAttr: Int
 
                 when (this) {
-                    is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView).run {
-                        colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
-                        textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+                    is AppTextView -> context.obtainStyledAttributes(attrs, R.styleable.AppTextView).run {
+                        colorAttr = getInt(R.styleable.AppTextView_textColor, -1)
+                        textSizeAttr = getInt(R.styleable.AppTextView_textSize, -1)
                         recycle()
                     }
 
-                    is QkEditText -> context.obtainStyledAttributes(attrs, R.styleable.QkEditText).run {
-                        colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
-                        textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+                    is AppEditText -> context.obtainStyledAttributes(attrs, R.styleable.AppEditText).run {
+                        colorAttr = getInt(R.styleable.AppEditText_textColor, -1)
+                        textSizeAttr = getInt(R.styleable.AppEditText_textSize, -1)
                         recycle()
                     }
 
@@ -108,15 +108,15 @@ class TextViewStyler @Inject constructor(
         }
 
         when (textView) {
-            is QkTextView -> textView.context.obtainStyledAttributes(attrs, R.styleable.QkTextView).run {
-                colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
-                textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+            is AppTextView -> textView.context.obtainStyledAttributes(attrs, R.styleable.AppTextView).run {
+                colorAttr = getInt(R.styleable.AppTextView_textColor, -1)
+                textSizeAttr = getInt(R.styleable.AppTextView_textSize, -1)
                 recycle()
             }
 
-            is QkEditText -> textView.context.obtainStyledAttributes(attrs, R.styleable.QkEditText).run {
-                colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
-                textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+            is AppEditText -> textView.context.obtainStyledAttributes(attrs, R.styleable.AppEditText).run {
+                colorAttr = getInt(R.styleable.AppEditText_textColor, -1)
+                textSizeAttr = getInt(R.styleable.AppEditText_textSize, -1)
                 recycle()
             }
 
@@ -126,7 +126,7 @@ class TextViewStyler @Inject constructor(
         when (colorAttr) {
             COLOR_THEME -> {
                 textView.setTextColor(colors.theme().theme)
-                (textView as? QkTextView)?.themeColorAttr = COLOR_THEME
+                (textView as? AppTextView)?.themeColorAttr = COLOR_THEME
             }
             COLOR_PRIMARY_ON_THEME -> textView.setTextColor(colors.theme().textPrimary)
             COLOR_SECONDARY_ON_THEME -> textView.setTextColor(colors.theme().textSecondary)

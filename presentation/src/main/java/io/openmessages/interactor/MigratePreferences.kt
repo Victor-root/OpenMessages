@@ -61,8 +61,8 @@ class MigratePreferences @Inject constructor(
                     prefs.delivery.set(rxPrefs.getBoolean("pref_key_delivery", prefs.delivery.get()).get())
 
                     // Quickreply
-                    prefs.qkreply.set(rxPrefs.getBoolean("pref_key_quickreply_enabled", prefs.qkreply.get()).get())
-                    prefs.qkreplyTapDismiss.set(rxPrefs.getBoolean("pref_key_quickreply_dismiss", prefs.qkreplyTapDismiss.get()).get())
+                    prefs.quickReply.set(rxPrefs.getBoolean("pref_key_quickreply_enabled", prefs.quickReply.get()).get())
+                    prefs.quickReplyTapDismiss.set(rxPrefs.getBoolean("pref_key_quickreply_dismiss", prefs.quickReplyTapDismiss.get()).get())
 
                     // Font size
                     prefs.textSize.set(rxPrefs.getString("pref_key_font_size", "${prefs.textSize.get()}").get().toInt())

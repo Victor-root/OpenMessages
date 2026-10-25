@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">தோற்றம்</string>
     <string name="settings_category_general">பொது</string>
-    <string name="settings_category_qkreply">QK பதில்</string>
+    <string name="settings_category_quick_reply">விரைவு பதில்</string>
     <string name="settings_theme_title">நிற அமைப்பு</string>
     <string name="settings_night_title">இரவு பயன்முறை</string>
     <string name="settings_black_title">தூய கருப்பு இரவு பயன்முறை</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">அதிர்வு</string>
     <string name="settings_ringtone_title">ஒலி</string>
     <string name="settings_ringtone_none">ஏதுமில்லை</string>
-    <string name="settings_qkreply_title">QK பதிலளிப்பு</string>
-    <string name="settings_qkreply_summary">புது தகவல்களுக்கு பாப்அப்</string>
-    <string name="settings_qkreply_tap_dismiss_title">நிராகரிக்க தட்டு</string>
-    <string name="settings_qkreply_tap_dismiss_summary">பாப்அப்பை மூட அதன் வெளியே தட்டு</string>
+    <string name="settings_quick_reply_title">விரைவு பதில்</string>
+    <string name="settings_quick_reply_summary">புது தகவல்களுக்கு பாப்அப்</string>
+    <string name="settings_quick_reply_tap_dismiss_title">நிராகரிக்க தட்டு</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">பாப்அப்பை மூட அதன் வெளியே தட்டு</string>
     <string name="settings_delayed_title">தாமத அனுப்பல்</string>
     <string name="settings_swipe_actions">தேய்த்தல் செயல்கள்</string>
     <string name="settings_swipe_actions_summary">உரையாடல் தேய்த்தல் செயல்களை உள்ளமை</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">தடுத்த அனுப்புநர்களிடமிருந்து வரும் தகவல்களை மறைப்பதற்கு பதிலாக கைவிடு</string>
     <string name="blocking_conversations">தடுக்கப்பட்ட உரையாடல்கள்</string>
     <string name="blocking_manager_title">தடுத்தல் மேலாளர்</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">பதிப்புரிமை</string>
     <string name="widget_loading">ஏற்றுகிறது...</string>
     <string name="widget_more">மேலும் உரையாடல்களை பார்</string>
-    <string name="qkreply_menu_read">படித்ததாகக் குறி</string>
-    <string name="qkreply_menu_call">அழை</string>
-    <string name="qkreply_menu_delete">அழி</string>
-    <string name="qkreply_menu_expand">அதிகம் காட்டு</string>
-    <string name="qkreply_menu_collapse">குறைவாக காட்டு</string>
-    <string name="qkreply_menu_view">உரையாடலை திற</string>
+    <string name="quick_reply_menu_read">படித்ததாகக் குறி</string>
+    <string name="quick_reply_menu_call">அழை</string>
+    <string name="quick_reply_menu_delete">அழி</string>
+    <string name="quick_reply_menu_expand">அதிகம் காட்டு</string>
+    <string name="quick_reply_menu_collapse">குறைவாக காட்டு</string>
+    <string name="quick_reply_menu_view">உரையாடலை திற</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">விண்ணப்பி</string>
@@ -358,7 +358,7 @@
         <item>2000KB</item>
         <item>No compression</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>சரி</item>
         <item>சற்றுநேரம் பொறு</item>
         <item>இதோ வந்துகொண்டே</item>

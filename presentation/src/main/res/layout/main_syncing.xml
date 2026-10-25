@@ -25,7 +25,7 @@
     android:orientation="vertical"
     android:paddingEnd="72dp">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/syncingLabel"
         style="@style/TextPrimary"
         android:layout_width="match_parent"

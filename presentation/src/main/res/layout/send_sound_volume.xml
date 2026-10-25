@@ -17,7 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<!-- Volume row shown above the Cancel/OK buttons in the send-sound QkDialog (set as its
+<!-- Volume row shown above the Cancel/OK buttons in the send-sound MenuDialog (set as its
      extraView). The SeekBar's progress/thumb tint placeholder here is design-time only; the real
      theme color is applied in code when the dialog is built, same as elsewhere in the app. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

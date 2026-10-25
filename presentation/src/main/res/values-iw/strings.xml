@@ -187,7 +187,7 @@
     </string-array>
     <string name="settings_category_appearance">מראה</string>
     <string name="settings_category_general">כללי</string>
-    <string name="settings_category_qkreply">תגובה מהירה</string>
+    <string name="settings_category_quick_reply">תגובה מהירה</string>
     <string name="settings_theme_title">ערכת נושא</string>
     <string name="settings_night_title">מצב לילה</string>
     <string name="settings_black_title">מצב לילה שחור טהור</string>
@@ -208,10 +208,10 @@
     <string name="settings_vibration_title">רטט</string>
     <string name="settings_ringtone_title">צליל</string>
     <string name="settings_ringtone_none">ללא</string>
-    <string name="settings_qkreply_title">תגובה מהירה</string>
-    <string name="settings_qkreply_summary">חלונית קופצת להודעות חדשות</string>
-    <string name="settings_qkreply_tap_dismiss_title">הקש כדי להתעלם</string>
-    <string name="settings_qkreply_tap_dismiss_summary">הקש מחוץ לחלונית הקופצת כדי לסגור אותה</string>
+    <string name="settings_quick_reply_title">תגובה מהירה</string>
+    <string name="settings_quick_reply_summary">חלונית קופצת להודעות חדשות</string>
+    <string name="settings_quick_reply_tap_dismiss_title">הקש כדי להתעלם</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">הקש מחוץ לחלונית הקופצת כדי לסגור אותה</string>
     <string name="settings_delayed_title">שליחה בעיכוב</string>
     <string name="settings_swipe_actions">פעולות ניגוב</string>
     <string name="settings_swipe_actions_summary">הגדר פעולות ניגוב להתכתבויות</string>
@@ -262,7 +262,7 @@
     <string name="blocking_drop_summary">להשמיט הודעות נכנסות משולחים חסומים במקום להסתיר אותן</string>
     <string name="blocking_conversations">התכתבויות חסומות</string>
     <string name="blocking_manager_title">מנהל חסימות</string>
-    <string name="blocking_manager_qksms_summary">תכונת חסימה מובנית בתוך Open Messages</string>
+    <string name="blocking_manager_built_in_summary">תכונת חסימה מובנית בתוך Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">חסימת הודעות ספאם, מספרים ושיחות לא מזוהות עם רשימת חסימה ותזמון</string>
     <string name="blocking_manager_call_control_summary">לסנן אוטומטית את השיחות וההודעות שלך במקום אחיד ונוח! Community IQ™‎ מאפשר לך להימנע מהודעות בלתי רצויות בזכות דיווחים על מפיצי ספאם מצד הקהילה</string>
     <string name="blocking_manager_sia_summary">לסנן אוטומטית הודעות ממספרים בלתי רצויים על ידי שימוש ביישומון „Should I Answer” (שאענה)</string>
@@ -300,12 +300,12 @@
     <string name="about_copyright_title">זכויות יוצרים</string>
     <string name="widget_loading">בטעינה…</string>
     <string name="widget_more">הצגת התכתבויות נוספות</string>
-    <string name="qkreply_menu_read">סימון כהודעה שנקראה</string>
-    <string name="qkreply_menu_call">להתקשר</string>
-    <string name="qkreply_menu_delete">מחיקה</string>
-    <string name="qkreply_menu_expand">להציג יותר</string>
-    <string name="qkreply_menu_collapse">להציג פחות</string>
-    <string name="qkreply_menu_view">פתיחת התכתבות</string>
+    <string name="quick_reply_menu_read">סימון כהודעה שנקראה</string>
+    <string name="quick_reply_menu_call">להתקשר</string>
+    <string name="quick_reply_menu_delete">מחיקה</string>
+    <string name="quick_reply_menu_expand">להציג יותר</string>
+    <string name="quick_reply_menu_collapse">להציג פחות</string>
+    <string name="quick_reply_menu_view">פתיחת התכתבות</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">הקסה</string>
     <string name="theme_apply">החלה</string>
@@ -368,7 +368,7 @@
         <item>2000 ק״ב</item>
         <item>ללא דחיסה</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>בסדר</item>
         <item>כבר אחזור אליך</item>
         <item>בדרך</item>

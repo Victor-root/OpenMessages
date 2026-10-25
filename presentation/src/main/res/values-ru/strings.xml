@@ -187,7 +187,7 @@
     </string-array>
     <string name="settings_category_appearance">Внешний вид</string>
     <string name="settings_category_general">Общее</string>
-    <string name="settings_category_qkreply">QK-ответ</string>
+    <string name="settings_category_quick_reply">Быстрый ответ</string>
     <string name="settings_theme_title">Тема</string>
     <string name="settings_night_title">Ночной режим</string>
     <string name="settings_black_title">Полностью чёрный ночной режим</string>
@@ -208,10 +208,10 @@
     <string name="settings_vibration_title">Вибросигнал</string>
     <string name="settings_ringtone_title">Звук</string>
     <string name="settings_ringtone_none">Нет</string>
-    <string name="settings_qkreply_title">QK-ответ</string>
-    <string name="settings_qkreply_summary">Всплывающее окно для новых сообщений</string>
-    <string name="settings_qkreply_tap_dismiss_title">Нажмите, чтобы отклонить</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Нажмите за пределами всплывающего окна, чтобы закрыть его</string>
+    <string name="settings_quick_reply_title">Быстрый ответ</string>
+    <string name="settings_quick_reply_summary">Всплывающее окно для новых сообщений</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Нажмите, чтобы отклонить</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Нажмите за пределами всплывающего окна, чтобы закрыть его</string>
     <string name="settings_delayed_title">Задержка перед отправкой</string>
     <string name="settings_swipe_actions">Действия жестами</string>
     <string name="settings_swipe_actions_summary">Настройка действий жестами для бесед</string>
@@ -262,7 +262,7 @@
     <string name="blocking_drop_summary">Удалять входящие сообщения от заблокированных отправителей, а не скрывать их</string>
     <string name="blocking_conversations">Заблокированные беседы</string>
     <string name="blocking_manager_title">Управление блокировкой</string>
-    <string name="blocking_manager_qksms_summary">Встроенная функция блокировки Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Встроенная функция блокировки Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Чёрный список с возможностью работы по расписанию для блокировки сообщений со спамом, звонков с определённых и неизвестных номеров</string>
     <string name="blocking_manager_call_control_summary">Автоматическая фильтрация звонков и сообщений в одном удобном месте! Community IQ™ позволяет предотвратить получение нежелательных сообщений от известных сообществу спаммеров</string>
     <string name="blocking_manager_sia_summary">Автоматически фильтровать сообщения от нежелательных номеров, используя приложение «Should I Answer»</string>
@@ -300,12 +300,12 @@
     <string name="about_copyright_title">Авторское право</string>
     <string name="widget_loading">Загрузка…</string>
     <string name="widget_more">Посмотреть больше бесед</string>
-    <string name="qkreply_menu_read">Прочитано</string>
-    <string name="qkreply_menu_call">Позвонить</string>
-    <string name="qkreply_menu_delete">Удалить</string>
-    <string name="qkreply_menu_expand">Показать ещё</string>
-    <string name="qkreply_menu_collapse">Показать меньше</string>
-    <string name="qkreply_menu_view">Открыть беседу</string>
+    <string name="quick_reply_menu_read">Прочитано</string>
+    <string name="quick_reply_menu_call">Позвонить</string>
+    <string name="quick_reply_menu_delete">Удалить</string>
+    <string name="quick_reply_menu_expand">Показать ещё</string>
+    <string name="quick_reply_menu_collapse">Показать меньше</string>
+    <string name="quick_reply_menu_view">Открыть беседу</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Применить</string>
@@ -368,7 +368,7 @@
         <item>2000 Кб</item>
         <item>Без сжатия</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Хорошо</item>
         <item>Дайте мне минуту</item>
         <item>Мне по пути</item>

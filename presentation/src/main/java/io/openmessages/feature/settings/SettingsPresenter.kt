@@ -23,7 +23,7 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.labelFor
@@ -47,7 +47,7 @@ class SettingsPresenter @Inject constructor(
     private val nightModeManager: NightModeManager,
     private val prefs: Preferences,
     private val syncMessages: SyncMessages
-) : QkPresenter<SettingsView, SettingsState>(SettingsState(
+) : BasePresenter<SettingsView, SettingsState>(SettingsState(
         nightModeId = prefs.nightMode.get()
 )) {
 

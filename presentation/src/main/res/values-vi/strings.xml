@@ -184,7 +184,7 @@
     </string-array>
     <string name="settings_category_appearance">Giao diện</string>
     <string name="settings_category_general">Chung</string>
-    <string name="settings_category_qkreply">Trả lời nhanh</string>
+    <string name="settings_category_quick_reply">Trả lời nhanh</string>
     <string name="settings_theme_title">Chủ đề</string>
     <string name="settings_night_title">Giao diện tối</string>
     <string name="settings_black_title">Giao diện tối AMOLED</string>
@@ -205,10 +205,10 @@
     <string name="settings_vibration_title">Rung</string>
     <string name="settings_ringtone_title">Âm thanh</string>
     <string name="settings_ringtone_none">Không dùng</string>
-    <string name="settings_qkreply_title">Trả lời nhanh</string>
-    <string name="settings_qkreply_summary">Hiển thị popup khi có tin nhắn mới</string>
-    <string name="settings_qkreply_tap_dismiss_title">Chạm để bỏ qua</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Chạm vào phía ngoài của hộp thoại để đóng</string>
+    <string name="settings_quick_reply_title">Trả lời nhanh</string>
+    <string name="settings_quick_reply_summary">Hiển thị popup khi có tin nhắn mới</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Chạm để bỏ qua</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Chạm vào phía ngoài của hộp thoại để đóng</string>
     <string name="settings_delayed_title">Trì hoãn gửi tin</string>
     <string name="settings_swipe_actions">Các hành động vuốt</string>
     <string name="settings_swipe_actions_summary">Tuỳ chỉnh hành động vuốt cho cuộc trò chuyện</string>
@@ -256,7 +256,7 @@
     <string name="blocking_drop_summary">Loại bỏ các tin nhắn được gửi tới từ người gửi đã chặn thay vì ẩn chúng</string>
     <string name="blocking_conversations">Các cuộc trò chuyện đã chặn</string>
     <string name="blocking_manager_title">Quản lý danh sách chặn</string>
-    <string name="blocking_manager_qksms_summary">Chức năng chặn tích hợp sẵn trong Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Chức năng chặn tích hợp sẵn trong Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Chặn tin nhằn rác, số &amp; cuộc gọi không xác định bằng danh sách đen &amp; Lịch trình</string>
     <string name="blocking_manager_call_control_summary">Tự động lọc các cuộc gọi và tin nhắn của bạn ở một nơi thuận tiện! Cộng đồng IQ™ cho phép bạn ngăn chặn các tin nhắn từ những kẻ gửi tin rác được đóng góp bởi cộng đồng</string>
     <string name="blocking_manager_sia_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
@@ -288,12 +288,12 @@
     <string name="about_copyright_title">Bản quyền</string>
     <string name="widget_loading">Đang tải…</string>
     <string name="widget_more">Xem thêm các cuộc trò chuyện</string>
-    <string name="qkreply_menu_read">Đánh dấu đã đọc</string>
-    <string name="qkreply_menu_call">Đàm thoại</string>
-    <string name="qkreply_menu_delete">Xoá</string>
-    <string name="qkreply_menu_expand">Hiển thị nhiều hơn</string>
-    <string name="qkreply_menu_collapse">Hiển thị ít hơn</string>
-    <string name="qkreply_menu_view">Mở cuộc trò chuyện</string>
+    <string name="quick_reply_menu_read">Đánh dấu đã đọc</string>
+    <string name="quick_reply_menu_call">Đàm thoại</string>
+    <string name="quick_reply_menu_delete">Xoá</string>
+    <string name="quick_reply_menu_expand">Hiển thị nhiều hơn</string>
+    <string name="quick_reply_menu_collapse">Hiển thị ít hơn</string>
+    <string name="quick_reply_menu_view">Mở cuộc trò chuyện</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">Hệ 16</string>
     <string name="theme_apply">Áp dụng</string>
@@ -353,7 +353,7 @@
         <item>2000KB</item>
         <item>Không nén</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Ok</item>
         <item>Chờ một lát</item>
         <item>Tôi đang đến đây</item>

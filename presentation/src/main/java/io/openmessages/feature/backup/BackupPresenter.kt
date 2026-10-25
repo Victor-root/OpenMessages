@@ -23,7 +23,7 @@ import android.net.Uri
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.LauncherIconManager
 import io.openmessages.common.util.extensions.makeToast
@@ -49,7 +49,7 @@ class BackupPresenter @Inject constructor(
     private val performBackup: PerformBackup,
     private val permissionManager: PermissionManager,
     private val prefs: Preferences
-) : QkPresenter<BackupView, BackupState>(BackupState()) {
+) : BasePresenter<BackupView, BackupState>(BackupState()) {
 
     /** Restore parameters held while we ask the user to grant the exact-alarm permission. */
     private var pendingRestore: Triple<Uri, String, Set<BackupCategory>>? = null

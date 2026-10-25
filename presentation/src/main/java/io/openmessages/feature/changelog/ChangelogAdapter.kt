@@ -23,12 +23,12 @@ import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.databinding.ChangelogListItemBinding
 import io.openmessages.manager.ChangelogManager
 
-class ChangelogAdapter(private val context: Context) : QkAdapter<ChangelogAdapter.ChangelogItem, QkBindingViewHolder<ChangelogListItemBinding>>() {
+class ChangelogAdapter(private val context: Context) : BaseAdapter<ChangelogAdapter.ChangelogItem, BindingViewHolder<ChangelogListItemBinding>>() {
 
     data class ChangelogItem(val type: Int, val label: String)
 
@@ -57,16 +57,16 @@ class ChangelogAdapter(private val context: Context) : QkAdapter<ChangelogAdapte
         data = changes
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ChangelogListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ChangelogListItemBinding> {
         val binding = ChangelogListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             if (viewType == 0) {
                 binding.changelogItem.setTypeface(binding.changelogItem.typeface, Typeface.BOLD)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ChangelogListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ChangelogListItemBinding>, position: Int) {
         val item = getItem(position)
         holder.binding.changelogItem.text = item.label
     }

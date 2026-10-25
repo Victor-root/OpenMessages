@@ -18,10 +18,10 @@
  */
 package io.openmessages.feature.conversationinfo
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.reactivex.rxjava3.core.Observable
 
-interface ConversationInfoView : QkViewContract<ConversationInfoState> {
+interface ConversationInfoView : ControllerView<ConversationInfoState> {
 
     fun recipientClicks(): Observable<Long>
     fun recipientLongClicks(): Observable<Long>

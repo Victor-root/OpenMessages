@@ -21,7 +21,7 @@ import androidx.core.widget.TextViewCompat
 import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.util.Colors
-import io.openmessages.common.widget.QkTextView
+import io.openmessages.common.widget.AppTextView
 import io.openmessages.model.Recipient
 import io.openmessages.util.DisplayNames
 import io.openmessages.util.tryOrNull
@@ -52,7 +52,7 @@ fun Recipient.getThemedIcon(context: Context, theme: Colors.Theme, width: Int, h
             val container = FrameLayout(themedContext)
             container.layoutParams = FrameLayout.LayoutParams(width, height)
             val view = inflater.inflate(R.layout.avatar_view, container)
-            val textView = view.findViewById<QkTextView>(R.id.initial)
+            val textView = view.findViewById<AppTextView>(R.id.initial)
             val iconView = view.findViewById<ImageView>(R.id.icon)
             val photoView = view.findViewById<ImageView>(R.id.photo)
 

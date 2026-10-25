@@ -18,7 +18,7 @@
  */
 package io.openmessages.repository
 
-import io.openmessages.manager.QkTransaction
+import io.openmessages.manager.MessageTransaction
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ContentUris
@@ -641,7 +641,7 @@ open class MessageRepositoryImpl @Inject constructor(
 
         // 3 stage sending process - stage 1, create records in os provider
         val group = (sendAsGroup && (toAddresses.size > 1))
-        val messageUri = QkTransaction.createMessage(
+        val messageUri = MessageTransaction.createMessage(
             context, subId, threadId, body, prefs.signature.get(),
             toAddresses.map(phoneNumberUtils::normalizeNumber).toTypedArray(),
             parts, group, prefs.longAsMms.get(), prefs.unicode.get()
@@ -687,7 +687,7 @@ open class MessageRepositoryImpl @Inject constructor(
 
         tryOrNull(true) {
             // explode message if needed
-            val explodedMessages = QkTransaction.explodeMessage(
+            val explodedMessages = MessageTransaction.explodeMessage(
                 context, message.getUri(), message.sendAsGroup
             ).filter { explodedMessageUri -> (explodedMessageUri != Uri.EMPTY) }
 
@@ -719,7 +719,7 @@ open class MessageRepositoryImpl @Inject constructor(
                     else null
 
                 // use values from os provider to resend the message, except subId
-                if (!QkTransaction.sendMessage(context, message.getUri(), sentIntent, deliveryIntent))
+                if (!MessageTransaction.sendMessage(context, message.getUri(), sentIntent, deliveryIntent))
                     Timber.e("message id ${message.id} not sent by smsmms")
             }
 

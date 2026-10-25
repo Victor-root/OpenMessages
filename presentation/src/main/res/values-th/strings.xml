@@ -184,7 +184,7 @@
     </string-array>
     <string name="settings_category_appearance">ลักษณะที่ปรากฏ</string>
     <string name="settings_category_general">ทั่วไป</string>
-    <string name="settings_category_qkreply">QK ตอบกลับ</string>
+    <string name="settings_category_quick_reply">ตอบกลับด่วน</string>
     <string name="settings_theme_title">รูปแบบการแสดงผล</string>
     <string name="settings_night_title">โหมดกลางคืน</string>
     <string name="settings_black_title">โหมดกลางคืนแบบมืดสนิท</string>
@@ -205,10 +205,10 @@
     <string name="settings_vibration_title">การสั่น</string>
     <string name="settings_ringtone_title">เสียง</string>
     <string name="settings_ringtone_none">ไม่มี</string>
-    <string name="settings_qkreply_title">QK ตอบกลับ</string>
-    <string name="settings_qkreply_summary">ป๊อปอัพข้อความใหม่</string>
-    <string name="settings_qkreply_tap_dismiss_title">แตะเพื่อยกเลิก</string>
-    <string name="settings_qkreply_tap_dismiss_summary">แตะนอกป๊อปอัพเพื่อปิด</string>
+    <string name="settings_quick_reply_title">ตอบกลับด่วน</string>
+    <string name="settings_quick_reply_summary">ป๊อปอัพข้อความใหม่</string>
+    <string name="settings_quick_reply_tap_dismiss_title">แตะเพื่อยกเลิก</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">แตะนอกป๊อปอัพเพื่อปิด</string>
     <string name="settings_delayed_title">การส่งแบบล่าช้า</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -256,7 +256,7 @@
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
     <string name="blocking_conversations">Blocked conversations</string>
     <string name="blocking_manager_title">Blocking Manager</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">กรองข้อความจากหมายเลขที่ไม่พึงประสงค์ โดยใช้แอพควรตอบกลับหรือไม่</string>
@@ -288,12 +288,12 @@
     <string name="about_copyright_title">ลิขสิทธิ์</string>
     <string name="widget_loading">กำลังโหลด…</string>
     <string name="widget_more">ดูการสนทนาเพิ่มเติม</string>
-    <string name="qkreply_menu_read">Mark read</string>
-    <string name="qkreply_menu_call">โทร</string>
-    <string name="qkreply_menu_delete">Delete</string>
-    <string name="qkreply_menu_expand">แสดงเพิ่มเติม</string>
-    <string name="qkreply_menu_collapse">แสดงน้อยลง</string>
-    <string name="qkreply_menu_view">เริ่มการสนทนา</string>
+    <string name="quick_reply_menu_read">Mark read</string>
+    <string name="quick_reply_menu_call">โทร</string>
+    <string name="quick_reply_menu_delete">Delete</string>
+    <string name="quick_reply_menu_expand">แสดงเพิ่มเติม</string>
+    <string name="quick_reply_menu_collapse">แสดงน้อยลง</string>
+    <string name="quick_reply_menu_view">เริ่มการสนทนา</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">ตกลง</string>
@@ -353,7 +353,7 @@
         <item>2000KB</item>
         <item>No compression</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>ตกลง</item>
         <item>ให้เวลาฉันสักครู่</item>
         <item>ตามใจฉัน</item>

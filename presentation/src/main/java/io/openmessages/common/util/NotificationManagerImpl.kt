@@ -44,7 +44,7 @@ import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.common.util.extensions.toPerson
 import io.openmessages.extensions.isImage
 import io.openmessages.feature.compose.ComposeActivity
-import io.openmessages.feature.qkreply.QkReplyActivity
+import io.openmessages.feature.quickreply.QuickReplyActivity
 import io.openmessages.manager.PermissionManager
 import io.openmessages.manager.ShortcutManager
 import io.openmessages.mapper.CursorToPartImpl
@@ -363,7 +363,7 @@ class NotificationManagerImpl @Inject constructor(
                             if (Build.VERSION.SDK_INT >= 24) {
                                 getReplyAction(threadId)
                             } else {
-                                val intent = Intent(context, QkReplyActivity::class.java).putExtra("threadId", threadId)
+                                val intent = Intent(context, QuickReplyActivity::class.java).putExtra("threadId", threadId)
                                 val pi = PendingIntent.getActivity(context, threadId.toInt(), intent,
                                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
                                 NotificationCompat.Action
@@ -395,10 +395,10 @@ class NotificationManagerImpl @Inject constructor(
                 }
                 .forEach { notification.addAction(it) }
 
-        if (prefs.qkreply.get()) {
+        if (prefs.quickReply.get()) {
             notification.priority = NotificationCompat.PRIORITY_DEFAULT
 
-            val intent = Intent(context, QkReplyActivity::class.java)
+            val intent = Intent(context, QuickReplyActivity::class.java)
                     .putExtra("threadId", threadId)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
@@ -488,7 +488,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val title = context.resources.getStringArray(R.array.notification_actions)[
                 Preferences.NOTIFICATION_ACTION_REPLY]
-        val responseSet = context.resources.getStringArray(R.array.qk_responses)
+        val responseSet = context.resources.getStringArray(R.array.quick_responses)
         val remoteInput = RemoteInput.Builder("body")
                 .setLabel(title)
 

@@ -34,8 +34,8 @@ import io.openmessages.feature.main.MainActivityModule
 import io.openmessages.feature.messageutils.MessageUtilsActivity
 import io.openmessages.feature.notificationprefs.NotificationPrefsActivity
 import io.openmessages.feature.notificationprefs.NotificationPrefsActivityModule
-import io.openmessages.feature.qkreply.QkReplyActivity
-import io.openmessages.feature.qkreply.QkReplyActivityModule
+import io.openmessages.feature.quickreply.QuickReplyActivity
+import io.openmessages.feature.quickreply.QuickReplyActivityModule
 import io.openmessages.feature.scheduled.ScheduledActivity
 import io.openmessages.feature.scheduled.ScheduledActivityModule
 import io.openmessages.feature.settings.SettingsActivity
@@ -76,8 +76,8 @@ abstract class ActivityBuilderModule {
     abstract fun bindNotificationPrefsActivity(): NotificationPrefsActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [QkReplyActivityModule::class])
-    abstract fun bindQkReplyActivity(): QkReplyActivity
+    @ContributesAndroidInjector(modules = [QuickReplyActivityModule::class])
+    abstract fun bindQuickReplyActivity(): QuickReplyActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [ScheduledActivityModule::class])

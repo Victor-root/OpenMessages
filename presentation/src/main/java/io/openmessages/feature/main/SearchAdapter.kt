@@ -26,8 +26,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.localiseSummary
@@ -44,13 +44,13 @@ class SearchAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator
-) : QkAdapter<SearchResult, QkBindingViewHolder<SearchListItemBinding>>() {
+) : BaseAdapter<SearchResult, BindingViewHolder<SearchListItemBinding>>() {
 
     private val highlightColor: Int by lazy { colors.theme().highlight }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<SearchListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<SearchListItemBinding> {
         val binding = SearchListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             itemView.setOnClickListener {
                 val result = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 navigator.showConversation(result.conversation.id, result.query.takeIf { result.messages > 0 })
@@ -58,7 +58,7 @@ class SearchAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<SearchListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<SearchListItemBinding>, position: Int) {
         val previous = data.getOrNull(position - 1)
         val result = getItem(position)
 

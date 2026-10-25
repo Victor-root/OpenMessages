@@ -18,10 +18,10 @@
  */
 package io.openmessages.feature.blocking
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.reactivex.rxjava3.core.Observable
 
-interface BlockingView : QkViewContract<BlockingState> {
+interface BlockingView : ControllerView<BlockingState> {
 
     val blockingManagerIntent: Observable<*>
     val blockedNumbersIntent: Observable<*>

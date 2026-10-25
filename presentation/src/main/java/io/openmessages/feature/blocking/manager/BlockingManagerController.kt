@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
-import io.openmessages.common.base.QkController
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.themeButtons
@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 
-class BlockingManagerController : QkController<BlockingManagerControllerBinding, BlockingManagerView, BlockingManagerState, BlockingManagerPresenter>(),
+class BlockingManagerController : BaseController<BlockingManagerControllerBinding, BlockingManagerView, BlockingManagerState, BlockingManagerPresenter>(),
     BlockingManagerView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): BlockingManagerControllerBinding =
@@ -50,7 +50,7 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
         val textTertiary = view.context.resolveThemeColor(android.R.attr.textColorTertiary)
         val imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, textTertiary))
 
-        binding.qksms.actionView.imageTintList = imageTintList
+        binding.builtIn.actionView.imageTintList = imageTintList
         binding.callBlocker.actionView.imageTintList = imageTintList
         binding.callControl.actionView.imageTintList = imageTintList
         binding.shouldIAnswer.actionView.imageTintList = imageTintList
@@ -61,9 +61,9 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
     }
 
     override fun render(state: BlockingManagerState) {
-        binding.qksms.actionView.setImageResource(getActionIcon(true))
-        binding.qksms.actionView.isActivated = true
-        binding.qksms.actionView.isInvisible = state.blockingManager != Preferences.BLOCKING_MANAGER_DEFAULT
+        binding.builtIn.actionView.setImageResource(getActionIcon(true))
+        binding.builtIn.actionView.isActivated = true
+        binding.builtIn.actionView.isInvisible = state.blockingManager != Preferences.BLOCKING_MANAGER_DEFAULT
 
         binding.callBlocker.actionView.setImageResource(getActionIcon(state.callBlockerInstalled))
         binding.callBlocker.actionView.isActivated = state.callBlockerInstalled
@@ -87,7 +87,7 @@ class BlockingManagerController : QkController<BlockingManagerControllerBinding,
     }
 
     override fun activityResumed(): Observable<*> = activityResumedSubject
-    override fun qksmsClicked(): Observable<*> = binding.qksms.clicks()
+    override fun builtInClicked(): Observable<*> = binding.builtIn.clicks()
     override fun callBlockerClicked(): Observable<*> = binding.callBlocker.clicks()
     override fun callControlClicked(): Observable<*> = binding.callControl.clicks()
     override fun siaClicked(): Observable<*> = binding.shouldIAnswer.clicks()

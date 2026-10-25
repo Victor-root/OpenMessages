@@ -27,7 +27,7 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkController
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.scrapViews
 import io.openmessages.common.util.extensions.themeButtons
@@ -44,7 +44,7 @@ import javax.inject.Inject
 
 class ConversationInfoController(
     val threadId: Long = 0
-) : QkController<ConversationInfoControllerBinding, ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
+) : BaseController<ConversationInfoControllerBinding, ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): ConversationInfoControllerBinding =
         ConversationInfoControllerBinding.inflate(inflater, container, false)

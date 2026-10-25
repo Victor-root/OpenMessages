@@ -20,7 +20,7 @@ package io.openmessages.feature.blocking.filters
 
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.repository.MessageContentFilterRepository
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 class MessageContentFiltersPresenter @Inject constructor(
     private val filterRepo: MessageContentFilterRepository,
-) : QkPresenter<MessageContentFiltersView, MessageContentFiltersState>(MessageContentFiltersState()) {
+) : BasePresenter<MessageContentFiltersView, MessageContentFiltersState>(MessageContentFiltersState()) {
 
     init {
         disposables += filterRepo.getMessageContentFilters()

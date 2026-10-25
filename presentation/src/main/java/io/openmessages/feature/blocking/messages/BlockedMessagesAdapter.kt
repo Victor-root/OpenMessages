@@ -24,8 +24,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import io.openmessages.R
-import io.openmessages.common.base.QkBindingViewHolder
-import io.openmessages.common.base.QkAdapter
+import io.openmessages.common.base.BindingViewHolder
+import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeColor
@@ -40,11 +40,11 @@ class BlockedMessagesAdapter @Inject constructor(
     private val displayNames: DisplayNames,
     private val context: Context,
     private val dateFormatter: DateFormatter
-) : QkAdapter<Conversation, QkBindingViewHolder<BlockedListItemBinding>>() {
+) : BaseAdapter<Conversation, BindingViewHolder<BlockedListItemBinding>>() {
 
     val clicks: PublishSubject<Long> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<BlockedListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<BlockedListItemBinding> {
         val binding = BlockedListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         if (viewType == 0) {
@@ -53,7 +53,7 @@ class BlockedMessagesAdapter @Inject constructor(
             binding.date.setTextColor(binding.root.context.resolveThemeColor(android.R.attr.textColorPrimary))
         }
 
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val conversation = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
@@ -70,7 +70,7 @@ class BlockedMessagesAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<BlockedListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<BlockedListItemBinding>, position: Int) {
         val conversation = getItem(position)
         val binding = holder.binding
 

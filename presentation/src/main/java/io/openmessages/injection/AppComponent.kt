@@ -20,14 +20,14 @@ package io.openmessages.injection
 
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
-import io.openmessages.common.QKApplication
-import io.openmessages.common.QkDialog
+import io.openmessages.common.OpenMessagesApplication
+import io.openmessages.common.MenuDialog
 import io.openmessages.common.widget.AvatarView
 import io.openmessages.common.widget.PagerTitleView
 import io.openmessages.common.widget.PreferenceView
-import io.openmessages.common.widget.QkEditText
-import io.openmessages.common.widget.QkSwitch
-import io.openmessages.common.widget.QkTextView
+import io.openmessages.common.widget.AppEditText
+import io.openmessages.common.widget.AppSwitch
+import io.openmessages.common.widget.AppTextView
 import io.openmessages.common.widget.RadioPreferenceView
 import io.openmessages.feature.backup.BackupController
 import io.openmessages.feature.blocking.BlockingController
@@ -61,7 +61,7 @@ interface AppComponent {
     fun conversationInfoBuilder(): ConversationInfoComponent.Builder
     fun themePickerBuilder(): ThemePickerComponent.Builder
 
-    fun inject(application: QKApplication)
+    fun inject(application: OpenMessagesApplication)
 
     fun inject(controller: AboutController)
     fun inject(controller: BackupController)
@@ -75,7 +75,7 @@ interface AppComponent {
     fun inject(controller: SwipeActionsController)
     fun inject(dialog: ThemePickerDialog)
 
-    fun inject(dialog: QkDialog)
+    fun inject(dialog: MenuDialog)
 
     fun inject(service: WidgetAdapter)
 
@@ -84,8 +84,8 @@ interface AppComponent {
     fun inject(view: PagerTitleView)
     fun inject(view: PreferenceView)
     fun inject(view: RadioPreferenceView)
-    fun inject(view: QkEditText)
-    fun inject(view: QkSwitch)
-    fun inject(view: QkTextView)
+    fun inject(view: AppEditText)
+    fun inject(view: AppSwitch)
+    fun inject(view: AppTextView)
 
 }

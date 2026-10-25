@@ -25,8 +25,8 @@ import android.view.ViewGroup
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -41,7 +41,7 @@ import javax.inject.Inject
 class ThemeAdapter @Inject constructor(
     private val context: Context,
     private val colors: Colors
-) : QkAdapter<List<Int>, QkBindingViewHolder<ThemePaletteListItemBinding>>() {
+) : BaseAdapter<List<Int>, BindingViewHolder<ThemePaletteListItemBinding>>() {
 
     val colorSelected: Subject<Int> = PublishSubject.create()
 
@@ -59,15 +59,15 @@ class ThemeAdapter @Inject constructor(
 
     private var iconTint = 0
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ThemePaletteListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ThemePaletteListItemBinding> {
         val binding = ThemePaletteListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.palette.flexWrap = FlexWrap.WRAP
         binding.palette.flexDirection = FlexDirection.ROW
 
-        return QkBindingViewHolder(binding)
+        return BindingViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ThemePaletteListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ThemePaletteListItemBinding>, position: Int) {
         val palette = getItem(position)
         val binding = holder.binding
 

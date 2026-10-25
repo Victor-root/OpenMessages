@@ -24,8 +24,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.databinding.ScheduledMessageListItemBinding
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.model.Contact
@@ -42,7 +42,7 @@ class ScheduledMessageAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkAdapter<ScheduledMessage, QkBindingViewHolder<ScheduledMessageListItemBinding>>() {
+) : BaseAdapter<ScheduledMessage, BindingViewHolder<ScheduledMessageListItemBinding>>() {
 
     /**
      * The contacts the recipients are named after
@@ -61,7 +61,7 @@ class ScheduledMessageAdapter @Inject constructor(
 
     val clicks: Subject<Long> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<ScheduledMessageListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ScheduledMessageListItemBinding> {
         val binding = ScheduledMessageListItemBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
@@ -69,7 +69,7 @@ class ScheduledMessageAdapter @Inject constructor(
         binding.attachments.adapter = ScheduledMessageAttachmentAdapter(context)
         binding.attachments.setRecycledViewPool(imagesViewPool)
 
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 if (toggleSelection(message.id, false))
@@ -83,7 +83,7 @@ class ScheduledMessageAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<ScheduledMessageListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<ScheduledMessageListItemBinding>, position: Int) {
         val message = getItemOrNull(position) ?: return
 
         // GroupAvatarView only accepts recipients, so map the phone numbers to recipients

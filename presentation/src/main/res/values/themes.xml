@@ -112,7 +112,7 @@
     <style name="Theme.OpenMessages.Material3Context" parent="Theme.Material3.DayNight.NoActionBar" />
 
     <!--
-        App-wide activity transitions. Mirrors the in-app Conductor transition (QkChangeHandler):
+        App-wide activity transitions. Mirrors the in-app Conductor transition (ScreenChangeHandler):
         a pushed screen slides in from the right while the previous one recedes a quarter-width to
         the left, and going back reverses it exactly. Wired through AppBaseTheme (see themes.xml and
         values-night/themes.xml) so every themed activity stays consistent. The dialog and gallery

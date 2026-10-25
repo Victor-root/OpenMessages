@@ -1,10 +1,10 @@
 package io.openmessages.feature.messageutils
 
-import io.openmessages.common.base.QkViewContract
+import io.openmessages.common.base.ControllerView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
-interface MessageUtilsView: QkViewContract<MessageUtilsState> {
+interface MessageUtilsView: ControllerView<MessageUtilsState> {
     val autoDeduplicateClickIntent: Observable<*>
     val deduplicateClickIntent: Observable<Unit>
     val autoDeleteClickIntent: Observable<Unit>

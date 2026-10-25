@@ -22,7 +22,7 @@
     android:id="@+id/toolbar"
     style="@style/Toolbar">
 
-    <io.openmessages.common.widget.QkTextView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/toolbarTitle"
         style="@style/ToolbarText"
         tools:text="Conversations" />

@@ -18,14 +18,14 @@
  */
 package io.openmessages.feature.contacts
 
-import io.openmessages.common.base.QkView
+import io.openmessages.common.base.BaseView
 import io.openmessages.extensions.Optional
 import io.openmessages.feature.compose.editing.ComposeItem
 import io.openmessages.feature.compose.editing.PhoneNumberAction
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.Subject
 
-interface ContactsContract : QkView<ContactsState> {
+interface ContactsContract : BaseView<ContactsState> {
 
     val queryChangedIntent: Observable<CharSequence>
     val queryClearedIntent: Observable<*>

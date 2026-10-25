@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">Uiterlijk</string>
     <string name="settings_category_general">Algemeen</string>
-    <string name="settings_category_qkreply">Quick Reply</string>
+    <string name="settings_category_quick_reply">Quick Reply</string>
     <string name="settings_theme_title">Thema</string>
     <string name="settings_night_title">Nachtmodus</string>
     <string name="settings_black_title">Pure zwarte nachtmodus</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">Trillen</string>
     <string name="settings_ringtone_title">Geluid</string>
     <string name="settings_ringtone_none">Geen</string>
-    <string name="settings_qkreply_title">Quick Reply</string>
-    <string name="settings_qkreply_summary">Popup voor nieuwe berichten</string>
-    <string name="settings_qkreply_tap_dismiss_title">Tik om te sluiten</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Tik buiten de popup om deze te sluiten</string>
+    <string name="settings_quick_reply_title">Quick Reply</string>
+    <string name="settings_quick_reply_summary">Popup voor nieuwe berichten</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Tik om te sluiten</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Tik buiten de popup om deze te sluiten</string>
     <string name="settings_delayed_title">Vertraagd verzenden</string>
     <string name="settings_swipe_actions">Swipe acties</string>
     <string name="settings_swipe_actions_summary">Pas de veeg-acties aan voor conversaties</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">Verwijder inkomende berichten van geblokkeerde afzenders in plaats van ze te verbergen</string>
     <string name="blocking_conversations">Geblokkeerde gesprekken</string>
     <string name="blocking_manager_title">Blokkeermanager</string>
-    <string name="blocking_manager_qksms_summary">Ingebouwde blokkeerfunctie in Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Ingebouwde blokkeerfunctie in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blokkeer spamberichten, nummers &amp; onbekende oproepen met blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Filter je oproepen en berichten automatisch op één handige plaats! Community IQ™ stelt je in staat om ongewenste berichten van de bij community bekende spammers te blokkeren</string>
     <string name="blocking_manager_sia_summary">Automatisch filteren van berichten van ongevraagde nummers met behulp van de app \"Should I Answer\"</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">Copyright</string>
     <string name="widget_loading">Laden…</string>
     <string name="widget_more">Bekijk meer conversaties</string>
-    <string name="qkreply_menu_read">Markeren als gelezen</string>
-    <string name="qkreply_menu_call">Bel</string>
-    <string name="qkreply_menu_delete">Verwijderen</string>
-    <string name="qkreply_menu_expand">Toon meer</string>
-    <string name="qkreply_menu_collapse">Toon minder</string>
-    <string name="qkreply_menu_view">Open conversatie</string>
+    <string name="quick_reply_menu_read">Markeren als gelezen</string>
+    <string name="quick_reply_menu_call">Bel</string>
+    <string name="quick_reply_menu_delete">Verwijderen</string>
+    <string name="quick_reply_menu_expand">Toon meer</string>
+    <string name="quick_reply_menu_collapse">Toon minder</string>
+    <string name="quick_reply_menu_view">Open conversatie</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Toepassen</string>
@@ -358,7 +358,7 @@
         <item>2000kB</item>
         <item>Geen compressie</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Oké</item>
         <item>Wacht even</item>
         <item>Onderweg</item>

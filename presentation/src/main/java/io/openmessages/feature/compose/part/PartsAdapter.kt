@@ -21,9 +21,9 @@ package io.openmessages.feature.compose.part
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.openmessages.common.base.QkViewHolder
+import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
-import io.openmessages.common.widget.QkContextMenuRecyclerView
+import io.openmessages.common.widget.ContextMenuRecyclerView
 import io.openmessages.databinding.MessageListItemInBinding
 import io.openmessages.databinding.MessageListItemOutBinding
 import io.openmessages.extensions.isSmil
@@ -42,7 +42,7 @@ class PartsAdapter @Inject constructor(
     imageBinder: ImageBinder,
     audioBinder: AudioBinder,
     vCardBinder: VCardBinder,
-) : QkContextMenuRecyclerView.Adapter<Long, MmsPart, QkContextMenuRecyclerView.ViewHolder<MmsPart>>() {
+) : ContextMenuRecyclerView.Adapter<Long, MmsPart, ContextMenuRecyclerView.ViewHolder<MmsPart>>() {
 
     private val partBinders = listOf(audioBinder, imageBinder, vCardBinder, fileBinder)
 
@@ -64,7 +64,7 @@ class PartsAdapter @Inject constructor(
         message: Message,
         previous: Message?,
         next: Message?,
-        holder: QkViewHolder,
+        holder: BaseViewHolder,
         audioState: MessagesAdapter.AudioState?
     ) {
         this.message = message
@@ -81,13 +81,13 @@ class PartsAdapter @Inject constructor(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-        : QkContextMenuRecyclerView.ViewHolder<MmsPart> {
+        : ContextMenuRecyclerView.ViewHolder<MmsPart> {
         val layout = partBinders.getOrNull(viewType)?.partLayout ?: 0
         val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
-        return QkContextMenuRecyclerView.ViewHolder(view)
+        return ContextMenuRecyclerView.ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: QkContextMenuRecyclerView.ViewHolder<MmsPart>, position: Int) {
+    override fun onBindViewHolder(holder: ContextMenuRecyclerView.ViewHolder<MmsPart>, position: Int) {
         val part = data[position]
 
         holder.contextMenuValue = part

@@ -19,11 +19,11 @@
 package io.openmessages.feature.main
 
 import android.content.Intent
-import io.openmessages.common.base.QkView
+import io.openmessages.common.base.BaseView
 import io.openmessages.manager.ChangelogManager
 import io.reactivex.rxjava3.core.Observable
 
-interface MainView : QkView<MainState> {
+interface MainView : BaseView<MainState> {
 
     val onNewIntentIntent: Observable<Intent>
     val activityResumedIntent: Observable<Boolean>

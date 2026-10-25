@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.R
-import io.openmessages.common.base.QkController
+import io.openmessages.common.base.BaseController
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.animateLayoutChanges
 import io.openmessages.common.util.extensions.setTint
@@ -28,7 +28,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class MessageUtilsController : QkController<MessageUtilsControllerBinding, MessageUtilsView, MessageUtilsState, MessageUtilsPresenter>(), MessageUtilsView {
+class MessageUtilsController : BaseController<MessageUtilsControllerBinding, MessageUtilsView, MessageUtilsState, MessageUtilsPresenter>(), MessageUtilsView {
 
     override fun inflateBinding(inflater: LayoutInflater, container: ViewGroup): MessageUtilsControllerBinding =
         MessageUtilsControllerBinding.inflate(inflater, container, false)

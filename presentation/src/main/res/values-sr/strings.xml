@@ -186,7 +186,7 @@
     </string-array>
     <string name="settings_category_appearance">Уреди изглед</string>
     <string name="settings_category_general">Опште</string>
-    <string name="settings_category_qkreply">Брзи одговор</string>
+    <string name="settings_category_quick_reply">Брзи одговор</string>
     <string name="settings_theme_title">Тема</string>
     <string name="settings_night_title">Ноћни мод</string>
     <string name="settings_black_title">Потпуно црни ноћни мод</string>
@@ -207,10 +207,10 @@
     <string name="settings_vibration_title">Вибрација</string>
     <string name="settings_ringtone_title">Звук</string>
     <string name="settings_ringtone_none">Ниједна</string>
-    <string name="settings_qkreply_title">Брзи одговор</string>
-    <string name="settings_qkreply_summary">Искачући прозор за нове поруке</string>
-    <string name="settings_qkreply_tap_dismiss_title">Додирни да уклониш</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Додирни екран изван искачућег прозора да га уклониш</string>
+    <string name="settings_quick_reply_title">Брзи одговор</string>
+    <string name="settings_quick_reply_summary">Искачући прозор за нове поруке</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Додирни да уклониш</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Додирни екран изван искачућег прозора да га уклониш</string>
     <string name="settings_delayed_title">Одложено слање</string>
     <string name="settings_swipe_actions">Радње превлачењем</string>
     <string name="settings_swipe_actions_summary">Подеси радње превлачењем у оквиру разговора</string>
@@ -260,7 +260,7 @@
     <string name="blocking_drop_summary">Одбиј поруке које стижу са блокираних бројева уместо да их сакријеш</string>
     <string name="blocking_conversations">Блокирани разговори</string>
     <string name="blocking_manager_title">Апликација за блокирање</string>
-    <string name="blocking_manager_qksms_summary">Уграђена могућност блокирања у Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Уграђена могућност блокирања у Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Блокирај нежељене поруке, бројеве и непознате позиве помоћу листе непожељних бројева</string>
     <string name="blocking_manager_call_control_summary">Аутоматски филтрирај позиве и поруке на једном месту! Community IQ™ ти омогућује да блокираш нежељене поруке од \"спамера\" познатих заједници</string>
     <string name="blocking_manager_sia_summary">Аутоматски фитрирај поруке са непожељних бројева користећи \"Should I Answer\" апликацију</string>
@@ -296,12 +296,12 @@
     <string name="about_copyright_title">Ауторска права</string>
     <string name="widget_loading">Учитавање…</string>
     <string name="widget_more">Прикажи више разговора</string>
-    <string name="qkreply_menu_read">Означи као прочитано</string>
-    <string name="qkreply_menu_call">Позови</string>
-    <string name="qkreply_menu_delete">Обриши</string>
-    <string name="qkreply_menu_expand">Прикажи више</string>
-    <string name="qkreply_menu_collapse">Прикажи мање</string>
-    <string name="qkreply_menu_view">Прикажи разговор</string>
+    <string name="quick_reply_menu_read">Означи као прочитано</string>
+    <string name="quick_reply_menu_call">Позови</string>
+    <string name="quick_reply_menu_delete">Обриши</string>
+    <string name="quick_reply_menu_expand">Прикажи више</string>
+    <string name="quick_reply_menu_collapse">Прикажи мање</string>
+    <string name="quick_reply_menu_view">Прикажи разговор</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Примени</string>
@@ -363,7 +363,7 @@
         <item>2000kB</item>
         <item>Без оптимизације</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>У реду</item>
         <item>Сачекај секунд</item>
         <item>Стижем</item>

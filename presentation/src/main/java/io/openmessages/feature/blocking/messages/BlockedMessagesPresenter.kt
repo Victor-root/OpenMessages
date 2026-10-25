@@ -23,7 +23,7 @@ import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.blocking.BlockingClient
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import io.openmessages.interactor.DeleteConversations
 import io.openmessages.repository.ConversationRepository
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -34,7 +34,7 @@ class BlockedMessagesPresenter @Inject constructor(
     private val blockingClient: BlockingClient,
     private val deleteConversations: DeleteConversations,
     private val navigator: Navigator
-) : QkPresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState()) {
+) : BasePresenter<BlockedMessagesView, BlockedMessagesState>(BlockedMessagesState()) {
 
     init {
         disposables += conversationRepo.observeBlockedConversations()

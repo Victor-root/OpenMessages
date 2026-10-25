@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">Görünüm</string>
     <string name="settings_category_general">Genel</string>
-    <string name="settings_category_qkreply">QK Yanıt</string>
+    <string name="settings_category_quick_reply">Hızlı Yanıt</string>
     <string name="settings_theme_title">Tema</string>
     <string name="settings_night_title">Gece Modu</string>
     <string name="settings_black_title">Saf siyah gece modu</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">Titreşim</string>
     <string name="settings_ringtone_title">Ses</string>
     <string name="settings_ringtone_none">Hiçbiri</string>
-    <string name="settings_qkreply_title">QK Yanıt</string>
-    <string name="settings_qkreply_summary">Yeni iletiler için açılan menü</string>
-    <string name="settings_qkreply_tap_dismiss_title">Kapatmak için dokunun</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Açılır pencereyi kapatmak için pencere dışındaki herhangi bir yere dokunun</string>
+    <string name="settings_quick_reply_title">Hızlı Yanıt</string>
+    <string name="settings_quick_reply_summary">Yeni iletiler için açılan menü</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Kapatmak için dokunun</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Açılır pencereyi kapatmak için pencere dışındaki herhangi bir yere dokunun</string>
     <string name="settings_delayed_title">Gecikmeli gönderme</string>
     <string name="settings_swipe_actions">Kaydırma eylemleri</string>
     <string name="settings_swipe_actions_summary">Konuşmalar için kaydırma eylemlerini yapılandırma</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">Engellenen gönderenlerden gelen iletileri gizlemek yerine iptal edin</string>
     <string name="blocking_conversations">Engellenen konuşmalar</string>
     <string name="blocking_manager_title">Engelleme Yöneticisi</string>
-    <string name="blocking_manager_qksms_summary">Open Messages\'de yerleşik engelleme işlevi</string>
+    <string name="blocking_manager_built_in_summary">Open Messages\'de yerleşik engelleme işlevi</string>
     <string name="blocking_manager_call_blocker_summary">İstenmeyen iletileri, numaraları ve kara listede olan bilinmeyen çağrıları ve Zamanlamaları engelle</string>
     <string name="blocking_manager_call_control_summary">Aramalarınızı ve iletilerinizi uygun bir yerde otomatik olarak filtreleyin! Topluluk IQ™ bilinen istenmeyen mesajları önlemeye olanak sağlar</string>
     <string name="blocking_manager_sia_summary">İstenmeyen numaralardan gelen iletileri otomatik olarak filtre</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">Telif hakkı</string>
     <string name="widget_loading">Yükleniyor…</string>
     <string name="widget_more">Daha fazla konuşma göster</string>
-    <string name="qkreply_menu_read">Okundu olarak işaretle</string>
-    <string name="qkreply_menu_call">Ara</string>
-    <string name="qkreply_menu_delete">Sil</string>
-    <string name="qkreply_menu_expand">Daha fazla göster</string>
-    <string name="qkreply_menu_collapse">Daha az göster</string>
-    <string name="qkreply_menu_view">Sohbeti aç</string>
+    <string name="quick_reply_menu_read">Okundu olarak işaretle</string>
+    <string name="quick_reply_menu_call">Ara</string>
+    <string name="quick_reply_menu_delete">Sil</string>
+    <string name="quick_reply_menu_expand">Daha fazla göster</string>
+    <string name="quick_reply_menu_collapse">Daha az göster</string>
+    <string name="quick_reply_menu_view">Sohbeti aç</string>
     <string name="theme_material">Malzeme</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Uygula</string>
@@ -358,7 +358,7 @@
         <item>2000KB</item>
         <item>Sıkıştırma yok</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Tamam</item>
         <item>Bana bir dakika ver</item>
         <item>Yolda</item>

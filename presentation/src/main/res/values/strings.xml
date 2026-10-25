@@ -352,7 +352,7 @@
 
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_category_general">General</string>
-    <string name="settings_category_qkreply">Quick Reply</string>
+    <string name="settings_category_quick_reply">Quick Reply</string>
 
     <string name="settings_theme_title">Theme</string>
     <string name="settings_night_title">Night mode</string>
@@ -388,10 +388,10 @@
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_ringtone_none">None</string>
-    <string name="settings_qkreply_title">Quick Reply</string>
-    <string name="settings_qkreply_summary">Popup for new messages</string>
-    <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
-    <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
+    <string name="settings_quick_reply_title">Quick Reply</string>
+    <string name="settings_quick_reply_summary">Popup for new messages</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Tap to dismiss</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Tap outside of the popup to close it</string>
     <string name="settings_delayed_title">Delayed sending</string>
     <string name="settings_swipe_actions">Swipe actions</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
@@ -469,7 +469,7 @@
     <string name="blocking_source_status_failed">Download failed, the source stays off. Check your connection and try again.</string>
 
     <string name="blocking_manager_title">Blocking Manager</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in Open Messages</string>
+    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_title" translatable="false">Call Blocker - Incoming/Outgoing</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_title" translatable="false">Call Control</string>
@@ -533,12 +533,12 @@
     <string name="widget_more">View more conversations</string>
     <string name="all_conversations_widget_title">All Conversations</string>
 
-    <string name="qkreply_menu_read">Mark read</string>
-    <string name="qkreply_menu_call">Call</string>
-    <string name="qkreply_menu_delete">Delete</string>
-    <string name="qkreply_menu_expand">Show more</string>
-    <string name="qkreply_menu_collapse">Show less</string>
-    <string name="qkreply_menu_view">Open conversation</string>
+    <string name="quick_reply_menu_read">Mark read</string>
+    <string name="quick_reply_menu_call">Call</string>
+    <string name="quick_reply_menu_delete">Delete</string>
+    <string name="quick_reply_menu_expand">Show more</string>
+    <string name="quick_reply_menu_collapse">Show less</string>
+    <string name="quick_reply_menu_view">Open conversation</string>
 
     <string name="theme_material">Material</string>
     <string name="theme_plus" translatable="false">Custom Color</string>
@@ -699,7 +699,7 @@
         <item>2</item>
     </integer-array>
 
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>Okay</item>
         <item>Give me a moment</item>
         <item>On my way</item>

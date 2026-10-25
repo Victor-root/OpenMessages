@@ -31,11 +31,11 @@ import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkThemedActivity
+import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.finishWithoutAnimation
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.showKeyboard
-import io.openmessages.common.widget.QkDialog
+import io.openmessages.common.widget.ListDialog
 import io.openmessages.databinding.ContactsActivityBinding
 import io.openmessages.extensions.Optional
 import io.openmessages.feature.compose.editing.ComposeItem
@@ -47,7 +47,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class ContactsActivity : QkThemedActivity(), ContactsContract {
+class ContactsActivity : ThemedActivity(), ContactsContract {
 
     companion object {
         const val SHARING_KEY = "sharing"
@@ -86,7 +86,7 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[ContactsViewModel::class.java] }
 
     private val phoneNumberDialog by lazy {
-        QkDialog(this).apply {
+        ListDialog(this).apply {
             titleRes = R.string.compose_number_picker_title
             adapter = phoneNumberAdapter
             positiveButton = R.string.compose_number_picker_always

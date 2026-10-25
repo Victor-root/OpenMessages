@@ -5,7 +5,7 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkViewModel
+import io.openmessages.common.base.BaseViewModel
 import io.openmessages.common.util.ClipboardUtils
 import io.openmessages.interactor.DeleteScheduledMessages
 import io.openmessages.interactor.SendScheduledMessage
@@ -26,7 +26,7 @@ class ScheduledViewModel @Inject constructor(
     private val scheduledMessageRepo: ScheduledMessageRepository,
     private val sendScheduledMessageInteractor: SendScheduledMessage,
     private val deleteScheduledMessagesInteractor: DeleteScheduledMessages,
-) : QkViewModel<ScheduledView, ScheduledState>(ScheduledState(conversationId = conversationId)) {
+) : BaseViewModel<ScheduledView, ScheduledState>(ScheduledState(conversationId = conversationId)) {
 
     init {
         val messages = if (conversationId != null)

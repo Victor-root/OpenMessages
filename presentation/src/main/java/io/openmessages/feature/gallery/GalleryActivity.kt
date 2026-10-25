@@ -31,7 +31,7 @@ import androidx.viewpager2.widget.ViewPager2
 import dagger.android.AndroidInjection
 import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
-import io.openmessages.common.base.QkActivity
+import io.openmessages.common.base.BaseActivity
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.databinding.GalleryActivityBinding
@@ -41,7 +41,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
-class GalleryActivity : QkActivity(), GalleryView {
+class GalleryActivity : BaseActivity(), GalleryView {
 
     // Full-screen media viewer with its own chrome: leave the bars as-is for now.
     override val supportsEdgeToEdge get() = false

@@ -22,8 +22,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.openmessages.R
-import io.openmessages.common.base.QkAdapter
-import io.openmessages.common.base.QkBindingViewHolder
+import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.util.extensions.forwardTouches
 import io.openmessages.databinding.PhoneNumberListItemBinding
 import io.openmessages.extensions.Optional
@@ -36,7 +36,7 @@ import javax.inject.Inject
 class PhoneNumberPickerAdapter @Inject constructor(
     private val displayNames: DisplayNames,
     private val context: Context
-) : QkAdapter<PhoneNumber, QkBindingViewHolder<PhoneNumberListItemBinding>>() {
+) : BaseAdapter<PhoneNumber, BindingViewHolder<PhoneNumberListItemBinding>>() {
 
     val selectedItemChanges: Subject<Optional<Long>> = BehaviorSubject.create()
 
@@ -48,10 +48,10 @@ class PhoneNumberPickerAdapter @Inject constructor(
             selectedItemChanges.onNext(Optional(value))
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkBindingViewHolder<PhoneNumberListItemBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<PhoneNumberListItemBinding> {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PhoneNumberListItemBinding.inflate(inflater, parent, false)
-        return QkBindingViewHolder(binding).apply {
+        return BindingViewHolder(binding).apply {
             binding.number.radioButton.forwardTouches(itemView)
 
             binding.root.setOnClickListener {
@@ -61,7 +61,7 @@ class PhoneNumberPickerAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkBindingViewHolder<PhoneNumberListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: BindingViewHolder<PhoneNumberListItemBinding>, position: Int) {
         val binding = holder.binding
         val phoneNumber = getItem(position)
 

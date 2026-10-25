@@ -22,12 +22,12 @@ import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import io.openmessages.R
 import io.openmessages.common.Navigator
-import io.openmessages.common.base.QkPresenter
+import io.openmessages.common.base.BasePresenter
 import javax.inject.Inject
 
 class AboutPresenter @Inject constructor(
     private val navigator: Navigator
-) : QkPresenter<AboutView, Unit>(Unit) {
+) : BasePresenter<AboutView, Unit>(Unit) {
 
     override fun bindIntents(view: AboutView) {
         super.bindIntents(view)

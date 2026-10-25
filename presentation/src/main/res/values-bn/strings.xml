@@ -185,7 +185,7 @@
     </string-array>
     <string name="settings_category_appearance">উপস্থিতি</string>
     <string name="settings_category_general">সাধারণ</string>
-    <string name="settings_category_qkreply">QK উত্তর</string>
+    <string name="settings_category_quick_reply">দ্রুত উত্তর</string>
     <string name="settings_theme_title">থিম</string>
     <string name="settings_night_title">নাইট মোড</string>
     <string name="settings_black_title">সম্পূর্ণ কালো রাত্রি মোড</string>
@@ -206,10 +206,10 @@
     <string name="settings_vibration_title">কম্পন</string>
     <string name="settings_ringtone_title">শব্দ</string>
     <string name="settings_ringtone_none">কোনোটা না</string>
-    <string name="settings_qkreply_title">QK উত্তর</string>
-    <string name="settings_qkreply_summary">নতুন বার্তার জন্য পপ-আপ</string>
-    <string name="settings_qkreply_tap_dismiss_title">সরিয়ে দিতে ট্যাপ করুন</string>
-    <string name="settings_qkreply_tap_dismiss_summary">এটি বন্ধ করার জন্য পপআপের বাইরে ট্যাপ করুন</string>
+    <string name="settings_quick_reply_title">দ্রুত উত্তর</string>
+    <string name="settings_quick_reply_summary">নতুন বার্তার জন্য পপ-আপ</string>
+    <string name="settings_quick_reply_tap_dismiss_title">সরিয়ে দিতে ট্যাপ করুন</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">এটি বন্ধ করার জন্য পপআপের বাইরে ট্যাপ করুন</string>
     <string name="settings_delayed_title">বিলম্বে পাঠাও</string>
     <string name="settings_swipe_actions">সোয়াইপের জন্য অ্যাকশনগুলি</string>
     <string name="settings_swipe_actions_summary">আলাপের জন্য সোয়াইপ সংকেতগুলো পরিবর্তন করো</string>
@@ -258,7 +258,7 @@
     <string name="blocking_drop_summary">অবরোধকৃত প্রেরকদের বার্তা লুকানোর জায়গায় ফেলে দাও</string>
     <string name="blocking_conversations">অবরুদ্ধ কথাবার্তা</string>
     <string name="blocking_manager_title">অবরুদ্ধকরণ ব্যবস্থাপক</string>
-    <string name="blocking_manager_qksms_summary">Open Messages-এর অন্তর্ভুক্ত অবরোধী সক্ষমতা(blocking)</string>
+    <string name="blocking_manager_built_in_summary">Open Messages-এর অন্তর্ভুক্ত অবরোধী সক্ষমতা(blocking)</string>
     <string name="blocking_manager_call_blocker_summary">স্প্যাম বার্তা, নম্বর &amp; অজানা কল অবরোধ তালিকা দিয়ে থামাও &amp; সময়সূচী</string>
     <string name="blocking_manager_call_control_summary">তোমার কল আর বার্তা একটাই সুবিধাজনক জায়গা থেকে ফিল্টার করো বা ছাঁকো! Community IQ™ দিয়ে অবাঞ্ছিত বার্তা আটকানো যায় সমাজে পরিচিত স্প্যামারদের থেকে</string>
     <string name="blocking_manager_sia_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\"(আমার কি উত্তর দেয়া উচিত?) অ্যাপ্লিকেশন ব্যবহার করে অযাচিত নম্বর-এর বার্তাগুলি ফিল্টার করো</string>
@@ -292,12 +292,12 @@
     <string name="about_copyright_title">স্বত্ব</string>
     <string name="widget_loading">লোড হচ্ছে…</string>
     <string name="widget_more">আরও আলাপ দেখো</string>
-    <string name="qkreply_menu_read">পড়া হয়েছে</string>
-    <string name="qkreply_menu_call">কল করুন</string>
-    <string name="qkreply_menu_delete">মুছে ফেলুন</string>
-    <string name="qkreply_menu_expand">আরও দেখান</string>
-    <string name="qkreply_menu_collapse">আরও কম প্রদর্শন করুন</string>
-    <string name="qkreply_menu_view">আলাপ খুলো</string>
+    <string name="quick_reply_menu_read">পড়া হয়েছে</string>
+    <string name="quick_reply_menu_call">কল করুন</string>
+    <string name="quick_reply_menu_delete">মুছে ফেলুন</string>
+    <string name="quick_reply_menu_expand">আরও দেখান</string>
+    <string name="quick_reply_menu_collapse">আরও কম প্রদর্শন করুন</string>
+    <string name="quick_reply_menu_view">আলাপ খুলো</string>
     <string name="theme_material">উপকরণ</string>
     <string name="theme_hex">হেক্স</string>
     <string name="theme_apply">প্রয়োগ করুন</string>
@@ -358,7 +358,7 @@
         <item>২০০০কিবা</item>
         <item>সংকোচন নেই(compression)</item>
     </string-array>
-    <string-array name="qk_responses">
+    <string-array name="quick_responses">
         <item>ঠিক আছে</item>
         <item>একটু অপেক্ষা করুন</item>
         <item>পথেই আছি</item>

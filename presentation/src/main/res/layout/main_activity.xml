@@ -51,7 +51,7 @@
                     android:gravity="center_vertical"
                     android:visibility="gone">
 
-                    <io.openmessages.common.widget.QkTextView
+                    <io.openmessages.common.widget.AppTextView
                         android:id="@+id/toolbarTitle"
                         style="@style/ToolbarText"
                         android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
                         android:contentDescription="@null"
                         app:tint="@color/white" />
 
-                    <io.openmessages.common.widget.QkTextView
+                    <io.openmessages.common.widget.AppTextView
                         android:id="@+id/toolbarUnreadCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                     ?attr/bubbleColor bubble, so without this the typed search text was white-on-white
                     in light mode. See the matching field in contacts_activity.xml.
                 -->
-                <io.openmessages.common.widget.QkEditText
+                <io.openmessages.common.widget.AppEditText
                     android:id="@+id/toolbarSearch"
                     style="@style/ToolbarText"
                     android:layout_marginTop="8dp"
@@ -154,7 +154,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <io.openmessages.common.widget.QkTextView
+            <io.openmessages.common.widget.AppTextView
                 android:id="@+id/empty"
                 style="@style/TextSecondary"
                 android:layout_width="match_parent"
