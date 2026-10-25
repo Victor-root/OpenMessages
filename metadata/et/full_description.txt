@@ -1,4 +1,4 @@
-Avatud lähtekoodil põhinev asendus Androidi standardsele lühisõnumirakendusele. Varasema QKSMS-nimelise rakenduse edasiarendus.
+Avatud lähtekoodil põhinev asendus Androidi standardsele lühisõnumirakendusele.
 ## Funktsionaalsused:
 - Sõnumite ajastamine
 - Sõnumite varundus

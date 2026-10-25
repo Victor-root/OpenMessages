@@ -1,4 +1,4 @@
-An open-source SMS app for Android, based on QKSMS.
+An open-source SMS app for Android.
 ## Features
 - Scheduled Messages
 - Message Backup

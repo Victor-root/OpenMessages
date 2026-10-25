@@ -2,7 +2,7 @@
 
 ## 🚀 v1.0.1 (2026-08-19)
 
-A bug-fix release. Every issue below is marked with where it comes from. Most are pre-existing bugs from the original QUIK/QKSMS codebase rather than regressions introduced during the Open Messages rebrand: they were already present in the code this project forked from, and only ever showed up on certain phones or with certain settings, which is why they went unnoticed until now. The two that came in with v1.0.0 say so.
+A bug-fix release. Every issue below is marked with where it comes from. Most are pre-existing bugs from the original codebase rather than regressions introduced during the Open Messages rebrand: they were already present in the code this project forked from, and only ever showed up on certain phones or with certain settings, which is why they went unnoticed until now. The two that came in with v1.0.0 say so.
 
 ### 🔄 Changed
 - 📏 **The maximum MMS size now defaults to "Automatic"**, meaning whatever limit the carrier itself reports, instead of a fixed 300 KB guessed on its behalf. Where a carrier reports no limit, 300 KB is still what's used, so nothing is lost by asking first. Anyone who has already picked a size keeps it.
@@ -24,7 +24,7 @@ A bug-fix release. Every issue below is marked with where it comes from. Most ar
 
 ## 🚀 v1.0.0 (2026-08-13)
 
-First public release of Open Messages, a rebrand and continued development of QUIK (itself a fork of QKSMS). Everything below is relative to the original QUIK/QKSMS this project started from.
+First public release of Open Messages. Everything below is relative to the app this project started from.
 
 ### ➕ Added
 - 💾 **Multi-category backup and restore:** back up SMS, MMS with attachments, app settings, blocking rules, conversation states (archived, pinned, blocked, custom name, flagged) and scheduled messages. Saved to Documents/OpenMessages by default, a custom folder, or a single .zip, with configurable automatic backups and an in-app manager to rename or delete existing backups.
@@ -40,9 +40,9 @@ First public release of Open Messages, a rebrand and continued development of QU
 - 🌐 **A landing page for the project**, under `website/`.
 
 ### 🔄 Changed
-- 🏷️ **Rebranded from QUIK/QKSMS to Open Messages**, name, icons, package and branding, with no functional link to the app it was forked from.
+- 🏷️ **Rebranded to Open Messages**, name, icons, package and branding, with no functional link to the app it was forked from.
 - 🖌️ **UI, theme system and dependency injection overhaul**, including a modernized send button, mic button, and a Material bottom-sheet attachment menu in place of the old speed-dial.
 - 🗂️ **Backup manager UI redesigned** and moved into the settings list.
 
 ### 🐛 Fixed
-- 🐛 **A number of bugs inherited from upstream QUIK/QKSMS.**
+- 🐛 **A number of bugs inherited from the original codebase.**
