@@ -48,7 +48,9 @@
     <string name="main_syncing">메시지 동기화 하기</string>
     <string name="main_sender_you">나: %s</string>
     <string name="main_message_results_title">메시지 검색 결과</string>
-    <string name="main_message_results">%d 개의 새로운 메시지</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d 개의 새로운 메시지</item>
+    </plurals>
     <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
     <string name="inbox_search_empty_text">결과없음</string>
     <string name="archived_empty_text">보관된 메시지가 여기 나타납니다</string>

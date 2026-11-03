@@ -48,7 +48,9 @@
     <string name="main_syncing">செய்திகள் ஒத்திசைக்கப்படுகின்றன…</string>
     <string name="main_sender_you">நீங்கள்: %s</string>
     <string name="main_message_results_title">தகவல்களிலுள்ள முடிவுகள்</string>
-    <string name="main_message_results">%d செய்திகள்</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d செய்திகள்</item>
+    </plurals>
     <string name="inbox_empty_text">உங்கள் உரையாடல்கள் இங்கே தோன்றும்</string>
     <string name="inbox_search_empty_text">முடிவுகள் இல்லை</string>
     <string name="archived_empty_text">உம் காப்பகப்படுத்திய உரையாடல்கள் இங்கு தோன்றும்</string>

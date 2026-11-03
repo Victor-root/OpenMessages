@@ -48,7 +48,9 @@
     <string name="main_syncing">Синхронизация сообщений…</string>
     <string name="main_sender_you">Вы: %s</string>
     <string name="main_message_results_title">Результаты в сообщениях</string>
-    <string name="main_message_results">%d сообщений</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d сообщений</item>
+    </plurals>
     <string name="inbox_empty_text">Беседы будут появляться здесь</string>
     <string name="inbox_search_empty_text">Нет результатов</string>
     <string name="archived_empty_text">Архивированные беседы будут появляться здесь</string>

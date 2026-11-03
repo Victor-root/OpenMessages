@@ -48,7 +48,9 @@
     <string name="main_syncing">Sinhroniziranje sporočil…</string>
     <string name="main_sender_you">Vi: %s</string>
     <string name="main_message_results_title">Rezultati v sporočilih</string>
-    <string name="main_message_results">%d sporočil</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d sporočil</item>
+    </plurals>
     <string name="inbox_empty_text">Vaši pogovori se bodo pojavili tukaj</string>
     <string name="inbox_search_empty_text">Ni rezultatov</string>
     <string name="archived_empty_text">Vaši arhivirani pogovori se bodo pojavili tukaj</string>

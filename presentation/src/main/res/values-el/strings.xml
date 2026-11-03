@@ -48,7 +48,9 @@
     <string name="main_syncing">Συγχρονισμός μηνυμάτων…</string>
     <string name="main_sender_you">Εσείς: %s</string>
     <string name="main_message_results_title">Αποτελέσματα στα μηνύματα</string>
-    <string name="main_message_results">Μηνύματα: %d</string>
+    <plurals name="main_message_results">
+        <item quantity="other">Μηνύματα: %d</item>
+    </plurals>
     <string name="inbox_empty_text">Οι συζητήσεις σας θα εμφανίζονται εδώ</string>
     <string name="inbox_search_empty_text">Δεν υπάρχουν αποτελέσματα</string>
     <string name="archived_empty_text">Οι αρχειοθετημένες συζητήσεις σας θα εμφανίζονται εδώ</string>

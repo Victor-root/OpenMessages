@@ -48,7 +48,9 @@
     <string name="main_syncing">Synchronizace zpráv…</string>
     <string name="main_sender_you">Vy: %s</string>
     <string name="main_message_results_title">Výsledky ve zprávách</string>
-    <string name="main_message_results">%d zpráv</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d zpráv</item>
+    </plurals>
     <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>
     <string name="inbox_search_empty_text">Žádné výsledky</string>
     <string name="archived_empty_text">Zde se objeví vaše archivované konverzace</string>

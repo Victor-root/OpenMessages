@@ -48,7 +48,9 @@
     <string name="main_syncing">বার্তাগুলি সিঙ্ক হচ্ছে…</string>
     <string name="main_sender_you">তুমি: %s</string>
     <string name="main_message_results_title">বার্তার ভিতর পাওয়া গেছে</string>
-    <string name="main_message_results">%dটি বার্তা</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%dটি বার্তা</item>
+    </plurals>
     <string name="inbox_empty_text">তোমার আলাপ এখানে দেখা যাবে</string>
     <string name="inbox_search_empty_text">কোনো ফলাফল নেই</string>
     <string name="archived_empty_text">তোমার আর্কাইভ করা আলাপ এখানে দেখা যাবে</string>

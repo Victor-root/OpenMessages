@@ -48,7 +48,9 @@
     <string name="main_syncing">संदेशों को सिंक्रनाइज़ कर रहा है.. ।</string>
     <string name="main_sender_you">आप: %s</string>
     <string name="main_message_results_title">संदेशों में परिणाम</string>
-    <string name="main_message_results">%d संदेश</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d संदेश</item>
+    </plurals>
     <string name="inbox_empty_text">आपकी बातचीत यहां दिखाई देगी</string>
     <string name="inbox_search_empty_text">कोई परिणाम नहीं</string>
     <string name="archived_empty_text">आपके संग्रहीत वार्तालाप यहां दिखाई देंगे</string>

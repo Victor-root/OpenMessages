@@ -48,7 +48,9 @@
     <string name="main_syncing">מסנכרן הודעות…</string>
     <string name="main_sender_you">אתה: %s</string>
     <string name="main_message_results_title">תוצאות בהודעות</string>
-    <string name="main_message_results">%d הודעות</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d הודעות</item>
+    </plurals>
     <string name="inbox_empty_text">ההתכתבויות שלך תופענה כאן</string>
     <string name="inbox_search_empty_text">אין תוצאות</string>
     <string name="archived_empty_text">ההתכתבויות שהעברת לארכיון תופענה כאן</string>

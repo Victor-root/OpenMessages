@@ -38,7 +38,9 @@
     <string name="main_sender_you">Вие: %s</string>
     <string name="main_sender_draft">Чернова: %s</string>
     <string name="main_message_results_title">Резултати в съобщенията</string>
-    <string name="main_message_results">%d съобщения</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d съобщения</item>
+    </plurals>
     <string name="inbox_empty_text">Разговорите ще се появят тук</string>
     <string name="inbox_search_empty_text">Няма резултати</string>
     <string name="archived_empty_text">Архивираните разговори ще се появят тук</string>

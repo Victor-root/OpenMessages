@@ -48,7 +48,9 @@
     <string name="main_syncing">İletiler eşitleniyor…</string>
     <string name="main_sender_you">Sen: %s</string>
     <string name="main_message_results_title">İletilerdeki sonuçlar</string>
-    <string name="main_message_results">%d ileti</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d ileti</item>
+    </plurals>
     <string name="inbox_empty_text">Konuşmalarınız burada görünür</string>
     <string name="inbox_search_empty_text"> Sonuç Yok</string>
     <string name="archived_empty_text">Arşivlenmiş konuşmalarınız burada görünür</string>

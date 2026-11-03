@@ -54,7 +54,9 @@
     <string name="main_syncing">Synchronizowanie wiadomości…</string>
     <string name="main_sender_you">Ty: %s</string>
     <string name="main_message_results_title">Wyniki w wiadomościach</string>
-    <string name="main_message_results">%d wiadomości</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d wiadomości</item>
+    </plurals>
     <string name="inbox_empty_text">Miejsce dla twoich bieżących rozmów</string>
     <string name="inbox_search_empty_text">Brak wyników</string>
     <string name="archived_empty_text">Miejsce dla twoich zarchiwizowanych rozmów</string>

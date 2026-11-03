@@ -69,7 +69,11 @@
     <string name="main_sender_you">Vous : %s</string>
     <string name="conversation_flagged_label">Spam potentiel</string>
     <string name="main_message_results_title">Résultats dans les messages</string>
-    <string name="main_message_results">%d messages</string>
+    <plurals name="main_message_results">
+        <item quantity="one">%d message</item>
+        <item quantity="many">%d messages</item>
+        <item quantity="other">%d messages</item>
+    </plurals>
     <string name="inbox_empty_text">Vos conversations apparaîtront ici</string>
     <string name="inbox_search_empty_text">Aucun résultat</string>
     <string name="archived_empty_text">Vos conversations archivées apparaîtront ici</string>

@@ -48,7 +48,9 @@
     <string name="main_syncing">Đang đồng bộ tin nhắn…</string>
     <string name="main_sender_you">Bạn: %s</string>
     <string name="main_message_results_title">Kết quả trong tin nhắn</string>
-    <string name="main_message_results">%d tin nhắn</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d tin nhắn</item>
+    </plurals>
     <string name="inbox_empty_text">Các cuộc trò chuyện của bạn sẽ xuất hiện ở đây</string>
     <string name="inbox_search_empty_text">Không có kết quả</string>
     <string name="archived_empty_text">Các cuộc trò chuyện đã lưu trữ của bạn sẽ xuất hiện ở đây</string>

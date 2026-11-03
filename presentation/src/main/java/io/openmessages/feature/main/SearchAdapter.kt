@@ -89,7 +89,7 @@ class SearchAdapter @Inject constructor(
 
             false -> {
                 holder.binding.date.setVisible(false)
-                holder.binding.snippet.text = context.getString(R.string.main_message_results, result.messages)
+                holder.binding.snippet.text = context.resources.getQuantityString(R.plurals.main_message_results, result.messages, result.messages)
             }
         }
     }

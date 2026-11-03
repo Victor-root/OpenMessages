@@ -48,7 +48,9 @@
     <string name="main_syncing">مزامنة الرسائل…</string>
     <string name="main_sender_you">أنت: %s</string>
     <string name="main_message_results_title">النتائج في الرسائل</string>
-    <string name="main_message_results">%d رسائل</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d رسائل</item>
+    </plurals>
     <string name="inbox_empty_text">ستظهر المحادثات الخاصة بك هنا</string>
     <string name="inbox_search_empty_text">لا نتائج</string>
     <string name="archived_empty_text">ستظهر المحادثات المؤرشفة الخاصة بك هنا</string>

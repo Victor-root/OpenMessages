@@ -48,7 +48,9 @@
     <string name="main_syncing">Berichten synchroniseren…</string>
     <string name="main_sender_you">Jij: %s</string>
     <string name="main_message_results_title">Resultaten in berichten</string>
-    <string name="main_message_results">%d berichten</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d berichten</item>
+    </plurals>
     <string name="inbox_empty_text">Je conversaties verschijnen hier</string>
     <string name="inbox_search_empty_text">Geen resultaten</string>
     <string name="archived_empty_text">Je gearchiveerde conversaties verschijnen hier</string>

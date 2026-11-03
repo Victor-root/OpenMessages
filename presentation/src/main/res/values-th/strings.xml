@@ -48,7 +48,9 @@
     <string name="main_syncing">กำลังปรับแต่งเพิ่มประสิทธิภาพฐานข้อมูล อาจใช้เวลาสักครู่…</string>
     <string name="main_sender_you">คุณ: %s</string>
     <string name="main_message_results_title">ผลลัพธ์ในข้อความ</string>
-    <string name="main_message_results">%d ข้อความ</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d ข้อความ</item>
+    </plurals>
     <string name="inbox_empty_text">บทสนทนาของคุณจะปรากฏที่นี่</string>
     <string name="inbox_search_empty_text">ไม่มีผลลัพธ์</string>
     <string name="archived_empty_text">บทสนทนาของคุณที่จัดเก็บไว้จะปรากฏที่นี่</string>

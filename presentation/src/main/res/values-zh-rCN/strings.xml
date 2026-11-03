@@ -48,7 +48,9 @@
     <string name="main_syncing">正在同步信息…</string>
     <string name="main_sender_you">你：%s</string>
     <string name="main_message_results_title">信息中的结果</string>
-    <string name="main_message_results">%d 条信息</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d 条信息</item>
+    </plurals>
     <string name="inbox_empty_text">对话会在这里显示</string>
     <string name="inbox_search_empty_text">无结果</string>
     <string name="archived_empty_text">存档的对话会出现在这里</string>

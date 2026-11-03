@@ -48,7 +48,9 @@
     <string name="main_syncing">Menyinkronkan pesan…</string>
     <string name="main_sender_you">Anda: %s</string>
     <string name="main_message_results_title">Hasil dalam pesan</string>
-    <string name="main_message_results">%d pesan</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d pesan</item>
+    </plurals>
     <string name="inbox_empty_text">Percakapan anda akan ditampilkan di sini</string>
     <string name="inbox_search_empty_text">Tidak ada hasil</string>
     <string name="archived_empty_text">Arsip percakapan anda akan ditampilkan di sini</string>

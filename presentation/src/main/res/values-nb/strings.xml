@@ -48,7 +48,9 @@
     <string name="main_syncing">Synkroniserer meldinger…</string>
     <string name="main_sender_you">Du: %s</string>
     <string name="main_message_results_title">Resultater i meldinger</string>
-    <string name="main_message_results">%d meldinger</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d meldinger</item>
+    </plurals>
     <string name="inbox_empty_text">Samtalene dine vises her</string>
     <string name="inbox_search_empty_text">Ingen treff</string>
     <string name="archived_empty_text">Arkiverte samtaler vises her</string>

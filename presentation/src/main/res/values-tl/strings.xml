@@ -48,7 +48,9 @@
     <string name="main_syncing">Syncing messages…</string>
     <string name="main_sender_you">Ikaw: %s</string>
     <string name="main_message_results_title">Resulta sa mga messages</string>
-    <string name="main_message_results">%d mga messages</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d mga messages</item>
+    </plurals>
     <string name="inbox_empty_text">Ang iyong mga pakikipag-usap ay makikita rito</string>
     <string name="inbox_search_empty_text">Walang nakita</string>
     <string name="archived_empty_text">Ang iyong mga isinantabing pakikipag-usap at makikita rito</string>

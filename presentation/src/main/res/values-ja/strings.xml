@@ -48,7 +48,9 @@
     <string name="main_syncing">メッセージを同期しています...</string>
     <string name="main_sender_you">あなた: %s</string>
     <string name="main_message_results_title">メッセージ内の検索結果</string>
-    <string name="main_message_results">%d 件のメッセージ</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d 件のメッセージ</item>
+    </plurals>
     <string name="inbox_empty_text">会話がここに表示されます</string>
     <string name="inbox_search_empty_text">検索結果がありません</string>
     <string name="archived_empty_text">保存した会話がここに表示されます</string>

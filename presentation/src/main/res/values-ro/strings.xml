@@ -54,7 +54,9 @@
     <string name="main_syncing">Se sincronizează mesajele…</string>
     <string name="main_sender_you">Tu: %s</string>
     <string name="main_message_results_title">Rezultate în mesaje</string>
-    <string name="main_message_results">%d mesaje</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d mesaje</item>
+    </plurals>
     <string name="inbox_empty_text">Conversațiile tale vor apărea aici</string>
     <string name="inbox_search_empty_text">Niciun rezultat</string>
     <string name="archived_empty_text">Conversațiile tale arhivate vor apărea aici</string>

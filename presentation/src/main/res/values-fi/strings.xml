@@ -48,7 +48,9 @@
     <string name="main_syncing">Synkronoidaan viestejä…</string>
     <string name="main_sender_you">Sinä: %s</string>
     <string name="main_message_results_title">Tuloksia viesteissä</string>
-    <string name="main_message_results">%d viestiä</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d viestiä</item>
+    </plurals>
     <string name="inbox_empty_text">Keskustelusi näkyvät tässä</string>
     <string name="inbox_search_empty_text">Ei tuloksia</string>
     <string name="archived_empty_text">Arkistoimasi keskustelut näkyvät tässä</string>

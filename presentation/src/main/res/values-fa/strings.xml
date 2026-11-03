@@ -48,7 +48,9 @@
     <string name="main_syncing">همگام‌سازی پیام‌ها…</string>
     <string name="main_sender_you">شما: %s</string>
     <string name="main_message_results_title">اَبدُمان در پیام‌ها</string>
-    <string name="main_message_results">%d پیام</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d پیام</item>
+    </plurals>
     <string name="inbox_empty_text">گفتگوهایتان اینجا نمایش داده می‌شود</string>
     <string name="inbox_search_empty_text">بی اَبدُم</string>
     <string name="archived_empty_text">بایگانی‌هایتان اینجا نمایش داده می‌شود</string>

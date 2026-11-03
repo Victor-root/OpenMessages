@@ -48,7 +48,9 @@
     <string name="main_syncing">Üzenetek szinkronizálása…</string>
     <string name="main_sender_you">Ön: %s</string>
     <string name="main_message_results_title">Találatok az üzenetekben</string>
-    <string name="main_message_results">%d üzenet</string>
+    <plurals name="main_message_results">
+        <item quantity="other">%d üzenet</item>
+    </plurals>
     <string name="inbox_empty_text">A beszélgetései itt jelennek meg</string>
     <string name="inbox_search_empty_text">Nincs találat</string>
     <string name="archived_empty_text">Az archivált beszélgetései itt jelennek meg</string>
