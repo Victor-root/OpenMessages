@@ -36,6 +36,7 @@ import io.openmessages.model.Recipient
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.databinding.ContactListItemBinding
 import io.openmessages.util.DisplayNames
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.plusAssign
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -191,6 +192,7 @@ class ComposeItemAdapter @Inject constructor(
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         disposables += conversationRepo.getUnmanagedRecipients()
                 .map { recipients -> recipients.associateByNotNull { recipient -> recipient.contact?.lookupKey } }
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { recipients -> this@ComposeItemAdapter.recipients = recipients }
     }
 
