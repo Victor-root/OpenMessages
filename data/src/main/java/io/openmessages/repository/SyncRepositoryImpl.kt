@@ -105,7 +105,7 @@ class SyncRepositoryImpl @Inject constructor(
                     .filter { conversation ->
                         conversation.archived || conversation.blocked || conversation.pinned ||
                                 conversation.name.isNotEmpty() || conversation.blockingClient != null ||
-                                !conversation.blockReason.isNullOrEmpty()
+                                !conversation.blockReason.isNullOrEmpty() || conversation.draft.isNotEmpty()
                     }
                     .associateBy { conversation -> conversation.id }
                     .toMutableMap()
@@ -214,6 +214,8 @@ class SyncRepositoryImpl @Inject constructor(
                                     blockingClient = persistedConversation.blockingClient
                                     blockReason = persistedConversation.blockReason
                                     sendAsGroup = persistedConversation.sendAsGroup
+                                    draft = persistedConversation.draft
+                                    draftDate = persistedConversation.draftDate
                                 }
                             }
                         }
