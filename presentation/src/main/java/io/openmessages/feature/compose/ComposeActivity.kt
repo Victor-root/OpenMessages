@@ -818,6 +818,15 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         gallery.launch(Intent.createChooser(intent, null))
     }
 
+    // Picking is for media apps only; documents come from the system file picker
+    override fun requestFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+            .addCategory(Intent.CATEGORY_OPENABLE)
+            .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            .setType("*/*")
+        gallery.launch(intent)
+    }
+
     override fun setDraft(draft: String) {
         binding.message.setText(draft)
         binding.message.setSelection(draft.length)

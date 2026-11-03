@@ -103,6 +103,7 @@ interface ComposeView : BaseView<ComposeState> {
     fun showKeyboard()
     fun requestCamera()
     fun requestGallery(mimeType: String)
+    fun requestFile()
     fun requestContact()
     fun setDraft(draft: String)
     fun showTemplatePicker()
