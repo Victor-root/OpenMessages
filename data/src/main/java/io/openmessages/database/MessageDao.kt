@@ -51,6 +51,7 @@ abstract class MessageDao {
     /** The fields a message is told apart from its duplicates by */
     class MessageSignature(
         val id: Long,
+        val threadId: Long,
         val address: String,
         val dateSent: Long,
         val boxId: Int,
@@ -167,7 +168,7 @@ abstract class MessageDao {
     @Query("SELECT * FROM message WHERE date < :before")
     abstract fun getOlderThan(before: Long): List<Message>
 
-    @Query("SELECT id, address, dateSent, boxId, body, attachmentTypeString FROM message ORDER BY id")
+    @Query("SELECT id, threadId, address, dateSent, boxId, body, attachmentTypeString FROM message ORDER BY id")
     abstract fun getSignatures(): List<MessageSignature>
 
     /**

@@ -1026,12 +1026,14 @@ open class MessageRepositoryImpl @Inject constructor(
 
     override fun deduplicateMessages(): Flowable<MessageRepository.DeduplicationResult> =
         Flowable.fromCallable {
-            val duplicateIds = findDuplicateMessages()
-            if (duplicateIds.isEmpty()) {
+            val duplicates = findDuplicateMessages()
+            if (duplicates.isEmpty()) {
                 MessageRepository.DeduplicationResult.NoDuplicates
             } else {
                 deduplicationProgress.onNext(MessageRepository.DeduplicationProgress.Running(0, 0, true))
-                deleteMessages(duplicateIds)
+                deleteMessages(duplicates.map { duplicate -> duplicate.id })
+                // A deleted duplicate may have been the last message its conversation points at
+                conversationRepo.updateConversations(duplicates.map { duplicate -> duplicate.threadId }.distinct())
                 MessageRepository.DeduplicationResult.Success
             }
         }
@@ -1040,9 +1042,9 @@ open class MessageRepositoryImpl @Inject constructor(
             deduplicationProgress.onNext(MessageRepository.DeduplicationProgress.Idle)
         }
 
-    private fun findDuplicateMessages(): List<Long> {
+    private fun findDuplicateMessages(): List<MessageDao.MessageSignature> {
         val seenSignatures = HashSet<String>()
-        val duplicateIds = ArrayList<Long>()
+        val duplicates = ArrayList<MessageDao.MessageSignature>()
 
         val allMessages = dao.getSignatures()
 
@@ -1059,11 +1061,11 @@ open class MessageRepositoryImpl @Inject constructor(
                 }
                 val signature = messageHash(message)
                 if (!seenSignatures.add(signature)) {
-                    duplicateIds.add(message.id)
+                    duplicates.add(message)
                 }
             }
         }
-        return duplicateIds
+        return duplicates
     }
 
     private fun messageHash(message: MessageDao.MessageSignature): String {
