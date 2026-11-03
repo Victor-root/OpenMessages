@@ -53,7 +53,10 @@ object VideoUtils {
     private const val MIN_VIDEO_BITRATE = 48_000
 
     /** Encoders only roughly keep to the bitrate asked of them, so a miss is corrected this often */
-    private const val MAX_ATTEMPTS = 3
+    private const val MAX_ATTEMPTS = 4
+
+    /** The picture sizes tried, largest first */
+    private val SHORT_SIDES = listOf(480, 360, 240, 144)
 
     private const val TIMEOUT_MINUTES = 3L
 
@@ -97,13 +100,17 @@ object VideoUtils {
 
         // What the file may carry each second, less a share for what the MP4 container adds
         var totalBitrate = (maxBytes * 8 * 1000 / durationMs * CONTAINER_SHARE).toInt()
+        // Some encoders stop lowering the bitrate past a floor of their own for a given picture
+        // size, so a lower bitrate alone can land on the same weight again. Each miss also takes
+        // the picture one size down, which always makes the file lighter.
+        var maxShortSide = sourceShortSide
         val output = File(context.cacheDir, "video-${UUID.randomUUID()}.mp4")
         try {
             repeat(MAX_ATTEMPTS) { attempt ->
                 val videoBitrate = totalBitrate - AUDIO_BITRATE
                 if (videoBitrate < MIN_VIDEO_BITRATE) return null
 
-                val shortSide = minOf(shortSideFor(videoBitrate), sourceShortSide)
+                val shortSide = minOf(shortSideFor(videoBitrate), maxShortSide)
                 if (!transcode(context, uri, output, videoBitrate, shortSide)) return null
 
                 val size = output.length()
@@ -113,6 +120,7 @@ object VideoUtils {
 
                 // How far off it landed is how far the next attempt has to move
                 totalBitrate = (totalBitrate * maxBytes.toDouble() / size * 0.9).toInt()
+                maxShortSide = SHORT_SIDES.firstOrNull { side -> side < shortSide } ?: return null
             }
             return null
         } finally {
