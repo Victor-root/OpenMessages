@@ -119,11 +119,14 @@ class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
         binding.action3.isVisible = state.threadId == 0L
         binding.action3.summary = state.action3Summary
 
-        binding.quickReplyDivider.isVisible = state.threadId == 0L
-        binding.quickReplyTitle.isVisible = state.threadId == 0L
+        // From Android 10 the system blocks the popup from opening on its own, so the setting has
+        // nothing to offer there
+        val quickReplyShown = state.threadId == 0L && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
+        binding.quickReplyDivider.isVisible = quickReplyShown
+        binding.quickReplyTitle.isVisible = quickReplyShown
         binding.quickReply.checkbox?.isChecked = state.quickReplyEnabled
-        binding.quickReply.isVisible = state.threadId == 0L
-        binding.quickReplyTapDismiss.isVisible = state.threadId == 0L
+        binding.quickReply.isVisible = quickReplyShown
+        binding.quickReplyTapDismiss.isVisible = quickReplyShown
         binding.quickReplyTapDismiss.isEnabled = state.quickReplyEnabled
         binding.quickReplyTapDismiss.checkbox?.isChecked = state.quickReplyTapDismiss
     }

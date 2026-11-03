@@ -395,7 +395,8 @@ class NotificationManagerImpl @Inject constructor(
                 }
                 .forEach { notification.addAction(it) }
 
-        if (prefs.quickReply.get()) {
+        // From Android 10 the system refuses to open an activity from the background
+        if (prefs.quickReply.get() && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             notification.priority = NotificationCompat.PRIORITY_DEFAULT
 
             val intent = Intent(context, QuickReplyActivity::class.java)
