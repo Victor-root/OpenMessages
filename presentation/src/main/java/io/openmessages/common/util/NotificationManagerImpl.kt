@@ -86,6 +86,7 @@ class NotificationManagerImpl @Inject constructor(
         const val DEFAULT_CHANNEL_ID = "notifications_default"
         const val BACKUP_RESTORE_CHANNEL_ID = "notifications_backup_restore"
         const val RECEIVING_WORKER_CHANNEL_ID = "notifications_receiving_worker"
+        private const val DIRECT_REPLY_DISMISS_DELAY_MS = 1000L
 
         val MARK_TYPE_COUNT = MessageMarkReceiver.MarkType.values().size
 
@@ -621,6 +622,29 @@ class NotificationManagerImpl @Inject constructor(
 
     override fun cancel(i: Int) {
         notificationManager.cancel(i)
+    }
+
+    /**
+     * From Android 15 the system holds on to a notification the user replied to from its Reply
+     * action, and refuses to let the app cancel it until the app posts it again. A cancel, or a
+     * timeout, that lands before the new post is in place still meets the held one and is refused,
+     * so the one shown is posted again set to time out a second later, once it has replaced the held
+     * one, and the system then removes it itself.
+     */
+    override fun dismissReplied(threadId: Long) {
+        val id = threadId.toInt()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            val shown = notificationManager.activeNotifications.firstOrNull { active -> active.id == id }
+            if (shown != null) {
+                val expiring = Notification.Builder.recoverBuilder(context, shown.notification)
+                    .setOnlyAlertOnce(true)
+                    .setTimeoutAfter(DIRECT_REPLY_DISMISS_DELAY_MS)
+                    .build()
+                notificationManager.notify(id, expiring)
+                return
+            }
+        }
+        notificationManager.cancel(id)
     }
 
 }

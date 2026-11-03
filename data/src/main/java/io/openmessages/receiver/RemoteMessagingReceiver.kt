@@ -26,6 +26,7 @@ import dagger.android.AndroidInjection
 import io.openmessages.compat.SubscriptionManagerCompat
 import io.openmessages.interactor.MarkRead
 import io.openmessages.interactor.SendNewMessage
+import io.openmessages.manager.NotificationManager
 import io.openmessages.repository.ConversationRepository
 import io.openmessages.repository.MessageRepository
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -35,6 +36,7 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
     @Inject lateinit var conversationRepo: ConversationRepository
     @Inject lateinit var markRead: MarkRead
     @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var notificationManager: NotificationManager
     @Inject lateinit var sendNewMessage: SendNewMessage
     @Inject lateinit var subscriptionManager: SubscriptionManagerCompat
 
@@ -47,7 +49,8 @@ class RemoteMessagingReceiver : BroadcastReceiver() {
         val threadId = bundle.getLong("threadId")
         val body = remoteInput.getCharSequence("body").toString()
 
-        markRead.execute(listOf(threadId))
+        // Marking it read cancels the notification, which the system refuses after a reply
+        markRead.execute(listOf(threadId)) { notificationManager.dismissReplied(threadId) }
 
         val pendingResult = goAsync()
 

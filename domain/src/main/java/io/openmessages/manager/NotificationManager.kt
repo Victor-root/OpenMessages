@@ -37,4 +37,9 @@ interface NotificationManager {
 
     fun cancel(i: Int)
 
+    /**
+     * Removes the notification of [threadId] once the user has replied to it from its Reply action
+     */
+    fun dismissReplied(threadId: Long)
+
 }
