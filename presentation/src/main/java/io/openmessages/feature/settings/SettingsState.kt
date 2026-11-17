@@ -46,6 +46,7 @@ data class SettingsState(
     val hideCountryCodeEnabled: Boolean = false,
     val edgeToEdgeEnabled: Boolean = false,
     val showStt: Boolean = true,
+    val drawerSwipe: Boolean = false,
     val showSttOffsetX: Float = Float.MIN_VALUE,
     val showSttOffsetY: Float = Float.MAX_VALUE,
     val splitSmsEnabled: Boolean = false,

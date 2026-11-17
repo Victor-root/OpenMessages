@@ -343,6 +343,8 @@
     <string name="settings_edge_to_edge_title">Bord à bord</string>
     <string name="settings_edge_to_edge_summary">Afficher le contenu derrière les barres de statut et de navigation</string>
     <string name="settings_system_show_stt_title">Afficher le bouton de saisie vocale</string>
+    <string name="settings_drawer_swipe_title">Glisser pour ouvrir le menu</string>
+    <string name="settings_drawer_swipe_summary">Ouvre le menu latéral en glissant depuis le bord gauche de la liste des conversations</string>
     <string name="settings_auto_emoji_title">Émoticône automatique</string>
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_o_summary">Appuyer pour personnaliser</string>

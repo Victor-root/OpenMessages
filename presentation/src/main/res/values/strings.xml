@@ -387,6 +387,8 @@
     <string name="settings_edge_to_edge_title">Edge-to-edge</string>
     <string name="settings_edge_to_edge_summary">Draw content behind the status and navigation bars</string>
     <string name="settings_system_show_stt_title">Show the speech-to-text button</string>
+    <string name="settings_drawer_swipe_title">Swipe to open the menu</string>
+    <string name="settings_drawer_swipe_summary">Open the side menu by swiping from the left edge of the conversation list</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_o_summary">Tap to customize</string>

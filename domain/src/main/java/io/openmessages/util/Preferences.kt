@@ -145,6 +145,7 @@ class Preferences @Inject constructor(
     /** Draw page content behind the transparent status and navigation bars (edge-to-edge). */
     val edgeToEdge = rxPrefs.getBoolean("edgeToEdge", false)
     val showStt = rxPrefs.getBoolean("showStt", false)
+    val drawerSwipe = rxPrefs.getBoolean("drawerSwipe", false)
     val showSttOffsetX = rxPrefs.getFloat("showSttOffsetX", Float.MIN_VALUE)
     val showSttOffsetY = rxPrefs.getFloat("showSttOffsetY", Float.MIN_VALUE)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)

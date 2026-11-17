@@ -237,6 +237,7 @@ class SettingsController : BaseController<SettingsControllerBinding, SettingsVie
         binding.edgeToEdge.checkbox?.setChecked(state.edgeToEdgeEnabled, animate)
 
         binding.showStt.checkbox?.setChecked(state.showStt, animate)
+        binding.drawerSwipe.checkbox?.setChecked(state.drawerSwipe, animate)
 
         binding.unicode.checkbox?.setChecked(state.stripUnicodeEnabled, animate)
         binding.mobileOnly.checkbox?.setChecked(state.mobileOnly, animate)

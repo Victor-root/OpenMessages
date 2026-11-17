@@ -20,7 +20,6 @@ package io.openmessages.common.widget
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.content.res.Configuration
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
@@ -66,9 +65,9 @@ class PreferenceView @JvmOverloads constructor(
         }
 
     /**
-     * The colour of the icon and its tile: the app's by default, following it as it changes, or a
-     * conversation's on its own screens. Both fade with the row when it is disabled, and on a dark
-     * background the icon is lightened, or a deep colour would hardly show.
+     * The colour of the icon's tile, as in AukDialer: the app's by default, following it as it
+     * changes, or a conversation's on its own screens. The icon takes the colour that reads on it,
+     * and both fade with the row when it is disabled.
      */
     var accent: Int = Color.TRANSPARENT
         set(value) {
@@ -82,14 +81,11 @@ class PreferenceView @JvmOverloads constructor(
     private var themeDisposable: Disposable? = null
 
     private fun applyAccent(color: Int) {
-        val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-                Configuration.UI_MODE_NIGHT_YES
-        val icon = colors.readableOnBackground(context, color)
         val disabled = intArrayOf(-android.R.attr.state_enabled)
-        fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
-            intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))
-        layout.icon.imageTintList = faded(icon, 0xFF)
-        layout.icon.backgroundTintList = faded(color, if (night) 0x38 else 0x24)
+        fun faded(color: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
+            intArrayOf(ColorUtils.setAlphaComponent(color, 0x55), color))
+        layout.icon.imageTintList = faded(colors.contentColorOnTheme(color))
+        layout.icon.backgroundTintList = faded(color)
     }
 
     override fun onAttachedToWindow() {

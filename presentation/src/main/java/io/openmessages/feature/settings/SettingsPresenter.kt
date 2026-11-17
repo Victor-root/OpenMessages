@@ -146,6 +146,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.showStt.asObservable()
             .subscribe { enabled -> newState { copy(showStt = enabled) } }
 
+        disposables += prefs.drawerSwipe.asObservable()
+            .subscribe { enabled -> newState { copy(drawerSwipe = enabled) } }
+
         disposables += prefs.unicode.asObservable()
                 .subscribe { enabled -> newState { copy(stripUnicodeEnabled = enabled) } }
 
@@ -247,6 +250,8 @@ class SettingsPresenter @Inject constructor(
                         R.id.hideCountryCode -> prefs.hideCountryCode.set(!prefs.hideCountryCode.get())
 
                         R.id.edgeToEdge -> prefs.edgeToEdge.set(!prefs.edgeToEdge.get())
+
+                        R.id.drawerSwipe -> prefs.drawerSwipe.set(!prefs.drawerSwipe.get())
 
                         R.id.showStt -> {
                             prefs.showStt.set(!prefs.showStt.get())

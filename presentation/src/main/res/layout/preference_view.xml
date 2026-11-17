@@ -26,16 +26,17 @@
     android:orientation="horizontal"
     tools:parentTag="io.openmessages.common.widget.PreferenceView">
 
-    <!-- The icon in a small tile, tinted in code from the theme colour -->
+    <!-- The icon in a tile filled with the theme colour, set in code -->
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
         android:layout_marginStart="12dp"
+        android:layout_marginVertical="6dp"
         android:background="@drawable/rounded_rect_12dp"
         android:duplicateParentState="true"
         android:importantForAccessibility="no"
-        android:padding="8dp"
+        android:padding="12dp"
         android:visibility="invisible" />
 
     <LinearLayout

@@ -215,7 +215,13 @@ class MainActivity : ThemedActivity(), MainView {
                 drawerOffset = slideOffset
                 updateStatusBarBackdrop()
             }
+
+            override fun onDrawerOpened(drawerView: View) = updateDrawerSwipe()
+            override fun onDrawerClosed(drawerView: View) = updateDrawerSwipe()
         })
+        prefs.drawerSwipe.asObservable()
+            .autoDispose(scope(Lifecycle.Event.ON_DESTROY))
+            .subscribe { updateDrawerSwipe() }
 
         snackbarBinding = MainPermissionHintBinding.bind(binding.snackbar.inflate()).also {
             it.snackbarButton.clicks()
@@ -444,6 +450,16 @@ class MainActivity : ThemedActivity(), MainView {
      * scrolls away from under it, leaving the list, or the drawer slides in over it, its own
      * background reaching up behind the bar
      */
+    /**
+     * Swiping in from the edge opens the menu only when the setting is on; once open, it can always
+     * be swiped closed
+     */
+    private fun updateDrawerSwipe() {
+        val swipe = prefs.drawerSwipe.get() || binding.drawerLayout.isDrawerOpen(GravityCompat.START)
+        binding.drawerLayout.setDrawerLockMode(
+            if (swipe) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+    }
+
     private fun updateStatusBarBackdrop() {
         val backdrop = when {
             !isEdgeToEdge() -> null
