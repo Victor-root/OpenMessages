@@ -43,7 +43,7 @@ class Colors @Inject constructor(
          * (toolbar, drawer header, FAB, scroll-to-top, swipe background); every custom color the
          * user picks is painted as a single flat color instead.
          */
-        const val DEFAULT_THEME = 0xFF7B2DDC.toInt()
+        const val DEFAULT_THEME = 0xFF6A2CD0.toInt()
     }
 
     /**

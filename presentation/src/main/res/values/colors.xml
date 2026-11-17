@@ -74,18 +74,18 @@
     <color name="tools_theme">#00838F</color>
 
     <!-- Open Messages brand gradient colors -->
-    <color name="colorBrand">#7B2DDC</color>
+    <color name="colorBrand">#6A2CD0</color>
     <color name="colorBrandLight">#9966FF</color>
     <color name="colorBrandAccent">#5D72FB</color>
 
     <array name="random_colors">
-        <item>#7B2DDC</item>
-        <item>#5D72FB</item>
-        <item>#06C9AF</item>
-        <item>#6DC966</item>
-        <item>#F1AF28</item>
-        <item>#FF8963</item>
-        <item>#8899EC</item>
+        <item>#6A2CD0</item>
+        <item>#475BDD</item>
+        <item>#00B199</item>
+        <item>#59B153</item>
+        <item>#D49515</item>
+        <item>#E0704C</item>
+        <item>#7181D0</item>
     </array>
 
     <array name="material_red">
@@ -244,6 +244,7 @@
         <item>#827717</item>
     </array>
 
+    <!-- The 500 and 700 shades are deeper than Material's, whose yellows wash out on a light background -->
     <array name="material_yellow">
         <item>#FFFDE7</item>
         <item>#FFF9C4</item>
@@ -252,7 +253,7 @@
         <item>#FFEE58</item>
         <item>#E6C400</item>
         <item>#FDD835</item>
-        <item>#FBC02D</item>
+        <item>#CAAC00</item>
         <item>#F9A825</item>
         <item>#F57F17</item>
     </array>

@@ -40,6 +40,9 @@ class RxSharedPreferences(private val preferences: SharedPreferences) {
         preferences.registerOnSharedPreferenceChangeListener(listener)
     }.share()
 
+    /** The key of every preference that holds a value */
+    val keys: Set<String> get() = preferences.all.keys
+
     fun getBoolean(key: String, defaultValue: Boolean = false): Preference<Boolean> =
         preference(key, defaultValue, SharedPreferences::getBoolean, SharedPreferences.Editor::putBoolean)
 

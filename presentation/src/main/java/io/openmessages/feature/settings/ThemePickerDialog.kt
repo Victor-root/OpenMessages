@@ -22,7 +22,6 @@ import android.app.Dialog
 import android.app.WallpaperManager
 import android.content.DialogInterface
 import android.content.res.ColorStateList
-import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
@@ -85,7 +84,7 @@ class ThemePickerDialog : DialogFragment() {
     private var hsvDisposable: Disposable? = null
 
     companion object {
-        const val DEFAULT_COLOR = 0xFF7B2DDC.toInt()
+        const val DEFAULT_COLOR = Colors.DEFAULT_THEME
         private const val ARG_RECIPIENT_ID = "recipientId"
         private const val ARG_INITIAL_COLOR = "initialColor"
 
@@ -136,14 +135,8 @@ class ThemePickerDialog : DialogFragment() {
             selectedColor == DEFAULT_COLOR
         ) { selectColor(DEFAULT_COLOR) }
 
-        // Color grid — the Material 500 shade of each family (4 columns).
-        // Red (index 0) uses 700 in light mode (#D32F2F) and 500 in dark mode (#F44336) so it
-        // remains legible on white backgrounds while still being vibrant in dark mode.
-        val night = (resources.configuration.uiMode and
-            Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        val flatColors = colors.materialColors.map { family -> family[5] }
-            .toMutableList()
-            .apply { set(0, colors.materialColors[0][if (night) 5 else 7]) }
+        // Color grid — the deep 700 shade of each family (4 columns), the tone of the default violet
+        val flatColors = colors.materialColors.map { family -> family[7] }
         colorAdapter = ColorGridAdapter(flatColors, selectedColor) { color -> selectColor(color) }
         binding.colorGrid.layoutManager = GridLayoutManager(requireContext(), 4)
         binding.colorGrid.adapter = colorAdapter
