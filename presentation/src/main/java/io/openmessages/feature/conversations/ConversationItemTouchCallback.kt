@@ -21,11 +21,9 @@ package io.openmessages.feature.conversations
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Rect
-import android.graphics.Shader
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -62,11 +60,6 @@ class ConversationItemTouchCallback @Inject constructor(
     private val backgroundPaint = Paint()
     private val swipeClip = Path()
     private var swipeColor = ContextCompat.getColor(context, R.color.colorBrand)
-    // The brand gradient is only drawn for the default violet theme; custom colors swipe flat.
-    private var swipeColorEnd = swipeColor
-    private var useGradient = false
-    private var swipeGradient: LinearGradient? = null
-    private var cachedItemWidth = 0
     private var rightAction = 0
     private var swipeRightIcon: Bitmap? = null
     private var leftAction = 0
@@ -89,9 +82,6 @@ class ConversationItemTouchCallback @Inject constructor(
                     mailOpenIcon = iconBitmap(R.drawable.ic_mail_opened, theme.textPrimary)
                     mailClosedIcon = iconBitmap(R.drawable.ic_mail, theme.textPrimary)
                     swipeColor = theme.theme
-                    swipeColorEnd = colors.deriveGradientEndColor(theme.theme)
-                    useGradient = colors.usesBrandGradient(theme.theme)
-                    swipeGradient = null // force the gradient to be rebuilt with the new colors
                     setDefaultSwipeDirs((if (right == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.RIGHT)
                             or (if (left == Preferences.SWIPE_ACTION_NONE) 0 else ItemTouchHelper.LEFT))
                 }
@@ -119,19 +109,7 @@ class ConversationItemTouchCallback @Inject constructor(
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             val itemView = viewHolder.itemView
 
-            // Default violet swipes with a horizontal brand gradient; custom colors swipe flat.
-            if (useGradient) {
-                val w = itemView.width
-                if (swipeGradient == null || cachedItemWidth != w) {
-                    swipeGradient = LinearGradient(itemView.left.toFloat(), 0f, (itemView.left + w).toFloat(), 0f,
-                            swipeColor, swipeColorEnd, Shader.TileMode.CLAMP)
-                    cachedItemWidth = w
-                }
-                backgroundPaint.shader = swipeGradient
-            } else {
-                backgroundPaint.shader = null
-                backgroundPaint.color = swipeColor
-            }
+            backgroundPaint.color = swipeColor
 
             // What the row uncovers keeps to the row's own corners within its group's block
             val radii = (adapter as? RowGroups.Adapter)?.rowGroups?.cornerRadii(viewHolder.bindingAdapterPosition)

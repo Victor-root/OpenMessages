@@ -309,9 +309,6 @@ class MainActivity : ThemedActivity(), MainView {
                 .autoDispose(scope())
                 .subscribe { theme ->
                     val density = resources.displayMetrics.density
-                    val gradientEnd = colors.deriveGradientEndColor(theme.theme)
-                    // The brand gradient is only used for the default violet; custom colors are flat.
-                    val useGradient = colors.usesBrandGradient(theme.theme)
                     // Anything sitting on the theme color follows the status-bar icon rule. Computed
                     // here rather than read from toolbarContentColor: this subscription is registered
                     // in onCreate, so it fires before ThemedActivity's own in onPostCreate.
@@ -336,13 +333,10 @@ class MainActivity : ThemedActivity(), MainView {
                     syncingBinding.syncingProgress.indeterminateTintList = ColorStateList.valueOf(theme.theme)
                     binding.drawer.rateIcon.setTint(theme.theme)
 
-                    // Compose FAB — brand gradient (rounded rect) for the default color, solid otherwise
+                    // Compose FAB, a rounded square in the theme colour
                     val cornerPx = 16f * density
-                    val composeBackground = (if (useGradient) {
-                        GradientDrawable(GradientDrawable.Orientation.BL_TR, intArrayOf(theme.theme, gradientEnd))
-                    } else {
-                        GradientDrawable().apply { setColor(theme.theme) }
-                    }).apply {
+                    val composeBackground = GradientDrawable().apply {
+                        setColor(theme.theme)
                         shape = GradientDrawable.RECTANGLE
                         cornerRadius = cornerPx
                     }
@@ -357,12 +351,11 @@ class MainActivity : ThemedActivity(), MainView {
                     )
                     binding.compose.setTint(onTheme)
 
-                    // Scroll-to-top — brand gradient (oval) for the default color, solid otherwise
-                    val scrollBackground = (if (useGradient) {
-                        GradientDrawable(GradientDrawable.Orientation.BL_TR, intArrayOf(theme.theme, gradientEnd))
-                    } else {
-                        GradientDrawable().apply { setColor(theme.theme) }
-                    }).apply { shape = GradientDrawable.OVAL }
+                    // Scroll-to-top, a disc in the theme colour
+                    val scrollBackground = GradientDrawable().apply {
+                        setColor(theme.theme)
+                        shape = GradientDrawable.OVAL
+                    }
                     val scrollMask = GradientDrawable().apply {
                         shape = GradientDrawable.OVAL
                         setColor(Color.WHITE)
@@ -399,12 +392,11 @@ class MainActivity : ThemedActivity(), MainView {
                     // toolbar's own icon tinting, so it needs the color applied here as well.
                     toggle.drawerArrowDrawable.color = onTheme
 
-                    // Drawer logo tile, painted like the compose button
-                    binding.drawer.drawerLogo.background = (if (useGradient) {
-                        GradientDrawable(GradientDrawable.Orientation.BL_TR, intArrayOf(theme.theme, gradientEnd))
-                    } else {
-                        GradientDrawable().apply { setColor(theme.theme) }
-                    }).apply { cornerRadius = 14f * density }
+                    // Drawer logo tile, in the theme colour like the compose button
+                    binding.drawer.drawerLogo.background = GradientDrawable().apply {
+                        setColor(theme.theme)
+                        cornerRadius = 14f * density
+                    }
                     binding.drawer.drawerLogo.clipToOutline = true
 
                     // Every drawer entry ripples within its pill; the entry showing fills it
@@ -723,7 +715,7 @@ class MainActivity : ThemedActivity(), MainView {
         searchBarShown = show
         val bar = binding.searchBar
         if (show) {
-            // A copy of the toolbar's own background, gradient included, at the same size
+            // A copy of the toolbar's own background
             bar.background = binding.toolbar.background?.constantState?.newDrawable()?.mutate()
             bar.isVisible = true
         }

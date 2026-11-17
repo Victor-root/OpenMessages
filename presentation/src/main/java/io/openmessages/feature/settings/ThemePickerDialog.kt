@@ -123,11 +123,11 @@ class ThemePickerDialog : DialogFragment() {
         val inflater = LayoutInflater.from(requireContext())
         binding = ThemePickerDialogBinding.inflate(inflater)
 
-        // Default theme swatch — the signature violet gradient, in its own category
-        val defaultDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TL_BR,
-            intArrayOf(DEFAULT_COLOR, colors.deriveGradientEndColor(DEFAULT_COLOR))
-        ).apply { shape = GradientDrawable.OVAL }
+        // Default theme swatch, the signature violet in its own category
+        val defaultDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(DEFAULT_COLOR)
+        }
         defaultCheck = addSwatch(
             binding.defaultColors,
             defaultDrawable,
@@ -354,14 +354,7 @@ class ThemePickerDialog : DialogFragment() {
     /** Live-preview the chosen color in the status bar, navigation bar and toolbar header. */
     private fun previewColor(color: Int) {
         (activity as? BaseActivity)?.applySystemBars(color)
-        // Match the real header: the default violet previews as a gradient, custom colors as flat.
-        activity?.findViewById<Toolbar>(R.id.toolbar)?.background = if (colors.usesBrandGradient(color)) {
-            GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    intArrayOf(color, colors.deriveGradientEndColor(color)))
-        } else {
-            ColorDrawable(color)
-        }
+        activity?.findViewById<Toolbar>(R.id.toolbar)?.background = ColorDrawable(color)
     }
 
     private fun updateButtonColors(color: Int) {

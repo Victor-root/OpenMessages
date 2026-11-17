@@ -47,12 +47,6 @@ class Colors @Inject constructor(
     }
 
     /**
-     * Whether the brand gradient should be used for the given theme color. Only true for the
-     * default violet — custom colors are always flat.
-     */
-    fun usesBrandGradient(color: Int): Boolean = color == DEFAULT_THEME
-
-    /**
      * Whether the status- and navigation-bar icons drawn on top of [color] should use the dark
      * (black) variant. Returns true for light theme colors and false for dark ones, based on
      * perceived brightness (ITU-R BT.601).
@@ -176,14 +170,6 @@ class Colors @Inject constructor(
         return 0.2126 * array[0] + 0.7152 * array[1] + 0.0722 * array[2] + 0.05
     }
 
-    fun deriveGradientEndColor(color: Int): Int {
-        val hsv = FloatArray(3)
-        Color.colorToHSV(color, hsv)
-        hsv[0] = (hsv[0] - 30f + 360f) % 360f
-        hsv[1] = (hsv[1] * 0.8f).coerceIn(0f, 1f)
-        hsv[2] = (hsv[2] * 1.2f).coerceIn(0f, 1f)
-        return Color.HSVToColor(hsv)
-    }
 
     private fun generateColor(recipient: Recipient): Int {
         val index = recipient.address.hashCode().absoluteValue % randomColors.size
