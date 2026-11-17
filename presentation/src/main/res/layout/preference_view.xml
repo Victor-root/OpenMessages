@@ -26,12 +26,16 @@
     android:orientation="horizontal"
     tools:parentTag="io.openmessages.common.widget.PreferenceView">
 
+    <!-- The icon in a small tile, tinted in code from the theme colour -->
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/rounded_rect_12dp"
         android:duplicateParentState="true"
+        android:importantForAccessibility="no"
+        android:padding="8dp"
         android:visibility="invisible" />
 
     <LinearLayout
@@ -40,10 +44,10 @@
         android:layout_weight="1"
         android:duplicateParentState="true"
         android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingTop="16dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="16dp">
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="14dp">
 
         <io.openmessages.common.widget.AppTextView
             android:id="@+id/titleView"
@@ -68,7 +72,7 @@
         android:id="@+id/widgetFrame"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="12dp"
         android:duplicateParentState="true" />
 
 </merge>

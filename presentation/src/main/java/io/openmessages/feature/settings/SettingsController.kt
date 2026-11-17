@@ -30,6 +30,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.core.view.allViews
 import androidx.core.view.isVisible
 import com.bluelinelabs.conductor.RouterTransaction
 import com.jakewharton.rxbinding4.view.clicks
@@ -149,9 +150,9 @@ class SettingsController : BaseController<SettingsControllerBinding, SettingsVie
         showBackButton(true)
     }
 
-    override fun preferenceClicks(): Observable<PreferenceView> = (0 until binding.preferences.childCount)
-            .map { index -> binding.preferences.getChildAt(index) }
-            .mapNotNull { view -> view as? PreferenceView }
+    override fun preferenceClicks(): Observable<PreferenceView> = binding.preferences.allViews
+            .filterIsInstance<PreferenceView>()
+            .toList()
             .map { preference -> preference.clicks().map { preference } }
             .let { preferences -> Observable.merge(preferences) }
 

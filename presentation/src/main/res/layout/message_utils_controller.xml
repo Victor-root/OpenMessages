@@ -32,58 +32,69 @@
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
+
         <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/deduplicate_messages_category" />
 
-        <io.openmessages.common.widget.PreferenceView
-            android:id="@+id/deduplicateMessages"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/delete_sweep"
-            app:summary="@string/deduplicate_messages_summary"
-            app:title="@string/deduplicate_messages_title" />
+        <io.openmessages.common.widget.BlockLayout
+            style="@style/PreferenceBlock">
 
-        <io.openmessages.common.widget.AppTextView
-            android:id="@+id/deduplicationProgressText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:textColor="?android:attr/textColorTertiary"
-            app:textSize="secondary"
-            android:paddingStart="72dp" />
+            <io.openmessages.common.widget.PreferenceView
+                android:id="@+id/deduplicateMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/delete_sweep"
+                app:summary="@string/deduplicate_messages_summary"
+                app:title="@string/deduplicate_messages_title" />
 
-        <ProgressBar
-            android:id="@+id/deduplicationProgress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="72dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <io.openmessages.common.widget.AppTextView
+                android:id="@+id/deduplicationProgressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:textColor="?android:attr/textColorTertiary"
+                app:textSize="secondary"
+                android:paddingStart="72dp" />
 
-        <io.openmessages.common.widget.PreferenceView
-            android:id="@+id/autoDeduplicate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/auto_delete"
-            app:summary="@string/auto_deduplicate_messages_summary"
-            app:title="@string/auto_deduplicate_messages_title"
-            app:widget="@layout/settings_switch_widget" />
+            <ProgressBar
+                android:id="@+id/deduplicationProgress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <io.openmessages.common.widget.PreferenceView
+                android:id="@+id/autoDeduplicate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/auto_delete"
+                app:summary="@string/auto_deduplicate_messages_summary"
+                app:title="@string/auto_deduplicate_messages_title"
+                app:widget="@layout/settings_switch_widget" />
+
+        </io.openmessages.common.widget.BlockLayout>
 
         <io.openmessages.common.widget.AppTextView
             style="@style/PreferenceCategory"
             android:text="@string/settings_category_general" />
 
-        <io.openmessages.common.widget.PreferenceView
-            android:id="@+id/autoDelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_baseline_history_toggle_off_24"
-            app:title="@string/settings_auto_delete"
-            tools:summary="Never" />
+        <io.openmessages.common.widget.BlockLayout
+            style="@style/PreferenceBlock">
+
+            <io.openmessages.common.widget.PreferenceView
+                android:id="@+id/autoDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_baseline_history_toggle_off_24"
+                app:title="@string/settings_auto_delete"
+                tools:summary="Never" />
+
+        </io.openmessages.common.widget.BlockLayout>
 
     </LinearLayout>
 

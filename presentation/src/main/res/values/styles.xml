@@ -67,16 +67,26 @@
         <item name="textSize">toolbar</item>
     </style>
 
+    <!-- The heading above a block of preferences, like a day above its conversations -->
     <style name="PreferenceCategory">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginEnd">24dp</item>
         <item name="android:layout_marginStart">24dp</item>
         <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="textColor">theme</item>
         <item name="textSize">secondary</item>
+    </style>
+
+    <!-- A block of preferences, see BlockLayout -->
+    <style name="PreferenceBlock">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_marginEnd">12dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
     </style>
 
     <style name="CollapsingToolbarCollapsedText">

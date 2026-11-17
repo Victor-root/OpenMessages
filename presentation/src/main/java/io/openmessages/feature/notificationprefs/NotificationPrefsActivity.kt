@@ -26,6 +26,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.content.IntentCompat
+import androidx.core.view.allViews
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import autodispose2.androidx.lifecycle.scope
@@ -85,9 +86,9 @@ class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
         actionsDialog.adapter.setData(R.array.notification_actions)
 
         // Listen to clicks for all of the preferences
-        (0 until binding.preferences.childCount)
-                .map { index -> binding.preferences.getChildAt(index) }
-                .mapNotNull { view -> view as? PreferenceView }
+        binding.preferences.allViews
+                .filterIsInstance<PreferenceView>()
+                .toList()
                 .map { preference -> preference.clicks().map { preference } }
                 .let { Observable.merge(it) }
                 .autoDispose(scope())
@@ -110,7 +111,7 @@ class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
         binding.vibration.checkbox?.isChecked = state.vibrationEnabled
         binding.ringtone.summary = state.ringtoneName
 
-        binding.actionsDivider.isVisible = state.threadId == 0L
+        binding.actionsBlock.isVisible = state.threadId == 0L
         binding.actionsTitle.isVisible = state.threadId == 0L
         binding.action1.isVisible = state.threadId == 0L
         binding.action1.summary = state.action1Summary
@@ -122,7 +123,7 @@ class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
         // From Android 10 the system blocks the popup from opening on its own, so the setting has
         // nothing to offer there
         val quickReplyShown = state.threadId == 0L && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
-        binding.quickReplyDivider.isVisible = quickReplyShown
+        binding.quickReplyBlock.isVisible = quickReplyShown
         binding.quickReplyTitle.isVisible = quickReplyShown
         binding.quickReply.checkbox?.isChecked = state.quickReplyEnabled
         binding.quickReply.isVisible = quickReplyShown

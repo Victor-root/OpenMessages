@@ -19,6 +19,9 @@
 package io.openmessages.common.widget
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.content.res.Configuration
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -26,16 +29,20 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.R as AppCompatR
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.graphics.ColorUtils
 import io.openmessages.R
+import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeAttribute
-import io.openmessages.common.util.extensions.resolveThemeColorStateList
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.databinding.PreferenceViewBinding
 import io.openmessages.injection.appComponent
+import javax.inject.Inject
 
 class PreferenceView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : LinearLayoutCompat(context, attrs) {
+
+    @Inject lateinit var colors: Colors
 
     private var layout: PreferenceViewBinding
 
@@ -82,7 +89,19 @@ class PreferenceView @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 
-        layout.icon.imageTintList = context.resolveThemeColorStateList(android.R.attr.textColorSecondary)
+        if (!isInEditMode) {
+            // The icon and its tile in the theme colour, both faded with the row when it is disabled.
+            // On a dark background the colour is lightened, or a deep one would hardly show.
+            val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+                    Configuration.UI_MODE_NIGHT_YES
+            val theme = colors.theme().theme
+            val icon = if (night) ColorUtils.blendARGB(theme, Color.WHITE, 0.45f) else theme
+            val disabled = intArrayOf(-android.R.attr.state_enabled)
+            fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
+                intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))
+            layout.icon.imageTintList = faded(icon, 0xFF)
+            layout.icon.backgroundTintList = faded(theme, if (night) 0x38 else 0x24)
+        }
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView).run {
             title = getString(R.styleable.PreferenceView_title)
