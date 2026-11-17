@@ -21,7 +21,6 @@ package io.openmessages.common.base
 import android.app.ActivityManager
 import android.graphics.Bitmap
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -155,14 +154,8 @@ abstract class ThemedActivity : BaseActivity() {
                 // subscription.
                 applyToolbarContentColor(theme.theme)
 
-                // Default violet keeps the brand gradient header; custom colors paint it flat.
-                toolbar?.background = if (colors.usesBrandGradient(theme.theme)) {
-                    GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            intArrayOf(theme.theme, colors.deriveGradientEndColor(theme.theme)))
-                } else {
-                    ColorDrawable(theme.theme)
-                }
+                // The toolbar is the theme colour, flat, as in AukDialer
+                toolbar?.background = ColorDrawable(theme.theme)
 
                 // Keep the recent-apps card header color in sync with the live theme color.
                 // The card would otherwise show whatever color was active when the task was created,

@@ -57,13 +57,16 @@
                         android:gravity="center_vertical"
                         android:visibility="gone">
 
-                        <io.openmessages.common.widget.AppTextView
+                        <!-- Written as AukDialer writes its titles: the system font, bold, 22sp -->
+                        <TextView
                             android:id="@+id/toolbarTitle"
-                            style="@style/ToolbarText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ellipsize="none"
-                            android:textColor="@color/white" />
+                            android:fontFamily="sans-serif"
+                            android:maxLines="1"
+                            android:textColor="@color/white"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
