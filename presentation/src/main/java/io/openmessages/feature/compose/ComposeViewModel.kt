@@ -1371,6 +1371,8 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(state, BiFunction { _, state ->
                     when {
                         state.selectedMessages > 0 -> view.clearSelection()
+                        // Closing the recorder stops the microphone and drops the recording
+                        state.audioMsgRecording -> newState { copy(audioMsgRecording = false) }
                         else -> newState { copy(hasError = true) }
                     }
                 })
@@ -1412,6 +1414,9 @@ class ComposeViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         sentSoundPool.release()
+        // Leaving the screen in any other way must not leave the microphone on either; an unsent
+        // recording is left to the cache clean-up
+        MediaRecorderManager.stopRecording()
     }
 
     /**

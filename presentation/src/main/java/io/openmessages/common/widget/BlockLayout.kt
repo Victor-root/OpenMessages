@@ -22,6 +22,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import io.openmessages.R
+import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
 
@@ -38,6 +39,9 @@ class BlockLayout @JvmOverloads constructor(
         setBackgroundResource(R.drawable.rounded_rect_20dp)
         if (!isInEditMode) setBackgroundTint(context.resolveThemeColor(R.attr.cardColor))
         clipToOutline = true
+        // Room between the rounded edges and the first and last rows
+        val inset = 6.dpToPx(context)
+        setPadding(0, inset, 0, inset)
     }
 
 }

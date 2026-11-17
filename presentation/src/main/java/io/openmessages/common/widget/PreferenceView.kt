@@ -36,6 +36,8 @@ import io.openmessages.common.util.extensions.resolveThemeAttribute
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.databinding.PreferenceViewBinding
 import io.openmessages.injection.appComponent
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 class PreferenceView @JvmOverloads constructor(
@@ -64,22 +66,46 @@ class PreferenceView @JvmOverloads constructor(
         }
 
     /**
-     * The colour of the icon and its tile: the app's by default, a conversation's on its own
-     * screens. Both fade with the row when it is disabled, and on a dark background the icon is
-     * lightened, or a deep colour would hardly show.
+     * The colour of the icon and its tile: the app's by default, following it as it changes, or a
+     * conversation's on its own screens. Both fade with the row when it is disabled, and on a dark
+     * background the icon is lightened, or a deep colour would hardly show.
      */
     var accent: Int = Color.TRANSPARENT
         set(value) {
             field = value
-            val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-                    Configuration.UI_MODE_NIGHT_YES
-            val icon = colors.readableOnBackground(context, value)
-            val disabled = intArrayOf(-android.R.attr.state_enabled)
-            fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
-                intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))
-            layout.icon.imageTintList = faded(icon, 0xFF)
-            layout.icon.backgroundTintList = faded(value, if (night) 0x38 else 0x24)
+            followsAppTheme = false
+            themeDisposable?.dispose()
+            applyAccent(value)
         }
+
+    private var followsAppTheme = true
+    private var themeDisposable: Disposable? = null
+
+    private fun applyAccent(color: Int) {
+        val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+                Configuration.UI_MODE_NIGHT_YES
+        val icon = colors.readableOnBackground(context, color)
+        val disabled = intArrayOf(-android.R.attr.state_enabled)
+        fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
+            intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))
+        layout.icon.imageTintList = faded(icon, 0xFF)
+        layout.icon.backgroundTintList = faded(color, if (night) 0x38 else 0x24)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (!isInEditMode && followsAppTheme) {
+            themeDisposable = colors.themeObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { theme -> applyAccent(theme.theme) }
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeDisposable?.dispose()
+        themeDisposable = null
+    }
 
     var summary: String? = null
         set(value) {
@@ -107,7 +133,7 @@ class PreferenceView @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 
-        if (!isInEditMode) accent = colors.theme().theme
+        if (!isInEditMode) applyAccent(colors.theme().theme)
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView).run {
             title = getString(R.styleable.PreferenceView_title)

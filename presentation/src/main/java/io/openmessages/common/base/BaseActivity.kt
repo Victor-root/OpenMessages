@@ -43,6 +43,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.core.view.doOnLayout
+import androidx.core.view.marginBottom
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
@@ -281,7 +282,8 @@ abstract class BaseActivity : AppCompatActivity() {
         if (view.visibility == View.GONE) return
         val handled = view.getTag(R.id.navigationBarInset) != null
         val position = IntArray(2).also(view::getLocationInWindow)
-        if (!handled && position[1] + view.height < screenBottom) return
+        // A view kept off the bottom by its margin, like a floating button, sits at the bottom too
+        if (!handled && position[1] + view.height + view.marginBottom < screenBottom) return
 
         when {
             view is RecyclerView || view is ScrollView || view is NestedScrollView || view is AbsListView -> {
