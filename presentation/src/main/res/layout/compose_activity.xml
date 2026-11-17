@@ -250,7 +250,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_rectangle_22dp"
-        android:backgroundTint="?attr/bubbleColor"
+        android:backgroundTint="?attr/cardColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toEndOf="@id/attach"
@@ -422,7 +422,7 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/rounded_rect_12dp"
         android:contentDescription="@string/compose_send_cd"
         android:elevation="4dp"
         android:padding="10dp"
@@ -439,7 +439,7 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/rounded_rect_12dp"
         android:contentDescription="@string/scheduled_send_cd"
         android:elevation="4dp"
         android:src="@drawable/ic_schedule_send_black_24dp"
@@ -468,20 +468,44 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <io.openmessages.common.widget.AppTextView
-                android:id="@+id/toolbarTitle"
-                style="@style/ToolbarText"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textDirection="ltr"
-                tools:text="Moez Bhatti" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-            <io.openmessages.common.widget.AppTextView
-                android:id="@+id/toolbarSubtitle"
-                style="@style/ToolbarText"
-                android:textColor="?android:attr/textColorTertiary"
-                android:visibility="gone"
-                app:textSize="secondary"
-                tools:text="3 of 9 results" />
+                <io.openmessages.common.widget.GroupAvatarView
+                    android:id="@+id/toolbarAvatars"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="12dp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <io.openmessages.common.widget.AppTextView
+                        android:id="@+id/toolbarTitle"
+                        style="@style/ToolbarText"
+                        android:layout_height="wrap_content"
+                        android:textDirection="ltr"
+                        tools:text="Moez Bhatti" />
+
+                    <io.openmessages.common.widget.AppTextView
+                        android:id="@+id/toolbarSubtitle"
+                        style="@style/ToolbarText"
+                        android:textColor="?android:attr/textColorTertiary"
+                        android:visibility="gone"
+                        app:textSize="tertiary"
+                        tools:text="3 of 9 results" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chips"
@@ -521,7 +545,7 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginStart="12dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/rounded_rect_12dp"
         android:contentDescription="@string/compose_attach_cd"
         android:elevation="4dp"
         android:padding="10dp"
@@ -552,7 +576,7 @@
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/circle"
+        android:background="@drawable/rounded_rect_12dp"
         android:contentDescription="@string/compose_record_audio_msg_cd"
         android:elevation="4dp"
         android:padding="10dp"

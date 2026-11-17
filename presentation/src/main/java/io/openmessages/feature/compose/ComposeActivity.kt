@@ -95,6 +95,7 @@ import io.openmessages.model.Attachment
 import io.openmessages.model.Recipient
 import io.openmessages.databinding.ComposeActivityBinding
 import io.openmessages.databinding.ComposeAttachSheetBinding
+import io.openmessages.util.DisplayNames
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -119,6 +120,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     @Inject lateinit var composeAttachmentAdapter: ComposeAttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
     @Inject lateinit var dateFormatter: DateFormatter
+    @Inject lateinit var displayNames: DisplayNames
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var scheduledMessagesAdapter: ScheduledMessagesAdapter
     @Inject lateinit var navigator: Navigator
@@ -343,6 +345,9 @@ class ComposeActivity : ThemedActivity(), ComposeView {
             theme
                 .doOnNext {
                     binding.loading.setTint(it.theme)
+
+                    // The avatar beside the title sits on the toolbar, which wears this colour
+                    binding.toolbarAvatars.barColor = it.theme
 
                     // Attach button + the bottom-sheet option circles follow the conversation theme.
                     binding.attach.setBackgroundTint(it.theme); binding.attach.setTint(it.textPrimary)
@@ -569,9 +574,24 @@ class ComposeActivity : ThemedActivity(), ComposeView {
             else -> state.conversationtitle
         }
 
-        binding.toolbarSubtitle.setVisible(state.query.isNotEmpty())
-        binding.toolbarSubtitle.text = getString(R.string.compose_subtitle_results, state.searchSelectionPosition,
-            state.searchResults)
+        // Who the conversation is with, beside its name: the avatar, and under a contact's name its
+        // number. A group, or a number with no contact, already says it all in the name.
+        val conversation = state.messages?.first
+        val showIdentity = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty() &&
+                conversation != null
+        binding.toolbarAvatars.setVisible(showIdentity)
+        if (showIdentity && binding.toolbarAvatars.recipients != conversation?.recipients) {
+            binding.toolbarAvatars.recipients = conversation?.recipients.orEmpty()
+        }
+        val number = conversation?.recipients?.singleOrNull()
+            ?.takeIf { recipient -> recipient.contact != null }
+            ?.let { recipient -> displayNames.number(recipient.address) }
+        binding.toolbarSubtitle.setVisible(state.query.isNotEmpty() || (showIdentity && number != null))
+        binding.toolbarSubtitle.text = when {
+            state.query.isNotEmpty() -> getString(R.string.compose_subtitle_results,
+                state.searchSelectionPosition, state.searchResults)
+            else -> number
+        }
 
         binding.toolbarTitle.setVisible(!state.editingMode)
         binding.chips.setVisible(state.editingMode)

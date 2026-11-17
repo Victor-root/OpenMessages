@@ -43,6 +43,14 @@ class GroupAvatarView @JvmOverloads constructor(
             updateView()
         }
 
+    /** The colour of the bar these avatars sit on, see [AvatarView.barColor] */
+    var barColor: Int? = null
+        set(value) {
+            if (field == value) return
+            field = value
+            updateView()
+        }
+
     override fun onFinishInflate() {
         super.onFinishInflate()
 
@@ -53,7 +61,7 @@ class GroupAvatarView @JvmOverloads constructor(
 
     private fun updateView() {
         layout.avatar1Frame.setBackgroundTint(when (recipients.size > 1) {
-            true -> context.resolveThemeColor(android.R.attr.windowBackground)
+            true -> barColor ?: context.resolveThemeColor(android.R.attr.windowBackground)
             false -> context.getColorCompat(android.R.color.transparent)
         })
         layout.avatar1Frame.updateLayoutParams<LayoutParams> {
@@ -62,6 +70,8 @@ class GroupAvatarView @JvmOverloads constructor(
         layout.avatar2.isVisible = recipients.size > 1
 
 
+        layout.avatar1.barColor = barColor
+        layout.avatar2.barColor = barColor
         recipients.getOrNull(0).run(layout.avatar1::setRecipient)
         recipients.getOrNull(1).run(layout.avatar2::setRecipient)
     }

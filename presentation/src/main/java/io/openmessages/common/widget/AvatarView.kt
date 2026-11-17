@@ -22,6 +22,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.graphics.ColorUtils
 import com.bumptech.glide.Glide
 import io.openmessages.R
 import io.openmessages.common.Navigator
@@ -79,9 +80,24 @@ class AvatarView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * The colour of the bar this avatar sits on, when it sits on one rather than on the screen's
+     * background. Its own colour can be the bar's, so its tile is then lifted off it.
+     */
+    var barColor: Int? = null
+        set(value) {
+            if (field == value) return
+            field = value
+            updateView()
+        }
+
     private fun updateView() {
         // Apply theme
-        setBackgroundTint(theme.theme)
+        setBackgroundTint(when (val bar = barColor) {
+            null -> theme.theme
+            else -> ColorUtils.compositeColors(
+                ColorUtils.setAlphaComponent(colors.contentColorOnTheme(bar), 0x40), theme.theme)
+        })
         layout.initial.setTextColor(theme.textPrimary)
         layout.icon.setTint(theme.textPrimary)
 
