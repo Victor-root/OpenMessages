@@ -20,6 +20,7 @@ package io.openmessages.feature.main
 
 import android.Manifest
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -37,12 +38,15 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.animation.doOnEnd
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -71,6 +75,7 @@ import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.scrapViews
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
+import io.openmessages.common.util.extensions.showKeyboard
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.common.widget.GroupHeadingDecoration
 import io.openmessages.common.widget.TextInputDialog
@@ -89,6 +94,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
+/** How long the search row takes to unroll over the toolbar, or to roll back */
+private const val SEARCH_REVEAL_MILLIS = 300L
+
 class MainActivity : ThemedActivity(), MainView {
 
     @Inject lateinit var blockingDialog: BlockingDialog
@@ -104,6 +112,10 @@ class MainActivity : ThemedActivity(), MainView {
     private lateinit var syncingBinding: MainSyncingBinding
 
     private var searchExpanded = false
+
+    /** Whether the search row is out, or on its way out */
+    private var searchBarShown = false
+    private var searchReveal: ValueAnimator? = null
     private var lastState: MainState? = null
     private var nextUnreadIndex = 0
     private var scrollToTopVisible = false
@@ -181,8 +193,6 @@ class MainActivity : ThemedActivity(), MainView {
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbarSearch.setTextColor(resolveThemeColor(android.R.attr.textColorPrimary))
-        binding.toolbarSearch.setHintTextColor(resolveThemeColor(android.R.attr.textColorTertiary))
         viewModel.bindView(this)
         onNewIntentIntent.onNext(intent)
         onBackPressedDispatcher.addCallback(this) {
@@ -226,17 +236,14 @@ class MainActivity : ThemedActivity(), MainView {
 
         binding.toolbarSearchIcon.setOnClickListener {
             searchExpanded = true
-            // Null the transition so all visibility changes happen instantly (badge hides,
-            // search bar appears, icons hide) — avoids badge/search overlap and any
-            // LayoutTransition interference. Then manually fade the search bar in.
-            val lt = binding.toolbar.layoutTransition
-            binding.toolbar.layoutTransition = null
-            binding.toolbarSearch.alpha = 0f
             updateSearchVisibility()
-            binding.toolbar.layoutTransition = lt
-            binding.toolbarSearch.animate().alpha(1f).setDuration(300).start()
-            binding.toolbarSearch.requestFocus()
+            binding.toolbarSearch.showKeyboard()
         }
+        binding.searchBack.setOnClickListener { clearSearch() }
+        binding.searchClear.setOnClickListener { binding.toolbarSearch.text = null }
+        binding.toolbarSearch.textChanges()
+            .autoDispose(scope())
+            .subscribe { text -> binding.searchClear.isInvisible = text.isEmpty() }
 
         binding.toolbarUnreadBadge.setOnClickListener {
             scrollToNextUnread()
@@ -379,6 +386,15 @@ class MainActivity : ThemedActivity(), MainView {
                         setStroke((1.5f * density).toInt(), onTheme)
                     }
 
+                    // The search row lies on the toolbar's background, so it reads the same way
+                    binding.searchBack.setTint(onTheme)
+                    binding.searchClear.setTint(onTheme)
+                    binding.toolbarSearch.setTextColor(onTheme)
+                    binding.toolbarSearch.setHintTextColor(ColorUtils.setAlphaComponent(onTheme, 0xB3))
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        binding.toolbarSearch.textCursorDrawable?.setTint(onTheme)
+                    }
+
                     // The drawer arrow / hamburger is drawn by ActionBarDrawerToggle, outside the
                     // toolbar's own icon tinting, so it needs the color applied here as well.
                     toggle.drawerArrowDrawable.color = onTheme
@@ -420,6 +436,7 @@ class MainActivity : ThemedActivity(), MainView {
         }
         statusBarHeight = top
         binding.toolbar.applyInsetTop(top)
+        binding.searchBar.applyInsetTop(top)
         binding.drawer.drawerHeader.applyInsetTop(top)
         binding.recyclerView.applyInsetPadding(bottom = bottom)
         binding.compose.applyInsetBottomMargin(bottom)
@@ -559,7 +576,7 @@ class MainActivity : ThemedActivity(), MainView {
         // visible area so the banner stays put. Restore the collapsing toolbar once neither applies.
         val bannerShown = state.syncing !is SyncRepository.SyncProgress.Idle ||
             !state.defaultSms || !state.smsPermission || !state.contactPermission || !state.notificationPermission
-        val toolbarParams = binding.toolbar.layoutParams as? AppBarLayout.LayoutParams
+        val toolbarParams = binding.toolbarFrame.layoutParams as? AppBarLayout.LayoutParams
         if (selectedConversations > 0 || bannerShown) {
             toolbarParams?.scrollFlags = 0
             binding.appBarLayout.setExpanded(true, false)
@@ -568,7 +585,7 @@ class MainActivity : ThemedActivity(), MainView {
                 AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
                 AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
         }
-        binding.toolbar.layoutParams = toolbarParams
+        binding.toolbarFrame.layoutParams = toolbarParams
 
         binding.drawer.inbox.isActivated = state.page is Inbox
         binding.drawer.archived.isActivated = state.page is Archived
@@ -697,6 +714,35 @@ class MainActivity : ThemedActivity(), MainView {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                 ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS)
 
+    /**
+     * Unrolls the search row from the right edge over the whole toolbar, or rolls it back there,
+     * from wherever an unfinished roll left it
+     */
+    private fun showSearchBar(show: Boolean) {
+        if (show == searchBarShown) return
+        searchBarShown = show
+        val bar = binding.searchBar
+        if (show) {
+            // A copy of the toolbar's own background, gradient included, at the same size
+            bar.background = binding.toolbar.background?.constantState?.newDrawable()?.mutate()
+            bar.isVisible = true
+        }
+        val from = bar.clipBounds?.left ?: if (show) bar.width else 0
+        searchReveal?.cancel()
+        searchReveal = ValueAnimator.ofInt(from, if (show) 0 else bar.width).apply {
+            duration = SEARCH_REVEAL_MILLIS
+            interpolator = FastOutSlowInInterpolator()
+            addUpdateListener { animator ->
+                bar.clipBounds = Rect(animator.animatedValue as Int, 0, bar.width, bar.height)
+            }
+            doOnEnd {
+                bar.clipBounds = null
+                if (!searchBarShown) bar.isInvisible = true
+            }
+            start()
+        }
+    }
+
     override fun clearSearch() {
         dismissKeyboard()
         binding.toolbarSearch.text = null
@@ -739,10 +785,12 @@ class MainActivity : ThemedActivity(), MainView {
         if (state == null) return
         val isInbox = state.page is Inbox && state.page.selected == 0
         val isSearching = state.page is Searching
-        val showInboxIcons = isInbox && !searchExpanded && !isSearching
-        binding.toolbarSearch.setVisible(isSearching || (isInbox && searchExpanded))
+        // The toolbar keeps its title and icons under the search row, which uncovers them as it
+        // rolls back
+        val showInboxIcons = isInbox
+        showSearchBar(isSearching || (isInbox && searchExpanded))
         binding.toolbarSearchIcon.setVisible(showInboxIcons)
-        binding.toolbarLogoGroup.setVisible(!isSearching && !(isInbox && searchExpanded))
+        binding.toolbarLogoGroup.setVisible(!isSearching)
         val unreadCount = if (showInboxIcons) {
             state.page.data?.count { conversation -> conversation.unread } ?: 0
         } else 0

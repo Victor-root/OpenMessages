@@ -58,6 +58,8 @@
     <string name="menu_mms_part_open">Open externally</string>
 
     <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_search_close_cd">Close search</string>
+    <string name="main_search_clear_cd">Clear search</string>
     <string name="main_title_selected">%d selected</string>
     <string name="main_menu_clear">Clear</string>
     <string name="main_menu_select_all">Select all</string>
