@@ -50,6 +50,9 @@ class RowGroups(context: Context) {
         return label.takeIf { position == 0 || labels.getOrNull(position - 1) != label }
     }
 
+    /** The label of the group [position] belongs to */
+    fun groupLabel(position: Int): String? = labels.getOrNull(position)
+
     private fun endsGroup(position: Int): Boolean =
         position == labels.lastIndex || labels.getOrNull(position + 1) != labels.getOrNull(position)
 

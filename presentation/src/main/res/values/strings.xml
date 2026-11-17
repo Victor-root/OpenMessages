@@ -107,6 +107,9 @@
     <string name="scheduled_menu_edit_message">Edit message</string>
 
     <string name="drawer_inbox">Inbox</string>
+    <string name="contacts_group_recent">Recent</string>
+    <string name="contacts_group_starred">Favorites</string>
+    <string name="contacts_group_groups">Groups</string>
     <string name="conversations_group_today">Today</string>
     <string name="conversations_group_yesterday">Yesterday</string>
     <string name="conversations_group_pinned">Pinned</string>

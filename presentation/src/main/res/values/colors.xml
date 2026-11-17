@@ -80,16 +80,6 @@
     <color name="colorBrandLight">#9966FF</color>
     <color name="colorBrandAccent">#5D72FB</color>
 
-    <array name="random_colors">
-        <item>#6A2CD0</item>
-        <item>#475BDD</item>
-        <item>#00B199</item>
-        <item>#59B153</item>
-        <item>#D49515</item>
-        <item>#E0704C</item>
-        <item>#7181D0</item>
-    </array>
-
     <array name="material_red">
         <item>#FFEBEE</item>
         <item>#FFCDD2</item>

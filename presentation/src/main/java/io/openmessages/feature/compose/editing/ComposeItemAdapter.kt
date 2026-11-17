@@ -18,6 +18,7 @@
  */
 package io.openmessages.feature.compose.editing
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -25,9 +26,8 @@ import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
 import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.base.BindingViewHolder
-import io.openmessages.common.util.Colors
+import io.openmessages.common.util.RowGroups
 import io.openmessages.common.util.extensions.forwardTouches
-import io.openmessages.common.util.extensions.setTint
 import io.openmessages.extensions.associateByNotNull
 import io.openmessages.model.Contact
 import io.openmessages.model.ContactGroup
@@ -44,10 +44,16 @@ import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 class ComposeItemAdapter @Inject constructor(
+    private val context: Context,
     private val displayNames: DisplayNames,
-    private val colors: Colors,
     private val conversationRepo: ConversationRepository
-) : BaseAdapter<ComposeItem, BindingViewHolder<ContactListItemBinding>>() {
+) : BaseAdapter<ComposeItem, BindingViewHolder<ContactListItemBinding>>(), RowGroups.Adapter {
+
+    /**
+     * The rows' groups: what was just typed on its own, then the recent conversations, the starred
+     * contacts and the contact groups, then a group per initial
+     */
+    override val rowGroups = RowGroups(context)
 
     val clicks: Subject<ComposeItem> = PublishSubject.create()
     val longClicks: Subject<ComposeItem> = PublishSubject.create()
@@ -64,8 +70,6 @@ class ComposeItemAdapter @Inject constructor(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<ContactListItemBinding> {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ContactListItemBinding.inflate(layoutInflater, parent, false)
-
-        binding.icon.setTint(colors.theme().theme)
 
         binding.numbers.setRecycledViewPool(numbersViewPool)
         binding.numbers.adapter = PhoneNumberAdapter(displayNames)
@@ -86,21 +90,53 @@ class ComposeItemAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: BindingViewHolder<ContactListItemBinding>, position: Int) {
         val binding = holder.binding
-        val prevItem = if (position > 0) getItem(position - 1) else null
+        holder.itemView.background = rowGroups.background(holder.itemView.context, position)
         when (val item = getItem(position)) {
             is ComposeItem.New -> bindNew(binding, item.value)
-            is ComposeItem.Recent -> bindRecent(binding, item.value, prevItem)
-            is ComposeItem.Starred -> bindStarred(binding, item.value, prevItem)
-            is ComposeItem.Person -> bindPerson(binding, item.value, prevItem)
-            is ComposeItem.Group -> bindGroup(binding, item.value, prevItem)
+            is ComposeItem.Recent -> bindRecent(binding, item.value)
+            is ComposeItem.Starred -> bindStarred(binding, item.value)
+            is ComposeItem.Person -> bindPerson(binding, item.value)
+            is ComposeItem.Group -> bindGroup(binding, item.value)
+        }
+    }
+
+    override fun onBindViewHolder(
+        holder: BindingViewHolder<ContactListItemBinding>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when (payloads.isNotEmpty() && payloads.all { payload -> payload == RowGroups.PAYLOAD }) {
+            true -> holder.itemView.background = rowGroups.background(holder.itemView.context, position)
+            false -> onBindViewHolder(holder, position)
+        }
+    }
+
+    override fun onDatasetChanged() {
+        rowGroups.update(data.map { item ->
+            when (item) {
+                // What was typed stands alone, under no heading
+                is ComposeItem.New -> ""
+                is ComposeItem.Recent -> context.getString(R.string.contacts_group_recent)
+                is ComposeItem.Starred -> context.getString(R.string.contacts_group_starred)
+                is ComposeItem.Group -> context.getString(R.string.contacts_group_groups)
+                is ComposeItem.Person -> initialOf(item.value)
+            }
+        })
+        notifyItemRangeChanged(0, itemCount, RowGroups.PAYLOAD)
+    }
+
+    /** The letter [contact] is listed under: its name's first letter, or # */
+    private fun initialOf(contact: Contact): String =
+        contact.name.firstOrNull()?.takeIf(Char::isLetter)?.uppercase() ?: "#"
+
+    /** The position each initial's group starts at, in list order */
+    fun initials(): Map<String, Int> = buildMap {
+        data.forEachIndexed { index, item ->
+            if (item is ComposeItem.Person) putIfAbsent(initialOf(item.value), index)
         }
     }
 
     private fun bindNew(binding: ContactListItemBinding, contact: Contact) {
-        binding.index.isVisible = false
-
-        binding.icon.isVisible = false
-
         binding.avatar.recipients = listOf(createRecipient(contact))
 
         binding.title.text = contact.numbers.joinToString { displayNames.number(it.address) }
@@ -110,12 +146,7 @@ class ComposeItemAdapter @Inject constructor(
         binding.numbers.isVisible = false
     }
 
-    private fun bindRecent(binding: ContactListItemBinding, conversation: Conversation, prev: ComposeItem?) {
-        binding.index.isVisible = false
-
-        binding.icon.isVisible = prev !is ComposeItem.Recent
-        binding.icon.setImageResource(R.drawable.ic_history_black_24dp)
-
+    private fun bindRecent(binding: ContactListItemBinding, conversation: Conversation) {
         binding.avatar.recipients = conversation.recipients
 
         binding.title.text = displayNames.of(conversation)
@@ -132,12 +163,7 @@ class ComposeItemAdapter @Inject constructor(
                 .flatMap { contact -> contact.numbers }
     }
 
-    private fun bindStarred(binding: ContactListItemBinding, contact: Contact, prev: ComposeItem?) {
-        binding.index.isVisible = false
-
-        binding.icon.isVisible = prev !is ComposeItem.Starred
-        binding.icon.setImageResource(R.drawable.ic_star_black_24dp)
-
+    private fun bindStarred(binding: ContactListItemBinding, contact: Contact) {
         binding.avatar.recipients = listOf(createRecipient(contact))
 
         binding.title.text = contact.name
@@ -148,12 +174,7 @@ class ComposeItemAdapter @Inject constructor(
         (binding.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
     }
 
-    private fun bindGroup(binding: ContactListItemBinding, group: ContactGroup, prev: ComposeItem?) {
-        binding.index.isVisible = false
-
-        binding.icon.isVisible = prev !is ComposeItem.Group
-        binding.icon.setImageResource(R.drawable.ic_people_black_24dp)
-
+    private fun bindGroup(binding: ContactListItemBinding, group: ContactGroup) {
         binding.avatar.recipients = group.contacts.map(::createRecipient)
 
         binding.title.text = group.title
@@ -165,15 +186,7 @@ class ComposeItemAdapter @Inject constructor(
         binding.numbers.isVisible = false
     }
 
-    private fun bindPerson(binding: ContactListItemBinding, contact: Contact, prev: ComposeItem?) {
-        binding.index.isVisible = true
-        binding.index.text = if (contact.name.getOrNull(0)?.isLetter() == true) contact.name[0].toString() else "#"
-        binding.index.isVisible = prev !is ComposeItem.Person ||
-                (contact.name[0].isLetter() && !contact.name[0].equals(prev.value.name[0], ignoreCase = true)) ||
-                (!contact.name[0].isLetter() && prev.value.name[0].isLetter())
-
-        binding.icon.isVisible = false
-
+    private fun bindPerson(binding: ContactListItemBinding, contact: Contact) {
         binding.avatar.recipients = listOf(createRecipient(contact))
 
         binding.title.text = contact.name

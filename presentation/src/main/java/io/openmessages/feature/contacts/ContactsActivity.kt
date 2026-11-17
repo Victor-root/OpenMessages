@@ -25,6 +25,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.IntentCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.editorActions
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -34,7 +36,9 @@ import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.finishWithoutAnimation
 import io.openmessages.common.util.extensions.hideKeyboard
+import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.showKeyboard
+import io.openmessages.common.widget.GroupHeadingDecoration
 import io.openmessages.common.widget.ListDialog
 import io.openmessages.databinding.ContactsActivityBinding
 import io.openmessages.extensions.Optional
@@ -106,6 +110,7 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
         viewModel.bindView(this)
 
         binding.contacts.adapter = contactsAdapter
+        setUpLetterRail()
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -121,6 +126,8 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
         binding.cancel.isVisible = state.query.length > 1
 
         contactsAdapter.data = state.composeItems
+        binding.letterRail.letters = contactsAdapter.initials().keys.toList()
+        updateRailSelection()
 
         if (state.selectedContact != null && !phoneNumberDialog.isShowing) {
             phoneNumberAdapter.data = state.selectedContact.numbers
@@ -129,6 +136,48 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
         } else if (state.selectedContact == null && phoneNumberDialog.isShowing) {
             phoneNumberDialog.dismiss()
         }
+    }
+
+    /**
+     * The contacts grouped under their initials, as in AukDialer: the initials in the theme colour,
+     * the one in view staying at the top, and a rail down the side to jump between them
+     */
+    private fun setUpLetterRail() {
+        val accent = colors.theme().theme
+        val onAccent = colors.contentColorOnTheme(accent)
+        binding.contacts.addItemDecoration(GroupHeadingDecoration(binding.contacts,
+            headingColor = colors.readableOnBackground(this, accent), sticky = true))
+
+        binding.letterRail.accent = accent
+        binding.letterRail.onAccent = onAccent
+        binding.letterBubble.setBackgroundTint(accent)
+        binding.letterBubble.setTextColor(onAccent)
+
+        binding.letterRail.onLetterTouched = { letter ->
+            binding.letterBubble.isVisible = letter != null
+            if (letter != null) {
+                binding.letterBubble.text = letter
+                binding.letterRail.selected = letter
+                contactsAdapter.initials()[letter]?.let { position ->
+                    (binding.contacts.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
+                }
+            } else {
+                updateRailSelection()
+            }
+        }
+
+        binding.contacts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) = updateRailSelection()
+        })
+    }
+
+    /** Sets the rail on the initial of the first contact in view, or none above the contacts */
+    private fun updateRailSelection() {
+        // Left to the finger while it is on the rail
+        if (binding.letterBubble.isVisible) return
+        val first = (binding.contacts.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+        binding.letterRail.selected = contactsAdapter.rowGroups.groupLabel(first)
+            ?.takeIf { label -> label in binding.letterRail.letters }
     }
 
     override fun clearQuery() {

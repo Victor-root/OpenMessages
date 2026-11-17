@@ -19,8 +19,10 @@
 package io.openmessages.common.util
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.core.content.res.getColorOrThrow
+import androidx.core.graphics.ColorUtils
 import io.openmessages.R
 import io.openmessages.common.util.extensions.getColorCompat
 import io.openmessages.model.Recipient
@@ -104,8 +106,8 @@ class Colors @Inject constructor(
             .map { res -> context.resources.obtainTypedArray(res) }
             .map { typedArray -> (0 until typedArray.length()).map(typedArray::getColorOrThrow) }
 
-    private val randomColors: List<Int> = context.resources.obtainTypedArray(R.array.random_colors)
-            .let { typedArray -> (0 until typedArray.length()).map(typedArray::getColorOrThrow) }
+    /** The palette on offer for the app and conversations: the deep shade of each family */
+    val themeColors: List<Int> = materialColors.map { family -> family[7] }
 
     private val minimumContrastRatio = 2
 
@@ -121,6 +123,16 @@ class Colors @Inject constructor(
             else -> generateColor(recipient)
         }
         return Theme(color, this)
+    }
+
+    /**
+     * [color] as text or an icon on the screen's background in [themed]'s mode: as it is on a light
+     * background, lightened on a dark one, where a deep colour would hardly show
+     */
+    fun readableOnBackground(themed: Context, color: Int): Int {
+        val night = themed.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+                Configuration.UI_MODE_NIGHT_YES
+        return if (night) ColorUtils.blendARGB(color, Color.WHITE, 0.45f) else color
     }
 
     /**
@@ -184,7 +196,7 @@ class Colors @Inject constructor(
 
 
     private fun generateColor(recipient: Recipient): Int {
-        val index = recipient.address.hashCode().absoluteValue % randomColors.size
-        return randomColors[index]
+        val index = recipient.address.hashCode().absoluteValue % themeColors.size
+        return themeColors[index]
     }
 }

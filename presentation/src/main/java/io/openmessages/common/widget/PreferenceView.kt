@@ -73,7 +73,7 @@ class PreferenceView @JvmOverloads constructor(
             field = value
             val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
                     Configuration.UI_MODE_NIGHT_YES
-            val icon = if (night) ColorUtils.blendARGB(value, Color.WHITE, 0.45f) else value
+            val icon = colors.readableOnBackground(context, value)
             val disabled = intArrayOf(-android.R.attr.state_enabled)
             fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
                 intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))

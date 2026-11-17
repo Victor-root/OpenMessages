@@ -135,9 +135,8 @@ class ThemePickerDialog : DialogFragment() {
             selectedColor == DEFAULT_COLOR
         ) { selectColor(DEFAULT_COLOR) }
 
-        // Color grid — the deep 700 shade of each family (4 columns), the tone of the default violet
-        val flatColors = colors.materialColors.map { family -> family[7] }
-        colorAdapter = ColorGridAdapter(flatColors, selectedColor) { color -> selectColor(color) }
+        // Color grid, 4 columns
+        colorAdapter = ColorGridAdapter(colors.themeColors, selectedColor) { color -> selectColor(color) }
         binding.colorGrid.layoutManager = GridLayoutManager(requireContext(), 4)
         binding.colorGrid.adapter = colorAdapter
         binding.colorGrid.itemAnimator = null

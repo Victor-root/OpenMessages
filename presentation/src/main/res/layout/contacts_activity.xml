@@ -33,7 +33,9 @@
         android:background="?android:attr/windowBackground"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:paddingStart="12dp"
         android:paddingTop="8dp"
+        android:paddingEnd="36dp"
         android:paddingBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,6 +44,33 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:listitem="@layout/contact_list_item"
         android:textDirection="ltr" />
+
+    <!-- The initials of the contacts down the side, to jump through them as in AukDialer -->
+    <io.openmessages.common.widget.LetterRailView
+        android:id="@+id/letterRail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/contacts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contacts" />
+
+    <!-- The initial being reached, large in the middle while the rail is dragged -->
+    <TextView
+        android:id="@+id/letterBubble"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/rounded_rectangle_40dp"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:textSize="57sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/contacts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/contacts"
+        tools:text="M"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
