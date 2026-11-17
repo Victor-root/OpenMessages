@@ -105,6 +105,10 @@
 
     <string name="drawer_inbox">Inbox</string>
     <string name="drawer_archived">Archived</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d unread</item>
+        <item quantity="other">%d unread</item>
+    </plurals>
     <string name="drawer_scheduled">Scheduled</string>
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">More</string>

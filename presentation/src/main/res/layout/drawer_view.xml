@@ -22,53 +22,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground">
+    android:background="@drawable/drawer_background"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="8dp">
+        android:paddingBottom="12dp">
 
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/drawerHeader"
             android:layout_width="match_parent"
-            android:layout_height="168dp"
-            android:background="@drawable/gradient_brand_vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="24dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="16dp">
+
+            <!-- The launcher artwork fills only the middle of its canvas, so it is drawn larger
+                 than the tile that clips it, as the launcher does -->
+            <FrameLayout
+                android:id="@+id/drawerLogo"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                tools:background="@color/colorBrand">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_launcher_foreground" />
+
+            </FrameLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <FrameLayout
-                    android:layout_width="88dp"
-                    android:layout_height="88dp"
-                    android:background="@drawable/circle_white_alpha">
-
-                    <ImageView
-                        android:layout_width="130dp"
-                        android:layout_height="130dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_launcher_foreground"
-                        android:contentDescription="@string/app_name" />
-
-                </FrameLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <io.openmessages.common.widget.AppTextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:ellipsize="end"
+                    android:lines="1"
                     android:text="@string/launcher_name"
-                    android:textColor="@color/white"
-                    android:textSize="26sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="21sp"
                     android:textStyle="bold" />
+
+                <io.openmessages.common.widget.AppTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@string/app_name"
+                    android:textColor="?android:attr/textColorSecondary"
+                    app:textSize="tertiary" />
 
             </LinearLayout>
 
-        </FrameLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/inbox"
@@ -77,12 +96,29 @@
             <ImageView
                 android:id="@+id/inboxIcon"
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_mail_opened"
-                tools:tint="@color/tools_theme" />
+                android:src="@drawable/ic_mail_opened" />
 
-            <io.openmessages.common.widget.AppTextView
-                style="@style/DrawerText"
-                android:text="@string/drawer_inbox" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <io.openmessages.common.widget.AppTextView
+                    android:id="@+id/inboxText"
+                    style="@style/DrawerText"
+                    android:layout_width="match_parent"
+                    android:layout_weight="0"
+                    android:text="@string/drawer_inbox" />
+
+                <io.openmessages.common.widget.AppTextView
+                    android:id="@+id/inboxSummary"
+                    style="@style/DrawerSummary"
+                    android:visibility="gone"
+                    tools:text="3 unread"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -93,21 +129,16 @@
             <ImageView
                 android:id="@+id/archivedIcon"
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_archive_filled"
-                tools:tint="?android:attr/textColorSecondary" />
+                android:src="@drawable/ic_archive_filled" />
 
             <io.openmessages.common.widget.AppTextView
+                android:id="@+id/archivedText"
                 style="@style/DrawerText"
                 android:text="@string/drawer_archived" />
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/divider" />
+        <View style="@style/DrawerSeparator" />
 
         <LinearLayout
             android:id="@+id/backup"
@@ -116,7 +147,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_import_export_black_24dp"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconBackup" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -131,7 +162,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_calendar_event"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconScheduled" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -146,7 +177,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_forbid_2"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconBlocking" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -161,7 +192,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/dashboard_2_gear"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconMessageUtils" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -176,7 +207,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_clipboard_text"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconTemplates" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -184,12 +215,7 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/divider" />
+        <View style="@style/DrawerSeparator" />
 
         <LinearLayout
             android:id="@+id/settings"
@@ -198,7 +224,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_settings_2"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconSettings" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -213,7 +239,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_people_black_24dp"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconInvite" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"
@@ -228,7 +254,7 @@
             <ImageView
                 style="@style/DrawerIcon"
                 android:src="@drawable/ic_info_black_24dp"
-                app:tint="?android:attr/textColorSecondary" />
+                app:tint="@color/drawerIconAbout" />
 
             <io.openmessages.common.widget.AppTextView
                 style="@style/DrawerText"

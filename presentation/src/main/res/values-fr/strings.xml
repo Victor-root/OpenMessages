@@ -90,6 +90,11 @@
     <string name="scheduled_menu_edit_message">Modifier le message</string>
     <string name="drawer_inbox">Boite de réception</string>
     <string name="drawer_archived">Archivées</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d non lue</item>
+        <item quantity="many">%d non lues</item>
+        <item quantity="other">%d non lues</item>
+    </plurals>
     <string name="drawer_scheduled">Programmés</string>
     <string name="drawer_blocking">Bloquer</string>
     <string name="drawer_more">Plus</string>

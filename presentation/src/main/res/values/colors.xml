@@ -332,4 +332,15 @@
         <item>#263238</item>
     </array>
 
+    <!-- Drawer entry icons, one hue each; deeper here so they hold on the light drawer -->
+    <color name="drawerIconArchived">#D9822B</color>
+    <color name="drawerIconBackup">#2E9E64</color>
+    <color name="drawerIconScheduled">#2C88C9</color>
+    <color name="drawerIconBlocking">#D9434F</color>
+    <color name="drawerIconMessageUtils">#B8901A</color>
+    <color name="drawerIconTemplates">#8A5CD6</color>
+    <color name="drawerIconSettings">#6B7A88</color>
+    <color name="drawerIconInvite">#D2508C</color>
+    <color name="drawerIconAbout">#4E74E0</color>
+
 </resources>

@@ -24,7 +24,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.StateListDrawable
@@ -39,6 +38,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
@@ -308,16 +308,19 @@ class MainActivity : ThemedActivity(), MainView {
                     // in onCreate, so it fires before ThemedActivity's own in onPostCreate.
                     val onTheme = colors.contentColorOnTheme(theme.theme)
 
-                    // Drawer icons tint
-                    val iconStates = arrayOf(
-                            intArrayOf(android.R.attr.state_activated),
-                            intArrayOf(-android.R.attr.state_activated))
-                    ColorStateList(iconStates, intArrayOf(theme.theme,
-                        resolveThemeColor(android.R.attr.textColorSecondary)
-                    )).let { tintList ->
-                        binding.drawer.inboxIcon.imageTintList = tintList
-                        binding.drawer.archivedIcon.imageTintList = tintList
-                    }
+                    // Drawer: the entry showing is a pill in the theme colour, its icon and text in the
+                    // colour that reads on it; the others keep their own icon colour
+                    val activated = intArrayOf(android.R.attr.state_activated)
+                    fun onPill(rest: Int) = ColorStateList(arrayOf(activated, intArrayOf()), intArrayOf(onTheme, rest))
+                    binding.drawer.inboxIcon.imageTintList = onPill(theme.theme)
+                    binding.drawer.archivedIcon.imageTintList =
+                        onPill(ContextCompat.getColor(this, R.color.drawerIconArchived))
+                    val textPrimary = resolveThemeColor(android.R.attr.textColorPrimary)
+                    binding.drawer.inboxText.setTextColor(onPill(textPrimary))
+                    binding.drawer.archivedText.setTextColor(onPill(textPrimary))
+                    binding.drawer.inboxSummary.setTextColor(ColorStateList(arrayOf(activated, intArrayOf()),
+                        intArrayOf(ColorUtils.setAlphaComponent(onTheme, 0xCC),
+                            resolveThemeColor(android.R.attr.textColorSecondary))))
 
                     // Progress bar and misc drawer views
                     syncingBinding.syncingProgress.progressTintList = ColorStateList.valueOf(theme.theme)
@@ -378,27 +381,28 @@ class MainActivity : ThemedActivity(), MainView {
                     // toolbar's own icon tinting, so it needs the color applied here as well.
                     toggle.drawerArrowDrawable.color = onTheme
 
-                    // Gradient only for the default violet brand color; all custom colors use solid fill
-                    binding.drawer.drawerHeader.background = if (useGradient) {
-                        GradientDrawable(
-                            GradientDrawable.Orientation.TOP_BOTTOM,
-                            intArrayOf(theme.theme, gradientEnd)
-                        )
+                    // Drawer logo tile, painted like the compose button
+                    binding.drawer.drawerLogo.background = (if (useGradient) {
+                        GradientDrawable(GradientDrawable.Orientation.BL_TR, intArrayOf(theme.theme, gradientEnd))
                     } else {
-                        ColorDrawable(theme.theme)
-                    }
+                        GradientDrawable().apply { setColor(theme.theme) }
+                    }).apply { cornerRadius = 14f * density }
+                    binding.drawer.drawerLogo.clipToOutline = true
 
-                    // Activated drawer row highlight
-                    val activeColor = Color.argb((255 * 0.15f).toInt(),
-                        Color.red(theme.theme), Color.green(theme.theme), Color.blue(theme.theme))
+                    // Every drawer entry ripples within its pill; the entry showing fills it
+                    val pillRadius = 26f * density
+                    fun pill(color: Int) = GradientDrawable().apply { cornerRadius = pillRadius; setColor(color) }
                     val rippleColor = ColorStateList.valueOf(
                         resolveThemeColor(android.R.attr.colorControlHighlight))
-                    listOf(binding.drawer.inbox, binding.drawer.archived).forEach { row ->
+                    with(binding.drawer) {
+                        listOf(inbox, archived, backup, scheduled, blocking, messageUtils, templates,
+                            settings, invite, about)
+                    }.forEach { row ->
                         val states = StateListDrawable().apply {
-                            addState(intArrayOf(android.R.attr.state_activated), ColorDrawable(activeColor))
-                            addState(intArrayOf(), ColorDrawable(Color.TRANSPARENT))
+                            addState(activated, pill(theme.theme))
+                            addState(intArrayOf(), pill(Color.TRANSPARENT))
                         }
-                        row.background = RippleDrawable(rippleColor, states, null)
+                        row.background = RippleDrawable(rippleColor, states, pill(Color.WHITE))
                     }
                 }
     }
@@ -425,14 +429,20 @@ class MainActivity : ThemedActivity(), MainView {
     }
 
     /**
-     * In edge-to-edge the status bar shows the toolbar or the drawer header, both in the theme
-     * colour, until the toolbar scrolls away from under it with the drawer closed, leaving the list
+     * In edge-to-edge the status bar shows the toolbar, in the theme colour, until the toolbar
+     * scrolls away from under it, leaving the list, or the drawer slides in over it, its own
+     * background reaching up behind the bar
      */
     private fun updateStatusBarBackdrop() {
-        val listBehind = isEdgeToEdge() && drawerOffset < 0.5f &&
-                // Set by the insets ahead of any layout, unlike the measured height
-                binding.toolbar.layoutParams.height + appBarOffset < statusBarHeight / 2
-        setStatusBarBackdrop(if (listBehind) resolveThemeColor(android.R.attr.windowBackground) else null)
+        val backdrop = when {
+            !isEdgeToEdge() -> null
+            drawerOffset >= 0.5f -> resolveThemeColor(R.attr.bubbleColor)
+            // Set by the insets ahead of any layout, unlike the measured height
+            binding.toolbar.layoutParams.height + appBarOffset < statusBarHeight / 2 ->
+                resolveThemeColor(android.R.attr.windowBackground)
+            else -> null
+        }
+        setStatusBarBackdrop(backdrop)
     }
 
     override fun onNewIntent(intent: Intent?) =
@@ -560,6 +570,13 @@ class MainActivity : ThemedActivity(), MainView {
 
         binding.drawer.inbox.isActivated = state.page is Inbox
         binding.drawer.archived.isActivated = state.page is Archived
+        // Only the inbox knows how many are unread, so the count stays as it was on other pages
+        if (state.page is Inbox) {
+            val unread = state.page.data?.count { conversation -> conversation.unread } ?: 0
+            binding.drawer.inboxSummary.setVisible(unread > 0)
+            binding.drawer.inboxSummary.text =
+                resources.getQuantityString(R.plurals.drawer_unread_count, unread, unread)
+        }
 
         // The drawer is worked by the user as much as by the app, so what is applied here is a
         // change of mind, not the state of mind itself.
