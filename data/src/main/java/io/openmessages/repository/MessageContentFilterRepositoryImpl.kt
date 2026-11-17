@@ -52,7 +52,9 @@ class MessageContentFilterRepositoryImpl @Inject constructor(
             if (isContact && !filter.includeContacts) {
                 false
             } else if (filter.isRegex) {
-                Regex(filter.value).matches(messageBody)
+                val options = if (filter.caseSensitive) emptySet() else setOf(RegexOption.IGNORE_CASE)
+                // A pattern that does not compile can never match, and must not stop a message from arriving
+                runCatching { Regex(filter.value, options).containsMatchIn(messageBody) }.getOrDefault(false)
             } else if (filter.caseSensitive) {
                 val regexp = "[\\s\\S]*\\b" + Regex.escape(filter.value) + "\\b[\\s\\S]*"
                 Regex(regexp).matches(messageBody)

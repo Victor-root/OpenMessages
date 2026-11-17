@@ -346,6 +346,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun showBackButton(show: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(show)
+        tintNavigationIcon()
+    }
+
+    /** The toolbar's back arrow in the colour that reads on the toolbar */
+    fun tintNavigationIcon() {
         toolbar?.navigationIcon?.setTint(toolbarContentColor)
     }
 

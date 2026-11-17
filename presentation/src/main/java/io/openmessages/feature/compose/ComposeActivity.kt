@@ -77,6 +77,7 @@ import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.autoScrollToStart
+import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.makeToast
@@ -117,6 +118,12 @@ class ComposeActivity : ThemedActivity(), ComposeView {
 
     // The message box sits at the bottom, so the conversation stays clear of the navigation bar
     override val extendsBehindNavigationBar = false
+
+    override fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
+        super.onApplyEdgeToEdgeInsets(top, bottom)
+        // The full-screen editor covers the toolbar, so its own bar keeps clear of the status bar
+        if (isEdgeToEdge()) binding.fullscreenEditor.applyInsetPadding(top = top)
+    }
 
     @Inject lateinit var composeAttachmentAdapter: ComposeAttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter

@@ -33,6 +33,7 @@
         android:padding="6dp"
         android:textAllCaps="true"
         app:autoSizeMaxTextSize="22sp"
+        app:autoSizeMinTextSize="6sp"
         app:autoSizeTextType="uniform" />
 
     <ImageView

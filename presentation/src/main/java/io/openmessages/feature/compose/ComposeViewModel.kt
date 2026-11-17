@@ -771,8 +771,9 @@ class ComposeViewModel @Inject constructor(
             .doOnNext(messageRepo::cancelDelayedSmsAlarm)
             .withLatestFrom(messages) { messageId, messages -> messages.withIds(listOf(messageId)) }
             .mapNotNull { messages -> messages.firstOrNull() }
-            // copy text from copy of message being cancelled
-            .doOnNext { message -> view.setDraft(message.getText(false)) }
+            // copy text from copy of message being cancelled, without the signature it was saved with,
+            // or sending it again would add the signature a second time
+            .doOnNext { message -> view.setDraft(message.getText(false).removeSignature()) }
             .observeOn(Schedulers.io())
             .map { message ->
                 // get attachments from copy of message and save locally to be attached to current
@@ -1409,6 +1410,11 @@ class ComposeViewModel @Inject constructor(
             })
             .autoDispose(view.scope())
             .subscribe()
+    }
+
+    private fun String.removeSignature(): String {
+        val signature = prefs.signature.get()
+        return if (signature.isEmpty()) this else removeSuffix("\n$signature")
     }
 
     override fun onCleared() {

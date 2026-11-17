@@ -183,8 +183,9 @@ class TextViewStyler @Inject constructor(
                 Preferences.TEXT_SIZE_SMALL -> 18f
                 Preferences.TEXT_SIZE_NORMAL -> 20f
                 Preferences.TEXT_SIZE_LARGE -> 22f
-                Preferences.TEXT_SIZE_LARGER -> 26f
-                Preferences.TEXT_SIZE_SUPER -> 52f
+                Preferences.TEXT_SIZE_LARGER -> 24f
+                // Larger than this a title no longer fits the 56dp toolbar
+                Preferences.TEXT_SIZE_SUPER -> 28f
                 else -> 20f
             }
 

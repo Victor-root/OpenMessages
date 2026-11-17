@@ -31,6 +31,7 @@
     android:nextFocusRight="@+id/compose">
 
     <io.openmessages.common.widget.GroupAvatarView
+        app:ringColor="?attr/cardColor"
         android:id="@+id/avatars"
         android:layout_width="56dp"
         android:layout_height="56dp"
@@ -68,7 +69,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/scheduled"
+        app:layout_constraintEnd_toStartOf="@id/pinned"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="@tools:sample/lorem/random" />

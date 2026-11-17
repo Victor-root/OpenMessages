@@ -70,6 +70,7 @@ abstract class BaseController<VB : ViewBinding, ViewContract : ControllerView<St
 
     fun showBackButton(show: Boolean) {
         appCompatActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(show)
+        (activity as? BaseActivity)?.tintNavigationIcon()
     }
 
     override fun onDestroyView(view: View) {

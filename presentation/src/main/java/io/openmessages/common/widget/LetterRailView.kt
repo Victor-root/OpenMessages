@@ -71,7 +71,7 @@ class LetterRailView @JvmOverloads constructor(
     var onLetterTouched: ((String?) -> Unit)? = null
 
     private val density = resources.displayMetrics.density
-    private val cell = 18 * density
+    private val maxCell = 18 * density
     private val padding = 8 * density
 
     private val textColor = ColorUtils.setAlphaComponent(
@@ -86,9 +86,13 @@ class LetterRailView @JvmOverloads constructor(
 
     private var touched: String? = null
 
+    /** The height of an initial's cell: [maxCell], tighter when the rail has less room than that */
+    private val cell: Float
+        get() = if (letters.isEmpty()) maxCell else minOf(maxCell, (height - 2 * padding) / letters.size)
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = (24 * density).toInt()
-        val height = (letters.size * cell + 2 * padding).toInt()
+        val height = (letters.size * maxCell + 2 * padding).toInt()
         setMeasuredDimension(resolveSize(width, widthMeasureSpec), resolveSize(height, heightMeasureSpec))
     }
 
@@ -100,7 +104,7 @@ class LetterRailView @JvmOverloads constructor(
             val isSelected = letter == selected
             if (isSelected) {
                 discPaint.color = accent
-                canvas.drawCircle(centreX, centreY, cell / 2, discPaint)
+                canvas.drawCircle(centreX, centreY, minOf(cell, maxCell) / 2, discPaint)
             }
             textPaint.color = if (isSelected) onAccent else textColor
             textPaint.typeface = if (isSelected) Typeface.DEFAULT_BOLD else Typeface.DEFAULT

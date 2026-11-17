@@ -19,11 +19,14 @@
 package io.openmessages.common.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import io.openmessages.R
 import io.openmessages.common.util.extensions.getColorCompat
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
@@ -43,6 +46,17 @@ class GroupAvatarView @JvmOverloads constructor(
             updateView()
         }
 
+    /** The colour of the ring that sets the front avatar apart, that of what the avatars sit on */
+    private var ringColor: Int? = null
+
+    init {
+        context.obtainStyledAttributes(attrs, R.styleable.GroupAvatarView).use { styled ->
+            if (styled.hasValue(R.styleable.GroupAvatarView_ringColor)) {
+                ringColor = styled.getColor(R.styleable.GroupAvatarView_ringColor, Color.TRANSPARENT)
+            }
+        }
+    }
+
     /** The colour of the bar these avatars sit on, see [AvatarView.barColor] */
     var barColor: Int? = null
         set(value) {
@@ -61,7 +75,7 @@ class GroupAvatarView @JvmOverloads constructor(
 
     private fun updateView() {
         layout.avatar1Frame.setBackgroundTint(when (recipients.size > 1) {
-            true -> barColor ?: context.resolveThemeColor(android.R.attr.windowBackground)
+            true -> barColor ?: ringColor ?: context.resolveThemeColor(android.R.attr.windowBackground)
             false -> context.getColorCompat(android.R.color.transparent)
         })
         layout.avatar1Frame.updateLayoutParams<LayoutParams> {

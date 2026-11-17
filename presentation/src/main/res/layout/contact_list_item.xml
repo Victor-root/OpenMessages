@@ -24,6 +24,7 @@
     android:layout_height="wrap_content">
 
     <io.openmessages.common.widget.GroupAvatarView
+        app:ringColor="?attr/cardColor"
         android:id="@+id/avatar"
         android:layout_width="48dp"
         android:layout_height="48dp"

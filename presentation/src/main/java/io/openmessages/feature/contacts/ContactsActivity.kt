@@ -36,6 +36,7 @@ import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.finishWithoutAnimation
+import io.openmessages.common.util.extensions.applyInsetBottomMargin
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
@@ -139,6 +140,12 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
         } else if (state.selectedContact == null && phoneNumberDialog.isShowing) {
             phoneNumberDialog.dismiss()
         }
+    }
+
+    override fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
+        super.onApplyEdgeToEdgeInsets(top, bottom)
+        // The list runs on under the navigation bar and the keyboard, the rail stays clear of them
+        if (isEdgeToEdge()) binding.letterRail.applyInsetBottomMargin(bottom)
     }
 
     /** The search field and its clear button in the colour that reads on the toolbar */
