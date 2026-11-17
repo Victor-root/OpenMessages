@@ -106,8 +106,9 @@ class Colors @Inject constructor(
             .map { res -> context.resources.obtainTypedArray(res) }
             .map { typedArray -> (0 until typedArray.length()).map(typedArray::getColorOrThrow) }
 
-    /** The palette on offer for the app and conversations: the deep shade of each family */
-    val themeColors: List<Int> = materialColors.map { family -> family[7] }
+    /** The palette on offer for the app and conversations */
+    val themeColors: List<Int> = context.resources.obtainTypedArray(R.array.theme_colors)
+            .let { typedArray -> (0 until typedArray.length()).map(typedArray::getColorOrThrow) }
 
     private val minimumContrastRatio = 2
 

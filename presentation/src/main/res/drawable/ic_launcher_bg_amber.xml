@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Launcher-icon background for the Amber alias. Intentionally a deeper burnt-amber than the
-    in-app Amber theme color (#FFA000): the shared foreground bubble is white, and white has too
+    in-app Amber theme color (#FFC107): the shared foreground bubble is white, and white has too
     little contrast on bright amber — on the Android 12+ splash the bubble and circle washed out.
     A darker amber keeps the bubble legible and the icon recognisably amber.
     The in-app theme color is kept bright separately, so only the icon/splash uses this shade.

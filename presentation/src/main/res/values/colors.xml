@@ -80,6 +80,29 @@
     <color name="colorBrandLight">#9966FF</color>
     <color name="colorBrandAccent">#5D72FB</color>
 
+    <!-- The palette on offer for the app and conversations, the same as VFiles -->
+    <array name="theme_colors">
+        <item>#BC111F</item>
+        <item>#E91E63</item>
+        <item>#9C27B0</item>
+        <item>#673AB7</item>
+        <item>#3F51B5</item>
+        <item>#2196F3</item>
+        <item>#03A9F4</item>
+        <item>#00BCD4</item>
+        <item>#009688</item>
+        <item>#4CAF50</item>
+        <item>#8BC34A</item>
+        <item>#CDDC39</item>
+        <item>#FFEB3B</item>
+        <item>#FFC107</item>
+        <item>#FF9800</item>
+        <item>#FF5722</item>
+        <item>#795548</item>
+        <item>#9E9E9E</item>
+        <item>#607D8B</item>
+    </array>
+
     <array name="material_red">
         <item>#FFEBEE</item>
         <item>#FFCDD2</item>
