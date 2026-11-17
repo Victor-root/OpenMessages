@@ -20,6 +20,8 @@
 <resources>
 
     <attr name="bubbleColor" format="reference" />
+    <!-- The rounded blocks lists are grouped into, set off from the window background -->
+    <attr name="cardColor" format="reference" />
     <attr name="switchThumbEnabled" format="color" />
     <attr name="switchThumbDisabled" format="color" />
     <attr name="switchTrackEnabled" format="color" />
@@ -49,6 +51,7 @@
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
+        <item name="cardColor">@color/cardLight</item>
         <item name="colorAccent">@color/colorBrand</item>
         <item name="colorPrimary">@color/backgroundLight</item>
         <item name="colorPrimaryDark">@color/backgroundLight</item>

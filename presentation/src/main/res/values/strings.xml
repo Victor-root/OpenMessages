@@ -82,6 +82,7 @@
     <string name="snippet_video">Video</string>
     <string name="snippet_audio">Audio</string>
     <string name="snippet_contact_card">Contact card</string>
+    <string name="search_group_conversations">Conversations</string>
     <string name="main_message_results_title">Results in messages</string>
     <plurals name="main_message_results">
         <item quantity="one">%d message</item>
@@ -104,6 +105,11 @@
     <string name="scheduled_menu_edit_message">Edit message</string>
 
     <string name="drawer_inbox">Inbox</string>
+    <string name="conversations_group_today">Today</string>
+    <string name="conversations_group_yesterday">Yesterday</string>
+    <string name="conversations_group_pinned">Pinned</string>
+    <string name="conversations_group_drafts">Drafts</string>
+    <string name="conversations_group_unread">Unread</string>
     <string name="drawer_archived">Archived</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d unread</item>

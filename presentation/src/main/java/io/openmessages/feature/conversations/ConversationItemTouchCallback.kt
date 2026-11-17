@@ -23,6 +23,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.Rect
 import android.graphics.Shader
 import androidx.core.content.ContextCompat
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
 import io.openmessages.common.util.Colors
+import io.openmessages.common.util.RowGroups
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.core.Observable
@@ -58,6 +60,7 @@ class ConversationItemTouchCallback @Inject constructor(
     var adapter: RecyclerView.Adapter<*>? = null
 
     private val backgroundPaint = Paint()
+    private val swipeClip = Path()
     private var swipeColor = ContextCompat.getColor(context, R.color.colorBrand)
     // The brand gradient is only drawn for the default violet theme; custom colors swipe flat.
     private var swipeColorEnd = swipeColor
@@ -120,7 +123,7 @@ class ConversationItemTouchCallback @Inject constructor(
             if (useGradient) {
                 val w = itemView.width
                 if (swipeGradient == null || cachedItemWidth != w) {
-                    swipeGradient = LinearGradient(0f, 0f, w.toFloat(), 0f,
+                    swipeGradient = LinearGradient(itemView.left.toFloat(), 0f, (itemView.left + w).toFloat(), 0f,
                             swipeColor, swipeColorEnd, Shader.TileMode.CLAMP)
                     cachedItemWidth = w
                 }
@@ -130,16 +133,27 @@ class ConversationItemTouchCallback @Inject constructor(
                 backgroundPaint.color = swipeColor
             }
 
+            // What the row uncovers keeps to the row's own corners within its group's block
+            val radii = (adapter as? RowGroups.Adapter)?.rowGroups?.cornerRadii(viewHolder.bindingAdapterPosition)
+            c.save()
+            if (radii != null) {
+                swipeClip.reset()
+                swipeClip.addRoundRect(itemView.left.toFloat(), itemView.top.toFloat(),
+                        itemView.right.toFloat(), itemView.bottom.toFloat(), radii, Path.Direction.CW)
+                c.clipPath(swipeClip)
+            }
+
             if (dX > 0) {
                 c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
-                        dX, itemView.bottom.toFloat(), backgroundPaint)
+                        itemView.left + dX, itemView.bottom.toFloat(), backgroundPaint)
 
                 resolveIcon(rightAction, swipeRightIcon, viewHolder.bindingAdapterPosition)?.let { icon ->
                     val availablePx = dX.toInt() - iconLength
                     if (availablePx > 0) {
                         val src = Rect(0, 0, min(availablePx, icon.width), icon.height)
                         val dstTop = itemView.top + (itemView.bottom - itemView.top - icon.height) / 2
-                        val dst = Rect(iconLength, dstTop, iconLength + src.width(), dstTop + src.height())
+                        val dst = Rect(itemView.left + iconLength, dstTop,
+                                itemView.left + iconLength + src.width(), dstTop + src.height())
                         c.drawBitmap(icon, src, dst, null)
                     }
                 }
@@ -158,6 +172,7 @@ class ConversationItemTouchCallback @Inject constructor(
                     }
                 }
             }
+            c.restore()
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }

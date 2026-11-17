@@ -68,6 +68,7 @@
     <string name="main_syncing">Synchronisation des messages…</string>
     <string name="main_sender_you">Vous : %s</string>
     <string name="conversation_flagged_label">Spam potentiel</string>
+    <string name="search_group_conversations">Conversations</string>
     <string name="main_message_results_title">Résultats dans les messages</string>
     <plurals name="main_message_results">
         <item quantity="one">%d message</item>
@@ -89,6 +90,11 @@
     <string name="scheduled_menu_send_now">Envoyer maintenant</string>
     <string name="scheduled_menu_edit_message">Modifier le message</string>
     <string name="drawer_inbox">Boite de réception</string>
+    <string name="conversations_group_today">Aujourd\'hui</string>
+    <string name="conversations_group_yesterday">Hier</string>
+    <string name="conversations_group_pinned">Épinglées</string>
+    <string name="conversations_group_drafts">Brouillons</string>
+    <string name="conversations_group_unread">Non lues</string>
     <string name="drawer_archived">Archivées</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d non lue</item>

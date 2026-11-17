@@ -30,6 +30,7 @@ import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.RowGroups
 import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.extensions.removeAccents
@@ -44,9 +45,12 @@ class SearchAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator
-) : BaseAdapter<SearchResult, BindingViewHolder<SearchListItemBinding>>() {
+) : BaseAdapter<SearchResult, BindingViewHolder<SearchListItemBinding>>(), RowGroups.Adapter {
 
     private val highlightColor: Int by lazy { colors.theme().highlight }
+
+    /** Conversations found by name come first, then those found in their messages */
+    override val rowGroups = RowGroups(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindingViewHolder<SearchListItemBinding> {
         val binding = SearchListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -59,10 +63,9 @@ class SearchAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder<SearchListItemBinding>, position: Int) {
-        val previous = data.getOrNull(position - 1)
         val result = getItem(position)
 
-        holder.binding.resultsHeader.setVisible(result.messages > 0 && previous?.messages == 0)
+        holder.itemView.background = rowGroups.background(holder.itemView.context, position)
 
         val query = result.query
         val title = SpannableString(displayNames.of(result.conversation))
@@ -92,6 +95,27 @@ class SearchAdapter @Inject constructor(
                 holder.binding.snippet.text = context.resources.getQuantityString(R.plurals.main_message_results, result.messages, result.messages)
             }
         }
+    }
+
+    override fun onBindViewHolder(
+        holder: BindingViewHolder<SearchListItemBinding>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when (payloads.isNotEmpty() && payloads.all { payload -> payload == RowGroups.PAYLOAD }) {
+            true -> holder.itemView.background = rowGroups.background(holder.itemView.context, position)
+            false -> onBindViewHolder(holder, position)
+        }
+    }
+
+    override fun onDatasetChanged() {
+        rowGroups.update(data.map { result ->
+            context.getString(when (result.messages) {
+                0 -> R.string.search_group_conversations
+                else -> R.string.main_message_results_title
+            })
+        })
+        notifyItemRangeChanged(0, itemCount, RowGroups.PAYLOAD)
     }
 
     override fun areItemsTheSame(old: SearchResult, new: SearchResult): Boolean {

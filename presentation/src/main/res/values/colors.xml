@@ -46,6 +46,9 @@
     <color name="bubbleLight">#FFFFFF</color>
     <color name="bubbleDark">#11171B</color>
     <color name="bubbleBlack">#0F1113</color>
+    <color name="cardLight">#FFFFFF</color>
+    <color name="cardDark">#222B31</color>
+    <color name="cardBlack">#14181B</color>
 
     <color name="separatorLight">#0C000000</color>
     <color name="separatorDark">#1AFFFFFF</color>

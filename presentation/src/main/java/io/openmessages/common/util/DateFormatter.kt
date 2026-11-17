@@ -20,6 +20,7 @@ package io.openmessages.common.util
 
 import android.content.Context
 import android.text.format.DateFormat
+import io.openmessages.R
 import io.openmessages.common.util.extensions.isSameDay
 import io.openmessages.common.util.extensions.isSameWeek
 import io.openmessages.common.util.extensions.isSameYear
@@ -81,6 +82,33 @@ class DateFormatter @Inject constructor(val context: Context) {
             now.isSameYear(then) -> getFormatter("MMM d")
             else -> getFormatter("MM/d/yy")
         }.format(date)
+    }
+
+    /**
+     * The heading of the day [date] falls on in the conversation list: today, yesterday, the day of
+     * the week within the last week, then the date, with the year once it is another one
+     */
+    fun getDayLabel(date: Long): String {
+        val now = Calendar.getInstance()
+        val then = Calendar.getInstance()
+        then.timeInMillis = date
+        val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
+        // The start of the day six days back, so that the whole of each of those days counts
+        val weekAgo = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_YEAR, -6)
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        return when {
+            now.isSameDay(then) -> context.getString(R.string.conversations_group_today)
+            yesterday.isSameDay(then) -> context.getString(R.string.conversations_group_yesterday)
+            then.after(weekAgo) -> getFormatter("EEEE").format(date)
+            now.isSameYear(then) -> getFormatter("MMMMd").format(date)
+            else -> getFormatter("MMMMdyyyy").format(date)
+        }.replaceFirstChar { char -> char.titlecase(Locale.getDefault()) }
     }
 
     fun getScheduledTimestamp(date: Long): String {

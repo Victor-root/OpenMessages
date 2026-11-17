@@ -72,6 +72,7 @@ import io.openmessages.common.util.extensions.scrapViews
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.util.extensions.themeButtons
+import io.openmessages.common.widget.GroupHeadingDecoration
 import io.openmessages.common.widget.TextInputDialog
 import io.openmessages.feature.blocking.BlockingDialog
 import io.openmessages.databinding.MainActivityBinding
@@ -249,6 +250,7 @@ class MainActivity : ThemedActivity(), MainView {
         }
 
         itemTouchCallback.adapter = conversationsAdapter
+        binding.recyclerView.addItemDecoration(GroupHeadingDecoration(binding.recyclerView))
         conversationsAdapter.autoScrollToStart(binding.recyclerView)
 
         // Recount unread whenever the list on screen changes

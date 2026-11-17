@@ -23,6 +23,7 @@ import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
@@ -34,6 +35,7 @@ import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
+import io.openmessages.common.util.RowGroups
 import io.openmessages.common.util.extensions.isPictureSummary
 import io.openmessages.common.util.extensions.localiseSummary
 import io.openmessages.common.util.extensions.looksLike
@@ -43,6 +45,7 @@ import io.openmessages.databinding.ConversationListItemBinding
 import io.openmessages.model.Conversation
 import io.openmessages.util.DisplayNames
 import io.openmessages.util.PhoneNumberUtils
+import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -52,8 +55,9 @@ class ConversationsAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
-    private val phoneNumberUtils: PhoneNumberUtils
-) : BaseAdapter<Conversation, BindingViewHolder<ConversationListItemBinding>>() {
+    private val phoneNumberUtils: PhoneNumberUtils,
+    private val prefs: Preferences
+) : BaseAdapter<Conversation, BindingViewHolder<ConversationListItemBinding>>(), RowGroups.Adapter {
     private val disposables = CompositeDisposable()
 
     var hasScheduledConversation: Set<Long> = emptySet()
@@ -62,6 +66,15 @@ class ConversationsAdapter @Inject constructor(
             field = value
             notifyDataSetChanged()
         }
+
+    /**
+     * The rows' groups. The list is sorted unread first (when asked), then pinned, then with a
+     * draft, then by date, so each of those runs is a group of its own ahead of the days.
+     */
+    override val rowGroups = RowGroups(context)
+
+    /** Whether each row's group is a day, under which its date need only give the time */
+    private var groupedByDay: List<Boolean> = emptyList()
 
     init {
         // This is how we access the threadId for the swipe actions
@@ -119,13 +132,13 @@ class ConversationsAdapter @Inject constructor(
         val theme = colors.theme(recipient).theme
 
         holder.itemView.isActivated = isSelected(conversation.id)
+        bindGroup(holder, position)
 
         binding.avatars.recipients = conversation.recipients
         binding.title.collapseEnabled = conversation.recipients.size > 1
         binding.title.text = buildSpannedString {
             append(displayNames.of(conversation))
         }
-        binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
 
         val localSnippet = context.localiseSummary(conversation.snippet)
         val snippetText = when {
@@ -146,8 +159,10 @@ class ConversationsAdapter @Inject constructor(
             else -> snippetText
         }
 
-        // Make the preview in italics if draft
-        if (conversation.draft.isNotEmpty()) binding.snippet.setTypeface(null, Typeface.ITALIC)
+        // The preview is in italics for a draft, and set back for anything else: rows are reused
+        val weight = if (conversation.unread) Typeface.BOLD else Typeface.NORMAL
+        val style = if (conversation.draft.isNotEmpty()) weight or Typeface.ITALIC else weight
+        binding.snippet.setTypeface(Typeface.create(binding.snippet.typeface, style), style)
 
         val mediaIcon = when {
             isPictureSummary(conversation.snippet) ->
@@ -165,6 +180,47 @@ class ConversationsAdapter @Inject constructor(
 
         binding.pinned.isVisible = conversation.pinned
         binding.unread.setTint(theme)
+    }
+
+    override fun onBindViewHolder(
+        holder: BindingViewHolder<ConversationListItemBinding>,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        when (payloads.isNotEmpty() && payloads.all { payload -> payload == RowGroups.PAYLOAD }) {
+            true -> bindGroup(holder, position)
+            false -> onBindViewHolder(holder, position)
+        }
+    }
+
+    /** What a row takes from its group: its slice of the block, and how its date is written */
+    private fun bindGroup(holder: BindingViewHolder<ConversationListItemBinding>, position: Int) {
+        val conversation = getItemOrNull(position) ?: return
+        val selected = ColorUtils.setAlphaComponent(colors.theme().theme, 0x29)
+        holder.itemView.background = rowGroups.background(holder.itemView.context, position, selected)
+        // Under a day's heading the day goes without saying, so only the time is shown
+        holder.binding.date.text = conversation.date.takeIf { it > 0 }?.let { date ->
+            when (groupedByDay.getOrNull(position)) {
+                true -> dateFormatter.getTimestamp(date)
+                else -> dateFormatter.getConversationTimestamp(date)
+            }
+        }
+    }
+
+    override fun onDatasetChanged() {
+        val groups = data.map(::groupOf)
+        rowGroups.update(groups.map { (label) -> label })
+        groupedByDay = groups.map { (_, byDay) -> byDay }
+        notifyItemRangeChanged(0, itemCount, RowGroups.PAYLOAD)
+    }
+
+    /** The label of [conversation]'s group, and whether that group is a day */
+    private fun groupOf(conversation: Conversation): Pair<String, Boolean> = when {
+        prefs.unreadAtTop.get() && conversation.unread ->
+            context.getString(R.string.conversations_group_unread) to false
+        conversation.pinned -> context.getString(R.string.conversations_group_pinned) to false
+        conversation.draft.isNotEmpty() -> context.getString(R.string.conversations_group_drafts) to false
+        else -> dateFormatter.getDayLabel(conversation.date) to true
     }
 
     override fun areItemsTheSame(old: Conversation, new: Conversation) = old.id == new.id
@@ -186,6 +242,5 @@ class ConversationsAdapter @Inject constructor(
         super.onDetachedFromRecyclerView(recyclerView)
         disposables.clear()
     }
-
 
 }

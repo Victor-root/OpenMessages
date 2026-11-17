@@ -39,6 +39,7 @@
         <item name="actionBarPopupTheme">@style/PopupTheme.Black</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
         <item name="bubbleColor">@color/bubbleDark</item>
+        <item name="cardColor">@color/cardDark</item>
         <item name="colorAccent">@color/colorBrand</item>
         <item name="colorPrimary">@color/backgroundDark</item>
         <item name="colorPrimaryDark">@color/backgroundDark</item>
@@ -71,6 +72,7 @@
     -->
     <style name="AppTheme.Black">
         <item name="android:windowBackground">@color/black</item>
+        <item name="cardColor">@color/cardBlack</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
     </style>
