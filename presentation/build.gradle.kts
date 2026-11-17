@@ -16,11 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
+import java.time.Duration
+import java.time.Instant
 import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
+}
+
+// The minutes since 2024 at build time, so that every build is above the last one, as the signer of
+// the F-Droid repository requires. A value source is read again by each build, even when the
+// configuration cache is reused.
+abstract class MinutesSince2024 : ValueSource<Int, ValueSourceParameters.None> {
+    override fun obtain(): Int =
+        Duration.between(Instant.parse("2024-01-01T00:00:00Z"), Instant.now()).toMinutes().toInt()
 }
 
 android {
@@ -31,10 +41,8 @@ android {
         applicationId = "io.openmessages"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        // First Open Messages release. The rebrand to the io.openmessages package means it installs
-        // fresh, never over the app it was forked from, so the counter restarts at 1. Bump
-        // versionCode by 1 and update versionName for each release.
-        versionCode = 3
+        // Update versionName for each release; versionCode follows the build time on its own
+        versionCode = providers.of(MinutesSince2024::class) {}.get()
         versionName = "2.0.0"
     }
 
