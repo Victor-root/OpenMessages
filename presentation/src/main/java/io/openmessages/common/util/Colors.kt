@@ -70,7 +70,7 @@ class Colors @Inject constructor(
      * so the two must never resolve differently for the same colour.
      */
     fun contentColorOnTheme(color: Int): Int = when {
-        useDarkSystemBarIcons(color) -> context.getColorCompat(R.color.textPrimary)
+        useDarkSystemBarIcons(color) -> context.getColorCompat(R.color.contentOnLightTheme)
         else -> Color.WHITE
     }
 
@@ -122,6 +122,18 @@ class Colors @Inject constructor(
         }
         return Theme(color, this)
     }
+
+    /**
+     * The colour each conversation was last shown in, so that a screen opening on it can start in
+     * that colour rather than the app's while its conversation is read from the database
+     */
+    private val conversationColors = HashMap<Long, Int>()
+
+    fun rememberConversationColor(threadId: Long, color: Int) {
+        conversationColors[threadId] = color
+    }
+
+    fun conversationColor(threadId: Long): Int? = conversationColors[threadId]
 
     fun themeObservable(recipient: Recipient? = null): Observable<Theme> {
         val pref = when {

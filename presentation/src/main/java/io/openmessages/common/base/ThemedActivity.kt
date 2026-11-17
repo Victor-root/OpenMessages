@@ -72,17 +72,27 @@ abstract class ThemedActivity : BaseActivity() {
      */
     val theme: Observable<Colors.Theme> = threadId
             .distinctUntilChanged()
-            .switchMap { threadId ->
-                // 0 is no conversation, so the default theme can be applied before the first frame
-                // rather than once the database has answered
-                when (threadId) {
-                    0L -> Observable.just(Optional<Conversation>(null))
-
-                    else -> conversationRepo.observeConversation(threadId)
-                            .distinctUntilChanged { old, new -> old.value?.recipients == new.value?.recipients }
-                            .observeOn(AndroidSchedulers.mainThread())
+            .switchMap { threadId -> conversationTheme(threadId)
+                .doOnNext { theme -> if (threadId != 0L) colors.rememberConversationColor(threadId, theme.theme) }
+                // Starts in the colour the conversation was last shown in, if it was, so the screen
+                // doesn't show the app's colour first while the database answers
+                .let { theme ->
+                    colors.conversationColor(threadId)
+                        ?.let { color -> theme.startWithItem(Colors.Theme(color, colors)).distinctUntilChanged() }
+                        ?: theme
                 }
             }
+
+    /** The theme of conversation [threadId], from its recipient or its last sender in a group */
+    private fun conversationTheme(threadId: Long): Observable<Colors.Theme> = when (threadId) {
+        // 0 is no conversation, so the default theme can be applied before the first frame rather
+        // than once the database has answered
+        0L -> Observable.just(Optional<Conversation>(null))
+
+        else -> conversationRepo.observeConversation(threadId)
+                .distinctUntilChanged { old, new -> old.value?.recipients == new.value?.recipients }
+                .observeOn(AndroidSchedulers.mainThread())
+    }
             .switchMap { (conversation) ->
                 when {
                     conversation == null -> Observable.just(Optional(null))

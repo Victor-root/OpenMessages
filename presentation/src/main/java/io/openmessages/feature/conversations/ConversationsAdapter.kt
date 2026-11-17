@@ -105,7 +105,12 @@ class ConversationsAdapter @Inject constructor(
                 val conversation = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
                     true -> binding.root.isActivated = isSelected(conversation.id)
-                    false -> navigator.showConversation(conversation.id)
+                    false -> {
+                        // The conversation opens in the colour it has here, without waiting on
+                        // the database for it
+                        colors.rememberConversationColor(conversation.id, colorOf(conversation))
+                        navigator.showConversation(conversation.id)
+                    }
                 }
             }
             binding.root.setOnLongClickListener {
@@ -121,15 +126,7 @@ class ConversationsAdapter @Inject constructor(
         val conversation = getItemOrNull(position) ?: return
         val binding = holder.binding
 
-        // If the last message wasn't incoming, then the colour doesn't really matter anyway
-        val lastMessage = conversation.lastMessage
-        val recipient = when {
-            conversation.recipients.size == 1 || lastMessage == null -> conversation.recipients.firstOrNull()
-            else -> conversation.recipients.find { recipient ->
-                phoneNumberUtils.compare(recipient.address, lastMessage.address)
-            }
-        }
-        val theme = colors.theme(recipient).theme
+        val theme = colorOf(conversation)
 
         holder.itemView.isActivated = isSelected(conversation.id)
         bindGroup(holder, position)
@@ -180,6 +177,19 @@ class ConversationsAdapter @Inject constructor(
 
         binding.pinned.isVisible = conversation.pinned
         binding.unread.setTint(theme)
+    }
+
+    /** The colour of [conversation]: its recipient's, or in a group its last sender's */
+    private fun colorOf(conversation: Conversation): Int {
+        // If the last message wasn't incoming, then the colour doesn't really matter anyway
+        val lastMessage = conversation.lastMessage
+        val recipient = when {
+            conversation.recipients.size == 1 || lastMessage == null -> conversation.recipients.firstOrNull()
+            else -> conversation.recipients.find { recipient ->
+                phoneNumberUtils.compare(recipient.address, lastMessage.address)
+            }
+        }
+        return colors.theme(recipient).theme
     }
 
     override fun onBindViewHolder(
