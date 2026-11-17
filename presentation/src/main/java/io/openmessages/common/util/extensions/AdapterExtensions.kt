@@ -36,9 +36,12 @@ fun RecyclerView.Adapter<*>.autoScrollToStart(recyclerView: RecyclerView) {
                     recyclerView.scrollToPosition(positionStart)
                 }
             } else {
+                // Only what lands at the top is brought into view: scrolling to anything else that
+                // changed, such as a conversation sorted further down once unpinned or read, sent
+                // the list straight to it
                 val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
-                if (firstVisiblePosition == 0) {
-                    recyclerView.scrollToPosition(positionStart)
+                if (firstVisiblePosition == 0 && positionStart == 0) {
+                    recyclerView.scrollToPosition(0)
                 }
             }
         }
