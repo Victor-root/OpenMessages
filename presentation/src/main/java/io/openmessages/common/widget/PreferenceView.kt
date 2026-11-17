@@ -63,6 +63,24 @@ class PreferenceView @JvmOverloads constructor(
             }
         }
 
+    /**
+     * The colour of the icon and its tile: the app's by default, a conversation's on its own
+     * screens. Both fade with the row when it is disabled, and on a dark background the icon is
+     * lightened, or a deep colour would hardly show.
+     */
+    var accent: Int = Color.TRANSPARENT
+        set(value) {
+            field = value
+            val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+                    Configuration.UI_MODE_NIGHT_YES
+            val icon = if (night) ColorUtils.blendARGB(value, Color.WHITE, 0.45f) else value
+            val disabled = intArrayOf(-android.R.attr.state_enabled)
+            fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
+                intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))
+            layout.icon.imageTintList = faded(icon, 0xFF)
+            layout.icon.backgroundTintList = faded(value, if (night) 0x38 else 0x24)
+        }
+
     var summary: String? = null
         set(value) {
             field = value
@@ -89,19 +107,7 @@ class PreferenceView @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
 
-        if (!isInEditMode) {
-            // The icon and its tile in the theme colour, both faded with the row when it is disabled.
-            // On a dark background the colour is lightened, or a deep one would hardly show.
-            val night = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
-                    Configuration.UI_MODE_NIGHT_YES
-            val theme = colors.theme().theme
-            val icon = if (night) ColorUtils.blendARGB(theme, Color.WHITE, 0.45f) else theme
-            val disabled = intArrayOf(-android.R.attr.state_enabled)
-            fun faded(color: Int, alpha: Int) = ColorStateList(arrayOf(disabled, intArrayOf()),
-                intArrayOf(ColorUtils.setAlphaComponent(color, alpha / 3), ColorUtils.setAlphaComponent(color, alpha)))
-            layout.icon.imageTintList = faded(icon, 0xFF)
-            layout.icon.backgroundTintList = faded(theme, if (night) 0x38 else 0x24)
-        }
+        if (!isInEditMode) accent = colors.theme().theme
 
         context.obtainStyledAttributes(attrs, R.styleable.PreferenceView).run {
             title = getString(R.styleable.PreferenceView_title)

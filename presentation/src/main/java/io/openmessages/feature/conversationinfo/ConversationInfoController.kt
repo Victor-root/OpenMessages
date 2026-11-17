@@ -86,6 +86,7 @@ class ConversationInfoController(
                 ?.autoDispose(scope())
                 ?.subscribe { theme ->
                     themeColor = theme.theme
+                    adapter.accent = theme.theme
                     binding.recyclerView.scrapViews()
                 }
     }

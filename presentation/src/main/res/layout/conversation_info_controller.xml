@@ -23,6 +23,8 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:paddingTop="8dp"
+    android:paddingStart="12dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="12dp"
     android:paddingBottom="8dp"
     android:textDirection="ltr" />

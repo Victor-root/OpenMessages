@@ -10,6 +10,7 @@ import io.openmessages.R
 import io.openmessages.common.base.BaseAdapter
 import io.openmessages.common.base.BaseViewHolder
 import io.openmessages.common.util.Colors
+import io.openmessages.common.util.RowGroups
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.databinding.ConversationInfoSettingsBinding
@@ -26,7 +27,20 @@ class ConversationInfoAdapter @Inject constructor(
     private val displayNames: DisplayNames,
     private val context: Context,
     private val colors: Colors
-) : BaseAdapter<ConversationInfoItem, BaseViewHolder>() {
+) : BaseAdapter<ConversationInfoItem, BaseViewHolder>(), RowGroups.Adapter {
+
+    /** The conversation's colour, as its toolbar wears it, for the settings' icons */
+    var accent: Int? = null
+        set(value) {
+            if (field == value) return
+            field = value
+            data.indexOfFirst { item -> item is ConversationInfoSettings }
+                .takeIf { index -> index >= 0 }
+                ?.let(::notifyItemChanged)
+        }
+
+    /** The recipients are one block; the settings are a block of their own, and the media a grid */
+    override val rowGroups = RowGroups(context)
 
     val recipientClicks: Subject<Long> = PublishSubject.create()
     val recipientLongClicks: Subject<Long> = PublishSubject.create()
@@ -105,10 +119,15 @@ class ConversationInfoAdapter @Inject constructor(
 
                 val theme = colors.theme(recipient)
                 binding.theme.setTint(theme.theme)
+                holder.itemView.background = rowGroups.background(holder.itemView.context, position)
             }
 
             is ConversationInfoSettings -> {
                 val binding = ConversationInfoSettingsBinding.bind(holder.itemView)
+                accent?.let { accent ->
+                    listOf(binding.groupName, binding.notifications, binding.markUnread, binding.archive,
+                        binding.block, binding.delete).forEach { preference -> preference.accent = accent }
+                }
                 binding.groupName.summary = item.name
 
                 binding.notifications.isEnabled = !item.blocked
@@ -137,6 +156,26 @@ class ConversationInfoAdapter @Inject constructor(
                 binding.video.isVisible = part.isVideo()
             }
         }
+    }
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int, payloads: MutableList<Any>) {
+        when (payloads.isNotEmpty() && payloads.all { payload -> payload == RowGroups.PAYLOAD }) {
+            true -> if (getItemOrNull(position) is ConversationInfoRecipient) {
+                holder.itemView.background = rowGroups.background(holder.itemView.context, position)
+            }
+            false -> onBindViewHolder(holder, position)
+        }
+    }
+
+    override fun onDatasetChanged() {
+        rowGroups.update(data.map { item ->
+            when (item) {
+                is ConversationInfoRecipient -> "recipients"
+                is ConversationInfoSettings -> "settings"
+                is ConversationInfoMedia -> "media"
+            }
+        })
+        notifyItemRangeChanged(0, itemCount, RowGroups.PAYLOAD)
     }
 
     override fun getItemViewType(position: Int): Int {
