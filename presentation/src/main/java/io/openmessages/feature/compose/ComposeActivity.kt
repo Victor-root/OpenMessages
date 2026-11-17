@@ -54,6 +54,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -370,8 +371,13 @@ class ComposeActivity : ThemedActivity(), ComposeView {
                     binding.speechToTextIcon.setTint(it.theme)
 
                     // audio message recording
-                    binding.audioMsgRecord.setColor(it.theme)
-                    binding.audioMsgPlayerPlayPause.setTint(it.theme)
+                    binding.audioMsgRecord.setColors(it.theme, it.textPrimary)
+                    binding.audioMsgAbort.setBackgroundTint(ColorUtils.setAlphaComponent(it.theme, 0x33))
+                    binding.audioMsgAbort.setTint(colors.readableOnBackground(this, it.theme))
+                    binding.audioMsgAttach.setBackgroundTint(it.theme)
+                    binding.audioMsgAttach.setTint(it.textPrimary)
+                    binding.audioMsgPlayerBackground.setBackgroundTint(ColorUtils.setAlphaComponent(it.theme, 0x26))
+                    binding.audioMsgPlayerPlayPause.setTint(colors.readableOnBackground(this, it.theme))
                     binding.audioMsgPlayerSeekBar.apply {
                         thumbTintList = ColorStateList.valueOf(it.theme)
                         progressBackgroundTintList = ColorStateList.valueOf(it.theme)

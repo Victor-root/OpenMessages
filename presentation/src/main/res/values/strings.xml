@@ -129,6 +129,8 @@
     <string name="template_hint">Type your message…</string>
     <string name="template_title_hint">Title (optional)</string>
     <string name="templates_add_cd">New template</string>
+    <string name="template_new">New template</string>
+    <string name="template_edit">Edit template</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_help">Help &amp; feedback</string>
     <string name="drawer_invite">Invite friends</string>
@@ -243,6 +245,8 @@
 
     <string name="compose_record_audio_msg_abort_cd">Cancel audio message</string>
     <string name="compose_record_audio_msg_attach_cd">Attach audio message</string>
+    <string name="compose_audio_msg_title">Voice message</string>
+    <string name="compose_audio_msg_attach">Attach</string>
     <string name="compose_record_audio_msg_play_pause_cd">Play or pause audio message</string>
 
     <string name="compose_message_cancel">Cancel</string>

@@ -23,6 +23,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.IntentCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,7 @@ import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.finishWithoutAnimation
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.showKeyboard
 import io.openmessages.common.widget.GroupHeadingDecoration
 import io.openmessages.common.widget.ListDialog
@@ -111,6 +113,7 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
 
         binding.contacts.adapter = contactsAdapter
         setUpLetterRail()
+        colorSearchField()
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -136,6 +139,14 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
         } else if (state.selectedContact == null && phoneNumberDialog.isShowing) {
             phoneNumberDialog.dismiss()
         }
+    }
+
+    /** The search field and its clear button in the colour that reads on the toolbar */
+    private fun colorSearchField() {
+        val content = colors.contentColorOnTheme(colors.theme().theme)
+        binding.search.setTextColor(content)
+        binding.search.setHintTextColor(ColorUtils.setAlphaComponent(content, 0xB3))
+        binding.cancel.setTint(content)
     }
 
     /**

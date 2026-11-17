@@ -81,6 +81,17 @@
     </style>
 
     <!-- A block of preferences, see BlockLayout -->
+    <!-- A Material 3 text button in a dialog, its colour set in code -->
+    <style name="DialogTextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/rounded_ripple_20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="PreferenceBlock">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

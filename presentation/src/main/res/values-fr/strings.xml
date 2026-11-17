@@ -210,6 +210,8 @@
     <string name="compose_record_audio_msg_cd">Enregistrer un message audio</string>
     <string name="compose_record_audio_msg_abort_cd">Annuler le message audio</string>
     <string name="compose_record_audio_msg_attach_cd">Joindre un message audio</string>
+    <string name="compose_audio_msg_title">Message vocal</string>
+    <string name="compose_audio_msg_attach">Joindre</string>
     <string name="compose_record_audio_msg_play_pause_cd">Jouer ou mettre en pause le message audio</string>
     <string name="compose_message_cancel">Annuler</string>
     <string name="compose_message_send_now">Envoyer maintenant</string>
@@ -687,6 +689,8 @@
     <string name="template_hint">Saisissez votre message…</string>
     <string name="template_title_hint">Titre (optionnel)</string>
     <string name="templates_add_cd">Nouveau modèle</string>
+    <string name="template_new">Nouveau modèle</string>
+    <string name="template_edit">Modifier le modèle</string>
     <string name="compose_reactions_title">Réactions</string>
     <string name="deduplicate_messages_category">Supprimer les doublons de messages</string>
     <string name="deduplicate_messages_title">Supprimer les messages dupliqués</string>
