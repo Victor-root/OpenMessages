@@ -70,6 +70,8 @@ class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
         setContentView(binding.root)
         setTitle(R.string.title_notification_prefs)
         showBackButton(true)
+        // Those of a conversation are themed in its colour, as the rest of its screens
+        intent.extras?.getLong("threadId")?.takeIf { it != 0L }?.let(threadId::onNext)
         viewModel.bindView(this)
 
         binding.preferences.postDelayed({ binding.preferences.animateLayoutChanges = true }, 100)

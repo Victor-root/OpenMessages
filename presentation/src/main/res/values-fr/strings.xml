@@ -91,7 +91,7 @@
     <string name="main_permission_allow">Autoriser</string>
     <string name="scheduled_menu_send_now">Envoyer maintenant</string>
     <string name="scheduled_menu_edit_message">Modifier le message</string>
-    <string name="drawer_inbox">Boite de réception</string>
+    <string name="drawer_inbox">Boîte de réception</string>
     <string name="contacts_group_recent">Récents</string>
     <string name="contacts_group_starred">Favoris</string>
     <string name="contacts_group_groups">Groupes</string>
@@ -107,7 +107,7 @@
         <item quantity="other">%d non lues</item>
     </plurals>
     <string name="drawer_scheduled">Programmés</string>
-    <string name="drawer_blocking">Bloquer</string>
+    <string name="drawer_blocking">Blocage</string>
     <string name="drawer_more">Plus</string>
     <string name="drawer_settings">Paramètres</string>
     <string name="drawer_help">Aide &amp; commentaires</string>
