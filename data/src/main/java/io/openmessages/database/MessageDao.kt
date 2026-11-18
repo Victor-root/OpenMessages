@@ -53,6 +53,7 @@ abstract class MessageDao {
         val id: Long,
         val threadId: Long,
         val address: String,
+        val date: Long,
         val dateSent: Long,
         val boxId: Int,
         val body: String,
@@ -168,7 +169,7 @@ abstract class MessageDao {
     @Query("SELECT * FROM message WHERE date < :before")
     abstract fun getOlderThan(before: Long): List<Message>
 
-    @Query("SELECT id, threadId, address, dateSent, boxId, body, attachmentTypeString FROM message ORDER BY id")
+    @Query("SELECT id, threadId, address, date, dateSent, boxId, body, attachmentTypeString FROM message ORDER BY id")
     abstract fun getSignatures(): List<MessageSignature>
 
     /**

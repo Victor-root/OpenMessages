@@ -1071,7 +1071,9 @@ open class MessageRepositoryImpl @Inject constructor(
     private fun messageHash(message: MessageDao.MessageSignature): String {
         val signatureString= buildString {
             append(message.address).append('|')
-            append(message.dateSent).append('|')
+            // A message sent from here has no date sent until it is sent: the date it was made tells
+            // two apart that are otherwise alike, like two MMS in the outbox
+            append(if (message.dateSent > 0) message.dateSent else message.date).append('|')
             append(message.boxId).append('|')
             append(message.body).append('|')
             append(message.attachmentTypeString)
