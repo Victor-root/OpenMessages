@@ -78,6 +78,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/title_theme"
         android:padding="8dp"
         android:src="@drawable/ic_palette_black_24dp"
         app:tint="?android:attr/textColorSecondary"

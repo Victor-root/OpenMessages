@@ -109,6 +109,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="8dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/main_search_clear_cd"
                 android:padding="8dp"
                 android:src="@drawable/ic_close_black_24dp"
                 android:visibility="gone" />

@@ -41,6 +41,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/info_unblock"
         android:padding="12dp"
         android:src="@drawable/ic_close_black_24dp"
         android:tint="?android:attr/textColorSecondary" />

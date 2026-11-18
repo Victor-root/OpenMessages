@@ -132,7 +132,7 @@ class ComposeItemAdapter @Inject constructor(
     /** The position each initial's group starts at, in list order */
     fun initials(): Map<String, Int> = buildMap {
         data.forEachIndexed { index, item ->
-            if (item is ComposeItem.Person) putIfAbsent(initialOf(item.value), index)
+            if (item is ComposeItem.Person) getOrPut(initialOf(item.value)) { index }
         }
     }
 
