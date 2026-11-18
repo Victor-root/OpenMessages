@@ -275,6 +275,8 @@ class MessagesAdapter @Inject constructor(
             }
 
             body.apply {
+                // My bubbles are neutral, so the links in them take the conversation's colour
+                setLinkTextColor(colors.readableOnBackground(this.context, theme.theme))
                 highlightColor = theme.theme.withAlpha(0x5d)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     textSelectHandle?.setTint(theme.theme.withAlpha(0xad))
