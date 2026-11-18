@@ -315,6 +315,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
             messageAdapter.emptyView = binding.messagesEmpty
 
             binding.messageList.setHasFixedSize(true)
+            binding.messageList.itemAnimator = MessageItemAnimator()
             // Two lists in one: the conversation's messages, then the ones still waiting for their
             // send time. Scheduled messages are always in the future, so appending them keeps them
             // last without anything having to reorder when a message is sent in the meantime.
