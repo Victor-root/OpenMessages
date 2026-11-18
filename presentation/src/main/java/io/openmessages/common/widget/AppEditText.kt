@@ -82,7 +82,10 @@ class AppEditText @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection {
-        return object : InputConnectionWrapper(super.onCreateInputConnection(editorInfo), true) {
+        val connection = super.onCreateInputConnection(editorInfo)
+        // Held sideways the keyboard would otherwise take the whole screen, and hide what is typed into
+        editorInfo.imeOptions = editorInfo.imeOptions or EditorInfo.IME_FLAG_NO_EXTRACT_UI
+        return object : InputConnectionWrapper(connection, true) {
             override fun sendKeyEvent(event: KeyEvent): Boolean {
                 if (event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_DEL) {
                     backspaces.onNext(Unit)

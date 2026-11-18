@@ -433,6 +433,7 @@ class MainActivity : ThemedActivity(), MainView {
             return
         }
         statusBarHeight = top
+        findViewById<View>(android.R.id.content)?.applyInsetPadding(left = sideInsetLeft, right = sideInsetRight)
         binding.toolbar.applyInsetTop(top)
         binding.searchBar.applyInsetTop(top)
         binding.drawer.drawerHeader.applyInsetTop(top)

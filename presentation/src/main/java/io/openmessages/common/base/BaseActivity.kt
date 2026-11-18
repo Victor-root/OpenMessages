@@ -211,6 +211,9 @@ abstract class BaseActivity : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(content) { _, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val sides = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            sideInsetLeft = sides.left
+            sideInsetRight = sides.right
             systemBarsBackground.topHeight = if (isEdgeToEdge()) 0 else bars.top
             systemBarsBackground.bottomHeight = bars.bottom
             // max(nav, ime) keeps bottom content above the keyboard once the window stops auto-resizing.
@@ -244,6 +247,15 @@ abstract class BaseActivity : AppCompatActivity() {
     private var bottomInset = 0
 
     /**
+     * The room the system takes on either side, a navigation bar on the right of a phone held
+     * sideways or a camera cut-out. The screen's content keeps clear of it.
+     */
+    protected var sideInsetLeft = 0
+        private set
+    protected var sideInsetRight = 0
+        private set
+
+    /**
      * Applies the system-bar insets. In edge-to-edge the default pushes the toolbar's themed
      * background behind the status bar and runs the screen on behind the nav bar, or lifts all of it
      * above the nav bar / keyboard where it doesn't; screens laid out in their own way (e.g. the main
@@ -253,15 +265,16 @@ abstract class BaseActivity : AppCompatActivity() {
     protected open fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
         val content = findViewById<View>(android.R.id.content) ?: return
         when {
-            !isEdgeToEdge() -> content.applyInsetPadding(top = top, bottom = bottom)
+            !isEdgeToEdge() -> content.applyInsetPadding(sideInsetLeft, top, sideInsetRight, bottom)
             extendsBehindNavigationBar -> {
+                content.applyInsetPadding(left = sideInsetLeft, right = sideInsetRight)
                 toolbar?.applyInsetTop(top)
                 bottomInset = bottom
                 extendBehindNavigationBar(content)
             }
             else -> {
                 toolbar?.applyInsetTop(top)
-                content.applyInsetPadding(bottom = bottom)
+                content.applyInsetPadding(sideInsetLeft, bottom = bottom, right = sideInsetRight)
             }
         }
     }
