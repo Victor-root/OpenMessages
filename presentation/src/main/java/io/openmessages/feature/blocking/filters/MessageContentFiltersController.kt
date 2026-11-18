@@ -46,7 +46,7 @@ class MessageContentFiltersController : BaseController<MessageContentFiltersCont
     @Inject override lateinit var presenter: MessageContentFiltersPresenter
     @Inject lateinit var colors: Colors
 
-    private val adapter = MessageContentFiltersAdapter()
+    private val adapter by lazy { MessageContentFiltersAdapter(activity!!) }
     private val saveFilterSubject: Subject<MessageContentFilterData> = PublishSubject.create()
 
     init {

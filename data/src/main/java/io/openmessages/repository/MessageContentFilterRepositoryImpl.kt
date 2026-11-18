@@ -32,6 +32,12 @@ class MessageContentFilterRepositoryImpl @Inject constructor(
 
     override fun createFilter(data: MessageContentFilterData) {
         db.runInTransaction {
+            // A filter already there is not added again, so restoring a backup leaves the same filters
+            val alreadyThere = dao.getAll().any { filter ->
+                filter.value == data.value && filter.caseSensitive == data.caseSensitive &&
+                        filter.isRegex == data.isRegex && filter.includeContacts == data.includeContacts
+            }
+            if (alreadyThere) return@runInTransaction
             val maxId = dao.getMaxId() ?: -1
             dao.insert(MessageContentFilter(maxId + 1, data.value, data.caseSensitive, data.isRegex, data.includeContacts))
         }

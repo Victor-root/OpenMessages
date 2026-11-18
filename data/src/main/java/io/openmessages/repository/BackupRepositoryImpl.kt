@@ -1008,8 +1008,16 @@ class BackupRepositoryImpl @Inject constructor(
     private fun restoreScheduled(dir: DocumentFile, fileName: String) {
         val backup = readJson(dir, fileName, moshi.adapter(ScheduledBackup::class.java)) ?: return
 
+        val scheduled = scheduledMessageRepo.getScheduledMessagesSnapshot()
         backup.messages
                 .filter { message -> message.date > now() }
+                // One already scheduled is not scheduled again, so restoring a backup twice leaves the same messages
+                .filterNot { message ->
+                    scheduled.any { existing ->
+                        existing.date == message.date && existing.recipients == message.recipients &&
+                                existing.body == message.body && existing.sendAsGroup == message.sendAsGroup
+                    }
+                }
                 .forEach { message ->
                     val conversationId = conversationRepo.getConversation(message.recipients)?.id ?: 0
                     val saved = scheduledMessageRepo.saveScheduledMessage(

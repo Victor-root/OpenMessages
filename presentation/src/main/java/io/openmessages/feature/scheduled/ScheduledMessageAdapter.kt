@@ -22,9 +22,11 @@ import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BlockAdapter
+import io.openmessages.common.util.Colors
 import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.databinding.ScheduledMessageListItemBinding
 import io.openmessages.common.util.DateFormatter
@@ -41,8 +43,11 @@ class ScheduledMessageAdapter @Inject constructor(
     private val displayNames: DisplayNames,
     private val context: Context,
     private val dateFormatter: DateFormatter,
-    private val phoneNumberUtils: PhoneNumberUtils
-) : BaseAdapter<ScheduledMessage, BindingViewHolder<ScheduledMessageListItemBinding>>() {
+    private val phoneNumberUtils: PhoneNumberUtils,
+    private val colors: Colors
+) : BlockAdapter<ScheduledMessage, BindingViewHolder<ScheduledMessageListItemBinding>>(context) {
+
+    override val selectedTint: Int get() = ColorUtils.setAlphaComponent(colors.theme().theme, 0x29)
 
     /**
      * The contacts the recipients are named after
@@ -72,11 +77,6 @@ class ScheduledMessageAdapter @Inject constructor(
         return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {
                 val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
-                if (toggleSelection(message.id, false))
-                    binding.root.isActivated = isSelected(message.id)
-            }
-            binding.root.setOnClickListener {
-                val message = getItemOrNull(bindingAdapterPosition) ?: return@setOnClickListener
                 toggleSelection(message.id)
                 binding.root.isActivated = isSelected(message.id)
             }
@@ -85,6 +85,7 @@ class ScheduledMessageAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: BindingViewHolder<ScheduledMessageListItemBinding>, position: Int) {
         val message = getItemOrNull(position) ?: return
+        joinBlock(holder, position)
 
         // GroupAvatarView only accepts recipients, so map the phone numbers to recipients
         holder.binding.avatars.recipients =

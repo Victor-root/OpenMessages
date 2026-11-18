@@ -18,17 +18,19 @@
  */
 package io.openmessages.feature.blocking.filters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BlockAdapter
 import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.model.MessageContentFilter
 import io.openmessages.databinding.MessageContentFilterListItemBinding
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 
-class MessageContentFiltersAdapter : BaseAdapter<MessageContentFilter, BindingViewHolder<MessageContentFilterListItemBinding>>() {
+class MessageContentFiltersAdapter(context: Context) :
+    BlockAdapter<MessageContentFilter, BindingViewHolder<MessageContentFilterListItemBinding>>(context) {
 
     val removeMessageContentFilter: Subject<Long> = PublishSubject.create()
 
@@ -44,6 +46,7 @@ class MessageContentFiltersAdapter : BaseAdapter<MessageContentFilter, BindingVi
 
     override fun onBindViewHolder(holder: BindingViewHolder<MessageContentFilterListItemBinding>, position: Int) {
         val item = getItem(position)
+        joinBlock(holder, position)
         holder.binding.caseIcon.visibility = if (item.caseSensitive) View.VISIBLE else View.GONE
         holder.binding.regexIcon.visibility = if (item.isRegex) View.VISIBLE else View.GONE
         holder.binding.contactsIcon.visibility = if (item.includeContacts) View.VISIBLE else View.GONE

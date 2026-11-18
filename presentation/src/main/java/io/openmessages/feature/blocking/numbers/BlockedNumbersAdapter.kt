@@ -18,9 +18,10 @@
  */
 package io.openmessages.feature.blocking.numbers
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BlockAdapter
 import io.openmessages.common.base.BindingViewHolder
 import io.openmessages.model.BlockedNumber
 import io.openmessages.databinding.BlockedNumberListItemBinding
@@ -29,8 +30,9 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 
 class BlockedNumbersAdapter(
+    context: Context,
     private val displayNames: DisplayNames
-) : BaseAdapter<BlockedNumber, BindingViewHolder<BlockedNumberListItemBinding>>() {
+) : BlockAdapter<BlockedNumber, BindingViewHolder<BlockedNumberListItemBinding>>(context) {
 
     val unblockAddress: Subject<Long> = PublishSubject.create()
 
@@ -47,6 +49,7 @@ class BlockedNumbersAdapter(
     override fun onBindViewHolder(holder: BindingViewHolder<BlockedNumberListItemBinding>, position: Int) {
         val item = getItem(position)
 
+        joinBlock(holder, position)
         holder.binding.number.text = displayNames.number(item.address)
     }
 

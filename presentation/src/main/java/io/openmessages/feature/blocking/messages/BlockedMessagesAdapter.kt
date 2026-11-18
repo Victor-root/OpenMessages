@@ -22,10 +22,12 @@ import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
 import io.openmessages.R
 import io.openmessages.common.base.BindingViewHolder
-import io.openmessages.common.base.BaseAdapter
+import io.openmessages.common.base.BlockAdapter
+import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeColor
@@ -39,8 +41,11 @@ import javax.inject.Inject
 class BlockedMessagesAdapter @Inject constructor(
     private val displayNames: DisplayNames,
     private val context: Context,
-    private val dateFormatter: DateFormatter
-) : BaseAdapter<Conversation, BindingViewHolder<BlockedListItemBinding>>() {
+    private val dateFormatter: DateFormatter,
+    private val colors: Colors
+) : BlockAdapter<Conversation, BindingViewHolder<BlockedListItemBinding>>(context) {
+
+    override val selectedTint: Int get() = ColorUtils.setAlphaComponent(colors.theme().theme, 0x29)
 
     val clicks: PublishSubject<Long> = PublishSubject.create()
 
@@ -74,6 +79,7 @@ class BlockedMessagesAdapter @Inject constructor(
         val conversation = getItem(position)
         val binding = holder.binding
 
+        joinBlock(holder, position)
         holder.itemView.isActivated = isSelected(conversation.id)
 
         binding.avatars.recipients = conversation.recipients

@@ -47,7 +47,7 @@ class BlockedNumbersController : BaseController<BlockedNumbersControllerBinding,
     @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
     @Inject lateinit var displayNames: DisplayNames
 
-    private val adapter by lazy { BlockedNumbersAdapter(displayNames) }
+    private val adapter by lazy { BlockedNumbersAdapter(activity!!, displayNames) }
     private val saveAddressSubject: Subject<String> = PublishSubject.create()
 
     init {
