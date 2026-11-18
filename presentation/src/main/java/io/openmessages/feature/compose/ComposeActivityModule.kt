@@ -96,7 +96,8 @@ class ComposeActivityModule {
             Intent.ACTION_SEND -> {
                 IntentCompat.getParcelableExtra(activity.intent, Intent.EXTRA_STREAM, Uri::class.java)?.run(uris::add)
             }
-            Intent.ACTION_SEND_MULTIPLE -> {
+            // Other screens of the app, forwarding a message or a picture, hand over a list with no action
+            else -> {
                 IntentCompat.getParcelableArrayListExtra(activity.intent, Intent.EXTRA_STREAM, Uri::class.java)
                     ?.run(uris::addAll)
             }

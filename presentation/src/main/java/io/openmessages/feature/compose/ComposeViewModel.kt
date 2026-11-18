@@ -609,8 +609,10 @@ class ComposeViewModel @Inject constructor(
             .filter { it == R.id.forward }
             .withLatestFrom(view.messagesSelectedIntent, messages) { _, messageIds, messages ->
                 messages.withIds(messageIds.take(1)).firstOrNull()?.let { message ->
+                    // A message of mine carries the signature it was sent with, which sending adds again
+                    val text = message.getText().let { if (message.isMe()) it.removeSignature() else it }
                     navigator.showCompose(
-                        message.getText(),
+                        text,
                         message.parts.filter { !it.isSmil() }.mapNotNull { it.getUri() }
                     )
                 }
