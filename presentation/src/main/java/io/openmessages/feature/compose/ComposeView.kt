@@ -80,6 +80,8 @@ interface ComposeView : BaseView<ComposeState> {
     val scheduledMessageClickIntent: Observable<Long>
     val speechRecogniserIntent: Observable<*>
     val shadeIntent: Observable<Unit>
+    /** The conversation scrolled up close to the oldest message loaded */
+    val loadOlderMessagesIntent: Observable<Unit>
     val recordAudioStartStopRecording: Subject<Boolean>
     val recordAnAudioMessage: Observable<Unit>
     val recordAudioAbort: Observable<Unit>

@@ -523,6 +523,18 @@ class MessagesAdapter @Inject constructor(
     override fun areContentsTheSame(old: Message, new: Message) =
         old == new && old.parts == new.parts && old.emojiReactions == new.emojiReactions
 
+    /**
+     * The oldest message the list held. Once older ones are loaded above it, it has a message before
+     * it again, which can change whether it shows its time or groups with its sender.
+     */
+    private var oldestId = -1L
+
+    override fun onDatasetChanged() {
+        val formerOldest = data.indexOfFirst { message -> message.id == oldestId }
+        if (formerOldest > 0) notifyItemChanged(formerOldest)
+        oldestId = data.firstOrNull()?.id ?: -1L
+    }
+
     override fun getItemId(position: Int): Long {
         return getItemOrNull(position)?.id ?: -1
     }

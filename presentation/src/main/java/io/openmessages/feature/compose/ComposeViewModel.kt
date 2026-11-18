@@ -94,6 +94,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import io.reactivex.rxjava3.functions.Function3
+import io.reactivex.rxjava3.functions.Function4
 import io.reactivex.rxjava3.functions.Function5
 import io.reactivex.rxjava3.kotlin.Observables
 import io.reactivex.rxjava3.kotlin.plusAssign
@@ -151,6 +152,12 @@ class ComposeViewModel @Inject constructor(
     private val chipsReducer: Subject<(List<Recipient>) -> List<Recipient>> = PublishSubject.create()
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
+    /**
+     * The date the conversation is shown from: its newest messages at first, reaching further back as
+     * it is scrolled up. A date rather than a count, so a new message joins the list without pushing
+     * the oldest one out of it.
+     */
+    private val shownSince: Subject<Long> = BehaviorSubject.create()
     private val selectedChips: Subject<List<Recipient>> = BehaviorSubject.createDefault(listOf())
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
@@ -275,6 +282,13 @@ class ComposeViewModel @Inject constructor(
             .distinctUntilChanged()
             .subscribe { recipientCount -> newState { copy(recipientCount = recipientCount) } }
 
+        // A conversation opens on its newest messages
+        disposables += conversation
+                .distinctUntilChanged { conversation -> conversation.id }
+                .observeOn(Schedulers.io())
+                .map { conversation -> messageRepo.getDateOfLatest(conversation.id, MESSAGE_PAGE) }
+                .subscribe(shownSince::onNext)
+
         // When the conversation changes, update the threadId and the messages for the adapter, which
         // shows them along with the conversation as it stands
         disposables += conversation
@@ -282,7 +296,10 @@ class ComposeViewModel @Inject constructor(
                 .switchMap { current ->
                     Observables.combineLatest(
                         conversation.filter { conversation -> conversation.id == current.id },
-                        messageRepo.getMessages(current.id).doOnNext(messages::onNext))
+                        shownSince
+                            .distinctUntilChanged()
+                            .switchMap { since -> messageRepo.getMessagesSince(current.id, since) }
+                            .doOnNext(messages::onNext))
                 }
                 .subscribe { (conversation, messages) ->
                     newState { copy(threadId = conversation.id, messages = Pair(conversation, messages)) }
@@ -717,6 +734,25 @@ class ComposeViewModel @Inject constructor(
             })
             .autoDispose(view.scope())
             .subscribe()
+
+        // Older messages load as the conversation is scrolled up to the oldest one shown, unless
+        // it is shown whole already. A burst of scroll events while the next page is on its way
+        // asks for the same date each time, which changes nothing.
+        view.loadOlderMessagesIntent
+                .withLatestFrom(conversation, messages, shownSince, Function4 { _, conversation, messages, since ->
+                    Triple(conversation.id, messages.size, since)
+                })
+                .filter { (_, _, since) -> since > 0 }
+                .observeOn(Schedulers.io())
+                .map { (threadId, shown, _) -> messageRepo.getDateOfLatest(threadId, shown + MESSAGE_PAGE) }
+                .autoDispose(view.scope())
+                .subscribe(shownSince::onNext)
+
+        // A search result older than the messages shown brings them back to it
+        disposables += Observables.combineLatest(searchSelection.filter { id -> id != -1L }, shownSince)
+                .observeOn(Schedulers.io())
+                .mapNotNull { (id, since) -> messageRepo.getMessage(id)?.date?.takeIf { date -> date < since } }
+                .subscribe(shownSince::onNext)
 
         // Scroll to search position
         searchSelection
@@ -1455,5 +1491,10 @@ class ComposeViewModel @Inject constructor(
      */
     private val MenuItem.mmsPart: MmsPart?
         get() = (menuInfo as? ContextMenuRecyclerView.ContextMenuInfo<*, *>)?.viewHolderValue as? MmsPart
+
+    companion object {
+        /** Messages loaded at a time: several screens of them, and cheap to read again on every change */
+        private const val MESSAGE_PAGE = 200
+    }
 
 }

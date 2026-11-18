@@ -69,6 +69,16 @@ abstract class MessageDao {
     abstract fun getMessages(threadId: Long): List<MessageWithRelations>
 
     @Transaction
+    @Query("SELECT * FROM message WHERE threadId = :threadId AND isEmojiReaction = 0 AND date >= :since " +
+            "ORDER BY date")
+    abstract fun observeMessagesSince(threadId: Long, since: Long): Flowable<List<MessageWithRelations>>
+
+    /** The date of the message [offset] places back from the newest of a conversation, if it has one */
+    @Query("SELECT date FROM message WHERE threadId = :threadId AND isEmojiReaction = 0 " +
+            "ORDER BY date DESC LIMIT 1 OFFSET :offset")
+    abstract fun dateBack(threadId: Long, offset: Int): Long?
+
+    @Transaction
     @Query("SELECT * FROM message WHERE threadId = :threadId ORDER BY date DESC")
     abstract fun getMessagesNewestFirst(threadId: Long): List<MessageWithRelations>
 

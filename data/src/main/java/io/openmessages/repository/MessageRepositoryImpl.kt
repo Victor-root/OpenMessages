@@ -134,6 +134,13 @@ open class MessageRepositoryImpl @Inject constructor(
     override fun getMessagesSync(threadId: Long, query: String): List<Message> =
         dao.getMessages(threadId).map(MessageWithRelations::toModel).matching(query)
 
+    override fun getMessagesSince(threadId: Long, since: Long): Observable<List<Message>> =
+        dao.observeMessagesSince(threadId, since)
+            .toObservable()
+            .map { messages -> messages.map(MessageWithRelations::toModel) }
+
+    override fun getDateOfLatest(threadId: Long, count: Int) = dao.dateBack(threadId, count - 1) ?: 0L
+
     override fun getMessage(messageId: Long) = dao.get(messageId)?.toModel()
 
     override fun getMessages(messageIds: Collection<Long>): List<Message> =

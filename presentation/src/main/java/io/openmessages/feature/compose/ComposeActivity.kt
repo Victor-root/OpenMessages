@@ -59,6 +59,8 @@ import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import autodispose2.ObservableSubscribeProxy
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
@@ -217,6 +219,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     override val scheduledMessageClickIntent: Subject<Long> by lazy { scheduledMessagesAdapter.clicks }
     override val speechRecogniserIntent by lazy { binding.speechToTextIcon.clicks() }
     override val shadeIntent by lazy { binding.shadeBackground.clicks() }
+    override val loadOlderMessagesIntent: Subject<Unit> = PublishSubject.create()
     override val recordAudioStartStopRecording: Subject<Boolean> = PublishSubject.create()
     /** Fed by the input-bar mic and the bottom sheet's "audio" item. */
     override val recordAnAudioMessage: Observable<Unit> by lazy {
@@ -239,6 +242,9 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         onClosed = dialogDismissedIntent::onNext)
 
     private var seekBarUpdater: Disposable? = null
+
+    /** A message asked to be scrolled to before the list held it, see [scrollToMessage] */
+    private var pendingScrollId = -1L
 
     private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[ComposeViewModel::class.java] }
 
@@ -316,6 +322,14 @@ class ComposeActivity : ThemedActivity(), ComposeView {
 
             binding.messageList.setHasFixedSize(true)
             binding.messageList.itemAnimator = MessageItemAnimator()
+            binding.messageList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+                    if (dy < 0 && layoutManager.findFirstVisibleItemPosition() < LOAD_OLDER_AHEAD) {
+                        loadOlderMessagesIntent.onNext(Unit)
+                    }
+                }
+            })
             // Two lists in one: the conversation's messages, then the ones still waiting for their
             // send time. Scheduled messages are always in the future, so appending them keeps them
             // last without anything having to reorder when a message is sent in the meantime.
@@ -669,6 +683,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         state.messages?.let { (conversation, messages) ->
             messageAdapter.conversation = conversation
             messageAdapter.data = messages
+            if (pendingScrollId != -1L) scrollToMessage(pendingScrollId)
         }
         messageAdapter.highlight = state.searchSelectionId
         state.scheduledMessages?.let { scheduledMessagesAdapter.data = it }
@@ -913,10 +928,10 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     }
 
     override fun scrollToMessage(id: Long) {
-        messageAdapter.data
-            .indexOfLast { message -> message.id == id }
-            .takeIf { position -> position != -1 }
-            ?.let(binding.messageList::scrollToPosition)
+        val position = messageAdapter.data.indexOfLast { message -> message.id == id }
+        // An older message than those shown yet is loaded first, and scrolled to once it is in
+        pendingScrollId = if (position == -1) id else -1L
+        if (position != -1) binding.messageList.scrollToPosition(position)
     }
 
     private fun buildDialog(spec: ComposeDialog): Dialog = when (spec) {
@@ -1027,4 +1042,10 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     override fun focusMessage() {
         binding.message.requestFocus()
     }
+
+    companion object {
+        /** How many messages short of the oldest one loaded the next older page is asked for */
+        private const val LOAD_OLDER_AHEAD = 40
+    }
+
 }

@@ -44,6 +44,19 @@ interface MessageRepository {
 
     fun getMessagesSync(threadId: Long, query: String = ""): List<Message>
 
+    /**
+     * The messages of a conversation dated [since] or later, oldest first. Watching a whole
+     * conversation reads all of it again on every change, which grows with its history; this costs
+     * what the part on screen costs, however long the conversation has run.
+     */
+    fun getMessagesSince(threadId: Long, since: Long): Observable<List<Message>>
+
+    /**
+     * The date to watch a conversation from for its [count] newest messages to be in, or 0 for the
+     * whole conversation when it holds no more than that
+     */
+    fun getDateOfLatest(threadId: Long, count: Int): Long
+
     fun getMessage(messageId: Long): Message?
 
     fun getMessages(messageIds: Collection<Long>): List<Message>
