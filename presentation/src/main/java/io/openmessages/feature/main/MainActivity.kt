@@ -784,6 +784,7 @@ class MainActivity : ThemedActivity(), MainView {
 
         is MainDialog.RenameConversation -> TextInputDialog(
             this,
+            colors,
             colors.theme().theme,
             getString(R.string.info_name)
         ) { name -> renameConversationIntent.onNext(spec.conversationId to name) }

@@ -18,16 +18,22 @@
  */
 package io.openmessages.common.util.extensions
 
+import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckedTextView
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
+import io.openmessages.common.util.Colors
 import io.reactivex.rxjava3.subjects.Subject
 
 /**
@@ -105,4 +111,24 @@ fun AlertDialog.setShowing(show: Boolean) {
     } else if (!isShowing && show) {
         show()
     }
+}
+
+/** A Material 3 outlined field: a thin outline, thicker and in [accent] while it has the focus */
+fun Context.outlinedFieldBackground(@ColorInt accent: Int): Drawable = StateListDrawable().apply {
+    fun outline(width: Int, color: Int) = GradientDrawable().apply {
+        cornerRadius = 12.dpToPx(this@outlinedFieldBackground).toFloat()
+        setStroke(width.dpToPx(this@outlinedFieldBackground), color)
+    }
+    addState(intArrayOf(android.R.attr.state_focused), outline(2, accent))
+    addState(intArrayOf(), outline(1, resolveThemeColor(android.R.attr.textColorTertiary)))
+}
+
+/**
+ * Colours the actions of a dialog as Material 3 does: [main] filled in [accent], the [others] as text
+ * in the shade of [accent] that reads on the dialog
+ */
+fun Colors.styleDialogActions(themed: Context, @ColorInt accent: Int, main: TextView, vararg others: TextView) {
+    main.setBackgroundTint(accent)
+    main.setTextColor(contentColorOnTheme(accent))
+    others.forEach { action -> action.setTextColor(readableOnBackground(themed, accent)) }
 }

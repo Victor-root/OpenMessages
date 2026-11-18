@@ -20,8 +20,6 @@ package io.openmessages.feature.templates
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
@@ -35,10 +33,10 @@ import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.ThemedActivity
-import io.openmessages.common.util.extensions.dpToPx
-import io.openmessages.common.util.extensions.resolveThemeColor
+import io.openmessages.common.util.extensions.outlinedFieldBackground
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
+import io.openmessages.common.util.extensions.styleDialogActions
 import io.openmessages.databinding.TemplateEditorDialogBinding
 import io.openmessages.feature.contacts.ContactsActivity
 import io.openmessages.databinding.TemplatesActivityBinding
@@ -115,12 +113,10 @@ class TemplatesActivity : ThemedActivity(), TemplatesView {
             .create()
 
         val themeColor = colors.theme().theme
-        val readable = colors.readableOnBackground(this, themeColor)
-        listOf(editor.titleField, editor.field).forEach { field -> field.background = outlinedField(readable) }
-        editor.save.setBackgroundTint(themeColor)
-        editor.save.setTextColor(colors.contentColorOnTheme(themeColor))
-        editor.delete.setTextColor(readable)
-        editor.cancel.setTextColor(readable)
+        listOf(editor.titleField, editor.field).forEach { field ->
+            field.background = outlinedFieldBackground(colors.readableOnBackground(this, themeColor))
+        }
+        colors.styleDialogActions(this, themeColor, editor.save, editor.delete, editor.cancel)
 
         editor.save.setOnClickListener {
             saveTemplateIntent.onNext(
@@ -159,17 +155,6 @@ class TemplatesActivity : ThemedActivity(), TemplatesView {
         /** When true, tapping a template returns it (via setResult) instead of opening the composer. */
         const val EXTRA_PICK = "pick"
         const val EXTRA_BODY = "body"
-    }
-
-
-    /** A Material 3 outlined field: a thin outline, in [accent] and thicker while it has the focus */
-    private fun outlinedField(accent: Int) = StateListDrawable().apply {
-        fun outline(width: Int, color: Int) = GradientDrawable().apply {
-            cornerRadius = 12.dpToPx(this@TemplatesActivity).toFloat()
-            setStroke(width.dpToPx(this@TemplatesActivity), color)
-        }
-        addState(intArrayOf(android.R.attr.state_focused), outline(2, accent))
-        addState(intArrayOf(), outline(1, resolveThemeColor(android.R.attr.textColorTertiary)))
     }
 
 }

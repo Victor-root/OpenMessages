@@ -80,7 +80,7 @@ class SettingsController : BaseController<SettingsControllerBinding, SettingsVie
     @Inject override lateinit var presenter: SettingsPresenter
 
     private val signatureDialog: TextInputDialog by lazy {
-        TextInputDialog(activity!!, colors.theme().theme, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
+        TextInputDialog(activity!!, colors, colors.theme().theme, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
     }
 
     private val sendSoundVolumeBinding: SendSoundVolumeBinding by lazy {

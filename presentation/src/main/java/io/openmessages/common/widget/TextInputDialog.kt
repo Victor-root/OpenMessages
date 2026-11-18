@@ -21,19 +21,23 @@ package io.openmessages.common.widget
 import android.app.Activity
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
+import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.outlinedFieldBackground
+import io.openmessages.common.util.extensions.styleDialogActions
 import io.openmessages.databinding.TextInputDialogBinding
 
 class TextInputDialog(
     context: Activity,
+    private val colors: Colors,
     private val themeColor: Int,
-    hint: String,
+    title: String,
     listener: (String) -> Unit
 ) : AlertDialog(context) {
 
     private val layout = TextInputDialogBinding.inflate(LayoutInflater.from(context))
 
     init {
-        layout.field.hint = hint
+        layout.title.text = title
 
         // Custom action row (see text_input_dialog.xml) instead of the stock AlertDialog buttons,
         // which stack into an ugly column when the localized labels are too wide to fit in a row.
@@ -51,10 +55,8 @@ class TextInputDialog(
 
     override fun onStart() {
         super.onStart()
-        // Colour the action labels with the user's theme color.
-        layout.save.setTextColor(themeColor)
-        layout.delete.setTextColor(themeColor)
-        layout.cancel.setTextColor(themeColor)
+        layout.field.background = context.outlinedFieldBackground(colors.readableOnBackground(context, themeColor))
+        colors.styleDialogActions(context, themeColor, layout.save, layout.delete, layout.cancel)
     }
 
     fun setText(text: String): TextInputDialog {

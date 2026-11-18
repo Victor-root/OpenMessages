@@ -56,7 +56,7 @@ class ConversationInfoController(
     @Inject lateinit var colors: Colors
 
     private val nameDialog: TextInputDialog by lazy {
-        TextInputDialog(activity!!, themeColor, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
+        TextInputDialog(activity!!, colors, themeColor, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
     }
 
     private val nameChangeSubject: Subject<String> = PublishSubject.create()
