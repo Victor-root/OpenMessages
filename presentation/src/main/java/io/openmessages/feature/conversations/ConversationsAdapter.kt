@@ -218,19 +218,23 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun onDatasetChanged() {
-        val groups = data.map(::groupOf)
+        val unreadAtTop = prefs.unreadAtTop.get()
+        val dayLabel = dateFormatter.dayLabeller()
+        val groups = data.map { conversation -> groupOf(conversation, unreadAtTop, dayLabel) }
         rowGroups.update(groups.map { (label) -> label })
         groupedByDay = groups.map { (_, byDay) -> byDay }
         notifyItemRangeChanged(0, itemCount, RowGroups.PAYLOAD)
     }
 
     /** The label of [conversation]'s group, and whether that group is a day */
-    private fun groupOf(conversation: Conversation): Pair<String, Boolean> = when {
-        prefs.unreadAtTop.get() && conversation.unread ->
+    private fun groupOf(
+        conversation: Conversation, unreadAtTop: Boolean, dayLabel: (Long) -> String
+    ): Pair<String, Boolean> = when {
+        unreadAtTop && conversation.unread ->
             context.getString(R.string.conversations_group_unread) to false
         conversation.pinned -> context.getString(R.string.conversations_group_pinned) to false
         conversation.draft.isNotEmpty() -> context.getString(R.string.conversations_group_drafts) to false
-        else -> dateFormatter.getDayLabel(conversation.date) to true
+        else -> dayLabel(conversation.date) to true
     }
 
     override fun areItemsTheSame(old: Conversation, new: Conversation) = old.id == new.id

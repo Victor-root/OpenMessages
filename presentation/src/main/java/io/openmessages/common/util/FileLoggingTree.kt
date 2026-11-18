@@ -96,8 +96,12 @@ class FileLoggingTree @Inject constructor(
 
                 logFileUri?.let {
                     val e = FileUtils.append(context, it, logItem.toByteArray())
-                    if (e is FileNotFoundException)
+                    if (e is FileNotFoundException) {
+                        // Deleted while logging: the next line starts a new file instead of every
+                        // line after it being lost until the app restarts
+                        logFileUri = null
                         Log.e(TAG, "Log file went away. Lost log file item: $logItem", e)
+                    }
                     else if (e is Exception)
                         Log.e(TAG, "Error while logging into file", e)
                 }
