@@ -50,38 +50,8 @@
         android:scrollbars="vertical"
         app:textSize="primary" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <io.openmessages.common.widget.AppTextView
-            android:id="@+id/delete"
-            style="@style/DialogTextButton"
-            android:text="@string/button_delete" />
-
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <io.openmessages.common.widget.AppTextView
-            android:id="@+id/cancel"
-            style="@style/DialogTextButton"
-            android:text="@string/button_cancel" />
-
-        <io.openmessages.common.widget.AppTextView
-            android:id="@+id/save"
-            style="@style/DialogTextButton"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/rounded_rectangle_22dp"
-            android:foreground="@drawable/rounded_ripple_20dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:text="@string/button_save" />
-
-    </LinearLayout>
+    <include
+        android:id="@+id/actions"
+        layout="@layout/dialog_actions" />
 
 </LinearLayout>

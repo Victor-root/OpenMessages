@@ -23,10 +23,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.jakewharton.rxbinding4.view.clicks
 import dagger.android.AndroidInjection
 import io.openmessages.R
@@ -106,9 +105,9 @@ class TemplatesActivity : ThemedActivity(), TemplatesView {
         editor.titleField.setText(template?.title.orEmpty())
         editor.field.setText(template?.body.orEmpty())
         editor.field.setSelection(editor.field.length())
-        editor.delete.isVisible = template != null
+        editor.actions.delete.isVisible = template != null
 
-        val dialog = MaterialAlertDialogBuilder(ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context))
+        val dialog = AlertDialog.Builder(this)
             .setView(editor.root)
             .create()
 
@@ -116,19 +115,19 @@ class TemplatesActivity : ThemedActivity(), TemplatesView {
         listOf(editor.titleField, editor.field).forEach { field ->
             field.background = outlinedFieldBackground(colors.readableOnBackground(this, themeColor))
         }
-        colors.styleDialogActions(this, themeColor, editor.save, editor.delete, editor.cancel)
+        colors.styleDialogActions(this, themeColor, editor.actions.save, editor.actions.delete, editor.actions.cancel)
 
-        editor.save.setOnClickListener {
+        editor.actions.save.setOnClickListener {
             saveTemplateIntent.onNext(
                 Triple(template?.id, editor.titleField.text.toString(), editor.field.text.toString())
             )
             dialog.dismiss()
         }
-        editor.delete.setOnClickListener {
+        editor.actions.delete.setOnClickListener {
             template?.let { deleteTemplateIntent.onNext(it.id) }
             dialog.dismiss()
         }
-        editor.cancel.setOnClickListener { dialog.dismiss() }
+        editor.actions.cancel.setOnClickListener { dialog.dismiss() }
 
         dialog.show()
     }

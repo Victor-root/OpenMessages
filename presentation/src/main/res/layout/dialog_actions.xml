@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The actions of a dialog: delete on the left, cancel and save on the right, wrapping onto a second line on a narrow screen -->
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    app:alignItems="center"
+    app:flexWrap="wrap"
+    app:justifyContent="flex_end">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_flexGrow="1">
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/delete"
+            style="@style/DialogTextButton"
+            android:text="@string/button_delete" />
+
+    </FrameLayout>
+
+    <io.openmessages.common.widget.AppTextView
+        android:id="@+id/cancel"
+        style="@style/DialogTextButton"
+        android:text="@string/button_cancel" />
+
+    <io.openmessages.common.widget.AppTextView
+        android:id="@+id/save"
+        style="@style/DialogTextButton"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_rectangle_22dp"
+        android:foreground="@drawable/rounded_ripple_20dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="@string/button_save" />
+
+</com.google.android.flexbox.FlexboxLayout>

@@ -39,24 +39,24 @@ class TextInputDialog(
     init {
         layout.title.text = title
 
-        // Custom action row (see text_input_dialog.xml) instead of the stock AlertDialog buttons,
+        // Custom action row (see dialog_actions.xml) instead of the stock AlertDialog buttons,
         // which stack into an ugly column when the localized labels are too wide to fit in a row.
         setView(layout.root)
-        layout.save.setOnClickListener {
+        layout.actions.save.setOnClickListener {
             listener(layout.field.text.toString())
             dismiss()
         }
-        layout.delete.setOnClickListener {
+        layout.actions.delete.setOnClickListener {
             listener("")
             dismiss()
         }
-        layout.cancel.setOnClickListener { dismiss() }
+        layout.actions.cancel.setOnClickListener { dismiss() }
     }
 
     override fun onStart() {
         super.onStart()
         layout.field.background = context.outlinedFieldBackground(colors.readableOnBackground(context, themeColor))
-        colors.styleDialogActions(context, themeColor, layout.save, layout.delete, layout.cancel)
+        colors.styleDialogActions(context, themeColor, layout.actions.save, layout.actions.delete, layout.actions.cancel)
     }
 
     fun setText(text: String): TextInputDialog {
