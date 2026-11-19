@@ -72,7 +72,6 @@ class BlockedMessagesController : BaseController<BlockedMessagesControllerBindin
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.blocked_messages_title)
-        showBackButton(true)
         setHasOptionsMenu(true)
     }
 

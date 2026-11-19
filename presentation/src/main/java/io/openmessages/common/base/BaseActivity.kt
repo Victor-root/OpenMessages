@@ -28,7 +28,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -314,16 +313,6 @@ abstract class BaseActivity : AppCompatActivity() {
         view.setTag(R.id.navigationBarInset, true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
         setSupportActionBar(toolbar)
@@ -355,16 +344,6 @@ abstract class BaseActivity : AppCompatActivity() {
             this.menu.onNext(menu)
         }
         return result
-    }
-
-    protected open fun showBackButton(show: Boolean) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(show)
-        tintNavigationIcon()
-    }
-
-    /** The toolbar's back arrow in the colour that reads on the toolbar */
-    fun tintNavigationIcon() {
-        toolbar?.navigationIcon?.setTint(toolbarContentColor)
     }
 
     private fun disableScreenshots(disableScreenshots: Boolean) {

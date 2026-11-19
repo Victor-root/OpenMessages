@@ -49,7 +49,6 @@
     <string name="menu_mms_part_forward">Transférer</string>
     <string name="menu_mms_part_open">Ouvrir en dehors de l\'appli</string>
     <string name="main_drawer_open_cd">Ouvrir le panneau de navigation</string>
-    <string name="main_search_close_cd">Fermer la recherche</string>
     <string name="main_search_clear_cd">Effacer la recherche</string>
     <string name="main_title_selected">%d sélectionnée</string>
     <string name="main_menu_clear">Effacer</string>

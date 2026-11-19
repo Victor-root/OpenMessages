@@ -175,7 +175,6 @@ class BackupController : BaseController<BackupControllerBinding, BackupView, Bac
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.backup_title)
-        showBackButton(true)
     }
 
     override fun onViewCreated() {

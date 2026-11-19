@@ -143,10 +143,7 @@ class ScheduledViewModel @Inject constructor(
             .subscribe { view.clearSelection() }
 
         // navigate back or unselect
-        view.optionsItemIntent
-            .filter { it == android.R.id.home }
-            .map { }
-            .mergeWith(view.backPressedIntent)
+        view.backPressedIntent
             .withLatestFrom(state) { _, state -> state }
             .autoDispose(view.scope())
             .subscribe {

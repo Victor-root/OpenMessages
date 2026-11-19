@@ -63,7 +63,6 @@ class GalleryActivity : BaseActivity(), GalleryView {
         super.onCreate(savedInstanceState)
         binding = GalleryActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        showBackButton(true)
         viewModel.bindView(this)
 
         binding.pager.adapter = pagerAdapter
@@ -118,10 +117,7 @@ class GalleryActivity : BaseActivity(), GalleryView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> onBackPressedDispatcher.onBackPressed()
-            else -> optionsItemSubject.onNext(item.itemId)
-        }
+        optionsItemSubject.onNext(item.itemId)
         return true
     }
 

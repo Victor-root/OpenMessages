@@ -62,7 +62,6 @@ class BlockedNumbersController : BaseController<BlockedNumbersControllerBinding,
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.blocked_numbers_title)
-        showBackButton(true)
     }
 
     override fun onViewCreated() {

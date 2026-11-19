@@ -72,7 +72,6 @@ class ThemePickerController(
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.title_theme)
-        showBackButton(true)
 
         themedActivity?.supportActionBar?.let { toolbar ->
             ObjectAnimator.ofFloat(toolbar, "elevation", toolbar.elevation, 0f).start()

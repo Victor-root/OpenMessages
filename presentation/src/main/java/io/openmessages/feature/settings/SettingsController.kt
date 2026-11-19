@@ -147,7 +147,6 @@ class SettingsController : BaseController<SettingsControllerBinding, SettingsVie
         switchesPopulated = false
         presenter.bindIntents(this)
         setTitle(R.string.title_settings)
-        showBackButton(true)
     }
 
     override fun preferenceClicks(): Observable<PreferenceView> = binding.preferences.allViews

@@ -54,7 +54,6 @@ class AboutController : BaseController<AboutControllerBinding, AboutView, Unit, 
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.about_title)
-        showBackButton(true)
     }
 
     override fun preferenceClicks(): Observable<PreferenceView> = (0 until binding.preferences.childCount)

@@ -141,16 +141,6 @@
                     android:orientation="horizontal"
                     android:visibility="invisible">
 
-                    <ImageView
-                        android:id="@+id/searchBack"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:contentDescription="@string/main_search_close_cd"
-                        android:padding="16dp"
-                        android:src="@drawable/ic_arrow_back_24dp"
-                        app:tint="@color/white" />
-
                     <io.openmessages.common.widget.AppEditText
                         android:id="@+id/toolbarSearch"
                         android:layout_width="0dp"
@@ -161,7 +151,7 @@
                         android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:paddingStart="4dp"
+                        android:paddingStart="16dp"
                         android:paddingEnd="4dp"
                         android:textColor="@color/white"
                         android:textColorHint="#B3FFFFFF"

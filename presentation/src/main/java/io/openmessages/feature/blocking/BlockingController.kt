@@ -66,7 +66,6 @@ class BlockingController : BaseController<BlockingControllerBinding, BlockingVie
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.blocking_title)
-        showBackButton(true)
     }
 
     override fun render(state: BlockingState) {
