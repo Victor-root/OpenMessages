@@ -88,6 +88,7 @@ import io.openmessages.common.util.extensions.getColorCompat
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.makeToast
 import io.openmessages.common.util.extensions.resolveThemeAttribute
+import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.scrapViews
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
@@ -958,7 +959,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     private fun showFullscreen() {
         binding.fullscreenMessage.setText(binding.message.text)
         binding.fullscreenMessage.setSelection(binding.fullscreenMessage.length())
-        binding.fullscreenEditor.isVisible = true
+        setFullscreenEditorShown(true)
         binding.fullscreenMessage.requestFocus()
         binding.fullscreenMessage.showKeyboard()
     }
@@ -967,15 +968,26 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     private fun collapseFullscreen() {
         binding.message.setText(binding.fullscreenMessage.text)
         binding.message.setSelection(binding.message.length())
-        binding.fullscreenEditor.isVisible = false
+        setFullscreenEditorShown(false)
         binding.message.requestFocus()
     }
 
     /** Syncs the full-screen text into the bubble and triggers the normal send. */
     private fun sendFromFullscreen() {
         binding.message.setText(binding.fullscreenMessage.text)
-        binding.fullscreenEditor.isVisible = false
+        setFullscreenEditorShown(false)
         binding.send.performClick()
+    }
+
+    /**
+     * Shows or hides the full-screen editor. Edge to edge it reaches up behind the status bar, whose
+     * icons are told so they stay legible on it rather than on the toolbar's colour.
+     */
+    private fun setFullscreenEditorShown(shown: Boolean) {
+        binding.fullscreenEditor.isVisible = shown
+        if (isEdgeToEdge()) {
+            setStatusBarBackdrop(if (shown) resolveThemeColor(android.R.attr.windowBackground) else null)
+        }
     }
 
     /** Inserts [text] into the message field at the cursor, replacing any selection. */

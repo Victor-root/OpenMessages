@@ -386,7 +386,6 @@
         android:id="@+id/expand"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/compose_expand_cd"
         android:padding="8dp"
         android:src="@drawable/ic_chevrons_up"
