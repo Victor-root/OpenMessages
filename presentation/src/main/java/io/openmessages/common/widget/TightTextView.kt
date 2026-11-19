@@ -22,7 +22,7 @@ import android.content.Context
 import android.util.AttributeSet
 import kotlin.math.ceil
 
-class TightTextView @JvmOverloads constructor(
+open class TightTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : AppTextView(context, attrs) {

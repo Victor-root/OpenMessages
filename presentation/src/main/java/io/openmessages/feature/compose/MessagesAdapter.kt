@@ -37,6 +37,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.jakewharton.rxbinding4.view.clicks
 import io.openmessages.common.AppMediaPlayer
@@ -47,16 +48,17 @@ import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.TextViewStyler
 import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setPadding
 import io.openmessages.common.util.extensions.setTint
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.util.extensions.withAlpha
+import io.openmessages.common.widget.MessageBodyView
 import io.openmessages.compat.SubscriptionManagerCompat
 import io.openmessages.extensions.isSmil
 import io.openmessages.extensions.isText
 import io.openmessages.extensions.joinTo
-import io.openmessages.extensions.millisecondsToMinutes
 import io.openmessages.extensions.truncateWithEllipses
 import io.openmessages.feature.compose.BubbleUtils.canGroup
 import io.openmessages.feature.compose.BubbleUtils.getBubble
@@ -74,7 +76,6 @@ import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -214,7 +215,7 @@ class MessagesAdapter @Inject constructor(
         val timestamp: TextView
         val simIndex: TextView
         val sim: ImageView
-        val body: TextView
+        val body: MessageBodyView
         val parts: androidx.recyclerview.widget.RecyclerView
         val reactions: View
         val reactionText: TextView
@@ -348,18 +349,21 @@ class MessagesAdapter @Inject constructor(
                 it.truncateWithEllipses(MAX_MESSAGE_DISPLAY_LENGTH)
         }
 
-        // Bind the message status
-        bindStatus(status, isMsgTextTruncated, message, next)
+        // A message without text has no bubble to carry its time, so the line below takes it
+        val hasBody = message.isSms() || displayText.isNotBlank()
 
-        // Bind the timestamp
+        // Bind the message status
+        bindStatus(status, isMsgTextTruncated, hasBody, message, next)
+
+        // Bind the day, shown above the first message of each one
         val subscription = subs.find { it.subscriptionId == message.subId }
+        val day = dayLabel(message.date)
 
         timestamp.apply {
-            text = dateFormatter.getMessageTimestamp(message.date)
+            text = day
             setVisible(
-                    ((message.date - (previous?.date ?: 0))
-                        .millisecondsToMinutes() >= BubbleUtils.TIMESTAMP_THRESHOLD) ||
-                            (message.subId != previous?.subId) &&
+                    (previous == null || dayLabel(previous.date) != day) ||
+                            (message.subId != previous.subId) &&
                             (subscription != null)
             )
         }
@@ -378,6 +382,17 @@ class MessagesAdapter @Inject constructor(
 
         // Bind the body text
         val emojiOnly = displayText.isEmojiOnly()
+
+        // The time, and for a message I sent where it stands, in the bubble's corner. A sent bubble
+        // is neutral and an emoji alone has none, so both take the screen's own secondary colour.
+        body.setFooter(
+            time = dateFormatter.getTimestamp(message.date),
+            icon = statusIcon(message)?.let { res -> ContextCompat.getDrawable(holder.itemView.context, res) },
+            color = when (isOutgoing || emojiOnly) {
+                true -> holder.itemView.context.resolveThemeColor(android.R.attr.textColorSecondary)
+                false -> theme.textSecondary
+            }
+        )
         textViewStyler.setTextSize(
             body,
             when (emojiOnly) {
@@ -424,7 +439,7 @@ class MessagesAdapter @Inject constructor(
 
         body.apply {
             text = spanString
-            setVisible(message.isSms() || spanString.isNotBlank())
+            setVisible(hasBody)
 
             setBackgroundResource(
                 getBubble(
@@ -473,12 +488,20 @@ class MessagesAdapter @Inject constructor(
     }
 
 
+    /**
+     * The line under a bubble. Its time and state already sit in the bubble's corner, so it is kept
+     * for what the corner can't say: a failure to retry, text cut short, who wrote in a group, the
+     * time of a message with no text, and the full date and state of a message tapped open.
+     */
     private fun bindStatus(
         statusView: TextView,
         bodyTextTruncated: Boolean,
+        hasBody: Boolean,
         message: Message,
         next: Message?
     ) {
+        val incomingInGroup = !message.isMe() && (conversation?.recipients?.size ?: 0) > 1
+
         statusView.apply {
             text = when {
                 message.isSending() -> context.getString(R.string.message_status_sending)
@@ -488,34 +511,32 @@ class MessagesAdapter @Inject constructor(
                 )
                 message.isFailedMessage() -> context.getString(R.string.message_status_failed)
                 bodyTextTruncated -> context.getString(R.string.message_body_too_long_to_display)
-                (!message.isMe() && (conversation?.recipients?.size ?: 0) > 1) ->
-                    // incoming group message
-                    "${contactCache[message.address]?.let(displayNames::of)} • ${
-                        dateFormatter.getTimestamp(message.date)}"
-                else -> dateFormatter.getTimestamp(message.date)
+                incomingInGroup -> contactCache[message.address]?.let(displayNames::of)
+                !hasBody -> dateFormatter.getTimestamp(message.date)
+                else -> dateFormatter.getMessageTimestamp(message.date)
             }
-
-            val age = TimeUnit.MILLISECONDS.toMinutes(
-                System.currentTimeMillis() - message.date
-            )
 
             setVisible(
                 when {
                     expanded[message.id] == true -> true
-                    message.isSending() -> true
                     message.isFailedMessage() -> true
                     bodyTextTruncated -> true
                     expanded[message.id] == false -> false
-                    ((conversation?.recipients?.size ?: 0) > 1) &&
-                            !message.isMe() && next?.compareSender(message) != true -> true
-                    (message.isDelivered() &&
-                            (next?.isDelivered() != true) &&
-                            (age <= BubbleUtils.TIMESTAMP_THRESHOLD)) -> true
-
+                    incomingInGroup && next?.compareSender(message) != true -> true
+                    !hasBody -> true
                     else -> false
                 }
             )
         }
+    }
+
+    /** Where a message I sent stands, as the icon in its bubble's corner; none for one received */
+    private fun statusIcon(message: Message): Int? = when {
+        !message.isMe() -> null
+        message.isFailedMessage() -> R.drawable.ic_error_outline_black_24dp
+        message.isSending() -> R.drawable.ic_schedule_black_24dp
+        message.isDelivered() -> R.drawable.ic_done_all_black_24dp
+        else -> R.drawable.ic_check_white_24dp
     }
 
     override fun areItemsTheSame(old: Message, new: Message) = old.id == new.id
@@ -529,7 +550,11 @@ class MessagesAdapter @Inject constructor(
      */
     private var oldestId = -1L
 
+    /** Names the day of a message, for the heading above the first message of each day */
+    private var dayLabel = dateFormatter.dayLabeller()
+
     override fun onDatasetChanged() {
+        dayLabel = dateFormatter.dayLabeller()
         val formerOldest = data.indexOfFirst { message -> message.id == oldestId }
         if (formerOldest > 0) notifyItemChanged(formerOldest)
         oldestId = data.firstOrNull()?.id ?: -1L
