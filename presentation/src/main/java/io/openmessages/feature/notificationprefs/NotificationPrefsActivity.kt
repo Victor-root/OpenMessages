@@ -83,6 +83,14 @@ class NotificationPrefsActivity : ThemedActivity(), NotificationPrefsView {
         binding.vibration.setVisible(!hasOreo)
         binding.ringtone.setVisible(!hasOreo)
 
+        // The choices of a conversation's notifications are checked in its colour, as the page is
+        theme
+                .autoDispose(scope())
+                .subscribe { theme ->
+                    previewModeDialog.adapter.accent = theme.theme
+                    actionsDialog.adapter.accent = theme.theme
+                }
+
         previewModeDialog.setTitle(R.string.settings_notification_previews_title)
         previewModeDialog.adapter.setData(R.array.notification_preview_options)
         actionsDialog.adapter.setData(R.array.notification_actions)

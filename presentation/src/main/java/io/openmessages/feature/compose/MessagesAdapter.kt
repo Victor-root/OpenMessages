@@ -139,7 +139,13 @@ class MessagesAdapter @Inject constructor(
     private val expanded = HashMap<Long, Boolean>()
     private val subs = subscriptionManager.activeSubscriptionInfoList
 
+    /** The conversation's colour, which my messages and their controls wear */
     var theme: Colors.Theme = colors.theme()
+        set(value) {
+            if (field == value) return
+            field = value
+            notifyDataSetChanged()
+        }
 
     private val audioState = AudioState()
 
@@ -158,10 +164,6 @@ class MessagesAdapter @Inject constructor(
             body = binding.body
             parts = binding.parts
             status = binding.status
-            binding.cancelIcon.setTint(theme.theme)
-            binding.cancel.setTint(theme.theme)
-            binding.sendNowIcon.setTint(theme.theme)
-            binding.resendIcon.setTint(theme.theme)
         } else {
             val binding = MessageListItemInBinding.inflate(inflater, parent, false)
             view = binding.root
@@ -203,7 +205,7 @@ class MessagesAdapter @Inject constructor(
         val next = if (position == itemCount - 1) null else getItemOrNull(position + 1)
 
         val theme = when (message.isOutgoingMessage()) {
-            true -> colors.theme()
+            true -> this.theme
             false -> colors.theme(contactCache[message.address])
         }
 
@@ -231,6 +233,10 @@ class MessagesAdapter @Inject constructor(
             reactions = binding.reactions
             reactionText = binding.reactionText
             status = binding.status
+
+            binding.cancel.setTint(theme.theme)
+            listOf(binding.cancelIcon, binding.sendNowIcon, binding.resendIcon)
+                .forEach { control -> control.setTint(theme.theme) }
 
             // bind the cancelFrame (cancel button) and send now button
             val isCancellable = message.isSending() && message.date > System.currentTimeMillis()

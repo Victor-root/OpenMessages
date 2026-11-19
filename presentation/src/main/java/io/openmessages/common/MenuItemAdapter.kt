@@ -39,6 +39,9 @@ data class MenuItem(val title: String, val actionId: Int)
 
 class MenuItemAdapter @Inject constructor(private val context: Context, private val colors: Colors) : BaseAdapter<MenuItem, BindingViewHolder<MenuListItemBinding>>() {
 
+    /** The colour of the selected item's check: the screen's, where it isn't the app's */
+    var accent: Int? = null
+
     val menuItemClicks: Subject<Int> = PublishSubject.create()
 
     private val disposables = CompositeDisposable()
@@ -69,7 +72,7 @@ class MenuItemAdapter @Inject constructor(private val context: Context, private 
                 intArrayOf(-android.R.attr.state_activated))
 
         val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
-        binding.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
+        binding.check.imageTintList = ColorStateList(states, intArrayOf(accent ?: colors.theme().theme, text))
 
         return BindingViewHolder(binding).apply {
             binding.root.setOnClickListener {

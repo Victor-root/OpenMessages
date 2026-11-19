@@ -20,6 +20,7 @@ package io.openmessages.common.util.extensions
 
 import android.animation.LayoutTransition
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.ColorStateList
 import android.graphics.Rect
 import android.view.GestureDetector
@@ -36,6 +37,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import io.openmessages.R
+import io.openmessages.common.base.ThemedActivity
+import io.openmessages.common.util.Colors
+import io.reactivex.rxjava3.core.Observable
 
 var ViewGroup.animateLayoutChanges: Boolean
     get() = layoutTransition != null
@@ -205,3 +209,14 @@ fun RecyclerView.scrapViews() {
     recycledViewPool.clear()
     adapter?.notifyDataSetChanged()
 }
+
+/**
+ * The theme of the screen this view is on, following it as it changes: a conversation's colour on
+ * that conversation's own screens, the app's everywhere else
+ */
+fun View.screenTheme(colors: Colors): Observable<Colors.Theme> =
+    generateSequence(context) { context -> (context as? ContextWrapper)?.baseContext }
+        .filterIsInstance<ThemedActivity>()
+        .firstOrNull()
+        ?.theme
+        ?: colors.themeObservable()

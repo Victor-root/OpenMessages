@@ -32,6 +32,7 @@ import androidx.core.graphics.ColorUtils
 import io.openmessages.R
 import io.openmessages.common.util.Colors
 import io.openmessages.common.util.extensions.resolveThemeAttribute
+import io.openmessages.common.util.extensions.screenTheme
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.databinding.PreferenceViewBinding
 import io.openmessages.injection.appComponent
@@ -65,19 +66,20 @@ class PreferenceView @JvmOverloads constructor(
         }
 
     /**
-     * The colour of the icon's tile, as in AukDialer: the app's by default, following it as it
-     * changes, or a conversation's on its own screens. The icon takes the colour that reads on it,
-     * and both fade with the row when it is disabled.
+     * The colour of the icon's tile, as in AukDialer: the screen's by default, following it as it
+     * changes, which is a conversation's on that conversation's own screens and the app's elsewhere,
+     * or one given here. The icon takes the colour that reads on it, and both fade with the row when
+     * it is disabled.
      */
     var accent: Int = Color.TRANSPARENT
         set(value) {
             field = value
-            followsAppTheme = false
+            followsScreenTheme = false
             themeDisposable?.dispose()
             applyAccent(value)
         }
 
-    private var followsAppTheme = true
+    private var followsScreenTheme = true
     private var themeDisposable: Disposable? = null
 
     private fun applyAccent(color: Int) {
@@ -90,8 +92,8 @@ class PreferenceView @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (!isInEditMode && followsAppTheme) {
-            themeDisposable = colors.themeObservable()
+        if (!isInEditMode && followsScreenTheme) {
+            themeDisposable = screenTheme(colors)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { theme -> applyAccent(theme.theme) }
         }

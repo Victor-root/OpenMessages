@@ -251,7 +251,12 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     // The date and time pickers are platform dialogs rather than AppCompat ones and were never
     // themed here; leave them as they were.
     private val dialogHost = DialogHost<ComposeDialog>(
-        build = { spec -> buildDialog(spec).also { (it as? AlertDialog)?.themeButtons(colors.theme().theme) } },
+        build = { spec ->
+            buildDialog(spec).also { dialog ->
+                // In the conversation's colour, as the rest of the screen
+                (dialog as? AlertDialog)?.themeButtons(conversationColor.takeIf { it != 0 } ?: colors.theme().theme)
+            }
+        },
         onClosed = dialogDismissedIntent::onNext)
 
     private var seekBarUpdater: Disposable? = null

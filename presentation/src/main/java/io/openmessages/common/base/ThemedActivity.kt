@@ -82,6 +82,9 @@ abstract class ThemedActivity : BaseActivity() {
                         ?: theme
                 }
             }
+            // Shared, so the many views following it on a screen watch the conversation once
+            .replay(1)
+            .refCount()
 
     /** The theme of conversation [threadId], from its recipient or its last sender in a group */
     private fun conversationTheme(threadId: Long): Observable<Colors.Theme> = when (threadId) {

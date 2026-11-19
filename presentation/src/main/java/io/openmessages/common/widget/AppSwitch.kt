@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.materialswitch.MaterialSwitch
 import io.openmessages.R
 import io.openmessages.common.util.Colors
+import io.openmessages.common.util.extensions.screenTheme
 import io.openmessages.common.util.extensions.withAlpha
 import io.openmessages.injection.appComponent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -41,8 +42,9 @@ import javax.inject.Inject
  * a Theme.AppCompat base (not a Material 3 theme), so the view's context is wrapped in a Material 3
  * theme overlay so the component can construct with the M3 color tokens it expects.
  *
- * Only the colors are then applied explicitly: the checked track follows the user's chosen theme
- * color (white thumb), and the unchecked track/thumb/outline use the Material 3
+ * Only the colors are then applied explicitly: the checked track follows the screen's colour, a
+ * conversation's on its own screens and the user's chosen theme color elsewhere (white thumb), and
+ * the unchecked track/thumb/outline use the Material 3
  * surfaceContainerHighest and outline tones. Colors are applied reactively, so a theme-color change
  * is reflected live without rebuilding the activity.
  */
@@ -69,7 +71,7 @@ class AppSwitch @JvmOverloads constructor(
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (!isInEditMode) {
-            themeDisposable = colors.themeObservable()
+            themeDisposable = screenTheme(colors)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { theme -> applyColors(theme.theme) }
         }
