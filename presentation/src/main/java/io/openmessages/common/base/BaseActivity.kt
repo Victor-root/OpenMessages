@@ -100,6 +100,9 @@ abstract class BaseActivity : AppCompatActivity() {
     /** What shows behind the status bar where that isn't [systemBarColor], see [setStatusBarBackdrop] */
     private var statusBarBackdrop: Int? = null
 
+    /** What the navigation bar is painted where it isn't the usual, see [setNavigationBarBackdrop] */
+    private var navigationBarBackdrop: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (isEdgeToEdge()) {
@@ -129,9 +132,9 @@ abstract class BaseActivity : AppCompatActivity() {
         val edgeToEdge = isEdgeToEdge()
         // In edge-to-edge the nav icons sit over the window background; a light background wants dark
         // icons. Otherwise they sit over the bar colour, like the status icons.
-        val lightNavIcons = colors.useDarkSystemBarIcons(
-                if (edgeToEdge) resolveThemeColor(android.R.attr.windowBackground) else barColor)
-        val navigationBarColor = if (edgeToEdge) Color.TRANSPARENT else barColor
+        val lightNavIcons = colors.useDarkSystemBarIcons(navigationBarBackdrop
+                ?: if (edgeToEdge) resolveThemeColor(android.R.attr.windowBackground) else barColor)
+        val navigationBarColor = navigationBarBackdrop ?: if (edgeToEdge) Color.TRANSPARENT else barColor
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             // Painted over the content: the nav bar always, the status bar only in the original
@@ -158,6 +161,16 @@ abstract class BaseActivity : AppCompatActivity() {
         if (statusBarBackdrop == color) return
         statusBarBackdrop = color
         applyStatusBarIcons()
+    }
+
+    /**
+     * Paints the navigation bar [color], for a sheet risen from the bottom of the screen to run on
+     * into it rather than stop at a band of the toolbar's colour, or as the screen has it with null
+     */
+    protected fun setNavigationBarBackdrop(color: Int?) {
+        if (navigationBarBackdrop == color) return
+        navigationBarBackdrop = color
+        applySystemBars(systemBarColor)
     }
 
     private fun applyStatusBarIcons() {

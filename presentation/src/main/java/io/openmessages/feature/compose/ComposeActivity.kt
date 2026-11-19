@@ -59,6 +59,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.BundleCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.ViewModelProvider
@@ -157,7 +158,12 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     private val attachSheetDelegate = lazy {
         // The app runs on a Theme.AppCompat base; Material's BottomSheetDialog needs a Material
         // context, so wrap the activity the same way the other Material components here do.
-        BottomSheetDialog(ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context)).apply {
+        // Down behind the navigation bar from Android 8, the first that draws dark buttons on a light
+        // bar; before that it stops above the bar, whose buttons could only be light.
+        BottomSheetDialog(
+            ContextThemeWrapper(this, R.style.Theme_OpenMessages_Material3Context),
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) R.style.ThemeOverlay_OpenMessages_EdgeToEdgeSheet else 0
+        ).apply {
             setContentView(attachSheetBinding.root)
             // The sheet opens over a keyboard that is on its way out, and a window that makes room
             // for a keyboard is measured when it appears rather than when the keyboard finally
@@ -174,9 +180,17 @@ class ComposeActivity : ThemedActivity(), ComposeView {
             // seven-item menu is only ever a truncated version of the same thing.
             behavior.skipCollapsed = true
             setOnShowListener {
-                // Drop the default opaque sheet background so our rounded-corner background shows through.
+                // The sheet's own frame wears our rounded background, so it reaches down through the
+                // room the frame keeps for the navigation bar instead of leaving a dimmed band there
                 findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                    ?.setBackgroundResource(android.R.color.transparent)
+                    ?.background = ContextCompat.getDrawable(this@ComposeActivity, R.drawable.bg_bottom_sheet)
+                window?.let { sheetWindow ->
+                    WindowCompat.getInsetsController(sheetWindow, sheetWindow.decorView).isAppearanceLightNavigationBars =
+                        colors.useDarkSystemBarIcons(this@ComposeActivity.resolveThemeColor(android.R.attr.windowBackground))
+                    // Nor the veil the system lays behind the buttons, which showed as a band of
+                    // another shade under the sheet
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) sheetWindow.isNavigationBarContrastEnforced = false
+                }
                 // Open at full height. The default is a peek height derived from the screen, which in
                 // landscape is shorter than the two rows and cut the options off at the screen edge.
                 // Set on every show: BottomSheetDialog.onStart() puts the sheet back to collapsed.
@@ -729,6 +743,8 @@ class ComposeActivity : ThemedActivity(), ComposeView {
 
         // show or hide audio message recording panel and shade background
         binding.audioMsgBackground.isVisible = state.audioMsgRecording
+        // The recorder's sheet runs on into the navigation bar, which wears its colour meanwhile
+        setNavigationBarBackdrop(resolveThemeColor(android.R.attr.windowBackground).takeIf { state.audioMsgRecording })
 
         binding.counter.text = state.remaining
         binding.counter.setVisible(!state.loading && binding.counter.text.isNotBlank())

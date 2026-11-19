@@ -114,6 +114,11 @@
     -->
     <style name="Theme.OpenMessages.Material3Context" parent="Theme.Material3.DayNight.NoActionBar" />
 
+    <!-- A bottom sheet drawn down behind the navigation bar, its content kept clear of the bar -->
+    <style name="ThemeOverlay.OpenMessages.EdgeToEdgeSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="enableEdgeToEdge">true</item>
+    </style>
+
     <!--
         App-wide activity transitions. Mirrors the in-app Conductor transition (ScreenChangeHandler):
         a pushed screen slides in from the right while the previous one recedes a quarter-width to
