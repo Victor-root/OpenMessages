@@ -30,7 +30,6 @@
     <string name="setup_next">Continuă</string>
     <string name="menu_add_person">Adaugă persoană</string>
     <string name="menu_call">Apelează</string>
-    <string name="menu_info">Detalii</string>
     <string name="menu_mms_part_save">Salvează în galerie</string>
     <string name="menu_mms_part_share">Partajează</string>
     <string name="menu_mms_part_forward">Redirecționează</string>
@@ -168,7 +167,6 @@
     <string name="message_status_sending">Se trimite…</string>
     <string name="message_status_delivered">Livrat %s</string>
     <string name="message_status_failed">Trimitere eșuată. Atinge pentru a încerca din nou</string>
-    <string name="info_title">Detalii</string>
     <string name="info_copied_address">Adresă copiată</string>
     <string name="info_name">Titlul conversației</string>
     <string name="info_notifications">Notificări</string>

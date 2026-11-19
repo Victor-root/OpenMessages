@@ -30,7 +30,6 @@
     <string name="setup_next">Fortsett</string>
     <string name="menu_add_person">Legg til person</string>
     <string name="menu_call">Ring</string>
-    <string name="menu_info">Detaljer</string>
     <string name="menu_mms_part_save">Lagre til galleri</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">Åpne navigasjonsskuff</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Sender …</string>
     <string name="message_status_delivered">Levert %s</string>
     <string name="message_status_failed">Feil ved sending. Trykk for å prøve igjen</string>
-    <string name="info_title">Detaljer</string>
     <string name="info_copied_address">Adresse kopiert</string>
     <string name="info_name">Tittel på samtalen</string>
     <string name="info_notifications">Varsler</string>

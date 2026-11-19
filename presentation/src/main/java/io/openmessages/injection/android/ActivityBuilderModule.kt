@@ -26,7 +26,7 @@ import io.openmessages.feature.compose.ComposeActivity
 import io.openmessages.feature.compose.ComposeActivityModule
 import io.openmessages.feature.contacts.ContactsActivity
 import io.openmessages.feature.contacts.ContactsActivityModule
-import io.openmessages.feature.conversationinfo.ConversationInfoActivity
+import io.openmessages.feature.conversationmedia.ConversationMediaActivity
 import io.openmessages.feature.gallery.GalleryActivity
 import io.openmessages.feature.gallery.GalleryActivityModule
 import io.openmessages.feature.main.MainActivity
@@ -65,7 +65,7 @@ abstract class ActivityBuilderModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [])
-    abstract fun bindConversationInfoActivity(): ConversationInfoActivity
+    abstract fun bindConversationMediaActivity(): ConversationMediaActivity
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [GalleryActivityModule::class])

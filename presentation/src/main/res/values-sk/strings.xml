@@ -30,7 +30,6 @@
     <string name="setup_next">Pokračovať</string>
     <string name="menu_add_person">Pridať osobu</string>
     <string name="menu_call">Volať</string>
-    <string name="menu_info">Podrobnosti</string>
     <string name="menu_mms_part_save">Uložiť do galérie</string>
     <string name="compose_menu_share">Zdielať</string>
     <string name="main_drawer_open_cd">Otvoriť navigačné menu</string>
@@ -131,7 +130,6 @@
     <string name="message_status_sending">Odosiela sa…</string>
     <string name="message_status_delivered">Doručené %s</string>
     <string name="message_status_failed">Odoslanie zlyhalo. Klepnutím skúste znovu</string>
-    <string name="info_title">Detaily</string>
     <string name="info_copied_address">Adresa skopírovaná</string>
     <string name="info_name">Názov konverzácie</string>
     <string name="info_notifications">Upozornenia</string>

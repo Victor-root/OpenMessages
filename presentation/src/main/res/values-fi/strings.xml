@@ -30,7 +30,6 @@
     <string name="setup_next">Jatka</string>
     <string name="menu_add_person">Lisää henkilö</string>
     <string name="menu_call">Soita</string>
-    <string name="menu_info">Lisätiedot</string>
     <string name="menu_mms_part_save">Tallenna galleriaan</string>
     <string name="compose_menu_share">Jaa</string>
     <string name="main_drawer_open_cd">Avaa navigointilaatikko</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Lähetetään…</string>
     <string name="message_status_delivered">Toimitettu: %s</string>
     <string name="message_status_failed">Lähettäminen epäonnistui. Yritä uudelleen napauttamalla</string>
-    <string name="info_title">Lisätiedot</string>
     <string name="info_copied_address">Osoite kopioitu</string>
     <string name="info_name">Keskustelun otsikko</string>
     <string name="info_notifications">Ilmoitukset</string>

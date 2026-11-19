@@ -30,7 +30,6 @@
     <string name="setup_next">繼續</string>
     <string name="menu_add_person">增加傳送人</string>
     <string name="menu_call">致電</string>
-    <string name="menu_info">詳細資訊</string>
     <string name="menu_mms_part_save">保存到圖庫</string>
     <string name="compose_menu_share">分享</string>
     <string name="main_drawer_open_cd">打開導航抽屜</string>
@@ -128,7 +127,6 @@
     <string name="message_status_sending">正在發送…</string>
     <string name="message_status_delivered">已傳遞 %s</string>
     <string name="message_status_failed">發送失敗，點擊重試</string>
-    <string name="info_title">詳細資訊</string>
     <string name="info_copied_address">已複製位址</string>
     <string name="info_name">對話標題</string>
     <string name="info_notifications">通知</string>

@@ -35,7 +35,7 @@ import io.openmessages.feature.settings.about.AboutActivity
 import io.openmessages.feature.backup.BackupActivity
 import io.openmessages.feature.blocking.BlockingActivity
 import io.openmessages.feature.compose.ComposeActivity
-import io.openmessages.feature.conversationinfo.ConversationInfoActivity
+import io.openmessages.feature.conversationmedia.ConversationMediaActivity
 import io.openmessages.feature.gallery.GalleryActivity
 import io.openmessages.feature.main.MainActivity
 import io.openmessages.feature.messageutils.MessageUtilsActivity
@@ -151,8 +151,8 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
-    fun showConversationInfo(threadId: Long) {
-        val intent = Intent(context, ConversationInfoActivity::class.java)
+    fun showConversationMedia(threadId: Long) {
+        val intent = Intent(context, ConversationMediaActivity::class.java)
         intent.putExtra("threadId", threadId)
         startActivity(intent)
     }

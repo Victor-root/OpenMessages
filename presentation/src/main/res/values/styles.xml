@@ -82,6 +82,24 @@
 
     <!-- A block of preferences, see BlockLayout -->
     <!-- A Material 3 text button in a dialog, its colour set in code -->
+    <style name="ConversationMenuAnimation">
+        <item name="android:windowEnterAnimation">@anim/conversation_menu_enter</item>
+        <item name="android:windowExitAnimation">@anim/conversation_menu_exit</item>
+    </style>
+
+    <!-- One action of the conversation's ⋮ menu: large, with its icon ahead of it -->
+    <style name="ConversationMenuItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:drawablePadding">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="textSize">primary</item>
+    </style>
+
     <style name="DialogTextButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">40dp</item>

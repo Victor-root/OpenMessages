@@ -16,20 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.openmessages.feature.conversationinfo.injection
+package io.openmessages.feature.conversationmedia
 
-import dagger.Module
-import dagger.Provides
-import io.openmessages.feature.conversationinfo.ConversationInfoController
-import io.openmessages.injection.scope.ControllerScope
-import javax.inject.Named
+import io.openmessages.common.base.ControllerView
+import io.reactivex.rxjava3.core.Observable
 
-@Module
-class ConversationInfoModule(private val controller: ConversationInfoController) {
+interface ConversationMediaView : ControllerView<ConversationMediaState> {
 
-    @Provides
-    @ControllerScope
-    @Named("threadId")
-    fun provideThreadId(): Long = controller.threadId
+    fun mediaClicks(): Observable<Long>
 
 }

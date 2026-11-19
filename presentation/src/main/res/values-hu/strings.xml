@@ -30,7 +30,6 @@
     <string name="setup_next">Tovább</string>
     <string name="menu_add_person">Személy hozzáadása</string>
     <string name="menu_call">Hívás</string>
-    <string name="menu_info">Részletek</string>
     <string name="menu_mms_part_save">Mentés a galériába</string>
     <string name="compose_menu_share">Szöveg megosztása</string>
     <string name="main_drawer_open_cd">Navigációs menü megnyitása</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Küldés…</string>
     <string name="message_status_delivered">Kézbesítve %s</string>
     <string name="message_status_failed">Sikertelen küldés. Koppintson az újraküldésre</string>
-    <string name="info_title">Részletek</string>
     <string name="info_copied_address">Cím másolva</string>
     <string name="info_name">Beszélgetés témája</string>
     <string name="info_notifications">Értesítések</string>

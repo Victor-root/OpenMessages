@@ -30,7 +30,6 @@
     <string name="setup_next">ทำต่อ</string>
     <string name="menu_add_person">Add person</string>
     <string name="menu_call">โทร</string>
-    <string name="menu_info">รายละเอียด</string>
     <string name="menu_mms_part_save">บันทึกรูปภาพ</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">เปิดเมนูลัด</string>
@@ -128,7 +127,6 @@
     <string name="message_status_sending">กำลังส่ง...</string>
     <string name="message_status_delivered">%s ถูกส่งแล้ว</string>
     <string name="message_status_failed">การส่งล้มเหลว ลองแตะเพื่อส่งอีกครั้ง</string>
-    <string name="info_title">รายละเอียด</string>
     <string name="info_copied_address">Address copied</string>
     <string name="info_name">หัวข้อสนทนา</string>
     <string name="info_notifications">การแจ้งเตือน</string>

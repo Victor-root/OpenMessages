@@ -30,7 +30,6 @@
     <string name="setup_next">जारी रखें</string>
     <string name="menu_add_person">व्यक्ति जोड़ें</string>
     <string name="menu_call">कॉल</string>
-    <string name="menu_info">विवरण</string>
     <string name="menu_mms_part_save">गैलरी में सहेजें</string>
     <string name="compose_menu_share">साझा करें</string>
     <string name="main_drawer_open_cd">खुला नेविगेशन दराज</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">भेज रहा है…</string>
     <string name="message_status_delivered">%s वितरित</string>
     <string name="message_status_failed">भेजने में असफल। पुनः प्रयास करें</string>
-    <string name="info_title">विवरण</string>
     <string name="info_copied_address">पता कॉपी किया गया</string>
     <string name="info_name">वार्तालाप शीर्षक</string>
     <string name="info_notifications">अधिसूचनाएँ</string>

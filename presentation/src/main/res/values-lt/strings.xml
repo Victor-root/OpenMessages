@@ -30,7 +30,6 @@
     <string name="setup_next">Tęsti</string>
     <string name="menu_add_person">Add person</string>
     <string name="menu_call">Skambinti</string>
-    <string name="menu_info">Dėtalės</string>
     <string name="menu_mms_part_save">Save to gallery</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
@@ -131,7 +130,6 @@
     <string name="message_status_sending">Siunčiama…</string>
     <string name="message_status_delivered">Nusiųsta %s</string>
     <string name="message_status_failed">Nepavyko nusiųsti. Spausk dar kartą norint persiųsti</string>
-    <string name="info_title">Dėtalės</string>
     <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Pranešimai</string>

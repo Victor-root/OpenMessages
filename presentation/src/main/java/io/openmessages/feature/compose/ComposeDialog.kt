@@ -38,6 +38,9 @@ sealed class ComposeDialog {
 
     data class DeleteConversation(val threadId: Long) : ComposeDialog()
 
+    /** The conversation's title, being edited from [name] */
+    data class RenameConversation(val name: String) : ComposeDialog()
+
     object ClearMessage : ComposeDialog()
 
     data class OpenLink(val uri: Uri) : ComposeDialog()

@@ -354,7 +354,7 @@
         <activity
             android:name=".feature.gallery.GalleryActivity"
             android:theme="@style/AppTheme.Gallery" />
-        <activity android:name=".feature.conversationinfo.ConversationInfoActivity" />
+        <activity android:name=".feature.conversationmedia.ConversationMediaActivity" />
         <activity android:name=".feature.notificationprefs.NotificationPrefsActivity" />
         <activity android:name=".feature.blocking.BlockingActivity" />
         <activity

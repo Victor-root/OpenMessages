@@ -32,7 +32,7 @@ import io.openmessages.blocking.BlockingManager
 import io.openmessages.common.util.NotificationManagerImpl
 import io.openmessages.common.util.ShortcutManagerImpl
 import io.openmessages.database.AppDatabase
-import io.openmessages.feature.conversationinfo.injection.ConversationInfoComponent
+import io.openmessages.feature.conversationmedia.injection.ConversationMediaComponent
 import io.openmessages.feature.themepicker.injection.ThemePickerComponent
 import io.openmessages.listener.ContactAddedListener
 import io.openmessages.listener.ContactAddedListenerImpl
@@ -95,7 +95,7 @@ import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module(subcomponents = [
-    ConversationInfoComponent::class,
+    ConversationMediaComponent::class,
     ThemePickerComponent::class])
 class AppModule(private var application: Application) {
 

@@ -30,7 +30,6 @@
     <string name="setup_next">Kontynuuj</string>
     <string name="menu_add_person">Dodaj osobę</string>
     <string name="menu_call">Zadzwoń</string>
-    <string name="menu_info">Szczegóły</string>
     <string name="menu_mms_part_save">Zapisz w galerii</string>
     <string name="menu_mms_part_share">Udostępnij</string>
     <string name="menu_mms_part_forward">Przekaż</string>
@@ -171,7 +170,6 @@
     <string name="message_status_sending">Wysyłanie…</string>
     <string name="message_status_delivered">Dostarczono %s</string>
     <string name="message_status_failed">Nie udało się wysłać wiadomości. Dotknij, aby spróbować ponownie</string>
-    <string name="info_title">Szczegóły</string>
     <string name="info_copied_address">Adres został skopiowany</string>
     <string name="info_name">Tytuł rozmowy</string>
     <string name="info_notifications">Powiadomienia</string>

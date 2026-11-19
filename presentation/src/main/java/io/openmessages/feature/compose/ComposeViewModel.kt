@@ -38,6 +38,7 @@ import autodispose2.autoDispose
 import com.google.android.mms.pdu_alt.ContentType
 import io.openmessages.common.AppMediaPlayer
 import io.openmessages.contentproviders.MmsPartProvider
+import io.openmessages.interactor.MarkUnarchived
 import io.openmessages.manager.BluetoothMicManager
 import io.openmessages.manager.MediaRecorderManager
 import io.openmessages.manager.MediaRecorderManager.AUDIO_FILE_PREFIX
@@ -131,6 +132,7 @@ class ComposeViewModel @Inject constructor(
     private val deleteConversations: DeleteConversations,
     private val deleteMessages: DeleteMessages,
     private val markArchived: MarkArchived,
+    private val markUnarchived: MarkUnarchived,
     private val markRead: MarkRead,
     private val markUnread: MarkUnread,
     private val messageDetailsFormatter: MessageDetailsFormatter,
@@ -521,12 +523,68 @@ class ComposeViewModel @Inject constructor(
             .autoDispose(view.scope())
             .subscribe { threadId -> deleteConversations.execute(listOf(threadId)) }
 
-        // Open the conversation settings if info button is clicked
+        // The conversation's options float under its ⋮ rather than taking a page of their own
         view.optionsItemIntent
                 .filter { it == R.id.info }
                 .withLatestFrom(conversation, BiFunction { _, conversation -> conversation })
                 .autoDispose(view.scope())
-                .subscribe { conversation -> navigator.showConversationInfo(conversation.id) }
+                .subscribe(view::showConversationMenu)
+
+        view.conversationMenuIntent
+                .withLatestFrom(conversation, BiFunction { action: ConversationMenuAction, conversation: Conversation ->
+                    action to conversation
+                })
+                .autoDispose(view.scope())
+                .subscribe { (action, conversation) ->
+                    when (action) {
+                        is ConversationMenuAction.Contact ->
+                            conversation.recipients.firstOrNull { it.id == action.recipientId }?.let { recipient ->
+                                recipient.contact?.lookupKey?.let(navigator::showContact)
+                                    ?: navigator.addContact(recipient.address)
+                            }
+
+                        is ConversationMenuAction.CopyAddress ->
+                            conversation.recipients.firstOrNull { it.id == action.recipientId }?.let { recipient ->
+                                ClipboardUtils.copy(context, recipient.address)
+                                context.makeToast(R.string.info_copied_address)
+                            }
+
+                        ConversationMenuAction.Media -> navigator.showConversationMedia(conversation.id)
+
+                        ConversationMenuAction.Rename ->
+                            newState { copy(dialog = ComposeDialog.RenameConversation(conversation.name)) }
+
+                        ConversationMenuAction.Notifications -> navigator.showNotificationSettings(conversation.id)
+
+                        // Looked at, it would be read again at once, so the screen closes on it
+                        ConversationMenuAction.MarkUnread -> {
+                            markUnread.execute(listOf(conversation.id))
+                            newState { copy(hasError = true) }
+                        }
+
+                        // Archived, it leaves nothing to look at here, as with the header's quick action
+                        ConversationMenuAction.Archive -> when (conversation.archived) {
+                            true -> markUnarchived.execute(listOf(conversation.id))
+                            false -> markArchived.execute(listOf(conversation.id)) { newState { copy(hasError = true) } }
+                        }
+
+                        ConversationMenuAction.Block ->
+                            view.showBlockingDialog(listOf(conversation.id), !conversation.blocked)
+
+                        ConversationMenuAction.Delete -> when (permissionManager.isDefaultSms()) {
+                            true -> newState { copy(dialog = ComposeDialog.DeleteConversation(conversation.id)) }
+                            false -> view.requestDefaultSms()
+                        }
+                    }
+                }
+
+        view.conversationNameIntent
+                .withLatestFrom(conversation, BiFunction { name: String, conversation: Conversation ->
+                    conversationRepo.setConversationName(conversation.id, name)
+                })
+                .flatMapCompletable { setName -> setName }
+                .autoDispose(view.scope())
+                .subscribe()
 
         // Copy the message contents
         view.optionsItemIntent

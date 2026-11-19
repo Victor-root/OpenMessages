@@ -30,7 +30,6 @@
     <string name="setup_next">Devam</string>
     <string name="menu_add_person">Kişi ekle</string>
     <string name="menu_call">Ara</string>
-    <string name="menu_info">Ayrıntılar</string>
     <string name="menu_mms_part_save">Galeriye Kaydet</string>
     <string name="compose_menu_share">Paylaş</string>
     <string name="main_drawer_open_cd">Gezinti çubuğunu aç</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Gönderiliyor…</string>
     <string name="message_status_delivered">Teslim Edildi %s</string>
     <string name="message_status_failed">Gönderilemedi. Yeniden denemek için dokunun</string>
-    <string name="info_title">Ayrıntılar</string>
     <string name="info_copied_address">Adres kopyalandı</string>
     <string name="info_name">Konuşma başlığı</string>
     <string name="info_notifications">Bildirimler</string>

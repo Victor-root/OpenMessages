@@ -30,7 +30,6 @@
     <string name="setup_next">Lanjut</string>
     <string name="menu_add_person">Tambah kontak</string>
     <string name="menu_call">Panggil</string>
-    <string name="menu_info">Detail</string>
     <string name="menu_mms_part_save">Simpan ke galeri</string>
     <string name="compose_menu_share">Berbagi</string>
     <string name="main_drawer_open_cd">Buka laci navigasi</string>
@@ -128,7 +127,6 @@
     <string name="message_status_sending">Mengirim…</string>
     <string name="message_status_delivered">%s terkirim</string>
     <string name="message_status_failed">Gagal mengirim. Ketuk untuk mencoba lagi</string>
-    <string name="info_title">Detail</string>
     <string name="info_copied_address">Alamat disalin</string>
     <string name="info_name">Judul percakapan</string>
     <string name="info_notifications">Notifikasi</string>

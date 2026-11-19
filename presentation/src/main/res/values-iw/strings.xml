@@ -30,7 +30,6 @@
     <string name="setup_next">המשך</string>
     <string name="menu_add_person">הוסף איש קשר</string>
     <string name="menu_call">התקשרות</string>
-    <string name="menu_info">פרטים</string>
     <string name="menu_mms_part_save">שמור לגלריה</string>
     <string name="compose_menu_share">שיתוף</string>
     <string name="main_drawer_open_cd">פתח מגירת ניווט</string>
@@ -131,7 +130,6 @@
     <string name="message_status_sending">שולח…</string>
     <string name="message_status_delivered">%s נמסרה</string>
     <string name="message_status_failed">השליחה נכשלה. הקש כדי לנסות שוב</string>
-    <string name="info_title">פרטים</string>
     <string name="info_copied_address">הכתובת הועתקה</string>
     <string name="info_name">כותרת התכתבות</string>
     <string name="info_notifications">התראות</string>

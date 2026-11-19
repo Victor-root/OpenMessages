@@ -30,7 +30,6 @@
     <string name="setup_next">Continue</string>
     <string name="menu_add_person">Add person</string>
     <string name="menu_call">सम्पर्क</string>
-    <string name="menu_info">Details</string>
     <string name="menu_mms_part_save">Save to gallery</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Sending…</string>
     <string name="message_status_delivered">Delivered %s</string>
     <string name="message_status_failed">Failed to send. Tap to try again</string>
-    <string name="info_title">Details</string>
     <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Notifications</string>

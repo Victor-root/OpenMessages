@@ -42,10 +42,13 @@ import android.view.ContextThemeWrapper
 import android.view.DragEvent.ACTION_DRAG_ENDED
 import android.view.DragEvent.ACTION_DRAG_EXITED
 import android.view.DragEvent.ACTION_DROP
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.PopupWindow
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.addCallback
@@ -57,6 +60,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -81,8 +85,10 @@ import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.autoScrollToStart
 import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.getColorCompat
 import io.openmessages.common.util.extensions.hideKeyboard
 import io.openmessages.common.util.extensions.makeToast
+import io.openmessages.common.util.extensions.resolveThemeAttribute
 import io.openmessages.common.util.extensions.scrapViews
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setTint
@@ -90,12 +96,17 @@ import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.util.extensions.showKeyboard
 import io.openmessages.common.util.extensions.themeButtons
 import io.openmessages.common.widget.MicInputCloudView
+import io.openmessages.common.widget.TextInputDialog
+import io.openmessages.databinding.ConversationMenuBinding
+import io.openmessages.databinding.ConversationRecipientListItemBinding
 import io.openmessages.extensions.mapNotNull
 import io.openmessages.feature.blocking.BlockingDialog
 import io.openmessages.feature.compose.editing.ChipsAdapter
 import io.openmessages.feature.contacts.ContactsActivity
+import io.openmessages.feature.settings.ThemePickerDialog
 import io.openmessages.feature.templates.TemplatesActivity
 import io.openmessages.model.Attachment
+import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
 import io.openmessages.databinding.ComposeActivityBinding
 import io.openmessages.databinding.ComposeAttachSheetBinding
@@ -220,6 +231,8 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     override val speechRecogniserIntent by lazy { binding.speechToTextIcon.clicks() }
     override val shadeIntent by lazy { binding.shadeBackground.clicks() }
     override val loadOlderMessagesIntent: Subject<Unit> = PublishSubject.create()
+    override val conversationMenuIntent: Subject<ConversationMenuAction> = PublishSubject.create()
+    override val conversationNameIntent: Subject<String> = PublishSubject.create()
     override val recordAudioStartStopRecording: Subject<Boolean> = PublishSubject.create()
     /** Fed by the input-bar mic and the bottom sheet's "audio" item. */
     override val recordAnAudioMessage: Observable<Unit> by lazy {
@@ -245,6 +258,9 @@ class ComposeActivity : ThemedActivity(), ComposeView {
 
     /** A message asked to be scrolled to before the list held it, see [scrollToMessage] */
     private var pendingScrollId = -1L
+
+    /** The conversation's colour, as its toolbar wears it */
+    private var conversationColor = 0
 
     private val viewModel by lazy { ViewModelProvider(this, viewModelFactory)[ComposeViewModel::class.java] }
 
@@ -371,6 +387,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
 
                     // The avatar beside the title sits on the toolbar, which wears this colour
                     binding.toolbarAvatars.barColor = it.theme
+                    conversationColor = it.theme
 
                     // Attach button + the bottom-sheet option circles follow the conversation theme.
                     binding.attach.setBackgroundTint(it.theme); binding.attach.setTint(it.textPrimary)
@@ -787,7 +804,61 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     override fun showBlockingDialog(threadIds: List<Long>, block: Boolean) {
         // Blocking a conversation from the "suspected spam" banner removes it from the inbox, so
         // bounce back to the conversation list once the block has been applied.
-        blockingDialog.show(threadIds, block) { finish() }
+        blockingDialog.show(threadIds, block) { if (block) finish() }
+    }
+
+    override fun showConversationMenu(conversation: Conversation) {
+        val menu = ConversationMenuBinding.inflate(layoutInflater)
+        val popup = PopupWindow(menu.root, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true)
+        popup.elevation = 12.dpToPx(this).toFloat()
+        popup.animationStyle = R.style.ConversationMenuAnimation
+
+        fun pick(action: ConversationMenuAction) {
+            popup.dismiss()
+            conversationMenuIntent.onNext(action)
+        }
+
+        conversation.recipients.forEach { recipient ->
+            val row = ConversationRecipientListItemBinding.inflate(layoutInflater, menu.recipients, true)
+            row.avatar.setRecipient(recipient)
+            row.name.text = displayNames.of(recipient)
+            row.address.text = displayNames.number(recipient.address)
+            row.address.setVisible(recipient.contact != null)
+            row.add.setVisible(recipient.contact == null)
+            row.theme.setTint(colors.theme(recipient).theme)
+            row.root.setBackgroundResource(resolveThemeAttribute(android.R.attr.selectableItemBackground))
+            row.root.setOnClickListener { pick(ConversationMenuAction.Contact(recipient.id)) }
+            row.root.setOnLongClickListener { pick(ConversationMenuAction.CopyAddress(recipient.id)); true }
+            row.theme.setOnClickListener {
+                popup.dismiss()
+                // Opens on the conversation's colour as it stands, which may be an automatic one
+                ThemePickerDialog.newInstance(recipient.id, conversationColor.takeIf { it != 0 })
+                    .show(supportFragmentManager, "theme_picker")
+            }
+        }
+
+        val accent = ColorStateList.valueOf(colors.readableOnBackground(this, conversationColor))
+        listOf(menu.media, menu.rename, menu.notifications, menu.markUnread, menu.archive, menu.block)
+            .forEach { item -> TextViewCompat.setCompoundDrawableTintList(item, accent) }
+        TextViewCompat.setCompoundDrawableTintList(menu.delete, ColorStateList.valueOf(getColorCompat(R.color.destructive)))
+
+        // A blocked conversation sends no notifications, and leaves the inbox for the blocked list
+        menu.notifications.setVisible(!conversation.blocked)
+        menu.archive.setVisible(!conversation.blocked)
+        menu.archive.setText(if (conversation.archived) R.string.info_unarchive else R.string.info_archive)
+        menu.block.setText(if (conversation.blocked) R.string.info_unblock else R.string.info_block)
+
+        menu.media.setOnClickListener { pick(ConversationMenuAction.Media) }
+        menu.rename.setOnClickListener { pick(ConversationMenuAction.Rename) }
+        menu.notifications.setOnClickListener { pick(ConversationMenuAction.Notifications) }
+        menu.markUnread.setOnClickListener { pick(ConversationMenuAction.MarkUnread) }
+        menu.archive.setOnClickListener { pick(ConversationMenuAction.Archive) }
+        menu.block.setOnClickListener { pick(ConversationMenuAction.Block) }
+        menu.delete.setOnClickListener { pick(ConversationMenuAction.Delete) }
+
+        // Over the toolbar, its top right corner on the ⋮ it grows out of
+        val anchor = binding.toolbar.findViewById<View>(R.id.info) ?: binding.toolbar
+        popup.showAsDropDown(anchor, -MENU_INSET_DP.dpToPx(this), -anchor.height + MENU_INSET_DP.dpToPx(this), Gravity.END)
     }
 
     override fun requestDefaultSms() {
@@ -945,6 +1016,10 @@ class ComposeActivity : ThemedActivity(), ComposeView {
                 .create()
         }
 
+        is ComposeDialog.RenameConversation -> TextInputDialog(
+            this, colors, conversationColor, getString(R.string.info_name), conversationNameIntent::onNext
+        ).setText(spec.name)
+
         is ComposeDialog.DeleteConversation -> AlertDialog.Builder(this)
             .setTitle(R.string.dialog_delete_title)
             .setMessage(resources.getQuantityString(R.plurals.dialog_delete_message, 1, 1))
@@ -1046,6 +1121,8 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     companion object {
         /** How many messages short of the oldest one loaded the next older page is asked for */
         private const val LOAD_OLDER_AHEAD = 40
+        /** How far the conversation menu sits in from the corner of the ⋮ it opens from */
+        private const val MENU_INSET_DP = 8
     }
 
 }

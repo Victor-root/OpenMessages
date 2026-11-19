@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2026 OpenMessages contributors
+  ~
+  ~ This file is part of Open Messages.
+  ~
+  ~ Open Messages is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Open Messages is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<!-- The menu under the conversation's ⋮: who is in it, then what can be done with it -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_rectangle_24dp"
+    android:backgroundTint="?attr/cardColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:id="@+id/recipients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/divider" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/media"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_photo_size_select_actual_black_24dp"
+            android:text="@string/conversation_menu_media" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/rename"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_edit_black_24dp"
+            android:text="@string/info_name" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/notifications"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_notifications_black_24dp"
+            android:text="@string/info_notifications" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/markUnread"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_markunread_black_24dp"
+            android:text="@string/main_menu_unread" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/archive"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_archive_white_24dp"
+            android:text="@string/info_archive" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/block"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_block_white_24dp"
+            android:text="@string/info_block" />
+
+        <io.openmessages.common.widget.AppTextView
+            android:id="@+id/delete"
+            style="@style/ConversationMenuItem"
+            android:drawableStart="@drawable/ic_delete_white_24dp"
+            android:text="@string/info_delete"
+            android:textColor="@color/destructive" />
+
+    </LinearLayout>
+
+</ScrollView>

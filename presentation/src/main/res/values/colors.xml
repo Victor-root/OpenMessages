@@ -362,4 +362,7 @@
     <color name="drawerIconInvite">#D2508C</color>
     <color name="drawerIconAbout">#4E74E0</color>
 
+    <!-- Actions that destroy something, such as deleting a conversation -->
+    <color name="destructive">#D32F2F</color>
+
 </resources>

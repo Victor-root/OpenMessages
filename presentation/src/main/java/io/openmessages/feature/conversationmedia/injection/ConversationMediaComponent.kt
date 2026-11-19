@@ -16,10 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.openmessages.feature.conversationinfo
+package io.openmessages.feature.conversationmedia.injection
 
-data class ConversationInfoState(
-    val threadId: Long = 0,
-    val data: List<ConversationInfoItem> = listOf(),
-    val hasError: Boolean = false
-)
+import dagger.Subcomponent
+import io.openmessages.feature.conversationmedia.ConversationMediaController
+import io.openmessages.injection.scope.ControllerScope
+
+@ControllerScope
+@Subcomponent(modules = [ConversationMediaModule::class])
+interface ConversationMediaComponent {
+
+    fun inject(controller: ConversationMediaController)
+
+    @Subcomponent.Builder
+    interface Builder {
+        fun conversationMediaModule(module: ConversationMediaModule): Builder
+        fun build(): ConversationMediaComponent
+    }
+
+}

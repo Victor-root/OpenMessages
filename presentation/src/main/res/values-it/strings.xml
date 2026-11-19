@@ -30,7 +30,6 @@
     <string name="setup_next">Continua</string>
     <string name="menu_add_person">Aggiungi persona</string>
     <string name="menu_call">Chiama</string>
-    <string name="menu_info">Dettagli</string>
     <string name="menu_mms_part_save">Salva nella galleria</string>
     <string name="compose_menu_share">Condividi testo</string>
     <string name="main_drawer_open_cd">Apri il pannello di navigazione</string>
@@ -130,7 +129,6 @@
     <string name="message_status_sending">Invio in corso…</string>
     <string name="message_status_delivered">Consegnato %s</string>
     <string name="message_status_failed">Impossibile inviare. Tocca per riprovare</string>
-    <string name="info_title">Dettagli</string>
     <string name="info_copied_address">Indirizzo copiato</string>
     <string name="info_name">Titolo della conversazione</string>
     <string name="info_notifications">Notifiche</string>

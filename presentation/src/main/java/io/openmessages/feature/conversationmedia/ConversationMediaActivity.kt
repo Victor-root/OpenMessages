@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.openmessages.feature.conversationinfo
+package io.openmessages.feature.conversationmedia
 
 import android.os.Bundle
 import com.bluelinelabs.conductor.Conductor
@@ -27,7 +27,7 @@ import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.handleBackThrough
 import io.openmessages.databinding.ContainerActivityBinding
 
-class ConversationInfoActivity : ThemedActivity() {
+class ConversationMediaActivity : ThemedActivity() {
 
     private lateinit var binding: ContainerActivityBinding
     private lateinit var router: Router
@@ -42,7 +42,7 @@ class ConversationInfoActivity : ThemedActivity() {
         val threadId = intent.extras?.getLong("threadId") ?: 0L
         this.threadId.onNext(threadId) // theme the whole page for this conversation
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(ConversationInfoController(threadId)))
+            router.setRoot(RouterTransaction.with(ConversationMediaController(threadId)))
         }
         handleBackThrough(router)
     }

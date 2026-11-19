@@ -30,7 +30,6 @@
     <string name="setup_next">Fortsätt</string>
     <string name="menu_add_person">Lägg till person</string>
     <string name="menu_call">Ring</string>
-    <string name="menu_info">Detaljer</string>
     <string name="menu_mms_part_save">Spara till galleri</string>
     <string name="compose_menu_share">Dela</string>
     <string name="main_drawer_open_cd">Öppna navigeringspanelen</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Skickar…</string>
     <string name="message_status_delivered">Levererade %s</string>
     <string name="message_status_failed">Misslyckades med att skicka. Knacka för att försöka igen</string>
-    <string name="info_title">Detaljer</string>
     <string name="info_copied_address">Adress kopierades</string>
     <string name="info_name">Titel för konversation</string>
     <string name="info_notifications">Aviseringar</string>

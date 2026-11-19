@@ -30,7 +30,6 @@
     <string name="setup_next">계속</string>
     <string name="menu_add_person">대화 상대 추가하기</string>
     <string name="menu_call">전화</string>
-    <string name="menu_info">자세히</string>
     <string name="menu_mms_part_save">갤러리에 저장하기</string>
     <string name="compose_menu_share">공유</string>
     <string name="main_drawer_open_cd">메뉴 열기</string>
@@ -128,7 +127,6 @@
     <string name="message_status_sending">전송 중...</string>
     <string name="message_status_delivered">%s 전송됨</string>
     <string name="message_status_failed">전송 실패, 눌러서 다시 시도하세요</string>
-    <string name="info_title">자세히</string>
     <string name="info_copied_address">주소 복사 됨</string>
     <string name="info_name">대화 제목</string>
     <string name="info_notifications">알림</string>

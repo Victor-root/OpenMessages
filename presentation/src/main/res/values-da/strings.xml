@@ -30,7 +30,6 @@
     <string name="setup_next">Fortsæt</string>
     <string name="menu_add_person">Tilføj person</string>
     <string name="menu_call">Opkald</string>
-    <string name="menu_info">Oplysninger</string>
     <string name="menu_mms_part_save">Gem i Galleri</string>
     <string name="compose_menu_share">Del</string>
     <string name="main_drawer_open_cd">Åbn navigeringsskuffe</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Afsender…</string>
     <string name="message_status_delivered">Leveret %s</string>
     <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
-    <string name="info_title">Oplysninger</string>
     <string name="info_copied_address">Adresse kopieret</string>
     <string name="info_name">Samtaletitel</string>
     <string name="info_notifications">Notifikationer</string>

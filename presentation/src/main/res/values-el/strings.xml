@@ -30,7 +30,6 @@
     <string name="setup_next">Συνέχεια</string>
     <string name="menu_add_person">Προσθήκη ατόμου</string>
     <string name="menu_call">Κλήση</string>
-    <string name="menu_info">Λεπτομέρειες</string>
     <string name="menu_mms_part_save">Αποθήκευση στη συλλογή</string>
     <string name="compose_menu_share">Κοινή χρήση</string>
     <string name="main_drawer_open_cd">Άνοιγμα πλαισίου πλοήγησης</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">Αποστολή…</string>
     <string name="message_status_delivered">Παραδόθηκε: %s</string>
     <string name="message_status_failed">Αποτυχία αποστολής. Πατήστε για νέα προσπάθεια</string>
-    <string name="info_title">Λεπτομέρειες</string>
     <string name="info_copied_address">Η διεύθυνση αντεγράφη</string>
     <string name="info_name">Τίτλος συζήτησης</string>
     <string name="info_notifications">Ειδοποιήσεις</string>

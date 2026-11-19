@@ -30,7 +30,6 @@
     <string name="setup_next">Продовжити</string>
     <string name="menu_add_person">Додати контакт</string>
     <string name="menu_call">Зателефонувати</string>
-    <string name="menu_info">Деталі</string>
     <string name="menu_mms_part_save">Зберегти в галереї</string>
     <string name="compose_menu_share">Поділитися</string>
     <string name="main_drawer_open_cd">Відкрити панель навігації</string>
@@ -131,7 +130,6 @@
     <string name="message_status_sending">Надсилання…</string>
     <string name="message_status_delivered">Доставлено %s</string>
     <string name="message_status_failed">Не вдалося надіслати. Торкніться, щоб повторити спробу</string>
-    <string name="info_title">Деталі</string>
     <string name="info_copied_address">Адреса скопійована</string>
     <string name="info_name">Заголовок бесіди</string>
     <string name="info_notifications">Сповіщення</string>

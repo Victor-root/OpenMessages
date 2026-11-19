@@ -30,7 +30,6 @@
     <string name="setup_next">Настави</string>
     <string name="menu_add_person">Додај контакт</string>
     <string name="menu_call">Позови</string>
-    <string name="menu_info">Детаљи</string>
     <string name="menu_mms_part_save">Сачувај у галерију</string>
     <string name="compose_menu_share">Подели</string>
     <string name="main_drawer_open_cd">Отвори панел за навигацију</string>
@@ -130,7 +129,6 @@
     <string name="message_status_sending">Шаљем…</string>
     <string name="message_status_delivered">Испоручено %s</string>
     <string name="message_status_failed">Слање неуспешно. Додирните да покушате поново.</string>
-    <string name="info_title">Детаљи</string>
     <string name="info_copied_address">Адреса је копирана</string>
     <string name="info_name">Наслов</string>
     <string name="info_notifications">Обавештења</string>

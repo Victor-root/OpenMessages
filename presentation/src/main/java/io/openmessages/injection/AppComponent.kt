@@ -36,7 +36,7 @@ import io.openmessages.feature.blocking.manager.BlockingManagerController
 import io.openmessages.feature.blocking.messages.BlockedMessagesController
 import io.openmessages.feature.blocking.numbers.BlockedNumbersController
 import io.openmessages.feature.compose.editing.DetailedChipView
-import io.openmessages.feature.conversationinfo.injection.ConversationInfoComponent
+import io.openmessages.feature.conversationmedia.injection.ConversationMediaComponent
 import io.openmessages.feature.messageutils.MessageUtilsController
 import io.openmessages.feature.settings.SettingsController
 import io.openmessages.feature.settings.ThemePickerDialog
@@ -58,7 +58,7 @@ import javax.inject.Singleton
     ServiceBuilderModule::class])
 interface AppComponent {
 
-    fun conversationInfoBuilder(): ConversationInfoComponent.Builder
+    fun conversationMediaBuilder(): ConversationMediaComponent.Builder
     fun themePickerBuilder(): ThemePickerComponent.Builder
 
     fun inject(application: OpenMessagesApplication)

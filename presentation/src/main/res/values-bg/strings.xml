@@ -13,7 +13,6 @@
     <string name="setup_next">Продължаване</string>
     <string name="menu_add_person">Добавяне на контакт</string>
     <string name="menu_call">Обаждане</string>
-    <string name="menu_info">Подробности</string>
     <string name="menu_mms_part_save">Запазване в галерията</string>
     <string name="menu_mms_part_share">Споделяне</string>
     <string name="menu_mms_part_forward">Препращане</string>
@@ -150,7 +149,6 @@
     <string name="message_status_delivered">Доставено %s</string>
     <string name="message_status_failed">Грешка при изпращане. Докоснете за нов опит</string>
     <string name="message_body_too_long_to_display">⚠ Съобщението е дълго. Копирайте го или го запазете за достъп до пълния текст</string>
-    <string name="info_title">Подробности</string>
     <string name="info_copied_address">Адресът е копиран</string>
     <string name="info_name">Наименование на разговора</string>
     <string name="info_notifications">Известия</string>

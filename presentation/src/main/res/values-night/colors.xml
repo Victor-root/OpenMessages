@@ -34,4 +34,6 @@
     <color name="drawerIconInvite">#F08AB8</color>
     <color name="drawerIconAbout">#7AA7FF</color>
 
+    <color name="destructive">#EF6B6B</color>
+
 </resources>

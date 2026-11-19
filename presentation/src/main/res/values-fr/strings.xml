@@ -44,7 +44,6 @@
     <string name="setup_next">Continuer</string>
     <string name="menu_add_person">Ajouter quelqu’un</string>
     <string name="menu_call">Appeler</string>
-    <string name="menu_info">Détails</string>
     <string name="menu_mms_part_save">Enregistrer dans la galerie</string>
     <string name="menu_mms_part_share">Partager</string>
     <string name="menu_mms_part_forward">Transférer</string>
@@ -223,7 +222,10 @@
     <string name="message_status_delivered">Livré %s</string>
     <string name="message_status_failed">Échec de l’envoi. Appuyer pour réessayer</string>
     <string name="message_body_too_long_to_display">⚠ Le message est long. Copiez ou sauvegardez pour le texte entier</string>
-    <string name="info_title">Détails</string>
+    <string name="conversation_menu">Options de la conversation</string>
+    <string name="conversation_menu_media">Voir tous les médias</string>
+    <string name="media_title">Médias</string>
+    <string name="media_empty">Les photos et vidéos échangées dans cette conversation apparaîtront ici</string>
     <string name="info_copied_address">Adresse copiée</string>
     <string name="info_name">Titre de la conversation</string>
     <string name="info_notifications">Notifications</string>

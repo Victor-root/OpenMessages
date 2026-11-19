@@ -30,7 +30,6 @@
     <string name="setup_next">続行</string>
     <string name="menu_add_person">人物を追加</string>
     <string name="menu_call">通話</string>
-    <string name="menu_info">詳細</string>
     <string name="menu_mms_part_save">ギャラリーに保存</string>
     <string name="compose_menu_share">共有</string>
     <string name="main_drawer_open_cd">ナビゲーションドロワーを開く</string>
@@ -128,7 +127,6 @@
     <string name="message_status_sending">送信中…</string>
     <string name="message_status_delivered">%s を配信しました</string>
     <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
-    <string name="info_title">詳細</string>
     <string name="info_copied_address">アドレスをコピーしました</string>
     <string name="info_name">会話のタイトル</string>
     <string name="info_notifications">通知</string>

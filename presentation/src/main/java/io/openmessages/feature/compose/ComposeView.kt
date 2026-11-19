@@ -25,6 +25,7 @@ import io.openmessages.common.AppMediaPlayer
 import io.openmessages.common.base.BaseView
 import io.openmessages.common.widget.MicInputCloudView
 import io.openmessages.model.Attachment
+import io.openmessages.model.Conversation
 import io.openmessages.model.Recipient
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.Subject
@@ -82,6 +83,9 @@ interface ComposeView : BaseView<ComposeState> {
     val shadeIntent: Observable<Unit>
     /** The conversation scrolled up close to the oldest message loaded */
     val loadOlderMessagesIntent: Observable<Unit>
+    val conversationMenuIntent: Observable<ConversationMenuAction>
+    /** The conversation's title, as typed in [ComposeDialog.RenameConversation] */
+    val conversationNameIntent: Observable<String>
     val recordAudioStartStopRecording: Subject<Boolean>
     val recordAnAudioMessage: Observable<Unit>
     val recordAudioAbort: Observable<Unit>
@@ -113,4 +117,10 @@ interface ComposeView : BaseView<ComposeState> {
     fun startSpeechRecognition()
     fun focusMessage()
     fun showBlockingDialog(threadIds: List<Long>, block: Boolean)
+
+    /**
+     * The conversation's options, in a menu floating under its ⋮: who is in it, its media, its title,
+     * notifications, and marking it unread, archiving, blocking or deleting it
+     */
+    fun showConversationMenu(conversation: Conversation)
 }

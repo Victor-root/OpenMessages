@@ -30,7 +30,6 @@
     <string name="setup_next">ادامه</string>
     <string name="menu_add_person">افزودن کَس</string>
     <string name="menu_call">زنگ‌زدن</string>
-    <string name="menu_info">گوکان</string>
     <string name="menu_mms_part_save">سِتَنجیدن در نگارستان</string>
     <string name="compose_menu_share">هم‌رسانی</string>
     <string name="main_drawer_open_cd">بازکردن کشو ناوبری</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">فرستاده می‌شود…</string>
     <string name="message_status_delivered">رسیده %s</string>
     <string name="message_status_failed">فرستاده نشد. برای تلاش دوباره بِپَرماسید</string>
-    <string name="info_title">گوکان</string>
     <string name="info_copied_address">از نشانی رونگاشت گرفته شد</string>
     <string name="info_name">سرنامه‌ی گفتگو</string>
     <string name="info_notifications">آگاهنده‌ها</string>

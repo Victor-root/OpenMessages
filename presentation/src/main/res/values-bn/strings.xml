@@ -30,7 +30,6 @@
     <string name="setup_next">আগাও</string>
     <string name="menu_add_person">কাউকে যুক্ত করো</string>
     <string name="menu_call">কল করো</string>
-    <string name="menu_info">বিস্তারিত</string>
     <string name="menu_mms_part_save">গ্যালারিতে সংরক্ষণ করো</string>
     <string name="compose_menu_share">শেয়ার</string>
     <string name="main_drawer_open_cd">ন্যাভিগেশন ড্রয়ার খুলো</string>
@@ -129,7 +128,6 @@
     <string name="message_status_sending">পাঠানো হচ্ছে…</string>
     <string name="message_status_delivered">প্রেরিত হয়েছে: %s</string>
     <string name="message_status_failed">পাঠাতে ব্যর্থ। আবার চেষ্টা করতে টিপ দাও</string>
-    <string name="info_title">বিস্তারিত</string>
     <string name="info_copied_address">ঠিকানা অনুলিপিত</string>
     <string name="info_name">আলাপের শিরোনাম</string>
     <string name="info_notifications">নোটিফিকেশন</string>

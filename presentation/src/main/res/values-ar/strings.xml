@@ -30,7 +30,6 @@
     <string name="setup_next">متابعة</string>
     <string name="menu_add_person">اضافة شخص</string>
     <string name="menu_call">اتصال</string>
-    <string name="menu_info">تفاصيل</string>
     <string name="menu_mms_part_save">حفظ إلى المعرض</string>
     <string name="compose_menu_share">مشاركة</string>
     <string name="main_drawer_open_cd">فتح درج التنقل</string>
@@ -133,7 +132,6 @@
     <string name="message_status_sending">الإرسال جارٍ…</string>
     <string name="message_status_delivered">تم إرسال %s</string>
     <string name="message_status_failed">فشل الإرسال. إلمس لإعادة المحاولة</string>
-    <string name="info_title">التفاصيل</string>
     <string name="info_copied_address">تم نسخ العنوان</string>
     <string name="info_name">عنوان المحادثة</string>
     <string name="info_notifications">الإشعارات</string>
