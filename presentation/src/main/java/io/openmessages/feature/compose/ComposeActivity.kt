@@ -834,6 +834,9 @@ class ComposeActivity : ThemedActivity(), ComposeView {
             row.address.setVisible(recipient.contact != null)
             row.add.setVisible(recipient.contact == null)
             row.theme.setTint(colors.theme(recipient).theme)
+            // A recipient the provider never numbered has no colour of its own to choose: the one
+            // kept under no number is the app's
+            row.theme.setVisible(recipient.id != 0L)
             row.root.setBackgroundResource(resolveThemeAttribute(android.R.attr.selectableItemBackground))
             row.root.setOnClickListener { pick(ConversationMenuAction.Contact(recipient.id)) }
             row.root.setOnLongClickListener { pick(ConversationMenuAction.CopyAddress(recipient.id)); true }

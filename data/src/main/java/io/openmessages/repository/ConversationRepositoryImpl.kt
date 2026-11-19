@@ -310,8 +310,16 @@ class ConversationRepositoryImpl @Inject constructor(
      */
     private fun createEmptyConversation(threadId: Long, addresses: Collection<String>, sendAsGroup: Boolean): Conversation {
         val contacts = db.contactDao().getAll().map(ContactWithNumbers::toModel)
+        // The provider numbered these addresses as it made the thread, and the recipients keep those
+        // numbers. Made up without one, they were all recipient 0: a single row each new
+        // conversation wrote over in turn, and the number the app's own colour is kept under, so
+        // choosing a colour for such a conversation recoloured the whole app.
+        val numbered = cursorToRecipient.getRecipientCursor()
+            ?.use { cursor -> cursor.map(cursorToRecipient::map) }
+            .orEmpty()
         val matchedRecipients = addresses.map { address ->
-            Recipient().apply {
+            (numbered.firstOrNull { recipient -> phoneNumberUtils.compare(recipient.address, address) }
+                ?: Recipient()).apply {
                 this.address = address
                 contact = contacts.firstOrNull { contact ->
                     contact.numbers.any {
