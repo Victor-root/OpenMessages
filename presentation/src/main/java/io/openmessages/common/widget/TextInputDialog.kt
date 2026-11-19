@@ -56,7 +56,7 @@ class TextInputDialog(
     override fun onStart() {
         super.onStart()
         layout.field.background = context.outlinedFieldBackground(colors.readableOnBackground(context, themeColor))
-        colors.styleDialogActions(context, themeColor, layout.actions.save, layout.actions.delete, layout.actions.cancel)
+        colors.styleDialogActions(context, themeColor, layout.actions)
     }
 
     fun setText(text: String): TextInputDialog {

@@ -27,13 +27,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckedTextView
 import android.widget.CompoundButton
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.CompoundButtonCompat
 import androidx.core.widget.TextViewCompat
 import io.openmessages.common.util.Colors
+import io.openmessages.databinding.DialogActionsBinding
 import io.reactivex.rxjava3.subjects.Subject
 
 /**
@@ -124,11 +124,13 @@ fun Context.outlinedFieldBackground(@ColorInt accent: Int): Drawable = StateList
 }
 
 /**
- * Colours the actions of a dialog as Material 3 does: [main] filled in [accent], the [others] as text
- * in the shade of [accent] that reads on the dialog
+ * Colours the actions of a dialog as Material 3 does: saving filled in [accent], cancelling and the
+ * delete icon in the shade of [accent] that reads on the dialog
  */
-fun Colors.styleDialogActions(themed: Context, @ColorInt accent: Int, main: TextView, vararg others: TextView) {
-    main.setBackgroundTint(accent)
-    main.setTextColor(contentColorOnTheme(accent))
-    others.forEach { action -> action.setTextColor(readableOnBackground(themed, accent)) }
+fun Colors.styleDialogActions(themed: Context, @ColorInt accent: Int, actions: DialogActionsBinding) {
+    actions.save.setBackgroundTint(accent)
+    actions.save.setTextColor(contentColorOnTheme(accent))
+    val onDialog = readableOnBackground(themed, accent)
+    actions.cancel.setTextColor(onDialog)
+    actions.delete.setTint(onDialog)
 }

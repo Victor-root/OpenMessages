@@ -114,7 +114,7 @@ class TemplatesActivity : ThemedActivity(), TemplatesView {
         listOf(editor.titleField, editor.field).forEach { field ->
             field.background = outlinedFieldBackground(colors.readableOnBackground(this, themeColor))
         }
-        colors.styleDialogActions(this, themeColor, editor.actions.save, editor.actions.delete, editor.actions.cancel)
+        colors.styleDialogActions(this, themeColor, editor.actions)
 
         editor.actions.save.setOnClickListener {
             saveTemplateIntent.onNext(

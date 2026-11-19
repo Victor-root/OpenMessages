@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The actions of a dialog: delete on the left, cancel and save on the right, wrapping onto a second line on a narrow screen -->
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- The actions of a dialog on one line however narrow the screen: deleting as an icon on the left,
+     cancelling and saving on the right -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
-    app:alignItems="center"
-    app:flexWrap="wrap"
-    app:justifyContent="flex_end">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_flexGrow="1">
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="-8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/button_delete"
+        android:padding="8dp"
+        android:src="@drawable/ic_delete_white_24dp" />
 
-        <io.openmessages.common.widget.AppTextView
-            android:id="@+id/delete"
-            style="@style/DialogTextButton"
-            android:text="@string/button_delete" />
-
-    </FrameLayout>
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <io.openmessages.common.widget.AppTextView
         android:id="@+id/cancel"
@@ -36,4 +38,4 @@
         android:paddingEnd="24dp"
         android:text="@string/button_save" />
 
-</com.google.android.flexbox.FlexboxLayout>
+</LinearLayout>
