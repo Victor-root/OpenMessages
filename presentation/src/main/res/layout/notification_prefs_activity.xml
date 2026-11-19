@@ -195,11 +195,4 @@
         android:background="@drawable/ab_shadow"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/divider"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

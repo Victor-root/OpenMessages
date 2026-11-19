@@ -182,6 +182,17 @@
     <string name="compose_audio_message_cd">Enregistrer un message audio</string>
     <string name="compose_camera_cd">Prendre une photo</string>
     <string name="compose_schedule_cd">Programmer un message</string>
+    <string name="compose_schedule_title">Programmer l\'envoi</string>
+    <string name="compose_schedule_in_hour">Dans 1 heure</string>
+    <string name="compose_schedule_tonight">Ce soir</string>
+    <string name="compose_schedule_tomorrow_morning">Demain matin</string>
+    <string name="compose_schedule_tomorrow_afternoon">Demain après-midi</string>
+    <string name="compose_schedule_custom">Choisir une date et une heure</string>
+    <string name="compose_schedule_confirm">Programmer</string>
+    <string name="compose_schedule_previous_month">Mois précédent</string>
+    <string name="compose_schedule_next_month">Mois suivant</string>
+    <string name="compose_schedule_increase">Augmenter</string>
+    <string name="compose_schedule_decrease">Diminuer</string>
     <string name="compose_schedule_cancel_cd">Annuler le message programmé</string>
     <string name="compose_contact_cd">Joindre un contact</string>
     <string name="compose_contact_error">Erreur de lecture du contact</string>

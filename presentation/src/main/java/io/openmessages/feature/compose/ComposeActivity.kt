@@ -21,9 +21,7 @@ package io.openmessages.feature.compose
 import android.Manifest
 import android.animation.LayoutTransition
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.Dialog
-import android.app.TimePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.ContentValues
 import android.content.Intent
@@ -36,7 +34,6 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.text.format.DateFormat
 import android.view.ContextMenu
 import android.view.ContextThemeWrapper
 import android.view.DragEvent.ACTION_DRAG_ENDED
@@ -120,7 +117,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxjava3.subjects.Subject
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -228,7 +224,6 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     override val attachAnyFileSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val contactSelectedIntent: Subject<Uri> = PublishSubject.create()
     override val inputContentIntent by lazy { binding.message.inputContentSelected }
-    override val scheduleDateSelectedIntent: Subject<Triple<Int, Int, Int>> = PublishSubject.create()
     override val scheduleSelectedIntent: Subject<Long> = PublishSubject.create()
     override val dialogDismissedIntent: Subject<ComposeDialog> = PublishSubject.create()
     override val changeSimIntent by lazy { binding.sim.clicks() }
@@ -261,8 +256,6 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     override val recordAudioChronometer: Subject<Boolean> = PublishSubject.create()
     override val recordAudioRecord: Subject<MicInputCloudView.ViewState> = PublishSubject.create()
 
-    // The date and time pickers are platform dialogs rather than AppCompat ones and were never
-    // themed here; leave them as they were.
     private val dialogHost = DialogHost<ComposeDialog>(
         build = { spec ->
             buildDialog(spec).also { dialog ->
@@ -1078,22 +1071,9 @@ class ComposeActivity : ThemedActivity(), ComposeView {
             .setMessage(spec.lines.joinToString("\n"))
             .create()
 
-        ComposeDialog.ScheduleDate -> {
-            // On some devices, the keyboard can cover the picker
+        ComposeDialog.Schedule -> {
             binding.message.hideKeyboard()
-            val now = Calendar.getInstance()
-            DatePickerDialog(this, { _, year, month, day ->
-                scheduleDateSelectedIntent.onNext(Triple(year, month, day))
-            }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
-        }
-
-        is ComposeDialog.ScheduleTime -> {
-            val now = Calendar.getInstance()
-            TimePickerDialog(this, { _, hour, minute ->
-                val scheduled = Calendar.getInstance()
-                        .apply { set(spec.year, spec.month, spec.day, hour, minute) }
-                scheduleSelectedIntent.onNext(scheduled.timeInMillis)
-            }, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), DateFormat.is24HourFormat(this))
+            ScheduleDialog(this, colors, conversationColor.takeIf { it != 0 } ?: colors.theme().theme, scheduleSelectedIntent::onNext)
         }
     }
 

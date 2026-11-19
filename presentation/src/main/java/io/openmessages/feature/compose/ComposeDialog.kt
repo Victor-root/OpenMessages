@@ -49,8 +49,5 @@ sealed class ComposeDialog {
 
     data class Reactions(val lines: List<String>) : ComposeDialog()
 
-    /** Scheduling picks a date first, then a time; the date picked travels in [ScheduleTime]. */
-    object ScheduleDate : ComposeDialog()
-
-    data class ScheduleTime(val year: Int, val month: Int, val day: Int) : ComposeDialog()
+    object Schedule : ComposeDialog()
 }

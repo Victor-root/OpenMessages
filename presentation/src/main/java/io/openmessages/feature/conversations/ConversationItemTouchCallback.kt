@@ -55,7 +55,7 @@ class ConversationItemTouchCallback @Inject constructor(
      */
     var adapter: RecyclerView.Adapter<*>? = null
 
-    private val backgroundPaint = Paint()
+    private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var swipeColor = ContextCompat.getColor(context, R.color.colorBrand)
     private var rightAction = 0
     private var swipeRightIcon: Bitmap? = null
@@ -66,6 +66,8 @@ class ConversationItemTouchCallback @Inject constructor(
     private var mailClosedIcon: Bitmap? = null
 
     private val iconLength = 24.dpToPx(context)
+    private val swipeInset = SWIPE_INSET_DP.dpToPx(context).toFloat()
+    private val swipeRadius = SWIPE_RADIUS_DP.dpToPx(context).toFloat()
 
     init {
 
@@ -109,8 +111,8 @@ class ConversationItemTouchCallback @Inject constructor(
             backgroundPaint.color = swipeColor
 
             if (dX > 0) {
-                c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
-                        itemView.left + dX, itemView.bottom.toFloat(), backgroundPaint)
+                drawSwipeBackground(c, itemView.left.toFloat(), itemView.top.toFloat(),
+                        itemView.left + dX, itemView.bottom.toFloat())
 
                 resolveIcon(rightAction, swipeRightIcon, viewHolder.bindingAdapterPosition)?.let { icon ->
                     val availablePx = dX.toInt() - iconLength
@@ -123,8 +125,8 @@ class ConversationItemTouchCallback @Inject constructor(
                     }
                 }
             } else if (dX < 0) {
-                c.drawRect(itemView.right.toFloat() + dX, itemView.top.toFloat(),
-                        itemView.right.toFloat(), itemView.bottom.toFloat(), backgroundPaint)
+                drawSwipeBackground(c, itemView.right.toFloat() + dX, itemView.top.toFloat(),
+                        itemView.right.toFloat(), itemView.bottom.toFloat())
 
                 resolveIcon(leftAction, swipeLeftIcon, viewHolder.bindingAdapterPosition)?.let { icon ->
                     val availablePx = -dX.toInt() - iconLength
@@ -140,6 +142,12 @@ class ConversationItemTouchCallback @Inject constructor(
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }
+    }
+
+    /** The room a swipe uncovers, as a rounded card set in from the row's edges */
+    private fun drawSwipeBackground(c: Canvas, left: Float, top: Float, right: Float, bottom: Float) {
+        c.drawRoundRect(left + swipeInset, top + swipeInset, right - swipeInset, bottom - swipeInset,
+                swipeRadius, swipeRadius, backgroundPaint)
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -184,5 +192,10 @@ class ConversationItemTouchCallback @Inject constructor(
         } else {
             baseIcon
         }
+
+    companion object {
+        private const val SWIPE_INSET_DP = 4
+        private const val SWIPE_RADIUS_DP = 20
+    }
 
 }

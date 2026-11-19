@@ -1019,24 +1019,15 @@ class ComposeViewModel @Inject constructor(
         view.scheduleIntent
                 .doOnNext { newState { copy(attaching = false) } }
                 .autoDispose(view.scope())
-                .subscribe { newState { copy(dialog = ComposeDialog.ScheduleDate) } }
+                .subscribe { newState { copy(dialog = ComposeDialog.Schedule) } }
 
         view.scheduleAction
             .take(1)
             .doOnNext{ newState { copy(scheduling = false) } }
             .autoDispose(view.scope())
-            .subscribe { newState { copy(dialog = ComposeDialog.ScheduleDate) } }
+            .subscribe { newState { copy(dialog = ComposeDialog.Schedule) } }
 
-        // Scheduling asks for a date, then a time. The date travels through the state so the time
-        // step still knows it if the screen is rebuilt between the two.
-        view.scheduleDateSelectedIntent
-                .autoDispose(view.scope())
-                .subscribe { (year, month, day) ->
-                    newState { copy(dialog = ComposeDialog.ScheduleTime(year, month, day)) }
-                }
-
-        // Clear the dialog once it is gone, unless it has already been replaced by another one:
-        // confirming the date step opens the time step and only then reports the date step closed.
+        // Clear the dialog once it is gone, unless it has already been replaced by another one
         view.dialogDismissedIntent
                 .autoDispose(view.scope())
                 .subscribe { dismissed ->

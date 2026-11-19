@@ -63,8 +63,6 @@ interface ComposeView : BaseView<ComposeState> {
     val attachAnyFileSelectedIntent: Observable<Uri>
     val contactSelectedIntent: Observable<Uri>
     val inputContentIntent: Observable<Uri>
-    /** The year, month and day picked in the date step of scheduling; the time step follows. */
-    val scheduleDateSelectedIntent: Observable<Triple<Int, Int, Int>>
     val scheduleSelectedIntent: Observable<Long>
     val scheduleCancelIntent: Observable<*>
     /** The dialog the user closed, so a dialog opened in its place is not closed along with it. */
