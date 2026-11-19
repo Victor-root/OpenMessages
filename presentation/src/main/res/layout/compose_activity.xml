@@ -666,8 +666,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:baselineAligned="false"
-            android:gravity="center_vertical"
+            android:gravity="top"
             android:orientation="horizontal">
+
+            <!-- The two side buttons sit level with the middle of the record button, their labels
+                 hanging below them -->
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -680,6 +683,7 @@
                     android:id="@+id/audioMsgAbort"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/circle"
                     android:contentDescription="@string/compose_record_audio_msg_abort_cd"
                     android:foreground="?android:attr/selectableItemBackgroundBorderless"
@@ -727,6 +731,7 @@
                     android:id="@+id/audioMsgAttach"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
                     android:background="@drawable/circle"
                     android:contentDescription="@string/compose_record_audio_msg_attach_cd"
                     android:foreground="?android:attr/selectableItemBackgroundBorderless"
