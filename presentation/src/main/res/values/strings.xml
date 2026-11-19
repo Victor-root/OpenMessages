@@ -111,9 +111,6 @@
     <string name="contacts_group_groups">Groups</string>
     <string name="conversations_group_today">Today</string>
     <string name="conversations_group_yesterday">Yesterday</string>
-    <string name="conversations_group_pinned">Pinned</string>
-    <string name="conversations_group_drafts">Drafts</string>
-    <string name="conversations_group_unread">Unread</string>
     <string name="drawer_archived">Archived</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d unread</item>

@@ -139,6 +139,9 @@ class MainViewModel @Inject constructor(
                 newState { copy(scheduledConversationIds = ids) }
             }
 
+        disposables += messageRepo.observeUnreadCounts()
+            .subscribe { counts -> newState { copy(unreadCounts = counts) } }
+
         // Migrate the preferences from 2.7.3
         migratePreferences.execute(Unit)
 

@@ -22,7 +22,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.Rect
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -30,7 +29,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import io.openmessages.R
 import io.openmessages.common.util.Colors
-import io.openmessages.common.util.RowGroups
 import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.core.Observable
@@ -58,7 +56,6 @@ class ConversationItemTouchCallback @Inject constructor(
     var adapter: RecyclerView.Adapter<*>? = null
 
     private val backgroundPaint = Paint()
-    private val swipeClip = Path()
     private var swipeColor = ContextCompat.getColor(context, R.color.colorBrand)
     private var rightAction = 0
     private var swipeRightIcon: Bitmap? = null
@@ -111,16 +108,6 @@ class ConversationItemTouchCallback @Inject constructor(
 
             backgroundPaint.color = swipeColor
 
-            // What the row uncovers keeps to the row's own corners within its group's block
-            val radii = (adapter as? RowGroups.Adapter)?.rowGroups?.cornerRadii(viewHolder.bindingAdapterPosition)
-            c.save()
-            if (radii != null) {
-                swipeClip.reset()
-                swipeClip.addRoundRect(itemView.left.toFloat(), itemView.top.toFloat(),
-                        itemView.right.toFloat(), itemView.bottom.toFloat(), radii, Path.Direction.CW)
-                c.clipPath(swipeClip)
-            }
-
             if (dX > 0) {
                 c.drawRect(itemView.left.toFloat(), itemView.top.toFloat(),
                         itemView.left + dX, itemView.bottom.toFloat(), backgroundPaint)
@@ -150,7 +137,6 @@ class ConversationItemTouchCallback @Inject constructor(
                     }
                 }
             }
-            c.restore()
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }

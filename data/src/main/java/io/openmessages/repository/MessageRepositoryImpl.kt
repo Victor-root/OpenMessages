@@ -237,6 +237,11 @@ open class MessageRepositoryImpl @Inject constructor(
             .toObservable()
             .map { messages -> messages.map(MessageWithRelations::toModel) }
 
+    override fun observeUnreadCounts(): Observable<Map<Long, Int>> =
+        dao.observeUnreadCounts()
+            .toObservable()
+            .map { counts -> counts.associate { unread -> unread.threadId to unread.count } }
+
     // marks all messages in threads as read and/or seen in the native provider
     private fun telephonyMarkSeenRead(
         seen: Boolean?,

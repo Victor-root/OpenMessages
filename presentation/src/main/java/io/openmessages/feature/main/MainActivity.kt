@@ -45,6 +45,7 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.core.view.updatePaddingRelative
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.lifecycle.Lifecycle
@@ -71,6 +72,7 @@ import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.applyInsetTop
 import io.openmessages.common.util.extensions.autoScrollToStart
 import io.openmessages.common.util.extensions.dismissKeyboard
+import io.openmessages.common.util.extensions.dpToPx
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.scrapViews
 import io.openmessages.common.util.extensions.setTint
@@ -488,6 +490,7 @@ class MainActivity : ThemedActivity(), MainView {
         dialogHost.render(state.dialog)
 
         conversationsAdapter.hasScheduledConversation = state.scheduledConversationIds
+        conversationsAdapter.unreadCounts = state.unreadCounts
 
         val addContact = when (state.page) {
             is Inbox -> state.page.addContact
@@ -577,6 +580,11 @@ class MainActivity : ThemedActivity(), MainView {
             }
 
         }
+
+        // The conversations run edge to edge, as Google Messages lists them; search results keep
+        // the gutter their blocks sit in
+        val gutter = if (binding.recyclerView.adapter === conversationsAdapter) 0 else LIST_GUTTER_DP.dpToPx(this)
+        binding.recyclerView.updatePaddingRelative(start = gutter, end = gutter)
 
         // Pin the toolbar during multi-selection, and while a bottom banner (the default-SMS /
         // permission hint or the syncing bar) is shown. Those banners are anchored to the bottom of
@@ -916,4 +924,10 @@ class MainActivity : ThemedActivity(), MainView {
                 binding.drawer.inbox.requestFocus()
         }
     }
+
+    companion object {
+        /** The side gutter the search results' blocks sit in */
+        private const val LIST_GUTTER_DP = 12
+    }
+
 }

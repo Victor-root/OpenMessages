@@ -83,6 +83,9 @@ interface MessageRepository {
 
     fun observeUnreadMessages(threadId: Long): Observable<List<Message>>
 
+    /** How many unread messages each conversation holds, by its id; one with none is left out */
+    fun observeUnreadCounts(): Observable<Map<Long, Int>>
+
     fun markAllSeen(): Int
 
     fun markSeen(threadIds: Collection<Long>): Int

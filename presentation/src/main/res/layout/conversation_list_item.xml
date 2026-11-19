@@ -17,39 +17,39 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   -->
+<!-- A conversation in the list, laid out as Google Messages lists them: flat and edge to edge, the
+     time above an unread count on the right -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingStart="12dp"
-    android:paddingTop="10dp"
+    android:minHeight="72dp"
+    android:nextFocusRight="@+id/compose"
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
     android:paddingEnd="16dp"
-    android:paddingBottom="10dp"
-    android:nextFocusRight="@+id/compose">
+    android:paddingBottom="12dp">
 
     <io.openmessages.common.widget.GroupAvatarView
-        app:ringColor="?attr/cardColor"
         android:id="@+id/avatars"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="top"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:ringColor="?android:attr/windowBackground" />
 
     <io.openmessages.common.widget.AppTextView
         android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:lines="1"
+        android:textDirection="ltr"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@id/snippet"
         app:layout_constraintEnd_toStartOf="@id/date"
@@ -57,8 +57,7 @@
         app:layout_constraintStart_toEndOf="@id/avatars"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="@tools:sample/full_names"
-        android:textDirection="ltr" />
+        tools:text="@tools:sample/full_names" />
 
     <io.openmessages.common.widget.AppTextView
         android:id="@+id/snippet"
@@ -66,6 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,43 +76,50 @@
 
     <ImageView
         android:id="@+id/pinned"
-        android:layout_width="20dp"
+        android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_marginTop="2dp"
-        android:paddingStart="4dp"
-        android:paddingTop="2dp"
+        android:layout_marginEnd="4dp"
+        android:importantForAccessibility="no"
         android:src="@drawable/ic_baseline_push_pin_24"
-        app:tint="?android:attr/textColorTertiary"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/snippet"
         app:layout_constraintEnd_toStartOf="@id/scheduled"
         app:layout_constraintTop_toTopOf="@id/snippet"
+        app:tint="?android:attr/textColorTertiary"
         tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/scheduled"
-        android:layout_width="20dp"
+        android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_marginTop="2dp"
-        android:paddingStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:importantForAccessibility="no"
         android:src="@drawable/ic_event_black_24dp"
-        android:tint="?android:attr/textColorTertiary"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/snippet"
         app:layout_constraintEnd_toStartOf="@id/unread"
         app:layout_constraintTop_toTopOf="@id/snippet"
+        app:tint="?android:attr/textColorTertiary"
         tools:visibility="visible" />
 
-    <ImageView
+    <io.openmessages.common.widget.AppTextView
         android:id="@+id/unread"
-        android:layout_width="20dp"
-        android:layout_height="16sp"
-        android:paddingStart="8dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:src="@drawable/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:background="@drawable/rounded_rect_20dp"
+        android:gravity="center"
+        android:minWidth="20dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:textSize="11sp"
+        android:textStyle="bold"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/snippet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/snippet"
-        tools:tint="@color/tools_theme"
+        tools:backgroundTint="@color/tools_theme"
+        tools:text="3"
+        tools:textColor="@android:color/white"
         tools:visibility="visible" />
 
     <io.openmessages.common.widget.AppTextView
@@ -120,10 +127,8 @@
         style="@style/TextTertiary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintBaseline_toBaselineOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="100"
-        tools:text="Oct 11" />
+        tools:text="18:45" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

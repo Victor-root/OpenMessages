@@ -96,9 +96,6 @@
     <string name="contacts_group_groups">Groupes</string>
     <string name="conversations_group_today">Aujourd\'hui</string>
     <string name="conversations_group_yesterday">Hier</string>
-    <string name="conversations_group_pinned">Épinglées</string>
-    <string name="conversations_group_drafts">Brouillons</string>
-    <string name="conversations_group_unread">Non lues</string>
     <string name="drawer_archived">Archivées</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d non lue</item>

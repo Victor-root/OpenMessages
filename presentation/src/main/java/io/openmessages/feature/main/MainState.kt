@@ -33,6 +33,8 @@ data class MainState(
     val contactPermission: Boolean = true,
     val notificationPermission: Boolean = true,
     val scheduledConversationIds: Set<Long> = emptySet(),
+    /** How many unread messages each conversation holds, by its id */
+    val unreadCounts: Map<Long, Int> = emptyMap(),
     val dialog: MainDialog? = null
 )
 

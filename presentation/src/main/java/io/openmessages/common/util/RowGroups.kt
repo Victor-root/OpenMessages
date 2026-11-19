@@ -57,7 +57,7 @@ class RowGroups(context: Context) {
         position == labels.lastIndex || labels.getOrNull(position + 1) != labels.getOrNull(position)
 
     /** The corners of the row at [position]: rounded where it starts or ends its group */
-    fun cornerRadii(position: Int): FloatArray {
+    private fun cornerRadii(position: Int): FloatArray {
         val top = if (labelAt(position) != null) radius else 0f
         val bottom = if (endsGroup(position)) radius else 0f
         return floatArrayOf(top, top, top, top, bottom, bottom, bottom, bottom)

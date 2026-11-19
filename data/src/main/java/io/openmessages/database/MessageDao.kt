@@ -167,6 +167,13 @@ abstract class MessageDao {
     @Query("SELECT * FROM message WHERE threadId = :threadId AND read = 0 ORDER BY date")
     abstract fun observeUnread(threadId: Long): Flowable<List<MessageWithRelations>>
 
+    /** How many unread messages a conversation holds */
+    class UnreadCount(val threadId: Long, val count: Int)
+
+    /** The unread messages of every conversation that holds any, counted */
+    @Query("SELECT threadId, COUNT(*) AS count FROM message WHERE read = 0 AND isEmojiReaction = 0 GROUP BY threadId")
+    abstract fun observeUnreadCounts(): Flowable<List<UnreadCount>>
+
     @Query("SELECT DISTINCT threadId FROM message WHERE seen = 0")
     abstract fun getUnseenThreadIds(): List<Long>
 
