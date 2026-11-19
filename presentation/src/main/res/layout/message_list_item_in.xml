@@ -27,13 +27,13 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
+    <!-- The day across the whole width, centred on the screen, above the message's own column -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:orientation="vertical"
         android:clipChildren="false"
-        android:clipToPadding="false">
+        android:clipToPadding="false"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,8 +44,8 @@
                 style="@style/TextSecondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/circle"
                 android:backgroundTint="?attr/cardColor"
                 android:gravity="center"
@@ -89,105 +89,115 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:clipToPadding="false"
-            android:clipChildren="false">
+            android:layout_marginEnd="36dp"
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
-            <io.openmessages.common.widget.AvatarView
-                android:id="@+id/avatar"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="bottom"
-                app:layout_constraintBottom_toBottomOf="@id/body"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:clipToPadding="false"
-                android:clipChildren="false"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp">
+                android:clipChildren="false">
 
-                <io.openmessages.common.widget.ContextMenuRecyclerViewLongMmsPart
-                    android:id="@+id/parts"
-                    android:layout_width="wrap_content"
+                <io.openmessages.common.widget.AvatarView
+                    android:id="@+id/avatar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="bottom"
+                    app:layout_constraintBottom_toBottomOf="@id/body"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="1"
-                    tools:listitem="@layout/mms_image_preview_list_item" />
+                    android:layout_marginStart="12dp"
+                    android:clipToPadding="false"
+                    android:clipChildren="false"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp">
 
-                <io.openmessages.common.widget.MessageBodyView
-                    android:id="@+id/body"
-                    style="@style/TextPrimary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@id/parts"
-                    android:layout_marginTop="2dp"
-                    android:autoLink="email|phone|web"
-                    android:background="@drawable/message_only"
-                    android:gravity="start|center_vertical"
-                    android:minHeight="36dp"
-                    android:textIsSelectable="true"
-                    tools:backgroundTint="@color/tools_theme"
-                    tools:text="@tools:sample/lorem/random" />
-
-                <LinearLayout
-                    android:id="@+id/reactions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/body"
-                    android:layout_alignEnd="@id/body"
-                    android:layout_marginEnd="-12dp"
-                    android:layout_marginTop="-10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <TextView
-                        android:id="@+id/reactionText"
+                    <io.openmessages.common.widget.ContextMenuRecyclerViewLongMmsPart
+                        android:id="@+id/parts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/mms_image_preview_list_item" />
+
+                    <io.openmessages.common.widget.MessageBodyView
+                        android:id="@+id/body"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@id/parts"
+                        android:layout_marginTop="2dp"
+                        android:autoLink="email|phone|web"
                         android:background="@drawable/message_only"
-                        android:backgroundTint="?android:attr/colorBackground"
-                        android:elevation="2dp"
-                        android:maxLines="1"
-                        android:paddingStart="8dp"
-                        android:paddingTop="4dp"
-                        android:paddingEnd="8dp"
-                        android:paddingBottom="4dp"
-                        android:text="😂 2"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="16sp" />
+                        android:gravity="start|center_vertical"
+                        android:minHeight="36dp"
+                        android:textIsSelectable="true"
+                        tools:backgroundTint="@color/tools_theme"
+                        tools:text="@tools:sample/lorem/random" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/reactions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/body"
+                        android:layout_alignEnd="@id/body"
+                        android:layout_marginEnd="-12dp"
+                        android:layout_marginTop="-10dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
-            </RelativeLayout>
+                        <TextView
+                            android:id="@+id/reactionText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/message_only"
+                            android:backgroundTint="?android:attr/colorBackground"
+                            android:elevation="2dp"
+                            android:maxLines="1"
+                            android:paddingStart="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingEnd="8dp"
+                            android:paddingBottom="4dp"
+                            android:text="😂 2"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <io.openmessages.common.widget.AppTextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/body"
+                app:textSize="tertiary"
+                tools:text="Sending..." />
 
         </LinearLayout>
-
-        <io.openmessages.common.widget.AppTextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="72dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/body"
-            app:textSize="tertiary"
-            tools:text="Sending..." />
 
     </LinearLayout>
 
