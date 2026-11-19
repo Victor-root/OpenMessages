@@ -75,7 +75,6 @@ import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.openmessages.common.AppMediaPlayer
 import dagger.android.AndroidInjection
-import io.openmessages.BuildConfig
 import io.openmessages.R
 import io.openmessages.common.Navigator
 import io.openmessages.common.ViewModelFactory
@@ -121,7 +120,6 @@ import io.reactivex.rxjava3.subjects.Subject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import timber.log.Timber
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -713,23 +711,12 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         binding.scheduledGroup.isVisible = state.scheduled != 0L
         binding.scheduledTime.text = dateFormatter.getScheduledTimestamp(state.scheduled)
 
-        binding.messageAttachments.setVisible(state.attachments.isNotEmpty())
+        // Shown with the rest of the compose bar, but not part of its group: a group sets its
+        // views visible again on every layout pass, so these two flickered in and out at each key
+        // typed, and every flicker animated the whole bar, a new line included, over a third of a
+        // second
+        binding.messageAttachments.setVisible(!state.loading && state.attachments.isNotEmpty())
         composeAttachmentAdapter.data = state.attachments
-
-        // Temporary, chasing the attachment row that shows itself when a message is merely being
-        // selected. Read once the layout pass has had its own say about the row, and only worth a
-        // line when the row is showing or holding something, which is the whole anomaly.
-        if (BuildConfig.DEBUG) {
-            binding.messageAttachments.post {
-                val visible = binding.messageAttachments.isVisible
-                if (visible || composeAttachmentAdapter.itemCount > 0) {
-                    Timber.v("attachment row visible=$visible holding " +
-                            "${composeAttachmentAdapter.itemCount} item(s) " +
-                            "[${state.attachments.joinToString { it.uri.toString() }}], " +
-                            "${state.selectedMessages} message(s) selected")
-                }
-            }
-        }
 
         binding.shadeBackground.apply {
             if (state.audioMsgRecording) {
@@ -744,7 +731,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         binding.audioMsgBackground.isVisible = state.audioMsgRecording
 
         binding.counter.text = state.remaining
-        binding.counter.setVisible(binding.counter.text.isNotBlank())
+        binding.counter.setVisible(!state.loading && binding.counter.text.isNotBlank())
 
         binding.sim.setVisible(state.subscription != null)
         binding.sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)

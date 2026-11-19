@@ -230,7 +230,7 @@
         android:id="@+id/composeBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="messageBackground,messageAttachments,attach,message,counter" />
+        app:constraint_referenced_ids="messageBackground,attach,message" />
 
     <View
         android:id="@+id/composeDivider"
