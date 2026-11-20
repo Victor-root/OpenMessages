@@ -500,7 +500,7 @@
                         style="@style/ToolbarText"
                         android:textColor="?android:attr/textColorTertiary"
                         android:visibility="gone"
-                        app:textSize="tertiary"
+                        app:textSize="secondary"
                         tools:text="3 of 9 results" />
 
                 </LinearLayout>
