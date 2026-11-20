@@ -61,6 +61,7 @@ class MessageContentFiltersController : BaseController<MessageContentFiltersCont
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.message_content_filters_title)
+        showBackButton(true)
     }
 
     override fun onViewCreated() {

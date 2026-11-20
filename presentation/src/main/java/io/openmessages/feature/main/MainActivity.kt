@@ -177,6 +177,7 @@ class MainActivity : ThemedActivity(), MainView {
             0
         )
     }
+    private val backChevron by lazy { ContextCompat.getDrawable(this, R.drawable.ic_chevron_back_24dp)!!.mutate() }
     private val itemTouchHelper by lazy { ItemTouchHelper(itemTouchCallback) }
     private val progressAnimator by lazy {
         ObjectAnimator.ofInt(syncingBinding.syncingProgress, "progress", 0, 0)
@@ -247,6 +248,7 @@ class MainActivity : ThemedActivity(), MainView {
             updateSearchVisibility()
             binding.toolbarSearch.showKeyboard()
         }
+        binding.searchBack.setOnClickListener { clearSearch() }
         binding.searchClear.setOnClickListener { binding.toolbarSearch.text = null }
         binding.toolbarSearch.textChanges()
             .autoDispose(scope())
@@ -387,6 +389,7 @@ class MainActivity : ThemedActivity(), MainView {
                     }
 
                     // The search row lies on the toolbar's background, so it reads the same way
+                    binding.searchBack.setTint(onTheme)
                     binding.searchClear.setTint(onTheme)
                     binding.toolbarSearch.setTextColor(onTheme)
                     binding.toolbarSearch.setHintTextColor(ColorUtils.setAlphaComponent(onTheme, 0xB3))
@@ -546,7 +549,7 @@ class MainActivity : ThemedActivity(), MainView {
 
         when (state.page) {
             is Inbox -> {
-                showMenuButton(state.page.selected == 0)
+                showBackButton(state.page.selected > 0)
                 title = if (state.page.selected == 0) getString(R.string.launcher_name)
                         else getString(R.string.main_title_selected, state.page.selected)
                 if (binding.recyclerView.adapter !== conversationsAdapter)
@@ -557,7 +560,7 @@ class MainActivity : ThemedActivity(), MainView {
             }
 
             is Searching -> {
-                showMenuButton(false)
+                showBackButton(true)
                 if (binding.recyclerView.adapter !== searchAdapter) binding.recyclerView.adapter = searchAdapter
                 searchAdapter.data = state.page.data ?: listOf()
                 itemTouchHelper.attachToRecyclerView(null)
@@ -565,7 +568,7 @@ class MainActivity : ThemedActivity(), MainView {
             }
 
             is Archived -> {
-                showMenuButton(state.page.selected == 0)
+                showBackButton(state.page.selected > 0)
                 title = when (state.page.selected != 0) {
                     true -> getString(R.string.main_title_selected, state.page.selected)
                     false -> getString(R.string.title_archived)
@@ -703,12 +706,12 @@ class MainActivity : ThemedActivity(), MainView {
         dialogHost.close()
     }
 
-    /**
-     * The menu button that opens the drawer. Hidden while selecting or searching, rather than turned
-     * into a back arrow: Android's own back undoes those.
-     */
-    private fun showMenuButton(show: Boolean) {
-        binding.toolbar.navigationIcon = if (show) toggle.drawerArrowDrawable else null
+    /** The drawer's menu button, or the back chevron while selecting or searching */
+    override fun showBackButton(show: Boolean) {
+        binding.toolbar.navigationIcon = when (show) {
+            true -> backChevron.apply { setTint(toolbarContentColor) }
+            false -> toggle.drawerArrowDrawable.apply { color = toolbarContentColor }
+        }
     }
 
     override fun requestDefaultSms() =

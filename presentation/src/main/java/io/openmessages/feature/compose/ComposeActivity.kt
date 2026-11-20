@@ -329,6 +329,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         super.onCreate(savedInstanceState)
         binding = ComposeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        showBackButton(true)
         viewModel.bindView(this)
         onBackPressedDispatcher.addCallback(this) {
             if (binding.fullscreenEditor.isVisible) collapseFullscreen()

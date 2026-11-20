@@ -109,6 +109,7 @@ class ContactsActivity : ThemedActivity(), ContactsContract {
         super.onCreate(savedInstanceState)
         binding = ContactsActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        showBackButton(true)
         viewModel.bindView(this)
 
         binding.contacts.adapter = contactsAdapter

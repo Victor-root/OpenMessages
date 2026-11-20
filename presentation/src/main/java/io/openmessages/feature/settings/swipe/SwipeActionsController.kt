@@ -81,6 +81,7 @@ class SwipeActionsController : BaseController<SwipeActionsControllerBinding, Swi
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.settings_swipe_actions)
+        showBackButton(true)
     }
 
     override fun actionClicks(): Observable<SwipeActionsView.Action> = actionClicks

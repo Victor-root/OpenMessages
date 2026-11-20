@@ -41,6 +41,7 @@ class BlockingManagerController : BaseController<BlockingManagerControllerBindin
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.blocking_manager_title)
+        showBackButton(true)
 
         val states = arrayOf(
                 intArrayOf(android.R.attr.state_activated),

@@ -61,6 +61,7 @@ class MessageUtilsController : BaseController<MessageUtilsControllerBinding, Mes
     override fun onAttach(view: View) {
         super.onAttach(view)
         setTitle(R.string.message_management_title)
+        showBackButton(true)
         presenter.bindIntents(this)
     }
 

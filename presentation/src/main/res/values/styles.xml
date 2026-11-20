@@ -56,6 +56,15 @@
         <item name="popupTheme">?attr/actionBarPopupTheme</item>
     </style>
 
+    <!-- A conversation's toolbar, its back chevron in a narrow button so its name keeps the room -->
+    <style name="ThemeOverlay.OpenMessages.CompactNavigation" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="toolbarNavigationButtonStyle">@style/CompactNavigationButton</item>
+    </style>
+
+    <style name="CompactNavigationButton" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:minWidth">40dp</item>
+    </style>
+
     <style name="ToolbarText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

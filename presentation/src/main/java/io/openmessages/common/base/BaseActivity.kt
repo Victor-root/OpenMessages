@@ -28,6 +28,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -326,18 +327,30 @@ abstract class BaseActivity : AppCompatActivity() {
         view.setTag(R.id.navigationBarInset, true)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        title = title // The title may have been set before layout inflation
-        if (drawsBehindSystemBars()) installEdgeToEdgeInsets()
+        onContentSet()
     }
 
     override fun setContentView(view: View?) {
         super.setContentView(view)
+        onContentSet()
+    }
+
+    private fun onContentSet() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_chevron_back_24dp)
         title = title // The title may have been set before layout inflation
         if (drawsBehindSystemBars()) installEdgeToEdgeInsets()
     }
@@ -357,6 +370,16 @@ abstract class BaseActivity : AppCompatActivity() {
             this.menu.onNext(menu)
         }
         return result
+    }
+
+    protected open fun showBackButton(show: Boolean) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(show)
+        tintNavigationIcon()
+    }
+
+    /** The toolbar's back chevron in the colour that reads on the toolbar */
+    fun tintNavigationIcon() {
+        toolbar?.navigationIcon?.setTint(toolbarContentColor)
     }
 
     private fun disableScreenshots(disableScreenshots: Boolean) {

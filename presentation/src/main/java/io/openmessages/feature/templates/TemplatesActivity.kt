@@ -82,6 +82,7 @@ class TemplatesActivity : ThemedActivity(), TemplatesView {
         binding = TemplatesActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(R.string.templates_title)
+        showBackButton(true)
         viewModel.bindView(this)
         onBackPressedDispatcher.addCallback(this) { backPressedIntent.onNext(Unit) }
 

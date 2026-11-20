@@ -1452,7 +1452,10 @@ class ComposeViewModel @Inject constructor(
             .subscribe()
 
         // Navigate back
-        view.backPressedIntent
+        view.optionsItemIntent
+                .filter { it == android.R.id.home }
+                .map { }
+                .mergeWith(view.backPressedIntent)
                 .withLatestFrom(state, BiFunction { _, state ->
                     when {
                         state.selectedMessages > 0 -> view.clearSelection()

@@ -64,6 +64,7 @@ class ScheduledActivity : ThemedActivity(), ScheduledView {
         binding = ScheduledActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(R.string.scheduled_title)
+        showBackButton(true)
         viewModel.bindView(this)
         onBackPressedDispatcher.addCallback(this) { backPressedIntent.onNext(Unit) }
 

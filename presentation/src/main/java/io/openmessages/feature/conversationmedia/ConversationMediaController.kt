@@ -60,6 +60,7 @@ class ConversationMediaController(
         super.onAttach(view)
         presenter.bindIntents(this)
         setTitle(R.string.media_title)
+        showBackButton(true)
     }
 
     override fun render(state: ConversationMediaState) {

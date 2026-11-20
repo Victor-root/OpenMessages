@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
 import io.openmessages.R
@@ -31,6 +32,9 @@ import io.openmessages.R
 abstract class BaseController<VB : ViewBinding, ViewContract : ControllerView<State>, State : Any, Presenter : BasePresenter<ViewContract, State>> : LifecycleController() {
 
     abstract var presenter: Presenter
+
+    private val appCompatActivity: AppCompatActivity?
+        get() = activity as? AppCompatActivity
 
     protected val themedActivity: ThemedActivity?
         get() = activity as? ThemedActivity
@@ -64,6 +68,10 @@ abstract class BaseController<VB : ViewBinding, ViewContract : ControllerView<St
         view?.findViewById<TextView>(R.id.toolbarTitle)?.text = title
     }
 
+    fun showBackButton(show: Boolean) {
+        appCompatActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(show)
+        (activity as? BaseActivity)?.tintNavigationIcon()
+    }
 
     override fun onDestroyView(view: View) {
         super.onDestroyView(view)
