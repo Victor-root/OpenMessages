@@ -122,10 +122,15 @@ fun View.applyInsetTop(top: Int) {
 }
 
 /** Adds [extra] to the view's *original* bottom margin (captured once) for window-inset handling. */
-fun View.applyInsetBottomMargin(extra: Int) {
+fun View.applyInsetBottomMargin(extra: Int) = applyInsetMargins(bottom = extra)
+
+/** Adds [top] and [bottom] to the view's *original* margins (captured once) for window-inset handling. */
+fun View.applyInsetMargins(top: Int = 0, bottom: Int = 0) {
     val params = layoutParams as? ViewGroup.MarginLayoutParams ?: return
-    val base = getTag(R.id.insetBaseMargin) as? Int ?: params.bottomMargin.also { setTag(R.id.insetBaseMargin, it) }
-    params.bottomMargin = base + extra
+    val base = getTag(R.id.insetBaseMargin) as? Rect
+            ?: Rect(0, params.topMargin, 0, params.bottomMargin).also { setTag(R.id.insetBaseMargin, it) }
+    params.topMargin = base.top + top
+    params.bottomMargin = base.bottom + bottom
     layoutParams = params
 }
 

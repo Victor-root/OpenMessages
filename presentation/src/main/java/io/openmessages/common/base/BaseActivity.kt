@@ -81,10 +81,17 @@ abstract class BaseActivity : AppCompatActivity() {
     protected fun isEdgeToEdge(): Boolean = supportsEdgeToEdge && prefs.edgeToEdge.get()
 
     /**
+     * Whether, out of edge-to-edge too, the screen lays itself out behind the system bars and paints
+     * their bands itself, see [paintOwnSystemBars]: so that something can slide in over them, like
+     * the main screen's menu
+     */
+    protected open val drawsOwnSystemBars: Boolean get() = false
+
+    /**
      * Whether the window draws behind the system bars: by choice in edge-to-edge, and from Android
      * 15 on for every window that isn't floating, whatever the app asks for
      */
-    private fun drawsBehindSystemBars(): Boolean = isEdgeToEdge() ||
+    private fun drawsBehindSystemBars(): Boolean = isEdgeToEdge() || drawsOwnSystemBars ||
             (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM && !window.isFloating)
 
     /**
@@ -106,7 +113,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (isEdgeToEdge()) {
+        if (isEdgeToEdge() || drawsOwnSystemBars) {
             WindowCompat.setDecorFitsSystemWindows(window, false)
         }
         applySystemBars(prefs.theme().get())
@@ -135,15 +142,19 @@ abstract class BaseActivity : AppCompatActivity() {
         // icons. Otherwise they sit over the bar colour, like the status icons.
         val lightNavIcons = colors.useDarkSystemBarIcons(navigationBarBackdrop
                 ?: if (edgeToEdge) resolveThemeColor(android.R.attr.windowBackground) else barColor)
-        val navigationBarColor = navigationBarBackdrop ?: if (edgeToEdge) Color.TRANSPARENT else barColor
+        val navigationBarColor = when {
+            drawsOwnSystemBars -> Color.TRANSPARENT
+            else -> navigationBarBackdrop ?: if (edgeToEdge) Color.TRANSPARENT else barColor
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             // Painted over the content: the nav bar always, the status bar only in the original
             // look, which in edge-to-edge shows the toolbar reaching up behind it.
             systemBarsBackground.color = navigationBarColor
         } else {
-            paintSystemBars(if (edgeToEdge) Color.TRANSPARENT else barColor, navigationBarColor)
+            paintSystemBars(if (edgeToEdge || drawsOwnSystemBars) Color.TRANSPARENT else barColor, navigationBarColor)
         }
+        if (drawsOwnSystemBars) paintOwnSystemBars(barColor)
 
         // We paint the nav veil ourselves, so disable the platform's automatic contrast scrim
         if (drawsBehindSystemBars() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -166,13 +177,20 @@ abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * Paints the navigation bar [color], for a sheet risen from the bottom of the screen to run on
-     * into it rather than stop at a band of the toolbar's colour, or as the screen has it with null
+     * into it rather than stop at a band of the toolbar's colour, or as the screen has it with null.
+     * On a screen that draws its own bars, it only tells the bar's icons what shows behind them.
      */
     protected fun setNavigationBarBackdrop(color: Int?) {
         if (navigationBarBackdrop == color) return
         navigationBarBackdrop = color
         applySystemBars(systemBarColor)
     }
+
+    /**
+     * Where a screen that draws its own system bars paints their bands [color], the bar colour of
+     * the original look; in edge-to-edge the screen itself runs on over those bands
+     */
+    protected open fun paintOwnSystemBars(color: Int) = Unit
 
     private fun applyStatusBarIcons() {
         WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
@@ -227,7 +245,7 @@ abstract class BaseActivity : AppCompatActivity() {
             val sides = insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
             sideInsetLeft = sides.left
             sideInsetRight = sides.right
-            systemBarsBackground.topHeight = if (isEdgeToEdge()) 0 else bars.top
+            systemBarsBackground.topHeight = if (isEdgeToEdge() || drawsOwnSystemBars) 0 else bars.top
             systemBarsBackground.bottomHeight = bars.bottom
             // max(nav, ime) keeps bottom content above the keyboard once the window stops auto-resizing.
             onApplyEdgeToEdgeInsets(bars.top, maxOf(bars.bottom, ime.bottom))
@@ -353,6 +371,8 @@ abstract class BaseActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_chevron_back_24dp)
         title = title // The title may have been set before layout inflation
         if (drawsBehindSystemBars()) installEdgeToEdgeInsets()
+        // The bars were first painted before the screen had anything to paint their bands on
+        if (drawsOwnSystemBars) paintOwnSystemBars(systemBarColor)
     }
 
     override fun setTitle(titleId: Int) {

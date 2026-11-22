@@ -68,6 +68,7 @@ import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.DialogHost
 import io.openmessages.common.util.extensions.applyInsetBottomMargin
+import io.openmessages.common.util.extensions.applyInsetMargins
 import io.openmessages.common.util.extensions.applyInsetPadding
 import io.openmessages.common.util.extensions.applyInsetTop
 import io.openmessages.common.util.extensions.autoScrollToStart
@@ -122,7 +123,7 @@ class MainActivity : ThemedActivity(), MainView {
     private var nextUnreadIndex = 0
     private var scrollToTopVisible = false
 
-    /** What decides what shows behind the status bar, see [updateStatusBarBackdrop] */
+    /** What decides what shows behind the system bars, see [updateSystemBarBackdrops] */
     private var statusBarHeight = 0
     private var appBarOffset = 0
     private var drawerOffset = 0f
@@ -211,12 +212,12 @@ class MainActivity : ThemedActivity(), MainView {
 
         binding.appBarLayout.addOnOffsetChangedListener { _, offset ->
             appBarOffset = offset
-            updateStatusBarBackdrop()
+            updateSystemBarBackdrops()
         }
         binding.drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 drawerOffset = slideOffset
-                updateStatusBarBackdrop()
+                updateSystemBarBackdrops()
             }
 
             override fun onDrawerOpened(drawerView: View) = updateDrawerSwipe()
@@ -430,30 +431,34 @@ class MainActivity : ThemedActivity(), MainView {
     // status bar; the list draws behind the transparent nav bar (clipToPadding is already false)
     // while everything interactive is lifted above it. Without it, the screen keeps clear of both
     // bars like any other.
+    /** The menu slides in over both system bars, edge to edge or not, as AukDialer's does */
+    override val drawsOwnSystemBars: Boolean get() = true
+
+    override fun paintOwnSystemBars(color: Int) {
+        if (::binding.isInitialized) binding.drawerLayout.setBackgroundColor(color)
+    }
+
     override fun onApplyEdgeToEdgeInsets(top: Int, bottom: Int) {
+        findViewById<View>(android.R.id.content)?.applyInsetPadding(left = sideInsetLeft, right = sideInsetRight)
+        binding.drawer.drawerHeader.applyInsetTop(top)
+        binding.drawer.root.applyInsetPadding(bottom = bottom)
         if (!isEdgeToEdge()) {
-            super.onApplyEdgeToEdgeInsets(top, bottom)
+            // Clear of both bars, over the bands of the bar colour painted behind it
+            binding.mainContent.applyInsetMargins(top = top, bottom = bottom)
+            updateSystemBarBackdrops()
             return
         }
         statusBarHeight = top
-        findViewById<View>(android.R.id.content)?.applyInsetPadding(left = sideInsetLeft, right = sideInsetRight)
         binding.toolbar.applyInsetTop(top)
         binding.searchBar.applyInsetTop(top)
-        binding.drawer.drawerHeader.applyInsetTop(top)
         binding.recyclerView.applyInsetPadding(bottom = bottom)
         binding.compose.applyInsetBottomMargin(bottom)
         binding.scrollToTop.applyInsetBottomMargin(bottom)
-        binding.drawer.root.applyInsetPadding(bottom = bottom)
         if (::snackbarBinding.isInitialized) snackbarBinding.root.applyInsetPadding(bottom = bottom)
         if (::syncingBinding.isInitialized) syncingBinding.root.applyInsetPadding(bottom = bottom)
-        updateStatusBarBackdrop()
+        updateSystemBarBackdrops()
     }
 
-    /**
-     * In edge-to-edge the status bar shows the toolbar, in the theme colour, until the toolbar
-     * scrolls away from under it, leaving the list, or the drawer slides in over it, its own
-     * background reaching up behind the bar
-     */
     /**
      * Swiping in from the edge opens the menu only when the setting is on; once open, it can always
      * be swiped closed
@@ -464,10 +469,18 @@ class MainActivity : ThemedActivity(), MainView {
             if (swipe) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    private fun updateStatusBarBackdrop() {
+    /**
+     * The status bar shows the toolbar, in the theme colour, until the drawer slides in over it, its
+     * own background reaching up behind the bar, or in edge-to-edge the toolbar scrolls away from
+     * under it, leaving the list. The navigation bar shows what the screen has under it until the
+     * drawer covers it too.
+     */
+    private fun updateSystemBarBackdrops() {
+        val drawer = resolveThemeColor(R.attr.bubbleColor).takeIf { drawerOffset >= 0.5f }
+        setNavigationBarBackdrop(drawer)
         val backdrop = when {
+            drawer != null -> drawer
             !isEdgeToEdge() -> null
-            drawerOffset >= 0.5f -> resolveThemeColor(R.attr.bubbleColor)
             // Set by the insets ahead of any layout, unlike the measured height
             binding.toolbar.layoutParams.height + appBarOffset < statusBarHeight / 2 ->
                 resolveThemeColor(android.R.attr.windowBackground)

@@ -24,9 +24,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Out of edge-to-edge, held clear of the system bars, the drawer layout's own background
+         painting their bands, see MainActivity.paintOwnSystemBars -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:attr/windowBackground">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
