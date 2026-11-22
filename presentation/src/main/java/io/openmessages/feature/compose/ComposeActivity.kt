@@ -45,6 +45,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.PopupWindow
 import android.widget.SeekBar
 import android.widget.Toast
@@ -748,9 +750,9 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         binding.simIndex.text = state.subscription?.simSlotIndex?.plus(1)?.toString()
 
         // show either send, audio msg record, or sendScheduled button
-        binding.send.visibility = if (state.canSend && !state.loading && state.scheduled == 0L) View.VISIBLE else View.INVISIBLE
-        binding.recordAudioMsg.visibility = if (state.canSend && !state.loading) View.INVISIBLE else View.VISIBLE
-        binding.scheduledSend.visibility = if (state.canSend && (state.scheduled != 0L) && !state.loading) View.VISIBLE else View.INVISIBLE
+        binding.send.swapShown(state.canSend && !state.loading && state.scheduled == 0L)
+        binding.recordAudioMsg.swapShown(!(state.canSend && !state.loading))
+        binding.scheduledSend.swapShown(state.canSend && (state.scheduled != 0L) && !state.loading)
 
         // if not in editing mode, and there are no non-me participants that can be sent to,
         // hide controls that allow constructing a reply and inform user no valid recipients
@@ -992,6 +994,47 @@ class ComposeActivity : ThemedActivity(), ComposeView {
     }
 
     /**
+     * Shows or hides one of the buttons sharing the end of the compose bar: the one leaving shrinks
+     * and fades, and once it has mostly gone the one taking its place grows in with a slight bounce.
+     * Set at once until the bar has been laid out, so the screen doesn't open on an animation.
+     */
+    private fun View.swapShown(show: Boolean) {
+        if (getTag(R.id.swapShown) == show) return
+        setTag(R.id.swapShown, show)
+        animate().cancel()
+
+        if (!isLaidOut) {
+            visibility = if (show) View.VISIBLE else View.INVISIBLE
+            alpha = 1f
+            scaleX = 1f
+            scaleY = 1f
+            return
+        }
+
+        if (show) {
+            if (visibility != View.VISIBLE) {
+                alpha = 0f
+                scaleX = SWAP_SCALE
+                scaleY = SWAP_SCALE
+                visibility = View.VISIBLE
+            }
+            animate().alpha(1f).scaleX(1f).scaleY(1f)
+                .setStartDelay(SWAP_IN_DELAY_MS)
+                .setDuration(SWAP_IN_MS)
+                .setInterpolator(OvershootInterpolator(SWAP_OVERSHOOT))
+                .withEndAction(null)
+                .start()
+        } else {
+            animate().alpha(0f).scaleX(SWAP_SCALE).scaleY(SWAP_SCALE)
+                .setStartDelay(0)
+                .setDuration(SWAP_OUT_MS)
+                .setInterpolator(DecelerateInterpolator())
+                .withEndAction { visibility = View.INVISIBLE }
+                .start()
+        }
+    }
+
+    /**
      * Shows or hides the full-screen editor. Edge to edge it reaches up behind the status bar, whose
      * icons are told so they stay legible on it rather than on the toolbar's colour.
      */
@@ -1126,6 +1169,12 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         private const val LOAD_OLDER_AHEAD = 40
         /** How far the conversation menu sits in from the corner of the ⋮ it opens from */
         private const val MENU_INSET_DP = 8
+        /** How the buttons at the end of the compose bar take each other's place, see swapShown */
+        private const val SWAP_SCALE = 0.5f
+        private const val SWAP_OVERSHOOT = 2f
+        private const val SWAP_IN_DELAY_MS = 80L
+        private const val SWAP_IN_MS = 260L
+        private const val SWAP_OUT_MS = 120L
     }
 
 }

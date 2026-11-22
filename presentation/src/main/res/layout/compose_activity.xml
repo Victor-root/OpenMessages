@@ -247,12 +247,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="-4dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_rectangle_22dp"
         android:backgroundTint="?attr/cardColor"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/send"
+        app:layout_constraintEnd_toStartOf="@id/sendButtons"
         app:layout_constraintStart_toEndOf="@id/attach"
         app:layout_constraintTop_toTopOf="@id/scheduledCancel" />
 
@@ -407,48 +407,14 @@
         android:id="@+id/counter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="-8dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorSecondary"
-        app:layout_constraintBottom_toTopOf="@id/send"
-        app:layout_constraintEnd_toEndOf="@id/send"
-        app:layout_constraintStart_toStartOf="@id/send"
+        app:layout_constraintBottom_toTopOf="@id/sendButtons"
+        app:layout_constraintEnd_toEndOf="@id/sendButtons"
+        app:layout_constraintStart_toStartOf="@id/sendButtons"
         app:textSize="tertiary"
         tools:text="108 / 2" />
-
-    <ImageView
-        android:id="@+id/send"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_rect_12dp"
-        android:contentDescription="@string/compose_send_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_send_black_24dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/tools_theme"
-        app:tint="@color/textPrimaryDark"
-        tools:visibility="visible" />
-
-    <ImageView
-        android:id="@+id/scheduledSend"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_rect_12dp"
-        android:contentDescription="@string/scheduled_send_cd"
-        android:elevation="4dp"
-        android:src="@drawable/ic_schedule_send_black_24dp"
-        android:padding="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/tools_theme"
-        app:tint="@color/textPrimaryDark"
-        tools:visibility="visible" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -571,20 +537,62 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <ImageView
-        android:id="@+id/recordAudioMsg"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_rect_12dp"
-        android:contentDescription="@string/compose_record_audio_msg_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_mic_black_24dp"
+    <!-- Send, scheduled send or record, one at a time in the same spot, swapped by
+         ComposeActivity.swapShown; held apart from the screen's layout transition, which would fade
+         them a second time. Padded so their shadows and bounce aren't clipped, the padding taken
+         back by the margins around -->
+    <FrameLayout
+        android:id="@+id/sendButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-12dp"
+        android:layout_marginEnd="-4dp"
+        android:clipToPadding="false"
+        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:backgroundTint="@color/tools_theme"
-        app:tint="@color/textPrimaryDark" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/send"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/rounded_rect_12dp"
+            android:contentDescription="@string/compose_send_cd"
+            android:elevation="4dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_send_black_24dp"
+            android:visibility="invisible"
+            android:backgroundTint="@color/tools_theme"
+            app:tint="@color/textPrimaryDark"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/scheduledSend"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/rounded_rect_12dp"
+            android:contentDescription="@string/scheduled_send_cd"
+            android:elevation="4dp"
+            android:src="@drawable/ic_schedule_send_black_24dp"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:backgroundTint="@color/tools_theme"
+            app:tint="@color/textPrimaryDark"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/recordAudioMsg"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/rounded_rect_12dp"
+            android:contentDescription="@string/compose_record_audio_msg_cd"
+            android:elevation="4dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_mic_black_24dp"
+            android:backgroundTint="@color/tools_theme"
+            app:tint="@color/textPrimaryDark" />
+
+    </FrameLayout>
 
     <!-- The audio message recorder, a sheet rising from the bottom over the dimmed conversation -->
     <LinearLayout
