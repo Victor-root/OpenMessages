@@ -20,7 +20,10 @@ package io.openmessages.feature.compose
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.text.Layout
@@ -48,6 +51,7 @@ import io.openmessages.common.util.Colors
 import io.openmessages.common.util.DateFormatter
 import io.openmessages.common.util.TextViewStyler
 import io.openmessages.common.util.extensions.dpToPx
+import io.openmessages.common.util.extensions.resolveThemeAttribute
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
 import io.openmessages.common.util.extensions.setPadding
@@ -102,6 +106,7 @@ class MessagesAdapter @Inject constructor(
         private const val VIEW_TYPE_MESSAGE_OUT = 1
 
         private const val MAX_MESSAGE_DISPLAY_LENGTH = 5000
+        private const val SELECTION_ALPHA = 0x40
     }
 
     // click events passed back to compose view model
@@ -144,8 +149,19 @@ class MessagesAdapter @Inject constructor(
         set(value) {
             if (field == value) return
             field = value
+            selectionTint = selectionTint(value.theme)
             notifyDataSetChanged()
         }
+
+    /**
+     * A selected message's row: the conversation's colour, light enough for the bubbles to read on,
+     * and lifted on a dark background where a deep colour would hardly show
+     */
+    private var selectionTint = selectionTint(theme.theme)
+
+    private fun selectionTint(color: Int) = ColorStateList(
+        arrayOf(intArrayOf(android.R.attr.state_activated), intArrayOf()),
+        intArrayOf(colors.readableOnBackground(context, color).withAlpha(SELECTION_ALPHA), Color.TRANSPARENT))
 
     private val audioState = AudioState()
 
@@ -156,20 +172,17 @@ class MessagesAdapter @Inject constructor(
         val view: View
         val body: TextView
         val parts: View
-        val status: View
 
         if (viewType == VIEW_TYPE_MESSAGE_OUT) {
             val binding = MessageListItemOutBinding.inflate(inflater, parent, false)
             view = binding.root
             body = binding.body
             parts = binding.parts
-            status = binding.status
         } else {
             val binding = MessageListItemInBinding.inflate(inflater, parent, false)
             view = binding.root
             body = binding.body
             parts = binding.parts
-            status = binding.status
         }
 
         body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
@@ -177,16 +190,15 @@ class MessagesAdapter @Inject constructor(
         // register recycler view with compose activity for context menus
         partContextMenuRegistrar.onNext(parts)
 
+        // Tinted in the conversation's colour across the whole width while selected, see selectionTint
+        view.background = ColorDrawable(Color.WHITE)
+        view.foreground = ContextCompat.getDrawable(parent.context,
+            parent.context.resolveThemeAttribute(android.R.attr.selectableItemBackground))
+
         return BaseViewHolder(view).apply {
             view.setOnClickListener {
                 getItemOrNull(bindingAdapterPosition)?.let {
-                    when (toggleSelection(it.id, false)) {
-                        true -> view.isActivated = isSelected(it.id)
-                        false -> {
-                            expanded[it.id] = status.visibility != View.VISIBLE
-                            notifyItemChanged(bindingAdapterPosition)
-                        }
-                    }
+                    if (toggleSelection(it.id, false)) view.isActivated = isSelected(it.id)
                 }
             }
             view.setOnLongClickListener {
@@ -210,6 +222,7 @@ class MessagesAdapter @Inject constructor(
         }
 
         // Update the selected state
+        holder.itemView.backgroundTintList = selectionTint
         holder.itemView.isActivated = isSelected(message.id) || highlight == message.id
 
         // Get views based on message type
