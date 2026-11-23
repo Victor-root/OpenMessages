@@ -43,6 +43,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.GravityCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.updatePaddingRelative
@@ -701,6 +702,29 @@ class MainActivity : ThemedActivity(), MainView {
                 snackbarBinding.snackbarButton.setText(R.string.main_permission_allow)
             }
         }
+    }
+
+    /**
+     * The list's animator, set aside while the screen is out of sight: what changed meanwhile, like
+     * the conversation just written to rising to the top, is laid out on the way back, and would be
+     * animated then, in front of the user, rather than when it happened
+     */
+    private var pausedListAnimator: RecyclerView.ItemAnimator? = null
+
+    override fun onStart() {
+        super.onStart()
+        pausedListAnimator?.let { animator ->
+            // Back once the changes are laid out, for the first frame to show them already done
+            binding.recyclerView.doOnPreDraw { (it as RecyclerView).itemAnimator = animator }
+            pausedListAnimator = null
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Already aside when the screen left again before showing a frame
+        binding.recyclerView.itemAnimator?.let { pausedListAnimator = it }
+        binding.recyclerView.itemAnimator = null
     }
 
     override fun onResume() {
