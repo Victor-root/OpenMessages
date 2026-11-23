@@ -154,6 +154,13 @@ class ComposeViewModel @Inject constructor(
     private val chipsReducer: Subject<(List<Recipient>) -> List<Recipient>> = PublishSubject.create()
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
+
+    /**
+     * Messages sent but not written yet, shown from the tap on send rather than once the provider
+     * has them, see [MessageRepository.outgoingSmsPreview]. Only ever changed on the main thread.
+     */
+    private val pendingMessages = BehaviorSubject.createDefault(listOf<Message>())
+    private var lastPendingId = 0L
     /**
      * The date the conversation is shown from: its newest messages at first, reaching further back as
      * it is scrolled up. A date rather than a count, so a new message joins the list without pushing
@@ -301,10 +308,16 @@ class ComposeViewModel @Inject constructor(
                         shownSince
                             .distinctUntilChanged()
                             .switchMap { since -> messageRepo.getMessagesSince(current.id, since) }
-                            .doOnNext(messages::onNext))
+                            .doOnNext(messages::onNext),
+                        pendingMessages)
                 }
-                .subscribe { (conversation, messages) ->
-                    newState { copy(threadId = conversation.id, messages = Pair(conversation, messages)) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { (conversation, messages, pending) ->
+                    // Each pending message gives way to itself once written
+                    val unsettled = pending.filter { message -> messages.none { it.settles(message) } }
+                    if (unsettled.size != pending.size) pendingMessages.onNext(unsettled)
+                    val shown = messages + unsettled.filter { message -> message.threadId == conversation.id }
+                    newState { copy(threadId = conversation.id, messages = Pair(conversation, shown)) }
                 }
 
         disposables += conversation
@@ -1424,12 +1437,29 @@ class ComposeViewModel @Inject constructor(
 
                         // send message
                         else -> {
+                            // A plain SMS shows at once, ahead of the provider writing it
+                            val pending = addresses.singleOrNull()
+                                ?.takeIf { delay == 0 && state.attachments.isEmpty() && conversationId != 0L }
+                                ?.let { address ->
+                                    messageRepo.outgoingSmsPreview(subId, conversationId, address, body.toString())
+                                }
+                            pending?.let { message ->
+                                AndroidSchedulers.mainThread().scheduleDirect {
+                                    message.id = --lastPendingId
+                                    pendingMessages.onNext(pendingMessages.value.orEmpty() + message)
+                                }
+                            }
                             sendNewMessage.execute(
                                 // The conversation this was written in, so the message joins it
                                 // rather than whichever one the addresses resolve to next.
                                 SendNewMessage.Params(subId, conversationId, addresses,
                                     body.toString(), sendAsGroup, state.attachments.toList(), delay)
-                            )
+                            ) {
+                                // Written by now, or never to be: either way no longer pending
+                                pending?.let { message ->
+                                    pendingMessages.onNext(pendingMessages.value.orEmpty() - message)
+                                }
+                            }
                             playSentSound()
                         }
                     }

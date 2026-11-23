@@ -115,6 +115,12 @@ interface MessageRepository {
         attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int = 0
     ): Collection<Message>
 
+    /**
+     * The SMS [sendNewMessages] is about to write for [body] to [address] alone, as it will read
+     * once written, to be shown while it is; null when it will go as an MMS instead
+     */
+    fun outgoingSmsPreview(subId: Int, threadId: Long, address: String, body: String): Message?
+
     fun sendMessage(message: Message): Collection<Message>
 
     /**

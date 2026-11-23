@@ -558,7 +558,8 @@ class MessagesAdapter @Inject constructor(
         else -> R.drawable.ic_check_white_24dp
     }
 
-    override fun areItemsTheSame(old: Message, new: Message) = old.id == new.id
+    /** A message shown while it was being sent and the same one once written are one bubble */
+    override fun areItemsTheSame(old: Message, new: Message) = old.id == new.id || new.settles(old)
 
     override fun areContentsTheSame(old: Message, new: Message) =
         old == new && old.parts == new.parts && old.emojiReactions == new.emojiReactions

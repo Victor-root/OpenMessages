@@ -409,6 +409,18 @@ open class MessageRepositoryImpl @Inject constructor(
         } * 0.9 // Ugly, but buys us a bit of wiggle room
     }
 
+    override fun outgoingSmsPreview(subId: Int, threadId: Long, address: String, body: String): Message? {
+        val stripUnicode = prefs.unicode.get()
+        val text = MessageTransaction.outgoingText(body, prefs.signature.get(), stripUnicode)
+        if (MessageTransaction.checkMMS(text, 1, 0, false, prefs.longAsMms.get(), stripUnicode)) return null
+
+        return Message(
+            threadId = threadId, address = address, boxId = Sms.MESSAGE_TYPE_OUTBOX,
+            type = Message.TYPE_SMS, date = now(), body = text.orEmpty(), read = true, seen = true,
+            subId = subId
+        )
+    }
+
     override fun sendNewMessages(
         subId: Int, threadId: Long, toAddresses: Collection<String>, body: String,
         attachments: Collection<Attachment>, sendAsGroup: Boolean, delayMs: Int

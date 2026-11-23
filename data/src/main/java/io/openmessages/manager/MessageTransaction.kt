@@ -89,7 +89,8 @@ object MessageTransaction {
         return data[0]
     }
 
-    private fun checkMMS(
+    /** Whether a message goes as an MMS rather than an SMS */
+    fun checkMMS(
         body: String?, numToAddresses: Int, numParts: Int, asGroup: Boolean, longAsMms: Boolean,
         stripUnicode: Boolean
     ): Boolean {
@@ -112,20 +113,25 @@ object MessageTransaction {
     ): Uri {
         Timber.v("creating message")
 
-        // add signature to original text to be saved in db
-        var text = body
-        if (signature.isNotEmpty())
-            text += "\n$signature"
-
-        // strip unicode if flagged to do so
-        if (stripUnicode)
-            text = StripAccents.stripAccents(text)
+        val text = outgoingText(body, signature, stripUnicode)
 
         if (checkMMS(text, toAddresses.size, parts.size, asGroup, longAsMms, stripUnicode)) {
             return createMmsMessage(context, subscriptionId, threadId, text, toAddresses, parts)
         }
 
         return createSmsMessage(context, subscriptionId, threadId, text, toAddresses)
+    }
+
+    /** The text a message is written with: [body], signed, and without accents if asked */
+    fun outgoingText(body: String?, signature: String, stripUnicode: Boolean): String? {
+        var text = body
+        if (signature.isNotEmpty())
+            text += "\n$signature"
+
+        if (stripUnicode)
+            text = StripAccents.stripAccents(text)
+
+        return text
     }
 
     fun explodeMessage(context: Context, messageUri: Uri, asGroup: Boolean): Collection<Uri> {
