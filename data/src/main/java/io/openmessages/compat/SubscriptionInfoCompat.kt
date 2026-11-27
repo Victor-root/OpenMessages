@@ -28,4 +28,7 @@ data class SubscriptionInfoCompat(private val subscriptionInfo: SubscriptionInfo
 
     val displayName: CharSequence get() = subscriptionInfo.displayName
 
+    /** The colour Android gives the SIM, as its settings show it */
+    val color: Int get() = subscriptionInfo.iconTint
+
 }

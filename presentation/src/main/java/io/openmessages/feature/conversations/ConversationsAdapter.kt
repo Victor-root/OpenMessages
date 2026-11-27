@@ -43,6 +43,7 @@ import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeAttribute
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.common.util.extensions.setTint
 import io.openmessages.compat.SubscriptionManagerCompat
 import io.openmessages.databinding.ConversationListItemBinding
 import io.openmessages.model.Conversation
@@ -143,9 +144,10 @@ class ConversationsAdapter @Inject constructor(
         binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
         bindUnreadCount(holder, conversation)
 
-        val simSlot = subs.takeIf { it.size > 1 }
+        val subscription = subs.takeIf { it.size > 1 }
             ?.find { subscription -> subscription.subscriptionId == conversation.lastMessage?.subId }
-            ?.simSlotIndex?.plus(1)
+        val simSlot = subscription?.simSlotIndex?.plus(1)
+        binding.sim.setTint(colors.sim(context, subscription) ?: context.resolveThemeColor(android.R.attr.textColorTertiary))
         binding.sim.isVisible = simSlot != null
         binding.simIndex.isVisible = simSlot != null
         binding.simIndex.text = simSlot?.toString()

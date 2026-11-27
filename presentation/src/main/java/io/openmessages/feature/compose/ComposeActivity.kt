@@ -748,6 +748,8 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         binding.sim.setVisible(state.subscription != null)
         binding.sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
         binding.simIndex.text = state.subscription?.simSlotIndex?.plus(1)?.toString()
+        colors.paintSimButton(binding.sim, binding.simIndex, state.subscription,
+            resolveThemeColor(android.R.attr.textColorPrimary), resolveThemeColor(android.R.attr.textColorPrimaryInverse))
 
         // show either send, audio msg record, or sendScheduled button
         binding.send.swapShown(state.canSend && !state.loading && state.scheduled == 0L)

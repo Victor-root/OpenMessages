@@ -388,6 +388,7 @@ class MessagesAdapter @Inject constructor(
         }
 
         simIndex.text = subscription?.simSlotIndex?.plus(1)?.toString()
+        sim.setTint(colors.sim(context, subscription) ?: context.resolveThemeColor(android.R.attr.textColorSecondary))
 
         ((message.subId != previous?.subId) && (subscription != null) && (subs.size > 1)).also {
             sim.setVisible(it)

@@ -21,10 +21,14 @@ package io.openmessages.common.util
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Color
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.res.getColorOrThrow
 import androidx.core.graphics.ColorUtils
 import io.openmessages.R
 import io.openmessages.common.util.extensions.getColorCompat
+import io.openmessages.common.util.extensions.setTint
+import io.openmessages.compat.SubscriptionInfoCompat
 import io.openmessages.model.Recipient
 import io.openmessages.util.Preferences
 import io.reactivex.rxjava3.core.Observable
@@ -134,6 +138,25 @@ class Colors @Inject constructor(
         val night = themed.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
                 Configuration.UI_MODE_NIGHT_YES
         return if (night) ColorUtils.blendARGB(color, Color.WHITE, 0.45f) else color
+    }
+
+    /**
+     * The colour Android gives [subscription]'s SIM, as an icon reads on the screen's background in
+     * [themed]'s mode, or null for a SIM it gives none
+     */
+    fun sim(themed: Context, subscription: SubscriptionInfoCompat?): Int? = subscription?.color
+        ?.takeIf { color -> Color.alpha(color) != 0 }
+        ?.let { color -> readableOnBackground(themed, color) }
+
+    /**
+     * Paints the SIM button of a message being written, its slot number drawn inside the icon, in
+     * the colour of [subscription]'s SIM, or [defaultTint] and [defaultIndex] for a SIM without one
+     */
+    fun paintSimButton(icon: ImageView, index: TextView, subscription: SubscriptionInfoCompat?,
+                       defaultTint: Int, defaultIndex: Int) {
+        val simColor = sim(icon.context, subscription)
+        icon.setTint(simColor ?: defaultTint)
+        index.setTextColor(simColor?.let(::contentColorOnTheme) ?: defaultIndex)
     }
 
     /**

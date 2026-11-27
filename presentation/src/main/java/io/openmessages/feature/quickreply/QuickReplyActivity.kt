@@ -42,6 +42,7 @@ import io.openmessages.R
 import io.openmessages.common.ViewModelFactory
 import io.openmessages.common.base.ThemedActivity
 import io.openmessages.common.util.extensions.autoScrollToStart
+import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setVisible
 import io.openmessages.common.util.extensions.showKeyboard
 import io.openmessages.common.widget.AppEditText
@@ -162,6 +163,8 @@ class QuickReplyActivity : ThemedActivity(), QuickReplyView {
         binding.sim.setVisible(state.subscription != null)
         binding.sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
         binding.simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
+        colors.paintSimButton(binding.sim, binding.simIndex, state.subscription,
+            resolveThemeColor(android.R.attr.textColorSecondary), resolveThemeColor(android.R.attr.textColorPrimaryInverse))
 
         binding.send.isEnabled = state.canSend
         binding.send.imageAlpha = if (state.canSend) 255 else 128
