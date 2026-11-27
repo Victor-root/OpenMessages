@@ -43,6 +43,7 @@ import io.openmessages.common.util.extensions.looksLike
 import io.openmessages.common.util.extensions.resolveThemeAttribute
 import io.openmessages.common.util.extensions.resolveThemeColor
 import io.openmessages.common.util.extensions.setBackgroundTint
+import io.openmessages.compat.SubscriptionManagerCompat
 import io.openmessages.databinding.ConversationListItemBinding
 import io.openmessages.model.Conversation
 import io.openmessages.util.DisplayNames
@@ -56,9 +57,13 @@ class ConversationsAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
-    private val phoneNumberUtils: PhoneNumberUtils
+    private val phoneNumberUtils: PhoneNumberUtils,
+    subscriptionManager: SubscriptionManagerCompat
 ) : BaseAdapter<Conversation, BindingViewHolder<ConversationListItemBinding>>() {
     private val disposables = CompositeDisposable()
+
+    /** The phone's SIMs, of which the conversations show theirs only when there are several */
+    private val subs = subscriptionManager.activeSubscriptionInfoList
 
     var hasScheduledConversation: Set<Long> = emptySet()
         set(value) {
@@ -137,6 +142,14 @@ class ConversationsAdapter @Inject constructor(
         holder.itemView.isActivated = isSelected(conversation.id)
         binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
         bindUnreadCount(holder, conversation)
+
+        val simSlot = subs.takeIf { it.size > 1 }
+            ?.find { subscription -> subscription.subscriptionId == conversation.lastMessage?.subId }
+            ?.simSlotIndex?.plus(1)
+        binding.sim.isVisible = simSlot != null
+        binding.simIndex.isVisible = simSlot != null
+        binding.simIndex.text = simSlot?.toString()
+        binding.simIndex.contentDescription = simSlot?.let { context.getString(R.string.main_sim_cd, it) }
 
         binding.avatars.recipients = conversation.recipients
         binding.title.collapseEnabled = conversation.recipients.size > 1

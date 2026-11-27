@@ -52,7 +52,7 @@
         android:textDirection="ltr"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@id/snippet"
-        app:layout_constraintEnd_toStartOf="@id/date"
+        app:layout_constraintEnd_toStartOf="@id/sim"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/avatars"
         app:layout_constraintTop_toTopOf="parent"
@@ -120,6 +120,33 @@
         tools:backgroundTint="@color/tools_theme"
         tools:text="3"
         tools:textColor="@android:color/white"
+        tools:visibility="visible" />
+
+    <!-- The SIM the conversation last went through, only with more than one SIM in the phone -->
+    <ImageView
+        android:id="@+id/sim"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_sim_card_black_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/date"
+        app:layout_constraintEnd_toStartOf="@id/simIndex"
+        app:layout_constraintTop_toTopOf="@id/date"
+        app:tint="?android:attr/textColorTertiary"
+        tools:visibility="visible" />
+
+    <io.openmessages.common.widget.AppTextView
+        android:id="@+id/simIndex"
+        style="@style/TextTertiary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@id/date"
+        app:layout_constraintEnd_toStartOf="@id/date"
+        tools:text="1"
         tools:visibility="visible" />
 
     <io.openmessages.common.widget.AppTextView
