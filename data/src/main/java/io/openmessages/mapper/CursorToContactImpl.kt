@@ -20,7 +20,9 @@ package io.openmessages.mapper
 
 import android.content.Context
 import android.database.Cursor
+import android.provider.ContactsContract.CommonDataKinds.Organization
 import android.provider.ContactsContract.CommonDataKinds.Phone
+import android.provider.ContactsContract.Data
 import io.openmessages.manager.PermissionManager
 import io.openmessages.model.Contact
 import io.openmessages.model.PhoneNumber
@@ -72,6 +74,22 @@ class CursorToContactImpl @Inject constructor(
         ))
         starred = from.getInt(COLUMN_STARRED) != 0
         lastUpdate = from.getLong(CONTACT_LAST_UPDATED)
+    }
+
+    override fun getCompanies(): Map<String, String> {
+        if (!permissionManager.hasContacts()) return emptyMap()
+        return context.contentResolver.query(
+            Data.CONTENT_URI, arrayOf(Data.LOOKUP_KEY, Organization.COMPANY),
+            "${Data.MIMETYPE} = ?", arrayOf(Organization.CONTENT_ITEM_TYPE), null
+        )?.use { cursor ->
+            buildMap {
+                while (cursor.moveToNext()) {
+                    val lookupKey = cursor.getString(0) ?: continue
+                    val company = cursor.getString(1)?.trim()?.takeIf { it.isNotEmpty() } ?: continue
+                    putIfAbsent(lookupKey, company)
+                }
+            }
+        }.orEmpty()
     }
 
     override fun getContactsCursor(): Cursor? {

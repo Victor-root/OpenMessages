@@ -19,6 +19,7 @@
 package io.openmessages.database
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -40,7 +41,11 @@ import io.openmessages.model.ScheduledMessage
 import io.openmessages.model.SyncLog
 
 @Database(
-    version = 1,
+    version = 2,
+    autoMigrations = [
+        // Contacts' companies
+        AutoMigration(from = 1, to = 2)
+    ],
     entities = [
         Conversation::class,
         ConversationRecipient::class,

@@ -41,6 +41,10 @@ class DisplayNames @Inject constructor(
     fun of(recipient: Recipient): String =
         recipient.contact?.name?.takeIf { it.isNotBlank() } ?: number(recipient.address)
 
+    /** The company a conversation's one contact works for; none for a group or anyone without one */
+    fun company(conversation: Conversation): String? =
+        conversation.recipients.singleOrNull()?.contact?.company?.takeIf { it.isNotBlank() }
+
     fun of(conversation: Conversation): String =
         conversation.name.takeIf { it.isNotBlank() } ?: conversation.recipients.joinToString(transform = ::of)
 

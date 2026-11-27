@@ -25,4 +25,7 @@ interface CursorToContact : Mapper<Cursor, Contact> {
 
     fun getContactsCursor(): Cursor?
 
+    /** The company each contact works for, by the contact's lookup key */
+    fun getCompanies(): Map<String, String>
+
 }

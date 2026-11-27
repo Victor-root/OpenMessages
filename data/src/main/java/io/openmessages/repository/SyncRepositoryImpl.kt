@@ -383,6 +383,7 @@ class SyncRepositoryImpl @Inject constructor(
 
     private fun getContacts(): List<Contact> {
         val defaultNumberIds = contactDao.getDefaultNumberIds()
+        val companies = cursorToContact.getCompanies()
 
         return cursorToContact.getContactsCursor()
                 ?.map { cursor -> cursorToContact.map(cursor) }
@@ -408,6 +409,7 @@ class SyncRepositoryImpl @Inject constructor(
 
                     contacts.value.first().apply {
                         numbers = uniqueNumbers
+                        company = companies[lookupKey].orEmpty()
                     }
                 } ?: listOf()
     }

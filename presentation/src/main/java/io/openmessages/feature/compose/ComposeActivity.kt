@@ -633,7 +633,7 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         }
 
         // Who the conversation is with, beside its name: the avatar, and under a contact's name its
-        // number. A group, or a number with no contact, already says it all in the name.
+        // number and company. A group, or a number with no contact, already says it all in the name.
         val conversation = state.messages?.first
         val showIdentity = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty() &&
                 conversation != null
@@ -644,11 +644,14 @@ class ComposeActivity : ThemedActivity(), ComposeView {
         val number = conversation?.recipients?.singleOrNull()
             ?.takeIf { recipient -> recipient.contact != null }
             ?.let { recipient -> displayNames.number(recipient.address) }
-        binding.toolbarSubtitle.setVisible(state.query.isNotEmpty() || (showIdentity && number != null))
+        // The number first, whole, the company after it giving way when the line runs short
+        val identity = listOfNotNull(number, conversation?.let(displayNames::company))
+            .joinToString(" · ").takeIf { it.isNotEmpty() }
+        binding.toolbarSubtitle.setVisible(state.query.isNotEmpty() || (showIdentity && identity != null))
         binding.toolbarSubtitle.text = when {
             state.query.isNotEmpty() -> getString(R.string.compose_subtitle_results,
                 state.searchSelectionPosition, state.searchResults)
-            else -> number
+            else -> identity
         }
 
         binding.toolbarTitle.setVisible(!state.editingMode)

@@ -157,6 +157,10 @@ class ConversationsAdapter @Inject constructor(
         binding.title.collapseEnabled = conversation.recipients.size > 1
         binding.title.text = buildSpannedString {
             append(displayNames.of(conversation))
+            // The company after the name, quieter, and the first to give way to a narrow row
+            displayNames.company(conversation)?.let { company ->
+                color(context.resolveThemeColor(android.R.attr.textColorTertiary)) { append(" · $company") }
+            }
         }
 
         val localSnippet = context.localiseSummary(conversation.snippet)

@@ -18,6 +18,7 @@
  */
 package io.openmessages.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -26,6 +27,8 @@ import androidx.room.PrimaryKey
 data class Contact(
     @PrimaryKey var lookupKey: String = "",
     var name: String = "",
+    /** The company the contact works for, as its card names it */
+    @ColumnInfo(defaultValue = "") var company: String = "",
     var photoUri: String? = null,
     var starred: Boolean = false,
     var lastUpdate: Long = 0
