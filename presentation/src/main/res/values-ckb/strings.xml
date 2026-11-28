@@ -1,3 +1,634 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_tagline">نامەناردنی سادە و سەرچاوە کراوە</string>
+    <string name="shortcut_compose_long_label">گفتوگۆی نوێ</string>
+    <string name="shortcut_compose_short_label">نووسین</string>
+    <string name="shortcut_compose_disabled_message">کورتەڕێ ناچالاک کراوە</string>
+    <string name="title_archived">ئەرشیفکراو</string>
+    <string name="title_settings">ڕێکخستنەکان</string>
+    <string name="title_notification_prefs">ئاگادارکردنەوەکان</string>
+    <string name="title_theme">ڕووکار</string>
+    <string name="theme_default">بنەڕەت</string>
+    <string name="theme_wallpaper">وێنەی باکگراوند</string>
+    <string name="theme_other_colors">ڕەنگەکان</string>
+    <string name="theme_tab_presets">پالێت</string>
+    <string name="theme_tab_custom">تایبەت</string>
+    <string name="theme_apply_to_icon">ڕەنگ بۆ ئایکۆنی ئەپ دابنێ (ئەپەکە دادەخرێت)</string>
+    <string name="theme_tab_icon">ئایکۆنی ئەپ</string>
+    <string name="theme_icon_follow_theme">هاوتای ڕەنگی ڕووکاری ئەپ</string>
+    <string name="theme_icon_summary">ڕەنگی ئایکۆنی ئەپەکەت هەڵبژێرە، جیا لە ڕووکار. جێبەجێکردنی گۆڕانکاری ئەپەکە دادەخات.</string>
+    <string name="theme_icon_change_title">ئایکۆنی ئەپ بگۆڕدرێت؟</string>
+    <string name="theme_icon_change_message">ڕەنگی ئایکۆنی ئەپ خەریکە دەگۆڕێت. Android تەنها کاتێک ئەپەکە داخراوە دەتوانێت ئایکۆن بگۆڕێت، بۆیە Open Messages هەر کە پشتڕاستی بکەیتەوە دادەخرێت.</string>
+    <string name="title_conversations">گەڕان لە نامەکاندا…</string>
+    <string name="title_search">گەڕان</string>
+    <string name="title_compose">ناو یان ژمارەیەک بنووسە</string>
+    <string name="setup_skip">تێپەڕاندن</string>
+    <string name="setup_next">بەردەوامبوون</string>
+    <string name="menu_add_person">زیادکردنی کەس</string>
+    <string name="menu_call">پەیوەندی کردن</string>
+    <string name="menu_mms_part_save">پاشەکەوت لە گەلەری</string>
+    <string name="menu_mms_part_share">هاوبەشکردن</string>
+    <string name="menu_mms_part_forward">ناردنەوە</string>
+    <string name="menu_mms_part_open">کردنەوە بە ئەپێکی تر</string>
+    <string name="main_drawer_open_cd">کردنەوەی لیستی ڕێنیشاندەر</string>
+    <string name="main_search_close_cd">داخستنی گەڕان</string>
+    <string name="main_search_clear_cd">سڕینەوەی گەڕان</string>
+    <string name="main_sim_cd">SIM %d</string>
+    <string name="main_title_selected">%d هەڵبژێردراو</string>
+    <string name="main_menu_clear">پاککردنەوە</string>
+    <string name="main_menu_select_all">هەڵبژاردنی هەمووی</string>
+    <string name="main_menu_archive">ئەرشیفکردن</string>
+    <string name="main_menu_unarchive">لابردن لە ئەرشیف</string>
+    <string name="main_menu_delete">سڕینەوە</string>
+    <string name="main_menu_add_contact">زیادکردن بۆ پەیوەندییەکان</string>
+    <string name="main_menu_pin">جێگیرکردن لە سەرەوە</string>
+    <string name="main_menu_unpin">لابردنی جێگیرکردن</string>
+    <string name="main_menu_read">نیشانکردن وەک خوێندراوە</string>
+    <string name="main_menu_unread">نیشانکردن وەک نەخوێندراوە</string>
+    <string name="main_menu_block">بلۆککردن</string>
+    <string name="main_menu_send_now">ئێستا بینێرە</string>
+    <string name="main_menu_edit_message">دەستکاریکردنی نامە</string>
+    <string name="main_menu_rename_conversation">گۆڕینی ناوی گفتوگۆ</string>
+    <string name="main_syncing">هاوکاتکردنی نامەکان…</string>
+    <string name="main_sync_emojis">شیکردنەوەی کاردانەوە ئیمۆجییەکان…</string>
+    <string name="main_sender_you">تۆ: %s</string>
+    <string name="main_sender_draft">ڕەشنووس: %s</string>
+    <string name="conversation_flagged_label">گومانی سپام</string>
+    <string name="snippet_picture">وێنە</string>
+    <string name="snippet_video">ڤیدیۆ</string>
+    <string name="snippet_audio">دەنگ</string>
+    <string name="snippet_contact_card">کارتی پەیوەندی</string>
+    <string name="search_group_conversations">گفتوگۆکان</string>
+    <string name="main_message_results_title">ئەنجامەکان لە نامەکاندا</string>
+    <plurals name="main_message_results">
+        <item quantity="one">%d نامە</item>
+        <item quantity="other">%d نامە</item>
+    </plurals>
+    <string name="inbox_empty_text">گفتوگۆکانت لێرە دەردەکەون</string>
+    <string name="inbox_search_empty_text">هیچ ئەنجامێک نییە</string>
+    <string name="archived_empty_text">گفتوگۆ ئەرشیفکراوەکانت لێرە دەردەکەون</string>
+    <string name="main_fab_cd">دەستپێکردنی گفتوگۆی نوێ</string>
+    <string name="main_default_sms_title">دووبارە حەز لە نامەناردن بکەرەوە</string>
+    <string name="main_default_sms_message">Open Messages بکە بە ئەپی SMSی بنەڕەتیت</string>
+    <string name="main_default_sms_change">گۆڕین</string>
+    <string name="main_permission_required">مۆڵەت پێویستە</string>
+    <string name="main_permission_sms">Open Messages پێویستی بە مۆڵەتە بۆ ناردن و بینینی نامەی SMS</string>
+    <string name="main_permission_contacts">Open Messages پێویستی بە مۆڵەتە بۆ بینینی پەیوەندییەکانت</string>
+    <string name="main_permission_notifications">Open Messages پێویستی بە مۆڵەتە بۆ پیشاندانی ئاگادارکردنەوەکان</string>
+    <string name="main_permission_allow">ڕێگەدان</string>
+    <string name="scheduled_menu_send_now">ئێستا بینێرە</string>
+    <string name="scheduled_menu_edit_message">دەستکاریکردنی نامە</string>
+    <string name="drawer_inbox">هاتووەکان</string>
+    <string name="contacts_group_recent">دوایین</string>
+    <string name="contacts_group_starred">دڵخوازەکان</string>
+    <string name="contacts_group_groups">گرووپەکان</string>
+    <string name="conversations_group_today">ئەمڕۆ</string>
+    <string name="conversations_group_yesterday">دوێنێ</string>
+    <string name="drawer_archived">ئەرشیفکراو</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d نەخوێندراوە</item>
+        <item quantity="other">%d نەخوێندراوە</item>
+    </plurals>
+    <string name="drawer_scheduled">خشتەکراو</string>
+    <string name="drawer_blocking">بلۆککردن</string>
+    <string name="drawer_more">زیاتر</string>
+    <string name="message_management_title">بەڕێوەبردنی نامەکان</string>
+    <string name="templates_title">قاڵبەکان</string>
+    <string name="templates_empty">هێشتا هیچ نامەیەکی پاشەکەوتکراو نییە.\nلە + بدە بۆ پاشەکەوتکردنی نامەیەک کە زۆر دەینێریت، پاشان لێی بدە بۆ هەڵبژاردنی ئەوەی بۆ کێ بینێریت.</string>
+    <string name="template_hint">نامەکەت بنووسە…</string>
+    <string name="template_title_hint">ناونیشان (ئارەزوومەندانە)</string>
+    <string name="templates_add_cd">قاڵبی نوێ</string>
+    <string name="template_new">قاڵبی نوێ</string>
+    <string name="template_edit">دەستکاریکردنی قاڵب</string>
+    <string name="drawer_settings">ڕێکخستنەکان</string>
+    <string name="drawer_help">یارمەتی و ڕاوبۆچوون</string>
+    <string name="drawer_invite">بانگهێشتکردنی هاوڕێیان</string>
+    <string name="rate_title">چێژ لە Open Messages وەردەگریت؟</string>
+    <string name="rate_summary">خۆشەویستی نیشان بدە و ئەستێرەیەکمان لە GitHub بۆ دابنێ!</string>
+    <string name="rate_okay">باشە!</string>
+    <string name="rate_dismiss">لابردن</string>
+    <string name="dialog_delete_title">سڕینەوە</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">دڵنیایت دەتەوێت ئەم گفتوگۆیە بسڕیتەوە؟</item>
+        <item quantity="other">دڵنیایت دەتەوێت %d گفتوگۆ بسڕیتەوە؟</item>
+    </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">دڵنیایت دەتەوێت ئەم نامەیە بسڕیتەوە؟</item>
+        <item quantity="other">دڵنیایت دەتەوێت %d نامە بسڕیتەوە؟</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">دڵنیایت دەتەوێت ئەم نامەیە ئێستا بنێریت؟</item>
+        <item quantity="other">دڵنیایت دەتەوێت %d نامە ئێستا بنێریت؟</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">دەستکاریکردنی نامە</string>
+    <string name="dialog_edit_scheduled_message">دەستکاریکردنی ئەم نامەیە لە خشتەکە لای دەبات.\n\nدڵنیابە لە پەڕەی داهاتوودا دووبارە بینێریتەوە، دەنا لەدەست دەچێت.\n\nدەتەوێت بەردەوام بیت؟</string>
+    <string name="dialog_edit_scheduled_message_positive_button">بەڵێ، نامەکە دەستکاری بکە</string>
+    <string name="dialog_clear_compose_title">سڕینەوەی نامە</string>
+    <string name="dialog_clear_compose">نامەکە بسڕدرێتەوە؟ ئەم کارە ناگەڕێتەوە.</string>
+    <string-array name="message_options">
+        <item>لەبەرگرتنەوەی دەق</item>
+        <item>ناردنەوە</item>
+        <item>سڕینەوە</item>
+    </string-array>
+    <string name="compose_number_picker_title">ژمارەی تەلەفۆنێک هەڵبژێرە</string>
+    <string name="compose_number_picker_default">%s ∙ بنەڕەت</string>
+    <string name="compose_number_picker_once">تەنها یەک جار</string>
+    <string name="compose_number_picker_always">هەمیشە</string>
+    <string name="compose_title_selected">%d هەڵبژێردراو</string>
+    <string name="compose_subtitle_results">%1$d لە %2$d ئەنجام</string>
+    <string name="compose_send_group_title">ناردن وەک نامەی گرووپ</string>
+    <string name="compose_send_group_summary">وەرگران و وەڵامەکان بۆ هەمووان دیار دەبن</string>
+    <string name="compose_send_group_summary_on">وەرگران و وەڵامەکان بۆ هەمووان دیار دەبن</string>
+    <string name="compose_send_group_summary_off">نامەکان بە جیا بۆ هەموو وەرگران دەنێردرێن</string>
+    <string name="compose_messages_empty">ئەمە سەرەتای گفتوگۆکەتە. شتێکی خۆش بڵێ!</string>
+    <string name="compose_vcard_label">کارتی پەیوەندی</string>
+    <string name="compose_scheduled_for">کاتی خشتەکراو:</string>
+    <string name="compose_scheduled_future">کاتی هەڵبژێردراو دەبێت لە داهاتوودا بێت!</string>
+    <string name="compose_scheduled_toast">زیادکرا بۆ نامە خشتەکراوەکان</string>
+    <string name="compose_scheduled_view">نامە خشتەکراوەکانی ئەم گفتوگۆیە</string>
+    <string name="compose_scheduled_bubble">ناردن لە %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d هاوپێچ</item>
+        <item quantity="other">%d هاوپێچ</item>
+    </plurals>
+    <string name="compose_hint">نامەیەک بنووسە…</string>
+    <string name="compose_expand_cd">فراوانکردن بۆ پڕی شاشە</string>
+    <string name="compose_collapse_cd">بچووککردنەوە</string>
+    <string name="compose_no_valid_recipients">ناتوانرێت بۆ بەشداربووانی تر بنێردرێت</string>
+    <string name="compose_flagged_title">گومانی سپام</string>
+    <string name="compose_flagged_approve">پەسەندکردن</string>
+    <string name="compose_flagged_block">بلۆککردن</string>
+    <string name="compose_menu_copy">لەبەرگرتنەوەی دەق</string>
+    <string name="compose_menu_share">هاوبەشکردنی دەق</string>
+    <string name="compose_menu_forward">ناردنەوە</string>
+    <string name="compose_menu_show_status">پیشاندانی دۆخ</string>
+    <string name="compose_menu_delete">سڕینەوە</string>
+    <string name="compose_menu_previous">پێشوو</string>
+    <string name="compose_menu_next">داهاتوو</string>
+    <string name="compose_menu_clear">پاککردنەوە</string>
+    <string name="compose_details_title">وردەکاریی نامە</string>
+    <string name="compose_reactions_title">کاردانەوەکان</string>
+    <string name="compose_details_type">جۆر: %s</string>
+    <string name="compose_details_from">لە: %s</string>
+    <string name="compose_details_to">بۆ: %s</string>
+    <string name="compose_details_subject">بابەت: %s</string>
+    <string name="compose_details_priority">پێشینە: %s</string>
+    <string name="compose_details_size">قەبارە: %s</string>
+    <string name="compose_details_sent">نێردرا: %s</string>
+    <string name="compose_details_received">وەرگیرا: %s</string>
+    <string name="compose_details_delivered">گەیشت: %s</string>
+    <string name="compose_details_error_code">کۆدی هەڵە: %d</string>
+    <string name="compose_attach_cd">زیادکردنی هاوپێچ</string>
+    <string name="compose_attach_file_cd">هاوپێچکردنی هەر فایلێک</string>
+    <string name="compose_gallery_cd">هاوپێچکردنی وێنە</string>
+    <string name="compose_audio_message_cd">تۆمارکردنی نامەی دەنگی</string>
+    <string name="compose_camera_cd">گرتنی وێنە</string>
+    <string name="compose_schedule_cd">خشتەکردنی نامە</string>
+    <string name="compose_schedule_title">خشتەکردنی نامە</string>
+    <string name="compose_schedule_in_hour">لە ماوەی ١ کاتژمێردا</string>
+    <string name="compose_schedule_tonight">ئەم ئێوارەیە</string>
+    <string name="compose_schedule_tomorrow_morning">بەیانیی سبەی</string>
+    <string name="compose_schedule_tomorrow_afternoon">پاشنیوەڕۆی سبەی</string>
+    <string name="compose_schedule_custom">هەڵبژاردنی بەروار و کات</string>
+    <string name="compose_schedule_confirm">خشتەکردن</string>
+    <string name="compose_schedule_previous_month">مانگی پێشوو</string>
+    <string name="compose_schedule_next_month">مانگی داهاتوو</string>
+    <string name="compose_schedule_increase">زیادکردن</string>
+    <string name="compose_schedule_decrease">کەمکردنەوە</string>
+    <string name="compose_schedule_cancel_cd">هەڵوەشاندنەوەی خشتەکردنی نامە</string>
+    <string name="compose_contact_cd">هاوپێچکردنی پەیوەندی</string>
+    <string name="compose_contact_error">هەڵە لە خوێندنەوەی پەیوەندی</string>
+    <string name="compose_attach_gallery">گەلەری</string>
+    <string name="compose_attach_camera">کامێرا</string>
+    <string name="compose_attach_file">فایل</string>
+    <string name="compose_attach_audio">دەنگ</string>
+    <string name="compose_attach_contact">پەیوەندی</string>
+    <string name="compose_attach_schedule">خشتەکردن</string>
+    <string name="compose_attach_templates">قاڵبەکان</string>
+    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) هەڵبژێردرا</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">ئەم ڤیدیۆیە زۆر درێژە بۆ ناردن بە MMS. دەتوانێت تا %d چرکە بێت.</item>
+        <item quantity="other">ئەم ڤیدیۆیە زۆر درێژە بۆ ناردن بە MMS. دەتوانێت تا %d چرکە بێت.</item>
+    </plurals>
+    <string name="compose_sim_cd">%s هەڵبژێردراوە، گۆڕینی کارتی SIM</string>
+    <string name="compose_send_cd">ناردنی نامە</string>
+    <string name="compose_record_audio_msg_cd">تۆمارکردنی نامەی دەنگی</string>
+    <string name="compose_record_audio_msg_abort_cd">هەڵوەشاندنەوەی نامەی دەنگی</string>
+    <string name="compose_record_audio_msg_attach_cd">هاوپێچکردنی نامەی دەنگی</string>
+    <string name="compose_audio_msg_title">نامەی دەنگی</string>
+    <string name="compose_audio_msg_attach">هاوپێچکردن</string>
+    <string name="compose_record_audio_msg_play_pause_cd">لێدان یان ڕاگرتنی نامەی دەنگی</string>
+    <string name="compose_message_cancel">هەڵوەشاندنەوە</string>
+    <string name="compose_message_send_now">ئێستا بینێرە</string>
+    <string name="compose_message_sim">ژمارەی SIM</string>
+    <string name="compose_message_item">بڕگەی نامە</string>
+    <string name="compose_message_attachment">هاوپێچ</string>
+    <string name="compose_toast_drag_stt">دوگمەی گۆڕینی قسە بۆ دەق بۆ هەر شوێنێک دەتەوێت بجوڵێنە</string>
+    <string name="message_status_sending">دەنێردرێت…</string>
+    <string name="message_status_delivered">گەیشت %s</string>
+    <string name="message_status_failed">ناردن سەرکەوتوو نەبوو. لێی بدە بۆ دووبارە هەوڵدانەوە</string>
+    <string name="message_body_too_long_to_display">⚠ نامەکە درێژە. بۆ دەقی تەواو لەبەری بگرەوە یان پاشەکەوتی بکە</string>
+    <string name="conversation_menu">هەڵبژاردەکانی گفتوگۆ</string>
+    <string name="conversation_menu_media">بینینی هەموو میدیاکان</string>
+    <string name="media_title">میدیا</string>
+    <string name="media_empty">ئەو وێنە و ڤیدیۆیانەی لەم گفتوگۆیەدا هاوبەش کراون لێرە دەردەکەون</string>
+    <string name="info_copied_address">ناونیشان لەبەرگیرایەوە</string>
+    <string name="info_name">ناونیشانی گفتوگۆ</string>
+    <string name="info_notifications">ئاگادارکردنەوەکان</string>
+    <string name="info_theme">ڕووکار</string>
+    <string name="info_archive">ئەرشیفکردن</string>
+    <string name="info_unarchive">لابردن لە ئەرشیف</string>
+    <string name="info_block">بلۆککردن</string>
+    <string name="info_unblock">لابردنی بلۆک</string>
+    <string name="info_delete">سڕینەوەی گفتوگۆ</string>
+    <string name="gallery_error">نەتوانرا میدیا باربکرێت</string>
+    <string name="gallery_toast_saved">لە گەلەری پاشەکەوت کرا</string>
+    <string name="backup_title">باکئەپ و گەڕاندنەوە</string>
+    <string name="backup_backing_up">باکئەپکردنی نامەکان</string>
+    <string name="backup_failed_title">باکئەپ سەرکەوتوو نەبوو</string>
+    <string name="backup_icon_change_title">ئایکۆنی ئەپ بگەڕێندرێتەوە؟</string>
+    <string name="backup_icon_change_message">باکئەپەکەت بە ڕەنگێکی تری ئایکۆنی ئەپ دروست کراوە. Android تەنها کاتێک ئەپەکە داخراوە دەتوانێت ئایکۆن بگۆڕێت، بۆیە Open Messages هەر کە پشتڕاستی بکەیتەوە دادەخرێت.</string>
+    <string name="icon_change_confirm">جێبەجێکردن و داخستن</string>
+    <string name="icon_change_later">ئێستا نا</string>
+    <string name="backup_restoring">گەڕاندنەوە لە باکئەپ</string>
+    <string name="backup_loading">بارکردن…</string>
+    <string name="backup_never">هەرگیز</string>
+    <string name="backup_location_title">شوێنی باکئەپ</string>
+    <string name="backup_location_summary">دیاریکردنی بوخچە</string>
+    <string name="backup_auto_title">باکئەپی خۆکار</string>
+    <string name="backup_auto_never">هەرگیز</string>
+    <string name="backup_auto_daily">هەموو ڕۆژێک</string>
+    <string name="backup_auto_weekly">هەموو هەفتەیەک</string>
+    <string name="backup_auto_custom">تایبەت…</string>
+    <string name="backup_auto_custom_title">ژمارەی ڕۆژ لە نێوان باکئەپەکاندا</string>
+    <string name="backup_auto_custom_hint">ژمارەی ڕۆژەکان</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">هەموو %d ڕۆژێک</item>
+        <item quantity="other">هەموو %d ڕۆژێک</item>
+    </plurals>
+    <string name="backup_zip_title">پاشەکەوت وەک فایلی .zip</string>
+    <string name="backup_zip_summary">هەر باکئەپێک وەک یەک ئەرشیف هەڵبگرە، گواستنەوەی لە نێوان مۆبایلەکاندا ئاسانترە</string>
+    <string name="backup_manage_title">بەڕێوەبردنی باکئەپەکان</string>
+    <string name="backup_manage_summary">گۆڕینی ناو یان سڕینەوەی باکئەپەکانت</string>
+    <string name="backup_manage_empty">هیچ باکئەپێک لەم شوێنەدا نەدۆزرایەوە</string>
+    <string name="backup_manage_rename">گۆڕینی ناو</string>
+    <string name="backup_manage_delete">سڕینەوە</string>
+    <string name="backup_manage_delete_confirm">\"%s\" بسڕدرێتەوە؟ ئەمە ناگەڕێتەوە.</string>
+    <string name="backup_manage_error">نەتوانرا ئەم باکئەپە نوێ بکرێتەوە</string>
+    <string name="backup_manage_type_folder">بوخچە</string>
+    <string name="backup_manage_type_zip">ئەرشیفی Zip</string>
+    <string name="backup_restore_from_title">گەڕاندنەوە لە</string>
+    <string name="backup_restore_from_folder">بوخچەیەک</string>
+    <string name="backup_restore_from_zip">فایلێکی .zip</string>
+    <string name="backup_restore_title">گەڕاندنەوە</string>
+    <string name="backup_restore_summary">باکئەپێک هەڵبژێرە</string>
+    <string name="backup_restore_error_backup">باکئەپ لە جێبەجێکردندایە…</string>
+    <string name="backup_restore_error_restore">گەڕاندنەوە لە جێبەجێکردندایە…</string>
+    <string name="backup_restore_confirm_title">گەڕاندنەوە لە باکئەپ</string>
+    <string name="backup_restore_stop_title">ڕاگرتنی گەڕاندنەوە</string>
+    <string name="backup_restore_stop_message">ئەو نامانەی پێشتر گەڕێندراونەتەوە لەسەر ئامێرەکەت دەمێننەوە</string>
+    <string name="backup_select_location_rationale_title">هەڵبژاردنی شوێنی باکئەپ</string>
+    <string name="backup_select_location_rationale_message">تکایە بوخچەیەک هەڵبژێرە بۆ پاشەکەوتکردنی باکئەپەکانت</string>
+    <string name="backup_details">%1$s\n%2$d نامە</string>
+    <string name="backup_selected_backup_error_title">هەڵە</string>
+    <string name="backup_selected_backup_error_message">نەتوانرا فایلی باکئەپ بخوێندرێتەوە</string>
+    <string name="backup_selected_backup_details_title">وردەکاریی باکئەپ</string>
+    <string name="backup_restore_dialog_title">باکئەپەکان</string>
+    <string name="backup_restore_dialog_empty">هیچ باکئەپێک نەدۆزرایەوە</string>
+    <string name="backup_disclaimer">بە شێوەی بنەڕەت، باکئەپەکان لە Documents/OpenMessages پاشەکەوت دەکرێن؛ بۆ گۆڕینی، شوێنی باکئەپ لە سەرەوە بەکاربهێنە. SMS و MMSەکانت (لەگەڵ هاوپێچەکان)، ڕێکخستنەکان، قاڵبەکان، یاساکانی بلۆککردن، نامە خشتەکراوەکان و گفتوگۆ ئەرشیفکراو یان جێگیرکراوەکان هەموویان دەتوانرێت بخرێنە ناوەوە. بۆ ئەوەی بە پێی خشتەیەک باکئەپ بکرێت، باکئەپی خۆکار لە سەرەوە بەکاربهێنە.</string>
+    <string name="backup_now">ئێستا باکئەپ بکە</string>
+    <string name="backup_now_summary">دروستکردنی باکئەپێکی نوێ</string>
+    <string name="backup_categories_title">چی باکئەپ بکرێت؟</string>
+    <string name="backup_restore_source_title">کام باکئەپ؟</string>
+    <string name="backup_restore_categories_title">گەڕاندنەوە لە %s</string>
+    <string name="backup_category_messages">نامەکان (SMS، MMS و هاوپێچەکان)</string>
+    <string name="backup_category_settings">ڕێکخستنەکان و قاڵبەکان</string>
+    <string name="backup_category_blocking">یاساکانی بلۆککردن</string>
+    <string name="backup_category_conversations">ئەرشیفکراو و جێگیرکراو</string>
+    <string name="backup_category_scheduled">نامە خشتەکراوەکان</string>
+    <string name="backup_exact_alarm_title">ڕێگەدان بە ئاگادارکەرەوەی ورد</string>
+    <string name="backup_exact_alarm_message">بۆ ناردنی نامە خشتەکراوەکانت لە کاتی ورددا، Open Messages پێویستی بە مۆڵەتە بۆ دانانی ئاگادارکەرەوەی ورد. بەبێ ئەوە، لەوانەیە کەمێک دواتر بنێردرێن.</string>
+    <string name="backup_exact_alarm_grant">ڕێگەدان</string>
+    <string name="backup_exact_alarm_skip">هەر بگەڕێنەرەوە</string>
+    <string name="backup_progress_parsing">شیکردنەوەی باکئەپ…</string>
+    <string name="backup_progress_running">%d/%d نامە</string>
+    <string name="backup_progress_saving">پاشەکەوتکردنی باکئەپ…</string>
+    <string name="backup_progress_syncing">هاوکاتکردنی نامەکان…</string>
+    <string name="backup_progress_finished">تەواو بوو!</string>
+    <string name="backup_progress_failed">باکئەپەکە نەتوانرا بنووسرێت. شوێنی بەتاڵ و بوخچەی باکئەپ بپشکنە.</string>
+    <string name="backup_notification_channel_name">باکئەپ و گەڕاندنەوە</string>
+    <string name="clipboard_too_large_to_copy">قەبارەی داتا لە سنووری کلیپبۆرد زیاترە</string>
+    <string name="clipboard_unable_to_copy_to">نەتوانرا بۆ کلیپبۆرد لەبەر بگیرێتەوە</string>
+    <string name="scheduled_title">خشتەکراو</string>
+    <string name="scheduled_empty_description">نامەیەک بە شێوەی خۆکار بنێرە، ڕێک لەو ساتەی کە دەتەوێت</string>
+    <string name="scheduled_empty_message_1">سڵاو! ڕۆژی لەدایکبوونت کەی بوو؟</string>
+    <string name="scheduled_empty_message_2">لە ٢٣ی کانوونی یەکەمە</string>
+    <string name="scheduled_empty_message_3">ڕۆژی لەدایکبوونت پیرۆز بێت! سەیر بکە چ هاوڕێیەکی باشم، ڕۆژی لەدایکبوونتم لەبیر بوو</string>
+    <string name="scheduled_empty_message_3_timestamp">ناردن لە ٢٣ی کانوونی یەکەم&#x200A;</string>
+    <string name="scheduled_compose_cd">خشتەکردنی نامەیەک</string>
+    <string name="scheduled_send_cd">خشتەکردنی ئەم نامەیە</string>
+    <string name="scheduled_options_title">نامەی خشتەکراو</string>
+    <string-array name="scheduled_options">
+        <item>ئێستا بینێرە</item>
+        <item>لەبەرگرتنەوەی دەق</item>
+        <item>سڕینەوە</item>
+    </string-array>
+    <string name="attachment_missing">ون بووە</string>
+    <string name="settings_category_appearance">ڕووخسار</string>
+    <string name="settings_category_general">گشتی</string>
+    <string name="settings_category_quick_reply">وەڵامی خێرا</string>
+    <string name="settings_theme_title">ڕووکار</string>
+    <string name="settings_night_title">دۆخی شەو</string>
+    <string name="settings_black_title">دۆخی شەوی ڕەشی تەواو</string>
+    <string name="settings_night_start_title">کاتی دەستپێک</string>
+    <string name="settings_night_end_title">کاتی کۆتایی</string>
+    <string name="settings_automatic_colors_title">ڕەنگی خۆکار بۆ هەر گفتوگۆیەک</string>
+    <string name="settings_text_size_title">قەبارەی فۆنت</string>
+    <string name="settings_system_font_title">بەکارهێنانی فۆنتی سیستەم</string>
+    <string name="settings_show_avatar_title">پیشاندانی وێنەی پەیوەندی</string>
+    <string name="settings_show_avatar_summary">وێنەی نێرەر لە گفتوگۆکاندا پیشان بدە. بیکوژێنەرەوە بۆ ئەوەی بڵقە نامەکان پانتر بن.</string>
+    <string name="settings_hide_country_code_title">شاردنەوەی کۆدی وڵات</string>
+    <string name="settings_hide_country_code_summary">ناونیشانی ژمارە تەلەفۆنەکان بە شێوازی ناوخۆیی پیشان بدە، بۆ نموونە \"06 ...\" لە جیاتی \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">لێوار بۆ لێوار</string>
+    <string name="settings_edge_to_edge_summary">ناوەڕۆک لە پشت شریتی دۆخ و ڕێنیشاندەر بکێشە</string>
+    <string name="settings_system_show_stt_title">پیشاندانی دوگمەی قسە بۆ دەق</string>
+    <string name="settings_drawer_swipe_title">ڕاکێشان بۆ کردنەوەی لیست</string>
+    <string name="settings_drawer_swipe_summary">لیستی لاتەنیشت بکەرەوە بە ڕاکێشان لە لێواری چەپی لیستی گفتوگۆکان</string>
+    <string name="settings_auto_emoji_title">ئیمۆجیی خۆکار</string>
+    <string name="settings_notifications_title">ئاگادارکردنەوەکان</string>
+    <string name="settings_notifications_o_summary">لێی بدە بۆ ڕێکخستن</string>
+    <string name="settings_notification_actions_title">کردارەکان</string>
+    <string name="settings_notification_action_1">دوگمەی ١</string>
+    <string name="settings_notification_action_2">دوگمەی ٢</string>
+    <string name="settings_notification_action_3">دوگمەی ٣</string>
+    <string name="settings_notification_previews_title">پێشبینینی ئاگادارکردنەوەکان</string>
+    <string name="settings_notification_previews_summary">پیشاندانی ناو و نامە</string>
+    <string name="settings_notification_wake_title">هەڵکردنی شاشە</string>
+    <string name="settings_notification_silent_title">بێدەنگ ئەگەر پەیوەندی نەبێت</string>
+    <string name="settings_notification_silent_summary">ئاگادارکردنەوەی ئەو نامانە بێدەنگ دەکات کە نێرەرەکەیان لە پەیوەندییەکانتدا نییە</string>
+    <string name="settings_copy_code_title">لەبەرگرتنەوەی کۆد لە ئاگادارکردنەوەکان</string>
+    <string name="settings_copy_code_summary">دوگمەی لەبەرگرتنەوەی کۆد بۆ ئاگادارکردنەوەکانی کۆدی یەکجاری و پشتڕاستکردنەوە زیاد دەکات</string>
+    <string name="notification_copy_code">لەبەرگرتنەوەی کۆد</string>
+    <string name="notification_code_copied">کۆد لەبەرگیرایەوە</string>
+    <string name="settings_vibration_title">لەرینەوە</string>
+    <string name="settings_ringtone_title">دەنگ</string>
+    <string name="settings_ringtone_none">هیچ</string>
+    <string name="settings_quick_reply_title">وەڵامی خێرا</string>
+    <string name="settings_quick_reply_summary">پەنجەرەی بچووک بۆ نامە نوێیەکان</string>
+    <string name="settings_quick_reply_tap_dismiss_title">لێدان بۆ لابردن</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">لە دەرەوەی پەنجەرەکە بدە بۆ داخستنی</string>
+    <string name="settings_delayed_title">ناردنی دواخراو</string>
+    <string name="settings_swipe_actions">کردارەکانی ڕاکێشان</string>
+    <string-array name="settings_swipe_actions">
+        <item>هیچ</item>
+        <item>ئەرشیفکردن</item>
+        <item>سڕینەوە</item>
+        <item>بلۆککردن</item>
+        <item>پەیوەندی کردن</item>
+        <item>نیشانکردن وەک خوێندراوە</item>
+        <item>نیشانکردن وەک نەخوێندراوە</item>
+        <item>خوێندنەوە بە دەنگ</item>
+        <item>خوێندراوە/نەخوێندراوە</item>
+    </string-array>
+    <string name="settings_swipe_actions_summary">ڕێکخستنی کردارەکانی ڕاکێشان بۆ گفتوگۆکان</string>
+    <string name="settings_swipe_actions_right">ڕاکێشان بۆ ڕاست</string>
+    <string name="settings_swipe_actions_left">ڕاکێشان بۆ چەپ</string>
+    <string name="settings_swipe_actions_change">گۆڕین</string>
+    <string name="settings_delivery_title">پشتڕاستکردنەوەی گەیاندن</string>
+    <string name="settings_delivery_summary">پشتڕاستکردنەوەی ئەوەی نامەکان بە سەرکەوتوویی نێردران</string>
+    <string name="settings_send_sound_title">دەنگ لە کاتی ناردن</string>
+    <string name="settings_send_sound_summary">کاتێک نامەیەک دەنێریت دەنگێکی کورت لێبدە</string>
+    <string name="settings_send_sound_volume_title">بەرزیی دەنگ</string>
+    <string name="settings_header_quick_action_title">کرداری خێرای سەرپەڕە</string>
+    <string name="settings_header_quick_action_summary">زیادکردنی دوگمەی کورتەڕێ بۆ سەرپەڕەی گفتوگۆ</string>
+    <string name="settings_unread_at_top_title">نەخوێندراوەکان لە سەرەوە</string>
+    <string name="settings_unread_at_top_summary">گفتوگۆ نەخوێندراوەکان لە سەرەوە پیشان بدە</string>
+    <string name="settings_signature_title">واژۆ</string>
+    <string name="settings_signature_summary">واژۆیەک بۆ کۆتایی نامەکانت زیاد بکە</string>
+    <string name="settings_unicode_title">لابردنی نیشانەکان</string>
+    <string name="settings_unicode_summary">لابردنی نیشانەکانی سەر پیتەکان لە نامە SMSە دەرچووەکاندا</string>
+    <string name="settings_mobile_title">تەنها ژمارەی مۆبایل</string>
+    <string name="settings_mobile_summary">لە کاتی نووسینی نامەدا، تەنها ژمارەی مۆبایل پیشان بدە</string>
+    <string name="settings_auto_delete">سڕینەوەی خۆکاری نامە کۆنەکان</string>
+    <string name="settings_auto_delete_dialog_message">نامەکان دوای ژمارەی دیاریکراوی ڕۆژ دەسڕدرێنەوە</string>
+    <string name="settings_auto_delete_dialog_hint">ژمارەی ڕۆژەکان</string>
+    <string name="settings_auto_delete_never">هەرگیز</string>
+    <string name="settings_auto_delete_warning">نامە کۆنەکان بە خۆکاری بسڕدرێنەوە؟</string>
+    <string name="settings_auto_delete_warning_message">ئەگەر بەردەوام بیت، %1$d نامە ئێستا دەسڕدرێنەوە</string>
+    <plurals name="settings_auto_delete_summary">
+        <item quantity="one">دوای ١ ڕۆژ</item>
+        <item quantity="other">دوای %d ڕۆژ</item>
+    </plurals>
+    <string name="settings_long_as_mms_title">ناردنی نامە درێژەکان وەک MMS</string>
+    <string name="settings_long_as_mms_summary">ئەگەر نامە دەقییە درێژەکانت نانێردرێن، یان بە ڕیزبەندیی هەڵە دەنێردرێن، دەتوانیت لە جیاتی ئەوە وەک نامەی MMS بیاننێریت. لەوانەیە تێچووی زیادە هەبێت</string>
+    <string name="settings_mms_size_title">پەستاندنی خۆکاری وێنە هاوپێچەکانی MMS</string>
+    <string name="settings_mms_weblink_title">مامەڵەکردن لەگەڵ بەستەر لە نامەکاندا</string>
+    <string name="settings_disable_screenshots_title">ناچالاککردنی وێنەگرتنی شاشە</string>
+    <string name="settings_diable_screenshots_summary">ڕێگری لە سیستەم و ئەپەکانی تر بکە لە گرتنی وێنەی شاشەی ئەپەکە.</string>
+    <string name="settings_sync_title">هاوکاتکردنی نامەکان</string>
+    <string name="settings_sync_summary">نامەکانت دووبارە لەگەڵ بنکەدراوەی SMSی Android هاوکات بکەرەوە</string>
+    <string name="settings_about_title">دەربارەی Open Messages</string>
+    <string name="settings_version">وەشانی %s</string>
+    <string name="settings_logging_enabled">تۆمارکردنی هەڵەدۆزی چالاک کرا</string>
+    <string name="settings_logging_disabled">تۆمارکردنی هەڵەدۆزی ناچالاک کرا</string>
+    <string name="settings_delay_duration_hint">ماوە بنووسە (چرکە)</string>
+    <string name="blocking_title">بلۆککردن</string>
+    <string name="blocking_drop_title">فڕێدانی نامەکان</string>
+    <string name="blocking_drop_summary">نامە هاتووەکانی نێرەرە بلۆککراوەکان فڕێ بدە لە جیاتی شاردنەوەیان</string>
+    <string name="blocking_conversations">گفتوگۆ بلۆککراوەکان</string>
+    <string name="blocking_category_integrated">بلۆککردنی ناوخۆیی</string>
+    <string name="blocking_integrated_description">Open Messages سپام لەسەر ئامێرەکەت بلۆک دەکات. ئەو سەرچاوە ئارەزوومەندانەی خوارەوە کاتێک چالاکیان دەکەیت لیستەکەیان لە ئینتەرنێتەوە دادەبەزێنن، پاشان بەبێ ئینتەرنێت کار دەکەن.</string>
+    <string name="blocking_category_external_apps">ئەپە دەرەکییەکان</string>
+    <string name="blocked_numbers_summary">ئەو ژمارانەی خۆت بلۆکیان دەکەیت</string>
+    <string name="blocking_source_phishing_title">دژە فیشینگ</string>
+    <string name="blocking_source_phishing_summary">ئەو نامانە بلۆک دەکات کە بەستەری ماڵپەڕە ناسراوەکانی فیشینگیان تێدایە. چالاککردنی ئەمە لیستەکە لە ئینتەرنێتەوە دادەبەزێنێت؛ دواتر پاڵاوتن بەبێ ئینتەرنێت دەبێت.</string>
+    <string name="blocking_source_flag_block_title">بلۆککردنی گومانی سپام</string>
+    <string name="blocking_source_flag_block_summary">ئەو نامانەی وەک سپامی ئەگەری نیشانکراون ڕاستەوخۆ بنێرە بۆ لیستی بلۆککراو لە جیاتی تەنها نیشانکردنیان لە هاتووەکاندا</string>
+    <string name="blocking_source_status_updating">نوێکردنەوە…</string>
+    <string name="blocking_source_status_updated">نوێیە · %1$d تۆمار</string>
+    <string name="blocking_source_status_failed">داگرتن سەرکەوتوو نەبوو، سەرچاوەکە ناچالاک دەمێنێتەوە. پەیوەندییەکەت بپشکنە و دووبارە هەوڵ بدەرەوە.</string>
+    <string name="blocking_manager_title">بەڕێوەبەری بلۆککردن</string>
+    <string name="blocking_manager_built_in_summary">تایبەتمەندیی بلۆککردنی ناوخۆیی Open Messages</string>
+    <string name="blocking_manager_call_blocker_summary">بلۆککردنی نامەی سپام، ژمارەکان و پەیوەندییە نەناسراوەکان بە لیستی ڕەش و خشتە</string>
+    <string name="blocking_manager_call_control_summary">پەیوەندی و نامەکانت بە خۆکاری لە یەک شوێنی گونجاودا بپاڵێوە! Community IQ™ ڕێگەت پێدەدات ڕێگری لە نامە نەخوازراوەکانی سپامکەرە ناسراوەکانی کۆمەڵگە بکەیت</string>
+    <string name="blocking_manager_sia_summary">نامەکانی ژمارە نەخوازراوەکان بە خۆکاری بپاڵێوە بە بەکارهێنانی ئەپی \"Should I Answer\"</string>
+    <string name="blocking_manager_copy_title">لەبەرگرتنەوەی ژمارە بلۆککراوەکان</string>
+    <string name="blocking_manager_copy_summary">بەردەوامبە بۆ %s و ژمارە بلۆککراوەکانی ئێستات بگوازەرەوە</string>
+    <string name="blocked_numbers_title">ژمارە بلۆککراوەکان</string>
+    <string name="blocked_numbers_empty">ژمارە بلۆککراوەکانت لێرە دەردەکەون</string>
+    <string name="blocked_numbers_add_cd">بلۆککردنی ژمارەیەکی نوێ</string>
+    <string name="blocked_numbers_dialog_title">بلۆککردنی نامەکانی</string>
+    <string name="blocked_numbers_dialog_hint">ژمارەی تەلەفۆن</string>
+    <string name="blocked_numbers_dialog_block">بلۆککردن</string>
+    <string name="message_content_filters_title">پاڵێوەرەکانی ناوەڕۆکی نامە</string>
+    <string name="message_content_filters_empty">پاڵێوەرەکانی ناوەڕۆکی نامەکانت لێرە دەردەکەون</string>
+    <string name="message_content_filters_add_cd">دروستکردنی پاڵێوەرێکی نوێ</string>
+    <string name="message_content_filters_dialog_title">فڕێدانی ئەو نامانەی دەگونجێن لەگەڵ</string>
+    <string name="message_content_filters_dialog_hint">وشە، دەستەواژە یان دەربڕینی ڕێک</string>
+    <string name="message_content_filters_dialog_case_switch">هەستیار بە پیتی گەورە و بچووک</string>
+    <string name="message_content_filters_dialog_regex_switch">دەربڕینی ڕێک</string>
+    <string name="message_content_filters_dialog_contacts_switch">پەیوەندییەکانیش بگرێتەوە</string>
+    <string name="message_content_filters_dialog_create">دروستکردن</string>
+    <string name="blocked_messages_title">نامە بلۆککراوەکان</string>
+    <string name="blocked_messages_empty">نامە بلۆککراوەکانت لێرە دەردەکەون</string>
+    <string name="blocking_block_title">بلۆککردن</string>
+    <string name="blocking_unblock_title">لابردنی بلۆک</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">بەردەوامبە بۆ %s و ئەم ژمارەیە بلۆک بکە</item>
+        <item quantity="other">بەردەوامبە بۆ %s و ئەم ژمارانە بلۆک بکە</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">بەردەوامبە بۆ %s و ڕێگە بەم ژمارەیە بدە</item>
+        <item quantity="other">بەردەوامبە بۆ %s و ڕێگە بەم ژمارانە بدە</item>
+    </plurals>
+    <string name="deduplicate_messages_category">لابردنی دووبارەبوونەوەی نامەکان</string>
+    <string name="deduplicate_messages_title">لابردنی نامە دووبارەکان</string>
+    <string name="deduplicate_messages_summary">بنکەدراوەی نامەکان دەپشکنێت و هەموو ئەو نامانە دەسڕێتەوە کە ڕێک وەک نامە ڕەسەنەکانن</string>
+    <string name="deduplicate_message_confirmation_dialog_message">بنکەدراوەی نامەکانت بۆ دووبارەکان دەپشکنرێت، پاشان ئەو دووبارانە لادەبرێن.\nئەمە بە خۆکاری نامەکان دەسڕێتەوە، تەنها ئەگەر لە ئەنجامەکانی تێدەگەیت بەردەوام بە.</string>
+    <string name="auto_deduplicate_messages_title">لابردنی خۆکاری نامە دووبارەکان</string>
+    <string name="auto_deduplicate_messages_summary">لابردنی دووبارەکان لە کاتی هاوکاتکردندا ئەنجام دەدرێت. تێبینی: ئەمە بە خۆکاری نامەکان دەسڕێتەوە، و هەرچەندە ئەگەری دووبارەی هەڵە زۆر کەمە، بەڵام هێشتا مومکینە.\nتکایە وریا بە.</string>
+    <string name="deduplicating_messages_finished">لابردنی نامە دووبارەکان تەواو بوو!</string>
+    <string name="deduplicating_messages_no_messages">هیچ نامەیەکی دووبارە نەدۆزرایەوە.</string>
+    <string name="deduplicating_messages_failed">لابردنی نامە دووبارەکان سەرکەوتوو نەبوو، تکایە دووبارە هەوڵ بدەرەوە</string>
+    <string name="about_title">دەربارە</string>
+    <string name="about_version_title">وەشان</string>
+    <string name="about_developer_title">گەشەپێدەر</string>
+    <string name="about_source_title">کۆدی سەرچاوە</string>
+    <string name="about_changelog_title">تۆماری گۆڕانکارییەکان</string>
+    <string name="about_contact_title">پەیوەندی</string>
+    <string name="about_license_title">مۆڵەتنامە</string>
+    <string name="about_copyright_title">مافی لەبەرگرتنەوە</string>
+    <string name="widget_loading">بارکردن…</string>
+    <string name="widget_more">بینینی گفتوگۆی زیاتر</string>
+    <string name="all_conversations_widget_title">هەموو گفتوگۆکان</string>
+    <string name="quick_reply_menu_read">نیشانکردن وەک خوێندراوە</string>
+    <string name="quick_reply_menu_call">پەیوەندی کردن</string>
+    <string name="quick_reply_menu_delete">سڕینەوە</string>
+    <string name="quick_reply_menu_expand">پیشاندانی زیاتر</string>
+    <string name="quick_reply_menu_collapse">پیشاندانی کەمتر</string>
+    <string name="quick_reply_menu_view">کردنەوەی گفتوگۆ</string>
+    <string name="theme_material">Material</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">جێبەجێکردن</string>
+    <string-array name="notification_actions">
+        <item>هیچ</item>
+        <item>ئەرشیفکردن</item>
+        <item>سڕینەوە</item>
+        <item>بلۆککردن</item>
+        <item>پەیوەندی کردن</item>
+        <item>نیشانکردن وەک خوێندراوە</item>
+        <item>وەڵامدانەوە</item>
+        <item>خوێندنەوە بە دەنگ</item>
+    </string-array>
+    <string name="button_yes">بەڵێ</string>
+    <string name="button_continue">بەردەوامبوون</string>
+    <string name="button_cancel">هەڵوەشاندنەوە</string>
+    <string name="button_close">داخستن</string>
+    <string name="button_delete">سڕینەوە</string>
+    <string name="button_save">پاشەکەوتکردن</string>
+    <string name="button_stop">ڕاگرتن</string>
+    <string name="button_set">دانان</string>
+    <string name="button_later">دواتر</string>
+    <string name="icon_restart_title">دەستپێکردنەوە پێویستە</string>
+    <string name="icon_restart_message">ئایکۆنی ئەپ پێویستی بە دەستپێکردنەوەی ئەپەکەیە بۆ تەواوکردنی نوێکردنەوە.</string>
+    <string name="icon_restart_now">دەستپێکردنەوە</string>
+    <string name="button_undo">گەڕاندنەوە</string>
+    <string name="button_clear">پاککردنەوە</string>
+    <string name="toast_copied">لەبەرگیرایەوە</string>
+    <plurals name="toast_archived">
+        <item quantity="one">گفتوگۆ ئەرشیف کرا</item>
+        <item quantity="other">%d گفتوگۆ ئەرشیف کران</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">گفتوگۆ لە ئەرشیف لابرا</item>
+        <item quantity="other">%d گفتوگۆ لە ئەرشیف لابران</item>
+    </plurals>
+    <plurals name="notification_new_messages">
+        <item quantity="one">نامەی نوێ</item>
+        <item quantity="other">%s نامەی نوێ</item>
+    </plurals>
+    <string name="notification_message_failed_title">نامە نەنێردرا</string>
+    <string name="notification_message_failed_text">ناردنی نامە بۆ %s سەرکەوتوو نەبوو</string>
+    <string name="notification_foreground_worker_title">وەرگرتنی نامە</string>
+    <string name="notification_foreground_worker_text">لە Android 12 و کۆنتر، ئاگادارکردنەوەیەک پێویستە بۆ ئەو کارەی لە پاشبنەمادا ڕێگە بە وەرگرتنی نامەکان دەدات.</string>
+    <string name="notification_foreground_worker_channel_name">ئاگادارکردنەوەی کارەکەری وەرگرتنی نامە</string>
+    <string name="notification_me">من</string>
+    <string name="notification_message_failed_action">دووبارە ناردنەوە</string>
+    <string-array name="night_modes">
+        <item>سیستەم</item>
+        <item>ناچالاک</item>
+        <item>هەمیشە چالاک</item>
+        <item>خۆکار</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>پیشاندانی ناو و نامە</item>
+        <item>پیشاندانی ناو</item>
+        <item>شاردنەوەی ناوەڕۆک</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>بچووک</item>
+        <item>ئاسایی</item>
+        <item>گەورە</item>
+        <item>گەورەتر</item>
+        <item>زۆر گەورە</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>بێ دواخستن</item>
+        <item>٣ چرکە</item>
+        <item>٥ چرکە</item>
+        <item>١٠ چرکە</item>
+    </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>هیچ</item>
+        <item>ئەرشیفکردن</item>
+        <item>نیشانکردن وەک نەخوێندراوە</item>
+        <item>بلۆککردن</item>
+        <item>سڕینەوە</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>هیچ</item>
+        <item>کلاسیک</item>
+        <item>ڕوون</item>
+        <item>نەرم</item>
+        <item>دابەزین</item>
+        <item>سێ نۆتە</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>خۆکار</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>بێ پەستاندن</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>بلۆککردن</item>
+        <item>ڕێگەدان</item>
+        <item>پرسیارکردن پێش کردنەوە</item>
+    </string-array>
+    <string-array name="quick_responses">
+        <item>باشە</item>
+        <item>کەمێک چاوەڕێ بکە</item>
+        <item>لە ڕێگادام</item>
+        <item>سوپاس</item>
+        <item>باشە، گونجاوە</item>
+        <item>چی هەیە؟</item>
+        <item>ڕازیم</item>
+        <item>نەخێر</item>
+        <item>خۆشم دەوێیت</item>
+        <item>ببورە</item>
+        <item>هاهاها</item>
+        <item>کێشە نییە</item>
+    </string-array>
+    <string name="speak_no_messages">هیچ نامەیەک نییە</string>
+    <string name="speak_unseen_messages">خوێندنەوەی نامە نەبینراوەکان بە دەنگ</string>
+    <string name="messageLinkHandling_dialog_title">ئاگاداری بەستەری دەرەکی</string>
+    <string name="messageLinkHandling_dialog_body">هەندێک بەستەر لەوانەیە سەلامەت نەبن یان بە شێوەیەکی چاوەڕواننەکراو بتگوازنەوە. پێش بەردەوامبوون بەستەری خوارەوە بپشکنە:\n\n%1$s\n\nدەتەوێت بەردەوام بیت؟</string>
+    <string name="messageLinkHandling_dialog_positive">بەڵێ، بەستەرەکە بکەرەوە</string>
+    <string name="messageLinkHandling_dialog_negative">نەخێر</string>
+    <string name="error_stt_toast">ببورە، هەڵەیەک ڕوویدا لە بارکردنی دابینکەری گۆڕینی قسە بۆ دەق.</string>
+    <string name="stt_toast_extra_prompt">نامەکەت بڵێ</string>
+    <string name="messages_text_share_file_error">ئۆپس! هەڵەیەک ڕوویدا لە کاتی هاوبەشکردندا</string>
 </resources>
