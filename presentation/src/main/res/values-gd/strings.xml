@@ -47,7 +47,7 @@
     <string name="menu_mms_part_share">Co-roinn</string>
     <string name="menu_mms_part_forward">Sìn air adhart</string>
     <string name="menu_mms_part_open">Fosgail ann an aplacaid eile</string>
-    <string name="compose_menu_share">Share</string>
+    <string name="compose_menu_share">Co-roinn an teacsa</string>
     <string name="main_drawer_open_cd">Fosgail drathair na seòladaireachd</string>
     <string name="main_search_close_cd">Dùin an lorg</string>
     <string name="main_search_clear_cd">Falamhaich an lorg</string>
@@ -126,7 +126,7 @@
     <string name="drawer_help">Cobhair is beachdan</string>
     <string name="drawer_invite">Thoir cuireadh do charaidean</string>
     <string name="rate_title">A bheil Open Messages a’ còrdadh riut?</string>
-    <string name="rate_summary">Share some love and rate us on Google Play!</string>
+    <string name="rate_summary">Seall gu bheil gaol agad oirnn is thoir rionnag dhuinn air GitHub!</string>
     <string name="rate_okay">GLÈ MHATH!</string>
     <string name="rate_dismiss">LEIG SEACHAD</string>
     <string name="dialog_delete_title">Sguab às</string>
@@ -170,7 +170,7 @@
     <string name="compose_send_group_summary_off">Thèid na teachdaireachdan a chur fa leth gu gach faightear</string>
     <string name="compose_messages_empty">Seo toiseach a’ chòmhraidh agad. Can rudeigin snog!</string>
     <string name="compose_vcard_label">Cairt neach-conaltraidh</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_for">Àm an sgeideil:</string>
     <string name="compose_scheduled_future">Feumaidh an t-àm a thagh thu a bhith san àm ri teachd!</string>
     <string name="compose_scheduled_toast">Chaidh a cur ris na teachdaireachdan air an sgeideal</string>
     <string name="compose_scheduled_view">Teachdaireachdan air an sgeideal sa chòmhradh seo</string>
@@ -199,7 +199,7 @@
     <string name="compose_reactions_title">Freagairtean</string>
     <string name="compose_details_type">Seòrsa: %s</string>
     <string name="compose_details_from">O: %s</string>
-    <string name="compose_details_to">To: %s</string>
+    <string name="compose_details_to">Gu: %s</string>
     <string name="compose_details_subject">Cuspair: %s</string>
     <string name="compose_details_priority">Prìomhachas: %s</string>
     <string name="compose_details_size">Meud: %s</string>
@@ -329,7 +329,7 @@
     <string name="backup_selected_backup_details_title">Fiosrachadh an lethbhreac-ghlèidhidh</string>
     <string name="backup_restore_dialog_title">Lethbhreacan-glèidhidh</string>
     <string name="backup_restore_dialog_empty">Cha deach lethbhreac-glèidhidh a lorg</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">Mar bhun-roghainn, thèid na lethbhreacan-glèidhidh a shàbhaladh ann an Documents/OpenMessages; cleachd \"Ionad nan lethbhreacan-glèidhidh\" gu h-àrd airson sin atharrachadh. Faodaidh tu na SMS is MMS agad (le ceanglachain), na roghainnean, na teamplaidean, riaghailtean a’ bhacaidh, na teachdaireachdan air an sgeideal agus na còmhraidhean san tasglann no prìnichte a ghabhail a-steach. Cleachd \"Lethbhreac-glèidhidh fèin-obrachail\" gu h-àrd airson fear a dhèanamh air sgeideal.</string>
     <string name="backup_now">Dèan lethbhreac-glèidhidh an-dràsta</string>
     <string name="backup_now_summary">Cruthaich lethbhreac-glèidhidh ùr</string>
     <string name="backup_categories_title">Dè bu chòir a ghlèidheadh?</string>
@@ -359,7 +359,7 @@
     <string name="scheduled_empty_message_2">Tha e air an 23mh dhen Dùbhlachd</string>
     <string name="scheduled_empty_message_3">Co-là-breith sona dhut! Seall cho math ’s a tha mi mar charaid, a’ cuimhneachadh air do cho-là-breith</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
+    <string name="scheduled_empty_message_3_timestamp">Ga cur air an 23mh dhen Dùbhlachd&#x200A;</string>
     <string name="scheduled_compose_cd">Cuir teachdaireachd air an sgeideal</string>
     <string name="scheduled_send_cd">Cuir an teachdaireachd seo air an sgeideal</string>
     <string name="scheduled_options_title">Teachdaireachd air an sgeideal</string>
@@ -377,7 +377,7 @@
     <string name="settings_black_title">Modh oidhche dubh-dhubh</string>
     <string name="settings_night_start_title">Àm tòiseachaidh</string>
     <string name="settings_night_end_title">Àm crìochnachaidh</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">Dath fèin-obrachail do gach còmhradh</string>
     <string name="settings_text_size_title">Meud a’ chrutha-chlò</string>
     <string name="settings_system_font_title">Cleachd cruth-clò an t-siostaim</string>
     <string name="settings_show_avatar_title">Seall dealbh an neach-conaltraidh</string>
@@ -413,15 +413,7 @@
     <string name="settings_quick_reply_tap_dismiss_title">Thoir gnogag airson a leigeil seachad</string>
     <string name="settings_quick_reply_tap_dismiss_summary">Thoir gnogag taobh a-muigh na priob-uinneige airson a dùnadh</string>
     <string name="settings_delayed_title">Cur air dàil</string>
-    <string-array name="settings_swipe_actions">
-        <item>Chan eil gin</item>
-        <item>Cuir san tasglann</item>
-        <item>Sguab às</item>
-        <item>Bac</item>
-        <item>Cuir fòn</item>
-        <item>Comharraich gun deach a leughadh</item>
-        <item>Comharraich nach deach a leughadh</item>
-    </string-array>
+    <string name="settings_swipe_actions">Gnìomhan grad-shlaighdidh</string>
     <string name="settings_swipe_actions_summary">Rèitich gnìomhan grad-shlaighdidh nan còmhraidhean</string>
     <string name="settings_swipe_actions_right">Grad-shlaighd gu deas</string>
     <string name="settings_swipe_actions_left">Grad-shlaighd gu clì</string>
@@ -434,6 +426,8 @@
         <item>Cuir fòn</item>
         <item>Comharraich gun deach a leughadh</item>
         <item>Comharraich nach deach a leughadh</item>
+        <item>Leugh a-mach</item>
+        <item>Comharraich leughte/gun leughadh</item>
     </string-array>
     <string name="settings_delivery_title">Dearbhaidhean lìbhrigidh</string>
     <string name="settings_delivery_summary">Dearbh gun deach na teachdaireachdan a chur gu soirbheachail</string>
@@ -565,15 +559,16 @@
         <item>Cuir fòn</item>
         <item>Comharraich gun deach a leughadh</item>
         <item>Freagair</item>
+        <item>Leugh a-mach</item>
     </string-array>
-    <string name="button_yes">Yes</string>
+    <string name="button_yes">Tha</string>
     <string name="button_continue">Lean air adhart</string>
     <string name="button_cancel">Sguir dheth</string>
     <string name="button_close">Dùin</string>
     <string name="button_delete">Sguab às</string>
     <string name="button_save">Sàbhail</string>
     <string name="button_stop">Stad</string>
-    <string name="button_set">Set</string>
+    <string name="button_set">Suidhich</string>
     <string name="button_later">Uaireigin eile</string>
     <string name="icon_restart_title">Feumar ath-thòiseachadh</string>
     <string name="icon_restart_message">Feumaidh an aplacaid ath-thòiseachadh gus crìoch a chur air ùrachadh na h-ìomhaigheige.</string>
@@ -622,6 +617,7 @@
         <item>Àbhaisteach</item>
         <item>Mòr</item>
         <item>Nas motha</item>
+        <item>Glè mhòr</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Gun dàil</item>
