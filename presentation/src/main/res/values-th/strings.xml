@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">ส่งข้อความแบบเรียบง่าย โอเพนซอร์ส</string>
     <string name="shortcut_compose_long_label">New conversation</string>
     <string name="shortcut_compose_short_label">Compose</string>
     <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">การตั้งค่า</string>
     <string name="title_notification_prefs">การแจ้งเตือน</string>
     <string name="title_theme">รูปแบบการแสดงผล</string>
+    <string name="theme_default">ค่าเริ่มต้น</string>
+    <string name="theme_wallpaper">วอลเปเปอร์</string>
+    <string name="theme_other_colors">สี</string>
+    <string name="theme_tab_presets">ชุดสี</string>
+    <string name="theme_tab_custom">กำหนดเอง</string>
+    <string name="theme_apply_to_icon">ใช้สีกับไอคอนแอป (แอปจะปิดลง)</string>
+    <string name="theme_tab_icon">ไอคอนแอป</string>
+    <string name="theme_icon_follow_theme">ใช้สีเดียวกับธีมของแอป</string>
+    <string name="theme_icon_summary">เลือกสีไอคอนแอปแยกจากธีมได้ เมื่อใช้การเปลี่ยนแปลง แอปจะปิดลง</string>
+    <string name="theme_icon_change_title">เปลี่ยนไอคอนแอปไหม</string>
+    <string name="theme_icon_change_message">สีไอคอนแอปกำลังจะเปลี่ยน Android เปลี่ยนไอคอนได้เฉพาะตอนที่แอปปิดอยู่ ดังนั้น Open Messages จะปิดลงทันทีที่คุณยืนยัน</string>
     <string name="title_conversations">ค้นหากล่องขาเข้า…</string>
+    <string name="title_search">ค้นหา</string>
     <string name="title_compose">พิมพ์ชื่อหรือหมายเลข</string>
     <string name="setup_skip">ข้าม</string>
     <string name="setup_next">ทำต่อ</string>
     <string name="menu_add_person">Add person</string>
     <string name="menu_call">โทร</string>
     <string name="menu_mms_part_save">บันทึกรูปภาพ</string>
+    <string name="menu_mms_part_share">แชร์</string>
+    <string name="menu_mms_part_forward">ส่งต่อ</string>
+    <string name="menu_mms_part_open">เปิดด้วยแอปอื่น</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">เปิดเมนูลัด</string>
+    <string name="main_search_close_cd">ปิดการค้นหา</string>
+    <string name="main_search_clear_cd">ล้างการค้นหา</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d ถูกเลือก</string>
     <string name="main_menu_clear">ลบออก</string>
+    <string name="main_menu_select_all">เลือกทั้งหมด</string>
     <string name="main_menu_archive">จัดเก็บ</string>
     <string name="main_menu_unarchive">ยกเลิกการเก็บ</string>
     <string name="main_menu_delete">ลบ</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Mark read</string>
     <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_block">ปิดกั้น</string>
+    <string name="main_menu_send_now">ส่งเลย</string>
+    <string name="main_menu_edit_message">แก้ไขข้อความ</string>
+    <string name="main_menu_rename_conversation">เปลี่ยนชื่อการสนทนา</string>
     <string name="main_syncing">กำลังปรับแต่งเพิ่มประสิทธิภาพฐานข้อมูล อาจใช้เวลาสักครู่…</string>
+    <string name="main_sync_emojis">กำลังประมวลผลรีแอคชันอีโมจิ…</string>
     <string name="main_sender_you">คุณ: %s</string>
+    <string name="main_sender_draft">ฉบับร่าง: %s</string>
+    <string name="conversation_flagged_label">สงสัยว่าเป็นสแปม</string>
+    <string name="snippet_picture">รูปภาพ</string>
+    <string name="snippet_video">วิดีโอ</string>
+    <string name="snippet_audio">เสียง</string>
+    <string name="snippet_contact_card">นามบัตร</string>
+    <string name="search_group_conversations">การสนทนา</string>
     <string name="main_message_results_title">ผลลัพธ์ในข้อความ</string>
     <plurals name="main_message_results">
         <item quantity="other">%d ข้อความ</item>
@@ -62,11 +93,29 @@
     <string name="main_permission_contacts">Open Messages ต้องการสิทธิ์เพื่อดูรายชื่อผู้ติดต่อของคุณ</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">อนุญาต</string>
+    <string name="scheduled_menu_send_now">ส่งเลย</string>
+    <string name="scheduled_menu_edit_message">แก้ไขข้อความ</string>
     <string name="drawer_inbox">กล่องขาเข้า</string>
+    <string name="contacts_group_recent">ล่าสุด</string>
+    <string name="contacts_group_starred">รายการโปรด</string>
+    <string name="contacts_group_groups">กลุ่ม</string>
+    <string name="conversations_group_today">วันนี้</string>
+    <string name="conversations_group_yesterday">เมื่อวาน</string>
     <string name="drawer_archived">จัดเก็บ</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="other">ยังไม่อ่าน %d</item>
+    </plurals>
     <string name="drawer_scheduled">กำหนดเวลา</string>
     <string name="drawer_blocking">บล็อก</string>
     <string name="drawer_more">เพิ่มเติม</string>
+    <string name="message_management_title">การจัดการข้อความ</string>
+    <string name="templates_title">เทมเพลต</string>
+    <string name="templates_empty">ยังไม่มีข้อความที่บันทึกไว้\nแตะ + เพื่อบันทึกข้อความที่คุณส่งบ่อย แล้วแตะข้อความนั้นเพื่อเลือกผู้รับ</string>
+    <string name="template_hint">พิมพ์ข้อความของคุณ…</string>
+    <string name="template_title_hint">ชื่อ (ไม่บังคับ)</string>
+    <string name="templates_add_cd">เทมเพลตใหม่</string>
+    <string name="template_new">เทมเพลตใหม่</string>
+    <string name="template_edit">แก้ไขเทมเพลต</string>
     <string name="drawer_settings">การตั้งค่า</string>
     <string name="drawer_help">ช่วยเหลือ &amp; ข้อคิดเห็น</string>
     <string name="drawer_invite">เชิญเพื่อน</string>
@@ -76,8 +125,19 @@
     <string name="rate_dismiss">ยกเลิก</string>
     <string name="dialog_delete_title">ลบ</string>
     <plurals name="dialog_delete_message">
-        <item quantity="other">คุณแน่ใจหรือว่า คุณต้องการลบการสนทนาทั้งหมด</item>
+        <item quantity="other">ต้องการลบ %d การสนทนาใช่ไหม</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="other">ต้องการลบ %d ข้อความใช่ไหม</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="other">ต้องการส่ง %d ข้อความตอนนี้ใช่ไหม</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">แก้ไขข้อความ</string>
+    <string name="dialog_edit_scheduled_message">การแก้ไขข้อความนี้จะนำข้อความออกจากกำหนดเวลา\n\nอย่าลืมตั้งเวลาใหม่ในหน้าถัดไป ไม่เช่นนั้นข้อความจะหายไป\n\nต้องการดำเนินการต่อไหม</string>
+    <string name="dialog_edit_scheduled_message_positive_button">ใช่ แก้ไขข้อความ</string>
+    <string name="dialog_clear_compose_title">ล้างข้อความ</string>
+    <string name="dialog_clear_compose">ล้างข้อความไหม การดำเนินการนี้ไม่สามารถเลิกทำได้</string>
     <string-array name="message_options">
         <item>คัดลอกข้อความ</item>
         <item>ส่งต่อ</item>
@@ -91,19 +151,34 @@
     <string name="compose_subtitle_results">%1$d ใน %2$d ของผลลัพท์</string>
     <string name="compose_send_group_title">ส่งเป็นข้อความกลุ่ม</string>
     <string name="compose_send_group_summary">ผู้รับและการตอบกลับจะแสดงให้ทุกคนเห็นทุกคน</string>
+    <string name="compose_send_group_summary_on">ผู้รับและการตอบกลับจะแสดงให้ทุกคนเห็น</string>
+    <string name="compose_send_group_summary_off">ข้อความจะถูกส่งแยกถึงผู้รับแต่ละคน</string>
     <string name="compose_messages_empty">การเริ่มต้นของการสนทนาของคุณ บอกกล่าวบางอย่างที่นี่</string>
     <string name="compose_vcard_label">นามบัตร</string>
     <string name="compose_scheduled_for">กำหนดการ</string>
     <string name="compose_scheduled_future">เลือกเวลาที่ต้องเป็นเวลาในอนาคต</string>
     <string name="compose_scheduled_toast">เพิ่มข้อความที่กำหนดเวลา</string>
+    <string name="compose_scheduled_view">ข้อความที่กำหนดเวลาไว้ของการสนทนานี้</string>
+    <string name="compose_scheduled_bubble">จะส่งเวลา %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="other">ไฟล์แนบ %d รายการ</item>
+    </plurals>
     <string name="compose_hint">เขียนข้อความ...</string>
+    <string name="compose_expand_cd">ขยายเต็มหน้าจอ</string>
+    <string name="compose_collapse_cd">ย่อ</string>
+    <string name="compose_no_valid_recipients">ส่งถึงผู้เข้าร่วมคนอื่นไม่ได้</string>
+    <string name="compose_flagged_title">สงสัยว่าเป็นสแปม</string>
+    <string name="compose_flagged_approve">อนุมัติ</string>
+    <string name="compose_flagged_block">บล็อก</string>
     <string name="compose_menu_copy">คัดลอกข้อความ</string>
     <string name="compose_menu_forward">ส่งต่อ</string>
+    <string name="compose_menu_show_status">แสดงสถานะ</string>
     <string name="compose_menu_delete">ลบ</string>
     <string name="compose_menu_previous">ก่อนหน้านี้</string>
     <string name="compose_menu_next">ถัดไป</string>
     <string name="compose_menu_clear">ล้าง</string>
     <string name="compose_details_title">รายละเอียดข้อความ</string>
+    <string name="compose_reactions_title">รีแอคชัน</string>
     <string name="compose_details_type">ประเภท: %s</string>
     <string name="compose_details_from">จาก: %s</string>
     <string name="compose_details_to">ถึง: %s</string>
@@ -115,18 +190,59 @@
     <string name="compose_details_delivered">การจัดส่ง: %s</string>
     <string name="compose_details_error_code">รหัสข้อผิดพลาด: %d</string>
     <string name="compose_attach_cd">เพิ่มสิ่งที่แนบ</string>
+    <string name="compose_attach_file_cd">แนบไฟล์ใดก็ได้</string>
     <string name="compose_gallery_cd">แนบรูปภาพ</string>
+    <string name="compose_audio_message_cd">บันทึกข้อความเสียง</string>
     <string name="compose_camera_cd">ถ่ายภาพ</string>
     <string name="compose_schedule_cd">กำหนดเวลาของข้อความ</string>
+    <string name="compose_schedule_title">กำหนดเวลาข้อความ</string>
+    <string name="compose_schedule_in_hour">ในอีก 1 ชั่วโมง</string>
+    <string name="compose_schedule_tonight">เย็นนี้</string>
+    <string name="compose_schedule_tomorrow_morning">พรุ่งนี้เช้า</string>
+    <string name="compose_schedule_tomorrow_afternoon">พรุ่งนี้บ่าย</string>
+    <string name="compose_schedule_custom">เลือกวันและเวลา</string>
+    <string name="compose_schedule_confirm">กำหนดเวลา</string>
+    <string name="compose_schedule_previous_month">เดือนก่อนหน้า</string>
+    <string name="compose_schedule_next_month">เดือนถัดไป</string>
+    <string name="compose_schedule_increase">เพิ่ม</string>
+    <string name="compose_schedule_decrease">ลด</string>
+    <string name="compose_schedule_cancel_cd">ยกเลิกการกำหนดเวลาข้อความ</string>
     <string name="compose_contact_cd">Attach a contact</string>
     <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_attach_gallery">แกลเลอรี</string>
+    <string name="compose_attach_camera">กล้อง</string>
+    <string name="compose_attach_file">ไฟล์</string>
+    <string name="compose_attach_audio">เสียง</string>
+    <string name="compose_attach_contact">รายชื่อติดต่อ</string>
+    <string name="compose_attach_schedule">กำหนดเวลา</string>
+    <string name="compose_attach_templates">เทมเพลต</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="other">วิดีโอนี้ยาวเกินกว่าจะส่งทาง MMS ได้ ความยาวสูงสุดคือ %d วินาที</item>
+    </plurals>
     <string name="compose_sim_cd">%s เลือก เปลี่ยน SIM การ์ด</string>
     <string name="compose_send_cd">ส่งข้อความ</string>
+    <string name="compose_record_audio_msg_cd">บันทึกข้อความเสียง</string>
+    <string name="compose_record_audio_msg_abort_cd">ยกเลิกข้อความเสียง</string>
+    <string name="compose_record_audio_msg_attach_cd">แนบข้อความเสียง</string>
+    <string name="compose_audio_msg_title">ข้อความเสียง</string>
+    <string name="compose_audio_msg_attach">แนบ</string>
+    <string name="compose_record_audio_msg_play_pause_cd">เล่นหรือหยุดข้อความเสียงชั่วคราว</string>
+    <string name="compose_message_cancel">ยกเลิก</string>
+    <string name="compose_message_send_now">ส่งเลย</string>
+    <string name="compose_message_sim">หมายเลข SIM</string>
+    <string name="compose_message_item">รายการข้อความ</string>
+    <string name="compose_message_attachment">ไฟล์แนบ</string>
+    <string name="compose_toast_drag_stt">ย้ายปุ่มแปลงเสียงเป็นข้อความไปไว้ตรงไหนก็ได้</string>
     <string name="message_status_sending">กำลังส่ง...</string>
     <string name="message_status_delivered">%s ถูกส่งแล้ว</string>
     <string name="message_status_failed">การส่งล้มเหลว ลองแตะเพื่อส่งอีกครั้ง</string>
+    <string name="message_body_too_long_to_display">⚠ ข้อความยาว คัดลอกหรือบันทึกเพื่อดูข้อความทั้งหมด</string>
+    <string name="conversation_menu">ตัวเลือกการสนทนา</string>
+    <string name="conversation_menu_media">ดูสื่อทั้งหมด</string>
+    <string name="media_title">สื่อ</string>
+    <string name="media_empty">รูปภาพและวิดีโอที่แชร์ในการสนทนานี้จะปรากฏที่นี่</string>
     <string name="info_copied_address">Address copied</string>
     <string name="info_name">หัวข้อสนทนา</string>
     <string name="info_notifications">การแจ้งเตือน</string>
@@ -140,11 +256,40 @@
     <string name="gallery_toast_saved">บันทึกรูปภาพแล้ว</string>
     <string name="backup_title">Backup and restore</string>
     <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_failed_title">สำรองข้อมูลไม่สำเร็จ</string>
+    <string name="backup_icon_change_title">คืนค่าไอคอนแอปไหม</string>
+    <string name="backup_icon_change_message">ข้อมูลสำรองของคุณสร้างขึ้นด้วยไอคอนแอปสีอื่น Android เปลี่ยนไอคอนได้เฉพาะตอนที่แอปปิดอยู่ ดังนั้น Open Messages จะปิดลงทันทีที่คุณยืนยัน</string>
+    <string name="icon_change_confirm">ใช้และปิดแอป</string>
+    <string name="icon_change_later">ไว้ทีหลัง</string>
     <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">สำรองข้อมูลอัตโนมัติ</string>
+    <string name="backup_auto_never">ไม่ต้อง</string>
+    <string name="backup_auto_daily">ทุกวัน</string>
+    <string name="backup_auto_weekly">ทุกสัปดาห์</string>
+    <string name="backup_auto_custom">กำหนดเอง…</string>
+    <string name="backup_auto_custom_title">จำนวนวันระหว่างการสำรองข้อมูล</string>
+    <string name="backup_auto_custom_hint">จำนวนวัน</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="other">ทุก %d วัน</item>
+    </plurals>
+    <string name="backup_zip_title">บันทึกเป็นไฟล์ .zip</string>
+    <string name="backup_zip_summary">เก็บข้อมูลสำรองแต่ละชุดเป็นไฟล์เดียว ย้ายระหว่างโทรศัพท์ได้ง่ายกว่า</string>
+    <string name="backup_manage_title">จัดการข้อมูลสำรอง</string>
+    <string name="backup_manage_summary">เปลี่ยนชื่อหรือลบข้อมูลสำรอง</string>
+    <string name="backup_manage_empty">ไม่พบข้อมูลสำรองในตำแหน่งนี้</string>
+    <string name="backup_manage_rename">เปลี่ยนชื่อ</string>
+    <string name="backup_manage_delete">ลบ</string>
+    <string name="backup_manage_delete_confirm">ลบ \"%s\" ไหม การดำเนินการนี้ไม่สามารถเลิกทำได้</string>
+    <string name="backup_manage_error">อัปเดตข้อมูลสำรองนี้ไม่ได้</string>
+    <string name="backup_manage_type_folder">โฟลเดอร์</string>
+    <string name="backup_manage_type_zip">ไฟล์ Zip</string>
+    <string name="backup_restore_from_title">กู้คืนจาก</string>
+    <string name="backup_restore_from_folder">โฟลเดอร์</string>
+    <string name="backup_restore_from_zip">ไฟล์ .zip</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_backup">Backup in progress…</string>
@@ -162,12 +307,28 @@
     <string name="backup_restore_dialog_empty">No backups found</string>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
     <string name="backup_now">Backup now</string>
+    <string name="backup_now_summary">สร้างข้อมูลสำรองใหม่</string>
+    <string name="backup_categories_title">ต้องการสำรองข้อมูลอะไรบ้าง</string>
+    <string name="backup_restore_source_title">ข้อมูลสำรองชุดไหน</string>
+    <string name="backup_restore_categories_title">กู้คืนจาก %s</string>
+    <string name="backup_category_messages">ข้อความ (SMS, MMS และไฟล์แนบ)</string>
+    <string name="backup_category_settings">การตั้งค่าและเทมเพลต</string>
+    <string name="backup_category_blocking">กฎการบล็อก</string>
+    <string name="backup_category_conversations">ที่จัดเก็บและปักหมุดไว้</string>
+    <string name="backup_category_scheduled">ข้อความที่กำหนดเวลาไว้</string>
+    <string name="backup_exact_alarm_title">อนุญาตการปลุกที่ตรงเวลา</string>
+    <string name="backup_exact_alarm_message">Open Messages ต้องได้รับสิทธิ์ตั้งการปลุกที่ตรงเวลา จึงจะส่งข้อความที่กำหนดเวลาไว้ได้ตรงเวลา หากไม่มีสิทธิ์นี้ ข้อความอาจส่งช้าไปเล็กน้อย</string>
+    <string name="backup_exact_alarm_grant">อนุญาต</string>
+    <string name="backup_exact_alarm_skip">กู้คืนต่อไป</string>
     <string name="backup_progress_parsing">Parsing backup…</string>
     <string name="backup_progress_running">%d/%d messages</string>
     <string name="backup_progress_saving">Saving backup…</string>
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_failed">เขียนข้อมูลสำรองไม่ได้ โปรดตรวจสอบพื้นที่ว่างและโฟลเดอร์สำรองข้อมูล</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="clipboard_too_large_to_copy">ข้อมูลมีขนาดเกินขีดจำกัดของคลิปบอร์ด</string>
+    <string name="clipboard_unable_to_copy_to">คัดลอกไปยังคลิปบอร์ดไม่ได้</string>
     <string name="scheduled_title">กำหนดการ</string>
     <string name="scheduled_empty_description">ส่งข้อความ โดยอัตโนมัติที่คุณต้องการ</string>
     <string name="scheduled_empty_message_1">วันเกิดของคุณอีกครั้งเมื่อไหร่</string>
@@ -176,12 +337,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
     <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_send_cd">กำหนดเวลาข้อความนี้</string>
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Send now</item>
         <item>Copy text</item>
         <item>Delete</item>
     </string-array>
+    <string name="attachment_missing">ไม่พบไฟล์</string>
     <string name="settings_category_appearance">ลักษณะที่ปรากฏ</string>
     <string name="settings_category_general">ทั่วไป</string>
     <string name="settings_category_quick_reply">ตอบกลับด่วน</string>
@@ -193,6 +356,15 @@
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">ขนาดแบบอักษร</string>
     <string name="settings_system_font_title">ใช้แบบอักษรของระบบ</string>
+    <string name="settings_show_avatar_title">แสดงรูปผู้ติดต่อ</string>
+    <string name="settings_show_avatar_summary">แสดงรูปของผู้ส่งในการสนทนา ปิดไว้เพื่อให้กรอบข้อความกว้างขึ้น</string>
+    <string name="settings_hide_country_code_title">ซ่อนรหัสประเทศ</string>
+    <string name="settings_hide_country_code_summary">แสดงหมายเลขโทรศัพท์ในรูปแบบท้องถิ่น เช่น \"06 ...\" แทน \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">เต็มขอบจอ</string>
+    <string name="settings_edge_to_edge_summary">แสดงเนื้อหาด้านหลังแถบสถานะและแถบนำทาง</string>
+    <string name="settings_system_show_stt_title">แสดงปุ่มแปลงเสียงเป็นข้อความ</string>
+    <string name="settings_drawer_swipe_title">ปัดเพื่อเปิดเมนู</string>
+    <string name="settings_drawer_swipe_summary">เปิดเมนูด้านข้างโดยปัดจากขอบซ้ายของรายการการสนทนา</string>
     <string name="settings_auto_emoji_title">อีโมจิอัตโนมัติ</string>
     <string name="settings_notifications_title">การแจ้งเตือน</string>
     <string name="settings_notifications_o_summary">Tap to customize</string>
@@ -201,7 +373,14 @@
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">ตัวอย่างการแจ้งเตือน</string>
+    <string name="settings_notification_previews_summary">แสดงชื่อและข้อความ</string>
     <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_silent_title">ปิดเสียงหากไม่ใช่ผู้ติดต่อ</string>
+    <string name="settings_notification_silent_summary">ปิดเสียงการแจ้งเตือนของข้อความจากผู้ที่ไม่อยู่ในรายชื่อติดต่อ</string>
+    <string name="settings_copy_code_title">คัดลอกรหัสจากการแจ้งเตือน</string>
+    <string name="settings_copy_code_summary">เพิ่มปุ่มคัดลอกรหัสในการแจ้งเตือนสำหรับรหัสยืนยันและรหัสใช้ครั้งเดียว</string>
+    <string name="notification_copy_code">คัดลอกรหัส</string>
+    <string name="notification_code_copied">คัดลอกรหัสแล้ว</string>
     <string name="settings_vibration_title">การสั่น</string>
     <string name="settings_ringtone_title">เสียง</string>
     <string name="settings_ringtone_none">ไม่มี</string>
@@ -226,6 +405,13 @@
     </string-array>
     <string name="settings_delivery_title">ยืนยันการส่ง</string>
     <string name="settings_delivery_summary">ยืนยันว่า ส่งข้อความเรียบร้อยแล้ว</string>
+    <string name="settings_send_sound_title">เสียงเมื่อส่ง</string>
+    <string name="settings_send_sound_summary">เล่นเสียงสั้นๆ เมื่อคุณส่งข้อความ</string>
+    <string name="settings_send_sound_volume_title">ระดับเสียง</string>
+    <string name="settings_header_quick_action_title">ปุ่มลัดบนส่วนหัว</string>
+    <string name="settings_header_quick_action_summary">เพิ่มปุ่มลัดที่ส่วนหัวของการสนทนา</string>
+    <string name="settings_unread_at_top_title">ยังไม่อ่านไว้ด้านบน</string>
+    <string name="settings_unread_at_top_summary">แสดงการสนทนาที่ยังไม่อ่านไว้ด้านบน</string>
     <string name="settings_signature_title">Signature</string>
     <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">ลบอักษรพิเศษ accents</string>
@@ -244,6 +430,9 @@
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">บีบอัดสิ่งที่แนบมาใน MMS อัตโนมัติ</string>
+    <string name="settings_mms_weblink_title">การจัดการลิงก์ในข้อความ</string>
+    <string name="settings_disable_screenshots_title">ปิดการจับภาพหน้าจอ</string>
+    <string name="settings_diable_screenshots_summary">ป้องกันไม่ให้ระบบและแอปอื่นจับภาพหน้าจอของแอปนี้</string>
     <string name="settings_sync_title">ซิงค์ข้อความ</string>
     <string name="settings_sync_summary">ซิงค์ข้อความของคุณกับฐานข้อมูลของ Android SMS</string>
     <string name="settings_about_title">เกี่ยวกับ Open Messages</string>
@@ -255,6 +444,17 @@
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
     <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_category_integrated">การบล็อกในตัว</string>
+    <string name="blocking_integrated_description">Open Messages บล็อกสแปมบนอุปกรณ์ของคุณ แหล่งข้อมูลเสริมด้านล่างจะดาวน์โหลดรายการทางอินเทอร์เน็ตเมื่อคุณเปิดใช้ จากนั้นทำงานแบบออฟไลน์</string>
+    <string name="blocking_category_external_apps">แอปภายนอก</string>
+    <string name="blocked_numbers_summary">หมายเลขที่คุณบล็อกเอง</string>
+    <string name="blocking_source_phishing_title">ป้องกันฟิชชิง</string>
+    <string name="blocking_source_phishing_summary">บล็อกข้อความที่มีลิงก์ไปยังเว็บไซต์ฟิชชิงที่รู้จัก การเปิดใช้จะดาวน์โหลดรายการทางอินเทอร์เน็ต หลังจากนั้นการกรองจะทำงานแบบออฟไลน์</string>
+    <string name="blocking_source_flag_block_title">บล็อกข้อความที่สงสัยว่าเป็นสแปม</string>
+    <string name="blocking_source_flag_block_summary">ย้ายข้อความที่ถูกระบุว่าอาจเป็นสแปมไปยังรายการที่บล็อกทันที แทนที่จะแค่ติดป้ายไว้ในกล่องขาเข้า</string>
+    <string name="blocking_source_status_updating">กำลังอัปเดต…</string>
+    <string name="blocking_source_status_updated">เป็นปัจจุบัน · %1$d รายการ</string>
+    <string name="blocking_source_status_failed">ดาวน์โหลดไม่สำเร็จ แหล่งข้อมูลจะยังปิดอยู่ โปรดตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
@@ -268,6 +468,15 @@
     <string name="blocked_numbers_dialog_title">Block texts from</string>
     <string name="blocked_numbers_dialog_hint">Phone number</string>
     <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="message_content_filters_title">ตัวกรองเนื้อหาข้อความ</string>
+    <string name="message_content_filters_empty">ตัวกรองเนื้อหาข้อความของคุณจะปรากฏที่นี่</string>
+    <string name="message_content_filters_add_cd">สร้างตัวกรองใหม่</string>
+    <string name="message_content_filters_dialog_title">ทิ้งข้อความที่ตรงกับ</string>
+    <string name="message_content_filters_dialog_hint">คำ วลี หรือนิพจน์ทั่วไป</string>
+    <string name="message_content_filters_dialog_case_switch">ตรงตามตัวพิมพ์เล็ก-ใหญ่</string>
+    <string name="message_content_filters_dialog_regex_switch">นิพจน์ทั่วไป</string>
+    <string name="message_content_filters_dialog_contacts_switch">รวมผู้ติดต่อ</string>
+    <string name="message_content_filters_dialog_create">สร้าง</string>
     <string name="blocked_messages_title">Blocked messages</string>
     <string name="blocked_messages_empty">Your blocked messages will appear here</string>
     <string name="blocking_block_title">Block</string>
@@ -278,6 +487,15 @@
     <plurals name="blocking_unblock_external">
         <item quantity="other">Continue to %s and allow these numbers</item>
     </plurals>
+    <string name="deduplicate_messages_category">ลบข้อความซ้ำ</string>
+    <string name="deduplicate_messages_title">ลบข้อความที่ซ้ำกัน</string>
+    <string name="deduplicate_messages_summary">สแกนฐานข้อมูลข้อความและลบข้อความทั้งหมดที่ซ้ำกับข้อความต้นฉบับทุกประการ</string>
+    <string name="deduplicate_message_confirmation_dialog_message">ฐานข้อมูลข้อความของคุณจะถูกสแกนหาข้อความซ้ำ แล้วข้อความซ้ำเหล่านั้นจะถูกลบ\nการดำเนินการนี้จะลบข้อความโดยอัตโนมัติ โปรดดำเนินการต่อเมื่อคุณเข้าใจผลที่จะตามมาแล้วเท่านั้น</string>
+    <string name="auto_deduplicate_messages_title">ลบข้อความซ้ำโดยอัตโนมัติ</string>
+    <string name="auto_deduplicate_messages_summary">การลบข้อความซ้ำจะทำระหว่างการซิงค์ โปรดทราบว่าการดำเนินการนี้จะลบข้อความโดยอัตโนมัติ และแม้โอกาสที่จะตรวจพบข้อความซ้ำผิดพลาดจะต่ำมาก แต่ก็ยังเป็นไปได้\nโปรดใช้ความระมัดระวัง</string>
+    <string name="deduplicating_messages_finished">ลบข้อความซ้ำเสร็จแล้ว!</string>
+    <string name="deduplicating_messages_no_messages">ไม่พบข้อความซ้ำ</string>
+    <string name="deduplicating_messages_failed">ลบข้อความซ้ำไม่สำเร็จ โปรดลองอีกครั้ง</string>
     <string name="about_title">เกี่ยวกับ</string>
     <string name="about_version_title">เวอร์ชัน</string>
     <string name="about_developer_title">นักพัฒนา</string>
@@ -288,6 +506,7 @@
     <string name="about_copyright_title">ลิขสิทธิ์</string>
     <string name="widget_loading">กำลังโหลด…</string>
     <string name="widget_more">ดูการสนทนาเพิ่มเติม</string>
+    <string name="all_conversations_widget_title">การสนทนาทั้งหมด</string>
     <string name="quick_reply_menu_read">Mark read</string>
     <string name="quick_reply_menu_call">โทร</string>
     <string name="quick_reply_menu_delete">Delete</string>
@@ -309,17 +528,34 @@
     <string name="button_yes">Yes</string>
     <string name="button_continue">Continue</string>
     <string name="button_cancel">ยกเลิก</string>
+    <string name="button_close">ปิด</string>
     <string name="button_delete">ลบ</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_set">ตั้งค่า</string>
+    <string name="button_later">ไว้ทีหลัง</string>
+    <string name="icon_restart_title">ต้องรีสตาร์ท</string>
+    <string name="icon_restart_message">ต้องรีสตาร์ทแอปเพื่ออัปเดตไอคอนแอปให้เสร็จสมบูรณ์</string>
+    <string name="icon_restart_now">รีสตาร์ท</string>
     <string name="button_undo">ย้อนกลับ</string>
+    <string name="button_clear">ล้าง</string>
     <string name="toast_copied">คัดลอกแล้ว</string>
+    <plurals name="toast_archived">
+        <item quantity="other">จัดเก็บ %d การสนทนาแล้ว</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="other">ยกเลิกการเก็บ %d การสนทนาแล้ว</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="other">มี %s ข้อความใหม่</item>
     </plurals>
     <string name="notification_message_failed_title">ข้อความไม่ถูกส่ง</string>
     <string name="notification_message_failed_text">ข้อความที่จะส่งถึง %s ไม่สามารถส่งได้</string>
+    <string name="notification_foreground_worker_title">กำลังรับข้อความ</string>
+    <string name="notification_foreground_worker_text">ใน Android 12 และเวอร์ชันก่อนหน้า ต้องมีการแจ้งเตือนสำหรับงานเบื้องหลังที่ใช้รับข้อความ</string>
+    <string name="notification_foreground_worker_channel_name">การแจ้งเตือนของงานรับข้อความ</string>
+    <string name="notification_me">ฉัน</string>
+    <string name="notification_message_failed_action">ส่งอีกครั้ง</string>
     <string-array name="night_modes">
         <item>System</item>
         <item>Disabled</item>
@@ -343,6 +579,21 @@
         <item>5 seconds</item>
         <item>10 seconds</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>ไม่มี</item>
+        <item>จัดเก็บ</item>
+        <item>ทำเครื่องหมายว่ายังไม่อ่าน</item>
+        <item>บล็อก</item>
+        <item>ลบ</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>ไม่มี</item>
+        <item>คลาสสิก</item>
+        <item>สดใส</item>
+        <item>นุ่มนวล</item>
+        <item>เสียงลง</item>
+        <item>สามโน้ต</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>
         <item>100KB</item>
@@ -352,6 +603,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>No compression</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>บล็อก</item>
+        <item>อนุญาต</item>
+        <item>ถามก่อนเปิด</item>
     </string-array>
     <string-array name="quick_responses">
         <item>ตกลง</item>
@@ -367,4 +623,13 @@
         <item>555</item>
         <item>ไม่เป็นไร</item>
     </string-array>
+    <string name="speak_no_messages">ไม่มีข้อความ</string>
+    <string name="speak_unseen_messages">อ่านออกเสียงข้อความที่ยังไม่ได้ดู</string>
+    <string name="messageLinkHandling_dialog_title">คำเตือนลิงก์ภายนอก</string>
+    <string name="messageLinkHandling_dialog_body">บางลิงก์อาจไม่ปลอดภัยหรือพาคุณไปยังที่อื่นโดยไม่คาดคิด โปรดตรวจสอบลิงก์ด้านล่างก่อนดำเนินการต่อ:\n\n%1$s\n\nต้องการดำเนินการต่อไหม</string>
+    <string name="messageLinkHandling_dialog_positive">ใช่ เปิดลิงก์</string>
+    <string name="messageLinkHandling_dialog_negative">ไม่</string>
+    <string name="error_stt_toast">ขออภัย เกิดข้อผิดพลาดในการโหลดบริการแปลงเสียงเป็นข้อความ</string>
+    <string name="stt_toast_extra_prompt">พูดข้อความของคุณ</string>
+    <string name="messages_text_share_file_error">อ๊ะ! เกิดข้อผิดพลาดขณะแชร์</string>
 </resources>

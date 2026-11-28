@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Nhắn tin đơn giản, mã nguồn mở</string>
     <string name="shortcut_compose_long_label">Cuộc trò chuyện mới</string>
     <string name="shortcut_compose_short_label">Soạn tin</string>
     <string name="shortcut_compose_disabled_message">Đã tắt lối tắt</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Cài đặt</string>
     <string name="title_notification_prefs">Thông báo</string>
     <string name="title_theme">Chủ đề</string>
+    <string name="theme_default">Mặc định</string>
+    <string name="theme_wallpaper">Hình nền</string>
+    <string name="theme_other_colors">Màu sắc</string>
+    <string name="theme_tab_presets">Bảng màu</string>
+    <string name="theme_tab_custom">Tùy chỉnh</string>
+    <string name="theme_apply_to_icon">Áp dụng màu cho biểu tượng ứng dụng (ứng dụng sẽ đóng)</string>
+    <string name="theme_tab_icon">Biểu tượng ứng dụng</string>
+    <string name="theme_icon_follow_theme">Theo màu chủ đề của ứng dụng</string>
+    <string name="theme_icon_summary">Chọn màu biểu tượng ứng dụng, độc lập với chủ đề. Khi áp dụng thay đổi, ứng dụng sẽ đóng.</string>
+    <string name="theme_icon_change_title">Đổi biểu tượng ứng dụng?</string>
+    <string name="theme_icon_change_message">Màu biểu tượng ứng dụng sắp thay đổi. Android chỉ có thể đổi biểu tượng khi ứng dụng đã đóng, vì vậy Open Messages sẽ tắt ngay khi bạn xác nhận.</string>
     <string name="title_conversations">Tìm kiếm tin nhắn…</string>
+    <string name="title_search">Tìm kiếm</string>
     <string name="title_compose">Nhập tên hoặc số điện thoại</string>
     <string name="setup_skip">Bỏ qua</string>
     <string name="setup_next">Tiếp tục</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Lưu vào bộ sưu tập</string>
     <string name="compose_menu_share">Chia sẻ</string>
     <string name="main_drawer_open_cd">Mở ngăn điều hướng</string>
+    <string name="main_search_close_cd">Đóng tìm kiếm</string>
+    <string name="main_search_clear_cd">Xóa nội dung tìm kiếm</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">Đã chọn %d</string>
     <string name="main_menu_clear">Dọn sạch</string>
     <string name="main_menu_archive">Lưu trữ</string>
@@ -63,7 +79,15 @@
     <string name="main_permission_notifications">Open Messages cần cấp quyền để hiển thị thông báo</string>
     <string name="main_permission_allow">Cho phép</string>
     <string name="drawer_inbox">Trò chuyện</string>
+    <string name="contacts_group_recent">Gần đây</string>
+    <string name="contacts_group_starred">Yêu thích</string>
+    <string name="contacts_group_groups">Nhóm</string>
+    <string name="conversations_group_today">Hôm nay</string>
+    <string name="conversations_group_yesterday">Hôm qua</string>
     <string name="drawer_archived">Lưu trữ</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="other">%d chưa đọc</item>
+    </plurals>
     <string name="drawer_scheduled">Hẹn giờ tin nhắn</string>
     <string name="drawer_blocking">Chặn liên hệ</string>
     <string name="drawer_more">Xem thêm</string>
@@ -97,6 +121,8 @@
     <string name="compose_scheduled_future">Thời gian chọn phải trong tương lai!</string>
     <string name="compose_scheduled_toast">Đã hẹn giờ cho tin nhắn</string>
     <string name="compose_hint">Viết tin nhắn…</string>
+    <string name="compose_expand_cd">Mở rộng toàn màn hình</string>
+    <string name="compose_collapse_cd">Thu gọn</string>
     <string name="compose_menu_copy">Sao chép văn bản</string>
     <string name="compose_menu_forward">Chuyển tiếp</string>
     <string name="compose_menu_delete">Xóa</string>
@@ -118,10 +144,31 @@
     <string name="compose_gallery_cd">Đính kèm ảnh</string>
     <string name="compose_camera_cd">Chụp ảnh</string>
     <string name="compose_schedule_cd">Hẹn giờ tin nhắn</string>
+    <string name="compose_schedule_title">Hẹn giờ tin nhắn</string>
+    <string name="compose_schedule_in_hour">Sau 1 giờ</string>
+    <string name="compose_schedule_tonight">Tối nay</string>
+    <string name="compose_schedule_tomorrow_morning">Sáng mai</string>
+    <string name="compose_schedule_tomorrow_afternoon">Chiều mai</string>
+    <string name="compose_schedule_custom">Chọn ngày và giờ</string>
+    <string name="compose_schedule_confirm">Hẹn giờ</string>
+    <string name="compose_schedule_previous_month">Tháng trước</string>
+    <string name="compose_schedule_next_month">Tháng sau</string>
+    <string name="compose_schedule_increase">Tăng</string>
+    <string name="compose_schedule_decrease">Giảm</string>
     <string name="compose_contact_cd">Đính kèm liên hệ</string>
     <string name="compose_contact_error">Lỗi đọc liên hệ</string>
+    <string name="compose_attach_gallery">Thư viện</string>
+    <string name="compose_attach_camera">Máy ảnh</string>
+    <string name="compose_attach_file">Tệp</string>
+    <string name="compose_attach_audio">Âm thanh</string>
+    <string name="compose_attach_contact">Liên hệ</string>
+    <string name="compose_attach_schedule">Hẹn giờ</string>
+    <string name="compose_attach_templates">Mẫu tin nhắn</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Đã chọn SIM %1$d (%2$s)</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="other">Video này quá dài để gửi qua MMS. Thời lượng tối đa là %d giây.</item>
+    </plurals>
     <string name="compose_sim_cd">%s đã được chọn, hãy đổi thẻ SIM</string>
     <string name="compose_send_cd">Gửi tin nhắn</string>
     <string name="message_status_sending">Đang gửi…</string>
@@ -140,11 +187,40 @@
     <string name="gallery_toast_saved">Đã lưu vào thư viện</string>
     <string name="backup_title">Sao lưu và khôi phục</string>
     <string name="backup_backing_up">Đang sao lưu tin nhắn</string>
+    <string name="backup_failed_title">Sao lưu thất bại</string>
+    <string name="backup_icon_change_title">Khôi phục biểu tượng ứng dụng?</string>
+    <string name="backup_icon_change_message">Bản sao lưu của bạn được tạo với màu biểu tượng ứng dụng khác. Android chỉ có thể đổi biểu tượng khi ứng dụng đã đóng, vì vậy Open Messages sẽ tắt ngay khi bạn xác nhận.</string>
+    <string name="icon_change_confirm">Áp dụng và đóng</string>
+    <string name="icon_change_later">Để sau</string>
     <string name="backup_restoring">Đang khôi phục từ bản sao lưu</string>
     <string name="backup_loading">Đang tải…</string>
     <string name="backup_never">Chưa bao giờ</string>
     <string name="backup_location_title">Vị trí sao lưu</string>
     <string name="backup_location_summary">Chọn thư mục</string>
+    <string name="backup_auto_title">Sao lưu tự động</string>
+    <string name="backup_auto_never">Không bao giờ</string>
+    <string name="backup_auto_daily">Hằng ngày</string>
+    <string name="backup_auto_weekly">Hằng tuần</string>
+    <string name="backup_auto_custom">Tùy chỉnh…</string>
+    <string name="backup_auto_custom_title">Số ngày giữa các lần sao lưu</string>
+    <string name="backup_auto_custom_hint">Số ngày</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="other">Mỗi %d ngày</item>
+    </plurals>
+    <string name="backup_zip_title">Lưu dưới dạng tệp .zip</string>
+    <string name="backup_zip_summary">Lưu mỗi bản sao lưu thành một tệp nén duy nhất, dễ chuyển giữa các điện thoại hơn</string>
+    <string name="backup_manage_title">Quản lý bản sao lưu</string>
+    <string name="backup_manage_summary">Đổi tên hoặc xóa bản sao lưu</string>
+    <string name="backup_manage_empty">Không tìm thấy bản sao lưu nào ở vị trí này</string>
+    <string name="backup_manage_rename">Đổi tên</string>
+    <string name="backup_manage_delete">Xóa</string>
+    <string name="backup_manage_delete_confirm">Xóa \"%s\"? Không thể hoàn tác thao tác này.</string>
+    <string name="backup_manage_error">Không thể cập nhật bản sao lưu này</string>
+    <string name="backup_manage_type_folder">Thư mục</string>
+    <string name="backup_manage_type_zip">Tệp nén Zip</string>
+    <string name="backup_restore_from_title">Khôi phục từ</string>
+    <string name="backup_restore_from_folder">Một thư mục</string>
+    <string name="backup_restore_from_zip">Một tệp .zip</string>
     <string name="backup_restore_title">Khôi phục</string>
     <string name="backup_restore_summary">Chọn một bản sao lưu</string>
     <string name="backup_restore_error_backup">Đang sao lưu…</string>
@@ -162,11 +238,25 @@
     <string name="backup_restore_dialog_empty">Không tìm thấy bản sao lưu nào</string>
     <string name="backup_disclaimer">Hiện tại, tính năng sao lưu và khôi phục chỉ hỗ trợ SMS. Việc hỗ trợ MMS và tính năng sao lưu định kì sẽ có sớm!</string>
     <string name="backup_now">Sao lưu ngay</string>
+    <string name="backup_now_summary">Tạo bản sao lưu mới</string>
+    <string name="backup_categories_title">Bạn muốn sao lưu những gì?</string>
+    <string name="backup_restore_source_title">Bản sao lưu nào?</string>
+    <string name="backup_restore_categories_title">Khôi phục từ %s</string>
+    <string name="backup_category_messages">Tin nhắn (SMS, MMS và tệp đính kèm)</string>
+    <string name="backup_category_settings">Cài đặt và mẫu tin nhắn</string>
+    <string name="backup_category_blocking">Quy tắc chặn</string>
+    <string name="backup_category_conversations">Đã lưu trữ và đã ghim</string>
+    <string name="backup_category_scheduled">Tin nhắn hẹn giờ</string>
+    <string name="backup_exact_alarm_title">Cho phép báo thức chính xác</string>
+    <string name="backup_exact_alarm_message">Để gửi tin nhắn hẹn giờ đúng giờ, Open Messages cần quyền đặt báo thức chính xác. Nếu không có quyền này, tin nhắn có thể được gửi trễ một chút.</string>
+    <string name="backup_exact_alarm_grant">Cho phép</string>
+    <string name="backup_exact_alarm_skip">Vẫn khôi phục</string>
     <string name="backup_progress_parsing">Đang phân tích bản sao lưu…</string>
     <string name="backup_progress_running">%d/%d tin nhắn</string>
     <string name="backup_progress_saving">Đang lưu bản sao lưu…</string>
     <string name="backup_progress_syncing">Đang đồng bộ tin nhắn…</string>
     <string name="backup_progress_finished">Hoàn tất!</string>
+    <string name="backup_progress_failed">Không thể ghi bản sao lưu. Hãy kiểm tra dung lượng còn trống và thư mục sao lưu.</string>
     <string name="backup_notification_channel_name">Sao lưu và khôi phục</string>
     <string name="scheduled_title">Hẹn giờ tin nhắn</string>
     <string name="scheduled_empty_description">Tự động gửi tin nhắn vào lúc mà bạn muốn</string>
@@ -193,6 +283,12 @@
     <string name="settings_automatic_colors_title">Tự động hiện màu sắc của liên hệ</string>
     <string name="settings_text_size_title">Cỡ chữ</string>
     <string name="settings_system_font_title">Sử dụng font chữ hệ thống</string>
+    <string name="settings_show_avatar_title">Hiện ảnh liên hệ</string>
+    <string name="settings_show_avatar_summary">Hiện ảnh của người gửi trong cuộc trò chuyện. Tắt đi để bong bóng tin nhắn rộng hơn.</string>
+    <string name="settings_hide_country_code_title">Ẩn mã quốc gia</string>
+    <string name="settings_hide_country_code_summary">Hiện số điện thoại theo định dạng trong nước, ví dụ \"06 ...\" thay vì \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Tràn viền</string>
+    <string name="settings_edge_to_edge_summary">Hiển thị nội dung phía sau thanh trạng thái và thanh điều hướng</string>
     <string name="settings_auto_emoji_title">Emoji tự động</string>
     <string name="settings_notifications_title">Thông báo</string>
     <string name="settings_notifications_o_summary">Chạm để tuỳ chỉnh</string>
@@ -226,6 +322,11 @@
     </string-array>
     <string name="settings_delivery_title">Xác nhận đã gửi tin</string>
     <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>
+    <string name="settings_send_sound_title">Âm thanh khi gửi</string>
+    <string name="settings_send_sound_summary">Phát một âm ngắn khi bạn gửi tin nhắn</string>
+    <string name="settings_send_sound_volume_title">Âm lượng</string>
+    <string name="settings_header_quick_action_title">Thao tác nhanh trên tiêu đề</string>
+    <string name="settings_header_quick_action_summary">Thêm nút tắt vào tiêu đề cuộc trò chuyện</string>
     <string name="settings_signature_title">Chữ ký</string>
     <string name="settings_signature_summary">Thêm chữ kí vào cuối đoạn tin nhắn của bạn</string>
     <string name="settings_unicode_title">Bỏ dấu</string>
@@ -255,6 +356,17 @@
     <string name="blocking_drop_title">Loại bỏ tin nhắn</string>
     <string name="blocking_drop_summary">Loại bỏ các tin nhắn được gửi tới từ người gửi đã chặn thay vì ẩn chúng</string>
     <string name="blocking_conversations">Các cuộc trò chuyện đã chặn</string>
+    <string name="blocking_category_integrated">Chặn tích hợp</string>
+    <string name="blocking_integrated_description">Open Messages chặn thư rác ngay trên thiết bị của bạn. Các nguồn tùy chọn bên dưới sẽ tải danh sách qua Internet khi bạn bật, sau đó hoạt động ngoại tuyến.</string>
+    <string name="blocking_category_external_apps">Ứng dụng bên ngoài</string>
+    <string name="blocked_numbers_summary">Các số bạn tự chặn</string>
+    <string name="blocking_source_phishing_title">Chống lừa đảo</string>
+    <string name="blocking_source_phishing_summary">Chặn tin nhắn có liên kết đến các trang lừa đảo đã biết. Khi bật, danh sách sẽ được tải qua Internet; sau đó việc lọc diễn ra ngoại tuyến.</string>
+    <string name="blocking_source_flag_block_title">Chặn tin nghi là thư rác</string>
+    <string name="blocking_source_flag_block_summary">Chuyển thẳng tin nhắn bị gắn cờ có thể là thư rác vào danh sách chặn thay vì chỉ gắn nhãn trong hộp thư</string>
+    <string name="blocking_source_status_updating">Đang cập nhật…</string>
+    <string name="blocking_source_status_updated">Đã cập nhật · %1$d mục</string>
+    <string name="blocking_source_status_failed">Tải xuống thất bại, nguồn vẫn tắt. Hãy kiểm tra kết nối và thử lại.</string>
     <string name="blocking_manager_title">Quản lý danh sách chặn</string>
     <string name="blocking_manager_built_in_summary">Chức năng chặn tích hợp sẵn trong Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Chặn tin nhằn rác, số &amp; cuộc gọi không xác định bằng danh sách đen &amp; Lịch trình</string>
@@ -309,10 +421,15 @@
     <string name="button_yes">Đồng ý</string>
     <string name="button_continue">Tiếp tục</string>
     <string name="button_cancel">Hủy</string>
+    <string name="button_close">Đóng</string>
     <string name="button_delete">Xóa</string>
     <string name="button_save">Lưu</string>
     <string name="button_stop">Dừng</string>
     <string name="button_set">Chọn</string>
+    <string name="button_later">Để sau</string>
+    <string name="icon_restart_title">Cần khởi động lại</string>
+    <string name="icon_restart_message">Cần khởi động lại ứng dụng để hoàn tất việc cập nhật biểu tượng.</string>
+    <string name="icon_restart_now">Khởi động lại</string>
     <string name="button_undo">Hoàn tác</string>
     <string name="toast_copied">Đã sao chép</string>
     <plurals name="notification_new_messages">
@@ -343,6 +460,21 @@
         <item>5 giây</item>
         <item>10 giây</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Không có</item>
+        <item>Lưu trữ</item>
+        <item>Đánh dấu chưa đọc</item>
+        <item>Chặn</item>
+        <item>Xóa</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Không có</item>
+        <item>Cổ điển</item>
+        <item>Trong trẻo</item>
+        <item>Nhẹ nhàng</item>
+        <item>Giảm dần</item>
+        <item>Ba nốt</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Tự động</item>
         <item>100KB</item>
@@ -352,6 +484,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Không nén</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Chặn</item>
+        <item>Cho phép</item>
+        <item>Hỏi trước khi mở</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Ok</item>
@@ -376,18 +513,40 @@
     <string name="dialog_clear_compose_title">Xóa nội dung</string>
     <string name="scheduled_send_cd">Hẹn giờ tin nhắn này</string>
     <string name="settings_system_show_stt_title">Hiển thị nút chuyển đổi văn bản thành giọng nói</string>
+    <string name="settings_drawer_swipe_title">Vuốt để mở menu</string>
+    <string name="settings_drawer_swipe_summary">Mở menu bên bằng cách vuốt từ mép trái của danh sách cuộc trò chuyện</string>
     <string name="settings_notification_previews_summary">Hiện tên và tin nhắn</string>
     <string name="menu_mms_part_open">Mở bằng ứng dụng khác</string>
     <string name="main_menu_send_now">Gửi ngay</string>
     <string name="main_sender_draft">Bản nháp: %s</string>
+    <string name="conversation_flagged_label">Nghi là thư rác</string>
+    <string name="snippet_picture">Hình ảnh</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Âm thanh</string>
+    <string name="snippet_contact_card">Danh thiếp</string>
+    <string name="search_group_conversations">Cuộc trò chuyện</string>
     <string name="scheduled_menu_send_now">Gửi ngay</string>
     <string name="scheduled_menu_edit_message">Chỉnh sửa tin nhắn</string>
     <string name="dialog_edit_scheduled_message">Chỉnh sửa sẽ xóa tin nhắn khỏi lịch hẹn.\n\nHãy gửi lại ở màn hình tiếp theo, nếu không tin nhắn sẽ mất.\n\nBạn có muốn tiếp tục không?</string>
     <string name="dialog_edit_scheduled_message_positive_button">Tiếp tục chỉnh sửa</string>
     <string name="dialog_clear_compose">Xóa nội dung? Thao tác này không thể phục hồi.</string>
     <string name="compose_scheduled_view">Hẹn giờ tin nhắn cho cuộc trò chuyện này</string>
+    <string name="compose_scheduled_bubble">Gửi lúc %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="other">%d tệp đính kèm</item>
+    </plurals>
     <string name="compose_no_valid_recipients">Không thể gửi đến người nhận</string>
+    <string name="compose_flagged_title">Nghi là thư rác</string>
+    <string name="compose_flagged_approve">Chấp nhận</string>
+    <string name="compose_flagged_block">Chặn</string>
     <string name="message_management_title">Quản lý tin nhắn</string>
+    <string name="templates_title">Mẫu tin nhắn</string>
+    <string name="templates_empty">Chưa có tin nhắn nào được lưu.\nNhấn + để lưu tin nhắn bạn hay gửi, rồi nhấn vào nó để chọn người nhận.</string>
+    <string name="template_hint">Nhập tin nhắn…</string>
+    <string name="template_title_hint">Tiêu đề (không bắt buộc)</string>
+    <string name="templates_add_cd">Mẫu mới</string>
+    <string name="template_new">Mẫu mới</string>
+    <string name="template_edit">Sửa mẫu</string>
     <string name="main_sync_emojis">Đang xử lý emoji…</string>
     <string name="compose_send_group_summary_off">Tin nhắn sẽ được gửi riêng biệt đến tất cả người nhận</string>
     <string name="compose_send_group_summary_on">Người nhận và các phản hồi sẽ hiển thị cho tất cả mọi người</string>
@@ -398,6 +557,8 @@
     <string name="compose_record_audio_msg_cd">Ghi âm</string>
     <string name="compose_record_audio_msg_abort_cd">Hủy ghi âm</string>
     <string name="compose_record_audio_msg_attach_cd">Đính kèm ghi âm</string>
+    <string name="compose_audio_msg_title">Tin nhắn thoại</string>
+    <string name="compose_audio_msg_attach">Đính kèm</string>
     <string name="compose_record_audio_msg_play_pause_cd">Bắt đầu hoặc dừng ghi âm</string>
     <string name="compose_message_cancel">Hủy</string>
     <string name="compose_message_send_now">Gửi bây giờ</string>
@@ -406,6 +567,10 @@
     <string name="compose_message_attachment">Tệp đính kèm</string>
     <string name="compose_toast_drag_stt">Di chuyển nút chuyển giọng nói thành văn bản đến bất kỳ vị trí nào bạn muốn</string>
     <string name="message_body_too_long_to_display">⚠ Tin nhắn quá dài. Sao chép hoặc lưu lại để xem toàn bộ nội dung</string>
+    <string name="conversation_menu">Tùy chọn cuộc trò chuyện</string>
+    <string name="conversation_menu_media">Xem tất cả phương tiện</string>
+    <string name="media_title">Phương tiện</string>
+    <string name="media_empty">Ảnh và video được chia sẻ trong cuộc trò chuyện này sẽ xuất hiện ở đây</string>
     <string name="settings_diable_screenshots_summary">Ngăn hệ điều hành và các ứng dụng khác chụp ảnh màn hình của ứng dụng.</string>
     <string name="settings_disable_screenshots_title">Tắt chức năng chụp ảnh màn hình</string>
     <string name="settings_mms_weblink_title">Xử lý liên kết trong tin nhắn</string>
@@ -453,6 +618,10 @@
     <string name="attachment_missing">Thiếu</string>
     <string name="settings_notification_silent_title">Im lặng nếu không phải người trong danh bạ</string>
     <string name="settings_notification_silent_summary">Tắt thông báo cho các tin nhắn không có người nhận trong danh bạ của bạn</string>
+    <string name="settings_copy_code_title">Sao chép mã từ thông báo</string>
+    <string name="settings_copy_code_summary">Thêm nút Sao chép mã vào thông báo chứa mã xác minh và mã dùng một lần</string>
+    <string name="notification_copy_code">Sao chép mã</string>
+    <string name="notification_code_copied">Đã sao chép mã</string>
     <string name="settings_unread_at_top_title">Chưa đọc ở trên cùng</string>
     <string name="settings_unread_at_top_summary">Hiển thị các cuộc trò chuyện chưa đọc ở trên cùng</string>
     <string name="about_developer">Một đội ngũ tuyệt vời gồm những con người đến từ khắp nơi trên thế giới!</string>
@@ -463,4 +632,5 @@
         <item quantity="other">Đã bỏ lưu trữ %d cuộc trò chuyện</item>
     </plurals>
     <string name="notification_foreground_worker_channel_name">Nhận thông báo về tin nhắn</string>
+    <string name="notification_me">Tôi</string>
 </resources>

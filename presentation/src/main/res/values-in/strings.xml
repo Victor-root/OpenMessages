@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Perpesanan sederhana dan sumber terbuka</string>
     <string name="shortcut_compose_long_label">Percakapan baru</string>
     <string name="shortcut_compose_short_label">Buat</string>
     <string name="shortcut_compose_disabled_message">Pintasan nonaktif</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">Setelan</string>
     <string name="title_notification_prefs">Notifikasi</string>
     <string name="title_theme">Tema</string>
+    <string name="theme_default">Default</string>
+    <string name="theme_wallpaper">Wallpaper</string>
+    <string name="theme_other_colors">Warna</string>
+    <string name="theme_tab_presets">Palet</string>
+    <string name="theme_tab_custom">Kustom</string>
+    <string name="theme_apply_to_icon">Terapkan warna ke ikon aplikasi (aplikasi akan ditutup)</string>
+    <string name="theme_tab_icon">Ikon aplikasi</string>
+    <string name="theme_icon_follow_theme">Samakan dengan warna tema aplikasi</string>
+    <string name="theme_icon_summary">Pilih warna ikon aplikasi, terpisah dari tema. Aplikasi akan ditutup saat perubahan diterapkan.</string>
+    <string name="theme_icon_change_title">Ganti ikon aplikasi?</string>
+    <string name="theme_icon_change_message">Warna ikon aplikasi akan berubah. Android hanya bisa mengganti ikon saat aplikasi ditutup, jadi Open Messages akan langsung ditutup begitu Anda mengonfirmasi.</string>
     <string name="title_conversations">Cari kotak masuk…</string>
+    <string name="title_search">Cari</string>
     <string name="title_compose">Ketik nama atau nomor</string>
     <string name="setup_skip">Lewati</string>
     <string name="setup_next">Lanjut</string>
     <string name="menu_add_person">Tambah kontak</string>
     <string name="menu_call">Panggil</string>
     <string name="menu_mms_part_save">Simpan ke galeri</string>
+    <string name="menu_mms_part_share">Bagikan</string>
+    <string name="menu_mms_part_forward">Teruskan</string>
+    <string name="menu_mms_part_open">Buka di aplikasi lain</string>
     <string name="compose_menu_share">Berbagi</string>
     <string name="main_drawer_open_cd">Buka laci navigasi</string>
+    <string name="main_search_close_cd">Tutup pencarian</string>
+    <string name="main_search_clear_cd">Hapus pencarian</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d dipilih</string>
     <string name="main_menu_clear">Bersihkan</string>
+    <string name="main_menu_select_all">Pilih semua</string>
     <string name="main_menu_archive">Arsipkan</string>
     <string name="main_menu_unarchive">Batalkan arsip</string>
     <string name="main_menu_delete">Hapus</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Tandai dibaca</string>
     <string name="main_menu_unread">Tandai belum dibaca</string>
     <string name="main_menu_block">Blokir</string>
+    <string name="main_menu_send_now">Kirim sekarang</string>
+    <string name="main_menu_edit_message">Edit pesan</string>
+    <string name="main_menu_rename_conversation">Ganti nama percakapan</string>
     <string name="main_syncing">Menyinkronkan pesan…</string>
+    <string name="main_sync_emojis">Memproses reaksi emoji…</string>
     <string name="main_sender_you">Anda: %s</string>
+    <string name="main_sender_draft">Draf: %s</string>
+    <string name="conversation_flagged_label">Diduga spam</string>
+    <string name="snippet_picture">Gambar</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Audio</string>
+    <string name="snippet_contact_card">Kartu kontak</string>
+    <string name="search_group_conversations">Percakapan</string>
     <string name="main_message_results_title">Hasil dalam pesan</string>
     <plurals name="main_message_results">
         <item quantity="other">%d pesan</item>
@@ -62,11 +93,29 @@
     <string name="main_permission_contacts">Open Messages membutuhkan izin untuk membaca kontak anda</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Izinkan</string>
+    <string name="scheduled_menu_send_now">Kirim sekarang</string>
+    <string name="scheduled_menu_edit_message">Edit pesan</string>
     <string name="drawer_inbox">Kotak masuk</string>
+    <string name="contacts_group_recent">Terbaru</string>
+    <string name="contacts_group_starred">Favorit</string>
+    <string name="contacts_group_groups">Grup</string>
+    <string name="conversations_group_today">Hari ini</string>
+    <string name="conversations_group_yesterday">Kemarin</string>
     <string name="drawer_archived">Diarsipkan</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="other">%d belum dibaca</item>
+    </plurals>
     <string name="drawer_scheduled">Terjadwal</string>
     <string name="drawer_blocking">Pemblokiran</string>
     <string name="drawer_more">Lainnya</string>
+    <string name="message_management_title">Pengelolaan Pesan</string>
+    <string name="templates_title">Template</string>
+    <string name="templates_empty">Belum ada pesan tersimpan.\nKetuk + untuk menyimpan pesan yang sering Anda kirim, lalu ketuk pesan itu untuk memilih penerimanya.</string>
+    <string name="template_hint">Ketik pesan Anda…</string>
+    <string name="template_title_hint">Judul (opsional)</string>
+    <string name="templates_add_cd">Template baru</string>
+    <string name="template_new">Template baru</string>
+    <string name="template_edit">Edit template</string>
     <string name="drawer_settings">Setelan</string>
     <string name="drawer_help">Bantuan &amp; umpanbalik</string>
     <string name="drawer_invite">Undang teman</string>
@@ -76,8 +125,19 @@
     <string name="rate_dismiss">ABAIKAN</string>
     <string name="dialog_delete_title">Hapus</string>
     <plurals name="dialog_delete_message">
-        <item quantity="other">Apakah anda yakin ingin menghapus percakapan ini?</item>
+        <item quantity="other">Apakah Anda yakin ingin menghapus %d percakapan?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="other">Yakin ingin menghapus %d pesan?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="other">Yakin ingin mengirim %d pesan sekarang?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">Edit pesan</string>
+    <string name="dialog_edit_scheduled_message">Mengedit pesan ini akan menghapusnya dari jadwal.\n\nPastikan untuk menjadwalkannya lagi di layar berikutnya, atau pesan akan hilang.\n\nIngin melanjutkan?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">Ya, edit pesan</string>
+    <string name="dialog_clear_compose_title">Hapus pesan</string>
+    <string name="dialog_clear_compose">Hapus pesan ini? Tindakan ini tidak dapat diurungkan.</string>
     <string-array name="message_options">
         <item>Salin teks</item>
         <item>Teruskan</item>
@@ -91,19 +151,34 @@
     <string name="compose_subtitle_results">%1$d dari %2$d hasil</string>
     <string name="compose_send_group_title">Kirim sebagai pesan grup</string>
     <string name="compose_send_group_summary">Penerima dan balasan akan ditampilkan ke semua orang</string>
+    <string name="compose_send_group_summary_on">Penerima dan balasan akan terlihat oleh semua orang</string>
+    <string name="compose_send_group_summary_off">Pesan akan dikirim terpisah ke setiap penerima</string>
     <string name="compose_messages_empty">Ini adalah awal percakapan anda. Katakan sesuatu yang baik!</string>
     <string name="compose_vcard_label">Kartu nama</string>
     <string name="compose_scheduled_for">Jadwalkan pada</string>
     <string name="compose_scheduled_future">Waktu yang dipilih harus berada di masa depan!</string>
     <string name="compose_scheduled_toast">Ditambahkan ke pesan terjadwal</string>
+    <string name="compose_scheduled_view">Pesan terjadwal untuk percakapan ini</string>
+    <string name="compose_scheduled_bubble">Dikirim pada %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="other">%d lampiran</item>
+    </plurals>
     <string name="compose_hint">Tulis pesan…</string>
+    <string name="compose_expand_cd">Perluas ke layar penuh</string>
+    <string name="compose_collapse_cd">Ciutkan</string>
+    <string name="compose_no_valid_recipients">Tidak dapat mengirim ke peserta lain</string>
+    <string name="compose_flagged_title">Diduga spam</string>
+    <string name="compose_flagged_approve">Setujui</string>
+    <string name="compose_flagged_block">Blokir</string>
     <string name="compose_menu_copy">Salin teks</string>
     <string name="compose_menu_forward">Teruskan</string>
+    <string name="compose_menu_show_status">Tampilkan status</string>
     <string name="compose_menu_delete">Hapus</string>
     <string name="compose_menu_previous">Sebelumnya</string>
     <string name="compose_menu_next">Berikutnya</string>
     <string name="compose_menu_clear">Bersihkan</string>
     <string name="compose_details_title">Detail pesan</string>
+    <string name="compose_reactions_title">Reaksi</string>
     <string name="compose_details_type">Tipe: %s</string>
     <string name="compose_details_from">Dari: %s</string>
     <string name="compose_details_to">Ke: %s</string>
@@ -115,18 +190,59 @@
     <string name="compose_details_delivered">Terkirim: %s</string>
     <string name="compose_details_error_code">Kode galat: %d</string>
     <string name="compose_attach_cd">Tambah lampiran</string>
+    <string name="compose_attach_file_cd">Lampirkan file apa pun</string>
     <string name="compose_gallery_cd">Lampirkan foto</string>
+    <string name="compose_audio_message_cd">Rekam pesan suara</string>
     <string name="compose_camera_cd">Ambil foto</string>
     <string name="compose_schedule_cd">Jadwalkan pesan</string>
+    <string name="compose_schedule_title">Jadwalkan pesan</string>
+    <string name="compose_schedule_in_hour">Dalam 1 jam</string>
+    <string name="compose_schedule_tonight">Malam ini</string>
+    <string name="compose_schedule_tomorrow_morning">Besok pagi</string>
+    <string name="compose_schedule_tomorrow_afternoon">Besok siang</string>
+    <string name="compose_schedule_custom">Pilih tanggal dan waktu</string>
+    <string name="compose_schedule_confirm">Jadwalkan</string>
+    <string name="compose_schedule_previous_month">Bulan sebelumnya</string>
+    <string name="compose_schedule_next_month">Bulan berikutnya</string>
+    <string name="compose_schedule_increase">Tambah</string>
+    <string name="compose_schedule_decrease">Kurangi</string>
+    <string name="compose_schedule_cancel_cd">Batalkan jadwal pesan</string>
     <string name="compose_contact_cd">Lampirkan kontak</string>
     <string name="compose_contact_error">Galat membaca kontak</string>
+    <string name="compose_attach_gallery">Galeri</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">File</string>
+    <string name="compose_attach_audio">Audio</string>
+    <string name="compose_attach_contact">Kontak</string>
+    <string name="compose_attach_schedule">Jadwal</string>
+    <string name="compose_attach_templates">Template</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) dipilih</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="other">Video ini terlalu panjang untuk dikirim lewat MMS. Durasi maksimal %d detik.</item>
+    </plurals>
     <string name="compose_sim_cd">%s dipilih, ganti kartu SIM</string>
     <string name="compose_send_cd">Kirim pesan</string>
+    <string name="compose_record_audio_msg_cd">Rekam pesan suara</string>
+    <string name="compose_record_audio_msg_abort_cd">Batalkan pesan suara</string>
+    <string name="compose_record_audio_msg_attach_cd">Lampirkan pesan suara</string>
+    <string name="compose_audio_msg_title">Pesan suara</string>
+    <string name="compose_audio_msg_attach">Lampirkan</string>
+    <string name="compose_record_audio_msg_play_pause_cd">Putar atau jeda pesan suara</string>
+    <string name="compose_message_cancel">Batal</string>
+    <string name="compose_message_send_now">Kirim sekarang</string>
+    <string name="compose_message_sim">Nomor SIM</string>
+    <string name="compose_message_item">Item pesan</string>
+    <string name="compose_message_attachment">Lampiran</string>
+    <string name="compose_toast_drag_stt">Pindahkan tombol ucapan ke teks ke mana saja</string>
     <string name="message_status_sending">Mengirim…</string>
     <string name="message_status_delivered">%s terkirim</string>
     <string name="message_status_failed">Gagal mengirim. Ketuk untuk mencoba lagi</string>
+    <string name="message_body_too_long_to_display">⚠ Pesan panjang. Salin atau Simpan untuk melihat teks lengkap</string>
+    <string name="conversation_menu">Opsi percakapan</string>
+    <string name="conversation_menu_media">Lihat semua media</string>
+    <string name="media_title">Media</string>
+    <string name="media_empty">Foto dan video yang dibagikan dalam percakapan ini akan muncul di sini</string>
     <string name="info_copied_address">Alamat disalin</string>
     <string name="info_name">Judul percakapan</string>
     <string name="info_notifications">Notifikasi</string>
@@ -140,11 +256,40 @@
     <string name="gallery_toast_saved">Disimpan ke galeri</string>
     <string name="backup_title">Cadangan dan pemulihan</string>
     <string name="backup_backing_up">Mencadangankan pesan</string>
+    <string name="backup_failed_title">Pencadangan gagal</string>
+    <string name="backup_icon_change_title">Pulihkan ikon aplikasi?</string>
+    <string name="backup_icon_change_message">Cadangan Anda dibuat dengan warna ikon aplikasi yang berbeda. Android hanya bisa mengganti ikon saat aplikasi ditutup, jadi Open Messages akan langsung ditutup begitu Anda mengonfirmasi.</string>
+    <string name="icon_change_confirm">Terapkan dan tutup</string>
+    <string name="icon_change_later">Nanti saja</string>
     <string name="backup_restoring">Memulihkan cadangan pesan</string>
     <string name="backup_loading">Memuat…</string>
     <string name="backup_never">Tidak pernah</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Pencadangan otomatis</string>
+    <string name="backup_auto_never">Tidak pernah</string>
+    <string name="backup_auto_daily">Setiap hari</string>
+    <string name="backup_auto_weekly">Setiap minggu</string>
+    <string name="backup_auto_custom">Kustom…</string>
+    <string name="backup_auto_custom_title">Jarak hari antar-pencadangan</string>
+    <string name="backup_auto_custom_hint">Jumlah hari</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="other">Setiap %d hari</item>
+    </plurals>
+    <string name="backup_zip_title">Simpan sebagai file .zip</string>
+    <string name="backup_zip_summary">Simpan setiap cadangan sebagai satu arsip, lebih mudah dipindahkan antar-ponsel</string>
+    <string name="backup_manage_title">Kelola cadangan</string>
+    <string name="backup_manage_summary">Ganti nama atau hapus cadangan Anda</string>
+    <string name="backup_manage_empty">Tidak ada cadangan di lokasi ini</string>
+    <string name="backup_manage_rename">Ganti nama</string>
+    <string name="backup_manage_delete">Hapus</string>
+    <string name="backup_manage_delete_confirm">Hapus \"%s\"? Tindakan ini tidak dapat diurungkan.</string>
+    <string name="backup_manage_error">Tidak dapat memperbarui cadangan ini</string>
+    <string name="backup_manage_type_folder">Folder</string>
+    <string name="backup_manage_type_zip">Arsip zip</string>
+    <string name="backup_restore_from_title">Pulihkan dari</string>
+    <string name="backup_restore_from_folder">Folder</string>
+    <string name="backup_restore_from_zip">File .zip</string>
     <string name="backup_restore_title">Pulihkan</string>
     <string name="backup_restore_summary">Pilih cadangan</string>
     <string name="backup_restore_error_backup">Pencadangan sedang berlangsung…</string>
@@ -162,12 +307,28 @@
     <string name="backup_restore_dialog_empty">Cadangan tidak ditemukan</string>
     <string name="backup_disclaimer">Saat ini, Cadangan dan Pemulihan hanya mendukung pesan SMS. Dukungan MMS dan cadangan terjadwal akan segera datang!</string>
     <string name="backup_now">Cadangkan sekarang</string>
+    <string name="backup_now_summary">Buat cadangan baru</string>
+    <string name="backup_categories_title">Apa yang ingin dicadangkan?</string>
+    <string name="backup_restore_source_title">Cadangan yang mana?</string>
+    <string name="backup_restore_categories_title">Pulihkan dari %s</string>
+    <string name="backup_category_messages">Pesan (SMS, MMS, dan lampiran)</string>
+    <string name="backup_category_settings">Setelan dan template</string>
+    <string name="backup_category_blocking">Aturan pemblokiran</string>
+    <string name="backup_category_conversations">Diarsipkan dan disematkan</string>
+    <string name="backup_category_scheduled">Pesan terjadwal</string>
+    <string name="backup_exact_alarm_title">Izinkan alarm tepat waktu</string>
+    <string name="backup_exact_alarm_message">Agar pesan terjadwal terkirim tepat waktu, Open Messages memerlukan izin untuk menyetel alarm tepat waktu. Tanpa izin ini, pesan mungkin terkirim sedikit terlambat.</string>
+    <string name="backup_exact_alarm_grant">Izinkan</string>
+    <string name="backup_exact_alarm_skip">Tetap pulihkan</string>
     <string name="backup_progress_parsing">Membaca cadangan…</string>
     <string name="backup_progress_running">%d/%d pesan</string>
     <string name="backup_progress_saving">Menyimpan cadangan…</string>
     <string name="backup_progress_syncing">Menyinkronkan pesan…</string>
     <string name="backup_progress_finished">Selesai!</string>
+    <string name="backup_progress_failed">Cadangan tidak dapat ditulis. Periksa sisa ruang penyimpanan dan folder cadangan.</string>
     <string name="backup_notification_channel_name">Cadangan dan pemulihan</string>
+    <string name="clipboard_too_large_to_copy">Ukuran data melebihi batas papan klip</string>
+    <string name="clipboard_unable_to_copy_to">Tidak dapat menyalin ke papan klip</string>
     <string name="scheduled_title">Terjadwal</string>
     <string name="scheduled_empty_description">Otomatis mengirim pesan pada waktu yang anda inginkan</string>
     <string name="scheduled_empty_message_1">Hai! Kapan kamu ulang tahun?</string>
@@ -176,12 +337,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Mengirim pada tanggal 23 Desember</string>
     <string name="scheduled_compose_cd">Jadwalkan pesan</string>
+    <string name="scheduled_send_cd">Jadwalkan pesan ini</string>
     <string name="scheduled_options_title">Pesan terjadwal</string>
     <string-array name="scheduled_options">
         <item>Kirim sekarang</item>
         <item>Salin teks</item>
         <item>Hapus</item>
     </string-array>
+    <string name="attachment_missing">Tidak ada</string>
     <string name="settings_category_appearance">Tampilan</string>
     <string name="settings_category_general">Umum</string>
     <string name="settings_category_quick_reply">Balasan cepat</string>
@@ -193,6 +356,15 @@
     <string name="settings_automatic_colors_title">Warna kontak otomatis</string>
     <string name="settings_text_size_title">Ukuran fon</string>
     <string name="settings_system_font_title">Gunakan fon sistem</string>
+    <string name="settings_show_avatar_title">Tampilkan foto kontak</string>
+    <string name="settings_show_avatar_summary">Tampilkan foto pengirim dalam percakapan. Matikan agar gelembung pesan lebih lebar.</string>
+    <string name="settings_hide_country_code_title">Sembunyikan kode negara</string>
+    <string name="settings_hide_country_code_summary">Tampilkan nomor telepon dalam format lokal, misalnya \"06 ...\" bukan \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Layar penuh tepi ke tepi</string>
+    <string name="settings_edge_to_edge_summary">Tampilkan konten di balik bilah status dan bilah navigasi</string>
+    <string name="settings_system_show_stt_title">Tampilkan tombol ucapan ke teks</string>
+    <string name="settings_drawer_swipe_title">Geser untuk membuka menu</string>
+    <string name="settings_drawer_swipe_summary">Buka menu samping dengan menggeser dari tepi kiri daftar percakapan</string>
     <string name="settings_auto_emoji_title">Emoji otomatis</string>
     <string name="settings_notifications_title">Notifikasi</string>
     <string name="settings_notifications_o_summary">Ketuk untuk ubahsuai</string>
@@ -201,7 +373,14 @@
     <string name="settings_notification_action_2">Tombol 2</string>
     <string name="settings_notification_action_3">Tombol 3</string>
     <string name="settings_notification_previews_title">Pratinjau notifikasi</string>
+    <string name="settings_notification_previews_summary">Tampilkan nama dan pesan</string>
     <string name="settings_notification_wake_title">Layar ambien</string>
+    <string name="settings_notification_silent_title">Senyap jika bukan kontak</string>
+    <string name="settings_notification_silent_summary">Senyapkan notifikasi untuk pesan dari pengirim yang tidak ada di kontak Anda</string>
+    <string name="settings_copy_code_title">Salin kode dari notifikasi</string>
+    <string name="settings_copy_code_summary">Menambahkan tombol Salin kode ke notifikasi untuk kode verifikasi dan kode sekali pakai</string>
+    <string name="notification_copy_code">Salin kode</string>
+    <string name="notification_code_copied">Kode disalin</string>
     <string name="settings_vibration_title">Getar</string>
     <string name="settings_ringtone_title">Suara</string>
     <string name="settings_ringtone_none">Tidak ada</string>
@@ -226,6 +405,13 @@
     </string-array>
     <string name="settings_delivery_title">Konfirmasi pengiriman</string>
     <string name="settings_delivery_summary">Mengonfirmasi bahwa pesan telah berhasil dikirim</string>
+    <string name="settings_send_sound_title">Suara saat mengirim</string>
+    <string name="settings_send_sound_summary">Putar nada singkat saat Anda mengirim pesan</string>
+    <string name="settings_send_sound_volume_title">Volume</string>
+    <string name="settings_header_quick_action_title">Tindakan cepat di header</string>
+    <string name="settings_header_quick_action_summary">Tambahkan tombol pintasan ke header percakapan</string>
+    <string name="settings_unread_at_top_title">Belum dibaca di atas</string>
+    <string name="settings_unread_at_top_summary">Tampilkan percakapan yang belum dibaca di bagian atas</string>
     <string name="settings_signature_title">Tanda tangan</string>
     <string name="settings_signature_summary">Tambahkan tanda tangan di akhir pesan anda</string>
     <string name="settings_unicode_title">Hapus aksen</string>
@@ -244,6 +430,9 @@
     <string name="settings_long_as_mms_title">Kirim pesan panjang sebagai MMS</string>
     <string name="settings_long_as_mms_summary">Jika pesan teks panjang anda gagal dikirim, atau dikirim dalam urutan yang salah, anda bisa mengirimkannya sebagai pesan MMS. Mungkin akan dikenai tagihan tambahan</string>
     <string name="settings_mms_size_title">Otomatis kompres lampiran MMS</string>
+    <string name="settings_mms_weblink_title">Penanganan tautan dalam pesan</string>
+    <string name="settings_disable_screenshots_title">Nonaktifkan Screenshot</string>
+    <string name="settings_diable_screenshots_summary">Cegah sistem dan aplikasi lain mengambil screenshot aplikasi ini.</string>
     <string name="settings_sync_title">Sinkronisasi pesan</string>
     <string name="settings_sync_summary">Sinkronisasi ulang pesan anda dengan basis data aplikasi SMS Android bawaan</string>
     <string name="settings_about_title">Tentang Open Messages</string>
@@ -255,6 +444,17 @@
     <string name="blocking_drop_title">Tolak pesan</string>
     <string name="blocking_drop_summary">Tolak pesan masuk dari pengirim yang diblokir</string>
     <string name="blocking_conversations">Percakapan diblokir</string>
+    <string name="blocking_category_integrated">Pemblokiran bawaan</string>
+    <string name="blocking_integrated_description">Open Messages memblokir spam langsung di perangkat Anda. Sumber opsional di bawah mengunduh daftarnya lewat internet saat Anda mengaktifkannya, lalu bekerja secara offline.</string>
+    <string name="blocking_category_external_apps">Aplikasi eksternal</string>
+    <string name="blocked_numbers_summary">Nomor yang Anda blokir sendiri</string>
+    <string name="blocking_source_phishing_title">Anti-phishing</string>
+    <string name="blocking_source_phishing_summary">Memblokir pesan yang berisi tautan ke situs phishing yang dikenal. Mengaktifkannya akan mengunduh daftar lewat internet; setelah itu penyaringan berjalan offline.</string>
+    <string name="blocking_source_flag_block_title">Blokir yang diduga spam</string>
+    <string name="blocking_source_flag_block_summary">Kirim pesan yang ditandai sebagai kemungkinan spam langsung ke daftar blokir, bukan sekadar diberi label di kotak masuk</string>
+    <string name="blocking_source_status_updating">Memperbarui…</string>
+    <string name="blocking_source_status_updated">Terbaru · %1$d entri</string>
+    <string name="blocking_source_status_failed">Unduhan gagal, sumber tetap nonaktif. Periksa koneksi Anda dan coba lagi.</string>
     <string name="blocking_manager_title">Pengelola Pemblokiran</string>
     <string name="blocking_manager_built_in_summary">Fitur pemblokiran pesan di dalam Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blokir pesan spam, nomor &amp; panggilan tak dikenal dengan daftar hitam &amp; Jadwal</string>
@@ -268,6 +468,15 @@
     <string name="blocked_numbers_dialog_title">Blokir pesan sms dari</string>
     <string name="blocked_numbers_dialog_hint">Nomor telepon</string>
     <string name="blocked_numbers_dialog_block">Blokir</string>
+    <string name="message_content_filters_title">Filter isi pesan</string>
+    <string name="message_content_filters_empty">Filter isi pesan Anda akan muncul di sini</string>
+    <string name="message_content_filters_add_cd">Buat filter baru</string>
+    <string name="message_content_filters_dialog_title">Buang pesan yang cocok dengan</string>
+    <string name="message_content_filters_dialog_hint">Kata, frasa, atau ekspresi reguler</string>
+    <string name="message_content_filters_dialog_case_switch">Peka huruf besar/kecil</string>
+    <string name="message_content_filters_dialog_regex_switch">Ekspresi reguler</string>
+    <string name="message_content_filters_dialog_contacts_switch">Sertakan kontak</string>
+    <string name="message_content_filters_dialog_create">Buat</string>
     <string name="blocked_messages_title">Pesan yang diblokir</string>
     <string name="blocked_messages_empty">Pesan yang anda blokir akan ditampilkan di sini</string>
     <string name="blocking_block_title">Blokir</string>
@@ -278,6 +487,15 @@
     <plurals name="blocking_unblock_external">
         <item quantity="other">Lanjutkan ke %s dan izinkan nomor ini</item>
     </plurals>
+    <string name="deduplicate_messages_category">Hapus Duplikat Pesan</string>
+    <string name="deduplicate_messages_title">Hapus Pesan Duplikat</string>
+    <string name="deduplicate_messages_summary">Memindai database pesan dan menghapus semua pesan yang sama persis dengan pesan aslinya</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Database pesan Anda akan dipindai untuk mencari duplikat, lalu duplikat tersebut akan dihapus.\nTindakan ini akan menghapus pesan secara otomatis, lanjutkan hanya jika Anda memahami akibatnya.</string>
+    <string name="auto_deduplicate_messages_title">Hapus Duplikat Pesan Secara Otomatis</string>
+    <string name="auto_deduplicate_messages_summary">Penghapusan duplikat akan dilakukan saat sinkronisasi. Perlu diketahui, tindakan ini akan menghapus pesan secara otomatis, dan meskipun kemungkinan salah mendeteksi duplikat sangat kecil, hal itu tetap mungkin terjadi.\nHarap berhati-hati.</string>
+    <string name="deduplicating_messages_finished">Penghapusan pesan duplikat selesai!</string>
+    <string name="deduplicating_messages_no_messages">Tidak ditemukan pesan duplikat.</string>
+    <string name="deduplicating_messages_failed">Gagal menghapus pesan duplikat, silakan coba lagi</string>
     <string name="about_title">Tentang</string>
     <string name="about_version_title">Versi</string>
     <string name="about_developer_title">Pengembang</string>
@@ -288,6 +506,7 @@
     <string name="about_copyright_title">Hak cipta</string>
     <string name="widget_loading">Memuat…</string>
     <string name="widget_more">Lihat percakapan lainnya</string>
+    <string name="all_conversations_widget_title">Semua Percakapan</string>
     <string name="quick_reply_menu_read">Tandai dibaca</string>
     <string name="quick_reply_menu_call">Panggil</string>
     <string name="quick_reply_menu_delete">Hapus</string>
@@ -309,17 +528,34 @@
     <string name="button_yes">Ya</string>
     <string name="button_continue">Lanjutkan</string>
     <string name="button_cancel">Batal</string>
+    <string name="button_close">Tutup</string>
     <string name="button_delete">Hapus</string>
     <string name="button_save">Simpan</string>
     <string name="button_stop">Setop</string>
     <string name="button_set">Set</string>
+    <string name="button_later">Nanti</string>
+    <string name="icon_restart_title">Perlu dimulai ulang</string>
+    <string name="icon_restart_message">Aplikasi perlu dimulai ulang untuk menyelesaikan pembaruan ikon aplikasi.</string>
+    <string name="icon_restart_now">Mulai ulang</string>
     <string name="button_undo">Urungkan</string>
+    <string name="button_clear">Hapus</string>
     <string name="toast_copied">Disalin</string>
+    <plurals name="toast_archived">
+        <item quantity="other">%d percakapan diarsipkan</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="other">%d percakapan batal diarsipkan</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="other">%s pesan baru</item>
     </plurals>
     <string name="notification_message_failed_title">Pesan tidak terkirim</string>
     <string name="notification_message_failed_text">Pesan ke %s gagal dikirim</string>
+    <string name="notification_foreground_worker_title">Menerima pesan</string>
+    <string name="notification_foreground_worker_text">Di Android 12 dan versi lebih lama, notifikasi diperlukan untuk proses latar belakang yang memungkinkan penerimaan pesan.</string>
+    <string name="notification_foreground_worker_channel_name">Notifikasi proses penerimaan pesan</string>
+    <string name="notification_me">Saya</string>
+    <string name="notification_message_failed_action">Kirim ulang</string>
     <string-array name="night_modes">
         <item>Sistem</item>
         <item>Nonaktif</item>
@@ -343,6 +579,21 @@
         <item>5 detik</item>
         <item>10 detik</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Tidak ada</item>
+        <item>Arsipkan</item>
+        <item>Tandai belum dibaca</item>
+        <item>Blokir</item>
+        <item>Hapus</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Tidak ada</item>
+        <item>Klasik</item>
+        <item>Cerah</item>
+        <item>Lembut</item>
+        <item>Menurun</item>
+        <item>Tiga nada</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Otomatis</item>
         <item>100KB</item>
@@ -352,6 +603,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Tanpa kompresi</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blokir</item>
+        <item>Izinkan</item>
+        <item>Tanya sebelum membuka</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Oke</item>
@@ -367,4 +623,13 @@
         <item>LOL</item>
         <item>Tidak apa-apa</item>
     </string-array>
+    <string name="speak_no_messages">Tidak Ada Pesan</string>
+    <string name="speak_unseen_messages">Bacakan pesan yang belum dilihat</string>
+    <string name="messageLinkHandling_dialog_title">Peringatan Tautan Eksternal</string>
+    <string name="messageLinkHandling_dialog_body">Beberapa tautan mungkin tidak aman atau mengalihkan Anda secara tak terduga. Periksa tautan di bawah sebelum melanjutkan:\n\n%1$s\n\nIngin melanjutkan?</string>
+    <string name="messageLinkHandling_dialog_positive">Ya, buka tautan</string>
+    <string name="messageLinkHandling_dialog_negative">Tidak</string>
+    <string name="error_stt_toast">Maaf, terjadi kesalahan saat memuat penyedia ucapan ke teks.</string>
+    <string name="stt_toast_extra_prompt">Ucapkan pesan Anda</string>
+    <string name="messages_text_share_file_error">Ups! Terjadi kesalahan saat berbagi</string>
 </resources>
