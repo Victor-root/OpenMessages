@@ -97,7 +97,7 @@
     <string name="drawer_invite">Freunde einladen</string>
     <string name="rate_title">Gefällt dir Open Messages?</string>
     <string name="rate_summary">Teile etwas von deiner Liebe und gib uns einen Stern auf GitHub!</string>
-    <string name="rate_okay">OKAY!</string>
+    <string name="rate_okay">OK!</string>
     <string name="rate_dismiss">VERWERFEN</string>
     <string name="dialog_delete_title">Löschen</string>
     <plurals name="dialog_delete_message">
@@ -431,7 +431,7 @@
     <string name="button_close">Schließen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_save">Speichern</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_stop">Stopp</string>
     <string name="button_set">Einstellen</string>
     <string name="button_later">Später</string>
     <string name="icon_restart_title">Neustart erforderlich</string>

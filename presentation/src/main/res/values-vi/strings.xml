@@ -230,7 +230,7 @@
     <string name="backup_restore_stop_message">Tin nhắn đã được khôi phục sẽ vẫn còn trên thiết bị của bạn</string>
     <string name="backup_select_location_rationale_title">Chọn vị trí sao lưu</string>
     <string name="backup_select_location_rationale_message">Vui lòng chọn thư mục để lưu bản sao lưu</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_details">%1$s\n%2$d tin nhắn</string>
     <string name="backup_selected_backup_error_title">Lỗi</string>
     <string name="backup_selected_backup_error_message">Không thể đọc tệp sao lưu</string>
     <string name="backup_selected_backup_details_title">Thông tin bản sao lưu</string>

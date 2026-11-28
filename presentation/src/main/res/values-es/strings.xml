@@ -76,7 +76,7 @@
     <string name="main_permission_required">Se requiere permiso</string>
     <string name="main_permission_sms">Open Messages necesita permiso para enviar y ver mensajes SMS</string>
     <string name="main_permission_contacts">Open Messages necesita permiso para ver sus contactos</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">Open Messages necesita permiso para mostrar notificaciones</string>
     <string name="main_permission_allow">Permitir</string>
     <string name="drawer_inbox">Recibidos</string>
     <string name="contacts_group_recent">Recientes</string>
@@ -198,8 +198,8 @@
     <string name="backup_restoring">Restaurar desde copia de seguridad</string>
     <string name="backup_loading">Cargando…</string>
     <string name="backup_never">Nunca</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">Ubicación de las copias de seguridad</string>
+    <string name="backup_location_summary">Elegir carpeta</string>
     <string name="backup_auto_title">Copia de seguridad automática</string>
     <string name="backup_auto_never">Nunca</string>
     <string name="backup_auto_daily">Cada día</string>
@@ -232,12 +232,12 @@
     <string name="backup_restore_confirm_title">Restaurar desde copia de seguridad</string>
     <string name="backup_restore_stop_title">Detener restauración</string>
     <string name="backup_restore_stop_message">Los mensajes que ya han sido restaurados permanecerán en su dispositivo</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_select_location_rationale_title">Seleccionar ubicación de las copias</string>
+    <string name="backup_select_location_rationale_message">Seleccione una carpeta donde guardar sus copias de seguridad</string>
+    <string name="backup_details">%1$s\n%2$d mensajes</string>
     <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_selected_backup_error_message">No se pudo leer el archivo de copia de seguridad</string>
+    <string name="backup_selected_backup_details_title">Detalles de la copia de seguridad</string>
     <string name="backup_restore_dialog_title">Copias de seguridad</string>
     <string name="backup_restore_dialog_empty">No se encontraron copias de seguridad</string>
     <string name="backup_disclaimer">Actualmente, sólo los SMS son soportados por la copia de seguridad y restauración. ¡El soporte para MMS y las copias de seguridad programadas se realizarán pronto!</string>

@@ -91,7 +91,7 @@
     <string name="main_permission_required">Permissão necessária</string>
     <string name="main_permission_sms">O Open Messages precisa de permissão para enviar e visualizar mensagens SMS</string>
     <string name="main_permission_contacts">O Open Messages precisa de permissão para visualizar seus contatos</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">O Open Messages precisa de permissão para exibir notificações</string>
     <string name="main_permission_allow">Permitir</string>
     <string name="scheduled_menu_send_now">Enviar agora</string>
     <string name="scheduled_menu_edit_message">Editar mensagem</string>
@@ -275,8 +275,8 @@
     <string name="backup_restoring">Recuperando do backup</string>
     <string name="backup_loading">Carregando…</string>
     <string name="backup_never">Nunca</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">Local do backup</string>
+    <string name="backup_location_summary">Definir pasta</string>
     <string name="backup_auto_title">Backup automático</string>
     <string name="backup_auto_never">Nunca</string>
     <string name="backup_auto_daily">Todos os dias</string>
@@ -310,12 +310,12 @@
     <string name="backup_restore_confirm_title">Recuperar do backup</string>
     <string name="backup_restore_stop_title">Parar de recuperar</string>
     <string name="backup_restore_stop_message">Mensagens que foram recuperadas permanecerão em seu dispositivo</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_title">Selecionar local do backup</string>
+    <string name="backup_select_location_rationale_message">Selecione uma pasta para salvar seus backups</string>
+    <string name="backup_details">%1$s\n%2$d mensagens</string>
+    <string name="backup_selected_backup_error_title">Erro</string>
+    <string name="backup_selected_backup_error_message">Não foi possível ler o arquivo de backup</string>
+    <string name="backup_selected_backup_details_title">Detalhes do backup</string>
     <string name="backup_restore_dialog_title">Backups</string>
     <string name="backup_restore_dialog_empty">Nenhum backup encontrado</string>
     <string name="backup_disclaimer">Atualmente, apenas SMS é suportado para Backup e Recuperação. Suporte a MMS e backups agendados virão em breve!</string>
@@ -516,7 +516,7 @@
     <string name="about_version_title">Versão</string>
     <string name="about_developer_title">Desenvolvedor</string>
     <string name="about_source_title">Código fonte</string>
-    <string name="about_changelog_title">Changelog</string>
+    <string name="about_changelog_title">Registro de alterações</string>
     <string name="about_contact_title">Contato</string>
     <string name="about_license_title">Licença</string>
     <string name="about_copyright_title">Copyright</string>

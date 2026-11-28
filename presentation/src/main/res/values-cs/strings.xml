@@ -242,10 +242,10 @@
     <string name="backup_restore_stop_message">Dříve obnovené zprávy zůstanou ve vašem zařízení</string>
     <string name="backup_select_location_rationale_title">Vyberte umístění zálohy</string>
     <string name="backup_select_location_rationale_message">Vyberte složku, do které chcete uložit zálohy</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_details">%1$s\nPočet zpráv: %2$d</string>
+    <string name="backup_selected_backup_error_title">Chyba</string>
     <string name="backup_selected_backup_error_message">Nelze přečíst záložní soubor</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_selected_backup_details_title">Podrobnosti zálohy</string>
     <string name="backup_restore_dialog_title">Zálohy</string>
     <string name="backup_restore_dialog_empty">Nenalezeny žádné zálohy</string>
     <string name="backup_disclaimer">Momentálně jsou pro zálohování a obnovení podporovány pouze SMS. MMS podpora a plánované zálohy budou přidány již brzy!</string>

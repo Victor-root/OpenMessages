@@ -91,7 +91,7 @@
     <string name="main_permission_required">권한을 부여해 주세요</string>
     <string name="main_permission_sms">Open Messages 앱은 메시지를 보내고 읽을 수 있는 권한이 필요합니다</string>
     <string name="main_permission_contacts">Open Messages 앱은 연락처를 읽을 수 있는 권한이 필요합니다</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">Open Messages 앱은 알림을 표시할 수 있는 권한이 필요합니다</string>
     <string name="main_permission_allow">허용</string>
     <string name="scheduled_menu_send_now">지금 보내기</string>
     <string name="scheduled_menu_edit_message">메시지 수정</string>
@@ -264,8 +264,8 @@
     <string name="backup_restoring">복원하기</string>
     <string name="backup_loading">로딩 중...</string>
     <string name="backup_never">사용 안 함</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">백업 위치</string>
+    <string name="backup_location_summary">폴더 설정</string>
     <string name="backup_auto_title">자동 백업</string>
     <string name="backup_auto_never">안 함</string>
     <string name="backup_auto_daily">매일</string>
@@ -297,12 +297,12 @@
     <string name="backup_restore_confirm_title">복원을 할까요?</string>
     <string name="backup_restore_stop_title">복원 중지</string>
     <string name="backup_restore_stop_message">이미 저장된 메시지들은 내 기기에 남아있습니다.</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_title">백업 위치 선택</string>
+    <string name="backup_select_location_rationale_message">백업을 저장할 폴더를 선택하세요</string>
+    <string name="backup_details">%1$s\n메시지 %2$d개</string>
+    <string name="backup_selected_backup_error_title">오류</string>
+    <string name="backup_selected_backup_error_message">백업 파일을 읽을 수 없습니다</string>
+    <string name="backup_selected_backup_details_title">백업 세부 정보</string>
     <string name="backup_restore_dialog_title">백업</string>
     <string name="backup_restore_dialog_empty">백업을 찾지 못했어요</string>
     <string name="backup_disclaimer">아직 SMS만 백업과 복원기능이 지원됩니다. MMS지원과 백업 스케줄 기능은 곧 찾아옵니다!</string>
@@ -384,7 +384,7 @@
     <string name="settings_vibration_title">진동</string>
     <string name="settings_ringtone_title">소리</string>
     <string name="settings_ringtone_none">없음</string>
-    <string name="settings_quick_reply_title">Quick Reply</string>
+    <string name="settings_quick_reply_title">빠른 응답</string>
     <string name="settings_quick_reply_summary">새로운 메시지에 대한 팝업</string>
     <string name="settings_quick_reply_tap_dismiss_title">탭해서 닫기</string>
     <string name="settings_quick_reply_tap_dismiss_summary">아무데나 탭하면 팝업이 닫힙니다.</string>
@@ -457,7 +457,7 @@
     <string name="blocking_source_status_failed">다운로드에 실패하여 이 소스는 꺼진 상태로 유지됩니다. 연결을 확인하고 다시 시도하세요.</string>
     <string name="blocking_manager_title">차단 메니저</string>
     <string name="blocking_manager_built_in_summary">빌트인 차단기능이 있는 기본 필터.</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_blocker_summary">블랙리스트와 일정으로 스팸 메시지, 번호 및 알 수 없는 전화 차단</string>
     <string name="blocking_manager_call_control_summary">자동으오 전화와 메시지를 한 곳에서 필터링하세요! Community IQ™는 커뮤니티 기반으로 원하지 않는 스팸 메시지를 차단해줍니다.</string>
     <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
     <string name="blocking_manager_copy_title">차단된 번호 복사하기</string>

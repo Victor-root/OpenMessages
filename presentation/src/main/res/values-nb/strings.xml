@@ -54,7 +54,7 @@
     <string name="main_menu_archive">Arkiv</string>
     <string name="main_menu_unarchive">Fjern fra arkiv</string>
     <string name="main_menu_delete">Slett</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
+    <string name="main_menu_add_contact">Legg til i kontakter</string>
     <string name="main_menu_pin">Fest øverst</string>
     <string name="main_menu_unpin">Løsne</string>
     <string name="main_menu_read">Merk som lest</string>
@@ -110,7 +110,7 @@
         <item>Slett</item>
     </string-array>
     <string name="compose_number_picker_title">Velg et telefonnummer</string>
-    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_default">%s ∙ Standard</string>
     <string name="compose_number_picker_once">Bare en gang</string>
     <string name="compose_number_picker_always">Alltid</string>
     <string name="compose_title_selected">%d valgt</string>
@@ -234,10 +234,10 @@
     <string name="backup_restore_stop_message">Meldinger som allerede er gjenopprettet vil forbli på din enhet</string>
     <string name="backup_select_location_rationale_title">Velg sikkerhetskopi plassering</string>
     <string name="backup_select_location_rationale_message">Velg en mappe for å lagre sikkerhetskopiene dine</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_details">%1$s\n%2$d meldinger</string>
+    <string name="backup_selected_backup_error_title">Feil</string>
     <string name="backup_selected_backup_error_message">Kunne ikke lese sikkerhetskopifilen</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_selected_backup_details_title">Detaljer om sikkerhetskopi</string>
     <string name="backup_restore_dialog_title">Sikkerhetskopier</string>
     <string name="backup_restore_dialog_empty">Fant ingen sikkerhetskopier</string>
     <string name="backup_disclaimer">Per idag er det bare mulig å sikkerhetskopiere SMS. MMS og planlagte sikkerhetskopiering kommer snart!</string>
@@ -301,7 +301,7 @@
     <string name="settings_notification_action_2">Knapp 2</string>
     <string name="settings_notification_action_3">Knapp 3</string>
     <string name="settings_notification_previews_title">Forhåndsvisninger av varsler</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">Vekk skjermen</string>
     <string name="settings_vibration_title">Vibrasjon</string>
     <string name="settings_ringtone_title">Lyd</string>
     <string name="settings_ringtone_none">Ingen</string>
@@ -384,10 +384,10 @@
     <string name="blocked_numbers_add_cd">Blokker et nytt nummer</string>
     <string name="blocked_numbers_dialog_title">Blokker meldinger fra</string>
     <string name="blocked_numbers_dialog_hint">Telefonnummer</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_numbers_dialog_block">Blokker</string>
     <string name="blocked_messages_title">Blokkerte meldinger</string>
     <string name="blocked_messages_empty">Blokkerte meldinger vil vises her</string>
-    <string name="blocking_block_title">Block</string>
+    <string name="blocking_block_title">Blokker</string>
     <string name="blocking_unblock_title">Opphev blokkering</string>
     <plurals name="blocking_block_external">
         <item quantity="one">Fortsett til %s og blokker nummeret</item>
@@ -484,14 +484,14 @@
         <item>Tre toner</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>Automatisk</item>
         <item>100KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Ingen komprimering</item>
     </string-array>
     <string-array name="messageLinkHandlings">
         <item>Blokker</item>

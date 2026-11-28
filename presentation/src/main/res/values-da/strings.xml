@@ -122,7 +122,7 @@
     <string name="drawer_invite">Invitér venner</string>
     <string name="rate_title">Synes om Open Messages?</string>
     <string name="rate_summary">Del og bedøm os på Google Play!</string>
-    <string name="rate_okay">OKAY!</string>
+    <string name="rate_okay">OK!</string>
     <string name="rate_dismiss">AFVIS</string>
     <string name="dialog_delete_title">Slet</string>
     <plurals name="dialog_delete_message">

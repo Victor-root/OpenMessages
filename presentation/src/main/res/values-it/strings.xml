@@ -244,7 +244,7 @@
     <string name="backup_restore_stop_message">I messaggi che sono già stati ripristinati rimarranno sul tuo dispositivo</string>
     <string name="backup_select_location_rationale_title">Seleziona posizione di backup</string>
     <string name="backup_select_location_rationale_message">Seleziona una cartella in cui salvare i backup</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_details">%1$s\n%2$d messaggi</string>
     <string name="backup_selected_backup_error_title">Errore</string>
     <string name="backup_selected_backup_error_message">Impossibile leggere il file di backup</string>
     <string name="backup_selected_backup_details_title">Dettagli del backup</string>
@@ -450,7 +450,7 @@
     <string name="button_close">Chiudi</string>
     <string name="button_delete">Elimina</string>
     <string name="button_save">Salva</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_stop">Interrompi</string>
     <string name="button_set">Set</string>
     <string name="button_later">Più tardi</string>
     <string name="icon_restart_title">Riavvio necessario</string>

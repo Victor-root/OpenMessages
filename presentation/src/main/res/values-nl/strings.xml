@@ -246,10 +246,10 @@
     <string name="backup_restore_stop_message">Berichten die al hersteld zijn zullen worden behouden op je toestel</string>
     <string name="backup_select_location_rationale_title">Selecteer de back-up locatie</string>
     <string name="backup_select_location_rationale_message">Selecteer een map waar uw de back-ups wilt opslaan</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_details">%1$s\n%2$d berichten</string>
+    <string name="backup_selected_backup_error_title">Fout</string>
     <string name="backup_selected_backup_error_message">Mislukt het back-up bestand te lezen</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_selected_backup_details_title">Back-updetails</string>
     <string name="backup_restore_dialog_title">Back-ups</string>
     <string name="backup_restore_dialog_empty">Geen back-ups gevonden</string>
     <string name="backup_disclaimer">Op dit moment wordt alleen SMS ondersteund door back-up en terugzetten. MMS ondersteuning en geplande back-ups zullen spoedig beschikbaar komen!</string>
@@ -290,7 +290,7 @@
     </string-array>
     <string name="settings_category_appearance">Uiterlijk</string>
     <string name="settings_category_general">Algemeen</string>
-    <string name="settings_category_quick_reply">Quick Reply</string>
+    <string name="settings_category_quick_reply">Snel antwoord</string>
     <string name="settings_theme_title">Thema</string>
     <string name="settings_night_title">Nachtmodus</string>
     <string name="settings_black_title">Pure zwarte nachtmodus</string>
@@ -317,7 +317,7 @@
     <string name="settings_vibration_title">Trillen</string>
     <string name="settings_ringtone_title">Geluid</string>
     <string name="settings_ringtone_none">Geen</string>
-    <string name="settings_quick_reply_title">Quick Reply</string>
+    <string name="settings_quick_reply_title">Snel antwoord</string>
     <string name="settings_quick_reply_summary">Popup voor nieuwe berichten</string>
     <string name="settings_quick_reply_tap_dismiss_title">Tik om te sluiten</string>
     <string name="settings_quick_reply_tap_dismiss_summary">Tik buiten de popup om deze te sluiten</string>
@@ -422,7 +422,7 @@
     <string name="about_version_title">Versie</string>
     <string name="about_developer_title">Ontwikkelaar</string>
     <string name="about_source_title">Broncode</string>
-    <string name="about_changelog_title">Changelog</string>
+    <string name="about_changelog_title">Wijzigingslogboek</string>
     <string name="about_contact_title">Contact</string>
     <string name="about_license_title">Licentie</string>
     <string name="about_copyright_title">Copyright</string>
@@ -452,7 +452,7 @@
     <string name="button_close">Sluiten</string>
     <string name="button_delete">Verwijderen</string>
     <string name="button_save">Opslaan</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_stop">Stoppen</string>
     <string name="button_set">Instellen</string>
     <string name="button_later">Later</string>
     <string name="icon_restart_title">Herstart vereist</string>
