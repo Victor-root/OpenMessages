@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Egyszerű, nyílt forráskódú üzenetküldés</string>
     <string name="shortcut_compose_long_label">Új beszélgetés</string>
     <string name="shortcut_compose_short_label">Írás</string>
     <string name="shortcut_compose_disabled_message">Rövidítés letiltva</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Beállítások</string>
     <string name="title_notification_prefs">Értesítések</string>
     <string name="title_theme">Téma</string>
+    <string name="theme_default">Alapértelmezett</string>
+    <string name="theme_wallpaper">Háttérkép</string>
+    <string name="theme_other_colors">Színek</string>
+    <string name="theme_tab_presets">Paletta</string>
+    <string name="theme_tab_custom">Egyéni</string>
+    <string name="theme_apply_to_icon">Szín alkalmazása az alkalmazásikonra (az alkalmazás bezárul)</string>
+    <string name="theme_tab_icon">Alkalmazásikon</string>
+    <string name="theme_icon_follow_theme">Az alkalmazás témaszínének követése</string>
+    <string name="theme_icon_summary">Válassza ki az alkalmazásikon színét a témától függetlenül. A módosítás alkalmazása bezárja az alkalmazást.</string>
+    <string name="theme_icon_change_title">Módosítja az alkalmazásikont?</string>
+    <string name="theme_icon_change_message">Az alkalmazásikon színe módosulni fog. Az Android csak bezárt alkalmazásnál tudja lecserélni az ikont, ezért a Open Messages a megerősítés után azonnal bezárul.</string>
     <string name="title_conversations">Keresés az üzenetek között…</string>
+    <string name="title_search">Keresés</string>
     <string name="title_compose">Adjon meg egy nevet vagy telefonszámot</string>
     <string name="setup_skip">Kihagyás</string>
     <string name="setup_next">Tovább</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Mentés a galériába</string>
     <string name="compose_menu_share">Szöveg megosztása</string>
     <string name="main_drawer_open_cd">Navigációs menü megnyitása</string>
+    <string name="main_search_close_cd">Keresés bezárása</string>
+    <string name="main_search_clear_cd">Keresés törlése</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d kijelölve</string>
     <string name="main_menu_clear">Törlés</string>
     <string name="main_menu_archive">Archiválás</string>
@@ -63,7 +79,16 @@
     <string name="main_permission_notifications">A Open Messages-nek engedélyre van szüksége az értesítések megjelenítéséhez</string>
     <string name="main_permission_allow">Engedélyezés</string>
     <string name="drawer_inbox">Bejövő üzenetek</string>
+    <string name="contacts_group_recent">Legutóbbiak</string>
+    <string name="contacts_group_starred">Kedvencek</string>
+    <string name="contacts_group_groups">Csoportok</string>
+    <string name="conversations_group_today">Ma</string>
+    <string name="conversations_group_yesterday">Tegnap</string>
     <string name="drawer_archived">Archivált</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d olvasatlan</item>
+        <item quantity="other">%d olvasatlan</item>
+    </plurals>
     <string name="drawer_scheduled">Ütemezett</string>
     <string name="drawer_blocking">Tiltás</string>
     <string name="drawer_more">Továbbiak</string>
@@ -98,6 +123,8 @@
     <string name="compose_scheduled_future">A kiválasztott időpontnak a jövőben kell lennie!</string>
     <string name="compose_scheduled_toast">Hozzáadva az ütemezett üzenetekhez</string>
     <string name="compose_hint">Írjon egy üzenetet…</string>
+    <string name="compose_expand_cd">Kibontás teljes képernyőre</string>
+    <string name="compose_collapse_cd">Összecsukás</string>
     <string name="compose_menu_copy">Szöveg másolása</string>
     <string name="compose_menu_forward">Továbbítás</string>
     <string name="compose_menu_delete">Törlés</string>
@@ -119,10 +146,32 @@
     <string name="compose_gallery_cd">Fénykép mellékelése</string>
     <string name="compose_camera_cd">Fénykép készítése</string>
     <string name="compose_schedule_cd">Ütemezett küldés</string>
+    <string name="compose_schedule_title">Üzenet ütemezése</string>
+    <string name="compose_schedule_in_hour">1 óra múlva</string>
+    <string name="compose_schedule_tonight">Ma este</string>
+    <string name="compose_schedule_tomorrow_morning">Holnap reggel</string>
+    <string name="compose_schedule_tomorrow_afternoon">Holnap délután</string>
+    <string name="compose_schedule_custom">Dátum és idő kiválasztása</string>
+    <string name="compose_schedule_confirm">Ütemezés</string>
+    <string name="compose_schedule_previous_month">Előző hónap</string>
+    <string name="compose_schedule_next_month">Következő hónap</string>
+    <string name="compose_schedule_increase">Növelés</string>
+    <string name="compose_schedule_decrease">Csökkentés</string>
     <string name="compose_contact_cd">Névjegy hozzáadása</string>
     <string name="compose_contact_error">Hiba a névjegy olvasásakor</string>
+    <string name="compose_attach_gallery">Galéria</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Fájl</string>
+    <string name="compose_attach_audio">Hang</string>
+    <string name="compose_attach_contact">Névjegy</string>
+    <string name="compose_attach_schedule">Ütemezés</string>
+    <string name="compose_attach_templates">Sablonok</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) kiválasztva</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Ez a videó túl hosszú MMS-ben való küldéshez. Legfeljebb %d másodperces lehet.</item>
+        <item quantity="other">Ez a videó túl hosszú MMS-ben való küldéshez. Legfeljebb %d másodperces lehet.</item>
+    </plurals>
     <string name="compose_sim_cd">%s kiválasztva, cseréljen SIM-kártyát</string>
     <string name="compose_send_cd">Üzenet küldése</string>
     <string name="message_status_sending">Küldés…</string>
@@ -141,11 +190,41 @@
     <string name="gallery_toast_saved">Mentve a galériába</string>
     <string name="backup_title">Biztonsági mentés és visszaállítás</string>
     <string name="backup_backing_up">Üzenetek mentése</string>
+    <string name="backup_failed_title">A biztonsági mentés sikertelen</string>
+    <string name="backup_icon_change_title">Visszaállítja az alkalmazásikont?</string>
+    <string name="backup_icon_change_message">A biztonsági mentés más alkalmazásikon-színnel készült. Az Android csak bezárt alkalmazásnál tudja lecserélni az ikont, ezért a Open Messages a megerősítés után azonnal bezárul.</string>
+    <string name="icon_change_confirm">Alkalmazás és bezárás</string>
+    <string name="icon_change_later">Most nem</string>
     <string name="backup_restoring">Üzenetek visszaállítása biztonsági mentésből</string>
     <string name="backup_loading">Betöltés…</string>
     <string name="backup_never">Soha</string>
     <string name="backup_location_title">Biztonsági mentés helye</string>
     <string name="backup_location_summary">Mappa megadása</string>
+    <string name="backup_auto_title">Automatikus biztonsági mentés</string>
+    <string name="backup_auto_never">Soha</string>
+    <string name="backup_auto_daily">Naponta</string>
+    <string name="backup_auto_weekly">Hetente</string>
+    <string name="backup_auto_custom">Egyéni…</string>
+    <string name="backup_auto_custom_title">Mentések közötti napok</string>
+    <string name="backup_auto_custom_hint">Napok száma</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">%d naponta</item>
+        <item quantity="other">%d naponta</item>
+    </plurals>
+    <string name="backup_zip_title">Mentés .zip fájlként</string>
+    <string name="backup_zip_summary">Minden mentés egyetlen archívumként tárolódik, így könnyebb telefonok között mozgatni</string>
+    <string name="backup_manage_title">Mentések kezelése</string>
+    <string name="backup_manage_summary">Biztonsági mentések átnevezése vagy törlése</string>
+    <string name="backup_manage_empty">Ezen a helyen nem található biztonsági mentés</string>
+    <string name="backup_manage_rename">Átnevezés</string>
+    <string name="backup_manage_delete">Törlés</string>
+    <string name="backup_manage_delete_confirm">Törli ezt: \"%s\"? Ez nem vonható vissza.</string>
+    <string name="backup_manage_error">Nem sikerült frissíteni ezt a mentést</string>
+    <string name="backup_manage_type_folder">Mappa</string>
+    <string name="backup_manage_type_zip">Zip-archívum</string>
+    <string name="backup_restore_from_title">Visszaállítás innen</string>
+    <string name="backup_restore_from_folder">Mappából</string>
+    <string name="backup_restore_from_zip">.zip fájlból</string>
     <string name="backup_restore_title">Visszaállítás</string>
     <string name="backup_restore_summary">Válasszon egy mentést</string>
     <string name="backup_restore_error_backup">Mentés folyamatban…</string>
@@ -163,11 +242,25 @@
     <string name="backup_restore_dialog_empty">Nincsenek mentések</string>
     <string name="backup_disclaimer">Jelenleg a biztonsági mentés és visszaállítás funkció csak SMS-eket támogat. Az MMS-ek támogatása és az ütemezett biztonsági mentések hamarosan elérhetőek lesznek!</string>
     <string name="backup_now">Mentés most</string>
+    <string name="backup_now_summary">Új biztonsági mentés készítése</string>
+    <string name="backup_categories_title">Mit szeretne menteni?</string>
+    <string name="backup_restore_source_title">Melyik mentés?</string>
+    <string name="backup_restore_categories_title">Visszaállítás innen: %s</string>
+    <string name="backup_category_messages">Üzenetek (SMS, MMS és mellékletek)</string>
+    <string name="backup_category_settings">Beállítások és sablonok</string>
+    <string name="backup_category_blocking">Tiltási szabályok</string>
+    <string name="backup_category_conversations">Archivált és kitűzött</string>
+    <string name="backup_category_scheduled">Ütemezett üzenetek</string>
+    <string name="backup_exact_alarm_title">Pontos ébresztések engedélyezése</string>
+    <string name="backup_exact_alarm_message">Az ütemezett üzenetek pontos időben történő elküldéséhez a Open Messages-nek engedélyre van szüksége pontos ébresztések beállításához. Enélkül az üzenetek kicsit később mehetnek ki.</string>
+    <string name="backup_exact_alarm_grant">Engedélyezés</string>
+    <string name="backup_exact_alarm_skip">Visszaállítás mindenképp</string>
     <string name="backup_progress_parsing">Mentés elemzése…</string>
     <string name="backup_progress_running">%d/%d üzenet</string>
     <string name="backup_progress_saving">Mentés…</string>
     <string name="backup_progress_syncing">Üzenetek szinkronizálása…</string>
     <string name="backup_progress_finished">Kész!</string>
+    <string name="backup_progress_failed">A biztonsági mentést nem sikerült kiírni. Ellenőrizze a szabad helyet és a mentési mappát.</string>
     <string name="backup_notification_channel_name">Biztonsági mentés és visszaállítás</string>
     <string name="scheduled_title">Ütemezett</string>
     <string name="scheduled_empty_description">Automatikusan küldendő üzenet egy megadott időpontban</string>
@@ -194,6 +287,12 @@
     <string name="settings_automatic_colors_title">Névjegyek automatikus színezése</string>
     <string name="settings_text_size_title">Betűméret</string>
     <string name="settings_system_font_title">Rendszer betűtípusának használata</string>
+    <string name="settings_show_avatar_title">Névjegykép megjelenítése</string>
+    <string name="settings_show_avatar_summary">A küldő képének megjelenítése a beszélgetésekben. Kapcsolja ki, hogy az üzenetbuborékok szélesebbek legyenek.</string>
+    <string name="settings_hide_country_code_title">Országkód elrejtése</string>
+    <string name="settings_hide_country_code_summary">Telefonszámok megjelenítése helyi formátumban, pl. \"06 ...\" a \"+33 6 ...\" helyett</string>
+    <string name="settings_edge_to_edge_title">Széltől szélig</string>
+    <string name="settings_edge_to_edge_summary">Tartalom megjelenítése az állapot- és navigációs sáv mögött</string>
     <string name="settings_auto_emoji_title">Automatikus emodzsi</string>
     <string name="settings_notifications_title">Értesítések</string>
     <string name="settings_notifications_o_summary">Koppintson a testreszabáshoz</string>
@@ -227,6 +326,11 @@
     </string-array>
     <string name="settings_delivery_title">Elküldés megerősítése</string>
     <string name="settings_delivery_summary">Megerősíti, hogy az üzenetek sikeresen el lettek-e küldve</string>
+    <string name="settings_send_sound_title">Hang küldéskor</string>
+    <string name="settings_send_sound_summary">Rövid hang lejátszása üzenet küldésekor</string>
+    <string name="settings_send_sound_volume_title">Hangerő</string>
+    <string name="settings_header_quick_action_title">Gyorsművelet a fejlécben</string>
+    <string name="settings_header_quick_action_summary">Parancsikongomb hozzáadása a beszélgetés fejlécéhez</string>
     <string name="settings_signature_title">Aláírás</string>
     <string name="settings_signature_summary">Aláírás hozzáadása az üzenetek végéhez</string>
     <string name="settings_unicode_title">Ékezetek eltávolítása</string>
@@ -257,6 +361,17 @@
     <string name="blocking_drop_title">Üzenetek eldobása</string>
     <string name="blocking_drop_summary">Üzenetek eldobása a tiltott küldőktől az elrejtésük helyett</string>
     <string name="blocking_conversations">Letiltott beszélgetések</string>
+    <string name="blocking_category_integrated">Beépített tiltás</string>
+    <string name="blocking_integrated_description">A Open Messages az eszközén tiltja a kéretlen üzeneteket. Az alábbi opcionális források bekapcsoláskor letöltik a listájukat az internetről, utána internet nélkül működnek.</string>
+    <string name="blocking_category_external_apps">Külső alkalmazások</string>
+    <string name="blocked_numbers_summary">Az Ön által tiltott számok</string>
+    <string name="blocking_source_phishing_title">Adathalászat elleni védelem</string>
+    <string name="blocking_source_phishing_summary">Tiltja az ismert adathalász oldalakra mutató üzeneteket. Bekapcsoláskor a lista letöltődik az internetről, a szűrés utána internet nélkül működik.</string>
+    <string name="blocking_source_flag_block_title">Feltételezett kéretlen üzenetek tiltása</string>
+    <string name="blocking_source_flag_block_summary">A lehetséges kéretlenként megjelölt üzeneteket egyenesen a tiltólistára küldi ahelyett, hogy csak megjelölné őket a beérkezők között</string>
+    <string name="blocking_source_status_updating">Frissítés…</string>
+    <string name="blocking_source_status_updated">Naprakész · %1$d bejegyzés</string>
+    <string name="blocking_source_status_failed">A letöltés sikertelen, a forrás kikapcsolva marad. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
     <string name="blocking_manager_title">Tiltáskezelő</string>
     <string name="blocking_manager_built_in_summary">A Open Messages beépített tiltási funkciója</string>
     <string name="blocking_manager_call_blocker_summary">Tiltja a kéretlen tartalmú üzeneteket, számokat és ismeretlen hívásokat a tiltólistával és az ütemezéssel</string>
@@ -313,10 +428,15 @@
     <string name="button_yes">Igen</string>
     <string name="button_continue">Folytatás</string>
     <string name="button_cancel">Mégse</string>
+    <string name="button_close">Bezárás</string>
     <string name="button_delete">Törlés</string>
     <string name="button_save">Mentés</string>
     <string name="button_stop">Megállítás</string>
     <string name="button_set">Beállítás</string>
+    <string name="button_later">Később</string>
+    <string name="icon_restart_title">Újraindítás szükséges</string>
+    <string name="icon_restart_message">Az alkalmazásikon frissítésének befejezéséhez újra kell indítani az alkalmazást.</string>
+    <string name="icon_restart_now">Újraindítás</string>
     <string name="button_undo">Visszavonás</string>
     <string name="toast_copied">Másolva</string>
     <plurals name="notification_new_messages">
@@ -348,6 +468,21 @@
         <item>5 másodperc</item>
         <item>10 másodperc</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Nincs</item>
+        <item>Archiválás</item>
+        <item>Megjelölés olvasatlanként</item>
+        <item>Tiltás</item>
+        <item>Törlés</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Nincs</item>
+        <item>Klasszikus</item>
+        <item>Csengő</item>
+        <item>Lágy</item>
+        <item>Ereszkedő</item>
+        <item>Hármas hang</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatikus</item>
         <item>100 KB</item>
@@ -357,6 +492,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Nincs tömörítés</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Tiltás</item>
+        <item>Engedélyezés</item>
+        <item>Kérdezzen megnyitás előtt</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Oké</item>
@@ -380,6 +520,12 @@
     <string name="main_menu_edit_message">Üzenet szerkesztése</string>
     <string name="main_menu_rename_conversation">Beszélgetés átnevezése</string>
     <string name="main_sender_draft">Vázlat: %s</string>
+    <string name="conversation_flagged_label">Feltételezett kéretlen üzenet</string>
+    <string name="snippet_picture">Kép</string>
+    <string name="snippet_video">Videó</string>
+    <string name="snippet_audio">Hang</string>
+    <string name="snippet_contact_card">Névjegy</string>
+    <string name="search_group_conversations">Beszélgetések</string>
     <string name="scheduled_menu_send_now">Küldés most</string>
     <string name="scheduled_menu_edit_message">Üzenet szerkesztése</string>
     <plurals name="dialog_delete_chat">
@@ -396,7 +542,15 @@
     <string name="dialog_clear_compose_title">Üzenet törlése</string>
     <string name="dialog_clear_compose">Törli az üzenetet? Ez a művelet nem visszavonható.</string>
     <string name="compose_scheduled_view">Ütemezett üzenetek ehhez a beszélgetéshez</string>
+    <string name="compose_scheduled_bubble">Küldés ekkor: %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d melléklet</item>
+        <item quantity="other">%d melléklet</item>
+    </plurals>
     <string name="compose_no_valid_recipients">Nem küldhető a többi résztvevőnek</string>
+    <string name="compose_flagged_title">Feltételezett kéretlen üzenet</string>
+    <string name="compose_flagged_approve">Jóváhagyás</string>
+    <string name="compose_flagged_block">Tiltás</string>
     <string name="compose_menu_show_status">Állapot megjelenítése</string>
     <string name="compose_attach_file_cd">Fájl mellékelése</string>
     <string name="compose_audio_message_cd">Hangüzenet rögzítése</string>
@@ -404,6 +558,8 @@
     <string name="compose_record_audio_msg_cd">Hangüzenet rögzítése</string>
     <string name="compose_record_audio_msg_abort_cd">Hangüzenet megszakítása</string>
     <string name="compose_record_audio_msg_attach_cd">Hangüzenet mellékelése</string>
+    <string name="compose_audio_msg_title">Hangüzenet</string>
+    <string name="compose_audio_msg_attach">Csatolás</string>
     <string name="compose_record_audio_msg_play_pause_cd">Hangüzenet lejátszása vagy szüneteltetése</string>
     <string name="compose_message_cancel">Megszakítás</string>
     <string name="compose_message_send_now">Küldés most</string>
@@ -412,14 +568,24 @@
     <string name="compose_message_attachment">Melléklet</string>
     <string name="compose_toast_drag_stt">Helyezze a beszédfelismerés gombot tetszőleges helyre</string>
     <string name="message_body_too_long_to_display">⚠ Az üzenet hosszú. Másolja vagy mentse el a teljes szöveget</string>
+    <string name="conversation_menu">Beszélgetés beállításai</string>
+    <string name="conversation_menu_media">Összes média</string>
+    <string name="media_title">Média</string>
+    <string name="media_empty">Az ebben a beszélgetésben megosztott fényképek és videók itt jelennek meg</string>
     <string name="clipboard_too_large_to_copy">Az adatméret meghaladja a vágólap korlátait</string>
     <string name="clipboard_unable_to_copy_to">Nem lehet a vágólapra másolni</string>
     <string name="scheduled_send_cd">Ezen üzenet ütemezése</string>
     <string name="attachment_missing">Hiányzik</string>
     <string name="settings_system_show_stt_title">Beszédfelismerés gomb megjelenítése</string>
+    <string name="settings_drawer_swipe_title">Menü megnyitása húzással</string>
+    <string name="settings_drawer_swipe_summary">Az oldalsó menü megnyitása a beszélgetéslista bal széléről való húzással</string>
     <string name="settings_notification_previews_summary">Név és üzenet megjelenítése</string>
     <string name="settings_notification_silent_title">Néma, ha nincs a névjegyek között</string>
     <string name="settings_notification_silent_summary">Némítja az értesítéseket az olyan üzenetekhez, amelyek címzettje nincs a névjegyei között</string>
+    <string name="settings_copy_code_title">Kódok másolása az értesítésekből</string>
+    <string name="settings_copy_code_summary">Kód másolása gombot ad az egyszer használatos és ellenőrző kódokat tartalmazó értesítésekhez</string>
+    <string name="notification_copy_code">Kód másolása</string>
+    <string name="notification_code_copied">Kód másolva</string>
     <string name="settings_unread_at_top_title">Olvasatlanok felül</string>
     <string name="settings_unread_at_top_summary">Olvasatlan beszélgetések megjelenítése felül</string>
     <string name="settings_mms_weblink_title">Hivatkozások kezelése az üzenetekben</string>
@@ -460,6 +626,13 @@
     <string name="notification_foreground_worker_title">Üzenet fogadása</string>
     <string name="main_sync_emojis">Emodzsi reakciók elemzése…</string>
     <string name="message_management_title">Üzenetkezelés</string>
+    <string name="templates_title">Sablonok</string>
+    <string name="templates_empty">Még nincsenek mentett üzenetek.\nKoppintson a + gombra egy gyakran küldött üzenet mentéséhez, majd koppintson rá, és válassza ki, kinek küldi.</string>
+    <string name="template_hint">Írja be az üzenetet…</string>
+    <string name="template_title_hint">Cím (nem kötelező)</string>
+    <string name="templates_add_cd">Új sablon</string>
+    <string name="template_new">Új sablon</string>
+    <string name="template_edit">Sablon szerkesztése</string>
     <string name="deduplicate_messages_category">Ismétlődő üzenetek kiszűrése</string>
     <string name="deduplicate_messages_title">Ismétlődő üzenetek eltávolítása</string>
     <string name="deduplicate_messages_summary">Átvizsgálja az üzenetadatbázist, és törli az összes olyan üzenetet, amely pontosan megegyezik az eredeti üzenetekkel</string>
@@ -472,4 +645,5 @@
     <string name="compose_reactions_title">Reakciók</string>
     <string name="about_developer">Egy csodálatos emberekből álló csapat a világ minden tájáról!</string>
     <string name="notification_foreground_worker_channel_name">Üzenetfogadás értesítés</string>
+    <string name="notification_me">Én</string>
 </resources>

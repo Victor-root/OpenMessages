@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Paprastos atvirojo kodo žinutės</string>
     <string name="shortcut_compose_long_label">New conversation</string>
     <string name="shortcut_compose_short_label">Compose</string>
     <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">Nustatymai</string>
     <string name="title_notification_prefs">Pranešimai</string>
     <string name="title_theme">Spalva</string>
+    <string name="theme_default">Numatytoji</string>
+    <string name="theme_wallpaper">Ekrano fonas</string>
+    <string name="theme_other_colors">Spalvos</string>
+    <string name="theme_tab_presets">Paletė</string>
+    <string name="theme_tab_custom">Pasirinktinė</string>
+    <string name="theme_apply_to_icon">Pritaikyti spalvą programėlės piktogramai (programėlė bus uždaryta)</string>
+    <string name="theme_tab_icon">Programėlės piktograma</string>
+    <string name="theme_icon_follow_theme">Atitikti programėlės temos spalvą</string>
+    <string name="theme_icon_summary">Pasirinkite programėlės piktogramos spalvą nepriklausomai nuo temos. Pritaikius pakeitimą programėlė bus uždaryta.</string>
+    <string name="theme_icon_change_title">Pakeisti programėlės piktogramą?</string>
+    <string name="theme_icon_change_message">Programėlės piktogramos spalva tuoj pasikeis. Android gali pakeisti piktogramą tik kai programėlė uždaryta, todėl Open Messages užsidarys vos patvirtinus.</string>
     <string name="title_conversations">Ieškoti žinutes…</string>
+    <string name="title_search">Paieška</string>
     <string name="title_compose">Rašyti</string>
     <string name="setup_skip">Praleisti</string>
     <string name="setup_next">Tęsti</string>
     <string name="menu_add_person">Add person</string>
     <string name="menu_call">Skambinti</string>
     <string name="menu_mms_part_save">Save to gallery</string>
+    <string name="menu_mms_part_share">Bendrinti</string>
+    <string name="menu_mms_part_forward">Persiųsti</string>
+    <string name="menu_mms_part_open">Atidaryti kitoje programėlėje</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_search_close_cd">Uždaryti paiešką</string>
+    <string name="main_search_clear_cd">Išvalyti paiešką</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d pasirinkta(s)</string>
     <string name="main_menu_clear">Ištrinti</string>
+    <string name="main_menu_select_all">Pažymėti viską</string>
     <string name="main_menu_archive">Archyvuoti</string>
     <string name="main_menu_unarchive">Išarchyvuoti</string>
     <string name="main_menu_delete">Ištrinti</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Mark read</string>
     <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_block">Blokuoti</string>
+    <string name="main_menu_send_now">Siųsti dabar</string>
+    <string name="main_menu_edit_message">Redaguoti žinutę</string>
+    <string name="main_menu_rename_conversation">Pervadinti pokalbį</string>
     <string name="main_syncing">Syncing messages…</string>
+    <string name="main_sync_emojis">Apdorojamos jaustukų reakcijos…</string>
     <string name="main_sender_you">Tu: %s</string>
+    <string name="main_sender_draft">Juodraštis: %s</string>
+    <string name="conversation_flagged_label">Įtariamas šlamštas</string>
+    <string name="snippet_picture">Nuotrauka</string>
+    <string name="snippet_video">Vaizdo įrašas</string>
+    <string name="snippet_audio">Garso įrašas</string>
+    <string name="snippet_contact_card">Kontakto kortelė</string>
+    <string name="search_group_conversations">Pokalbiai</string>
     <string name="main_message_results_title">Results in messages</string>
     <plurals name="main_message_results">
         <item quantity="other">%d messages</item>
@@ -62,11 +93,32 @@
     <string name="main_permission_contacts">Open Messages needs permission to view your contacts</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Allow</string>
+    <string name="scheduled_menu_send_now">Siųsti dabar</string>
+    <string name="scheduled_menu_edit_message">Redaguoti žinutę</string>
     <string name="drawer_inbox">Žinutės</string>
+    <string name="contacts_group_recent">Naujausi</string>
+    <string name="contacts_group_starred">Mėgstamiausi</string>
+    <string name="contacts_group_groups">Grupės</string>
+    <string name="conversations_group_today">Šiandien</string>
+    <string name="conversations_group_yesterday">Vakar</string>
     <string name="drawer_archived">Archyvas</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d neperskaityta</item>
+        <item quantity="few">%d neperskaitytos</item>
+        <item quantity="many">%d neperskaitytų</item>
+        <item quantity="other">%d neperskaitytų</item>
+    </plurals>
     <string name="drawer_scheduled">Planuota</string>
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">Daugiau</string>
+    <string name="message_management_title">Žinučių tvarkymas</string>
+    <string name="templates_title">Šablonai</string>
+    <string name="templates_empty">Išsaugotų žinučių dar nėra.\nBakstelėkite +, kad išsaugotumėte dažnai siunčiamą žinutę, tada bakstelėkite ją ir pasirinkite, kam ją siųsti.</string>
+    <string name="template_hint">Įveskite žinutę…</string>
+    <string name="template_title_hint">Pavadinimas (nebūtina)</string>
+    <string name="templates_add_cd">Naujas šablonas</string>
+    <string name="template_new">Naujas šablonas</string>
+    <string name="template_edit">Redaguoti šabloną</string>
     <string name="drawer_settings">Nustatymai</string>
     <string name="drawer_help">Pagalba ir atsiliepimai</string>
     <string name="drawer_invite">Invite friends</string>
@@ -81,6 +133,23 @@
         <item quantity="many">Are you sure you would like to delete %d conversations?</item>
         <item quantity="other">Are you sure you would like to delete %d conversations?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">Ar tikrai norite ištrinti %d žinutę?</item>
+        <item quantity="few">Ar tikrai norite ištrinti %d žinutes?</item>
+        <item quantity="many">Ar tikrai norite ištrinti %d žinučių?</item>
+        <item quantity="other">Ar tikrai norite ištrinti %d žinučių?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">Ar tikrai norite išsiųsti %d žinutę dabar?</item>
+        <item quantity="few">Ar tikrai norite išsiųsti %d žinutes dabar?</item>
+        <item quantity="many">Ar tikrai norite išsiųsti %d žinučių dabar?</item>
+        <item quantity="other">Ar tikrai norite išsiųsti %d žinučių dabar?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">Redaguoti žinutę</string>
+    <string name="dialog_edit_scheduled_message">Redaguojant šią žinutę ji bus pašalinta iš suplanuotų.\n\nKitame ekrane būtinai ją pateikite iš naujo, kitaip ji bus prarasta.\n\nAr norite tęsti?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">Taip, redaguoti žinutę</string>
+    <string name="dialog_clear_compose_title">Išvalyti žinutę</string>
+    <string name="dialog_clear_compose">Išvalyti žinutę? Šio veiksmo anuliuoti negalima.</string>
     <string-array name="message_options">
         <item>Kopijuoti tekstą</item>
         <item>Persiųsti</item>
@@ -94,19 +163,37 @@
     <string name="compose_subtitle_results">%1$d of %2$d results</string>
     <string name="compose_send_group_title">Send as group message</string>
     <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_send_group_summary_on">Gavėjai ir atsakymai bus matomi visiems</string>
+    <string name="compose_send_group_summary_off">Žinutės bus siunčiamos atskirai kiekvienam gavėjui</string>
     <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
     <string name="compose_scheduled_future">Selected time must be in the future!</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_scheduled_view">Šio pokalbio suplanuotos žinutės</string>
+    <string name="compose_scheduled_bubble">Siuntimas %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d priedas</item>
+        <item quantity="few">%d priedai</item>
+        <item quantity="many">%d priedų</item>
+        <item quantity="other">%d priedų</item>
+    </plurals>
     <string name="compose_hint">Rašyti žinutę...</string>
+    <string name="compose_expand_cd">Išskleisti per visą ekraną</string>
+    <string name="compose_collapse_cd">Sutraukti</string>
+    <string name="compose_no_valid_recipients">Negalima siųsti kitiems dalyviams</string>
+    <string name="compose_flagged_title">Įtariamas šlamštas</string>
+    <string name="compose_flagged_approve">Patvirtinti</string>
+    <string name="compose_flagged_block">Blokuoti</string>
     <string name="compose_menu_copy">Kopijuoti tekstą</string>
     <string name="compose_menu_forward">Persiųsti</string>
+    <string name="compose_menu_show_status">Rodyti būseną</string>
     <string name="compose_menu_delete">Ištrinti</string>
     <string name="compose_menu_previous">Previous</string>
     <string name="compose_menu_next">Next</string>
     <string name="compose_menu_clear">Clear</string>
     <string name="compose_details_title">Message details</string>
+    <string name="compose_reactions_title">Reakcijos</string>
     <string name="compose_details_type">Type: %s</string>
     <string name="compose_details_from">From: %s</string>
     <string name="compose_details_to">To: %s</string>
@@ -118,18 +205,62 @@
     <string name="compose_details_delivered">Delivered: %s</string>
     <string name="compose_details_error_code">Error code: %d</string>
     <string name="compose_attach_cd">Pridėti priedą</string>
+    <string name="compose_attach_file_cd">Pridėti bet kokį failą</string>
     <string name="compose_gallery_cd">Pridėti nuotrauką</string>
+    <string name="compose_audio_message_cd">Įrašyti garso žinutę</string>
     <string name="compose_camera_cd">Padaryti nuotrauką</string>
     <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_schedule_title">Suplanuoti žinutę</string>
+    <string name="compose_schedule_in_hour">Po 1 valandos</string>
+    <string name="compose_schedule_tonight">Šįvakar</string>
+    <string name="compose_schedule_tomorrow_morning">Rytoj ryte</string>
+    <string name="compose_schedule_tomorrow_afternoon">Rytoj po pietų</string>
+    <string name="compose_schedule_custom">Pasirinkti datą ir laiką</string>
+    <string name="compose_schedule_confirm">Suplanuoti</string>
+    <string name="compose_schedule_previous_month">Ankstesnis mėnuo</string>
+    <string name="compose_schedule_next_month">Kitas mėnuo</string>
+    <string name="compose_schedule_increase">Padidinti</string>
+    <string name="compose_schedule_decrease">Sumažinti</string>
+    <string name="compose_schedule_cancel_cd">Atšaukti žinutės planavimą</string>
     <string name="compose_contact_cd">Attach a contact</string>
     <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_attach_gallery">Galerija</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Failas</string>
+    <string name="compose_attach_audio">Garsas</string>
+    <string name="compose_attach_contact">Kontaktas</string>
+    <string name="compose_attach_schedule">Suplanuoti</string>
+    <string name="compose_attach_templates">Šablonai</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Šis vaizdo įrašas per ilgas siųsti MMS žinute. Jis gali trukti ne ilgiau kaip %d sekundę.</item>
+        <item quantity="few">Šis vaizdo įrašas per ilgas siųsti MMS žinute. Jis gali trukti ne ilgiau kaip %d sekundes.</item>
+        <item quantity="many">Šis vaizdo įrašas per ilgas siųsti MMS žinute. Jis gali trukti ne ilgiau kaip %d sekundžių.</item>
+        <item quantity="other">Šis vaizdo įrašas per ilgas siųsti MMS žinute. Jis gali trukti ne ilgiau kaip %d sekundžių.</item>
+    </plurals>
     <string name="compose_sim_cd">%s selected, change SIM card</string>
     <string name="compose_send_cd">Siųsti žinutę</string>
+    <string name="compose_record_audio_msg_cd">Įrašyti garso žinutę</string>
+    <string name="compose_record_audio_msg_abort_cd">Atšaukti garso žinutę</string>
+    <string name="compose_record_audio_msg_attach_cd">Pridėti garso žinutę</string>
+    <string name="compose_audio_msg_title">Balso žinutė</string>
+    <string name="compose_audio_msg_attach">Pridėti</string>
+    <string name="compose_record_audio_msg_play_pause_cd">Leisti arba pristabdyti garso žinutę</string>
+    <string name="compose_message_cancel">Atšaukti</string>
+    <string name="compose_message_send_now">Siųsti dabar</string>
+    <string name="compose_message_sim">SIM numeris</string>
+    <string name="compose_message_item">Žinutės elementas</string>
+    <string name="compose_message_attachment">Priedas</string>
+    <string name="compose_toast_drag_stt">Perkelkite diktavimo mygtuką, kur tik norite</string>
     <string name="message_status_sending">Siunčiama…</string>
     <string name="message_status_delivered">Nusiųsta %s</string>
     <string name="message_status_failed">Nepavyko nusiųsti. Spausk dar kartą norint persiųsti</string>
+    <string name="message_body_too_long_to_display">⚠ Žinutė ilga. Nukopijuokite arba išsaugokite, kad matytumėte visą tekstą</string>
+    <string name="conversation_menu">Pokalbio parinktys</string>
+    <string name="conversation_menu_media">Visa medija</string>
+    <string name="media_title">Medija</string>
+    <string name="media_empty">Šiame pokalbyje bendrintos nuotraukos ir vaizdo įrašai bus rodomi čia</string>
     <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Pranešimai</string>
@@ -143,11 +274,43 @@
     <string name="gallery_toast_saved">Saved to gallery</string>
     <string name="backup_title">Backup and restore</string>
     <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_failed_title">Atsarginė kopija nepavyko</string>
+    <string name="backup_icon_change_title">Atkurti programėlės piktogramą?</string>
+    <string name="backup_icon_change_message">Jūsų atsarginė kopija sukurta su kitos spalvos programėlės piktograma. Android gali pakeisti piktogramą tik kai programėlė uždaryta, todėl Open Messages užsidarys vos patvirtinus.</string>
+    <string name="icon_change_confirm">Pritaikyti ir uždaryti</string>
+    <string name="icon_change_later">Ne dabar</string>
     <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Automatinė atsarginė kopija</string>
+    <string name="backup_auto_never">Niekada</string>
+    <string name="backup_auto_daily">Kasdien</string>
+    <string name="backup_auto_weekly">Kas savaitę</string>
+    <string name="backup_auto_custom">Pasirinktinai…</string>
+    <string name="backup_auto_custom_title">Dienos tarp kopijų</string>
+    <string name="backup_auto_custom_hint">Dienų skaičius</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Kas %d dieną</item>
+        <item quantity="few">Kas %d dienas</item>
+        <item quantity="many">Kas %d dienų</item>
+        <item quantity="other">Kas %d dienų</item>
+    </plurals>
+    <string name="backup_zip_title">Išsaugoti kaip .zip failą</string>
+    <string name="backup_zip_summary">Kiekvieną kopiją laikyti kaip vieną archyvą, kurį lengviau perkelti tarp telefonų</string>
+    <string name="backup_manage_title">Tvarkyti atsargines kopijas</string>
+    <string name="backup_manage_summary">Pervadinkite arba ištrinkite atsargines kopijas</string>
+    <string name="backup_manage_empty">Šioje vietoje atsarginių kopijų nerasta</string>
+    <string name="backup_manage_rename">Pervadinti</string>
+    <string name="backup_manage_delete">Ištrinti</string>
+    <string name="backup_manage_delete_confirm">Ištrinti \"%s\"? To anuliuoti negalima.</string>
+    <string name="backup_manage_error">Nepavyko atnaujinti šios kopijos</string>
+    <string name="backup_manage_type_folder">Aplankas</string>
+    <string name="backup_manage_type_zip">Zip archyvas</string>
+    <string name="backup_restore_from_title">Atkurti iš</string>
+    <string name="backup_restore_from_folder">Aplanko</string>
+    <string name="backup_restore_from_zip">.zip failo</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_backup">Backup in progress…</string>
@@ -165,12 +328,28 @@
     <string name="backup_restore_dialog_empty">No backups found</string>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
     <string name="backup_now">Backup now</string>
+    <string name="backup_now_summary">Sukurti naują atsarginę kopiją</string>
+    <string name="backup_categories_title">Ką įtraukti į atsarginę kopiją?</string>
+    <string name="backup_restore_source_title">Kuri kopija?</string>
+    <string name="backup_restore_categories_title">Atkurti iš %s</string>
+    <string name="backup_category_messages">Žinutės (SMS, MMS ir priedai)</string>
+    <string name="backup_category_settings">Nustatymai ir šablonai</string>
+    <string name="backup_category_blocking">Blokavimo taisyklės</string>
+    <string name="backup_category_conversations">Archyvuoti ir prisegti</string>
+    <string name="backup_category_scheduled">Suplanuotos žinutės</string>
+    <string name="backup_exact_alarm_title">Leisti tikslius signalus</string>
+    <string name="backup_exact_alarm_message">Kad suplanuotos žinutės būtų išsiųstos tiksliai laiku, Open Messages reikia leidimo nustatyti tikslius signalus. Be jo žinutės gali išeiti šiek tiek vėliau.</string>
+    <string name="backup_exact_alarm_grant">Leisti</string>
+    <string name="backup_exact_alarm_skip">Vis tiek atkurti</string>
     <string name="backup_progress_parsing">Parsing backup…</string>
     <string name="backup_progress_running">%d/%d messages</string>
     <string name="backup_progress_saving">Saving backup…</string>
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_failed">Nepavyko įrašyti atsarginės kopijos. Patikrinkite laisvą vietą ir atsarginių kopijų aplanką.</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="clipboard_too_large_to_copy">Duomenų dydis viršija iškarpinės ribą</string>
+    <string name="clipboard_unable_to_copy_to">Nepavyko nukopijuoti į iškarpinę</string>
     <string name="scheduled_title">Scheduled</string>
     <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
@@ -179,12 +358,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
     <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_send_cd">Suplanuoti šią žinutę</string>
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Send now</item>
         <item>Copy text</item>
         <item>Delete</item>
     </string-array>
+    <string name="attachment_missing">Trūksta</string>
     <string name="settings_category_appearance">Išvaizda</string>
     <string name="settings_category_general">Bendra</string>
     <string name="settings_category_quick_reply">Greitas atsakas</string>
@@ -196,6 +377,15 @@
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Šrifto dydis</string>
     <string name="settings_system_font_title">Naudoti sistemos šriftą</string>
+    <string name="settings_show_avatar_title">Rodyti kontakto nuotrauką</string>
+    <string name="settings_show_avatar_summary">Rodyti siuntėjo nuotrauką pokalbiuose. Išjunkite, kad žinučių burbulai būtų platesni.</string>
+    <string name="settings_hide_country_code_title">Slėpti šalies kodą</string>
+    <string name="settings_hide_country_code_summary">Rodyti telefono numerius vietiniu formatu, pvz., \"06 ...\" vietoj \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Nuo krašto iki krašto</string>
+    <string name="settings_edge_to_edge_summary">Rodyti turinį po būsenos ir naršymo juostomis</string>
+    <string name="settings_system_show_stt_title">Rodyti diktavimo mygtuką</string>
+    <string name="settings_drawer_swipe_title">Braukti, kad atidarytumėte meniu</string>
+    <string name="settings_drawer_swipe_summary">Atidarykite šoninį meniu braukdami nuo kairiojo pokalbių sąrašo krašto</string>
     <string name="settings_auto_emoji_title">Automatinis emoji</string>
     <string name="settings_notifications_title">Pranešimai</string>
     <string name="settings_notifications_o_summary">Tap to customize</string>
@@ -204,7 +394,14 @@
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">Pranešimų peržiūra</string>
+    <string name="settings_notification_previews_summary">Rodyti vardą ir žinutę</string>
     <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_silent_title">Tyliai, jei ne kontaktas</string>
+    <string name="settings_notification_silent_summary">Nutildo pranešimus apie žinutes, kurių siuntėjų nėra jūsų kontaktuose</string>
+    <string name="settings_copy_code_title">Kopijuoti kodus iš pranešimų</string>
+    <string name="settings_copy_code_summary">Prie pranešimų su vienkartiniais ir patvirtinimo kodais prideda mygtuką Kopijuoti kodą</string>
+    <string name="notification_copy_code">Kopijuoti kodą</string>
+    <string name="notification_code_copied">Kodas nukopijuotas</string>
     <string name="settings_vibration_title">Vibracija</string>
     <string name="settings_ringtone_title">Garas</string>
     <string name="settings_ringtone_none">None</string>
@@ -229,6 +426,13 @@
     </string-array>
     <string name="settings_delivery_title">Žinučių pristatymo patvirtinimai</string>
     <string name="settings_delivery_summary">Patvirtinti, kad pranešimai buvo sėkmingai išsiųsti</string>
+    <string name="settings_send_sound_title">Garsas siunčiant</string>
+    <string name="settings_send_sound_summary">Groti trumpą signalą, kai išsiunčiate žinutę</string>
+    <string name="settings_send_sound_volume_title">Garsumas</string>
+    <string name="settings_header_quick_action_title">Greitasis veiksmas antraštėje</string>
+    <string name="settings_header_quick_action_summary">Pridėti sparčiosios nuorodos mygtuką į pokalbio antraštę</string>
+    <string name="settings_unread_at_top_title">Neperskaityti viršuje</string>
+    <string name="settings_unread_at_top_summary">Rodyti neperskaitytus pokalbius viršuje</string>
     <string name="settings_signature_title">Signature</string>
     <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Trinti akcentus</string>
@@ -250,6 +454,9 @@
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_mms_weblink_title">Nuorodų tvarkymas žinutėse</string>
+    <string name="settings_disable_screenshots_title">Išjungti ekrano kopijas</string>
+    <string name="settings_diable_screenshots_summary">Neleisti sistemai ir kitoms programėlėms daryti šios programėlės ekrano kopijų.</string>
     <string name="settings_sync_title">Sinchronizuoti pranešimus</string>
     <string name="settings_sync_summary">Iš naujo sinchronizuoti Android pranešimų duomenų bazę</string>
     <string name="settings_about_title">Apie Open Messages</string>
@@ -261,6 +468,17 @@
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
     <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_category_integrated">Integruotas blokavimas</string>
+    <string name="blocking_integrated_description">Open Messages blokuoja šlamštą jūsų įrenginyje. Toliau nurodyti pasirenkami šaltiniai įjungus atsisiunčia savo sąrašą iš interneto, o vėliau veikia neprisijungus.</string>
+    <string name="blocking_category_external_apps">Išorinės programėlės</string>
+    <string name="blocked_numbers_summary">Numeriai, kuriuos blokuojate patys</string>
+    <string name="blocking_source_phishing_title">Apsauga nuo sukčiavimo</string>
+    <string name="blocking_source_phishing_summary">Blokuoja žinutes su nuorodomis į žinomas sukčiavimo svetaines. Įjungus sąrašas atsisiunčiamas iš interneto, vėliau filtruojama neprisijungus.</string>
+    <string name="blocking_source_flag_block_title">Blokuoti įtariamą šlamštą</string>
+    <string name="blocking_source_flag_block_summary">Žinutes, pažymėtas kaip galimas šlamštas, siųsti tiesiai į blokuotųjų sąrašą, užuot tik pažymėjus jas gautuosiuose</string>
+    <string name="blocking_source_status_updating">Atnaujinama…</string>
+    <string name="blocking_source_status_updated">Atnaujinta · įrašų: %1$d</string>
+    <string name="blocking_source_status_failed">Atsisiųsti nepavyko, šaltinis lieka išjungtas. Patikrinkite ryšį ir bandykite dar kartą.</string>
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
@@ -274,6 +492,15 @@
     <string name="blocked_numbers_dialog_title">Block texts from</string>
     <string name="blocked_numbers_dialog_hint">Phone number</string>
     <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="message_content_filters_title">Žinučių turinio filtrai</string>
+    <string name="message_content_filters_empty">Jūsų žinučių turinio filtrai bus rodomi čia</string>
+    <string name="message_content_filters_add_cd">Sukurti naują filtrą</string>
+    <string name="message_content_filters_dialog_title">Atmesti žinutes, kuriose yra</string>
+    <string name="message_content_filters_dialog_hint">Žodis, frazė arba reguliarusis reiškinys</string>
+    <string name="message_content_filters_dialog_case_switch">Skirti didžiąsias ir mažąsias raides</string>
+    <string name="message_content_filters_dialog_regex_switch">Reguliarusis reiškinys</string>
+    <string name="message_content_filters_dialog_contacts_switch">Įtraukti kontaktus</string>
+    <string name="message_content_filters_dialog_create">Sukurti</string>
     <string name="blocked_messages_title">Blocked messages</string>
     <string name="blocked_messages_empty">Your blocked messages will appear here</string>
     <string name="blocking_block_title">Block</string>
@@ -290,6 +517,15 @@
         <item quantity="many">Continue to %s and allow these numbers</item>
         <item quantity="other">Continue to %s and allow these numbers</item>
     </plurals>
+    <string name="deduplicate_messages_category">Dublikatų šalinimas</string>
+    <string name="deduplicate_messages_title">Šalinti pasikartojančias žinutes</string>
+    <string name="deduplicate_messages_summary">Peržiūri žinučių duomenų bazę ir ištrina visas žinutes, kurios tiksliai sutampa su originaliomis</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Žinučių duomenų bazė bus patikrinta dėl dublikatų, o tada jie bus pašalinti.\nTai automatiškai ištrins žinutes, tęskite tik jei suprantate pasekmes.</string>
+    <string name="auto_deduplicate_messages_title">Automatiškai šalinti dublikatus</string>
+    <string name="auto_deduplicate_messages_summary">Dublikatai bus šalinami sinchronizuojant. Atminkite, kad žinutės bus ištrinamos automatiškai, ir nors klaidingo dublikato tikimybė labai maža, ji vis tiek yra.\nBūkite atsargūs.</string>
+    <string name="deduplicating_messages_finished">Dublikatų šalinimas baigtas!</string>
+    <string name="deduplicating_messages_no_messages">Pasikartojančių žinučių nerasta.</string>
+    <string name="deduplicating_messages_failed">Nepavyko pašalinti dublikatų, bandykite dar kartą</string>
     <string name="about_title">Apie</string>
     <string name="about_version_title">Versija</string>
     <string name="about_developer_title">Kūrėjas</string>
@@ -300,6 +536,7 @@
     <string name="about_copyright_title">Autorinės teisės</string>
     <string name="widget_loading">Kraunama…</string>
     <string name="widget_more">Žiūrėti daugiau pokalbių</string>
+    <string name="all_conversations_widget_title">Visi pokalbiai</string>
     <string name="quick_reply_menu_read">Mark read</string>
     <string name="quick_reply_menu_call">Skambinti</string>
     <string name="quick_reply_menu_delete">Delete</string>
@@ -321,12 +558,30 @@
     <string name="button_yes">Yes</string>
     <string name="button_continue">Continue</string>
     <string name="button_cancel">Atšaukti</string>
+    <string name="button_close">Uždaryti</string>
     <string name="button_delete">Ištrinti</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_set">Padaryti</string>
+    <string name="button_later">Vėliau</string>
+    <string name="icon_restart_title">Reikia paleisti iš naujo</string>
+    <string name="icon_restart_message">Kad piktograma būtų atnaujinta iki galo, programėlę reikia paleisti iš naujo.</string>
+    <string name="icon_restart_now">Paleisti iš naujo</string>
     <string name="button_undo">Anuliuoti</string>
+    <string name="button_clear">Išvalyti</string>
     <string name="toast_copied">Nukopijuota</string>
+    <plurals name="toast_archived">
+        <item quantity="one">Suarchyvuotas %d pokalbis</item>
+        <item quantity="few">Suarchyvuoti %d pokalbiai</item>
+        <item quantity="many">Suarchyvuota %d pokalbių</item>
+        <item quantity="other">Suarchyvuota %d pokalbių</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">Išarchyvuotas %d pokalbis</item>
+        <item quantity="few">Išarchyvuoti %d pokalbiai</item>
+        <item quantity="many">Išarchyvuota %d pokalbių</item>
+        <item quantity="other">Išarchyvuota %d pokalbių</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">Naujas pranešimas</item>
         <item quantity="few">%s nauji pranešimai</item>
@@ -335,6 +590,11 @@
     </plurals>
     <string name="notification_message_failed_title">Žinutė neišsiųsta</string>
     <string name="notification_message_failed_text">Žinutę, skirta %s, išsiųsti nepavyko</string>
+    <string name="notification_foreground_worker_title">Gaunama žinutė</string>
+    <string name="notification_foreground_worker_text">Android 12 ir senesnėse versijose foniniam darbui, leidžiančiam gauti žinutes, reikalingas pranešimas.</string>
+    <string name="notification_foreground_worker_channel_name">Žinučių gavimo pranešimas</string>
+    <string name="notification_me">Aš</string>
+    <string name="notification_message_failed_action">Siųsti iš naujo</string>
     <string-array name="night_modes">
         <item>System</item>
         <item>Disabled</item>
@@ -358,6 +618,21 @@
         <item>5 seconds</item>
         <item>10 seconds</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Nėra</item>
+        <item>Archyvuoti</item>
+        <item>Pažymėti kaip neperskaitytą</item>
+        <item>Blokuoti</item>
+        <item>Ištrinti</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Nėra</item>
+        <item>Klasikinis</item>
+        <item>Skambus</item>
+        <item>Švelnus</item>
+        <item>Krentantis</item>
+        <item>Trys natos</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>
         <item>100 kB</item>
@@ -367,6 +642,11 @@
         <item>1000 kB</item>
         <item>2000 kB</item>
         <item>No compression</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blokuoti</item>
+        <item>Leisti</item>
+        <item>Klausti prieš atidarant</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Gerai</item>
@@ -382,4 +662,13 @@
         <item>HAHA</item>
         <item>Viskas gerai</item>
     </string-array>
+    <string name="speak_no_messages">Žinučių nėra</string>
+    <string name="speak_unseen_messages">Perskaityti neperžiūrėtas žinutes</string>
+    <string name="messageLinkHandling_dialog_title">Įspėjimas dėl išorinės nuorodos</string>
+    <string name="messageLinkHandling_dialog_body">Kai kurios nuorodos gali būti nesaugios arba netikėtai jus nukreipti. Prieš tęsdami peržiūrėkite toliau pateiktą nuorodą:\n\n%1$s\n\nAr norite tęsti?</string>
+    <string name="messageLinkHandling_dialog_positive">Taip, atidaryti nuorodą</string>
+    <string name="messageLinkHandling_dialog_negative">Ne</string>
+    <string name="error_stt_toast">Atsiprašome, įkeliant kalbos vertimo į tekstą paslaugą įvyko klaida.</string>
+    <string name="stt_toast_extra_prompt">Pasakykite savo žinutę</string>
+    <string name="messages_text_share_file_error">Oi! Bendrinant kažkas nutiko</string>
 </resources>

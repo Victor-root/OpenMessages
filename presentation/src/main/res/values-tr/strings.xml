@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Basit, açık kaynaklı mesajlaşma</string>
     <string name="shortcut_compose_long_label">Yeni konuşma</string>
     <string name="shortcut_compose_short_label">Oluştur</string>
     <string name="shortcut_compose_disabled_message">Kısayol devre dışı</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Ayarlar</string>
     <string name="title_notification_prefs">Bildirimler</string>
     <string name="title_theme">Tema</string>
+    <string name="theme_default">Varsayılan</string>
+    <string name="theme_wallpaper">Duvar kâğıdı</string>
+    <string name="theme_other_colors">Renkler</string>
+    <string name="theme_tab_presets">Palet</string>
+    <string name="theme_tab_custom">Özel</string>
+    <string name="theme_apply_to_icon">Rengi uygulama simgesine uygula (uygulama kapanacak)</string>
+    <string name="theme_tab_icon">Uygulama simgesi</string>
+    <string name="theme_icon_follow_theme">Uygulama tema rengiyle eşleştir</string>
+    <string name="theme_icon_summary">Uygulama simgesinin rengini temadan bağımsız olarak seçin. Bir değişikliği uygulamak uygulamayı kapatır.</string>
+    <string name="theme_icon_change_title">Uygulama simgesi değiştirilsin mi?</string>
+    <string name="theme_icon_change_message">Uygulama simgesinin rengi değişmek üzere. Android simgeyi yalnızca uygulama kapalıyken değiştirebilir, bu yüzden Open Messages onayladığınız anda kapanacak.</string>
     <string name="title_conversations">Gelen iletilerde ara…</string>
+    <string name="title_search">Ara</string>
     <string name="title_compose">Bir isme veya numaraya yazın</string>
     <string name="setup_skip">Atla</string>
     <string name="setup_next">Devam</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Galeriye Kaydet</string>
     <string name="compose_menu_share">Paylaş</string>
     <string name="main_drawer_open_cd">Gezinti çubuğunu aç</string>
+    <string name="main_search_close_cd">Aramayı kapat</string>
+    <string name="main_search_clear_cd">Aramayı temizle</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d Seçili</string>
     <string name="main_menu_clear">Temizle</string>
     <string name="main_menu_archive">Arşiv</string>
@@ -63,7 +79,16 @@
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">İzin ver</string>
     <string name="drawer_inbox">Gelen Kutusu</string>
+    <string name="contacts_group_recent">Son kullanılanlar</string>
+    <string name="contacts_group_starred">Favoriler</string>
+    <string name="contacts_group_groups">Gruplar</string>
+    <string name="conversations_group_today">Bugün</string>
+    <string name="conversations_group_yesterday">Dün</string>
     <string name="drawer_archived">Arşivle</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d okunmamış</item>
+        <item quantity="other">%d okunmamış</item>
+    </plurals>
     <string name="drawer_scheduled">Zamanlanmış</string>
     <string name="drawer_blocking">Engellenmiş</string>
     <string name="drawer_more">Daha fazla</string>
@@ -98,6 +123,8 @@
     <string name="compose_scheduled_future">Seçilen zaman gelecekte olmalı!</string>
     <string name="compose_scheduled_toast">Zamanlanmış iletilere eklendi</string>
     <string name="compose_hint">İleti yaz…</string>
+    <string name="compose_expand_cd">Tam ekrana genişlet</string>
+    <string name="compose_collapse_cd">Daralt</string>
     <string name="compose_menu_copy">Metni kopyala</string>
     <string name="compose_menu_forward">Yönlendir</string>
     <string name="compose_menu_delete">Sil</string>
@@ -119,10 +146,32 @@
     <string name="compose_gallery_cd">Bir fotoğraf ekle</string>
     <string name="compose_camera_cd">Fotoğraf Çek</string>
     <string name="compose_schedule_cd">İleti zamanla</string>
+    <string name="compose_schedule_title">İleti zamanla</string>
+    <string name="compose_schedule_in_hour">1 saat içinde</string>
+    <string name="compose_schedule_tonight">Bu akşam</string>
+    <string name="compose_schedule_tomorrow_morning">Yarın sabah</string>
+    <string name="compose_schedule_tomorrow_afternoon">Yarın öğleden sonra</string>
+    <string name="compose_schedule_custom">Tarih ve saat seç</string>
+    <string name="compose_schedule_confirm">Zamanla</string>
+    <string name="compose_schedule_previous_month">Önceki ay</string>
+    <string name="compose_schedule_next_month">Sonraki ay</string>
+    <string name="compose_schedule_increase">Artır</string>
+    <string name="compose_schedule_decrease">Azalt</string>
     <string name="compose_contact_cd">Bir kişi ekle</string>
     <string name="compose_contact_error">Kişi okunurken hata oluştu</string>
+    <string name="compose_attach_gallery">Galeri</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Dosya</string>
+    <string name="compose_attach_audio">Ses</string>
+    <string name="compose_attach_contact">Kişi</string>
+    <string name="compose_attach_schedule">Zamanla</string>
+    <string name="compose_attach_templates">Şablonlar</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) seçili</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Bu video MMS ile göndermek için çok uzun. En fazla %d saniye sürebilir.</item>
+        <item quantity="other">Bu video MMS ile göndermek için çok uzun. En fazla %d saniye sürebilir.</item>
+    </plurals>
     <string name="compose_sim_cd">Seçili, %s SIM kartı değiştirin</string>
     <string name="compose_send_cd">İleti gönder</string>
     <string name="message_status_sending">Gönderiliyor…</string>
@@ -141,11 +190,41 @@
     <string name="gallery_toast_saved">Galeriye kaydedildi</string>
     <string name="backup_title">Yedekleme ve geri yükleme</string>
     <string name="backup_backing_up">İletileri yedekleme</string>
+    <string name="backup_failed_title">Yedekleme başarısız</string>
+    <string name="backup_icon_change_title">Uygulama simgesi geri yüklensin mi?</string>
+    <string name="backup_icon_change_message">Yedeğiniz farklı bir uygulama simgesi rengiyle oluşturulmuş. Android simgeyi yalnızca uygulama kapalıyken değiştirebilir, bu yüzden Open Messages onayladığınız anda kapanacak.</string>
+    <string name="icon_change_confirm">Uygula ve kapat</string>
+    <string name="icon_change_later">Şimdi değil</string>
     <string name="backup_restoring">Yedekten geri yükleme</string>
     <string name="backup_loading">Yükleniyor…</string>
     <string name="backup_never">Asla</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Otomatik yedekleme</string>
+    <string name="backup_auto_never">Hiçbir zaman</string>
+    <string name="backup_auto_daily">Her gün</string>
+    <string name="backup_auto_weekly">Her hafta</string>
+    <string name="backup_auto_custom">Özel…</string>
+    <string name="backup_auto_custom_title">Yedeklemeler arası gün</string>
+    <string name="backup_auto_custom_hint">Gün sayısı</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">%d günde bir</item>
+        <item quantity="other">%d günde bir</item>
+    </plurals>
+    <string name="backup_zip_title">.zip dosyası olarak kaydet</string>
+    <string name="backup_zip_summary">Her yedeği telefonlar arasında taşıması daha kolay tek bir arşiv olarak saklayın</string>
+    <string name="backup_manage_title">Yedekleri yönet</string>
+    <string name="backup_manage_summary">Yedeklerinizi yeniden adlandırın veya silin</string>
+    <string name="backup_manage_empty">Bu konumda yedek bulunamadı</string>
+    <string name="backup_manage_rename">Yeniden adlandır</string>
+    <string name="backup_manage_delete">Sil</string>
+    <string name="backup_manage_delete_confirm">\"%s\" silinsin mi? Bu işlem geri alınamaz.</string>
+    <string name="backup_manage_error">Bu yedek güncellenemedi</string>
+    <string name="backup_manage_type_folder">Klasör</string>
+    <string name="backup_manage_type_zip">Zip arşivi</string>
+    <string name="backup_restore_from_title">Şuradan geri yükle</string>
+    <string name="backup_restore_from_folder">Bir klasör</string>
+    <string name="backup_restore_from_zip">Bir .zip dosyası</string>
     <string name="backup_restore_title">Geri yükle</string>
     <string name="backup_restore_summary">Bir yedekleme\'yi seçin</string>
     <string name="backup_restore_error_backup">Yedekleme devam ediyor…</string>
@@ -163,11 +242,25 @@
     <string name="backup_restore_dialog_empty">Yedekleme bulunamadı</string>
     <string name="backup_disclaimer">Şu anda sadece SMS yedekleme ve geri yükleme desteklenmektedir. MMS desteği ve zamanlanmış ileti yedeklemeleri çok yakında !</string>
     <string name="backup_now">Şimdi yedekle</string>
+    <string name="backup_now_summary">Yeni bir yedek oluştur</string>
+    <string name="backup_categories_title">Neler yedeklensin?</string>
+    <string name="backup_restore_source_title">Hangi yedek?</string>
+    <string name="backup_restore_categories_title">%s yedeğinden geri yükle</string>
+    <string name="backup_category_messages">İletiler (SMS, MMS ve ekler)</string>
+    <string name="backup_category_settings">Ayarlar ve şablonlar</string>
+    <string name="backup_category_blocking">Engelleme kuralları</string>
+    <string name="backup_category_conversations">Arşivlenmiş ve sabitlenmiş</string>
+    <string name="backup_category_scheduled">Zamanlanmış iletiler</string>
+    <string name="backup_exact_alarm_title">Tam zamanlı alarmlara izin ver</string>
+    <string name="backup_exact_alarm_message">Zamanlanmış iletilerinizi tam zamanında göndermek için Open Messages\'ın tam zamanlı alarm kurma iznine ihtiyacı var. Bu izin olmadan iletiler biraz gecikebilir.</string>
+    <string name="backup_exact_alarm_grant">İzin ver</string>
+    <string name="backup_exact_alarm_skip">Yine de geri yükle</string>
     <string name="backup_progress_parsing">Yedekleme ayrılıyor…</string>
     <string name="backup_progress_running">%d%d ileti</string>
     <string name="backup_progress_saving">Yedekleme kaydediliyor…</string>
     <string name="backup_progress_syncing">İletiler senkronize ediliyor…</string>
     <string name="backup_progress_finished">Tamamlandı!</string>
+    <string name="backup_progress_failed">Yedek yazılamadı. Boş alanı ve yedekleme klasörünü kontrol edin.</string>
     <string name="backup_notification_channel_name">Yedekleme ve geri yükleme</string>
     <string name="scheduled_title">Zamanlanmış</string>
     <string name="scheduled_empty_description">İstediğiniz bir anda otomatik olarak bir ileti gönderin</string>
@@ -194,6 +287,12 @@
     <string name="settings_automatic_colors_title">Otomatik kişi renkleri</string>
     <string name="settings_text_size_title">Yazı tipi boyutu</string>
     <string name="settings_system_font_title">Sistem yazı tipini kullan</string>
+    <string name="settings_show_avatar_title">Kişi fotoğrafını göster</string>
+    <string name="settings_show_avatar_summary">Konuşmalarda gönderenin fotoğrafını gösterir. İleti balonlarına daha fazla genişlik vermek için kapatın.</string>
+    <string name="settings_hide_country_code_title">Ülke kodunu gizle</string>
+    <string name="settings_hide_country_code_summary">Telefon numaralarını yerel biçimde göster, ör. \"+33 6 ...\" yerine \"06 ...\"</string>
+    <string name="settings_edge_to_edge_title">Kenardan kenara</string>
+    <string name="settings_edge_to_edge_summary">İçeriği durum ve gezinme çubuklarının arkasına çiz</string>
     <string name="settings_auto_emoji_title">Otomatik emoji</string>
     <string name="settings_notifications_title">Bildirimler</string>
     <string name="settings_notifications_o_summary">Özelleştirmek için dokunun</string>
@@ -227,6 +326,11 @@
     </string-array>
     <string name="settings_delivery_title">İletim raporları</string>
     <string name="settings_delivery_summary">İletinizin sorunsuz gönderildiğinin onayını alın</string>
+    <string name="settings_send_sound_title">Gönderme sesi</string>
+    <string name="settings_send_sound_summary">İleti gönderdiğinizde kısa bir ses çal</string>
+    <string name="settings_send_sound_volume_title">Ses düzeyi</string>
+    <string name="settings_header_quick_action_title">Başlık hızlı eylemi</string>
+    <string name="settings_header_quick_action_summary">Konuşma başlığına bir kısayol düğmesi ekle</string>
     <string name="settings_signature_title">İmza</string>
     <string name="settings_signature_summary">İletilerinizin sonuna bir imza ekleyin</string>
     <string name="settings_unicode_title">Şeritli aksanlar</string>
@@ -257,6 +361,17 @@
     <string name="blocking_drop_title">Havadan atılan iletiler</string>
     <string name="blocking_drop_summary">Engellenen gönderenlerden gelen iletileri gizlemek yerine iptal edin</string>
     <string name="blocking_conversations">Engellenen konuşmalar</string>
+    <string name="blocking_category_integrated">Yerleşik engelleme</string>
+    <string name="blocking_integrated_description">Open Messages istenmeyen iletileri cihazınızda engeller. Aşağıdaki isteğe bağlı kaynaklar açıldıklarında listelerini internetten indirir, ardından çevrimdışı çalışır.</string>
+    <string name="blocking_category_external_apps">Harici uygulamalar</string>
+    <string name="blocked_numbers_summary">Kendi engellediğiniz numaralar</string>
+    <string name="blocking_source_phishing_title">Kimlik avı koruması</string>
+    <string name="blocking_source_phishing_summary">Bilinen kimlik avı sitelerine bağlantı içeren iletileri engeller. Açıldığında liste internetten indirilir; filtreleme sonrasında çevrimdışı yapılır.</string>
+    <string name="blocking_source_flag_block_title">Şüpheli istenmeyen iletileri engelle</string>
+    <string name="blocking_source_flag_block_summary">Olası istenmeyen ileti olarak etiketlenenleri gelen kutusunda yalnızca etiketlemek yerine doğrudan engellenenler listesine gönderir</string>
+    <string name="blocking_source_status_updating">Güncelleniyor…</string>
+    <string name="blocking_source_status_updated">Güncel · %1$d kayıt</string>
+    <string name="blocking_source_status_failed">İndirme başarısız, kaynak kapalı kalıyor. Bağlantınızı kontrol edip tekrar deneyin.</string>
     <string name="blocking_manager_title">Engelleme Yöneticisi</string>
     <string name="blocking_manager_built_in_summary">Open Messages\'de yerleşik engelleme işlevi</string>
     <string name="blocking_manager_call_blocker_summary">İstenmeyen iletileri, numaraları ve kara listede olan bilinmeyen çağrıları ve Zamanlamaları engelle</string>
@@ -313,10 +428,15 @@
     <string name="button_yes">Evet</string>
     <string name="button_continue">Devam</string>
     <string name="button_cancel">İptal</string>
+    <string name="button_close">Kapat</string>
     <string name="button_delete">Sil</string>
     <string name="button_save">Kaydet</string>
     <string name="button_stop">Durdur</string>
     <string name="button_set">Ayarla</string>
+    <string name="button_later">Daha sonra</string>
+    <string name="icon_restart_title">Yeniden başlatma gerekli</string>
+    <string name="icon_restart_message">Uygulama simgesinin güncellenmesini tamamlamak için uygulamanın yeniden başlatılması gerekiyor.</string>
+    <string name="icon_restart_now">Yeniden başlat</string>
     <string name="button_undo">Geri al</string>
     <string name="toast_copied">Kopyalandı</string>
     <plurals name="notification_new_messages">
@@ -348,6 +468,21 @@
         <item>5 saniye</item>
         <item>10 saniye</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Hiçbiri</item>
+        <item>Arşivle</item>
+        <item>Okunmadı olarak işaretle</item>
+        <item>Engelle</item>
+        <item>Sil</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Hiçbiri</item>
+        <item>Klasik</item>
+        <item>Parlak</item>
+        <item>Yumuşak</item>
+        <item>Alçalan</item>
+        <item>Üçlü nota</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Otomatik</item>
         <item>100KB</item>
@@ -357,6 +492,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Sıkıştırma yok</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Engelle</item>
+        <item>İzin ver</item>
+        <item>Açmadan önce sor</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Tamam</item>
@@ -380,6 +520,12 @@
     <string name="main_menu_edit_message">İletiyi düzenle</string>
     <string name="main_menu_rename_conversation">Konuşmayı yeniden adlandır</string>
     <string name="main_sender_draft">Taslak: %s</string>
+    <string name="conversation_flagged_label">Şüpheli istenmeyen ileti</string>
+    <string name="snippet_picture">Resim</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Ses</string>
+    <string name="snippet_contact_card">Kişi kartı</string>
+    <string name="search_group_conversations">Konuşmalar</string>
     <string name="scheduled_menu_send_now">Şimdi gönder</string>
     <string name="scheduled_menu_edit_message">İletiyi düzenle</string>
     <plurals name="dialog_delete_chat">
@@ -396,6 +542,11 @@
     <string name="dialog_clear_compose_title">İletiyi temizle</string>
     <string name="dialog_clear_compose">İleti silinsin mi? Bu işlem geri alınamaz.</string>
     <string name="compose_scheduled_view">Bu sohbet için planlanmış iletiler</string>
+    <string name="compose_scheduled_bubble">Gönderim: %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d ek</item>
+        <item quantity="other">%d ek</item>
+    </plurals>
     <string name="compose_menu_show_status">Durumu göster</string>
     <string name="compose_attach_file_cd">Herhangi bir dosya ekleyin</string>
     <string name="compose_audio_message_cd">Bir sesli ileti kaydedin</string>
@@ -403,6 +554,8 @@
     <string name="compose_record_audio_msg_cd">Sesli ileti kaydet</string>
     <string name="compose_record_audio_msg_abort_cd">Sesli iletiyi iptal et</string>
     <string name="compose_record_audio_msg_attach_cd">Sesli ileti ekleyin</string>
+    <string name="compose_audio_msg_title">Sesli ileti</string>
+    <string name="compose_audio_msg_attach">Ekle</string>
     <string name="compose_record_audio_msg_play_pause_cd">Sesli iletiyi oynat veya durdur</string>
     <string name="compose_message_cancel">İptal et</string>
     <string name="compose_message_send_now">Şimdi gönder</string>
@@ -410,16 +563,29 @@
     <string name="compose_message_attachment">Ek</string>
     <string name="compose_toast_drag_stt">Sesle yazma butonunu istediğiniz yere taşıyın</string>
     <string name="message_body_too_long_to_display">⚠ İleti çok uzun. Metnin tümü için Kopyala ya da Kaydet</string>
+    <string name="conversation_menu">Konuşma seçenekleri</string>
+    <string name="conversation_menu_media">Tüm medyayı gör</string>
+    <string name="media_title">Medya</string>
+    <string name="media_empty">Bu konuşmada paylaşılan fotoğraflar ve videolar burada görünür</string>
     <string name="compose_no_valid_recipients">Diğer katılımcılara gönderilemez</string>
+    <string name="compose_flagged_title">Şüpheli istenmeyen ileti</string>
+    <string name="compose_flagged_approve">Onayla</string>
+    <string name="compose_flagged_block">Engelle</string>
     <string name="compose_message_item">İleti öğesi</string>
     <string name="clipboard_too_large_to_copy">Veri boyutu pano sınırını aşıyor</string>
     <string name="clipboard_unable_to_copy_to">Panoya kopyalanamıyor</string>
     <string name="scheduled_send_cd">Bu iletiyi planla</string>
     <string name="attachment_missing">Eksik</string>
     <string name="settings_system_show_stt_title">Konuşmadan metne düğmesini göster</string>
+    <string name="settings_drawer_swipe_title">Menüyü kaydırarak aç</string>
+    <string name="settings_drawer_swipe_summary">Konuşma listesinin sol kenarından kaydırarak yan menüyü açın</string>
     <string name="settings_notification_previews_summary">İsim ve ileti göster</string>
     <string name="settings_notification_silent_title">Kişilerde yoksa sessiz</string>
     <string name="settings_notification_silent_summary">Kişilerinizde alıcısı olmayan iletiler için bildirimleri sessize alır</string>
+    <string name="settings_copy_code_title">Bildirimlerdeki kodları kopyala</string>
+    <string name="settings_copy_code_summary">Tek kullanımlık ve doğrulama kodu içeren bildirimlere Kodu kopyala düğmesi ekler</string>
+    <string name="notification_copy_code">Kodu kopyala</string>
+    <string name="notification_code_copied">Kod kopyalandı</string>
     <string name="settings_unread_at_top_title">Okunmamış en üstte</string>
     <string name="settings_unread_at_top_summary">Okunmamış sohbetleri en üstte göster</string>
     <string name="settings_mms_weblink_title">İletilerdeki bağlantıyı işleme şekli</string>
@@ -460,6 +626,13 @@
     <string name="notification_foreground_worker_text">Android 12 ve daha eski sürümlerde, ileti almayı sağlayan arka plan çalışması için bir bildirim gereklidir.</string>
     <string name="main_sync_emojis">Emoji tepkileri ayrıştırılıyor…</string>
     <string name="message_management_title">İleti Yönetimi</string>
+    <string name="templates_title">Şablonlar</string>
+    <string name="templates_empty">Henüz kaydedilmiş ileti yok.\nSık gönderdiğiniz bir iletiyi kaydetmek için + simgesine dokunun, ardından kime göndereceğinizi seçmek için ona dokunun.</string>
+    <string name="template_hint">İletinizi yazın…</string>
+    <string name="template_title_hint">Başlık (isteğe bağlı)</string>
+    <string name="templates_add_cd">Yeni şablon</string>
+    <string name="template_new">Yeni şablon</string>
+    <string name="template_edit">Şablonu düzenle</string>
     <string name="compose_reactions_title">Tepkiler</string>
     <string name="deduplicate_messages_category">İletileri Tekilleştir</string>
     <string name="deduplicate_messages_title">Tekrar Eden İletileri Sil</string>
@@ -472,4 +645,5 @@
     <string name="deduplicating_messages_no_messages">Tekrar eden ileti bulunamadı.</string>
     <string name="about_developer">Dünyanın dört bir yanından gelen harika insanlardan oluşan bir ekip!</string>
     <string name="notification_foreground_worker_channel_name">İleti alma işleyicisi bildirimi</string>
+    <string name="notification_me">Ben</string>
 </resources>

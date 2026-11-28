@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Jednostavne poruke otvorenog koda</string>
     <string name="shortcut_compose_long_label">Novi razgovor</string>
     <string name="shortcut_compose_short_label">Sastavi</string>
     <string name="shortcut_compose_disabled_message">Prečac onemogućen</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">Postavke</string>
     <string name="title_notification_prefs">Obavijesti</string>
     <string name="title_theme">Tema</string>
+    <string name="theme_default">Zadano</string>
+    <string name="theme_wallpaper">Pozadina</string>
+    <string name="theme_other_colors">Boje</string>
+    <string name="theme_tab_presets">Paleta</string>
+    <string name="theme_tab_custom">Prilagođeno</string>
+    <string name="theme_apply_to_icon">Primijeni boju na ikonu aplikacije (aplikacija će se zatvoriti)</string>
+    <string name="theme_tab_icon">Ikona aplikacije</string>
+    <string name="theme_icon_follow_theme">Prati boju teme aplikacije</string>
+    <string name="theme_icon_summary">Odaberite boju ikone aplikacije, neovisno o temi. Primjena promjene zatvorit će aplikaciju.</string>
+    <string name="theme_icon_change_title">Promijeniti ikonu aplikacije?</string>
+    <string name="theme_icon_change_message">Boja ikone aplikacije uskoro će se promijeniti. Android može zamijeniti ikonu samo dok je aplikacija zatvorena, pa će se Open Messages zatvoriti čim potvrdite.</string>
     <string name="title_conversations">Pretraži poruke…</string>
+    <string name="title_search">Pretraži</string>
     <string name="title_compose">Unesite ime ili broj</string>
     <string name="setup_skip">Preskoči</string>
     <string name="setup_next">Nastavi</string>
     <string name="menu_add_person">Dodaj osobu</string>
     <string name="menu_call">Nazovi</string>
     <string name="menu_mms_part_save">Spremi u galeriju</string>
+    <string name="menu_mms_part_share">Podijeli</string>
+    <string name="menu_mms_part_forward">Proslijedi</string>
+    <string name="menu_mms_part_open">Otvori u drugoj aplikaciji</string>
     <string name="compose_menu_share">Podijeli</string>
     <string name="main_drawer_open_cd">Otvori navigacijsku ladicu</string>
+    <string name="main_search_close_cd">Zatvori pretraživanje</string>
+    <string name="main_search_clear_cd">Očisti pretraživanje</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d odabrano</string>
     <string name="main_menu_clear">Očisti</string>
+    <string name="main_menu_select_all">Odaberi sve</string>
     <string name="main_menu_archive">Arhiviraj</string>
     <string name="main_menu_unarchive">Dearhiviraj</string>
     <string name="main_menu_delete">Izbriši</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Označi kao pročitano</string>
     <string name="main_menu_unread">Označi kao nepročitano</string>
     <string name="main_menu_block">Blokiraj</string>
+    <string name="main_menu_send_now">Pošalji sada</string>
+    <string name="main_menu_edit_message">Uredi poruku</string>
+    <string name="main_menu_rename_conversation">Preimenuj razgovor</string>
     <string name="main_syncing">Sinkronizacija poruka…</string>
+    <string name="main_sync_emojis">Obrada emoji reakcija…</string>
     <string name="main_sender_you">Vi: %s</string>
+    <string name="main_sender_draft">Skica: %s</string>
+    <string name="conversation_flagged_label">Mogući spam</string>
+    <string name="snippet_picture">Slika</string>
+    <string name="snippet_video">Videozapis</string>
+    <string name="snippet_audio">Zvuk</string>
+    <string name="snippet_contact_card">Kartica kontakta</string>
+    <string name="search_group_conversations">Razgovori</string>
     <string name="main_message_results_title">Rezultati u porukama</string>
     <plurals name="main_message_results">
         <item quantity="other">%d poruka</item>
@@ -62,11 +93,31 @@
     <string name="main_permission_contacts">Open Messages treba dozvolu za pregledavanje vaših kontakata</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Dopusti</string>
+    <string name="scheduled_menu_send_now">Pošalji sada</string>
+    <string name="scheduled_menu_edit_message">Uredi poruku</string>
     <string name="drawer_inbox">Poruke</string>
+    <string name="contacts_group_recent">Nedavno</string>
+    <string name="contacts_group_starred">Favoriti</string>
+    <string name="contacts_group_groups">Grupe</string>
+    <string name="conversations_group_today">Danas</string>
+    <string name="conversations_group_yesterday">Jučer</string>
     <string name="drawer_archived">Arhivirano</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d nepročitana</item>
+        <item quantity="few">%d nepročitane</item>
+        <item quantity="other">%d nepročitanih</item>
+    </plurals>
     <string name="drawer_scheduled">Zakazano</string>
     <string name="drawer_blocking">Blokiranje</string>
     <string name="drawer_more"> Više</string>
+    <string name="message_management_title">Upravljanje porukama</string>
+    <string name="templates_title">Predlošci</string>
+    <string name="templates_empty">Još nema spremljenih poruka.\nDodirnite + da biste spremili poruku koju često šaljete, a zatim je dodirnite da odaberete kome je šaljete.</string>
+    <string name="template_hint">Upišite poruku…</string>
+    <string name="template_title_hint">Naslov (neobavezno)</string>
+    <string name="templates_add_cd">Novi predložak</string>
+    <string name="template_new">Novi predložak</string>
+    <string name="template_edit">Uredi predložak</string>
     <string name="drawer_settings">Postavke</string>
     <string name="drawer_help">Pomoć i povratne informacije</string>
     <string name="drawer_invite">Pozovi prijatelje</string>
@@ -80,6 +131,21 @@
         <item quantity="few">Sigurno želite izbrisati %d razgovora?</item>
         <item quantity="other">Sigurno želite izbrisati %d razgovora?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">Sigurno želite izbrisati %d poruku?</item>
+        <item quantity="few">Sigurno želite izbrisati %d poruke?</item>
+        <item quantity="other">Sigurno želite izbrisati %d poruka?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">Sigurno želite sada poslati %d poruku?</item>
+        <item quantity="few">Sigurno želite sada poslati %d poruke?</item>
+        <item quantity="other">Sigurno želite sada poslati %d poruka?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">Uredi poruku</string>
+    <string name="dialog_edit_scheduled_message">Uređivanjem ove poruke ona će biti uklonjena iz zakazanih.\n\nNe zaboravite je ponovno poslati na sljedećem zaslonu, inače će biti izgubljena.\n\nŽelite li nastaviti?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">Da, uredi poruku</string>
+    <string name="dialog_clear_compose_title">Očisti poruku</string>
+    <string name="dialog_clear_compose">Očistiti poruku? Ova se radnja ne može poništiti.</string>
     <string-array name="message_options">
         <item>Kopiraj tekst</item>
         <item>Proslijedi</item>
@@ -93,19 +159,36 @@
     <string name="compose_subtitle_results">Rezultat %1$d od %2$d</string>
     <string name="compose_send_group_title">Pošalji kao grupnu poruku</string>
     <string name="compose_send_group_summary">Primatelji i odgovori bit će vidljivi svima</string>
+    <string name="compose_send_group_summary_on">Primatelji i odgovori bit će vidljivi svima</string>
+    <string name="compose_send_group_summary_off">Poruke će se slati zasebno svim primateljima</string>
     <string name="compose_messages_empty">Ovo je početak vašeg razgovora. Recite nešto lijepo!</string>
     <string name="compose_vcard_label">Kartica kontakta</string>
     <string name="compose_scheduled_for">Zakazano za</string>
     <string name="compose_scheduled_future">Odabrano vrijeme mora biti u budućnosti!</string>
     <string name="compose_scheduled_toast">Dodano u zakazane poruke</string>
+    <string name="compose_scheduled_view">Zakazane poruke za ovaj razgovor</string>
+    <string name="compose_scheduled_bubble">Slanje u %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d privitak</item>
+        <item quantity="few">%d privitka</item>
+        <item quantity="other">%d privitaka</item>
+    </plurals>
     <string name="compose_hint">Napiši poruku…</string>
+    <string name="compose_expand_cd">Proširi na cijeli zaslon</string>
+    <string name="compose_collapse_cd">Sažmi</string>
+    <string name="compose_no_valid_recipients">Nije moguće slati ostalim sudionicima</string>
+    <string name="compose_flagged_title">Mogući spam</string>
+    <string name="compose_flagged_approve">Odobri</string>
+    <string name="compose_flagged_block">Blokiraj</string>
     <string name="compose_menu_copy">Kopiraj tekst</string>
     <string name="compose_menu_forward">Proslijedi</string>
+    <string name="compose_menu_show_status">Prikaži status</string>
     <string name="compose_menu_delete">Izbriši</string>
     <string name="compose_menu_previous">Prethodno</string>
     <string name="compose_menu_next">Sljedeće</string>
     <string name="compose_menu_clear">Očisti</string>
     <string name="compose_details_title">Detalji poruke</string>
+    <string name="compose_reactions_title">Reakcije</string>
     <string name="compose_details_type">Vrsta: %s</string>
     <string name="compose_details_from">Od: %s</string>
     <string name="compose_details_to">Za: %s</string>
@@ -117,18 +200,61 @@
     <string name="compose_details_delivered">Dostavljeno: %s</string>
     <string name="compose_details_error_code">Kod greške: %d</string>
     <string name="compose_attach_cd">Dodaj privitak</string>
+    <string name="compose_attach_file_cd">Priloži bilo koju datoteku</string>
     <string name="compose_gallery_cd">Priloži fotografiju</string>
+    <string name="compose_audio_message_cd">Snimi zvučnu poruku</string>
     <string name="compose_camera_cd">Snimi fotografiju</string>
     <string name="compose_schedule_cd">Zakaži poruku</string>
+    <string name="compose_schedule_title">Zakaži poruku</string>
+    <string name="compose_schedule_in_hour">Za 1 sat</string>
+    <string name="compose_schedule_tonight">Večeras</string>
+    <string name="compose_schedule_tomorrow_morning">Sutra ujutro</string>
+    <string name="compose_schedule_tomorrow_afternoon">Sutra poslijepodne</string>
+    <string name="compose_schedule_custom">Odaberi datum i vrijeme</string>
+    <string name="compose_schedule_confirm">Zakaži</string>
+    <string name="compose_schedule_previous_month">Prethodni mjesec</string>
+    <string name="compose_schedule_next_month">Sljedeći mjesec</string>
+    <string name="compose_schedule_increase">Povećaj</string>
+    <string name="compose_schedule_decrease">Smanji</string>
+    <string name="compose_schedule_cancel_cd">Otkaži zakazivanje poruke</string>
     <string name="compose_contact_cd">Priloži kontakt</string>
     <string name="compose_contact_error">Greška kod čitanja kontakta</string>
+    <string name="compose_attach_gallery">Galerija</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Datoteka</string>
+    <string name="compose_attach_audio">Zvuk</string>
+    <string name="compose_attach_contact">Kontakt</string>
+    <string name="compose_attach_schedule">Zakaži</string>
+    <string name="compose_attach_templates">Predlošci</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) odabran</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Ovaj je videozapis predug za slanje MMS-om. Može trajati najviše %d sekundu.</item>
+        <item quantity="few">Ovaj je videozapis predug za slanje MMS-om. Može trajati najviše %d sekunde.</item>
+        <item quantity="other">Ovaj je videozapis predug za slanje MMS-om. Može trajati najviše %d sekundi.</item>
+    </plurals>
     <string name="compose_sim_cd">%s odabrano, promijeni SIM karticu</string>
     <string name="compose_send_cd">Pošalji poruku</string>
+    <string name="compose_record_audio_msg_cd">Snimi zvučnu poruku</string>
+    <string name="compose_record_audio_msg_abort_cd">Odustani od zvučne poruke</string>
+    <string name="compose_record_audio_msg_attach_cd">Priloži zvučnu poruku</string>
+    <string name="compose_audio_msg_title">Glasovna poruka</string>
+    <string name="compose_audio_msg_attach">Priloži</string>
+    <string name="compose_record_audio_msg_play_pause_cd">Reproduciraj ili pauziraj zvučnu poruku</string>
+    <string name="compose_message_cancel">Odustani</string>
+    <string name="compose_message_send_now">Pošalji sada</string>
+    <string name="compose_message_sim">Broj SIM-a</string>
+    <string name="compose_message_item">Stavka poruke</string>
+    <string name="compose_message_attachment">Privitak</string>
+    <string name="compose_toast_drag_stt">Premjestite gumb za diktiranje kamo god želite</string>
     <string name="message_status_sending">Slanje…</string>
     <string name="message_status_delivered">Isporučeno %s</string>
     <string name="message_status_failed">Slanje nije uspjelo. Dodirnite da biste pokušali ponovno</string>
+    <string name="message_body_too_long_to_display">⚠ Poruka je duga. Kopirajte ili spremite za cijeli tekst</string>
+    <string name="conversation_menu">Opcije razgovora</string>
+    <string name="conversation_menu_media">Prikaži sve medije</string>
+    <string name="media_title">Mediji</string>
+    <string name="media_empty">Fotografije i videozapisi podijeljeni u ovom razgovoru pojavit će se ovdje</string>
     <string name="info_copied_address">Adresa kopirana</string>
     <string name="info_name">Naslov razgovora</string>
     <string name="info_notifications">Obavijesti</string>
@@ -142,11 +268,42 @@
     <string name="gallery_toast_saved">Spremljeno u galeriju</string>
     <string name="backup_title">Sigurnosno kopiranje i vraćanje</string>
     <string name="backup_backing_up">Sigurnosno kopiranje poruka</string>
+    <string name="backup_failed_title">Sigurnosno kopiranje nije uspjelo</string>
+    <string name="backup_icon_change_title">Vratiti ikonu aplikacije?</string>
+    <string name="backup_icon_change_message">Vaša sigurnosna kopija napravljena je s drugom bojom ikone aplikacije. Android može zamijeniti ikonu samo dok je aplikacija zatvorena, pa će se Open Messages zatvoriti čim potvrdite.</string>
+    <string name="icon_change_confirm">Primijeni i zatvori</string>
+    <string name="icon_change_later">Ne sada</string>
     <string name="backup_restoring">Vraćanje podataka iz sig. kopije</string>
     <string name="backup_loading">Učitavanje…</string>
     <string name="backup_never">Nikad</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Automatsko sigurnosno kopiranje</string>
+    <string name="backup_auto_never">Nikad</string>
+    <string name="backup_auto_daily">Svaki dan</string>
+    <string name="backup_auto_weekly">Svaki tjedan</string>
+    <string name="backup_auto_custom">Prilagođeno…</string>
+    <string name="backup_auto_custom_title">Dana između kopija</string>
+    <string name="backup_auto_custom_hint">Broj dana</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Svakih %d dan</item>
+        <item quantity="few">Svaka %d dana</item>
+        <item quantity="other">Svakih %d dana</item>
+    </plurals>
+    <string name="backup_zip_title">Spremi kao .zip datoteku</string>
+    <string name="backup_zip_summary">Spremi svaku kopiju kao jednu arhivu, lakšu za prijenos između telefona</string>
+    <string name="backup_manage_title">Upravljanje kopijama</string>
+    <string name="backup_manage_summary">Preimenujte ili izbrišite svoje sigurnosne kopije</string>
+    <string name="backup_manage_empty">Na ovoj lokaciji nema sigurnosnih kopija</string>
+    <string name="backup_manage_rename">Preimenuj</string>
+    <string name="backup_manage_delete">Izbriši</string>
+    <string name="backup_manage_delete_confirm">Izbrisati \"%s\"? Ovo se ne može poništiti.</string>
+    <string name="backup_manage_error">Nije moguće ažurirati ovu kopiju</string>
+    <string name="backup_manage_type_folder">Mapa</string>
+    <string name="backup_manage_type_zip">Zip arhiva</string>
+    <string name="backup_restore_from_title">Vrati iz</string>
+    <string name="backup_restore_from_folder">Mape</string>
+    <string name="backup_restore_from_zip">.zip datoteke</string>
     <string name="backup_restore_title">Vraćanje</string>
     <string name="backup_restore_summary">Odaberite sig. kopiju</string>
     <string name="backup_restore_error_backup">Sigurno kopiranje u tijeku…</string>
@@ -164,12 +321,28 @@
     <string name="backup_restore_dialog_empty">Nisu pronađene sigurnosne kopije</string>
     <string name="backup_disclaimer">Trenutno je samo SMS podržan u sigurnosnom kopiranju i vraćanju. Podrška za MMS i zakazane sigurnosne kopije dolazi uskoro!</string>
     <string name="backup_now">Sig. kopiraj sada</string>
+    <string name="backup_now_summary">Izradi novu sigurnosnu kopiju</string>
+    <string name="backup_categories_title">Što treba kopirati?</string>
+    <string name="backup_restore_source_title">Koja kopija?</string>
+    <string name="backup_restore_categories_title">Vrati iz %s</string>
+    <string name="backup_category_messages">Poruke (SMS, MMS i privici)</string>
+    <string name="backup_category_settings">Postavke i predlošci</string>
+    <string name="backup_category_blocking">Pravila blokiranja</string>
+    <string name="backup_category_conversations">Arhivirano i prikvačeno</string>
+    <string name="backup_category_scheduled">Zakazane poruke</string>
+    <string name="backup_exact_alarm_title">Dopusti točne alarme</string>
+    <string name="backup_exact_alarm_message">Da bi zakazane poruke slao u točno vrijeme, Open Messages treba dozvolu za postavljanje točnih alarma. Bez nje poruke mogu otići malo kasnije.</string>
+    <string name="backup_exact_alarm_grant">Dopusti</string>
+    <string name="backup_exact_alarm_skip">Ipak vrati</string>
     <string name="backup_progress_parsing">Analiziranje sig. kopije…</string>
     <string name="backup_progress_running">%d/%d poruka</string>
     <string name="backup_progress_saving">Spremanje sigurnosne kopije…</string>
     <string name="backup_progress_syncing">Sinkronizacija poruka…</string>
     <string name="backup_progress_finished">Dovršeno!</string>
+    <string name="backup_progress_failed">Sigurnosnu kopiju nije moguće zapisati. Provjerite slobodan prostor i mapu za kopije.</string>
     <string name="backup_notification_channel_name">Sig. kopiranje i vraćanje</string>
+    <string name="clipboard_too_large_to_copy">Podaci premašuju ograničenje međuspremnika</string>
+    <string name="clipboard_unable_to_copy_to">Nije moguće kopirati u međuspremnik</string>
     <string name="scheduled_title">Zakazano</string>
     <string name="scheduled_empty_description">Automatski šaljite poruku u točno određeno vrijeme</string>
     <string name="scheduled_empty_message_1">Bok! Kad ti je bio rođendan?</string>
@@ -178,12 +351,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Slanje 23. prosinca</string>
     <string name="scheduled_compose_cd">Zakaži poruku</string>
+    <string name="scheduled_send_cd">Zakaži ovu poruku</string>
     <string name="scheduled_options_title">Zakazana poruka</string>
     <string-array name="scheduled_options">
         <item>Pošalji sada</item>
         <item>Kopiraj tekst</item>
         <item>Izbriši</item>
     </string-array>
+    <string name="attachment_missing">Nedostaje</string>
     <string name="settings_category_appearance">Izgled</string>
     <string name="settings_category_general">Općenito</string>
     <string name="settings_category_quick_reply">Brzi odgovor</string>
@@ -195,6 +370,15 @@
     <string name="settings_automatic_colors_title">Automatske boje kontakata</string>
     <string name="settings_text_size_title">Veličina fonta</string>
     <string name="settings_system_font_title">Koristi font sustava</string>
+    <string name="settings_show_avatar_title">Prikaži fotografiju kontakta</string>
+    <string name="settings_show_avatar_summary">Prikaži fotografiju pošiljatelja u razgovorima. Isključite da oblačići poruka budu širi.</string>
+    <string name="settings_hide_country_code_title">Sakrij pozivni broj države</string>
+    <string name="settings_hide_country_code_summary">Prikaži brojeve telefona u lokalnom obliku, npr. \"06 ...\" umjesto \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Od ruba do ruba</string>
+    <string name="settings_edge_to_edge_summary">Prikaži sadržaj iza trake stanja i navigacijske trake</string>
+    <string name="settings_system_show_stt_title">Prikaži gumb za diktiranje</string>
+    <string name="settings_drawer_swipe_title">Povlačenje za otvaranje izbornika</string>
+    <string name="settings_drawer_swipe_summary">Otvorite bočni izbornik povlačenjem s lijevog ruba popisa razgovora</string>
     <string name="settings_auto_emoji_title">Automatski emoji</string>
     <string name="settings_notifications_title">Obavijesti</string>
     <string name="settings_notifications_o_summary">Dodirnite za prilagođavanje</string>
@@ -203,7 +387,14 @@
     <string name="settings_notification_action_2">Tipka 2</string>
     <string name="settings_notification_action_3">Tipka 3</string>
     <string name="settings_notification_previews_title">Pregledi obavijesti</string>
+    <string name="settings_notification_previews_summary">Prikaži ime i poruku</string>
     <string name="settings_notification_wake_title">Uključi zaslon</string>
+    <string name="settings_notification_silent_title">Bez zvuka ako nije kontakt</string>
+    <string name="settings_notification_silent_summary">Utišava obavijesti za poruke čiji pošiljatelji nisu u vašim kontaktima</string>
+    <string name="settings_copy_code_title">Kopiraj kodove iz obavijesti</string>
+    <string name="settings_copy_code_summary">Dodaje gumb Kopiraj kod u obavijesti s jednokratnim i verifikacijskim kodovima</string>
+    <string name="notification_copy_code">Kopiraj kod</string>
+    <string name="notification_code_copied">Kod kopiran</string>
     <string name="settings_vibration_title">Vibracija</string>
     <string name="settings_ringtone_title">Zvuk</string>
     <string name="settings_ringtone_none">Nema</string>
@@ -228,6 +419,13 @@
     </string-array>
     <string name="settings_delivery_title">Potvrde o dostavi</string>
     <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>
+    <string name="settings_send_sound_title">Zvuk pri slanju</string>
+    <string name="settings_send_sound_summary">Reproduciraj kratak ton kad pošaljete poruku</string>
+    <string name="settings_send_sound_volume_title">Glasnoća</string>
+    <string name="settings_header_quick_action_title">Brza radnja u zaglavlju</string>
+    <string name="settings_header_quick_action_summary">Dodaj gumb prečaca u zaglavlje razgovora</string>
+    <string name="settings_unread_at_top_title">Nepročitano na vrhu</string>
+    <string name="settings_unread_at_top_summary">Prikaži nepročitane razgovore na vrhu</string>
     <string name="settings_signature_title">Potpis</string>
     <string name="settings_signature_summary">Dodajte potpis na kraj vaših poruka</string>
     <string name="settings_unicode_title">Uklanjanje naglasaka</string>
@@ -248,6 +446,9 @@
     <string name="settings_long_as_mms_title">Šalji duge poruke kao MMS</string>
     <string name="settings_long_as_mms_summary">Ako imate probleme sa slanjem dužih poruka ili ako se šalju krivim redoslijedom, možete ih poslati kao MMS poruke. Možda će doći do dodatnih troškova</string>
     <string name="settings_mms_size_title">Automatski kompresiraj MMS priloge</string>
+    <string name="settings_mms_weblink_title">Rukovanje poveznicama u porukama</string>
+    <string name="settings_disable_screenshots_title">Onemogući snimke zaslona</string>
+    <string name="settings_diable_screenshots_summary">Spriječi sustav i druge aplikacije da snimaju zaslon aplikacije.</string>
     <string name="settings_sync_title">Uskladi poruke</string>
     <string name="settings_sync_summary">Ponovno uskladite svoje poruke s Androidovom nativnom bazom SMS-ova</string>
     <string name="settings_about_title">O Open Messages-u</string>
@@ -259,6 +460,17 @@
     <string name="blocking_drop_title">Odbaci poruke</string>
     <string name="blocking_drop_summary">Odbacite dolazne poruke od blokiranih pošiljatelja umjesto da ih samo sakrivate</string>
     <string name="blocking_conversations">Blokirani razgovori</string>
+    <string name="blocking_category_integrated">Ugrađeno blokiranje</string>
+    <string name="blocking_integrated_description">Open Messages blokira spam na vašem uređaju. Dodatni izvori u nastavku preuzimaju svoj popis s interneta kad ih uključite, a zatim rade izvanmrežno.</string>
+    <string name="blocking_category_external_apps">Vanjske aplikacije</string>
+    <string name="blocked_numbers_summary">Brojevi koje sami blokirate</string>
+    <string name="blocking_source_phishing_title">Zaštita od krađe identiteta</string>
+    <string name="blocking_source_phishing_summary">Blokira poruke s poveznicama na poznate stranice za krađu identiteta. Uključivanjem se popis preuzima s interneta, a filtriranje je zatim izvanmrežno.</string>
+    <string name="blocking_source_flag_block_title">Blokiraj mogući spam</string>
+    <string name="blocking_source_flag_block_summary">Šalje poruke označene kao mogući spam ravno na popis blokiranih umjesto da ih samo označi u pristigloj pošti</string>
+    <string name="blocking_source_status_updating">Ažuriranje…</string>
+    <string name="blocking_source_status_updated">Ažurno · %1$d unosa</string>
+    <string name="blocking_source_status_failed">Preuzimanje nije uspjelo, izvor ostaje isključen. Provjerite vezu i pokušajte ponovno.</string>
     <string name="blocking_manager_title">Upravitelj za blokiranje</string>
     <string name="blocking_manager_built_in_summary">Ugrađena funkcionalnost blokiranja u Open Messages-u</string>
     <string name="blocking_manager_call_blocker_summary">Blokirajte neželjene poruke, brojeve i nepoznate pozive pomoću crne liste i zakazivanja</string>
@@ -272,6 +484,15 @@
     <string name="blocked_numbers_dialog_title">Blokiraj poruke od</string>
     <string name="blocked_numbers_dialog_hint">Telefonski broj</string>
     <string name="blocked_numbers_dialog_block">Blokiraj</string>
+    <string name="message_content_filters_title">Filtri sadržaja poruka</string>
+    <string name="message_content_filters_empty">Vaši filtri sadržaja poruka pojavit će se ovdje</string>
+    <string name="message_content_filters_add_cd">Izradi novi filtar</string>
+    <string name="message_content_filters_dialog_title">Odbaci poruke koje sadrže</string>
+    <string name="message_content_filters_dialog_hint">Riječ, izraz ili regularni izraz</string>
+    <string name="message_content_filters_dialog_case_switch">Razlikuj velika i mala slova</string>
+    <string name="message_content_filters_dialog_regex_switch">Regularni izraz</string>
+    <string name="message_content_filters_dialog_contacts_switch">Uključi kontakte</string>
+    <string name="message_content_filters_dialog_create">Izradi</string>
     <string name="blocked_messages_title">Blokirane poruke</string>
     <string name="blocked_messages_empty">Vaše blokirane poruke pojavit će se ovdje</string>
     <string name="blocking_block_title">Blokiraj</string>
@@ -286,6 +507,15 @@
         <item quantity="few">Nastavi na %s i dopusti ove brojeve</item>
         <item quantity="other">Nastavi na %s i dopusti ove brojeve</item>
     </plurals>
+    <string name="deduplicate_messages_category">Uklanjanje duplikata</string>
+    <string name="deduplicate_messages_title">Ukloni duplicirane poruke</string>
+    <string name="deduplicate_messages_summary">Pretražuje bazu poruka i briše sve poruke koje su točne kopije izvornih poruka</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Baza poruka bit će pretražena radi duplikata, a zatim će oni biti uklonjeni.\nOvo automatski briše poruke, nastavite samo ako razumijete posljedice.</string>
+    <string name="auto_deduplicate_messages_title">Automatski ukloni duplikate</string>
+    <string name="auto_deduplicate_messages_summary">Duplikati će se uklanjati tijekom sinkronizacije. Imajte na umu da se poruke brišu automatski, a iako je mogućnost lažnog duplikata vrlo mala, ipak postoji.\nBudite oprezni.</string>
+    <string name="deduplicating_messages_finished">Uklanjanje duplikata je dovršeno!</string>
+    <string name="deduplicating_messages_no_messages">Nisu pronađene duplicirane poruke.</string>
+    <string name="deduplicating_messages_failed">Uklanjanje duplikata nije uspjelo, pokušajte ponovno</string>
     <string name="about_title">O aplikaciji</string>
     <string name="about_version_title">Verzija</string>
     <string name="about_developer_title">Razvijatelj</string>
@@ -296,6 +526,7 @@
     <string name="about_copyright_title">Autorska prava</string>
     <string name="widget_loading">Učitavanje…</string>
     <string name="widget_more">Prikaži više razgovora</string>
+    <string name="all_conversations_widget_title">Svi razgovori</string>
     <string name="quick_reply_menu_read">Označi kao pročitano</string>
     <string name="quick_reply_menu_call">Nazovi</string>
     <string name="quick_reply_menu_delete">Izbriši</string>
@@ -317,12 +548,28 @@
     <string name="button_yes">Da</string>
     <string name="button_continue">Nastavi</string>
     <string name="button_cancel">Odustani</string>
+    <string name="button_close">Zatvori</string>
     <string name="button_delete">Izbriši</string>
     <string name="button_save">Spremi</string>
     <string name="button_stop">Zaustavi</string>
     <string name="button_set">Postavi</string>
+    <string name="button_later">Kasnije</string>
+    <string name="icon_restart_title">Potrebno ponovno pokretanje</string>
+    <string name="icon_restart_message">Aplikaciju treba ponovno pokrenuti kako bi se ikona do kraja ažurirala.</string>
+    <string name="icon_restart_now">Ponovno pokreni</string>
     <string name="button_undo">Poništi</string>
+    <string name="button_clear">Očisti</string>
     <string name="toast_copied">Kopirano</string>
+    <plurals name="toast_archived">
+        <item quantity="one">Arhiviran %d razgovor</item>
+        <item quantity="few">Arhivirana %d razgovora</item>
+        <item quantity="other">Arhivirano %d razgovora</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">Vraćen iz arhive %d razgovor</item>
+        <item quantity="few">Vraćena iz arhive %d razgovora</item>
+        <item quantity="other">Vraćeno iz arhive %d razgovora</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">Nova poruka</item>
         <item quantity="few">%s nove poruke</item>
@@ -330,6 +577,11 @@
     </plurals>
     <string name="notification_message_failed_title">Poruka nije poslana</string>
     <string name="notification_message_failed_text">Poruka za %s nije se uspjela poslati</string>
+    <string name="notification_foreground_worker_title">Primanje poruke</string>
+    <string name="notification_foreground_worker_text">Na Androidu 12 i starijim potrebna je obavijest za pozadinski rad koji omogućuje primanje poruka.</string>
+    <string name="notification_foreground_worker_channel_name">Obavijest o primanju poruka</string>
+    <string name="notification_me">Ja</string>
+    <string name="notification_message_failed_action">Pošalji ponovno</string>
     <string-array name="night_modes">
         <item>Sustav</item>
         <item>Onemogućeno</item>
@@ -353,6 +605,21 @@
         <item>5 sekundi</item>
         <item>10 sekundi</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Ništa</item>
+        <item>Arhiviraj</item>
+        <item>Označi kao nepročitano</item>
+        <item>Blokiraj</item>
+        <item>Izbriši</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Ništa</item>
+        <item>Klasično</item>
+        <item>Vedro</item>
+        <item>Nježno</item>
+        <item>Silazno</item>
+        <item>Tri tona</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatski</item>
         <item>100KB</item>
@@ -362,6 +629,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Bez kompresije</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blokiraj</item>
+        <item>Dopusti</item>
+        <item>Pitaj prije otvaranja</item>
     </string-array>
     <string-array name="quick_responses">
         <item>U redu</item>
@@ -377,4 +649,13 @@
         <item>LOL</item>
         <item>U redu je</item>
     </string-array>
+    <string name="speak_no_messages">Nema poruka</string>
+    <string name="speak_unseen_messages">Pročitaj naglas nepregledane poruke</string>
+    <string name="messageLinkHandling_dialog_title">Upozorenje o vanjskoj poveznici</string>
+    <string name="messageLinkHandling_dialog_body">Neke poveznice mogu biti nesigurne ili vas neočekivano preusmjeriti. Provjerite poveznicu u nastavku prije nastavka:\n\n%1$s\n\nŽelite li nastaviti?</string>
+    <string name="messageLinkHandling_dialog_positive">Da, otvori poveznicu</string>
+    <string name="messageLinkHandling_dialog_negative">Ne</string>
+    <string name="error_stt_toast">Nažalost, došlo je do pogreške pri učitavanju usluge pretvaranja govora u tekst.</string>
+    <string name="stt_toast_extra_prompt">Izgovorite poruku</string>
+    <string name="messages_text_share_file_error">Ups! Nešto nije u redu prilikom dijeljenja</string>
 </resources>

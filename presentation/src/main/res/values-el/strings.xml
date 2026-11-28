@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Απλά μηνύματα ανοιχτού κώδικα</string>
     <string name="shortcut_compose_long_label">Νέα συζήτηση</string>
     <string name="shortcut_compose_short_label">Σύνταξη</string>
     <string name="shortcut_compose_disabled_message">Η συντόμευση απενεργοποιήθηκε</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">Ρυθμίσεις</string>
     <string name="title_notification_prefs">Ειδοποιήσεις</string>
     <string name="title_theme">Θέμα εμφάνισης</string>
+    <string name="theme_default">Προεπιλογή</string>
+    <string name="theme_wallpaper">Ταπετσαρία</string>
+    <string name="theme_other_colors">Χρώματα</string>
+    <string name="theme_tab_presets">Παλέτα</string>
+    <string name="theme_tab_custom">Προσαρμογή</string>
+    <string name="theme_apply_to_icon">Εφαρμογή χρώματος στο εικονίδιο της εφαρμογής (η εφαρμογή θα κλείσει)</string>
+    <string name="theme_tab_icon">Εικονίδιο εφαρμογής</string>
+    <string name="theme_icon_follow_theme">Ίδιο με το χρώμα του θέματος</string>
+    <string name="theme_icon_summary">Επιλέξτε το χρώμα του εικονιδίου της εφαρμογής, ανεξάρτητα από το θέμα. Η εφαρμογή μιας αλλαγής θα κλείσει την εφαρμογή.</string>
+    <string name="theme_icon_change_title">Αλλαγή εικονιδίου εφαρμογής;</string>
+    <string name="theme_icon_change_message">Το χρώμα του εικονιδίου της εφαρμογής πρόκειται να αλλάξει. Το Android μπορεί να αλλάξει το εικονίδιο μόνο όταν η εφαρμογή είναι κλειστή, οπότε το Open Messages θα κλείσει μόλις επιβεβαιώσετε.</string>
     <string name="title_conversations">Αναζήτηση στα εισερχόμενα…</string>
+    <string name="title_search">Αναζήτηση</string>
     <string name="title_compose">Πληκτρολογήστε ένα όνομα ή αριθμό</string>
     <string name="setup_skip">Παράλειψη</string>
     <string name="setup_next">Συνέχεια</string>
     <string name="menu_add_person">Προσθήκη ατόμου</string>
     <string name="menu_call">Κλήση</string>
     <string name="menu_mms_part_save">Αποθήκευση στη συλλογή</string>
+    <string name="menu_mms_part_share">Κοινή χρήση</string>
+    <string name="menu_mms_part_forward">Προώθηση</string>
+    <string name="menu_mms_part_open">Άνοιγμα σε άλλη εφαρμογή</string>
     <string name="compose_menu_share">Κοινή χρήση</string>
     <string name="main_drawer_open_cd">Άνοιγμα πλαισίου πλοήγησης</string>
+    <string name="main_search_close_cd">Κλείσιμο αναζήτησης</string>
+    <string name="main_search_clear_cd">Απαλοιφή αναζήτησης</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">Επιλεγμένα: %d</string>
     <string name="main_menu_clear">Εκκαθάριση</string>
+    <string name="main_menu_select_all">Επιλογή όλων</string>
     <string name="main_menu_archive">Αρχειοθέτηση</string>
     <string name="main_menu_unarchive">Αναίρεση αρχειοθέτησης</string>
     <string name="main_menu_delete">Διαγραφή</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Mark read</string>
     <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_block">Φραγή</string>
+    <string name="main_menu_send_now">Αποστολή τώρα</string>
+    <string name="main_menu_edit_message">Επεξεργασία μηνύματος</string>
+    <string name="main_menu_rename_conversation">Μετονομασία συζήτησης</string>
     <string name="main_syncing">Συγχρονισμός μηνυμάτων…</string>
+    <string name="main_sync_emojis">Ανάλυση αντιδράσεων emoji…</string>
     <string name="main_sender_you">Εσείς: %s</string>
+    <string name="main_sender_draft">Πρόχειρο: %s</string>
+    <string name="conversation_flagged_label">Πιθανό ανεπιθύμητο</string>
+    <string name="snippet_picture">Εικόνα</string>
+    <string name="snippet_video">Βίντεο</string>
+    <string name="snippet_audio">Ήχος</string>
+    <string name="snippet_contact_card">Κάρτα επαφής</string>
+    <string name="search_group_conversations">Συζητήσεις</string>
     <string name="main_message_results_title">Αποτελέσματα στα μηνύματα</string>
     <plurals name="main_message_results">
         <item quantity="other">Μηνύματα: %d</item>
@@ -62,11 +93,30 @@
     <string name="main_permission_contacts">Το Open Messages απαιτεί την άδεια ανάγνωσης των επαφών σας</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Να επιτραπεί</string>
+    <string name="scheduled_menu_send_now">Αποστολή τώρα</string>
+    <string name="scheduled_menu_edit_message">Επεξεργασία μηνύματος</string>
     <string name="drawer_inbox">Εισερχόμενα</string>
+    <string name="contacts_group_recent">Πρόσφατα</string>
+    <string name="contacts_group_starred">Αγαπημένα</string>
+    <string name="contacts_group_groups">Ομάδες</string>
+    <string name="conversations_group_today">Σήμερα</string>
+    <string name="conversations_group_yesterday">Χθες</string>
     <string name="drawer_archived">Αρχείο</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d μη αναγνωσμένο</item>
+        <item quantity="other">%d μη αναγνωσμένα</item>
+    </plurals>
     <string name="drawer_scheduled">Προγραμματισμένα</string>
     <string name="drawer_blocking">Με φραγή</string>
     <string name="drawer_more">Περισσότερα</string>
+    <string name="message_management_title">Διαχείριση μηνυμάτων</string>
+    <string name="templates_title">Πρότυπα</string>
+    <string name="templates_empty">Δεν υπάρχουν ακόμα αποθηκευμένα μηνύματα.\nΠατήστε + για να αποθηκεύσετε ένα μήνυμα που στέλνετε συχνά και, στη συνέχεια, πατήστε το για να επιλέξετε σε ποιον θα το στείλετε.</string>
+    <string name="template_hint">Πληκτρολογήστε το μήνυμά σας…</string>
+    <string name="template_title_hint">Τίτλος (προαιρετικό)</string>
+    <string name="templates_add_cd">Νέο πρότυπο</string>
+    <string name="template_new">Νέο πρότυπο</string>
+    <string name="template_edit">Επεξεργασία προτύπου</string>
     <string name="drawer_settings">Ρυθμίσεις</string>
     <string name="drawer_help">Βοήθεια &amp; αποστολή σχολίων</string>
     <string name="drawer_invite">Πρόσκληση φίλων</string>
@@ -79,6 +129,19 @@
         <item quantity="one">Σίγουρα επιθυμείτε να διαγράψετε αυτή τη συζήτηση;</item>
         <item quantity="other">Σίγουρα επιθυμείτε να διαγράψετε %d συζητήσεις;</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">Θέλετε σίγουρα να διαγράψετε αυτό το μήνυμα;</item>
+        <item quantity="other">Θέλετε σίγουρα να διαγράψετε %d μηνύματα;</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">Θέλετε σίγουρα να στείλετε αυτό το μήνυμα τώρα;</item>
+        <item quantity="other">Θέλετε σίγουρα να στείλετε %d μηνύματα τώρα;</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">Επεξεργασία μηνύματος</string>
+    <string name="dialog_edit_scheduled_message">Η επεξεργασία αυτού του μηνύματος θα το αφαιρέσει από τον προγραμματισμό.\n\nΦροντίστε να το υποβάλετε ξανά στην επόμενη οθόνη, αλλιώς θα χαθεί.\n\nΘέλετε να συνεχίσετε;</string>
+    <string name="dialog_edit_scheduled_message_positive_button">Ναι, επεξεργασία μηνύματος</string>
+    <string name="dialog_clear_compose_title">Απαλοιφή μηνύματος</string>
+    <string name="dialog_clear_compose">Απαλοιφή του μηνύματος; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</string>
     <string-array name="message_options">
         <item>Αντιγραφή κειμένου</item>
         <item>Προώθηση</item>
@@ -92,19 +155,35 @@
     <string name="compose_subtitle_results">%1$d από %2$d αποτελέσματα</string>
     <string name="compose_send_group_title">Αποστολή ως ομαδικό μήνυμα</string>
     <string name="compose_send_group_summary">Οι παραλήπτες και απαντήσεις θα είναι ορατοί σε όλους</string>
+    <string name="compose_send_group_summary_on">Οι παραλήπτες και οι απαντήσεις θα είναι ορατοί σε όλους</string>
+    <string name="compose_send_group_summary_off">Τα μηνύματα θα αποστέλλονται ξεχωριστά σε κάθε παραλήπτη</string>
     <string name="compose_messages_empty">Εδώ ξεκινά η συζήτηση. Πείτε κάτι ωραίο!</string>
     <string name="compose_vcard_label">Κάρτα επαφής</string>
     <string name="compose_scheduled_for">Προγραμματίστηκε για</string>
     <string name="compose_scheduled_future">Η χρονική στιγμή πρέπει να βρίσκεται στο μέλλον!</string>
     <string name="compose_scheduled_toast">Προστέθηκε στα προγραμματισμένα μηνύματα</string>
+    <string name="compose_scheduled_view">Προγραμματισμένα μηνύματα για αυτή τη συζήτηση</string>
+    <string name="compose_scheduled_bubble">Αποστολή στις %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d συνημμένο</item>
+        <item quantity="other">%d συνημμένα</item>
+    </plurals>
     <string name="compose_hint">Γράψτε ένα μήνυμα…</string>
+    <string name="compose_expand_cd">Ανάπτυξη σε πλήρη οθόνη</string>
+    <string name="compose_collapse_cd">Σύμπτυξη</string>
+    <string name="compose_no_valid_recipients">Δεν είναι δυνατή η αποστολή στους άλλους συμμετέχοντες</string>
+    <string name="compose_flagged_title">Πιθανό ανεπιθύμητο</string>
+    <string name="compose_flagged_approve">Έγκριση</string>
+    <string name="compose_flagged_block">Φραγή</string>
     <string name="compose_menu_copy">Αντιγραφή κειμένου</string>
     <string name="compose_menu_forward">Προώθηση</string>
+    <string name="compose_menu_show_status">Εμφάνιση κατάστασης</string>
     <string name="compose_menu_delete">Διαγραφή</string>
     <string name="compose_menu_previous">Προηγούμενο</string>
     <string name="compose_menu_next">Επόμενο</string>
     <string name="compose_menu_clear">Εκκαθάριση</string>
     <string name="compose_details_title">Λεπτομέρειες μηνύματος</string>
+    <string name="compose_reactions_title">Αντιδράσεις</string>
     <string name="compose_details_type">Τύπος: %s</string>
     <string name="compose_details_from">Από: %s</string>
     <string name="compose_details_to">Προς: %s</string>
@@ -116,18 +195,60 @@
     <string name="compose_details_delivered">Παραδόθηκε: %s</string>
     <string name="compose_details_error_code">Κωδικός σφάλματος: %d</string>
     <string name="compose_attach_cd">Προσθήκη συνημμένου</string>
+    <string name="compose_attach_file_cd">Επισύναψη οποιουδήποτε αρχείου</string>
     <string name="compose_gallery_cd">Επισύναψη φωτογραφίας</string>
+    <string name="compose_audio_message_cd">Εγγραφή ηχητικού μηνύματος</string>
     <string name="compose_camera_cd">Λήψη φωτογραφίας</string>
     <string name="compose_schedule_cd">Προγραμματισμός μηνύματος</string>
+    <string name="compose_schedule_title">Προγραμματισμός μηνύματος</string>
+    <string name="compose_schedule_in_hour">Σε 1 ώρα</string>
+    <string name="compose_schedule_tonight">Απόψε</string>
+    <string name="compose_schedule_tomorrow_morning">Αύριο το πρωί</string>
+    <string name="compose_schedule_tomorrow_afternoon">Αύριο το απόγευμα</string>
+    <string name="compose_schedule_custom">Επιλογή ημερομηνίας και ώρας</string>
+    <string name="compose_schedule_confirm">Προγραμματισμός</string>
+    <string name="compose_schedule_previous_month">Προηγούμενος μήνας</string>
+    <string name="compose_schedule_next_month">Επόμενος μήνας</string>
+    <string name="compose_schedule_increase">Αύξηση</string>
+    <string name="compose_schedule_decrease">Μείωση</string>
+    <string name="compose_schedule_cancel_cd">Ακύρωση προγραμματισμού μηνύματος</string>
     <string name="compose_contact_cd">Επισύναψη επαφής</string>
     <string name="compose_contact_error">Πρόβλημα ανάγνωσης επαφής</string>
+    <string name="compose_attach_gallery">Συλλογή</string>
+    <string name="compose_attach_camera">Κάμερα</string>
+    <string name="compose_attach_file">Αρχείο</string>
+    <string name="compose_attach_audio">Ήχος</string>
+    <string name="compose_attach_contact">Επαφή</string>
+    <string name="compose_attach_schedule">Προγραμματισμός</string>
+    <string name="compose_attach_templates">Πρότυπα</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Αυτό το βίντεο είναι πολύ μεγάλο για αποστολή μέσω MMS. Μπορεί να διαρκεί έως %d δευτερόλεπτο.</item>
+        <item quantity="other">Αυτό το βίντεο είναι πολύ μεγάλο για αποστολή μέσω MMS. Μπορεί να διαρκεί έως %d δευτερόλεπτα.</item>
+    </plurals>
     <string name="compose_sim_cd">Επελέγη το %s, αλλάξτε την κάρτα SIM</string>
     <string name="compose_send_cd">Αποστολή μηνύματος</string>
+    <string name="compose_record_audio_msg_cd">Εγγραφή ηχητικού μηνύματος</string>
+    <string name="compose_record_audio_msg_abort_cd">Ακύρωση ηχητικού μηνύματος</string>
+    <string name="compose_record_audio_msg_attach_cd">Επισύναψη ηχητικού μηνύματος</string>
+    <string name="compose_audio_msg_title">Φωνητικό μήνυμα</string>
+    <string name="compose_audio_msg_attach">Επισύναψη</string>
+    <string name="compose_record_audio_msg_play_pause_cd">Αναπαραγωγή ή παύση ηχητικού μηνύματος</string>
+    <string name="compose_message_cancel">Ακύρωση</string>
+    <string name="compose_message_send_now">Αποστολή τώρα</string>
+    <string name="compose_message_sim">Αριθμός SIM</string>
+    <string name="compose_message_item">Στοιχείο μηνύματος</string>
+    <string name="compose_message_attachment">Συνημμένο</string>
+    <string name="compose_toast_drag_stt">Μετακινήστε το κουμπί υπαγόρευσης όπου θέλετε</string>
     <string name="message_status_sending">Αποστολή…</string>
     <string name="message_status_delivered">Παραδόθηκε: %s</string>
     <string name="message_status_failed">Αποτυχία αποστολής. Πατήστε για νέα προσπάθεια</string>
+    <string name="message_body_too_long_to_display">⚠ Το μήνυμα είναι μεγάλο. Αντιγράψτε ή αποθηκεύστε το για το πλήρες κείμενο</string>
+    <string name="conversation_menu">Επιλογές συζήτησης</string>
+    <string name="conversation_menu_media">Όλα τα πολυμέσα</string>
+    <string name="media_title">Πολυμέσα</string>
+    <string name="media_empty">Οι φωτογραφίες και τα βίντεο που κοινοποιούνται σε αυτή τη συζήτηση θα εμφανίζονται εδώ</string>
     <string name="info_copied_address">Η διεύθυνση αντεγράφη</string>
     <string name="info_name">Τίτλος συζήτησης</string>
     <string name="info_notifications">Ειδοποιήσεις</string>
@@ -141,11 +262,41 @@
     <string name="gallery_toast_saved">Αποθηκεύτηκε στη συλλογή</string>
     <string name="backup_title">Αντίγραφα ασφαλείας και επαναφορά</string>
     <string name="backup_backing_up">Δημιουργία αντιγράφου ασφαλείας μηνυμάτων</string>
+    <string name="backup_failed_title">Η δημιουργία αντιγράφου ασφαλείας απέτυχε</string>
+    <string name="backup_icon_change_title">Επαναφορά εικονιδίου εφαρμογής;</string>
+    <string name="backup_icon_change_message">Το αντίγραφο ασφαλείας σας δημιουργήθηκε με διαφορετικό χρώμα εικονιδίου. Το Android μπορεί να αλλάξει το εικονίδιο μόνο όταν η εφαρμογή είναι κλειστή, οπότε το Open Messages θα κλείσει μόλις επιβεβαιώσετε.</string>
+    <string name="icon_change_confirm">Εφαρμογή και κλείσιμο</string>
+    <string name="icon_change_later">Όχι τώρα</string>
     <string name="backup_restoring">Επαναφορά αντιγράφου ασφαλείας μηνυμάτων</string>
     <string name="backup_loading">Φόρτωση…</string>
     <string name="backup_never">Ποτέ</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Αυτόματο αντίγραφο ασφαλείας</string>
+    <string name="backup_auto_never">Ποτέ</string>
+    <string name="backup_auto_daily">Κάθε μέρα</string>
+    <string name="backup_auto_weekly">Κάθε εβδομάδα</string>
+    <string name="backup_auto_custom">Προσαρμογή…</string>
+    <string name="backup_auto_custom_title">Ημέρες μεταξύ αντιγράφων</string>
+    <string name="backup_auto_custom_hint">Αριθμός ημερών</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Κάθε %d ημέρα</item>
+        <item quantity="other">Κάθε %d ημέρες</item>
+    </plurals>
+    <string name="backup_zip_title">Αποθήκευση ως αρχείο .zip</string>
+    <string name="backup_zip_summary">Κάθε αντίγραφο αποθηκεύεται ως ένα αρχείο, πιο εύκολο στη μεταφορά μεταξύ τηλεφώνων</string>
+    <string name="backup_manage_title">Διαχείριση αντιγράφων ασφαλείας</string>
+    <string name="backup_manage_summary">Μετονομάστε ή διαγράψτε τα αντίγραφα ασφαλείας σας</string>
+    <string name="backup_manage_empty">Δεν βρέθηκαν αντίγραφα ασφαλείας σε αυτή τη θέση</string>
+    <string name="backup_manage_rename">Μετονομασία</string>
+    <string name="backup_manage_delete">Διαγραφή</string>
+    <string name="backup_manage_delete_confirm">Διαγραφή του \"%s\"; Αυτό δεν μπορεί να αναιρεθεί.</string>
+    <string name="backup_manage_error">Δεν ήταν δυνατή η ενημέρωση αυτού του αντιγράφου</string>
+    <string name="backup_manage_type_folder">Φάκελος</string>
+    <string name="backup_manage_type_zip">Αρχείο zip</string>
+    <string name="backup_restore_from_title">Επαναφορά από</string>
+    <string name="backup_restore_from_folder">Φάκελο</string>
+    <string name="backup_restore_from_zip">Αρχείο .zip</string>
     <string name="backup_restore_title">Επαναφορά</string>
     <string name="backup_restore_summary">Επιλέξτε ένα αντίγραφο ασφαλείας</string>
     <string name="backup_restore_error_backup">Δημιουργία αντιγράφου ασφαλείας…</string>
@@ -163,12 +314,28 @@
     <string name="backup_restore_dialog_empty">Δεν βρέθηκαν αντίγραφα ασφαλείας</string>
     <string name="backup_disclaimer">Προς το παρόν, μπορούν να δημιουργηθούν αντίγραφα ασφαλείας μόνο για SMS. Η υποστήριξη MMS και ο προγραμματισμός αντιγράφων ασφαλείας θα προστεθούν σύντομα!</string>
     <string name="backup_now">Δημιουργία αντιγράφου τώρα</string>
+    <string name="backup_now_summary">Δημιουργία νέου αντιγράφου ασφαλείας</string>
+    <string name="backup_categories_title">Τι να συμπεριληφθεί στο αντίγραφο;</string>
+    <string name="backup_restore_source_title">Ποιο αντίγραφο;</string>
+    <string name="backup_restore_categories_title">Επαναφορά από %s</string>
+    <string name="backup_category_messages">Μηνύματα (SMS, MMS και συνημμένα)</string>
+    <string name="backup_category_settings">Ρυθμίσεις και πρότυπα</string>
+    <string name="backup_category_blocking">Κανόνες φραγής</string>
+    <string name="backup_category_conversations">Αρχειοθετημένες και καρφιτσωμένες</string>
+    <string name="backup_category_scheduled">Προγραμματισμένα μηνύματα</string>
+    <string name="backup_exact_alarm_title">Να επιτρέπονται ακριβείς ειδοποιήσεις</string>
+    <string name="backup_exact_alarm_message">Για να στέλνει τα προγραμματισμένα μηνύματα την ακριβή ώρα, το Open Messages χρειάζεται άδεια για ακριβείς ειδοποιήσεις. Χωρίς αυτήν, ενδέχεται να σταλούν λίγο αργότερα.</string>
+    <string name="backup_exact_alarm_grant">Να επιτρέπεται</string>
+    <string name="backup_exact_alarm_skip">Επαναφορά ούτως ή άλλως</string>
     <string name="backup_progress_parsing">Ανάγνωση αντιγράφου ασφαλείας…</string>
     <string name="backup_progress_running">%d/%d μηνύματα</string>
     <string name="backup_progress_saving">Αποθήκευση αντιγράφου ασφαλείας…</string>
     <string name="backup_progress_syncing">Συγχρονισμός μηνυμάτων…</string>
     <string name="backup_progress_finished">Ολοκληρώθηκε!</string>
+    <string name="backup_progress_failed">Δεν ήταν δυνατή η εγγραφή του αντιγράφου ασφαλείας. Ελέγξτε τον ελεύθερο χώρο και τον φάκελο αντιγράφων.</string>
     <string name="backup_notification_channel_name">Αντίγραφα ασφαλείας και επαναφορά</string>
+    <string name="clipboard_too_large_to_copy">Το μέγεθος των δεδομένων υπερβαίνει το όριο του προχείρου</string>
+    <string name="clipboard_unable_to_copy_to">Δεν είναι δυνατή η αντιγραφή στο πρόχειρο</string>
     <string name="scheduled_title">Προγραμματισμένα</string>
     <string name="scheduled_empty_description">Στείλτε μήνυμα αυτόματα, την ακριβή στιγμή που επιθυμείτε</string>
     <string name="scheduled_empty_message_1">Γεια! Πότε είπαμε ότι έχεις γενέθλια;</string>
@@ -177,12 +344,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Αποστολή στις 23 Δεκεμβρίου</string>
     <string name="scheduled_compose_cd">Προγραμματισμός μηνύματος</string>
+    <string name="scheduled_send_cd">Προγραμματισμός αυτού του μηνύματος</string>
     <string name="scheduled_options_title">Προγραμματισμένο μήνυμα</string>
     <string-array name="scheduled_options">
         <item>Αποστολή τώρα</item>
         <item>Αντιγραφή κειμένου</item>
         <item>Διαγραφή</item>
     </string-array>
+    <string name="attachment_missing">Λείπει</string>
     <string name="settings_category_appearance">Εμφάνιση</string>
     <string name="settings_category_general">Γενικά</string>
     <string name="settings_category_quick_reply">Γρήγορη απάντηση</string>
@@ -194,6 +363,15 @@
     <string name="settings_automatic_colors_title">Αυτόματος χρωματισμός επαφών</string>
     <string name="settings_text_size_title">Μέγεθος γραμματοσειράς</string>
     <string name="settings_system_font_title">Χρήση γραμματοσειράς συστήματος</string>
+    <string name="settings_show_avatar_title">Εμφάνιση φωτογραφίας επαφής</string>
+    <string name="settings_show_avatar_summary">Εμφάνιση της φωτογραφίας του αποστολέα στις συζητήσεις. Απενεργοποιήστε το για πιο φαρδιά συννεφάκια μηνυμάτων.</string>
+    <string name="settings_hide_country_code_title">Απόκρυψη κωδικού χώρας</string>
+    <string name="settings_hide_country_code_summary">Εμφάνιση αριθμών τηλεφώνου σε τοπική μορφή, π.χ. \"06 ...\" αντί για \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Από άκρη σε άκρη</string>
+    <string name="settings_edge_to_edge_summary">Εμφάνιση περιεχομένου πίσω από τη γραμμή κατάστασης και πλοήγησης</string>
+    <string name="settings_system_show_stt_title">Εμφάνιση κουμπιού υπαγόρευσης</string>
+    <string name="settings_drawer_swipe_title">Σύρετε για άνοιγμα του μενού</string>
+    <string name="settings_drawer_swipe_summary">Ανοίξτε το πλαϊνό μενού σύροντας από την αριστερή άκρη της λίστας συζητήσεων</string>
     <string name="settings_auto_emoji_title">Αυτόματα emoji</string>
     <string name="settings_notifications_title">Ειδοποιήσεις</string>
     <string name="settings_notifications_o_summary">Πατήστε για προσαρμογή</string>
@@ -202,7 +380,14 @@
     <string name="settings_notification_action_2">Κουμπί 2</string>
     <string name="settings_notification_action_3">Κουμπί 3</string>
     <string name="settings_notification_previews_title">Προεπισκοπήσεις ειδοποιήσεων</string>
+    <string name="settings_notification_previews_summary">Εμφάνιση ονόματος και μηνύματος</string>
     <string name="settings_notification_wake_title">Ενεργοποίηση οθόνης</string>
+    <string name="settings_notification_silent_title">Σίγαση αν δεν είναι επαφή</string>
+    <string name="settings_notification_silent_summary">Σιγεί τις ειδοποιήσεις για μηνύματα από αποστολείς που δεν είναι στις επαφές σας</string>
+    <string name="settings_copy_code_title">Αντιγραφή κωδικών από ειδοποιήσεις</string>
+    <string name="settings_copy_code_summary">Προσθέτει κουμπί Αντιγραφή κωδικού στις ειδοποιήσεις με κωδικούς μίας χρήσης και επαλήθευσης</string>
+    <string name="notification_copy_code">Αντιγραφή κωδικού</string>
+    <string name="notification_code_copied">Ο κωδικός αντιγράφηκε</string>
     <string name="settings_vibration_title">Δόνηση</string>
     <string name="settings_ringtone_title">Ήχος</string>
     <string name="settings_ringtone_none">Κανένα</string>
@@ -227,6 +412,13 @@
     </string-array>
     <string name="settings_delivery_title">Επιβεβαιώσεις παράδοσης</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_send_sound_title">Ήχος κατά την αποστολή</string>
+    <string name="settings_send_sound_summary">Αναπαραγωγή σύντομου ήχου όταν στέλνετε μήνυμα</string>
+    <string name="settings_send_sound_volume_title">Ένταση</string>
+    <string name="settings_header_quick_action_title">Γρήγορη ενέργεια κεφαλίδας</string>
+    <string name="settings_header_quick_action_summary">Προσθήκη κουμπιού συντόμευσης στην κεφαλίδα της συζήτησης</string>
+    <string name="settings_unread_at_top_title">Μη αναγνωσμένα στην κορυφή</string>
+    <string name="settings_unread_at_top_summary">Εμφάνιση μη αναγνωσμένων συζητήσεων στην κορυφή</string>
     <string name="settings_signature_title">Υπογραφή</string>
     <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Strip accents</string>
@@ -246,6 +438,9 @@
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_mms_weblink_title">Χειρισμός συνδέσμων στα μηνύματα</string>
+    <string name="settings_disable_screenshots_title">Απενεργοποίηση στιγμιοτύπων οθόνης</string>
+    <string name="settings_diable_screenshots_summary">Αποτροπή λήψης στιγμιοτύπων της εφαρμογής από το σύστημα και άλλες εφαρμογές.</string>
     <string name="settings_sync_title">Συγχρονισμός μηνυμάτων</string>
     <string name="settings_sync_summary">Επανασυγχρονισμός μηνυμάτων με τη βάση δεδομένων SMS του Android</string>
     <string name="settings_about_title">Σχετικά με το Open Messages</string>
@@ -257,6 +452,17 @@
     <string name="blocking_drop_title">Απόρριψη μηνυμάτων</string>
     <string name="blocking_drop_summary">Απόρριψη αντί για απόκρυψη μηνυμάτων από αποστολείς σε φραγή</string>
     <string name="blocking_conversations">Συζητήσεις σε φραγή</string>
+    <string name="blocking_category_integrated">Ενσωματωμένη φραγή</string>
+    <string name="blocking_integrated_description">Το Open Messages μπλοκάρει τα ανεπιθύμητα στη συσκευή σας. Οι προαιρετικές πηγές παρακάτω κατεβάζουν τη λίστα τους από το διαδίκτυο όταν τις ενεργοποιείτε και μετά λειτουργούν εκτός σύνδεσης.</string>
+    <string name="blocking_category_external_apps">Εξωτερικές εφαρμογές</string>
+    <string name="blocked_numbers_summary">Αριθμοί στους οποίους κάνετε φραγή εσείς</string>
+    <string name="blocking_source_phishing_title">Προστασία από ηλεκτρονικό ψάρεμα</string>
+    <string name="blocking_source_phishing_summary">Μπλοκάρει μηνύματα με συνδέσμους προς γνωστούς ιστότοπους ηλεκτρονικού ψαρέματος. Η ενεργοποίηση κατεβάζει τη λίστα από το διαδίκτυο και το φιλτράρισμα γίνεται μετά εκτός σύνδεσης.</string>
+    <string name="blocking_source_flag_block_title">Φραγή πιθανών ανεπιθύμητων</string>
+    <string name="blocking_source_flag_block_summary">Στέλνει τα μηνύματα που επισημαίνονται ως πιθανά ανεπιθύμητα κατευθείαν στη λίστα φραγής, αντί απλώς να τα επισημαίνει στα εισερχόμενα</string>
+    <string name="blocking_source_status_updating">Ενημέρωση…</string>
+    <string name="blocking_source_status_updated">Ενημερωμένο · %1$d καταχωρίσεις</string>
+    <string name="blocking_source_status_failed">Η λήψη απέτυχε, η πηγή παραμένει απενεργοποιημένη. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
     <string name="blocking_manager_title">Διαχειριστής φραγής</string>
     <string name="blocking_manager_built_in_summary">Ενσωματωμένη λειτουργία φραγής του Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
@@ -270,6 +476,15 @@
     <string name="blocked_numbers_dialog_title">Block texts from</string>
     <string name="blocked_numbers_dialog_hint">Phone number</string>
     <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="message_content_filters_title">Φίλτρα περιεχομένου μηνυμάτων</string>
+    <string name="message_content_filters_empty">Τα φίλτρα περιεχομένου μηνυμάτων σας θα εμφανίζονται εδώ</string>
+    <string name="message_content_filters_add_cd">Δημιουργία νέου φίλτρου</string>
+    <string name="message_content_filters_dialog_title">Απόρριψη μηνυμάτων που περιέχουν</string>
+    <string name="message_content_filters_dialog_hint">Λέξη, φράση ή κανονική έκφραση</string>
+    <string name="message_content_filters_dialog_case_switch">Διάκριση πεζών-κεφαλαίων</string>
+    <string name="message_content_filters_dialog_regex_switch">Κανονική έκφραση</string>
+    <string name="message_content_filters_dialog_contacts_switch">Συμπερίληψη επαφών</string>
+    <string name="message_content_filters_dialog_create">Δημιουργία</string>
     <string name="blocked_messages_title">Blocked messages</string>
     <string name="blocked_messages_empty">Your blocked messages will appear here</string>
     <string name="blocking_block_title">Block</string>
@@ -282,6 +497,15 @@
         <item quantity="one">Continue to %s and allow this number</item>
         <item quantity="other">Continue to %s and allow these numbers</item>
     </plurals>
+    <string name="deduplicate_messages_category">Αφαίρεση διπλότυπων</string>
+    <string name="deduplicate_messages_title">Αφαίρεση διπλότυπων μηνυμάτων</string>
+    <string name="deduplicate_messages_summary">Σαρώνει τη βάση δεδομένων μηνυμάτων και διαγράφει όλα τα μηνύματα που ταιριάζουν ακριβώς με τα αρχικά</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Η βάση δεδομένων μηνυμάτων θα σαρωθεί για διπλότυπα, τα οποία στη συνέχεια θα αφαιρεθούν.\nΑυτό διαγράφει αυτόματα μηνύματα, συνεχίστε μόνο αν κατανοείτε τις συνέπειες.</string>
+    <string name="auto_deduplicate_messages_title">Αυτόματη αφαίρεση διπλότυπων</string>
+    <string name="auto_deduplicate_messages_summary">Η αφαίρεση διπλότυπων θα γίνεται κατά τον συγχρονισμό. Σημειώστε ότι αυτό διαγράφει αυτόματα μηνύματα, και παρόλο που η πιθανότητα ψευδούς διπλότυπου είναι πολύ μικρή, υπάρχει.\nΠροσέξτε.</string>
+    <string name="deduplicating_messages_finished">Η αφαίρεση διπλότυπων ολοκληρώθηκε!</string>
+    <string name="deduplicating_messages_no_messages">Δεν βρέθηκαν διπλότυπα μηνύματα.</string>
+    <string name="deduplicating_messages_failed">Η αφαίρεση διπλότυπων απέτυχε, δοκιμάστε ξανά</string>
     <string name="about_title">Σχετικά με την εφαρμογή</string>
     <string name="about_version_title">Έκδοση</string>
     <string name="about_developer_title">Προγραμματιστής</string>
@@ -292,6 +516,7 @@
     <string name="about_copyright_title">Πνευματικά δικαιώματα</string>
     <string name="widget_loading">Loading…</string>
     <string name="widget_more">View more conversations</string>
+    <string name="all_conversations_widget_title">Όλες οι συζητήσεις</string>
     <string name="quick_reply_menu_read">Mark read</string>
     <string name="quick_reply_menu_call">Call</string>
     <string name="quick_reply_menu_delete">Delete</string>
@@ -313,18 +538,37 @@
     <string name="button_yes">Yes</string>
     <string name="button_continue">Continue</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_close">Κλείσιμο</string>
     <string name="button_delete">Delete</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_set">Set</string>
+    <string name="button_later">Αργότερα</string>
+    <string name="icon_restart_title">Απαιτείται επανεκκίνηση</string>
+    <string name="icon_restart_message">Η εφαρμογή πρέπει να επανεκκινηθεί για να ολοκληρωθεί η ενημέρωση του εικονιδίου.</string>
+    <string name="icon_restart_now">Επανεκκίνηση</string>
     <string name="button_undo">Undo</string>
+    <string name="button_clear">Απαλοιφή</string>
     <string name="toast_copied">Copied</string>
+    <plurals name="toast_archived">
+        <item quantity="one">Η συζήτηση αρχειοθετήθηκε</item>
+        <item quantity="other">Αρχειοθετήθηκαν %d συζητήσεις</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">Η συζήτηση βγήκε από το αρχείο</item>
+        <item quantity="other">%d συζητήσεις βγήκαν από το αρχείο</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">New message</item>
         <item quantity="other">%s new messages</item>
     </plurals>
     <string name="notification_message_failed_title">Message not sent</string>
     <string name="notification_message_failed_text">The message to %s failed to send</string>
+    <string name="notification_foreground_worker_title">Λήψη μηνύματος</string>
+    <string name="notification_foreground_worker_text">Στο Android 12 και παλαιότερες εκδόσεις, απαιτείται ειδοποίηση για την εργασία στο παρασκήνιο που επιτρέπει τη λήψη μηνυμάτων.</string>
+    <string name="notification_foreground_worker_channel_name">Ειδοποίηση λήψης μηνυμάτων</string>
+    <string name="notification_me">Εγώ</string>
+    <string name="notification_message_failed_action">Επανάληψη αποστολής</string>
     <string-array name="night_modes">
         <item>System</item>
         <item>Disabled</item>
@@ -348,6 +592,21 @@
         <item>5 seconds</item>
         <item>10 seconds</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Καμία</item>
+        <item>Αρχειοθέτηση</item>
+        <item>Σήμανση ως μη αναγνωσμένο</item>
+        <item>Φραγή</item>
+        <item>Διαγραφή</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Κανένας</item>
+        <item>Κλασικός</item>
+        <item>Φωτεινός</item>
+        <item>Απαλός</item>
+        <item>Κατιών</item>
+        <item>Τρεις νότες</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>
         <item>100KB</item>
@@ -357,6 +616,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>No compression</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Φραγή</item>
+        <item>Να επιτρέπεται</item>
+        <item>Ερώτηση πριν το άνοιγμα</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Okay</item>
@@ -372,4 +636,13 @@
         <item>LOL</item>
         <item>That\'s okay</item>
     </string-array>
+    <string name="speak_no_messages">Κανένα μήνυμα</string>
+    <string name="speak_unseen_messages">Εκφώνηση μη αναγνωσμένων μηνυμάτων</string>
+    <string name="messageLinkHandling_dialog_title">Προειδοποίηση εξωτερικού συνδέσμου</string>
+    <string name="messageLinkHandling_dialog_body">Ορισμένοι σύνδεσμοι μπορεί να μην είναι ασφαλείς ή να σας ανακατευθύνουν απροσδόκητα. Ελέγξτε τον παρακάτω σύνδεσμο πριν συνεχίσετε:\n\n%1$s\n\nΘέλετε να συνεχίσετε;</string>
+    <string name="messageLinkHandling_dialog_positive">Ναι, άνοιγμα συνδέσμου</string>
+    <string name="messageLinkHandling_dialog_negative">Όχι</string>
+    <string name="error_stt_toast">Δυστυχώς, παρουσιάστηκε σφάλμα κατά τη φόρτωση της υπηρεσίας μετατροπής ομιλίας σε κείμενο.</string>
+    <string name="stt_toast_extra_prompt">Πείτε το μήνυμά σας</string>
+    <string name="messages_text_share_file_error">Ωχ! Κάτι πήγε στραβά κατά την κοινή χρήση</string>
 </resources>
