@@ -18,13 +18,13 @@
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="app_tagline">سادہ، اوپن سورس پیغام رسانی</string>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
-    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-    <string name="title_archived">Archived</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_notification_prefs">Notifications</string>
-    <string name="title_theme">Theme</string>
+    <string name="shortcut_compose_long_label">نئی گفتگو</string>
+    <string name="shortcut_compose_short_label">لکھیں</string>
+    <string name="shortcut_compose_disabled_message">شارٹ کٹ غیر فعال ہے</string>
+    <string name="title_archived">آرکائیو شدہ</string>
+    <string name="title_settings">ترتیبات</string>
+    <string name="title_notification_prefs">اطلاعات</string>
+    <string name="title_theme">تھیم</string>
     <string name="theme_default">ڈیفالٹ</string>
     <string name="theme_wallpaper">وال پیپر</string>
     <string name="theme_other_colors">رنگ</string>
@@ -36,40 +36,40 @@
     <string name="theme_icon_summary">تھیم سے الگ، اپنے ایپ آئیکن کا رنگ منتخب کریں۔ تبدیلی لاگو کرنے سے ایپ بند ہو جائے گی۔</string>
     <string name="theme_icon_change_title">ایپ آئیکن تبدیل کریں؟</string>
     <string name="theme_icon_change_message">ایپ آئیکن کا رنگ تبدیل ہونے والا ہے۔ Android آئیکن صرف اسی وقت بدل سکتا ہے جب ایپ بند ہو، اس لیے تصدیق کرتے ہی Open Messages بند ہو جائے گی۔</string>
-    <string name="title_conversations">Search inbox…</string>
+    <string name="title_conversations">ان باکس میں تلاش کریں…</string>
     <string name="title_search">تلاش</string>
-    <string name="title_compose">Type a name or number</string>
-    <string name="setup_skip">Skip</string>
-    <string name="setup_next">Continue</string>
-    <string name="menu_add_person">Add person</string>
-    <string name="menu_call">Call</string>
-    <string name="menu_mms_part_save">Save to gallery</string>
+    <string name="title_compose">نام یا نمبر لکھیں</string>
+    <string name="setup_skip">چھوڑیں</string>
+    <string name="setup_next">جاری رکھیں</string>
+    <string name="menu_add_person">شخص شامل کریں</string>
+    <string name="menu_call">کال کریں</string>
+    <string name="menu_mms_part_save">گیلری میں محفوظ کریں</string>
     <string name="menu_mms_part_share">شیئر کریں</string>
     <string name="menu_mms_part_forward">آگے بھیجیں</string>
     <string name="menu_mms_part_open">بیرونی ایپ میں کھولیں</string>
     <string name="compose_menu_share">Share</string>
-    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_drawer_open_cd">سائیڈ مینو کھولیں</string>
     <string name="main_search_close_cd">تلاش بند کریں</string>
     <string name="main_search_clear_cd">تلاش صاف کریں</string>
     <string name="main_sim_cd">SIM %d</string>
-    <string name="main_title_selected">%d selected</string>
-    <string name="main_menu_clear">Clear</string>
+    <string name="main_title_selected">%d منتخب</string>
+    <string name="main_menu_clear">صاف کریں</string>
     <string name="main_menu_select_all">سب منتخب کریں</string>
-    <string name="main_menu_archive">Archive</string>
-    <string name="main_menu_unarchive">Unarchive</string>
-    <string name="main_menu_delete">Delete</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
-    <string name="main_menu_pin">Pin to top</string>
-    <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
-    <string name="main_menu_block">Block</string>
+    <string name="main_menu_archive">آرکائیو کریں</string>
+    <string name="main_menu_unarchive">آرکائیو سے نکالیں</string>
+    <string name="main_menu_delete">حذف کریں</string>
+    <string name="main_menu_add_contact">رابطوں میں شامل کریں</string>
+    <string name="main_menu_pin">اوپر پن کریں</string>
+    <string name="main_menu_unpin">پن ہٹائیں</string>
+    <string name="main_menu_read">پڑھا ہوا نشان زد کریں</string>
+    <string name="main_menu_unread">غیر پڑھا نشان زد کریں</string>
+    <string name="main_menu_block">بلاک کریں</string>
     <string name="main_menu_send_now">ابھی بھیجیں</string>
     <string name="main_menu_edit_message">پیغام میں ترمیم کریں</string>
     <string name="main_menu_rename_conversation">گفتگو کا نام بدلیں</string>
-    <string name="main_syncing">Syncing messages…</string>
+    <string name="main_syncing">پیغامات ہم آہنگ ہو رہے ہیں…</string>
     <string name="main_sync_emojis">ایموجی ردعمل پڑھے جا رہے ہیں…</string>
-    <string name="main_sender_you">You: %s</string>
+    <string name="main_sender_you">آپ: %s</string>
     <string name="main_sender_draft">مسودہ: %s</string>
     <string name="conversation_flagged_label">مشتبہ اسپیم</string>
     <string name="snippet_picture">تصویر</string>
@@ -77,38 +77,39 @@
     <string name="snippet_audio">آڈیو</string>
     <string name="snippet_contact_card">رابطہ کارڈ</string>
     <string name="search_group_conversations">گفتگوئیں</string>
-    <string name="main_message_results_title">Results in messages</string>
+    <string name="main_message_results_title">پیغامات میں نتائج</string>
     <plurals name="main_message_results">
-        <item quantity="other">%d messages</item>
+        <item quantity="one">%d پیغام</item>
+        <item quantity="other">%d پیغامات</item>
     </plurals>
-    <string name="inbox_empty_text">Your conversations will appear here</string>
-    <string name="inbox_search_empty_text">No results</string>
-    <string name="archived_empty_text">Your archived conversations will appear here</string>
-    <string name="main_fab_cd">Start new conversation</string>
-    <string name="main_default_sms_title">Love texting again</string>
-    <string name="main_default_sms_message">Make Open Messages your default SMS app</string>
-    <string name="main_default_sms_change">Change</string>
-    <string name="main_permission_required">Permission required</string>
-    <string name="main_permission_sms">Open Messages needs permission to send and view SMS messages</string>
-    <string name="main_permission_contacts">Open Messages needs permission to view your contacts</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
-    <string name="main_permission_allow">Allow</string>
+    <string name="inbox_empty_text">آپ کی گفتگوئیں یہاں نظر آئیں گی</string>
+    <string name="inbox_search_empty_text">کوئی نتیجہ نہیں</string>
+    <string name="archived_empty_text">آپ کی آرکائیو شدہ گفتگوئیں یہاں نظر آئیں گی</string>
+    <string name="main_fab_cd">نئی گفتگو شروع کریں</string>
+    <string name="main_default_sms_title">پیغام رسانی کا لطف دوبارہ اٹھائیں</string>
+    <string name="main_default_sms_message">Open Messages کو اپنی ڈیفالٹ SMS ایپ بنائیں</string>
+    <string name="main_default_sms_change">تبدیل کریں</string>
+    <string name="main_permission_required">اجازت درکار ہے</string>
+    <string name="main_permission_sms">Open Messages کو SMS پیغامات بھیجنے اور دیکھنے کی اجازت درکار ہے</string>
+    <string name="main_permission_contacts">Open Messages کو آپ کے رابطے دیکھنے کی اجازت درکار ہے</string>
+    <string name="main_permission_notifications">Open Messages کو اطلاعات دکھانے کی اجازت درکار ہے</string>
+    <string name="main_permission_allow">اجازت دیں</string>
     <string name="scheduled_menu_send_now">ابھی بھیجیں</string>
     <string name="scheduled_menu_edit_message">پیغام میں ترمیم کریں</string>
-    <string name="drawer_inbox">Inbox</string>
+    <string name="drawer_inbox">ان باکس</string>
     <string name="contacts_group_recent">حالیہ</string>
     <string name="contacts_group_starred">پسندیدہ</string>
     <string name="contacts_group_groups">گروپس</string>
     <string name="conversations_group_today">آج</string>
     <string name="conversations_group_yesterday">کل</string>
-    <string name="drawer_archived">Archived</string>
+    <string name="drawer_archived">آرکائیو شدہ</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d غیر پڑھا</item>
         <item quantity="other">%d غیر پڑھے</item>
     </plurals>
-    <string name="drawer_scheduled">Scheduled</string>
-    <string name="drawer_blocking">Blocking</string>
-    <string name="drawer_more">More</string>
+    <string name="drawer_scheduled">شیڈول شدہ</string>
+    <string name="drawer_blocking">بلاکنگ</string>
+    <string name="drawer_more">مزید</string>
     <string name="message_management_title">پیغامات کا انتظام</string>
     <string name="templates_title">سانچے</string>
     <string name="templates_empty">ابھی کوئی محفوظ پیغام نہیں۔\nاکثر بھیجا جانے والا پیغام محفوظ کرنے کے لیے + پر ٹیپ کریں، پھر اس پر ٹیپ کر کے منتخب کریں کہ کسے بھیجنا ہے۔</string>
@@ -117,17 +118,17 @@
     <string name="templates_add_cd">نیا سانچہ</string>
     <string name="template_new">نیا سانچہ</string>
     <string name="template_edit">سانچے میں ترمیم کریں</string>
-    <string name="drawer_settings">Settings</string>
-    <string name="drawer_help">Help &amp; feedback</string>
-    <string name="drawer_invite">Invite friends</string>
-    <string name="rate_title">Enjoying Open Messages?</string>
+    <string name="drawer_settings">ترتیبات</string>
+    <string name="drawer_help">مدد اور رائے</string>
+    <string name="drawer_invite">دوستوں کو مدعو کریں</string>
+    <string name="rate_title">کیا Open Messages پسند آ رہی ہے؟</string>
     <string name="rate_summary">Share some love and rate us on Google Play!</string>
-    <string name="rate_okay">OKAY!</string>
-    <string name="rate_dismiss">DISMISS</string>
-    <string name="dialog_delete_title">Delete</string>
+    <string name="rate_okay">ٹھیک ہے!</string>
+    <string name="rate_dismiss">رد کریں</string>
+    <string name="dialog_delete_title">حذف کریں</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Are you sure you would like to delete this conversation?</item>
-        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="one">کیا آپ واقعی یہ گفتگو حذف کرنا چاہتے ہیں؟</item>
+        <item quantity="other">کیا آپ واقعی %d گفتگوئیں حذف کرنا چاہتے ہیں؟</item>
     </plurals>
     <plurals name="dialog_delete_chat">
         <item quantity="one">کیا آپ واقعی یہ پیغام حذف کرنا چاہتے ہیں؟</item>
@@ -143,63 +144,63 @@
     <string name="dialog_clear_compose_title">پیغام صاف کریں</string>
     <string name="dialog_clear_compose">پیغام صاف کریں؟ یہ عمل واپس نہیں ہو سکتا۔</string>
     <string-array name="message_options">
-        <item>Copy text</item>
-        <item>Forward</item>
-        <item>Delete</item>
+        <item>متن کاپی کریں</item>
+        <item>آگے بھیجیں</item>
+        <item>حذف کریں</item>
     </string-array>
-    <string name="compose_number_picker_title">Choose a phone number</string>
-    <string name="compose_number_picker_default">%s ∙ Default</string>
-    <string name="compose_number_picker_once">Just once</string>
-    <string name="compose_number_picker_always">Always</string>
-    <string name="compose_title_selected">%d selected</string>
-    <string name="compose_subtitle_results">%1$d of %2$d results</string>
-    <string name="compose_send_group_title">Send as group message</string>
-    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_number_picker_title">فون نمبر منتخب کریں</string>
+    <string name="compose_number_picker_default">%s ∙ ڈیفالٹ</string>
+    <string name="compose_number_picker_once">صرف ایک بار</string>
+    <string name="compose_number_picker_always">ہمیشہ</string>
+    <string name="compose_title_selected">%d منتخب</string>
+    <string name="compose_subtitle_results">%2$d میں سے %1$d نتائج</string>
+    <string name="compose_send_group_title">گروپ پیغام کے طور پر بھیجیں</string>
+    <string name="compose_send_group_summary">وصول کنندگان اور جوابات سب کو نظر آئیں گے</string>
     <string name="compose_send_group_summary_on">وصول کنندگان اور جوابات سب کو نظر آئیں گے</string>
     <string name="compose_send_group_summary_off">پیغامات تمام وصول کنندگان کو الگ الگ بھیجے جائیں گے</string>
-    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-    <string name="compose_vcard_label">Contact card</string>
+    <string name="compose_messages_empty">یہ آپ کی گفتگو کا آغاز ہے۔ کچھ اچھا کہیں!</string>
+    <string name="compose_vcard_label">رابطہ کارڈ</string>
     <string name="compose_scheduled_for">Scheduled for</string>
-    <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_scheduled_future">منتخب وقت مستقبل کا ہونا چاہیے!</string>
+    <string name="compose_scheduled_toast">شیڈول شدہ پیغامات میں شامل ہو گیا</string>
     <string name="compose_scheduled_view">اس گفتگو کے شیڈول شدہ پیغامات</string>
     <string name="compose_scheduled_bubble">%s پر بھیجا جائے گا</string>
     <plurals name="compose_scheduled_bubble_attachments">
         <item quantity="one">%d منسلکہ</item>
         <item quantity="other">%d منسلکات</item>
     </plurals>
-    <string name="compose_hint">Write a message…</string>
+    <string name="compose_hint">پیغام لکھیں…</string>
     <string name="compose_expand_cd">پوری اسکرین پر پھیلائیں</string>
     <string name="compose_collapse_cd">سکیڑیں</string>
     <string name="compose_no_valid_recipients">دوسرے شرکاء کو نہیں بھیجا جا سکتا</string>
     <string name="compose_flagged_title">مشتبہ اسپیم</string>
     <string name="compose_flagged_approve">منظور کریں</string>
     <string name="compose_flagged_block">بلاک کریں</string>
-    <string name="compose_menu_copy">Copy text</string>
-    <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_copy">متن کاپی کریں</string>
+    <string name="compose_menu_forward">آگے بھیجیں</string>
     <string name="compose_menu_show_status">حالت دکھائیں</string>
-    <string name="compose_menu_delete">Delete</string>
-    <string name="compose_menu_previous">Previous</string>
-    <string name="compose_menu_next">Next</string>
-    <string name="compose_menu_clear">Clear</string>
-    <string name="compose_details_title">Message details</string>
+    <string name="compose_menu_delete">حذف کریں</string>
+    <string name="compose_menu_previous">پچھلا</string>
+    <string name="compose_menu_next">اگلا</string>
+    <string name="compose_menu_clear">صاف کریں</string>
+    <string name="compose_details_title">پیغام کی تفصیلات</string>
     <string name="compose_reactions_title">ردعمل</string>
-    <string name="compose_details_type">Type: %s</string>
-    <string name="compose_details_from">From: %s</string>
+    <string name="compose_details_type">قسم: %s</string>
+    <string name="compose_details_from">از: %s</string>
     <string name="compose_details_to">To: %s</string>
-    <string name="compose_details_subject">Subject: %s</string>
-    <string name="compose_details_priority">Priority: %s</string>
-    <string name="compose_details_size">Size: %s</string>
-    <string name="compose_details_sent">Sent: %s</string>
-    <string name="compose_details_received">Received: %s</string>
-    <string name="compose_details_delivered">Delivered: %s</string>
-    <string name="compose_details_error_code">Error code: %d</string>
-    <string name="compose_attach_cd">Add an attachment</string>
+    <string name="compose_details_subject">موضوع: %s</string>
+    <string name="compose_details_priority">ترجیح: %s</string>
+    <string name="compose_details_size">سائز: %s</string>
+    <string name="compose_details_sent">بھیجا گیا: %s</string>
+    <string name="compose_details_received">موصول ہوا: %s</string>
+    <string name="compose_details_delivered">پہنچا: %s</string>
+    <string name="compose_details_error_code">خرابی کا کوڈ: %d</string>
+    <string name="compose_attach_cd">منسلکہ شامل کریں</string>
     <string name="compose_attach_file_cd">کوئی بھی فائل منسلک کریں</string>
-    <string name="compose_gallery_cd">Attach a photo</string>
+    <string name="compose_gallery_cd">تصویر منسلک کریں</string>
     <string name="compose_audio_message_cd">صوتی پیغام ریکارڈ کریں</string>
-    <string name="compose_camera_cd">Take a photo</string>
-    <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_camera_cd">تصویر کھینچیں</string>
+    <string name="compose_schedule_cd">پیغام شیڈول کریں</string>
     <string name="compose_schedule_title">پیغام شیڈول کریں</string>
     <string name="compose_schedule_in_hour">1 گھنٹے میں</string>
     <string name="compose_schedule_tonight">آج شام</string>
@@ -212,8 +213,8 @@
     <string name="compose_schedule_increase">بڑھائیں</string>
     <string name="compose_schedule_decrease">گھٹائیں</string>
     <string name="compose_schedule_cancel_cd">پیغام کا شیڈول منسوخ کریں</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">رابطہ منسلک کریں</string>
+    <string name="compose_contact_error">رابطہ پڑھنے میں خرابی</string>
     <string name="compose_attach_gallery">گیلری</string>
     <string name="compose_attach_camera">کیمرا</string>
     <string name="compose_attach_file">فائل</string>
@@ -222,13 +223,13 @@
     <string name="compose_attach_schedule">شیڈول</string>
     <string name="compose_attach_templates">سانچے</string>
     <!-- Example: SIM 1 (Verizon) selected-->
-    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) منتخب</string>
     <plurals name="compose_video_too_long">
         <item quantity="one">یہ ویڈیو MMS سے بھیجنے کے لیے بہت لمبی ہے۔ زیادہ سے زیادہ %d سیکنڈ کی ہو سکتی ہے۔</item>
         <item quantity="other">یہ ویڈیو MMS سے بھیجنے کے لیے بہت لمبی ہے۔ زیادہ سے زیادہ %d سیکنڈ کی ہو سکتی ہے۔</item>
     </plurals>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
-    <string name="compose_send_cd">Send message</string>
+    <string name="compose_sim_cd">%s منتخب، SIM کارڈ تبدیل کریں</string>
+    <string name="compose_send_cd">پیغام بھیجیں</string>
     <string name="compose_record_audio_msg_cd">صوتی پیغام ریکارڈ کریں</string>
     <string name="compose_record_audio_msg_abort_cd">صوتی پیغام منسوخ کریں</string>
     <string name="compose_record_audio_msg_attach_cd">صوتی پیغام منسلک کریں</string>
@@ -241,37 +242,37 @@
     <string name="compose_message_item">پیغام کا آئٹم</string>
     <string name="compose_message_attachment">منسلکہ</string>
     <string name="compose_toast_drag_stt">بول کر لکھنے کا بٹن جہاں چاہیں منتقل کریں</string>
-    <string name="message_status_sending">Sending…</string>
-    <string name="message_status_delivered">Delivered %s</string>
-    <string name="message_status_failed">Failed to send. Tap to try again</string>
+    <string name="message_status_sending">بھیجا جا رہا ہے…</string>
+    <string name="message_status_delivered">پہنچ گیا %s</string>
+    <string name="message_status_failed">بھیجا نہیں جا سکا۔ دوبارہ کوشش کے لیے ٹیپ کریں</string>
     <string name="message_body_too_long_to_display">⚠ پیغام لمبا ہے۔ پورا متن دیکھنے کے لیے کاپی یا محفوظ کریں</string>
     <string name="conversation_menu">گفتگو کے اختیارات</string>
     <string name="conversation_menu_media">تمام میڈیا دیکھیں</string>
     <string name="media_title">میڈیا</string>
     <string name="media_empty">اس گفتگو میں شیئر کی گئی تصاویر اور ویڈیوز یہاں نظر آئیں گی</string>
-    <string name="info_copied_address">Address copied</string>
-    <string name="info_name">Conversation title</string>
-    <string name="info_notifications">Notifications</string>
-    <string name="info_theme">Theme</string>
-    <string name="info_archive">Archive</string>
-    <string name="info_unarchive">Unarchive</string>
-    <string name="info_block">Block</string>
-    <string name="info_unblock">Unblock</string>
-    <string name="info_delete">Delete conversation</string>
-    <string name="gallery_error">Couldn\'t load media</string>
-    <string name="gallery_toast_saved">Saved to gallery</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
+    <string name="info_copied_address">پتہ کاپی ہو گیا</string>
+    <string name="info_name">گفتگو کا عنوان</string>
+    <string name="info_notifications">اطلاعات</string>
+    <string name="info_theme">تھیم</string>
+    <string name="info_archive">آرکائیو کریں</string>
+    <string name="info_unarchive">آرکائیو سے نکالیں</string>
+    <string name="info_block">بلاک کریں</string>
+    <string name="info_unblock">ان بلاک کریں</string>
+    <string name="info_delete">گفتگو حذف کریں</string>
+    <string name="gallery_error">میڈیا لوڈ نہیں ہو سکا</string>
+    <string name="gallery_toast_saved">گیلری میں محفوظ ہو گیا</string>
+    <string name="backup_title">بیک اپ اور بحالی</string>
+    <string name="backup_backing_up">پیغامات کا بیک اپ ہو رہا ہے</string>
     <string name="backup_failed_title">بیک اپ ناکام</string>
     <string name="backup_icon_change_title">ایپ آئیکن بحال کریں؟</string>
     <string name="backup_icon_change_message">آپ کا بیک اپ ایپ آئیکن کے کسی دوسرے رنگ کے ساتھ بنایا گیا تھا۔ Android آئیکن صرف اسی وقت بدل سکتا ہے جب ایپ بند ہو، اس لیے تصدیق کرتے ہی Open Messages بند ہو جائے گی۔</string>
     <string name="icon_change_confirm">لاگو کریں اور بند کریں</string>
     <string name="icon_change_later">ابھی نہیں</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_loading">Loading…</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_restoring">بیک اپ سے بحال ہو رہا ہے</string>
+    <string name="backup_loading">لوڈ ہو رہا ہے…</string>
+    <string name="backup_never">کبھی نہیں</string>
+    <string name="backup_location_title">بیک اپ کا مقام</string>
+    <string name="backup_location_summary">فولڈر مقرر کریں</string>
     <string name="backup_auto_title">خودکار بیک اپ</string>
     <string name="backup_auto_never">کبھی نہیں</string>
     <string name="backup_auto_daily">ہر روز</string>
@@ -297,23 +298,23 @@
     <string name="backup_restore_from_title">بحال کریں از</string>
     <string name="backup_restore_from_folder">ایک فولڈر</string>
     <string name="backup_restore_from_zip">ایک ‎.zip فائل</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_backup">Backup in progress…</string>
-    <string name="backup_restore_error_restore">Restore in progress…</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_restore_title">بحال کریں</string>
+    <string name="backup_restore_summary">بیک اپ منتخب کریں</string>
+    <string name="backup_restore_error_backup">بیک اپ جاری ہے…</string>
+    <string name="backup_restore_error_restore">بحالی جاری ہے…</string>
+    <string name="backup_restore_confirm_title">بیک اپ سے بحال کریں</string>
+    <string name="backup_restore_stop_title">بحالی روکیں</string>
+    <string name="backup_restore_stop_message">جو پیغامات پہلے ہی بحال ہو چکے ہیں وہ آپ کے آلے پر رہیں گے</string>
+    <string name="backup_select_location_rationale_title">بیک اپ کا مقام منتخب کریں</string>
+    <string name="backup_select_location_rationale_message">براہ کرم وہ فولڈر منتخب کریں جہاں بیک اپ محفوظ کرنے ہیں</string>
+    <string name="backup_details">%1$s\n%2$d پیغامات</string>
+    <string name="backup_selected_backup_error_title">خرابی</string>
+    <string name="backup_selected_backup_error_message">بیک اپ فائل پڑھی نہیں جا سکی</string>
+    <string name="backup_selected_backup_details_title">بیک اپ کی تفصیلات</string>
+    <string name="backup_restore_dialog_title">بیک اپس</string>
+    <string name="backup_restore_dialog_empty">کوئی بیک اپ نہیں ملا</string>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
+    <string name="backup_now">ابھی بیک اپ لیں</string>
     <string name="backup_now_summary">نیا بیک اپ بنائیں</string>
     <string name="backup_categories_title">کس چیز کا بیک اپ لیا جائے؟</string>
     <string name="backup_restore_source_title">کون سا بیک اپ؟</string>
@@ -327,42 +328,42 @@
     <string name="backup_exact_alarm_message">شیڈول شدہ پیغامات کو عین وقت پر بھیجنے کے لیے Open Messages کو درست الارم سیٹ کرنے کی اجازت درکار ہے۔ اس کے بغیر وہ تھوڑی تاخیر سے جا سکتے ہیں۔</string>
     <string name="backup_exact_alarm_grant">اجازت دیں</string>
     <string name="backup_exact_alarm_skip">پھر بھی بحال کریں</string>
-    <string name="backup_progress_parsing">Parsing backup…</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup…</string>
-    <string name="backup_progress_syncing">Syncing messages…</string>
-    <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_parsing">بیک اپ پڑھا جا رہا ہے…</string>
+    <string name="backup_progress_running">%d/%d پیغامات</string>
+    <string name="backup_progress_saving">بیک اپ محفوظ ہو رہا ہے…</string>
+    <string name="backup_progress_syncing">پیغامات ہم آہنگ ہو رہے ہیں…</string>
+    <string name="backup_progress_finished">مکمل!</string>
     <string name="backup_progress_failed">بیک اپ لکھا نہیں جا سکا۔ باقی جگہ اور بیک اپ فولڈر چیک کریں۔</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_notification_channel_name">بیک اپ اور بحالی</string>
     <string name="clipboard_too_large_to_copy">ڈیٹا کا سائز کلپ بورڈ کی حد سے زیادہ ہے</string>
     <string name="clipboard_unable_to_copy_to">کلپ بورڈ پر کاپی نہیں ہو سکا</string>
-    <string name="scheduled_title">Scheduled</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_title">شیڈول شدہ</string>
+    <string name="scheduled_empty_description">عین اس لمحے خودکار طور پر پیغام بھیجیں جب آپ چاہیں</string>
+    <string name="scheduled_empty_message_1">ارے! تمہاری سالگرہ کب ہے، ذرا پھر بتانا؟</string>
+    <string name="scheduled_empty_message_2">23 دسمبر کو ہے</string>
+    <string name="scheduled_empty_message_3">سالگرہ مبارک! دیکھو میں کتنا اچھا دوست ہوں، تمہاری سالگرہ یاد رکھی</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_compose_cd">پیغام شیڈول کریں</string>
     <string name="scheduled_send_cd">یہ پیغام شیڈول کریں</string>
-    <string name="scheduled_options_title">Scheduled message</string>
+    <string name="scheduled_options_title">شیڈول شدہ پیغام</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>ابھی بھیجیں</item>
+        <item>متن کاپی کریں</item>
+        <item>حذف کریں</item>
     </string-array>
     <string name="attachment_missing">غائب</string>
-    <string name="settings_category_appearance">Appearance</string>
-    <string name="settings_category_general">General</string>
-    <string name="settings_category_quick_reply">Quick Reply</string>
-    <string name="settings_theme_title">Theme</string>
-    <string name="settings_night_title">Night mode</string>
-    <string name="settings_black_title">Pure black night mode</string>
-    <string name="settings_night_start_title">Start time</string>
-    <string name="settings_night_end_title">End time</string>
+    <string name="settings_category_appearance">ظاہری شکل</string>
+    <string name="settings_category_general">عمومی</string>
+    <string name="settings_category_quick_reply">فوری جواب</string>
+    <string name="settings_theme_title">تھیم</string>
+    <string name="settings_night_title">نائٹ موڈ</string>
+    <string name="settings_black_title">خالص سیاہ نائٹ موڈ</string>
+    <string name="settings_night_start_title">آغاز کا وقت</string>
+    <string name="settings_night_end_title">اختتام کا وقت</string>
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
-    <string name="settings_text_size_title">Font size</string>
-    <string name="settings_system_font_title">Use system font</string>
+    <string name="settings_text_size_title">فونٹ کا سائز</string>
+    <string name="settings_system_font_title">سسٹم فونٹ استعمال کریں</string>
     <string name="settings_show_avatar_title">رابطے کی تصویر دکھائیں</string>
     <string name="settings_show_avatar_summary">گفتگو میں بھیجنے والے کی تصویر دکھائیں۔ پیغام کے بلبلوں کو زیادہ چوڑائی دینے کے لیے اسے بند کریں۔</string>
     <string name="settings_hide_country_code_title">ملک کا کوڈ چھپائیں</string>
@@ -372,46 +373,48 @@
     <string name="settings_system_show_stt_title">بول کر لکھنے کا بٹن دکھائیں</string>
     <string name="settings_drawer_swipe_title">مینو کھولنے کے لیے سوائپ کریں</string>
     <string name="settings_drawer_swipe_summary">گفتگو کی فہرست کے بائیں کنارے سے سوائپ کر کے سائیڈ مینو کھولیں</string>
-    <string name="settings_auto_emoji_title">Automatic emoji</string>
-    <string name="settings_notifications_title">Notifications</string>
-    <string name="settings_notifications_o_summary">Tap to customize</string>
-    <string name="settings_notification_actions_title">Actions</string>
-    <string name="settings_notification_action_1">Button 1</string>
-    <string name="settings_notification_action_2">Button 2</string>
-    <string name="settings_notification_action_3">Button 3</string>
-    <string name="settings_notification_previews_title">Notification previews</string>
+    <string name="settings_auto_emoji_title">خودکار ایموجی</string>
+    <string name="settings_notifications_title">اطلاعات</string>
+    <string name="settings_notifications_o_summary">حسب منشا بنانے کے لیے ٹیپ کریں</string>
+    <string name="settings_notification_actions_title">اعمال</string>
+    <string name="settings_notification_action_1">بٹن 1</string>
+    <string name="settings_notification_action_2">بٹن 2</string>
+    <string name="settings_notification_action_3">بٹن 3</string>
+    <string name="settings_notification_previews_title">اطلاع کا پیش منظر</string>
     <string name="settings_notification_previews_summary">نام اور پیغام دکھائیں</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">اسکرین جگائیں</string>
     <string name="settings_notification_silent_title">رابطہ نہ ہو تو خاموش</string>
     <string name="settings_notification_silent_summary">ان پیغامات کی اطلاعات خاموش کرتا ہے جن کے بھیجنے والے آپ کے رابطوں میں نہیں</string>
     <string name="settings_copy_code_title">اطلاعات سے کوڈ کاپی کریں</string>
     <string name="settings_copy_code_summary">یک وقتی اور تصدیقی کوڈز کی اطلاعات میں کوڈ کاپی کریں کا بٹن شامل کرتا ہے</string>
     <string name="notification_copy_code">کوڈ کاپی کریں</string>
     <string name="notification_code_copied">کوڈ کاپی ہو گیا</string>
-    <string name="settings_vibration_title">Vibration</string>
-    <string name="settings_ringtone_title">Sound</string>
-    <string name="settings_ringtone_none">None</string>
-    <string name="settings_quick_reply_title">Quick Reply</string>
-    <string name="settings_quick_reply_summary">Popup for new messages</string>
-    <string name="settings_quick_reply_tap_dismiss_title">Tap to dismiss</string>
-    <string name="settings_quick_reply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_delayed_title">Delayed sending</string>
-    <string name="settings_swipe_actions">Swipe actions</string>
-    <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-    <string name="settings_swipe_actions_right">Right swipe</string>
-    <string name="settings_swipe_actions_left">Left swipe</string>
-    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string name="settings_vibration_title">وائبریشن</string>
+    <string name="settings_ringtone_title">آواز</string>
+    <string name="settings_ringtone_none">کوئی نہیں</string>
+    <string name="settings_quick_reply_title">فوری جواب</string>
+    <string name="settings_quick_reply_summary">نئے پیغامات کے لیے پاپ اپ</string>
+    <string name="settings_quick_reply_tap_dismiss_title">بند کرنے کے لیے ٹیپ کریں</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">پاپ اپ بند کرنے کے لیے اس کے باہر ٹیپ کریں</string>
+    <string name="settings_delayed_title">تاخیر سے بھیجنا</string>
+    <string name="settings_swipe_actions">سوائپ اعمال</string>
+    <string name="settings_swipe_actions_summary">گفتگوؤں کے لیے سوائپ اعمال ترتیب دیں</string>
+    <string name="settings_swipe_actions_right">دائیں سوائپ</string>
+    <string name="settings_swipe_actions_left">بائیں سوائپ</string>
+    <string name="settings_swipe_actions_change">تبدیل کریں</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>کوئی نہیں</item>
+        <item>آرکائیو کریں</item>
+        <item>حذف کریں</item>
+        <item>بلاک کریں</item>
+        <item>کال کریں</item>
+        <item>پڑھا ہوا نشان زد کریں</item>
+        <item>غیر پڑھا نشان زد کریں</item>
+        <item>پڑھ کر سنائیں</item>
+        <item>پڑھا/غیر پڑھا نشان زد کریں</item>
     </string-array>
-    <string name="settings_delivery_title">Delivery confirmations</string>
-    <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_delivery_title">ترسیل کی تصدیق</string>
+    <string name="settings_delivery_summary">تصدیق کریں کہ پیغامات کامیابی سے بھیجے گئے</string>
     <string name="settings_send_sound_title">بھیجنے پر آواز</string>
     <string name="settings_send_sound_summary">پیغام بھیجتے وقت ایک مختصر آواز چلائیں</string>
     <string name="settings_send_sound_volume_title">آواز کی سطح</string>
@@ -419,39 +422,39 @@
     <string name="settings_header_quick_action_summary">گفتگو کے ہیڈر میں شارٹ کٹ بٹن شامل کریں</string>
     <string name="settings_unread_at_top_title">غیر پڑھے اوپر</string>
     <string name="settings_unread_at_top_summary">غیر پڑھی گفتگوئیں سب سے اوپر دکھائیں</string>
-    <string name="settings_signature_title">Signature</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
-    <string name="settings_unicode_title">Strip accents</string>
-    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
-    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_signature_title">دستخط</string>
+    <string name="settings_signature_summary">اپنے پیغامات کے آخر میں دستخط شامل کریں</string>
+    <string name="settings_unicode_title">اعراب ہٹائیں</string>
+    <string name="settings_unicode_summary">بھیجے جانے والے SMS پیغامات کے حروف سے اعراب ہٹائیں</string>
+    <string name="settings_mobile_title">صرف موبائل نمبر</string>
+    <string name="settings_mobile_summary">پیغام لکھتے وقت صرف موبائل نمبر دکھائیں</string>
+    <string name="settings_auto_delete">پرانے پیغامات خودکار طور پر حذف کریں</string>
+    <string name="settings_auto_delete_dialog_message">پیغامات مقررہ دنوں کے بعد حذف ہو جائیں گے</string>
+    <string name="settings_auto_delete_dialog_hint">دنوں کی تعداد</string>
+    <string name="settings_auto_delete_never">کبھی نہیں</string>
+    <string name="settings_auto_delete_warning">پرانے پیغامات خودکار طور پر حذف کریں؟</string>
+    <string name="settings_auto_delete_warning_message">جاری رکھنے پر %1$d پیغامات ابھی حذف ہو جائیں گے</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">1 دن بعد</item>
+        <item quantity="other">%d دن بعد</item>
     </plurals>
-    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
-    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
-    <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_long_as_mms_title">لمبے پیغامات MMS کے طور پر بھیجیں</string>
+    <string name="settings_long_as_mms_summary">اگر آپ کے لمبے پیغامات نہیں جا رہے یا غلط ترتیب میں جا رہے ہیں، تو آپ انہیں MMS پیغامات کے طور پر بھیج سکتے ہیں۔ اضافی چارجز لگ سکتے ہیں</string>
+    <string name="settings_mms_size_title">MMS تصویری منسلکات خودکار طور پر کمپریس کریں</string>
     <string name="settings_mms_weblink_title">پیغامات میں لنکس کا طریقہ</string>
     <string name="settings_disable_screenshots_title">اسکرین شاٹس بند کریں</string>
     <string name="settings_diable_screenshots_summary">آپریٹنگ سسٹم اور دوسری ایپس کو اس ایپ کے اسکرین شاٹس لینے سے روکیں۔</string>
-    <string name="settings_sync_title">Sync messages</string>
-    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-    <string name="settings_about_title">About Open Messages</string>
-    <string name="settings_version">Version %s</string>
-    <string name="settings_logging_enabled">Debug logging enabled</string>
-    <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="settings_sync_title">پیغامات ہم آہنگ کریں</string>
+    <string name="settings_sync_summary">اپنے پیغامات کو Android کے اصل SMS ڈیٹا بیس سے دوبارہ ہم آہنگ کریں</string>
+    <string name="settings_about_title">Open Messages کے بارے میں</string>
+    <string name="settings_version">ورژن %s</string>
+    <string name="settings_logging_enabled">ڈیبگ لاگنگ فعال</string>
+    <string name="settings_logging_disabled">ڈیبگ لاگنگ غیر فعال</string>
+    <string name="settings_delay_duration_hint">دورانیہ درج کریں (سیکنڈ)</string>
+    <string name="blocking_title">بلاکنگ</string>
+    <string name="blocking_drop_title">پیغامات مسترد کریں</string>
+    <string name="blocking_drop_summary">بلاک شدہ بھیجنے والوں کے آنے والے پیغامات چھپانے کے بجائے مسترد کریں</string>
+    <string name="blocking_conversations">بلاک شدہ گفتگوئیں</string>
     <string name="blocking_category_integrated">بلٹ ان بلاکنگ</string>
     <string name="blocking_integrated_description">Open Messages آپ کے آلے پر ہی اسپیم بلاک کرتی ہے۔ نیچے دیے گئے اختیاری ذرائع آن کرنے پر اپنی فہرست انٹرنیٹ سے ڈاؤن لوڈ کرتے ہیں، پھر آف لائن کام کرتے ہیں۔</string>
     <string name="blocking_category_external_apps">بیرونی ایپس</string>
@@ -463,19 +466,19 @@
     <string name="blocking_source_status_updating">اپ ڈیٹ ہو رہا ہے…</string>
     <string name="blocking_source_status_updated">تازہ ترین · %1$d اندراجات</string>
     <string name="blocking_source_status_failed">ڈاؤن لوڈ ناکام، ذریعہ بند رہے گا۔ اپنا کنکشن چیک کریں اور دوبارہ کوشش کریں۔</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
-    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
-    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocking_manager_title">بلاکنگ مینیجر</string>
+    <string name="blocking_manager_built_in_summary">Open Messages میں بلٹ ان بلاکنگ</string>
+    <string name="blocking_manager_call_blocker_summary">بلیک لسٹ اور شیڈول کے ساتھ اسپیم پیغامات، نمبرز اور نامعلوم کالز بلاک کریں</string>
+    <string name="blocking_manager_call_control_summary">اپنی کالز اور پیغامات ایک ہی آسان جگہ پر خودکار طور پر فلٹر کریں! Community IQ™ کمیونٹی میں معروف اسپیمرز کے ناپسندیدہ پیغامات روکنے دیتا ہے</string>
+    <string name="blocking_manager_sia_summary">\"Should I Answer\" ایپ کے ذریعے ناپسندیدہ نمبروں کے پیغامات خودکار طور پر فلٹر کریں</string>
+    <string name="blocking_manager_copy_title">بلاک شدہ نمبر کاپی کریں</string>
+    <string name="blocking_manager_copy_summary">%s پر جائیں اور اپنے موجودہ بلاک شدہ نمبر کاپی کریں</string>
+    <string name="blocked_numbers_title">بلاک شدہ نمبر</string>
+    <string name="blocked_numbers_empty">آپ کے بلاک شدہ نمبر یہاں نظر آئیں گے</string>
+    <string name="blocked_numbers_add_cd">نیا نمبر بلاک کریں</string>
+    <string name="blocked_numbers_dialog_title">ان سے پیغامات بلاک کریں</string>
+    <string name="blocked_numbers_dialog_hint">فون نمبر</string>
+    <string name="blocked_numbers_dialog_block">بلاک کریں</string>
     <string name="message_content_filters_title">پیغام کے مواد کے فلٹرز</string>
     <string name="message_content_filters_empty">آپ کے پیغام کے مواد کے فلٹرز یہاں نظر آئیں گے</string>
     <string name="message_content_filters_add_cd">نیا فلٹر بنائیں</string>
@@ -485,17 +488,17 @@
     <string name="message_content_filters_dialog_regex_switch">ریگولر ایکسپریشن</string>
     <string name="message_content_filters_dialog_contacts_switch">رابطے شامل کریں</string>
     <string name="message_content_filters_dialog_create">بنائیں</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocked_messages_title">بلاک شدہ پیغامات</string>
+    <string name="blocked_messages_empty">آپ کے بلاک شدہ پیغامات یہاں نظر آئیں گے</string>
+    <string name="blocking_block_title">بلاک کریں</string>
+    <string name="blocking_unblock_title">ان بلاک کریں</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="one">%s پر جائیں اور یہ نمبر بلاک کریں</item>
+        <item quantity="other">%s پر جائیں اور یہ نمبرز بلاک کریں</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="one">%s پر جائیں اور اس نمبر کی اجازت دیں</item>
+        <item quantity="other">%s پر جائیں اور ان نمبروں کی اجازت دیں</item>
     </plurals>
     <string name="deduplicate_messages_category">دہرے پیغامات ہٹائیں</string>
     <string name="deduplicate_messages_title">دہرے پیغامات ہٹائیں</string>
@@ -506,50 +509,51 @@
     <string name="deduplicating_messages_finished">دہرے پیغامات ہٹا دیے گئے!</string>
     <string name="deduplicating_messages_no_messages">کوئی دہرا پیغام نہیں ملا۔</string>
     <string name="deduplicating_messages_failed">دہرے پیغامات ہٹانا ناکام رہا، براہ کرم دوبارہ کوشش کریں</string>
-    <string name="about_title">About</string>
-    <string name="about_version_title">Version</string>
-    <string name="about_developer_title">Developer</string>
-    <string name="about_source_title">Source code</string>
-    <string name="about_changelog_title">Changelog</string>
-    <string name="about_contact_title">Contact</string>
-    <string name="about_license_title">License</string>
-    <string name="about_copyright_title">Copyright</string>
-    <string name="widget_loading">Loading…</string>
-    <string name="widget_more">View more conversations</string>
+    <string name="about_title">بارے میں</string>
+    <string name="about_version_title">ورژن</string>
+    <string name="about_developer_title">ڈیولپر</string>
+    <string name="about_source_title">سورس کوڈ</string>
+    <string name="about_changelog_title">تبدیلیوں کی فہرست</string>
+    <string name="about_contact_title">رابطہ</string>
+    <string name="about_license_title">لائسنس</string>
+    <string name="about_copyright_title">کاپی رائٹ</string>
+    <string name="widget_loading">لوڈ ہو رہا ہے…</string>
+    <string name="widget_more">مزید گفتگوئیں دیکھیں</string>
     <string name="all_conversations_widget_title">تمام گفتگوئیں</string>
-    <string name="quick_reply_menu_read">Mark read</string>
-    <string name="quick_reply_menu_call">Call</string>
-    <string name="quick_reply_menu_delete">Delete</string>
-    <string name="quick_reply_menu_expand">Show more</string>
-    <string name="quick_reply_menu_collapse">Show less</string>
-    <string name="quick_reply_menu_view">Open conversation</string>
+    <string name="quick_reply_menu_read">پڑھا ہوا نشان زد کریں</string>
+    <string name="quick_reply_menu_call">کال کریں</string>
+    <string name="quick_reply_menu_delete">حذف کریں</string>
+    <string name="quick_reply_menu_expand">مزید دکھائیں</string>
+    <string name="quick_reply_menu_collapse">کم دکھائیں</string>
+    <string name="quick_reply_menu_view">گفتگو کھولیں</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
-    <string name="theme_apply">Apply</string>
+    <string name="theme_apply">لاگو کریں</string>
     <string-array name="notification_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>کوئی نہیں</item>
+        <item>آرکائیو کریں</item>
+        <item>حذف کریں</item>
+        <item>بلاک کریں</item>
+        <item>کال کریں</item>
+        <item>پڑھا ہوا نشان زد کریں</item>
+        <item>جواب دیں</item>
+        <item>پڑھ کر سنائیں</item>
     </string-array>
     <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
-    <string name="button_cancel">Cancel</string>
+    <string name="button_continue">جاری رکھیں</string>
+    <string name="button_cancel">منسوخ کریں</string>
     <string name="button_close">بند کریں</string>
-    <string name="button_delete">Delete</string>
-    <string name="button_save">Save</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_delete">حذف کریں</string>
+    <string name="button_save">محفوظ کریں</string>
+    <string name="button_stop">روکیں</string>
     <string name="button_set">Set</string>
     <string name="button_later">بعد میں</string>
     <string name="icon_restart_title">دوبارہ شروع کرنا ضروری ہے</string>
     <string name="icon_restart_message">ایپ آئیکن کی تبدیلی مکمل کرنے کے لیے ایپ کو دوبارہ شروع کرنا ہوگا۔</string>
     <string name="icon_restart_now">دوبارہ شروع کریں</string>
-    <string name="button_undo">Undo</string>
+    <string name="button_undo">واپس کریں</string>
     <string name="button_clear">صاف کریں</string>
-    <string name="toast_copied">Copied</string>
+    <string name="toast_copied">کاپی ہو گیا</string>
     <plurals name="toast_archived">
         <item quantity="one">گفتگو آرکائیو ہو گئی</item>
         <item quantity="other">%d گفتگوئیں آرکائیو ہو گئیں</item>
@@ -559,38 +563,39 @@
         <item quantity="other">%d گفتگوئیں آرکائیو سے نکال دی گئیں</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">New message</item>
-        <item quantity="other">%s new messages</item>
+        <item quantity="one">نیا پیغام</item>
+        <item quantity="other">%s نئے پیغامات</item>
     </plurals>
-    <string name="notification_message_failed_title">Message not sent</string>
-    <string name="notification_message_failed_text">The message to %s failed to send</string>
+    <string name="notification_message_failed_title">پیغام نہیں بھیجا گیا</string>
+    <string name="notification_message_failed_text">%s کو پیغام نہیں بھیجا جا سکا</string>
     <string name="notification_foreground_worker_title">پیغام موصول ہو رہا ہے</string>
     <string name="notification_foreground_worker_text">Android 12 اور پرانے ورژنز پر، پیغامات موصول کرنے والے پس منظر کے کام کے لیے ایک اطلاع ضروری ہے۔</string>
     <string name="notification_foreground_worker_channel_name">پیغام موصولی کے عمل کی اطلاع</string>
     <string name="notification_me">میں</string>
     <string name="notification_message_failed_action">دوبارہ بھیجیں</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>سسٹم</item>
+        <item>غیر فعال</item>
+        <item>ہمیشہ آن</item>
+        <item>خودکار</item>
     </string-array>
     <string-array name="notification_preview_options">
-        <item>Show name and message</item>
-        <item>Show name</item>
-        <item>Hide contents</item>
+        <item>نام اور پیغام دکھائیں</item>
+        <item>نام دکھائیں</item>
+        <item>مواد چھپائیں</item>
     </string-array>
     <string-array name="text_sizes">
-        <item>Small</item>
-        <item>Normal</item>
-        <item>Large</item>
-        <item>Larger</item>
+        <item>چھوٹا</item>
+        <item>عام</item>
+        <item>بڑا</item>
+        <item>زیادہ بڑا</item>
+        <item>بہت بڑا</item>
     </string-array>
     <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>کوئی تاخیر نہیں</item>
+        <item>3 سیکنڈ</item>
+        <item>5 سیکنڈ</item>
+        <item>10 سیکنڈ</item>
     </string-array>
     <string-array name="header_quick_action_labels">
         <item>کوئی نہیں</item>
@@ -608,14 +613,14 @@
         <item>تین سُر</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>خودکار</item>
         <item>100KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>کوئی کمپریشن نہیں</item>
     </string-array>
     <string-array name="messageLinkHandlings">
         <item>بلاک کریں</item>
@@ -623,18 +628,18 @@
         <item>کھولنے سے پہلے پوچھیں</item>
     </string-array>
     <string-array name="quick_responses">
-        <item>Okay</item>
-        <item>Give me a moment</item>
-        <item>On my way</item>
-        <item>Thanks</item>
-        <item>Sounds good</item>
-        <item>What\'s up?</item>
-        <item>Agreed</item>
-        <item>No</item>
-        <item>Love you</item>
-        <item>Sorry</item>
+        <item>ٹھیک ہے</item>
+        <item>ایک لمحہ دیں</item>
+        <item>راستے میں ہوں</item>
+        <item>شکریہ</item>
+        <item>ٹھیک لگتا ہے</item>
+        <item>کیا حال ہے؟</item>
+        <item>متفق</item>
+        <item>نہیں</item>
+        <item>تم سے پیار ہے</item>
+        <item>معاف کیجیے</item>
         <item>LOL</item>
-        <item>That\'s okay</item>
+        <item>کوئی بات نہیں</item>
     </string-array>
     <string name="speak_no_messages">کوئی پیغام نہیں</string>
     <string name="speak_unseen_messages">نہ دیکھے گئے پیغامات سنائیں</string>
