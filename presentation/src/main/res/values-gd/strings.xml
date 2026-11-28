@@ -18,13 +18,13 @@
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
     <string name="app_tagline">Teachdaireachdan sìmplidh le bun-tùs fosgailte</string>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
-    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-    <string name="title_archived">Archived</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_notification_prefs">Notifications</string>
-    <string name="title_theme">Theme</string>
+    <string name="shortcut_compose_long_label">Còmhradh ùr</string>
+    <string name="shortcut_compose_short_label">Sgrìobh</string>
+    <string name="shortcut_compose_disabled_message">Chaidh an ath-ghoirid a chur à comas</string>
+    <string name="title_archived">San tasglann</string>
+    <string name="title_settings">Roghainnean</string>
+    <string name="title_notification_prefs">Brathan</string>
+    <string name="title_theme">Ùrlar</string>
     <string name="theme_default">Bun-roghainn</string>
     <string name="theme_wallpaper">Pàipear-balla</string>
     <string name="theme_other_colors">Dathan</string>
@@ -36,40 +36,40 @@
     <string name="theme_icon_summary">Tagh dath ìomhaigheag na h-aplacaid, neo-eisimeileach on ùrlar. Dùinidh an aplacaid nuair a chuireas tu atharrachadh an sàs.</string>
     <string name="theme_icon_change_title">A bheil thu airson ìomhaigheag na h-aplacaid atharrachadh?</string>
     <string name="theme_icon_change_message">Tha dath ìomhaigheag na h-aplacaid gu bhith ag atharrachadh. Chan urrainn do Android an ìomhaigheag atharrachadh ach nuair a bhios an aplacaid dùinte, mar sin dùinidh Open Messages cho luath ’s a dhearbhas tu e.</string>
-    <string name="title_conversations">Search inbox…</string>
+    <string name="title_conversations">Lorg sa bhogsa a-steach…</string>
     <string name="title_search">Lorg</string>
-    <string name="title_compose">Type a name or number</string>
-    <string name="setup_skip">Skip</string>
-    <string name="setup_next">Continue</string>
-    <string name="menu_add_person">Add person</string>
-    <string name="menu_call">Call</string>
-    <string name="menu_mms_part_save">Save to gallery</string>
+    <string name="title_compose">Cuir a-steach ainm no àireamh</string>
+    <string name="setup_skip">Leum thairis air</string>
+    <string name="setup_next">Lean air adhart</string>
+    <string name="menu_add_person">Cuir neach ris</string>
+    <string name="menu_call">Cuir fòn</string>
+    <string name="menu_mms_part_save">Sàbhail sa ghailearaidh</string>
     <string name="menu_mms_part_share">Co-roinn</string>
     <string name="menu_mms_part_forward">Sìn air adhart</string>
     <string name="menu_mms_part_open">Fosgail ann an aplacaid eile</string>
     <string name="compose_menu_share">Share</string>
-    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_drawer_open_cd">Fosgail drathair na seòladaireachd</string>
     <string name="main_search_close_cd">Dùin an lorg</string>
     <string name="main_search_clear_cd">Falamhaich an lorg</string>
     <string name="main_sim_cd">SIM %d</string>
-    <string name="main_title_selected">%d selected</string>
-    <string name="main_menu_clear">Clear</string>
+    <string name="main_title_selected">%d air an taghadh</string>
+    <string name="main_menu_clear">Falamhaich</string>
     <string name="main_menu_select_all">Tagh na h-uile</string>
-    <string name="main_menu_archive">Archive</string>
-    <string name="main_menu_unarchive">Unarchive</string>
-    <string name="main_menu_delete">Delete</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
-    <string name="main_menu_pin">Pin to top</string>
-    <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
-    <string name="main_menu_block">Block</string>
+    <string name="main_menu_archive">Cuir san tasglann</string>
+    <string name="main_menu_unarchive">Thoir às an tasglann</string>
+    <string name="main_menu_delete">Sguab às</string>
+    <string name="main_menu_add_contact">Cuir ris an luchd-conaltraidh</string>
+    <string name="main_menu_pin">Prìnich aig a’ bharr</string>
+    <string name="main_menu_unpin">Dì-phrìnich</string>
+    <string name="main_menu_read">Comharraich gun deach a leughadh</string>
+    <string name="main_menu_unread">Comharraich nach deach a leughadh</string>
+    <string name="main_menu_block">Bac</string>
     <string name="main_menu_send_now">Cuir an-dràsta</string>
     <string name="main_menu_edit_message">Deasaich an teachdaireachd</string>
     <string name="main_menu_rename_conversation">Thoir ainm ùr air a’ chòmhradh</string>
-    <string name="main_syncing">Syncing messages…</string>
+    <string name="main_syncing">A’ sioncronachadh nan teachdaireachdan…</string>
     <string name="main_sync_emojis">A’ pàrsadh freagairtean emoji…</string>
-    <string name="main_sender_you">You: %s</string>
+    <string name="main_sender_you">Thusa: %s</string>
     <string name="main_sender_draft">Dreachd: %s</string>
     <string name="conversation_flagged_label">Spama, ma dh’fhaoidte</string>
     <string name="snippet_picture">Dealbh</string>
@@ -77,40 +77,43 @@
     <string name="snippet_audio">Fuaim</string>
     <string name="snippet_contact_card">Cairt neach-conaltraidh</string>
     <string name="search_group_conversations">Còmhraidhean</string>
-    <string name="main_message_results_title">Results in messages</string>
+    <string name="main_message_results_title">Toraidhean sna teachdaireachdan</string>
     <plurals name="main_message_results">
-        <item quantity="other">%d messages</item>
+        <item quantity="one">%d teachdaireachd</item>
+        <item quantity="two">%d theachdaireachd</item>
+        <item quantity="few">%d teachdaireachdan</item>
+        <item quantity="other">%d teachdaireachd</item>
     </plurals>
-    <string name="inbox_empty_text">Your conversations will appear here</string>
-    <string name="inbox_search_empty_text">No results</string>
-    <string name="archived_empty_text">Your archived conversations will appear here</string>
-    <string name="main_fab_cd">Start new conversation</string>
-    <string name="main_default_sms_title">Love texting again</string>
-    <string name="main_default_sms_message">Make Open Messages your default SMS app</string>
-    <string name="main_default_sms_change">Change</string>
-    <string name="main_permission_required">Permission required</string>
-    <string name="main_permission_sms">Open Messages needs permission to send and view SMS messages</string>
-    <string name="main_permission_contacts">Open Messages needs permission to view your contacts</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
-    <string name="main_permission_allow">Allow</string>
+    <string name="inbox_empty_text">Nochdaidh na còmhraidhean agad an-seo</string>
+    <string name="inbox_search_empty_text">Gun toradh</string>
+    <string name="archived_empty_text">Nochdaidh na còmhraidhean agad san tasglann an-seo</string>
+    <string name="main_fab_cd">Tòisich còmhradh ùr</string>
+    <string name="main_default_sms_title">Gabh tlachd à teacsaichean a-rithist</string>
+    <string name="main_default_sms_message">Dèan Open Messages na aplacaid SMS bhunaiteach agad</string>
+    <string name="main_default_sms_change">Atharraich</string>
+    <string name="main_permission_required">Tha feum air cead</string>
+    <string name="main_permission_sms">Feumaidh Open Messages cead airson teachdaireachdan SMS a chur ’s a shealltainn</string>
+    <string name="main_permission_contacts">Feumaidh Open Messages cead airson an luchd-conaltraidh agad a shealltainn</string>
+    <string name="main_permission_notifications">Feumaidh Open Messages cead airson brathan a shealltainn</string>
+    <string name="main_permission_allow">Ceadaich</string>
     <string name="scheduled_menu_send_now">Cuir an-dràsta</string>
     <string name="scheduled_menu_edit_message">Deasaich an teachdaireachd</string>
-    <string name="drawer_inbox">Inbox</string>
+    <string name="drawer_inbox">Am bogsa a-steach</string>
     <string name="contacts_group_recent">O chionn goirid</string>
     <string name="contacts_group_starred">Annsachdan</string>
     <string name="contacts_group_groups">Buidhnean</string>
     <string name="conversations_group_today">An-diugh</string>
     <string name="conversations_group_yesterday">An-dè</string>
-    <string name="drawer_archived">Archived</string>
+    <string name="drawer_archived">San tasglann</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d gun leughadh</item>
         <item quantity="two">%d gun leughadh</item>
         <item quantity="few">%d gun leughadh</item>
         <item quantity="other">%d gun leughadh</item>
     </plurals>
-    <string name="drawer_scheduled">Scheduled</string>
-    <string name="drawer_blocking">Blocking</string>
-    <string name="drawer_more">More</string>
+    <string name="drawer_scheduled">Air an sgeideal</string>
+    <string name="drawer_blocking">Bacadh</string>
+    <string name="drawer_more">Barrachd</string>
     <string name="message_management_title">Stiùireadh theachdaireachdan</string>
     <string name="templates_title">Teamplaidean</string>
     <string name="templates_empty">Chan eil teachdaireachd air a sàbhaladh fhathast.\nThoir gnogag air + gus teachdaireachd a chuireas tu gu tric a shàbhaladh, an uairsin thoir gnogag oirre gus taghadh cò dha a thèid a cur.</string>
@@ -119,19 +122,19 @@
     <string name="templates_add_cd">Teamplaid ùr</string>
     <string name="template_new">Teamplaid ùr</string>
     <string name="template_edit">Deasaich an teamplaid</string>
-    <string name="drawer_settings">Settings</string>
-    <string name="drawer_help">Help &amp; feedback</string>
-    <string name="drawer_invite">Invite friends</string>
-    <string name="rate_title">Enjoying Open Messages?</string>
+    <string name="drawer_settings">Roghainnean</string>
+    <string name="drawer_help">Cobhair is beachdan</string>
+    <string name="drawer_invite">Thoir cuireadh do charaidean</string>
+    <string name="rate_title">A bheil Open Messages a’ còrdadh riut?</string>
     <string name="rate_summary">Share some love and rate us on Google Play!</string>
-    <string name="rate_okay">OKAY!</string>
-    <string name="rate_dismiss">DISMISS</string>
-    <string name="dialog_delete_title">Delete</string>
+    <string name="rate_okay">GLÈ MHATH!</string>
+    <string name="rate_dismiss">LEIG SEACHAD</string>
+    <string name="dialog_delete_title">Sguab às</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Are you sure you would like to delete this conversation?</item>
-        <item quantity="two">Are you sure you would like to delete %d conversations?</item>
-        <item quantity="few">Are you sure you would like to delete %d conversations?</item>
-        <item quantity="other">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="one">A bheil thu cinnteach gu bheil thu airson an còmhradh seo a sguabadh às?</item>
+        <item quantity="two">A bheil thu cinnteach gu bheil thu airson %d chòmhradh a sguabadh às?</item>
+        <item quantity="few">A bheil thu cinnteach gu bheil thu airson %d còmhraidhean a sguabadh às?</item>
+        <item quantity="other">A bheil thu cinnteach gu bheil thu airson %d còmhradh a sguabadh às?</item>
     </plurals>
     <plurals name="dialog_delete_chat">
         <item quantity="one">A bheil thu cinnteach gu bheil thu airson an teachdaireachd seo a sguabadh às?</item>
@@ -151,25 +154,25 @@
     <string name="dialog_clear_compose_title">Falamhaich an teachdaireachd</string>
     <string name="dialog_clear_compose">A bheil thu airson an teachdaireachd fhalamhachadh? Cha ghabh seo a neo-dhèanamh.</string>
     <string-array name="message_options">
-        <item>Copy text</item>
-        <item>Forward</item>
-        <item>Delete</item>
+        <item>Dèan lethbhreac dhen teacsa</item>
+        <item>Sìn air adhart</item>
+        <item>Sguab às</item>
     </string-array>
-    <string name="compose_number_picker_title">Choose a phone number</string>
-    <string name="compose_number_picker_default">%s ∙ Default</string>
-    <string name="compose_number_picker_once">Just once</string>
-    <string name="compose_number_picker_always">Always</string>
-    <string name="compose_title_selected">%d selected</string>
-    <string name="compose_subtitle_results">%1$d of %2$d results</string>
-    <string name="compose_send_group_title">Send as group message</string>
-    <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_number_picker_title">Tagh àireamh fòn</string>
+    <string name="compose_number_picker_default">%s ∙ Bun-roghainn</string>
+    <string name="compose_number_picker_once">An turas seo a-mhàin</string>
+    <string name="compose_number_picker_always">An-còmhnaidh</string>
+    <string name="compose_title_selected">%d air an taghadh</string>
+    <string name="compose_subtitle_results">Toradh %1$d à %2$d</string>
+    <string name="compose_send_group_title">Cuir mar theachdaireachd buidhinn</string>
+    <string name="compose_send_group_summary">Chì a h-uile duine na faightearan agus na freagairtean</string>
     <string name="compose_send_group_summary_on">Chì a h-uile duine na faightearan agus na freagairtean</string>
     <string name="compose_send_group_summary_off">Thèid na teachdaireachdan a chur fa leth gu gach faightear</string>
-    <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
-    <string name="compose_vcard_label">Contact card</string>
+    <string name="compose_messages_empty">Seo toiseach a’ chòmhraidh agad. Can rudeigin snog!</string>
+    <string name="compose_vcard_label">Cairt neach-conaltraidh</string>
     <string name="compose_scheduled_for">Scheduled for</string>
-    <string name="compose_scheduled_future">Selected time must be in the future!</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_scheduled_future">Feumaidh an t-àm a thagh thu a bhith san àm ri teachd!</string>
+    <string name="compose_scheduled_toast">Chaidh a cur ris na teachdaireachdan air an sgeideal</string>
     <string name="compose_scheduled_view">Teachdaireachdan air an sgeideal sa chòmhradh seo</string>
     <string name="compose_scheduled_bubble">Ga cur aig %s</string>
     <plurals name="compose_scheduled_bubble_attachments">
@@ -178,38 +181,38 @@
         <item quantity="few">%d ceanglachain</item>
         <item quantity="other">%d ceanglachan</item>
     </plurals>
-    <string name="compose_hint">Write a message…</string>
+    <string name="compose_hint">Sgrìobh teachdaireachd…</string>
     <string name="compose_expand_cd">Leudaich gu làn-sgrìn</string>
     <string name="compose_collapse_cd">Co-theannaich</string>
     <string name="compose_no_valid_recipients">Chan urrainn dhut cur gu com-pàirtichean eile</string>
     <string name="compose_flagged_title">Spama, ma dh’fhaoidte</string>
     <string name="compose_flagged_approve">Gabh ris</string>
     <string name="compose_flagged_block">Bac</string>
-    <string name="compose_menu_copy">Copy text</string>
-    <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_copy">Dèan lethbhreac dhen teacsa</string>
+    <string name="compose_menu_forward">Sìn air adhart</string>
     <string name="compose_menu_show_status">Seall an staid</string>
-    <string name="compose_menu_delete">Delete</string>
-    <string name="compose_menu_previous">Previous</string>
-    <string name="compose_menu_next">Next</string>
-    <string name="compose_menu_clear">Clear</string>
-    <string name="compose_details_title">Message details</string>
+    <string name="compose_menu_delete">Sguab às</string>
+    <string name="compose_menu_previous">Air ais</string>
+    <string name="compose_menu_next">Air adhart</string>
+    <string name="compose_menu_clear">Falamhaich</string>
+    <string name="compose_details_title">Fiosrachadh na teachdaireachd</string>
     <string name="compose_reactions_title">Freagairtean</string>
-    <string name="compose_details_type">Type: %s</string>
-    <string name="compose_details_from">From: %s</string>
+    <string name="compose_details_type">Seòrsa: %s</string>
+    <string name="compose_details_from">O: %s</string>
     <string name="compose_details_to">To: %s</string>
-    <string name="compose_details_subject">Subject: %s</string>
-    <string name="compose_details_priority">Priority: %s</string>
-    <string name="compose_details_size">Size: %s</string>
-    <string name="compose_details_sent">Sent: %s</string>
-    <string name="compose_details_received">Received: %s</string>
-    <string name="compose_details_delivered">Delivered: %s</string>
-    <string name="compose_details_error_code">Error code: %d</string>
-    <string name="compose_attach_cd">Add an attachment</string>
+    <string name="compose_details_subject">Cuspair: %s</string>
+    <string name="compose_details_priority">Prìomhachas: %s</string>
+    <string name="compose_details_size">Meud: %s</string>
+    <string name="compose_details_sent">Air a cur: %s</string>
+    <string name="compose_details_received">Air a faighinn: %s</string>
+    <string name="compose_details_delivered">Air a lìbhrigeadh: %s</string>
+    <string name="compose_details_error_code">Còd mearachd: %d</string>
+    <string name="compose_attach_cd">Cuir ceanglachan ris</string>
     <string name="compose_attach_file_cd">Cuir faidhle sam bith ris</string>
-    <string name="compose_gallery_cd">Attach a photo</string>
+    <string name="compose_gallery_cd">Cuir dealbh ris</string>
     <string name="compose_audio_message_cd">Clàraich teachdaireachd fuaime</string>
-    <string name="compose_camera_cd">Take a photo</string>
-    <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_camera_cd">Tog dealbh</string>
+    <string name="compose_schedule_cd">Cuir teachdaireachd air an sgeideal</string>
     <string name="compose_schedule_title">Cuir teachdaireachd air an sgeideal</string>
     <string name="compose_schedule_in_hour">An ceann uair a thìde</string>
     <string name="compose_schedule_tonight">Feasgar an-diugh</string>
@@ -222,8 +225,8 @@
     <string name="compose_schedule_increase">Meudaich</string>
     <string name="compose_schedule_decrease">Lùghdaich</string>
     <string name="compose_schedule_cancel_cd">Sguir dhen teachdaireachd air an sgeideal</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Cuir neach-conaltraidh ris</string>
+    <string name="compose_contact_error">Mearachd le leughadh an neach-conaltraidh</string>
     <string name="compose_attach_gallery">Gailearaidh</string>
     <string name="compose_attach_camera">Camara</string>
     <string name="compose_attach_file">Faidhle</string>
@@ -232,15 +235,15 @@
     <string name="compose_attach_schedule">Sgeideal</string>
     <string name="compose_attach_templates">Teamplaidean</string>
     <!-- Example: SIM 1 (Verizon) selected-->
-    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_changed_toast">Chaidh SIM %1$d (%2$s) a thaghadh</string>
     <plurals name="compose_video_too_long">
         <item quantity="one">Tha a’ video seo ro fhada airson a chur le MMS. Faodaidh e mairsinn suas ri %d diog.</item>
         <item quantity="two">Tha a’ video seo ro fhada airson a chur le MMS. Faodaidh e mairsinn suas ri %d dhiog.</item>
         <item quantity="few">Tha a’ video seo ro fhada airson a chur le MMS. Faodaidh e mairsinn suas ri %d diogan.</item>
         <item quantity="other">Tha a’ video seo ro fhada airson a chur le MMS. Faodaidh e mairsinn suas ri %d diog.</item>
     </plurals>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
-    <string name="compose_send_cd">Send message</string>
+    <string name="compose_sim_cd">Chaidh %s a thaghadh, atharraich a’ chairt SIM</string>
+    <string name="compose_send_cd">Cuir an teachdaireachd</string>
     <string name="compose_record_audio_msg_cd">Clàraich teachdaireachd fuaime</string>
     <string name="compose_record_audio_msg_abort_cd">Sguir dhen teachdaireachd fuaime</string>
     <string name="compose_record_audio_msg_attach_cd">Cuir an teachdaireachd fuaime ris</string>
@@ -253,37 +256,37 @@
     <string name="compose_message_item">Nì teachdaireachd</string>
     <string name="compose_message_attachment">Ceanglachan</string>
     <string name="compose_toast_drag_stt">Gluais am putan cainnt gu teacsa far an togair thu</string>
-    <string name="message_status_sending">Sending…</string>
-    <string name="message_status_delivered">Delivered %s</string>
-    <string name="message_status_failed">Failed to send. Tap to try again</string>
+    <string name="message_status_sending">Ga cur…</string>
+    <string name="message_status_delivered">Air a lìbhrigeadh %s</string>
+    <string name="message_status_failed">Cha deach a cur. Thoir gnogag airson feuchainn ris a-rithist</string>
     <string name="message_body_too_long_to_display">⚠ Tha an teachdaireachd fada. Dèan lethbhreac no sàbhail i airson an teacsa slàn</string>
     <string name="conversation_menu">Roghainnean a’ chòmhraidh</string>
     <string name="conversation_menu_media">Seall a h-uile meadhan</string>
     <string name="media_title">Meadhanan</string>
     <string name="media_empty">Nochdaidh dealbhan is videothan a chaidh a cho-roinneadh sa chòmhradh seo an-seo</string>
-    <string name="info_copied_address">Address copied</string>
-    <string name="info_name">Conversation title</string>
-    <string name="info_notifications">Notifications</string>
-    <string name="info_theme">Theme</string>
-    <string name="info_archive">Archive</string>
-    <string name="info_unarchive">Unarchive</string>
-    <string name="info_block">Block</string>
-    <string name="info_unblock">Unblock</string>
-    <string name="info_delete">Delete conversation</string>
-    <string name="gallery_error">Couldn\'t load media</string>
-    <string name="gallery_toast_saved">Saved to gallery</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
+    <string name="info_copied_address">Chaidh lethbhreac dhen t-seòladh a dhèanamh</string>
+    <string name="info_name">Tiotal a’ chòmhraidh</string>
+    <string name="info_notifications">Brathan</string>
+    <string name="info_theme">Ùrlar</string>
+    <string name="info_archive">Cuir san tasglann</string>
+    <string name="info_unarchive">Thoir às an tasglann</string>
+    <string name="info_block">Bac</string>
+    <string name="info_unblock">Dì-bhac</string>
+    <string name="info_delete">Sguab às an còmhradh</string>
+    <string name="gallery_error">Cha b’ urrainn dhuinn am meadhan a luchdadh</string>
+    <string name="gallery_toast_saved">Chaidh a shàbhaladh sa ghailearaidh</string>
+    <string name="backup_title">Lethbhreac-glèidhidh is aiseag</string>
+    <string name="backup_backing_up">A’ dèanamh lethbhreac-glèidhidh de na teachdaireachdan</string>
     <string name="backup_failed_title">Dh’fhàillig an lethbhreac-glèidhidh</string>
     <string name="backup_icon_change_title">A bheil thu airson ìomhaigheag na h-aplacaid aiseag?</string>
     <string name="backup_icon_change_message">Chaidh an lethbhreac-glèidhidh agad a dhèanamh le dath eile air ìomhaigheag na h-aplacaid. Chan urrainn do Android an ìomhaigheag atharrachadh ach nuair a bhios an aplacaid dùinte, mar sin dùinidh Open Messages cho luath ’s a dhearbhas tu e.</string>
     <string name="icon_change_confirm">Cuir an sàs is dùin</string>
     <string name="icon_change_later">Chan ann an-dràsta</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_loading">Loading…</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_restoring">Ag aiseag on lethbhreac-ghlèidhidh</string>
+    <string name="backup_loading">Ga luchdadh…</string>
+    <string name="backup_never">Chan ann idir</string>
+    <string name="backup_location_title">Ionad nan lethbhreacan-glèidhidh</string>
+    <string name="backup_location_summary">Suidhich pasgan</string>
     <string name="backup_auto_title">Lethbhreac-glèidhidh fèin-obrachail</string>
     <string name="backup_auto_never">Chan ann idir</string>
     <string name="backup_auto_daily">Gach latha</string>
@@ -311,23 +314,23 @@
     <string name="backup_restore_from_title">Aisig o</string>
     <string name="backup_restore_from_folder">Pasgan</string>
     <string name="backup_restore_from_zip">Faidhle .zip</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_backup">Backup in progress…</string>
-    <string name="backup_restore_error_restore">Restore in progress…</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_restore_title">Aisig</string>
+    <string name="backup_restore_summary">Tagh lethbhreac-glèidhidh</string>
+    <string name="backup_restore_error_backup">Lethbhreac-glèidhidh a’ dol air adhart…</string>
+    <string name="backup_restore_error_restore">Aiseag a’ dol air adhart…</string>
+    <string name="backup_restore_confirm_title">Aisig on lethbhreac-ghlèidhidh</string>
+    <string name="backup_restore_stop_title">Cuir stad air an aiseag</string>
+    <string name="backup_restore_stop_message">Fanaidh na teachdaireachdan a chaidh aiseag mu thràth air an uidheam agad</string>
+    <string name="backup_select_location_rationale_title">Tagh ionad nan lethbhreacan-glèidhidh</string>
+    <string name="backup_select_location_rationale_message">Tagh pasgan far an sàbhail thu na lethbhreacan-glèidhidh agad</string>
+    <string name="backup_details">%1$s\n%2$d teachdaireachd(an)</string>
+    <string name="backup_selected_backup_error_title">Mearachd</string>
+    <string name="backup_selected_backup_error_message">Cha b’ urrainn dhuinn faidhle an lethbhreac-ghlèidhidh a leughadh</string>
+    <string name="backup_selected_backup_details_title">Fiosrachadh an lethbhreac-ghlèidhidh</string>
+    <string name="backup_restore_dialog_title">Lethbhreacan-glèidhidh</string>
+    <string name="backup_restore_dialog_empty">Cha deach lethbhreac-glèidhidh a lorg</string>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
+    <string name="backup_now">Dèan lethbhreac-glèidhidh an-dràsta</string>
     <string name="backup_now_summary">Cruthaich lethbhreac-glèidhidh ùr</string>
     <string name="backup_categories_title">Dè bu chòir a ghlèidheadh?</string>
     <string name="backup_restore_source_title">Dè an lethbhreac-glèidhidh?</string>
@@ -341,42 +344,42 @@
     <string name="backup_exact_alarm_message">Gus na teachdaireachdan agad air an sgeideal a chur aig an dearbh àm, feumaidh Open Messages cead caismeachdan pongail a shuidheachadh. As aonais, dh’fhaoidte gun tèid an cur beagan anmoch.</string>
     <string name="backup_exact_alarm_grant">Ceadaich</string>
     <string name="backup_exact_alarm_skip">Aisig co-dhiù</string>
-    <string name="backup_progress_parsing">Parsing backup…</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup…</string>
-    <string name="backup_progress_syncing">Syncing messages…</string>
-    <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_parsing">A’ pàrsadh an lethbhreac-ghlèidhidh…</string>
+    <string name="backup_progress_running">%d/%d teachdaireachd(an)</string>
+    <string name="backup_progress_saving">A’ sàbhaladh an lethbhreac-ghlèidhidh…</string>
+    <string name="backup_progress_syncing">A’ sioncronachadh nan teachdaireachdan…</string>
+    <string name="backup_progress_finished">Deiseil!</string>
     <string name="backup_progress_failed">Cha b’ urrainn dhuinn an lethbhreac-glèidhidh a sgrìobhadh. Thoir sùil air an àite a tha air fhàgail agus air pasgan nan lethbhreacan-glèidhidh.</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_notification_channel_name">Lethbhreac-glèidhidh is aiseag</string>
     <string name="clipboard_too_large_to_copy">Tha an dàta nas motha na crìoch an stòr-bhùird</string>
     <string name="clipboard_unable_to_copy_to">Cha b’ urrainn dhuinn lethbhreac a chur dhan stòr-bhòrd</string>
-    <string name="scheduled_title">Scheduled</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_title">Air an sgeideal</string>
+    <string name="scheduled_empty_description">Cuir teachdaireachd gu fèin-obrachail, aig an dearbh àm a thogras tu</string>
+    <string name="scheduled_empty_message_1">Haoigh! Cuin a tha do cho-là-breith a-rithist?</string>
+    <string name="scheduled_empty_message_2">Tha e air an 23mh dhen Dùbhlachd</string>
+    <string name="scheduled_empty_message_3">Co-là-breith sona dhut! Seall cho math ’s a tha mi mar charaid, a’ cuimhneachadh air do cho-là-breith</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_compose_cd">Cuir teachdaireachd air an sgeideal</string>
     <string name="scheduled_send_cd">Cuir an teachdaireachd seo air an sgeideal</string>
-    <string name="scheduled_options_title">Scheduled message</string>
+    <string name="scheduled_options_title">Teachdaireachd air an sgeideal</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Cuir an-dràsta</item>
+        <item>Dèan lethbhreac dhen teacsa</item>
+        <item>Sguab às</item>
     </string-array>
     <string name="attachment_missing">A dhìth</string>
-    <string name="settings_category_appearance">Appearance</string>
-    <string name="settings_category_general">General</string>
-    <string name="settings_category_quick_reply">Quick Reply</string>
-    <string name="settings_theme_title">Theme</string>
-    <string name="settings_night_title">Night mode</string>
-    <string name="settings_black_title">Pure black night mode</string>
-    <string name="settings_night_start_title">Start time</string>
-    <string name="settings_night_end_title">End time</string>
+    <string name="settings_category_appearance">Coltas</string>
+    <string name="settings_category_general">Coitcheann</string>
+    <string name="settings_category_quick_reply">Grad-fhreagairt</string>
+    <string name="settings_theme_title">Ùrlar</string>
+    <string name="settings_night_title">Modh na h-oidhche</string>
+    <string name="settings_black_title">Modh oidhche dubh-dhubh</string>
+    <string name="settings_night_start_title">Àm tòiseachaidh</string>
+    <string name="settings_night_end_title">Àm crìochnachaidh</string>
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
-    <string name="settings_text_size_title">Font size</string>
-    <string name="settings_system_font_title">Use system font</string>
+    <string name="settings_text_size_title">Meud a’ chrutha-chlò</string>
+    <string name="settings_system_font_title">Cleachd cruth-clò an t-siostaim</string>
     <string name="settings_show_avatar_title">Seall dealbh an neach-conaltraidh</string>
     <string name="settings_show_avatar_summary">Seall dealbh an t-seòladair sna còmhraidhean. Cuir dheth e airson builgeanan nan teachdaireachdan a leudachadh.</string>
     <string name="settings_hide_country_code_title">Falaich còd na dùthcha</string>
@@ -386,46 +389,54 @@
     <string name="settings_system_show_stt_title">Seall am putan cainnt gu teacsa</string>
     <string name="settings_drawer_swipe_title">Grad-shlaighd gus an clàr-taice fhosgladh</string>
     <string name="settings_drawer_swipe_summary">Fosgail an clàr-taice taobh le grad-shlaighdeadh on oir chlì aig liosta nan còmhraidhean</string>
-    <string name="settings_auto_emoji_title">Automatic emoji</string>
-    <string name="settings_notifications_title">Notifications</string>
-    <string name="settings_notifications_o_summary">Tap to customize</string>
-    <string name="settings_notification_actions_title">Actions</string>
-    <string name="settings_notification_action_1">Button 1</string>
-    <string name="settings_notification_action_2">Button 2</string>
-    <string name="settings_notification_action_3">Button 3</string>
-    <string name="settings_notification_previews_title">Notification previews</string>
+    <string name="settings_auto_emoji_title">Emoji fèin-obrachail</string>
+    <string name="settings_notifications_title">Brathan</string>
+    <string name="settings_notifications_o_summary">Thoir gnogag airson gnàthachadh</string>
+    <string name="settings_notification_actions_title">Gnìomhan</string>
+    <string name="settings_notification_action_1">Putan 1</string>
+    <string name="settings_notification_action_2">Putan 2</string>
+    <string name="settings_notification_action_3">Putan 3</string>
+    <string name="settings_notification_previews_title">Ro-sheallaidhean nam brathan</string>
     <string name="settings_notification_previews_summary">Seall an t-ainm is an teachdaireachd</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">Dùisg an sgrìn</string>
     <string name="settings_notification_silent_title">Sàmhach mur e neach-conaltraidh a th’ ann</string>
     <string name="settings_notification_silent_summary">Cuiridh seo brathan nan teachdaireachdan nach eil o neach san luchd-conaltraidh agad nan tost</string>
     <string name="settings_copy_code_title">Dèan lethbhreac de chòdan o bhrathan</string>
     <string name="settings_copy_code_summary">Cuiridh seo putan airson lethbhreac a dhèanamh dhen chòd ri brathan le còdan aon-turais is dearbhaidh</string>
     <string name="notification_copy_code">Dèan lethbhreac dhen chòd</string>
     <string name="notification_code_copied">Chaidh lethbhreac dhen chòd a dhèanamh</string>
-    <string name="settings_vibration_title">Vibration</string>
-    <string name="settings_ringtone_title">Sound</string>
-    <string name="settings_ringtone_none">None</string>
-    <string name="settings_quick_reply_title">Quick Reply</string>
-    <string name="settings_quick_reply_summary">Popup for new messages</string>
-    <string name="settings_quick_reply_tap_dismiss_title">Tap to dismiss</string>
-    <string name="settings_quick_reply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_delayed_title">Delayed sending</string>
-    <string name="settings_swipe_actions">Swipe actions</string>
-    <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-    <string name="settings_swipe_actions_right">Right swipe</string>
-    <string name="settings_swipe_actions_left">Left swipe</string>
-    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string name="settings_vibration_title">Crith</string>
+    <string name="settings_ringtone_title">Fuaim</string>
+    <string name="settings_ringtone_none">Chan eil gin</string>
+    <string name="settings_quick_reply_title">Grad-fhreagairt</string>
+    <string name="settings_quick_reply_summary">Priob-uinneag do theachdaireachdan ùra</string>
+    <string name="settings_quick_reply_tap_dismiss_title">Thoir gnogag airson a leigeil seachad</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">Thoir gnogag taobh a-muigh na priob-uinneige airson a dùnadh</string>
+    <string name="settings_delayed_title">Cur air dàil</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Chan eil gin</item>
+        <item>Cuir san tasglann</item>
+        <item>Sguab às</item>
+        <item>Bac</item>
+        <item>Cuir fòn</item>
+        <item>Comharraich gun deach a leughadh</item>
+        <item>Comharraich nach deach a leughadh</item>
     </string-array>
-    <string name="settings_delivery_title">Delivery confirmations</string>
-    <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_swipe_actions_summary">Rèitich gnìomhan grad-shlaighdidh nan còmhraidhean</string>
+    <string name="settings_swipe_actions_right">Grad-shlaighd gu deas</string>
+    <string name="settings_swipe_actions_left">Grad-shlaighd gu clì</string>
+    <string name="settings_swipe_actions_change">ATHARRAICH</string>
+    <string-array name="settings_swipe_actions">
+        <item>Chan eil gin</item>
+        <item>Cuir san tasglann</item>
+        <item>Sguab às</item>
+        <item>Bac</item>
+        <item>Cuir fòn</item>
+        <item>Comharraich gun deach a leughadh</item>
+        <item>Comharraich nach deach a leughadh</item>
+    </string-array>
+    <string name="settings_delivery_title">Dearbhaidhean lìbhrigidh</string>
+    <string name="settings_delivery_summary">Dearbh gun deach na teachdaireachdan a chur gu soirbheachail</string>
     <string name="settings_send_sound_title">Fuaim nuair a chuirear</string>
     <string name="settings_send_sound_summary">Cluich fuaim ghoirid nuair a chuireas tu teachdaireachd</string>
     <string name="settings_send_sound_volume_title">Àirde na fuaime</string>
@@ -433,41 +444,41 @@
     <string name="settings_header_quick_action_summary">Cuir putan ath-ghoirid ri bann-cinn a’ chòmhraidh</string>
     <string name="settings_unread_at_top_title">Gun leughadh aig a’ bharr</string>
     <string name="settings_unread_at_top_summary">Seall na còmhraidhean gun leughadh aig a’ bharr</string>
-    <string name="settings_signature_title">Signature</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
-    <string name="settings_unicode_title">Strip accents</string>
-    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
-    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_signature_title">Earr-sgrìobhadh</string>
+    <string name="settings_signature_summary">Cuir earr-sgrìobhadh ri deireadh nan teachdaireachdan agad</string>
+    <string name="settings_unicode_title">Thoir air falbh na stràcan</string>
+    <string name="settings_unicode_summary">Thoir air falbh na stràcan o na caractaran ann an teachdaireachdan SMS a-mach</string>
+    <string name="settings_mobile_title">Àireamhan fòn-làimhe a-mhàin</string>
+    <string name="settings_mobile_summary">Nuair a sgrìobhas tu teachdaireachd, na seall ach àireamhan fòn-làimhe</string>
+    <string name="settings_auto_delete">Sguab às seann teachdaireachdan gu fèin-obrachail</string>
+    <string name="settings_auto_delete_dialog_message">Thèid na teachdaireachdan a sguabadh às às dèidh na h-àireimh de làithean a shònraich thu</string>
+    <string name="settings_auto_delete_dialog_hint">Àireamh de làithean</string>
+    <string name="settings_auto_delete_never">Chan ann idir</string>
+    <string name="settings_auto_delete_warning">A bheil thu airson seann teachdaireachdan a sguabadh às gu fèin-obrachail?</string>
+    <string name="settings_auto_delete_warning_message">Ma leanas tu air adhart, thèid %1$d teachdaireachd(an) a sguabadh às an-dràsta</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="two">After %d days</item>
-        <item quantity="few">After %d days</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">An ceann %d latha</item>
+        <item quantity="two">An ceann %d latha</item>
+        <item quantity="few">An ceann %d làithean</item>
+        <item quantity="other">An ceann %d latha</item>
     </plurals>
-    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
-    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
-    <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_long_as_mms_title">Cuir teachdaireachdan fada mar MMS</string>
+    <string name="settings_long_as_mms_summary">Mur eil na teachdaireachdan teacsa as fhaide agad gan cur no ma thèid an cur san òrdugh cheàrr, ’s urrainn dhut an cur mar theachdaireachdan MMS na àite. Dh’fhaoidte gum bi cosgaisean a bharrachd ann</string>
+    <string name="settings_mms_size_title">Dùmhlaich dealbhan MMS ceangailte gu fèin-obrachail</string>
     <string name="settings_mms_weblink_title">Làimhseachadh cheanglaichean sna teachdaireachdan</string>
     <string name="settings_disable_screenshots_title">Cuir glacaidhean-sgrìn à comas</string>
     <string name="settings_diable_screenshots_summary">Na leig leis an t-siostam-obrachaidh agad no le aplacaidean eile glacaidhean-sgrìn dhen aplacaid a dhèanamh.</string>
-    <string name="settings_sync_title">Sync messages</string>
-    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-    <string name="settings_about_title">About Open Messages</string>
-    <string name="settings_version">Version %s</string>
-    <string name="settings_logging_enabled">Debug logging enabled</string>
-    <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="settings_sync_title">Sioncronaich na teachdaireachdan</string>
+    <string name="settings_sync_summary">Ath-shioncronaich na teachdaireachdan agad le stòr-dàta SMS tùsail Android</string>
+    <string name="settings_about_title">Mu Open Messages</string>
+    <string name="settings_version">Tionndadh %s</string>
+    <string name="settings_logging_enabled">Tha logadh dì-bhugachaidh an comas</string>
+    <string name="settings_logging_disabled">Tha logadh dì-bhugachaidh à comas</string>
+    <string name="settings_delay_duration_hint">Cuir a-steach an fhaid (diogan)</string>
+    <string name="blocking_title">Bacadh</string>
+    <string name="blocking_drop_title">Tilg air falbh teachdaireachdan</string>
+    <string name="blocking_drop_summary">Tilg air falbh teachdaireachdan a-steach o sheòladairean bacte seach an cur am falach</string>
+    <string name="blocking_conversations">Còmhraidhean bacte</string>
     <string name="blocking_category_integrated">Bacadh amalaichte</string>
     <string name="blocking_integrated_description">Bacaidh Open Messages spama air an uidheam agad. Luchdaichidh na tùsan roghainneil gu h-ìosal a-nall an liosta aca thar an eadar-lìn nuair a chuireas tu air iad, agus obraichidh iad far loidhne an uairsin.</string>
     <string name="blocking_category_external_apps">Aplacaidean on taobh a-muigh</string>
@@ -479,19 +490,19 @@
     <string name="blocking_source_status_updating">Ga ùrachadh…</string>
     <string name="blocking_source_status_updated">Ùraichte · %1$d innteart(an)</string>
     <string name="blocking_source_status_failed">Dh’fhàillig an luchdadh a-nall, fanaidh an tùs dheth. Thoir sùil air a’ cheangal agad is feuch ris a-rithist.</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
-    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
-    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocking_manager_title">Manaidsear a’ bhacaidh</string>
+    <string name="blocking_manager_built_in_summary">Gleus bacaidh amalaichte ann an Open Messages</string>
+    <string name="blocking_manager_call_blocker_summary">Bac teachdaireachdan spama, àireamhan is gairmean neo-aithnichte le liosta-dhubh is sgeideal</string>
+    <string name="blocking_manager_call_control_summary">Criathraich na gairmean ’s na teachdaireachdan agad gu fèin-obrachail ann an aon àite goireasach! Leigidh Community IQ™ leat teachdaireachdan gun iarraidh o spamairean aithnichte sa choimhearsnachd a bhacadh</string>
+    <string name="blocking_manager_sia_summary">Criathraich teachdaireachdan o àireamhan gun iarraidh gu fèin-obrachail leis an aplacaid \"Should I Answer\"</string>
+    <string name="blocking_manager_copy_title">Dèan lethbhreac de na h-àireamhan bacte</string>
+    <string name="blocking_manager_copy_summary">Lean air adhart gu %s is dèan lethbhreac de na h-àireamhan a bhac thu mu thràth</string>
+    <string name="blocked_numbers_title">Àireamhan bacte</string>
+    <string name="blocked_numbers_empty">Nochdaidh na h-àireamhan bacte agad an-seo</string>
+    <string name="blocked_numbers_add_cd">Bac àireamh ùr</string>
+    <string name="blocked_numbers_dialog_title">Bac teacsaichean o</string>
+    <string name="blocked_numbers_dialog_hint">Àireamh fòn</string>
+    <string name="blocked_numbers_dialog_block">Bac</string>
     <string name="message_content_filters_title">Criathragan susbaint theachdaireachdan</string>
     <string name="message_content_filters_empty">Nochdaidh na criathragan susbaint theachdaireachdan agad an-seo</string>
     <string name="message_content_filters_add_cd">Cruthaich criathrag ùr</string>
@@ -501,21 +512,21 @@
     <string name="message_content_filters_dialog_regex_switch">Eas-preisean riaghailteach</string>
     <string name="message_content_filters_dialog_contacts_switch">Gabh a-steach an luchd-conaltraidh</string>
     <string name="message_content_filters_dialog_create">Cruthaich</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocked_messages_title">Teachdaireachdan bacte</string>
+    <string name="blocked_messages_empty">Nochdaidh na teachdaireachdan bacte agad an-seo</string>
+    <string name="blocking_block_title">Bac</string>
+    <string name="blocking_unblock_title">Dì-bhac</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="two">Continue to %s and block these numbers</item>
-        <item quantity="few">Continue to %s and block these numbers</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="one">Lean air adhart gu %s is bac an àireamh seo</item>
+        <item quantity="two">Lean air adhart gu %s is bac na h-àireamhan seo</item>
+        <item quantity="few">Lean air adhart gu %s is bac na h-àireamhan seo</item>
+        <item quantity="other">Lean air adhart gu %s is bac na h-àireamhan seo</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="two">Continue to %s and allow these numbers</item>
-        <item quantity="few">Continue to %s and allow these numbers</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="one">Lean air adhart gu %s is ceadaich an àireamh seo</item>
+        <item quantity="two">Lean air adhart gu %s is ceadaich na h-àireamhan seo</item>
+        <item quantity="few">Lean air adhart gu %s is ceadaich na h-àireamhan seo</item>
+        <item quantity="other">Lean air adhart gu %s is ceadaich na h-àireamhan seo</item>
     </plurals>
     <string name="deduplicate_messages_category">Dì-dhùblaich teachdaireachdan</string>
     <string name="deduplicate_messages_title">Thoir air falbh teachdaireachdan dùblaichte</string>
@@ -526,50 +537,50 @@
     <string name="deduplicating_messages_finished">Tha na teachdaireachdan air an dì-dhùblachadh!</string>
     <string name="deduplicating_messages_no_messages">Cha deach teachdaireachd dhùblaichte a lorg.</string>
     <string name="deduplicating_messages_failed">Dh’fhàillig dì-dhùblachadh nan teachdaireachdan, feuch ris a-rithist</string>
-    <string name="about_title">About</string>
-    <string name="about_version_title">Version</string>
-    <string name="about_developer_title">Developer</string>
-    <string name="about_source_title">Source code</string>
-    <string name="about_changelog_title">Changelog</string>
-    <string name="about_contact_title">Contact</string>
-    <string name="about_license_title">License</string>
-    <string name="about_copyright_title">Copyright</string>
-    <string name="widget_loading">Loading…</string>
-    <string name="widget_more">View more conversations</string>
+    <string name="about_title">Mu dhèidhinn</string>
+    <string name="about_version_title">Tionndadh</string>
+    <string name="about_developer_title">Leasaiche</string>
+    <string name="about_source_title">Bun-tùs</string>
+    <string name="about_changelog_title">Loga nan atharraichean</string>
+    <string name="about_contact_title">Conaltradh</string>
+    <string name="about_license_title">Ceadachas</string>
+    <string name="about_copyright_title">Còir-lethbhreac</string>
+    <string name="widget_loading">Ga luchdadh…</string>
+    <string name="widget_more">Seall barrachd chòmhraidhean</string>
     <string name="all_conversations_widget_title">Na còmhraidhean uile</string>
-    <string name="quick_reply_menu_read">Mark read</string>
-    <string name="quick_reply_menu_call">Call</string>
-    <string name="quick_reply_menu_delete">Delete</string>
-    <string name="quick_reply_menu_expand">Show more</string>
-    <string name="quick_reply_menu_collapse">Show less</string>
-    <string name="quick_reply_menu_view">Open conversation</string>
+    <string name="quick_reply_menu_read">Comharraich gun deach a leughadh</string>
+    <string name="quick_reply_menu_call">Cuir fòn</string>
+    <string name="quick_reply_menu_delete">Sguab às</string>
+    <string name="quick_reply_menu_expand">Seall barrachd</string>
+    <string name="quick_reply_menu_collapse">Seall nas lugha</string>
+    <string name="quick_reply_menu_view">Fosgail an còmhradh</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
-    <string name="theme_apply">Apply</string>
+    <string name="theme_apply">Cuir an sàs</string>
     <string-array name="notification_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>Chan eil gin</item>
+        <item>Cuir san tasglann</item>
+        <item>Sguab às</item>
+        <item>Bac</item>
+        <item>Cuir fòn</item>
+        <item>Comharraich gun deach a leughadh</item>
+        <item>Freagair</item>
     </string-array>
     <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
-    <string name="button_cancel">Cancel</string>
+    <string name="button_continue">Lean air adhart</string>
+    <string name="button_cancel">Sguir dheth</string>
     <string name="button_close">Dùin</string>
-    <string name="button_delete">Delete</string>
-    <string name="button_save">Save</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_delete">Sguab às</string>
+    <string name="button_save">Sàbhail</string>
+    <string name="button_stop">Stad</string>
     <string name="button_set">Set</string>
     <string name="button_later">Uaireigin eile</string>
     <string name="icon_restart_title">Feumar ath-thòiseachadh</string>
     <string name="icon_restart_message">Feumaidh an aplacaid ath-thòiseachadh gus crìoch a chur air ùrachadh na h-ìomhaigheige.</string>
     <string name="icon_restart_now">Ath-thòisich</string>
-    <string name="button_undo">Undo</string>
+    <string name="button_undo">Neo-dhèan</string>
     <string name="button_clear">Falamhaich</string>
-    <string name="toast_copied">Copied</string>
+    <string name="toast_copied">Chaidh lethbhreac a dhèanamh</string>
     <plurals name="toast_archived">
         <item quantity="one">Chaidh an còmhradh a chur san tasglann</item>
         <item quantity="two">Chaidh %d chòmhradh a chur san tasglann</item>
@@ -583,40 +594,40 @@
         <item quantity="other">Chaidh %d còmhradh a thoirt às an tasglann</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">New message</item>
-        <item quantity="two">%s new messages</item>
-        <item quantity="few">%s new messages</item>
-        <item quantity="other">%s new messages</item>
+        <item quantity="one">Teachdaireachd ùr</item>
+        <item quantity="two">%s theachdaireachd ùr</item>
+        <item quantity="few">%s teachdaireachdan ùra</item>
+        <item quantity="other">%s teachdaireachd ùr</item>
     </plurals>
-    <string name="notification_message_failed_title">Message not sent</string>
-    <string name="notification_message_failed_text">The message to %s failed to send</string>
+    <string name="notification_message_failed_title">Cha deach an teachdaireachd a chur</string>
+    <string name="notification_message_failed_text">Cha deach an teachdaireachd gu %s a chur</string>
     <string name="notification_foreground_worker_title">A’ faighinn teachdaireachd</string>
     <string name="notification_foreground_worker_text">Air Android 12 is tionndaidhean nas sine, tha feum air brath airson na h-obrach sa chùlaibh a leigeas leat teachdaireachdan fhaighinn.</string>
     <string name="notification_foreground_worker_channel_name">Brath obair faighinn nan teachdaireachdan</string>
     <string name="notification_me">Mise</string>
     <string name="notification_message_failed_action">Cuir a-rithist</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>An siostam</item>
+        <item>À comas</item>
+        <item>Air an-còmhnaidh</item>
+        <item>Fèin-obrachail</item>
     </string-array>
     <string-array name="notification_preview_options">
-        <item>Show name and message</item>
-        <item>Show name</item>
-        <item>Hide contents</item>
+        <item>Seall an t-ainm is an teachdaireachd</item>
+        <item>Seall an t-ainm</item>
+        <item>Falaich an t-susbaint</item>
     </string-array>
     <string-array name="text_sizes">
-        <item>Small</item>
-        <item>Normal</item>
-        <item>Large</item>
-        <item>Larger</item>
+        <item>Beag</item>
+        <item>Àbhaisteach</item>
+        <item>Mòr</item>
+        <item>Nas motha</item>
     </string-array>
     <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>Gun dàil</item>
+        <item>3 diogan</item>
+        <item>5 diogan</item>
+        <item>10 diogan</item>
     </string-array>
     <string-array name="header_quick_action_labels">
         <item>Chan eil gin</item>
@@ -634,14 +645,14 @@
         <item>Trì pongan</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>Fèin-obrachail</item>
         <item>100KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Gun dùmhlachadh</item>
     </string-array>
     <string-array name="messageLinkHandlings">
         <item>Bac</item>
@@ -649,18 +660,18 @@
         <item>Faighnich mus tèid fhosgladh</item>
     </string-array>
     <string-array name="quick_responses">
-        <item>Okay</item>
-        <item>Give me a moment</item>
-        <item>On my way</item>
-        <item>Thanks</item>
-        <item>Sounds good</item>
-        <item>What\'s up?</item>
-        <item>Agreed</item>
-        <item>No</item>
-        <item>Love you</item>
-        <item>Sorry</item>
+        <item>Ceart ma-thà</item>
+        <item>Fuirich mionaid</item>
+        <item>Air mo shlighe</item>
+        <item>Mòran taing</item>
+        <item>Glè mhath</item>
+        <item>Dè tha dol?</item>
+        <item>Aontaichte</item>
+        <item>Chan eil</item>
+        <item>Tha gaol agam ort</item>
+        <item>Tha mi duilich</item>
         <item>LOL</item>
-        <item>That\'s okay</item>
+        <item>Tha sin ceart gu leòr</item>
     </string-array>
     <string name="speak_no_messages">Chan eil teachdaireachd ann</string>
     <string name="speak_unseen_messages">Leugh a-mach teachdaireachdan nach fhaca tu</string>
