@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">シンプルなオープンソースのメッセージアプリ</string>
     <string name="shortcut_compose_long_label">新しい会話</string>
     <string name="shortcut_compose_short_label">新規作成</string>
     <string name="shortcut_compose_disabled_message">ショートカットが無効です</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">設定</string>
     <string name="title_notification_prefs">通知</string>
     <string name="title_theme">テーマ</string>
+    <string name="theme_default">デフォルト</string>
+    <string name="theme_wallpaper">壁紙</string>
+    <string name="theme_other_colors">色</string>
+    <string name="theme_tab_presets">パレット</string>
+    <string name="theme_tab_custom">カスタム</string>
+    <string name="theme_apply_to_icon">アプリアイコンに色を適用 (アプリは終了します)</string>
+    <string name="theme_tab_icon">アプリアイコン</string>
+    <string name="theme_icon_follow_theme">アプリのテーマ色に合わせる</string>
+    <string name="theme_icon_summary">テーマとは別にアプリアイコンの色を選べます。変更を適用するとアプリが終了します。</string>
+    <string name="theme_icon_change_title">アプリアイコンを変更しますか？</string>
+    <string name="theme_icon_change_message">アプリアイコンの色を変更します。Android ではアプリの終了中にしかアイコンを切り替えられないため、確定するとすぐに Open Messages が終了します。</string>
     <string name="title_conversations">受信トレイを検索…</string>
+    <string name="title_search">検索</string>
     <string name="title_compose">名前または電話番号を入力</string>
     <string name="setup_skip">スキップ</string>
     <string name="setup_next">続行</string>
@@ -33,8 +46,12 @@
     <string name="menu_mms_part_save">ギャラリーに保存</string>
     <string name="compose_menu_share">共有</string>
     <string name="main_drawer_open_cd">ナビゲーションドロワーを開く</string>
+    <string name="main_search_close_cd">検索を閉じる</string>
+    <string name="main_search_clear_cd">検索をクリア</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d 件を選択中</string>
     <string name="main_menu_clear">消去</string>
+    <string name="main_menu_select_all">すべて選択</string>
     <string name="main_menu_archive">アーカイブ</string>
     <string name="main_menu_unarchive">アーカイブ解除</string>
     <string name="main_menu_delete">削除</string>
@@ -44,8 +61,19 @@
     <string name="main_menu_read">既読にする</string>
     <string name="main_menu_unread">未読にする</string>
     <string name="main_menu_block">ブロック</string>
+    <string name="main_menu_send_now">今すぐ送信</string>
+    <string name="main_menu_edit_message">メッセージを編集</string>
+    <string name="main_menu_rename_conversation">会話の名前を変更</string>
     <string name="main_syncing">メッセージを同期しています...</string>
+    <string name="main_sync_emojis">絵文字リアクションを解析中…</string>
     <string name="main_sender_you">あなた: %s</string>
+    <string name="main_sender_draft">下書き: %s</string>
+    <string name="conversation_flagged_label">迷惑メッセージの疑い</string>
+    <string name="snippet_picture">画像</string>
+    <string name="snippet_video">動画</string>
+    <string name="snippet_audio">音声</string>
+    <string name="snippet_contact_card">連絡先カード</string>
+    <string name="search_group_conversations">会話</string>
     <string name="main_message_results_title">メッセージ内の検索結果</string>
     <plurals name="main_message_results">
         <item quantity="other">%d 件のメッセージ</item>
@@ -62,11 +90,29 @@
     <string name="main_permission_contacts">Open Messages はあなたの連絡先を閲覧する権限を必要とします</string>
     <string name="main_permission_notifications">Open Messages は通知を表示する権限を必要とします</string>
     <string name="main_permission_allow">許可</string>
+    <string name="scheduled_menu_send_now">今すぐ送信</string>
+    <string name="scheduled_menu_edit_message">メッセージを編集</string>
     <string name="drawer_inbox">受信トレイ</string>
+    <string name="contacts_group_recent">最近</string>
+    <string name="contacts_group_starred">お気に入り</string>
+    <string name="contacts_group_groups">グループ</string>
+    <string name="conversations_group_today">今日</string>
+    <string name="conversations_group_yesterday">昨日</string>
     <string name="drawer_archived">アーカイブ済み</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="other">未読 %d 件</item>
+    </plurals>
     <string name="drawer_scheduled">送信予約済み</string>
     <string name="drawer_blocking">ブロック</string>
     <string name="drawer_more">もっと</string>
+    <string name="message_management_title">メッセージ管理</string>
+    <string name="templates_title">テンプレート</string>
+    <string name="templates_empty">保存したメッセージはまだありません。\n+ をタップしてよく送るメッセージを保存し、タップして送信先を選びます。</string>
+    <string name="template_hint">メッセージを入力…</string>
+    <string name="template_title_hint">タイトル (省略可)</string>
+    <string name="templates_add_cd">新しいテンプレート</string>
+    <string name="template_new">新しいテンプレート</string>
+    <string name="template_edit">テンプレートを編集</string>
     <string name="drawer_settings">設定</string>
     <string name="drawer_help">ヘルプとフィードバック</string>
     <string name="drawer_invite">友達を招待</string>
@@ -78,6 +124,17 @@
     <plurals name="dialog_delete_message">
         <item quantity="other">本当に %d 件の会話を削除しますか？</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="other">%d 件のメッセージを削除してもよろしいですか？</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="other">%d 件のメッセージを今すぐ送信してもよろしいですか？</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">メッセージを編集</string>
+    <string name="dialog_edit_scheduled_message">このメッセージを編集すると、予約から外れます。\n\n次の画面で必ずもう一度予約してください。そうしないとメッセージは失われます。\n\n続けますか？</string>
+    <string name="dialog_edit_scheduled_message_positive_button">はい、編集します</string>
+    <string name="dialog_clear_compose_title">メッセージを消去</string>
+    <string name="dialog_clear_compose">メッセージを消去しますか？この操作は元に戻せません。</string>
     <string-array name="message_options">
         <item>テキストをコピー</item>
         <item>転送</item>
@@ -91,19 +148,34 @@
     <string name="compose_subtitle_results">%2$d 件中 %1$d 件の結果</string>
     <string name="compose_send_group_title">グループ メッセージとして送信</string>
     <string name="compose_send_group_summary">宛先と返信は全員に表示されます</string>
+    <string name="compose_send_group_summary_on">宛先と返信が全員に表示されます</string>
+    <string name="compose_send_group_summary_off">メッセージは各宛先に個別に送信されます</string>
     <string name="compose_messages_empty">これが会話の始まりです。何か素敵なことを言ってください！</string>
     <string name="compose_vcard_label">連絡先カード</string>
     <string name="compose_scheduled_for">送信予約</string>
     <string name="compose_scheduled_future">今より先の時間を選択してください！</string>
     <string name="compose_scheduled_toast">送信予約メッセージに追加されました</string>
+    <string name="compose_scheduled_view">この会話の予約メッセージ</string>
+    <string name="compose_scheduled_bubble">%s に送信</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="other">添付ファイル %d 件</item>
+    </plurals>
     <string name="compose_hint">メッセージを書いてください…</string>
+    <string name="compose_expand_cd">全画面表示</string>
+    <string name="compose_collapse_cd">折りたたむ</string>
+    <string name="compose_no_valid_recipients">他の参加者に送信できません</string>
+    <string name="compose_flagged_title">迷惑メッセージの疑い</string>
+    <string name="compose_flagged_approve">承認</string>
+    <string name="compose_flagged_block">ブロック</string>
     <string name="compose_menu_copy">テキストをコピー</string>
     <string name="compose_menu_forward">転送</string>
+    <string name="compose_menu_show_status">ステータスを表示</string>
     <string name="compose_menu_delete">削除</string>
     <string name="compose_menu_previous">前へ</string>
     <string name="compose_menu_next">次へ</string>
     <string name="compose_menu_clear">消去</string>
     <string name="compose_details_title">メッセージの詳細</string>
+    <string name="compose_reactions_title">リアクション</string>
     <string name="compose_details_type">タイプ: %s</string>
     <string name="compose_details_from">差出人: %s</string>
     <string name="compose_details_to">宛先:%s</string>
@@ -115,18 +187,59 @@
     <string name="compose_details_delivered">配信: %s</string>
     <string name="compose_details_error_code">エラーコード: %d</string>
     <string name="compose_attach_cd">添付ファイルを追加</string>
+    <string name="compose_attach_file_cd">ファイルを添付</string>
     <string name="compose_gallery_cd">写真を添付</string>
+    <string name="compose_audio_message_cd">音声メッセージを録音</string>
     <string name="compose_camera_cd">写真を撮る</string>
     <string name="compose_schedule_cd">メッセージの送信を予約</string>
+    <string name="compose_schedule_title">メッセージを予約</string>
+    <string name="compose_schedule_in_hour">1 時間後</string>
+    <string name="compose_schedule_tonight">今晩</string>
+    <string name="compose_schedule_tomorrow_morning">明日の朝</string>
+    <string name="compose_schedule_tomorrow_afternoon">明日の午後</string>
+    <string name="compose_schedule_custom">日時を選択</string>
+    <string name="compose_schedule_confirm">予約</string>
+    <string name="compose_schedule_previous_month">前の月</string>
+    <string name="compose_schedule_next_month">次の月</string>
+    <string name="compose_schedule_increase">増やす</string>
+    <string name="compose_schedule_decrease">減らす</string>
+    <string name="compose_schedule_cancel_cd">メッセージの予約を取り消す</string>
     <string name="compose_contact_cd">連絡先を添付</string>
     <string name="compose_contact_error">連絡先の読み取りエラー</string>
+    <string name="compose_attach_gallery">ギャラリー</string>
+    <string name="compose_attach_camera">カメラ</string>
+    <string name="compose_attach_file">ファイル</string>
+    <string name="compose_attach_audio">音声</string>
+    <string name="compose_attach_contact">連絡先</string>
+    <string name="compose_attach_schedule">予約</string>
+    <string name="compose_attach_templates">テンプレート</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) を選択しました</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="other">この動画は長すぎて MMS で送信できません。最大 %d 秒までです。</item>
+    </plurals>
     <string name="compose_sim_cd">%s 選択、SIM カードを変更</string>
     <string name="compose_send_cd">メッセージを送信</string>
+    <string name="compose_record_audio_msg_cd">音声メッセージを録音</string>
+    <string name="compose_record_audio_msg_abort_cd">音声メッセージを取り消す</string>
+    <string name="compose_record_audio_msg_attach_cd">音声メッセージを添付</string>
+    <string name="compose_audio_msg_title">ボイスメッセージ</string>
+    <string name="compose_audio_msg_attach">添付</string>
+    <string name="compose_record_audio_msg_play_pause_cd">音声メッセージを再生または一時停止</string>
+    <string name="compose_message_cancel">キャンセル</string>
+    <string name="compose_message_send_now">今すぐ送信</string>
+    <string name="compose_message_sim">SIM 番号</string>
+    <string name="compose_message_item">メッセージ項目</string>
+    <string name="compose_message_attachment">添付ファイル</string>
+    <string name="compose_toast_drag_stt">音声入力ボタンは好きな場所に移動できます</string>
     <string name="message_status_sending">送信中…</string>
     <string name="message_status_delivered">%s を配信しました</string>
     <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
+    <string name="message_body_too_long_to_display">⚠ 長いメッセージです。全文はコピーまたは保存してください</string>
+    <string name="conversation_menu">会話のオプション</string>
+    <string name="conversation_menu_media">すべてのメディアを表示</string>
+    <string name="media_title">メディア</string>
+    <string name="media_empty">この会話で共有された写真と動画がここに表示されます</string>
     <string name="info_copied_address">アドレスをコピーしました</string>
     <string name="info_name">会話のタイトル</string>
     <string name="info_notifications">通知</string>
@@ -140,11 +253,40 @@
     <string name="gallery_toast_saved">ギャラリーに保存</string>
     <string name="backup_title">バックアップと復元</string>
     <string name="backup_backing_up">メッセージをバックアップしています</string>
+    <string name="backup_failed_title">バックアップに失敗しました</string>
+    <string name="backup_icon_change_title">アプリアイコンを復元しますか？</string>
+    <string name="backup_icon_change_message">このバックアップは別のアプリアイコンの色で作成されました。Android ではアプリの終了中にしかアイコンを切り替えられないため、確定するとすぐに Open Messages が終了します。</string>
+    <string name="icon_change_confirm">適用して終了</string>
+    <string name="icon_change_later">後で</string>
     <string name="backup_restoring">バックアップから復元</string>
     <string name="backup_loading">読み込み中...</string>
     <string name="backup_never">なし</string>
     <string name="backup_location_title">バックアップの場所</string>
     <string name="backup_location_summary">フォルダーを設定</string>
+    <string name="backup_auto_title">自動バックアップ</string>
+    <string name="backup_auto_never">しない</string>
+    <string name="backup_auto_daily">毎日</string>
+    <string name="backup_auto_weekly">毎週</string>
+    <string name="backup_auto_custom">カスタム…</string>
+    <string name="backup_auto_custom_title">バックアップの間隔 (日数)</string>
+    <string name="backup_auto_custom_hint">日数</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="other">%d 日ごと</item>
+    </plurals>
+    <string name="backup_zip_title">.zip ファイルとして保存</string>
+    <string name="backup_zip_summary">各バックアップを 1 つのアーカイブにまとめて保存し、スマートフォン間で移しやすくします</string>
+    <string name="backup_manage_title">バックアップを管理</string>
+    <string name="backup_manage_summary">バックアップの名前変更や削除</string>
+    <string name="backup_manage_empty">この場所にバックアップはありません</string>
+    <string name="backup_manage_rename">名前を変更</string>
+    <string name="backup_manage_delete">削除</string>
+    <string name="backup_manage_delete_confirm">「%s」を削除しますか？この操作は元に戻せません。</string>
+    <string name="backup_manage_error">このバックアップを更新できませんでした</string>
+    <string name="backup_manage_type_folder">フォルダ</string>
+    <string name="backup_manage_type_zip">Zip アーカイブ</string>
+    <string name="backup_restore_from_title">復元元</string>
+    <string name="backup_restore_from_folder">フォルダ</string>
+    <string name="backup_restore_from_zip">.zip ファイル</string>
     <string name="backup_restore_title">復元</string>
     <string name="backup_restore_summary">バックアップを選択</string>
     <string name="backup_restore_error_backup">バックアップ中…</string>
@@ -162,12 +304,28 @@
     <string name="backup_restore_dialog_empty">バックアップが見つかりません</string>
     <string name="backup_disclaimer">現在、SMS のみバックアップと復元に対応しています。 MMS 対応と定期バックアップは近日中に公開されます！</string>
     <string name="backup_now">今すぐバックアップ</string>
+    <string name="backup_now_summary">新しいバックアップを作成</string>
+    <string name="backup_categories_title">何をバックアップしますか？</string>
+    <string name="backup_restore_source_title">どのバックアップですか？</string>
+    <string name="backup_restore_categories_title">%s から復元</string>
+    <string name="backup_category_messages">メッセージ (SMS、MMS、添付ファイル)</string>
+    <string name="backup_category_settings">設定とテンプレート</string>
+    <string name="backup_category_blocking">ブロックのルール</string>
+    <string name="backup_category_conversations">アーカイブと固定</string>
+    <string name="backup_category_scheduled">予約メッセージ</string>
+    <string name="backup_exact_alarm_title">正確なアラームを許可</string>
+    <string name="backup_exact_alarm_message">予約メッセージを正確な時刻に送信するには、Open Messages に正確なアラームを設定する権限が必要です。許可しない場合、少し遅れて送信されることがあります。</string>
+    <string name="backup_exact_alarm_grant">許可</string>
+    <string name="backup_exact_alarm_skip">このまま復元</string>
     <string name="backup_progress_parsing">バックアップを解析中...</string>
     <string name="backup_progress_running">%d 件/%d 件のメッセージ</string>
     <string name="backup_progress_saving">バックアップを保存しています...</string>
     <string name="backup_progress_syncing">メッセージを同期しています...</string>
     <string name="backup_progress_finished">終了しました！</string>
+    <string name="backup_progress_failed">バックアップを書き込めませんでした。空き容量とバックアップフォルダを確認してください。</string>
     <string name="backup_notification_channel_name">バックアップと復元</string>
+    <string name="clipboard_too_large_to_copy">データがクリップボードの上限を超えています</string>
+    <string name="clipboard_unable_to_copy_to">クリップボードにコピーできません</string>
     <string name="scheduled_title">予約</string>
     <string name="scheduled_empty_description">希望する瞬間に自動的にメッセージを送信</string>
     <string name="scheduled_empty_message_1">ちょっと！あなたの誕生日はいつでしたか？</string>
@@ -176,12 +334,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">12 月 23 日に送信</string>
     <string name="scheduled_compose_cd">メッセージを送信予約</string>
+    <string name="scheduled_send_cd">このメッセージを予約</string>
     <string name="scheduled_options_title">送信予約されたメッセージ</string>
     <string-array name="scheduled_options">
         <item>今すぐ送る</item>
         <item>テキストをコピー</item>
         <item>削除</item>
     </string-array>
+    <string name="attachment_missing">見つかりません</string>
     <string name="settings_category_appearance">外観</string>
     <string name="settings_category_general">全般</string>
     <string name="settings_category_quick_reply">Quick Reply</string>
@@ -193,6 +353,15 @@
     <string name="settings_automatic_colors_title">自動的に連絡先に色をつける</string>
     <string name="settings_text_size_title">フォントサイズ</string>
     <string name="settings_system_font_title">システムフォントを使用する</string>
+    <string name="settings_show_avatar_title">連絡先の写真を表示</string>
+    <string name="settings_show_avatar_summary">会話に送信者の写真を表示します。オフにするとメッセージの吹き出しが広くなります。</string>
+    <string name="settings_hide_country_code_title">国番号を非表示</string>
+    <string name="settings_hide_country_code_summary">電話番号のタイトルを国内形式で表示します (例: 「+81 90 ...」ではなく「090 ...」)</string>
+    <string name="settings_edge_to_edge_title">エッジツーエッジ</string>
+    <string name="settings_edge_to_edge_summary">ステータスバーとナビゲーションバーの裏側にもコンテンツを表示します</string>
+    <string name="settings_system_show_stt_title">音声入力ボタンを表示</string>
+    <string name="settings_drawer_swipe_title">スワイプでメニューを開く</string>
+    <string name="settings_drawer_swipe_summary">会話リストの左端からスワイプしてサイドメニューを開きます</string>
     <string name="settings_auto_emoji_title">自動絵文字</string>
     <string name="settings_notifications_title">通知</string>
     <string name="settings_notifications_o_summary">タップしてカスタマイズ</string>
@@ -201,7 +370,14 @@
     <string name="settings_notification_action_2">ボタン 2</string>
     <string name="settings_notification_action_3">ボタン 3</string>
     <string name="settings_notification_previews_title">通知プレビュー</string>
+    <string name="settings_notification_previews_summary">名前とメッセージを表示</string>
     <string name="settings_notification_wake_title">画面を点灯</string>
+    <string name="settings_notification_silent_title">連絡先以外はサイレント</string>
+    <string name="settings_notification_silent_summary">連絡先に登録されていない相手からのメッセージの通知を鳴らしません</string>
+    <string name="settings_copy_code_title">通知からコードをコピー</string>
+    <string name="settings_copy_code_summary">ワンタイムコードや確認コードの通知に「コードをコピー」ボタンを追加します</string>
+    <string name="notification_copy_code">コードをコピー</string>
+    <string name="notification_code_copied">コードをコピーしました</string>
     <string name="settings_vibration_title">バイブレーション</string>
     <string name="settings_ringtone_title">音</string>
     <string name="settings_ringtone_none">なし</string>
@@ -226,6 +402,13 @@
     </string-array>
     <string name="settings_delivery_title">配信確認</string>
     <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>
+    <string name="settings_send_sound_title">送信音</string>
+    <string name="settings_send_sound_summary">メッセージ送信時に短い音を鳴らします</string>
+    <string name="settings_send_sound_volume_title">音量</string>
+    <string name="settings_header_quick_action_title">ヘッダーのクイック操作</string>
+    <string name="settings_header_quick_action_summary">会話のヘッダーにショートカットボタンを追加します</string>
+    <string name="settings_unread_at_top_title">未読を上に表示</string>
+    <string name="settings_unread_at_top_summary">未読の会話を一番上に表示します</string>
     <string name="settings_signature_title">署名</string>
     <string name="settings_signature_summary">メッセージの最後に署名を追加します</string>
     <string name="settings_unicode_title">アクセントの除去</string>
@@ -244,6 +427,9 @@
     <string name="settings_long_as_mms_title">長いメッセージを MMS として送信</string>
     <string name="settings_long_as_mms_summary">長いテキストメッセージの送信が失敗する場合、または間違った順序で送信される場合は、代わりに MMS メッセージとして送信できます。 追加料金が適用される場合があります</string>
     <string name="settings_mms_size_title">MMS 添付ファイルの自動圧縮</string>
+    <string name="settings_mms_weblink_title">メッセージ内のリンクの扱い</string>
+    <string name="settings_disable_screenshots_title">スクリーンショットを無効化</string>
+    <string name="settings_diable_screenshots_summary">OS や他のアプリがこのアプリのスクリーンショットを撮れないようにします。</string>
     <string name="settings_sync_title">メッセージを同期</string>
     <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
     <string name="settings_about_title">Open Messages について</string>
@@ -255,6 +441,17 @@
     <string name="blocking_drop_title">メッセージをドロップ</string>
     <string name="blocking_drop_summary">ブロックした送信者からの受信メッセージを非表示にする代わりにドロップします</string>
     <string name="blocking_conversations">ブロックした会話</string>
+    <string name="blocking_category_integrated">内蔵ブロック</string>
+    <string name="blocking_integrated_description">Open Messages は端末上で迷惑メッセージをブロックします。以下の任意のソースは、オンにしたときにインターネットからリストをダウンロードし、その後はオフラインで動作します。</string>
+    <string name="blocking_category_external_apps">外部アプリ</string>
+    <string name="blocked_numbers_summary">自分でブロックした番号</string>
+    <string name="blocking_source_phishing_title">フィッシング対策</string>
+    <string name="blocking_source_phishing_summary">既知のフィッシングサイトへのリンクを含むメッセージをブロックします。オンにするとインターネットからリストをダウンロードし、その後のフィルタリングはオフラインで行われます。</string>
+    <string name="blocking_source_flag_block_title">迷惑メッセージの疑いをブロック</string>
+    <string name="blocking_source_flag_block_summary">迷惑メッセージの可能性があるメッセージを、受信トレイでラベル表示するだけでなく、直接ブロックリストに送ります</string>
+    <string name="blocking_source_status_updating">更新中…</string>
+    <string name="blocking_source_status_updated">最新 · %1$d 件</string>
+    <string name="blocking_source_status_failed">ダウンロードに失敗したため、このソースはオフのままです。接続を確認して、もう一度お試しください。</string>
     <string name="blocking_manager_title">ブロッキングマネージャー</string>
     <string name="blocking_manager_built_in_summary">Open Messages の内蔵ブロック機能</string>
     <string name="blocking_manager_call_blocker_summary">ブラックリストにより迷惑メッセージ、番号、不明な通話をブロック</string>
@@ -268,6 +465,15 @@
     <string name="blocked_numbers_dialog_title">次からのテキストをブロック</string>
     <string name="blocked_numbers_dialog_hint">電話番号</string>
     <string name="blocked_numbers_dialog_block">ブロック</string>
+    <string name="message_content_filters_title">メッセージ内容フィルタ</string>
+    <string name="message_content_filters_empty">メッセージ内容フィルタがここに表示されます</string>
+    <string name="message_content_filters_add_cd">新しいフィルタを作成</string>
+    <string name="message_content_filters_dialog_title">一致するメッセージを破棄</string>
+    <string name="message_content_filters_dialog_hint">単語、フレーズ、または正規表現</string>
+    <string name="message_content_filters_dialog_case_switch">大文字と小文字を区別</string>
+    <string name="message_content_filters_dialog_regex_switch">正規表現</string>
+    <string name="message_content_filters_dialog_contacts_switch">連絡先も含める</string>
+    <string name="message_content_filters_dialog_create">作成</string>
     <string name="blocked_messages_title">ブロックしたメッセージ</string>
     <string name="blocked_messages_empty">ブロックしたメッセージがここに表示されます</string>
     <string name="blocking_block_title">ブロック</string>
@@ -278,6 +484,15 @@
     <plurals name="blocking_unblock_external">
         <item quantity="other">%s で継続してこの番号を許可</item>
     </plurals>
+    <string name="deduplicate_messages_category">重複メッセージの削除</string>
+    <string name="deduplicate_messages_title">重複メッセージを削除</string>
+    <string name="deduplicate_messages_summary">メッセージのデータベースをスキャンし、元のメッセージと完全に一致するメッセージをすべて削除します</string>
+    <string name="deduplicate_message_confirmation_dialog_message">メッセージのデータベースから重複をスキャンし、見つかった重複を削除します。\nメッセージが自動的に削除されます。影響を理解したうえで続けてください。</string>
+    <string name="auto_deduplicate_messages_title">重複メッセージを自動削除</string>
+    <string name="auto_deduplicate_messages_summary">同期中に重複の削除を行います。メッセージが自動的に削除されます。誤って重複と判定される可能性は非常に低いものの、ゼロではありません。\nご注意ください。</string>
+    <string name="deduplicating_messages_finished">重複メッセージの削除が完了しました！</string>
+    <string name="deduplicating_messages_no_messages">重複メッセージは見つかりませんでした。</string>
+    <string name="deduplicating_messages_failed">重複メッセージの削除に失敗しました。もう一度お試しください</string>
     <string name="about_title">このアプリについて</string>
     <string name="about_version_title">バージョン</string>
     <string name="about_developer_title">開発者</string>
@@ -288,6 +503,7 @@
     <string name="about_copyright_title">著作権</string>
     <string name="widget_loading">読み込み中...</string>
     <string name="widget_more">さらに会話を表示</string>
+    <string name="all_conversations_widget_title">すべての会話</string>
     <string name="quick_reply_menu_read">既読にする</string>
     <string name="quick_reply_menu_call">通話</string>
     <string name="quick_reply_menu_delete">削除</string>
@@ -309,17 +525,34 @@
     <string name="button_yes">はい</string>
     <string name="button_continue">続行</string>
     <string name="button_cancel">キャンセル</string>
+    <string name="button_close">閉じる</string>
     <string name="button_delete">削除</string>
     <string name="button_save">保存</string>
     <string name="button_stop">やめる</string>
     <string name="button_set">設定</string>
+    <string name="button_later">後で</string>
+    <string name="icon_restart_title">再起動が必要です</string>
+    <string name="icon_restart_message">アプリアイコンの更新を完了するには、アプリの再起動が必要です。</string>
+    <string name="icon_restart_now">再起動</string>
     <string name="button_undo">元に戻す</string>
+    <string name="button_clear">クリア</string>
     <string name="toast_copied">コピーしました</string>
+    <plurals name="toast_archived">
+        <item quantity="other">%d 件の会話をアーカイブしました</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="other">%d 件の会話のアーカイブを解除しました</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="other">%s 件の新着メッセージ</item>
     </plurals>
     <string name="notification_message_failed_title">メッセージは送信されませんでした</string>
     <string name="notification_message_failed_text">%s へのメッセージの送信に失敗しました</string>
+    <string name="notification_foreground_worker_title">メッセージを受信中</string>
+    <string name="notification_foreground_worker_text">Android 12 以前では、メッセージを受信するためのバックグラウンド処理に通知が必要です。</string>
+    <string name="notification_foreground_worker_channel_name">メッセージ受信処理の通知</string>
+    <string name="notification_me">自分</string>
+    <string name="notification_message_failed_action">再送信</string>
     <string-array name="night_modes">
         <item>システム</item>
         <item>無効</item>
@@ -343,6 +576,21 @@
         <item>5 秒</item>
         <item>10 秒</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>なし</item>
+        <item>アーカイブ</item>
+        <item>未読にする</item>
+        <item>ブロック</item>
+        <item>削除</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>なし</item>
+        <item>クラシック</item>
+        <item>明るい</item>
+        <item>やわらか</item>
+        <item>下降</item>
+        <item>3 音</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>自動</item>
         <item>100KB</item>
@@ -352,6 +600,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>圧縮なし</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>ブロック</item>
+        <item>許可</item>
+        <item>開く前に確認</item>
     </string-array>
     <string-array name="quick_responses">
         <item>OK</item>
@@ -367,5 +620,16 @@
         <item>爆笑</item>
         <item>大丈夫</item>
     </string-array>
+    <string name="speak_no_messages">メッセージはありません</string>
+    <string name="speak_unseen_messages">未読メッセージを読み上げる</string>
+    <string name="messageLinkHandling_dialog_title">外部リンクの警告</string>
+    <string name="messageLinkHandling_dialog_body">安全でないリンクや、予期しない場所にリダイレクトされるリンクがあります。続行する前に以下のリンクを確認してください:\n\n%1$s\n\n続けますか？</string>
+    <string name="messageLinkHandling_dialog_positive">はい、リンクを開きます</string>
+    <string name="messageLinkHandling_dialog_negative">いいえ</string>
+    <string name="error_stt_toast">音声入力サービスの読み込み中にエラーが発生しました。</string>
+    <string name="stt_toast_extra_prompt">メッセージを話してください</string>
+    <string name="messages_text_share_file_error">共有中に問題が発生しました</string>
     <string name="menu_mms_part_share">共有</string>
+    <string name="menu_mms_part_forward">転送</string>
+    <string name="menu_mms_part_open">外部アプリで開く</string>
 </resources>

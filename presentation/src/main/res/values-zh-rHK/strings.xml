@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">簡單、開源的訊息應用程式</string>
     <string name="shortcut_compose_long_label">新對話</string>
     <string name="shortcut_compose_short_label">撰寫</string>
     <string name="shortcut_compose_disabled_message">捷徑已停用</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">設定</string>
     <string name="title_notification_prefs">通知</string>
     <string name="title_theme">主題</string>
+    <string name="theme_default">預設</string>
+    <string name="theme_wallpaper">牆紙</string>
+    <string name="theme_other_colors">顏色</string>
+    <string name="theme_tab_presets">調色盤</string>
+    <string name="theme_tab_custom">自訂</string>
+    <string name="theme_apply_to_icon">將顏色套用到應用程式圖示 (應用程式將關閉)</string>
+    <string name="theme_tab_icon">應用程式圖示</string>
+    <string name="theme_icon_follow_theme">配合應用程式主題顏色</string>
+    <string name="theme_icon_summary">選擇應用程式圖示的顏色，與主題無關。套用變更後應用程式將關閉。</string>
+    <string name="theme_icon_change_title">要變更應用程式圖示嗎？</string>
+    <string name="theme_icon_change_message">應用程式圖示的顏色即將變更。Android 只能在應用程式關閉時更換圖示，因此您確認後 Open Messages 會立即關閉。</string>
     <string name="title_conversations">在收件箱中搜索...</string>
+    <string name="title_search">搜尋</string>
     <string name="title_compose">編輯</string>
     <string name="setup_skip">跳過</string>
     <string name="setup_next">繼續</string>
     <string name="menu_add_person">增加傳送人</string>
     <string name="menu_call">致電</string>
     <string name="menu_mms_part_save">保存到圖庫</string>
+    <string name="menu_mms_part_share">分享</string>
+    <string name="menu_mms_part_forward">轉寄</string>
+    <string name="menu_mms_part_open">以外部應用程式開啟</string>
     <string name="compose_menu_share">分享</string>
     <string name="main_drawer_open_cd">打開導航抽屜</string>
+    <string name="main_search_close_cd">關閉搜尋</string>
+    <string name="main_search_clear_cd">清除搜尋</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">已選擇%d項</string>
     <string name="main_menu_clear">清除</string>
+    <string name="main_menu_select_all">全選</string>
     <string name="main_menu_archive">封存</string>
     <string name="main_menu_unarchive">取消封存</string>
     <string name="main_menu_delete">刪除</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">標示已讀</string>
     <string name="main_menu_unread">標示未讀</string>
     <string name="main_menu_block">攔截</string>
+    <string name="main_menu_send_now">立即傳送</string>
+    <string name="main_menu_edit_message">編輯訊息</string>
+    <string name="main_menu_rename_conversation">重新命名對話</string>
     <string name="main_syncing">正在同步…</string>
+    <string name="main_sync_emojis">正在解析表情回應…</string>
     <string name="main_sender_you">您：%s</string>
+    <string name="main_sender_draft">草稿：%s</string>
+    <string name="conversation_flagged_label">疑似垃圾訊息</string>
+    <string name="snippet_picture">圖片</string>
+    <string name="snippet_video">影片</string>
+    <string name="snippet_audio">音訊</string>
+    <string name="snippet_contact_card">聯絡人名片</string>
+    <string name="search_group_conversations">對話</string>
     <string name="main_message_results_title">信息中的結果</string>
     <plurals name="main_message_results">
         <item quantity="other">%d 條信息</item>
@@ -62,11 +93,29 @@
     <string name="main_permission_contacts">需要允許Open Messages查看您的連絡人</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">允許</string>
+    <string name="scheduled_menu_send_now">立即傳送</string>
+    <string name="scheduled_menu_edit_message">編輯訊息</string>
     <string name="drawer_inbox">收件箱</string>
+    <string name="contacts_group_recent">最近</string>
+    <string name="contacts_group_starred">我的最愛</string>
+    <string name="contacts_group_groups">群組</string>
+    <string name="conversations_group_today">今天</string>
+    <string name="conversations_group_yesterday">昨天</string>
     <string name="drawer_archived">已存檔</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="other">%d 則未讀</item>
+    </plurals>
     <string name="drawer_scheduled">已計劃</string>
     <string name="drawer_blocking">封鎖</string>
     <string name="drawer_more">更多</string>
+    <string name="message_management_title">訊息管理</string>
+    <string name="templates_title">範本</string>
+    <string name="templates_empty">尚未儲存任何訊息。\n輕觸 + 儲存您常傳送的訊息，再輕觸該訊息選擇要傳送給誰。</string>
+    <string name="template_hint">輸入訊息…</string>
+    <string name="template_title_hint">標題 (選填)</string>
+    <string name="templates_add_cd">新增範本</string>
+    <string name="template_new">新增範本</string>
+    <string name="template_edit">編輯範本</string>
     <string name="drawer_settings">設定</string>
     <string name="drawer_help">幫助與反饋</string>
     <string name="drawer_invite">邀請朋友</string>
@@ -78,6 +127,17 @@
     <plurals name="dialog_delete_message">
         <item quantity="other">您確定要刪除這 %d 段對話嗎？</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="other">確定要刪除 %d 則訊息嗎？</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="other">確定要立即傳送 %d 則訊息嗎？</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">編輯訊息</string>
+    <string name="dialog_edit_scheduled_message">編輯這則訊息會將它從排程中移除。\n\n請務必在下一個畫面重新提交，否則訊息將會遺失。\n\n要繼續嗎？</string>
+    <string name="dialog_edit_scheduled_message_positive_button">是，編輯訊息</string>
+    <string name="dialog_clear_compose_title">清除訊息</string>
+    <string name="dialog_clear_compose">要清除訊息嗎？此操作無法復原。</string>
     <string-array name="message_options">
         <item>複製文本</item>
         <item>轉寄</item>
@@ -91,19 +151,34 @@
     <string name="compose_subtitle_results">已顯示 %2$d 條中的 %1$d 條結果</string>
     <string name="compose_send_group_title">群發訊息</string>
     <string name="compose_send_group_summary">收件人和回復對每個人都是可見的</string>
+    <string name="compose_send_group_summary_on">所有人都會看到收件者和回覆</string>
+    <string name="compose_send_group_summary_off">訊息將分別傳送給每位收件者</string>
     <string name="compose_messages_empty">這是您談話的開始。說點好聽的吧！</string>
     <string name="compose_vcard_label">連絡人卡片</string>
     <string name="compose_scheduled_for">排程於</string>
     <string name="compose_scheduled_future">所選時間必須是未來時間</string>
     <string name="compose_scheduled_toast">已新增至排程訊息</string>
+    <string name="compose_scheduled_view">此對話的排程訊息</string>
+    <string name="compose_scheduled_bubble">將於 %s 傳送</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="other">%d 個附件</item>
+    </plurals>
     <string name="compose_hint">寫一條訊息…</string>
+    <string name="compose_expand_cd">展開為全螢幕</string>
+    <string name="compose_collapse_cd">收合</string>
+    <string name="compose_no_valid_recipients">無法傳送給其他參與者</string>
+    <string name="compose_flagged_title">疑似垃圾訊息</string>
+    <string name="compose_flagged_approve">核准</string>
+    <string name="compose_flagged_block">封鎖</string>
     <string name="compose_menu_copy">複製文本</string>
     <string name="compose_menu_forward">轉寄</string>
+    <string name="compose_menu_show_status">顯示狀態</string>
     <string name="compose_menu_delete">刪除</string>
     <string name="compose_menu_previous">前一個</string>
     <string name="compose_menu_next">下一個</string>
     <string name="compose_menu_clear">清空</string>
     <string name="compose_details_title">訊息詳情</string>
+    <string name="compose_reactions_title">表情回應</string>
     <string name="compose_details_type">類型：%s</string>
     <string name="compose_details_from">來自：%s</string>
     <string name="compose_details_to">发送到：%s</string>
@@ -115,18 +190,59 @@
     <string name="compose_details_delivered">送達於：%s</string>
     <string name="compose_details_error_code">錯誤代碼: %d</string>
     <string name="compose_attach_cd">添加附件</string>
+    <string name="compose_attach_file_cd">附加任何檔案</string>
     <string name="compose_gallery_cd">附加照片</string>
+    <string name="compose_audio_message_cd">錄製語音訊息</string>
     <string name="compose_camera_cd">拍攝照片</string>
     <string name="compose_schedule_cd">排程訊息</string>
+    <string name="compose_schedule_title">排程訊息</string>
+    <string name="compose_schedule_in_hour">1 小時後</string>
+    <string name="compose_schedule_tonight">今晚</string>
+    <string name="compose_schedule_tomorrow_morning">明天早上</string>
+    <string name="compose_schedule_tomorrow_afternoon">明天下午</string>
+    <string name="compose_schedule_custom">選擇日期和時間</string>
+    <string name="compose_schedule_confirm">排程</string>
+    <string name="compose_schedule_previous_month">上個月</string>
+    <string name="compose_schedule_next_month">下個月</string>
+    <string name="compose_schedule_increase">增加</string>
+    <string name="compose_schedule_decrease">減少</string>
+    <string name="compose_schedule_cancel_cd">取消排程訊息</string>
     <string name="compose_contact_cd">附加聯絡人</string>
     <string name="compose_contact_error">讀取聯絡人時出錯</string>
+    <string name="compose_attach_gallery">相簿</string>
+    <string name="compose_attach_camera">相機</string>
+    <string name="compose_attach_file">檔案</string>
+    <string name="compose_attach_audio">音訊</string>
+    <string name="compose_attach_contact">聯絡人</string>
+    <string name="compose_attach_schedule">排程</string>
+    <string name="compose_attach_templates">範本</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">已選取%1$d (%2$s) SIM卡</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="other">這部影片太長，無法透過 MMS 傳送。最長只能 %d 秒。</item>
+    </plurals>
     <string name="compose_sim_cd">%s 已選擇，變更 SIM 卡</string>
     <string name="compose_send_cd">發送訊息</string>
+    <string name="compose_record_audio_msg_cd">錄製語音訊息</string>
+    <string name="compose_record_audio_msg_abort_cd">取消語音訊息</string>
+    <string name="compose_record_audio_msg_attach_cd">附加語音訊息</string>
+    <string name="compose_audio_msg_title">語音訊息</string>
+    <string name="compose_audio_msg_attach">附加</string>
+    <string name="compose_record_audio_msg_play_pause_cd">播放或暫停語音訊息</string>
+    <string name="compose_message_cancel">取消</string>
+    <string name="compose_message_send_now">立即傳送</string>
+    <string name="compose_message_sim">SIM 卡號碼</string>
+    <string name="compose_message_item">訊息項目</string>
+    <string name="compose_message_attachment">附件</string>
+    <string name="compose_toast_drag_stt">您可以將語音輸入按鈕移到任何位置</string>
     <string name="message_status_sending">正在發送…</string>
     <string name="message_status_delivered">已傳遞 %s</string>
     <string name="message_status_failed">發送失敗，點擊重試</string>
+    <string name="message_body_too_long_to_display">⚠ 訊息過長。請複製或儲存以查看全文</string>
+    <string name="conversation_menu">對話選項</string>
+    <string name="conversation_menu_media">查看所有媒體</string>
+    <string name="media_title">媒體</string>
+    <string name="media_empty">此對話中分享的相片和影片會顯示在這裡</string>
     <string name="info_copied_address">已複製位址</string>
     <string name="info_name">對話標題</string>
     <string name="info_notifications">通知</string>
@@ -140,11 +256,40 @@
     <string name="gallery_toast_saved">保存到圖庫</string>
     <string name="backup_title">備份和還原</string>
     <string name="backup_backing_up">正在備份訊息</string>
+    <string name="backup_failed_title">備份失敗</string>
+    <string name="backup_icon_change_title">要還原應用程式圖示嗎？</string>
+    <string name="backup_icon_change_message">您的備份是以不同的應用程式圖示顏色建立的。Android 只能在應用程式關閉時更換圖示，因此您確認後 Open Messages 會立即關閉。</string>
+    <string name="icon_change_confirm">套用並關閉</string>
+    <string name="icon_change_later">稍後再說</string>
     <string name="backup_restoring">正在從備份還原</string>
     <string name="backup_loading">載入中…</string>
     <string name="backup_never">從未備份</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">自動備份</string>
+    <string name="backup_auto_never">永不</string>
+    <string name="backup_auto_daily">每天</string>
+    <string name="backup_auto_weekly">每週</string>
+    <string name="backup_auto_custom">自訂…</string>
+    <string name="backup_auto_custom_title">備份間隔天數</string>
+    <string name="backup_auto_custom_hint">天數</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="other">每 %d 天</item>
+    </plurals>
+    <string name="backup_zip_title">儲存為 .zip 檔案</string>
+    <string name="backup_zip_summary">將每份備份存成單一壓縮檔，方便在手機之間移轉</string>
+    <string name="backup_manage_title">管理備份</string>
+    <string name="backup_manage_summary">重新命名或刪除備份</string>
+    <string name="backup_manage_empty">此位置沒有備份</string>
+    <string name="backup_manage_rename">重新命名</string>
+    <string name="backup_manage_delete">刪除</string>
+    <string name="backup_manage_delete_confirm">要刪除「%s」嗎？此操作無法復原。</string>
+    <string name="backup_manage_error">無法更新此備份</string>
+    <string name="backup_manage_type_folder">資料夾</string>
+    <string name="backup_manage_type_zip">Zip 壓縮檔</string>
+    <string name="backup_restore_from_title">還原來源</string>
+    <string name="backup_restore_from_folder">資料夾</string>
+    <string name="backup_restore_from_zip">.zip 檔案</string>
     <string name="backup_restore_title">還原</string>
     <string name="backup_restore_summary">選擇備份</string>
     <string name="backup_restore_error_backup">正在進行備份…</string>
@@ -162,12 +307,28 @@
     <string name="backup_restore_dialog_empty">未能找到備份</string>
     <string name="backup_disclaimer">目前只有簡訊支援備份和還原，多媒體和排程簡訊備份將在不久後加入！</string>
     <string name="backup_now">立即備份</string>
+    <string name="backup_now_summary">建立新的備份</string>
+    <string name="backup_categories_title">要備份哪些內容？</string>
+    <string name="backup_restore_source_title">要使用哪份備份？</string>
+    <string name="backup_restore_categories_title">從 %s 還原</string>
+    <string name="backup_category_messages">訊息 (SMS、MMS 和附件)</string>
+    <string name="backup_category_settings">設定和範本</string>
+    <string name="backup_category_blocking">封鎖規則</string>
+    <string name="backup_category_conversations">封存和置頂</string>
+    <string name="backup_category_scheduled">排程訊息</string>
+    <string name="backup_exact_alarm_title">允許精確鬧鐘</string>
+    <string name="backup_exact_alarm_message">為了在準確時間傳送排程訊息，Open Messages 需要設定精確鬧鐘的權限。若未授予，訊息可能會稍晚送出。</string>
+    <string name="backup_exact_alarm_grant">允許</string>
+    <string name="backup_exact_alarm_skip">仍要還原</string>
     <string name="backup_progress_parsing">正在解析備份…</string>
     <string name="backup_progress_running">%d/%d 條訊息</string>
     <string name="backup_progress_saving">正在儲存備份…</string>
     <string name="backup_progress_syncing">正在同步訊息…</string>
     <string name="backup_progress_finished">完成！</string>
+    <string name="backup_progress_failed">無法寫入備份。請檢查剩餘空間和備份資料夾。</string>
     <string name="backup_notification_channel_name">備份和還原</string>
+    <string name="clipboard_too_large_to_copy">資料大小超過剪貼簿上限</string>
+    <string name="clipboard_unable_to_copy_to">無法複製到剪貼簿</string>
     <string name="scheduled_title">排程</string>
     <string name="scheduled_empty_description">在您指定的時間自動傳送訊息</string>
     <string name="scheduled_empty_message_1">嘿，您的生日是什麼時候？</string>
@@ -176,12 +337,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">在 12 月 23 日傳送</string>
     <string name="scheduled_compose_cd">新增排程訊息</string>
+    <string name="scheduled_send_cd">排程這則訊息</string>
     <string name="scheduled_options_title">排程訊息</string>
     <string-array name="scheduled_options">
         <item>立即發送</item>
         <item>複製文字</item>
         <item>刪除</item>
     </string-array>
+    <string name="attachment_missing">遺失</string>
     <string name="settings_category_appearance">外觀</string>
     <string name="settings_category_general">通用</string>
     <string name="settings_category_quick_reply">快速答覆</string>
@@ -193,6 +356,15 @@
     <string name="settings_automatic_colors_title">聯絡人自動上色</string>
     <string name="settings_text_size_title">字體大小</string>
     <string name="settings_system_font_title">使用系統字體</string>
+    <string name="settings_show_avatar_title">顯示聯絡人相片</string>
+    <string name="settings_show_avatar_summary">在對話中顯示傳送者的相片。關閉後訊息泡泡會更寬。</string>
+    <string name="settings_hide_country_code_title">隱藏國碼</string>
+    <string name="settings_hide_country_code_summary">以本地格式顯示電話號碼標題，例如「9123 4567」而非「+852 9123 4567」</string>
+    <string name="settings_edge_to_edge_title">全螢幕延伸顯示</string>
+    <string name="settings_edge_to_edge_summary">在狀態列和導覽列後方顯示內容</string>
+    <string name="settings_system_show_stt_title">顯示語音輸入按鈕</string>
+    <string name="settings_drawer_swipe_title">滑動開啟選單</string>
+    <string name="settings_drawer_swipe_summary">從對話清單的左側邊緣滑動以開啟側邊選單</string>
     <string name="settings_auto_emoji_title">自動 emoji 表情</string>
     <string name="settings_notifications_title">通知</string>
     <string name="settings_notifications_o_summary">輕觸以跳轉至系統設定</string>
@@ -201,7 +373,14 @@
     <string name="settings_notification_action_2">按鈕2</string>
     <string name="settings_notification_action_3">按鈕3</string>
     <string name="settings_notification_previews_title">通知預覽</string>
+    <string name="settings_notification_previews_summary">顯示名稱和訊息</string>
     <string name="settings_notification_wake_title">喚醒畫面</string>
+    <string name="settings_notification_silent_title">非聯絡人時靜音</string>
+    <string name="settings_notification_silent_summary">來自非聯絡人的訊息將以靜音方式通知</string>
+    <string name="settings_copy_code_title">從通知複製驗證碼</string>
+    <string name="settings_copy_code_summary">在一次性密碼和驗證碼的通知中加入「複製驗證碼」按鈕</string>
+    <string name="notification_copy_code">複製驗證碼</string>
+    <string name="notification_code_copied">已複製驗證碼</string>
     <string name="settings_vibration_title">震動</string>
     <string name="settings_ringtone_title">音效</string>
     <string name="settings_ringtone_none">無</string>
@@ -226,6 +405,13 @@
     </string-array>
     <string name="settings_delivery_title">送達確認</string>
     <string name="settings_delivery_summary">確認訊息已成功送達</string>
+    <string name="settings_send_sound_title">傳送音效</string>
+    <string name="settings_send_sound_summary">傳送訊息時播放短促的提示音</string>
+    <string name="settings_send_sound_volume_title">音量</string>
+    <string name="settings_header_quick_action_title">標題列快速動作</string>
+    <string name="settings_header_quick_action_summary">在對話標題列加入捷徑按鈕</string>
+    <string name="settings_unread_at_top_title">未讀置頂</string>
+    <string name="settings_unread_at_top_summary">將未讀對話顯示在最上方</string>
     <string name="settings_signature_title">簽名</string>
     <string name="settings_signature_summary">在訊息結尾添加簽名</string>
     <string name="settings_unicode_title">刪除讀音符號</string>
@@ -244,6 +430,9 @@
     <string name="settings_long_as_mms_title">以MMS傳送長訊息</string>
     <string name="settings_long_as_mms_summary">若您較長的訊息無法傳送或是以錯誤順序傳送，您可以改用MMS方式傳送訊息。（可能會有額外費用）</string>
     <string name="settings_mms_size_title">自動壓縮MMS附件</string>
+    <string name="settings_mms_weblink_title">訊息中的連結處理</string>
+    <string name="settings_disable_screenshots_title">停用螢幕截圖</string>
+    <string name="settings_diable_screenshots_summary">防止作業系統和其他應用程式擷取本應用程式的畫面。</string>
     <string name="settings_sync_title">同步消息</string>
     <string name="settings_sync_summary">重新與安卓原生訊息數據庫進行同步</string>
     <string name="settings_about_title">關於Open Messages</string>
@@ -255,6 +444,17 @@
     <string name="blocking_drop_title">直接刪除</string>
     <string name="blocking_drop_summary">直接刪除封鎖的簡訊，而非只有隱藏簡訊</string>
     <string name="blocking_conversations">封鎖的對話</string>
+    <string name="blocking_category_integrated">內建封鎖</string>
+    <string name="blocking_integrated_description">Open Messages 會在您的裝置上封鎖垃圾訊息。下方的選用來源會在您開啟時透過網絡下載清單，之後離線運作。</string>
+    <string name="blocking_category_external_apps">外部應用程式</string>
+    <string name="blocked_numbers_summary">您自行封鎖的號碼</string>
+    <string name="blocking_source_phishing_title">防詐騙網站</string>
+    <string name="blocking_source_phishing_summary">封鎖含有已知釣魚網站連結的訊息。開啟後會透過網絡下載清單，之後過濾會離線進行。</string>
+    <string name="blocking_source_flag_block_title">封鎖疑似垃圾訊息</string>
+    <string name="blocking_source_flag_block_summary">將標記為可能是垃圾訊息的訊息直接移到封鎖清單，而不只是在收件匣中加上標籤</string>
+    <string name="blocking_source_status_updating">更新中…</string>
+    <string name="blocking_source_status_updated">已是最新 · %1$d 筆項目</string>
+    <string name="blocking_source_status_failed">下載失敗，此來源保持關閉。請檢查連線後再試一次。</string>
     <string name="blocking_manager_title">封鎖管理器</string>
     <string name="blocking_manager_built_in_summary">Open Messages內建封鎖功能</string>
     <string name="blocking_manager_call_blocker_summary">使用黑名單與排程封鎖垃圾訊息、號碼和未知來電</string>
@@ -268,6 +468,15 @@
     <string name="blocked_numbers_dialog_title">輸入封鎖號碼</string>
     <string name="blocked_numbers_dialog_hint">電話號碼</string>
     <string name="blocked_numbers_dialog_block">封鎖</string>
+    <string name="message_content_filters_title">訊息內容過濾器</string>
+    <string name="message_content_filters_empty">您的訊息內容過濾器會顯示在這裡</string>
+    <string name="message_content_filters_add_cd">建立新的過濾器</string>
+    <string name="message_content_filters_dialog_title">捨棄符合以下內容的訊息</string>
+    <string name="message_content_filters_dialog_hint">字詞、片語或規則運算式</string>
+    <string name="message_content_filters_dialog_case_switch">區分大小寫</string>
+    <string name="message_content_filters_dialog_regex_switch">規則運算式</string>
+    <string name="message_content_filters_dialog_contacts_switch">包含聯絡人</string>
+    <string name="message_content_filters_dialog_create">建立</string>
     <string name="blocked_messages_title">封鎖的訊息</string>
     <string name="blocked_messages_empty">封鎖的訊息會顯示在這裡</string>
     <string name="blocking_block_title">封鎖</string>
@@ -278,6 +487,15 @@
     <plurals name="blocking_unblock_external">
         <item quantity="other">正在解鎖這些號碼%s</item>
     </plurals>
+    <string name="deduplicate_messages_category">移除重複訊息</string>
+    <string name="deduplicate_messages_title">移除重複訊息</string>
+    <string name="deduplicate_messages_summary">掃描訊息資料庫，刪除所有與原始訊息完全相同的訊息</string>
+    <string name="deduplicate_message_confirmation_dialog_message">系統將掃描您的訊息資料庫找出重複項目，然後移除這些重複訊息。\n此操作會自動刪除訊息，請在了解後果後再繼續。</string>
+    <string name="auto_deduplicate_messages_title">自動移除重複訊息</string>
+    <string name="auto_deduplicate_messages_summary">將在同步時移除重複訊息。請注意，此功能會自動刪除訊息，雖然誤判為重複的機率極低，但仍有可能發生。\n請謹慎使用。</string>
+    <string name="deduplicating_messages_finished">已完成移除重複訊息！</string>
+    <string name="deduplicating_messages_no_messages">找不到重複的訊息。</string>
+    <string name="deduplicating_messages_failed">移除重複訊息失敗，請再試一次</string>
     <string name="about_title">關於</string>
     <string name="about_version_title">版本</string>
     <string name="about_developer_title">開發者</string>
@@ -288,6 +506,7 @@
     <string name="about_copyright_title">版權</string>
     <string name="widget_loading">載入中…</string>
     <string name="widget_more">查看更多對話</string>
+    <string name="all_conversations_widget_title">所有對話</string>
     <string name="quick_reply_menu_read">標示已讀</string>
     <string name="quick_reply_menu_call">致電</string>
     <string name="quick_reply_menu_delete">刪除</string>
@@ -309,17 +528,34 @@
     <string name="button_yes">確定</string>
     <string name="button_continue">繼續</string>
     <string name="button_cancel">取消</string>
+    <string name="button_close">關閉</string>
     <string name="button_delete">刪除</string>
     <string name="button_save">儲存</string>
     <string name="button_stop">停止</string>
     <string name="button_set">設置</string>
+    <string name="button_later">稍後</string>
+    <string name="icon_restart_title">需要重新啟動</string>
+    <string name="icon_restart_message">需要重新啟動應用程式才能完成更新應用程式圖示。</string>
+    <string name="icon_restart_now">重新啟動</string>
     <string name="button_undo">復原</string>
+    <string name="button_clear">清除</string>
     <string name="toast_copied">已複製</string>
+    <plurals name="toast_archived">
+        <item quantity="other">已封存 %d 則對話</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="other">已取消封存 %d 則對話</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="other">%s條新訊息</item>
     </plurals>
     <string name="notification_message_failed_title">消息未發送</string>
     <string name="notification_message_failed_text">給%s的訊息發送失敗</string>
+    <string name="notification_foreground_worker_title">正在接收訊息</string>
+    <string name="notification_foreground_worker_text">在 Android 12 及更舊版本中，接收訊息的背景工作需要顯示通知。</string>
+    <string name="notification_foreground_worker_channel_name">訊息接收工作通知</string>
+    <string name="notification_me">我</string>
+    <string name="notification_message_failed_action">重新傳送</string>
     <string-array name="night_modes">
         <item>跟隨系統</item>
         <item>停用</item>
@@ -343,6 +579,21 @@
         <item>5 秒</item>
         <item>10 秒</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>無</item>
+        <item>封存</item>
+        <item>標示為未讀</item>
+        <item>封鎖</item>
+        <item>刪除</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>無</item>
+        <item>經典</item>
+        <item>明亮</item>
+        <item>柔和</item>
+        <item>下降</item>
+        <item>三連音</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>自動</item>
         <item>100KB</item>
@@ -352,6 +603,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>無壓縮</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>封鎖</item>
+        <item>允許</item>
+        <item>開啟前詢問</item>
     </string-array>
     <string-array name="quick_responses">
         <item>好的</item>
@@ -367,4 +623,13 @@
         <item>啊哈哈哈哈</item>
         <item>好的</item>
     </string-array>
+    <string name="speak_no_messages">沒有訊息</string>
+    <string name="speak_unseen_messages">朗讀未讀訊息</string>
+    <string name="messageLinkHandling_dialog_title">外部連結警告</string>
+    <string name="messageLinkHandling_dialog_body">部分連結可能不安全，或會將您導向非預期的網頁。繼續之前，請先確認以下連結：\n\n%1$s\n\n要繼續嗎？</string>
+    <string name="messageLinkHandling_dialog_positive">是，開啟連結</string>
+    <string name="messageLinkHandling_dialog_negative">否</string>
+    <string name="error_stt_toast">抱歉，載入語音轉文字服務時發生錯誤。</string>
+    <string name="stt_toast_extra_prompt">說出您的訊息</string>
+    <string name="messages_text_share_file_error">糟糕！分享時發生錯誤</string>
 </resources>
