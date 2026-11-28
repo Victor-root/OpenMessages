@@ -64,6 +64,7 @@
     <string name="main_sender_you">شما: %s</string>
     <string name="main_message_results_title">اَبدُمان در پیام‌ها</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d پیام</item>
         <item quantity="other">%d پیام</item>
     </plurals>
     <string name="inbox_empty_text">گفتگوهایتان اینجا نمایش داده می‌شود</string>
@@ -109,7 +110,7 @@
     <string name="rate_dismiss">رد کردن</string>
     <string name="dialog_delete_title">سِتُردن</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">آیا اُستیگان هستید که می خواهید این گفتگو را بسِتُردانید؟</item>
+        <item quantity="one">آیا اُستیگان هستید که می خواهید %d گفتگو را بسِتُردانید؟</item>
         <item quantity="other">آیا اُستیگان هستید که می خواهید %d گفتگو را بسِتُردانید؟</item>
     </plurals>
     <string-array name="message_options">
@@ -327,7 +328,7 @@
     <string name="settings_auto_delete_warning">پیام‌های کهنه خودکار سترده شوند؟</string>
     <string name="settings_auto_delete_warning_message">اگر ادامه دهید، اکنون %1$d پیام سترده خواهند شد</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">پس از ۱ روز</item>
+        <item quantity="one">پس از %d روز</item>
         <item quantity="other">پس از %d روز</item>
     </plurals>
     <string name="settings_long_as_mms_title">پیام‌های بلند را با MMS بفرست</string>
@@ -424,7 +425,7 @@
     <string name="button_undo">اَگرد</string>
     <string name="toast_copied">پچین شد</string>
     <plurals name="notification_new_messages">
-        <item quantity="one">پیام نو</item>
+        <item quantity="one">%s پیام نو</item>
         <item quantity="other">%s پیام نو</item>
     </plurals>
     <string name="notification_message_failed_title">پیام فرستاده نشد</string>
@@ -499,11 +500,11 @@
     </string-array>
     <string name="menu_mms_part_share">همرسانی</string>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">آیا اُستیگان هستید که می خواهید این پیام را بسِتُردانید؟</item>
+        <item quantity="one">آیا اُستیگان هستید که می خواهید %d پیام را بسِتُردانید؟</item>
         <item quantity="other">آیا اُستیگان هستید که می خواهید %d پیام را بسِتُردانید؟</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">آیا اُستیگان هستید که می خواهید این پیام را بفرستید؟</item>
+        <item quantity="one">آیا اُستیگان هستید که می خواهید %d پیام را بفرستید؟</item>
         <item quantity="other">آیا اُستیگان هستید که می خواهید %d پیام را بفرستید؟</item>
     </plurals>
     <string name="dialog_edit_scheduled_message_title">ویرایش پیام</string>
@@ -527,11 +528,11 @@
     <string name="speak_no_messages">بی‌پیام</string>
     <string name="speak_unseen_messages">گفتن پیام‌های خوانده نشده</string>
     <plurals name="toast_archived">
-        <item quantity="one">گفتگو بایگانی شد</item>
+        <item quantity="one">%d گفتگو بایگانی شد</item>
         <item quantity="other">%d گفتگو بایگانی شدند</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">گفتگو وابایگانی شد</item>
+        <item quantity="one">%d گفتگو وابایگانی شد</item>
         <item quantity="other">%d گفتگو وابایگانی شدند</item>
     </plurals>
     <string name="all_conversations_widget_title">همه‌ی گفتگو‌ها</string>

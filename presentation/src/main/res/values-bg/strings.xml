@@ -60,6 +60,7 @@
     <string name="search_group_conversations">Разговори</string>
     <string name="main_message_results_title">Резултати в съобщенията</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d съобщение</item>
         <item quantity="other">%d съобщения</item>
     </plurals>
     <string name="inbox_empty_text">Разговорите ще се появят тук</string>

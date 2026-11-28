@@ -79,6 +79,9 @@
     <string name="search_group_conversations">Konverzácie</string>
     <string name="main_message_results_title">Výsledky v správach</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d správa</item>
+        <item quantity="few">%d správy</item>
+        <item quantity="many">%d správy</item>
         <item quantity="other">%d správ</item>
     </plurals>
     <string name="inbox_empty_text">Tu sa zobrazia vaše konverzácie</string>

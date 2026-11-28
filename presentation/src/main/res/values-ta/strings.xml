@@ -79,6 +79,7 @@
     <string name="search_group_conversations">உரையாடல்கள்</string>
     <string name="main_message_results_title">தகவல்களிலுள்ள முடிவுகள்</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d செய்தி</item>
         <item quantity="other">%d செய்திகள்</item>
     </plurals>
     <string name="inbox_empty_text">உங்கள் உரையாடல்கள் இங்கே தோன்றும்</string>

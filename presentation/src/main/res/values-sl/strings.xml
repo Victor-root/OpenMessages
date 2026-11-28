@@ -79,6 +79,9 @@
     <string name="search_group_conversations">Pogovori</string>
     <string name="main_message_results_title">Rezultati v sporočilih</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d sporočilo</item>
+        <item quantity="two">%d sporočili</item>
+        <item quantity="few">%d sporočila</item>
         <item quantity="other">%d sporočil</item>
     </plurals>
     <string name="inbox_empty_text">Vaši pogovori se bodo pojavili tukaj</string>
@@ -586,7 +589,7 @@
         <item quantity="other">Iz arhiva vrnjenih %d pogovorov</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">Novo sporočilo</item>
+        <item quantity="one">%s novo sporočilo</item>
         <item quantity="two">%s novi sporočili</item>
         <item quantity="few">%s novih sporočil</item>
         <item quantity="other">%s novih sporočil</item>

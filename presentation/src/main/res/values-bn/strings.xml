@@ -79,6 +79,7 @@
     <string name="search_group_conversations">আলাপ</string>
     <string name="main_message_results_title">বার্তার ভিতর পাওয়া গেছে</string>
     <plurals name="main_message_results">
+        <item quantity="one">%dটি বার্তা</item>
         <item quantity="other">%dটি বার্তা</item>
     </plurals>
     <string name="inbox_empty_text">তোমার আলাপ এখানে দেখা যাবে</string>
@@ -126,15 +127,15 @@
     <string name="rate_dismiss">বাতিল করো</string>
     <string name="dialog_delete_title">মুছে ফেলো</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">তুমি কি নিশ্চিত যে এই আলাপটি তুমি মুছে ফেলতে চাও?</item>
+        <item quantity="one">তুমি কি নিশ্চিত যে %dটি আলাপ তুমি মুছে ফেলতে চাও?</item>
         <item quantity="other">তুমি কি নিশ্চিত যে %d টি আলাপ তুমি মুছতে চাও?</item>
     </plurals>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">তুমি কি নিশ্চিত যে এই বার্তাটি মুছে ফেলতে চাও?</item>
+        <item quantity="one">তুমি কি নিশ্চিত যে %dটি বার্তা মুছে ফেলতে চাও?</item>
         <item quantity="other">তুমি কি নিশ্চিত যে %dটি বার্তা মুছে ফেলতে চাও?</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">তুমি কি নিশ্চিত যে এই বার্তাটি এখনই পাঠাতে চাও?</item>
+        <item quantity="one">তুমি কি নিশ্চিত যে %dটি বার্তা এখনই পাঠাতে চাও?</item>
         <item quantity="other">তুমি কি নিশ্চিত যে %dটি বার্তা এখনই পাঠাতে চাও?</item>
     </plurals>
     <string name="dialog_edit_scheduled_message_title">বার্তা সম্পাদনা করো</string>
@@ -434,7 +435,7 @@
     <string name="settings_auto_delete_warning">স্বয়ংক্রিয়ভাবে পুরান বার্তা মুছো?</string>
     <string name="settings_auto_delete_warning_message">যদি আগাও, %1$dটি বার্তা মুছে যাবে এখনই</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">১ দিন পরে</item>
+        <item quantity="one">%d দিন পরে</item>
         <item quantity="other">%d দিন পরে</item>
     </plurals>
     <string name="settings_long_as_mms_title">দীর্ঘ বার্তা এমএমএস হিসেবে পাঠাও</string>
@@ -554,15 +555,15 @@
     <string name="button_clear">মুছে ফেলো</string>
     <string name="toast_copied">অনুলিপি করা হয়েছে</string>
     <plurals name="toast_archived">
-        <item quantity="one">আলাপ আর্কাইভ করা হয়েছে</item>
+        <item quantity="one">%dটি আলাপ আর্কাইভ করা হয়েছে</item>
         <item quantity="other">%dটি আলাপ আর্কাইভ করা হয়েছে</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">আলাপ আনআর্কাইভ করা হয়েছে</item>
+        <item quantity="one">%dটি আলাপ আনআর্কাইভ করা হয়েছে</item>
         <item quantity="other">%dটি আলাপ আনআর্কাইভ করা হয়েছে</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">নতুন বার্তা</item>
+        <item quantity="one">%sটি নতুন বার্তা</item>
         <item quantity="other">%sটি নতুন বার্তা</item>
     </plurals>
     <string name="notification_message_failed_title">বার্তা পাঠাতে ব্যর্থ</string>

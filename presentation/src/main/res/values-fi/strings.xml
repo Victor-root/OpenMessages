@@ -79,6 +79,7 @@
     <string name="search_group_conversations">Keskustelut</string>
     <string name="main_message_results_title">Tuloksia viesteissä</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d viesti</item>
         <item quantity="other">%d viestiä</item>
     </plurals>
     <string name="inbox_empty_text">Keskustelusi näkyvät tässä</string>

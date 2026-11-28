@@ -79,6 +79,8 @@
     <string name="search_group_conversations">Conversas</string>
     <string name="main_message_results_title">Resultados nas mensagens</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d mensagem</item>
+        <item quantity="many">%d mensagens</item>
         <item quantity="other">%d mensagem(s)</item>
     </plurals>
     <string name="inbox_empty_text">Suas conversas aparecerão aqui</string>
@@ -127,16 +129,16 @@
     <string name="rate_dismiss">DESCARTAR</string>
     <string name="dialog_delete_title">Excluir</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Tem certeza que quer excluir esta conversa?</item>
+        <item quantity="one">Tem certeza que quer excluir %d conversa?</item>
         <item quantity="other">Tem certeza que quer excluir %d conversas?</item>
     </plurals>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">Tem certeza de que deseja excluir esta mensagem?</item>
+        <item quantity="one">Tem certeza de que deseja excluir %d mensagem?</item>
         <item quantity="many">Tem certeza de que deseja excluir %d mensagens?</item>
         <item quantity="other">Tem certeza de que deseja excluir %d mensagens?</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">Tem certeza de que deseja enviar esta mensagem agora?</item>
+        <item quantity="one">Tem certeza de que deseja enviar %d mensagem agora?</item>
         <item quantity="many">Tem certeza de que deseja enviar %d mensagens agora?</item>
         <item quantity="other">Tem certeza de que deseja enviar %d mensagens agora?</item>
     </plurals>
@@ -440,7 +442,7 @@
     <string name="settings_auto_delete_warning">Excluir mensagens antigas automaticamente?</string>
     <string name="settings_auto_delete_warning_message">Se você continuar, %1$d mensagens serão excluídas agora</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">Após 1 dia</item>
+        <item quantity="one">Após %d dia</item>
         <item quantity="other">Após %d dias</item>
     </plurals>
     <string name="settings_long_as_mms_title">Enviar mensagens longas como MMS</string>
@@ -560,17 +562,17 @@
     <string name="button_clear">Limpar</string>
     <string name="toast_copied">Copiada</string>
     <plurals name="toast_archived">
-        <item quantity="one">Conversa arquivada</item>
+        <item quantity="one">%d conversa arquivada</item>
         <item quantity="many">%d conversas arquivadas</item>
         <item quantity="other">%d conversas arquivadas</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">Conversa desarquivada</item>
+        <item quantity="one">%d conversa desarquivada</item>
         <item quantity="many">%d conversas desarquivadas</item>
         <item quantity="other">%d conversas desarquivadas</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">Nova mensagem</item>
+        <item quantity="one">%s nova mensagem</item>
         <item quantity="other">%s novas mensagens</item>
     </plurals>
     <string name="notification_message_failed_title">Mensagem não enviada</string>

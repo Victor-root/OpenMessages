@@ -64,6 +64,7 @@
     <string name="main_sender_you">Ön: %s</string>
     <string name="main_message_results_title">Találatok az üzenetekben</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d üzenet</item>
         <item quantity="other">%d üzenet</item>
     </plurals>
     <string name="inbox_empty_text">A beszélgetései itt jelennek meg</string>

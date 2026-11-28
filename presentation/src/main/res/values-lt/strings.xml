@@ -131,7 +131,7 @@
     <string name="rate_dismiss">ATMESTI</string>
     <string name="dialog_delete_title">Ištrinti</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Ar tikrai norite ištrinti šį pokalbį?</item>
+        <item quantity="one">Ar tikrai norite ištrinti %d pokalbį?</item>
         <item quantity="few">Ar tikrai norite ištrinti %d pokalbius?</item>
         <item quantity="many">Ar tikrai norite ištrinti %d pokalbio?</item>
         <item quantity="other">Ar tikrai norite ištrinti %d pokalbių?</item>
@@ -589,7 +589,7 @@
         <item quantity="other">Išarchyvuota %d pokalbių</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">Naujas pranešimas</item>
+        <item quantity="one">%s naujas pranešimas</item>
         <item quantity="few">%s nauji pranešimai</item>
         <item quantity="many">%s nauji pranešimai</item>
         <item quantity="other">%s nauji pranešimai</item>

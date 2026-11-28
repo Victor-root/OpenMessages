@@ -64,6 +64,11 @@
     <string name="main_sender_you">أنت: %s</string>
     <string name="main_message_results_title">النتائج في الرسائل</string>
     <plurals name="main_message_results">
+        <item quantity="zero">%d رسالة</item>
+        <item quantity="one">رسالة واحدة</item>
+        <item quantity="two">رسالتان</item>
+        <item quantity="few">%d رسائل</item>
+        <item quantity="many">%d رسالة</item>
         <item quantity="other">%d رسائل</item>
     </plurals>
     <string name="inbox_empty_text">ستظهر المحادثات الخاصة بك هنا</string>

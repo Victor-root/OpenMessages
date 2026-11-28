@@ -65,6 +65,7 @@
     <string name="main_sender_you">Jij: %s</string>
     <string name="main_message_results_title">Resultaten in berichten</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d bericht</item>
         <item quantity="other">%d berichten</item>
     </plurals>
     <string name="inbox_empty_text">Je conversaties verschijnen hier</string>

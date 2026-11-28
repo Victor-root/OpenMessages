@@ -64,6 +64,9 @@
     <string name="main_sender_you">Ви: %s</string>
     <string name="main_message_results_title">Результати в повідомленнях</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d повідомлення</item>
+        <item quantity="few">%d повідомлення</item>
+        <item quantity="many">%d повідомлень</item>
         <item quantity="other">Повідомлень: %d</item>
     </plurals>
     <string name="inbox_empty_text">Ваші бесіди з\'являтимуться тут</string>
@@ -103,7 +106,7 @@
     <string name="rate_dismiss">ВІДХИЛИТИ</string>
     <string name="dialog_delete_title">Видалити</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Ви впевнені, що хочете видалити цю бесіду?</item>
+        <item quantity="one">Ви впевнені, що хочете видалити %d бесіду?</item>
         <item quantity="few">Ви впевнені, що хочете видалити %d бесіди?</item>
         <item quantity="many">Ви впевнені, що хочете видалити %d бесід?</item>
         <item quantity="other">Ви впевнені, що хочете видалити %d бесіди?</item>
@@ -354,7 +357,7 @@
     <string name="settings_auto_delete_warning">Автоматично видаляти старі повідомлення?</string>
     <string name="settings_auto_delete_warning_message">Якщо ви продовжите, %1$d повідомлень буде видалено</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">Після 1 дня</item>
+        <item quantity="one">Після %d дня</item>
         <item quantity="few">Після %d днів</item>
         <item quantity="many">Після %d днів</item>
         <item quantity="other">Після %d днів</item>
@@ -457,7 +460,7 @@
     <string name="button_undo">Скасувати</string>
     <string name="toast_copied">Скопійовано</string>
     <plurals name="notification_new_messages">
-        <item quantity="one">Нове повідомлення</item>
+        <item quantity="one">%s нове повідомлення</item>
         <item quantity="few">%s нових повідомлень</item>
         <item quantity="many">%s нових повідомлень</item>
         <item quantity="other">%s нових повідомлень</item>

@@ -16,7 +16,7 @@
   ~
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
-  --><resources>
+  --><resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">Open Messages</string>
     <string name="app_tagline">Une messagerie simple et open source</string>
     <string name="shortcut_compose_long_label">Nouvelle conversation</string>
@@ -114,17 +114,17 @@
     <string name="rate_okay">OK !</string>
     <string name="rate_dismiss">ANNULER</string>
     <string name="dialog_delete_title">Supprimer</string>
-    <plurals name="dialog_delete_message">
+    <plurals name="dialog_delete_message" tools:ignore="ImpliedQuantity">
         <item quantity="one">Voulez-vous vraiment supprimer cette conversation ?</item>
         <item quantity="many">Voulez-vous vraiment supprimer %d conversations ?</item>
         <item quantity="other">Voulez-vous vraiment supprimer %d conversations ?</item>
     </plurals>
-    <plurals name="dialog_delete_chat">
+    <plurals name="dialog_delete_chat" tools:ignore="ImpliedQuantity">
         <item quantity="one">Voulez-vous vraiment supprimer ce message ?</item>
         <item quantity="many">Voulez-vous vraiment supprimer %d messages ?</item>
         <item quantity="other">Voulez-vous vraiment supprimer %d messages ?</item>
     </plurals>
-    <plurals name="dialog_send_now">
+    <plurals name="dialog_send_now" tools:ignore="ImpliedQuantity">
         <item quantity="one">Voulez-vous vraiment envoyer ce message maintenant ?</item>
         <item quantity="many">Voulez-vous vraiment envoyer %d messages maintenant ?</item>
         <item quantity="other">Voulez-vous vraiment envoyer %d messages maintenant ?</item>
@@ -420,7 +420,7 @@
     <string name="settings_auto_delete_warning">Supprimer les anciens messages automatiquement ?</string>
     <string name="settings_auto_delete_warning_message">Si vous continuez, %1$d messages seront supprimés maintenant</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">Après 1 jour</item>
+        <item quantity="one">Après %d jour</item>
         <item quantity="many">Après %d jours</item>
         <item quantity="other">Après %d jours</item>
     </plurals>
@@ -543,12 +543,12 @@
     <string name="button_undo">Annuler</string>
     <string name="button_clear">Nettoyer</string>
     <string name="toast_copied">Copié</string>
-    <plurals name="toast_archived">
+    <plurals name="toast_archived" tools:ignore="ImpliedQuantity">
         <item quantity="one">Conversation archivée</item>
         <item quantity="many">%d conversations archivées</item>
         <item quantity="other">%d conversations archivées</item>
     </plurals>
-    <plurals name="notification_new_messages">
+    <plurals name="notification_new_messages" tools:ignore="ImpliedQuantity">
         <item quantity="one">Nouveau message</item>
         <item quantity="many">%s nouveaux messages</item>
         <item quantity="other">%s nouveaux messages</item>
@@ -681,7 +681,7 @@
     <string name="message_content_filters_dialog_contacts_switch">Inclure les contacts</string>
     <string name="message_content_filters_dialog_create">Créer</string>
     <string name="all_conversations_widget_title">Toutes les conversations</string>
-    <plurals name="toast_unarchived">
+    <plurals name="toast_unarchived" tools:ignore="ImpliedQuantity">
         <item quantity="one">Conversation désarchivée</item>
         <item quantity="many">%d conversations désarchivées</item>
         <item quantity="other">%d conversations désarchivées</item>

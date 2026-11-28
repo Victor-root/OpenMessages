@@ -64,6 +64,8 @@
     <string name="main_sender_you">Você: %s</string>
     <string name="main_message_results_title">Resultados nas mensagens</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d mensagem</item>
+        <item quantity="many">%d mensagens</item>
         <item quantity="other">%d mensagens</item>
     </plurals>
     <string name="inbox_empty_text">As suas conversas aparecerão aqui</string>
@@ -101,7 +103,7 @@
     <string name="rate_dismiss">Agora não</string>
     <string name="dialog_delete_title">Eliminar</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Tem a certeza de que deseja eliminar esta conversa?</item>
+        <item quantity="one">Tem a certeza de que deseja eliminar %d conversa?</item>
         <item quantity="many">Tem a certeza de que deseja eliminar %d conversas?</item>
         <item quantity="other">Tem a certeza de que deseja eliminar %d conversas?</item>
     </plurals>
@@ -347,7 +349,7 @@
     <string name="settings_auto_delete_warning">Eliminar mensagens antigas automaticamente?</string>
     <string name="settings_auto_delete_warning_message">Se continuar, %1$d mensagens serão eliminadas</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">Após 1 dia</item>
+        <item quantity="one">Após %d dia</item>
         <item quantity="many">Após %d dias</item>
         <item quantity="other">Após %d dias</item>
     </plurals>
@@ -447,7 +449,7 @@
     <string name="button_undo">Anular</string>
     <string name="toast_copied">Copiada</string>
     <plurals name="notification_new_messages">
-        <item quantity="one">1 nova mensagem</item>
+        <item quantity="one">%s nova mensagem</item>
         <item quantity="many">%s novas mensagens</item>
         <item quantity="other">%s novas mensagens</item>
     </plurals>
@@ -538,12 +540,12 @@
     <string name="scheduled_menu_send_now">Enviar agora</string>
     <string name="scheduled_menu_edit_message">Editar mensagem</string>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">Tem a certeza de que deseja eliminar esta mensagem?</item>
+        <item quantity="one">Tem a certeza de que deseja eliminar %d mensagem?</item>
         <item quantity="many">Tem a certeza de que deseja eliminar %d mensagens?</item>
         <item quantity="other">Tem a certeza de que deseja eliminar %d mensagens?</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">Tem a certeza de que deseja enviar esta mensagem agora?</item>
+        <item quantity="one">Tem a certeza de que deseja enviar %d mensagem agora?</item>
         <item quantity="many">Tem a certeza de que deseja enviar %d mensagens agora?</item>
         <item quantity="other">Tem a certeza de que deseja enviar %d mensagens agora?</item>
     </plurals>
@@ -611,12 +613,12 @@
     <string name="all_conversations_widget_title">Todas as conversas</string>
     <string name="button_clear">Limpar</string>
     <plurals name="toast_archived">
-        <item quantity="one">Conversa arquivada</item>
+        <item quantity="one">%d conversa arquivada</item>
         <item quantity="many">%d conversas arquivadas</item>
         <item quantity="other">%d conversas arquivadas</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">Conversa desarquivada</item>
+        <item quantity="one">%d conversa desarquivada</item>
         <item quantity="many">%d conversas desarquivadas</item>
         <item quantity="other">%d conversas desarquivadas</item>
     </plurals>

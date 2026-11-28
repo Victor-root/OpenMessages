@@ -64,6 +64,9 @@
     <string name="main_sender_you">Vy: %s</string>
     <string name="main_message_results_title">Výsledky ve zprávách</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d zpráva</item>
+        <item quantity="few">%d zprávy</item>
+        <item quantity="many">%d zprávy</item>
         <item quantity="other">%d zpráv</item>
     </plurals>
     <string name="inbox_empty_text">Zde se objeví vaše konverzace</string>

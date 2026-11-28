@@ -79,6 +79,7 @@
     <string name="search_group_conversations">Samtaler</string>
     <string name="main_message_results_title">Resultater i beskeder</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d besked</item>
         <item quantity="other">%d beskeder</item>
     </plurals>
     <string name="inbox_empty_text">Dine samtaler vil fremgå her</string>

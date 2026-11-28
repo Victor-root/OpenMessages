@@ -79,6 +79,7 @@
     <string name="search_group_conversations">Mga usapan</string>
     <string name="main_message_results_title">Resulta sa mga messages</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d mensahe</item>
         <item quantity="other">%d mga messages</item>
     </plurals>
     <string name="inbox_empty_text">Ang iyong mga pakikipag-usap ay makikita rito</string>
@@ -126,15 +127,15 @@
     <string name="rate_dismiss">ISARA</string>
     <string name="dialog_delete_title">Tanggalin</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Sigurado ka bang gusto mong burahin ang pag-uusap na ito?</item>
+        <item quantity="one">Sigurado ka bang gusto mong burahin ang %d na pag-uusap?</item>
         <item quantity="other">Sigurado ka bang gusto mong burahin ang %d na pag-uusap?</item>
     </plurals>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">Sigurado ka bang gusto mong burahin ang mensaheng ito?</item>
+        <item quantity="one">Sigurado ka bang gusto mong burahin ang %d na mensahe?</item>
         <item quantity="other">Sigurado ka bang gusto mong burahin ang %d na mensahe?</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">Sigurado ka bang gusto mong ipadala na ang mensaheng ito?</item>
+        <item quantity="one">Sigurado ka bang gusto mong ipadala na ang %d na mensahe?</item>
         <item quantity="other">Sigurado ka bang gusto mong ipadala na ang %d na mensahe?</item>
     </plurals>
     <string name="dialog_edit_scheduled_message_title">I-edit ang mensahe</string>
@@ -434,7 +435,7 @@
     <string name="settings_auto_delete_warning">Awtomatikong burahin ang mga lumang mensahe?</string>
     <string name="settings_auto_delete_warning_message">Kapag nagpatuloy ka, %1$d mensahe ang buburahin ngayon</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">Pagkalipas ng 1 araw</item>
+        <item quantity="one">Pagkalipas ng %d araw</item>
         <item quantity="other">Pagkalipas ng %d araw</item>
     </plurals>
     <string name="settings_long_as_mms_title">Ipadala ang mahahabang mensahe bilang MMS</string>
@@ -554,15 +555,15 @@
     <string name="button_clear">I-clear</string>
     <string name="toast_copied">Nakopya</string>
     <plurals name="toast_archived">
-        <item quantity="one">Naitabi ang usapan</item>
+        <item quantity="one">Naitabi ang %d na usapan</item>
         <item quantity="other">Naitabi ang %d na usapan</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">Nailabas ang usapan</item>
+        <item quantity="one">Nailabas ang %d na usapan</item>
         <item quantity="other">Nailabas ang %d na usapan</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">Bagong mensahe</item>
+        <item quantity="one">%s bagong mensahe</item>
         <item quantity="other">%s bagong mensahe</item>
     </plurals>
     <string name="notification_message_failed_title">Hindi naipadala ang mensahe</string>

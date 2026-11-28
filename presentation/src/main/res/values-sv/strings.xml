@@ -72,6 +72,7 @@
     <string name="search_group_conversations">Konversationer</string>
     <string name="main_message_results_title">Resultat i meddelanden</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d meddelande</item>
         <item quantity="other">%d meddelanden</item>
     </plurals>
     <string name="inbox_empty_text">Dina konversationer kommer att dyka upp här</string>

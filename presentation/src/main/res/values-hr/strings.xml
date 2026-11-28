@@ -79,6 +79,8 @@
     <string name="search_group_conversations">Razgovori</string>
     <string name="main_message_results_title">Rezultati u porukama</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d poruka</item>
+        <item quantity="few">%d poruke</item>
         <item quantity="other">%d poruka</item>
     </plurals>
     <string name="inbox_empty_text">Vaši razgovori pojavit će se ovdje</string>
@@ -127,7 +129,7 @@
     <string name="rate_dismiss">ODBACI</string>
     <string name="dialog_delete_title">Izbriši</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">Sigurno želite izbrisati ovaj razgovor?</item>
+        <item quantity="one">Sigurno želite izbrisati %d razgovor?</item>
         <item quantity="few">Sigurno želite izbrisati %d razgovora?</item>
         <item quantity="other">Sigurno želite izbrisati %d razgovora?</item>
     </plurals>
@@ -441,7 +443,7 @@
     <string name="settings_auto_delete_warning">Brisati stare poruke automatski?</string>
     <string name="settings_auto_delete_warning_message">Ako nastavite, sada će biti izbrisan sljedeći broj poruka: %1$d</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">Nakon 1 dana</item>
+        <item quantity="one">Nakon %d dana</item>
         <item quantity="few">Nakon %d dana</item>
         <item quantity="other">Nakon %d dana</item>
     </plurals>
@@ -574,7 +576,7 @@
         <item quantity="other">Vraćeno iz arhive %d razgovora</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">Nova poruka</item>
+        <item quantity="one">%s nova poruka</item>
         <item quantity="few">%s nove poruke</item>
         <item quantity="other">%s novih poruka</item>
     </plurals>

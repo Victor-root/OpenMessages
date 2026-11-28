@@ -64,6 +64,9 @@
     <string name="main_sender_you">Вы: %s</string>
     <string name="main_message_results_title">Результаты в сообщениях</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d сообщение</item>
+        <item quantity="few">%d сообщения</item>
+        <item quantity="many">%d сообщений</item>
         <item quantity="other">%d сообщений</item>
     </plurals>
     <string name="inbox_empty_text">Беседы будут появляться здесь</string>

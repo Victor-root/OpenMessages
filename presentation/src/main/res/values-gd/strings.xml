@@ -131,19 +131,19 @@
     <string name="rate_dismiss">LEIG SEACHAD</string>
     <string name="dialog_delete_title">Sguab às</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">A bheil thu cinnteach gu bheil thu airson an còmhradh seo a sguabadh às?</item>
+        <item quantity="one">A bheil thu cinnteach gu bheil thu airson %d chòmhradh a sguabadh às?</item>
         <item quantity="two">A bheil thu cinnteach gu bheil thu airson %d chòmhradh a sguabadh às?</item>
         <item quantity="few">A bheil thu cinnteach gu bheil thu airson %d còmhraidhean a sguabadh às?</item>
         <item quantity="other">A bheil thu cinnteach gu bheil thu airson %d còmhradh a sguabadh às?</item>
     </plurals>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">A bheil thu cinnteach gu bheil thu airson an teachdaireachd seo a sguabadh às?</item>
+        <item quantity="one">A bheil thu cinnteach gu bheil thu airson %d theachdaireachd a sguabadh às?</item>
         <item quantity="two">A bheil thu cinnteach gu bheil thu airson %d theachdaireachd a sguabadh às?</item>
         <item quantity="few">A bheil thu cinnteach gu bheil thu airson %d teachdaireachdan a sguabadh às?</item>
         <item quantity="other">A bheil thu cinnteach gu bheil thu airson %d teachdaireachd a sguabadh às?</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">A bheil thu cinnteach gu bheil thu airson an teachdaireachd seo a chur an-dràsta?</item>
+        <item quantity="one">A bheil thu cinnteach gu bheil thu airson %d theachdaireachd a chur an-dràsta?</item>
         <item quantity="two">A bheil thu cinnteach gu bheil thu airson %d theachdaireachd a chur an-dràsta?</item>
         <item quantity="few">A bheil thu cinnteach gu bheil thu airson %d teachdaireachdan a chur an-dràsta?</item>
         <item quantity="other">A bheil thu cinnteach gu bheil thu airson %d teachdaireachd a chur an-dràsta?</item>
@@ -577,19 +577,19 @@
     <string name="button_clear">Falamhaich</string>
     <string name="toast_copied">Chaidh lethbhreac a dhèanamh</string>
     <plurals name="toast_archived">
-        <item quantity="one">Chaidh an còmhradh a chur san tasglann</item>
+        <item quantity="one">Chaidh %d chòmhradh a chur san tasglann</item>
         <item quantity="two">Chaidh %d chòmhradh a chur san tasglann</item>
         <item quantity="few">Chaidh %d còmhraidhean a chur san tasglann</item>
         <item quantity="other">Chaidh %d còmhradh a chur san tasglann</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">Chaidh an còmhradh a thoirt às an tasglann</item>
+        <item quantity="one">Chaidh %d chòmhradh a thoirt às an tasglann</item>
         <item quantity="two">Chaidh %d chòmhradh a thoirt às an tasglann</item>
         <item quantity="few">Chaidh %d còmhraidhean a thoirt às an tasglann</item>
         <item quantity="other">Chaidh %d còmhradh a thoirt às an tasglann</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">Teachdaireachd ùr</item>
+        <item quantity="one">%s theachdaireachd ùr</item>
         <item quantity="two">%s theachdaireachd ùr</item>
         <item quantity="few">%s teachdaireachdan ùra</item>
         <item quantity="other">%s teachdaireachd ùr</item>

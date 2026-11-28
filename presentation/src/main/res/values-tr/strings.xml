@@ -64,6 +64,7 @@
     <string name="main_sender_you">Sen: %s</string>
     <string name="main_message_results_title">İletilerdeki sonuçlar</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d ileti</item>
         <item quantity="other">%d ileti</item>
     </plurals>
     <string name="inbox_empty_text">Konuşmalarınız burada görünür</string>

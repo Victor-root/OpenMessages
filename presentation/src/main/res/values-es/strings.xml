@@ -64,6 +64,8 @@
     <string name="main_sender_you">Tú: %s</string>
     <string name="main_message_results_title">Resultados en los mensajes</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d mensaje</item>
+        <item quantity="many">%d mensajes</item>
         <item quantity="other">%d mensajes</item>
     </plurals>
     <string name="inbox_empty_text">Sus conversaciones aparecerán aquí</string>

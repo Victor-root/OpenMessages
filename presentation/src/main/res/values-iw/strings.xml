@@ -79,6 +79,8 @@
     <string name="search_group_conversations">התכתבויות</string>
     <string name="main_message_results_title">תוצאות בהודעות</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d הודעה</item>
+        <item quantity="two">%d הודעות</item>
         <item quantity="other">%d הודעות</item>
     </plurals>
     <string name="inbox_empty_text">ההתכתבויות שלך תופענה כאן</string>

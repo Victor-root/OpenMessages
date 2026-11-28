@@ -64,6 +64,7 @@
     <string name="main_sender_you">आप: %s</string>
     <string name="main_message_results_title">संदेशों में परिणाम</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d संदेश</item>
         <item quantity="other">%d संदेश</item>
     </plurals>
     <string name="inbox_empty_text">आपकी बातचीत यहां दिखाई देगी</string>
@@ -101,7 +102,7 @@
     <string name="rate_dismiss">खारिज</string>
     <string name="dialog_delete_title">हटाएँ</string>
     <plurals name="dialog_delete_message">
-        <item quantity="one">क्या आप वाकई इस वार्तालाप को हटाना चाहते हैं?</item>
+        <item quantity="one">क्या आप वाकई %d वार्तालाप को हटाना चाहते हैं?</item>
         <item quantity="other">क्या आप वाकई %d वार्तालापों को हटाना चाहते हैं?</item>
     </plurals>
     <string-array name="message_options">
@@ -346,7 +347,7 @@
     <string name="settings_auto_delete_warning">पुराने संदेशों को स्वचालित रूप से हटाएं?</string>
     <string name="settings_auto_delete_warning_message">अगर आप आगे बढ़ते हैं, तो %1$d संदेशों को अभी हटा दिया जाएगा</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">1 दिन के बाद</item>
+        <item quantity="one">%d दिन के बाद</item>
         <item quantity="other">%d दिनों के बाद</item>
     </plurals>
     <string name="settings_long_as_mms_title">एमएमएस के रूप में लंबे संदेश भेजें</string>
@@ -443,7 +444,7 @@
     <string name="button_undo">पूर्ववत करें</string>
     <string name="toast_copied">प्रतिलिपि बनाई गई हैं।</string>
     <plurals name="notification_new_messages">
-        <item quantity="one">नई संदेश</item>
+        <item quantity="one">%s नया संदेश</item>
         <item quantity="other">%s नए संदेश</item>
     </plurals>
     <string name="notification_message_failed_title">संदेश नही भेजा गया</string>
@@ -542,11 +543,11 @@
     <string name="template_new">नया टेम्पलेट</string>
     <string name="template_edit">टेम्पलेट संपादित करें</string>
     <plurals name="dialog_delete_chat">
-        <item quantity="one">क्या आप वाकई इस संदेश को हटाना चाहते हैं?</item>
+        <item quantity="one">क्या आप वाकई %d संदेश को हटाना चाहते हैं?</item>
         <item quantity="other">क्या आप वाकई %d संदेश हटाना चाहते हैं?</item>
     </plurals>
     <plurals name="dialog_send_now">
-        <item quantity="one">क्या आप वाकई इस संदेश को अभी भेजना चाहते हैं?</item>
+        <item quantity="one">क्या आप वाकई %d संदेश को अभी भेजना चाहते हैं?</item>
         <item quantity="other">क्या आप वाकई %d संदेश अभी भेजना चाहते हैं?</item>
     </plurals>
     <string name="dialog_edit_scheduled_message_title">संदेश संपादित करें</string>
@@ -628,11 +629,11 @@
     <string name="all_conversations_widget_title">सभी वार्तालाप</string>
     <string name="button_clear">साफ़ करें</string>
     <plurals name="toast_archived">
-        <item quantity="one">वार्तालाप संग्रहित किया गया</item>
+        <item quantity="one">%d वार्तालाप संग्रहित किया गया</item>
         <item quantity="other">%d वार्तालाप संग्रहित किए गए</item>
     </plurals>
     <plurals name="toast_unarchived">
-        <item quantity="one">वार्तालाप संग्रह से निकाला गया</item>
+        <item quantity="one">%d वार्तालाप संग्रह से निकाला गया</item>
         <item quantity="other">%d वार्तालाप संग्रह से निकाले गए</item>
     </plurals>
     <string name="notification_foreground_worker_title">संदेश प्राप्त हो रहा है</string>

@@ -70,6 +70,9 @@
     <string name="main_sender_you">Ty: %s</string>
     <string name="main_message_results_title">Wyniki w wiadomościach</string>
     <plurals name="main_message_results">
+        <item quantity="one">%d wiadomość</item>
+        <item quantity="few">%d wiadomości</item>
+        <item quantity="many">%d wiadomości</item>
         <item quantity="other">%d wiadomości</item>
     </plurals>
     <string name="inbox_empty_text">Miejsce dla twoich bieżących rozmów</string>
