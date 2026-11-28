@@ -333,6 +333,8 @@
         <item>Chiama</item>
         <item>Segna come \"letto\"</item>
         <item>Segna come \"da leggere\"</item>
+        <item>Leggi ad alta voce</item>
+        <item>Segna come \"letto\"/\"da leggere\"</item>
     </string-array>
     <string name="settings_delivery_title">Conferme di recapito</string>
     <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>
@@ -443,6 +445,7 @@
         <item>Chiama</item>
         <item>Segna come \"letto\"</item>
         <item>Rispondi</item>
+        <item>Leggi ad alta voce</item>
     </string-array>
     <string name="button_yes">Sì</string>
     <string name="button_continue">Continua</string>
@@ -481,6 +484,7 @@
         <item>Normale</item>
         <item>Grande</item>
         <item>Enorme</item>
+        <item>Gigante</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Nessun ritardo</item>

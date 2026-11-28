@@ -601,6 +601,7 @@
         <item>Средња</item>
         <item>Велика</item>
         <item>Највећа</item>
+        <item>Огромна</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Без одлагања</item>

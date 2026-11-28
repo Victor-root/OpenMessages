@@ -417,6 +417,7 @@
         <item>Marchează ca citit</item>
         <item>Marchează ca necitit</item>
         <item>Vorbește</item>
+        <item>Marchează ca citit/necitit</item>
     </string-array>
     <string name="settings_delivery_title">Confirmare de livrare</string>
     <string name="settings_delivery_summary">Confirmare că mesajele au fost trimise cu succes</string>

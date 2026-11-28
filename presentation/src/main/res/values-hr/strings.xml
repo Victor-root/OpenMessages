@@ -416,6 +416,8 @@
         <item>Nazovi</item>
         <item>Označi kao pročitano</item>
         <item>Označi kao nepročitano</item>
+        <item>Pročitaj naglas</item>
+        <item>Označi kao pročitano/nepročitano</item>
     </string-array>
     <string name="settings_delivery_title">Potvrde o dostavi</string>
     <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>
@@ -544,6 +546,7 @@
         <item>Nazovi</item>
         <item>Označi kao pročitano</item>
         <item>Odgovori</item>
+        <item>Pročitaj naglas</item>
     </string-array>
     <string name="button_yes">Da</string>
     <string name="button_continue">Nastavi</string>
@@ -598,6 +601,7 @@
         <item>Normalno</item>
         <item>Veliko</item>
         <item>Veće</item>
+        <item>Ogromno</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Bez odgode</item>

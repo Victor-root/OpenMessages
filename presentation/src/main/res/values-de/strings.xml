@@ -323,6 +323,8 @@
         <item>Anrufen</item>
         <item>Als gelesen markieren</item>
         <item>Als ungelesen markieren</item>
+        <item>Vorlesen</item>
+        <item>Als gelesen/ungelesen markieren</item>
     </string-array>
     <string name="settings_delivery_title">Zustellbestätigungen</string>
     <string name="settings_delivery_summary">Bestätigung, dass Nachrichten erfolgreich gesendet wurden</string>
@@ -424,6 +426,7 @@
         <item>Anrufen</item>
         <item>Als gelesen markieren</item>
         <item>Antwort</item>
+        <item>Vorlesen</item>
     </string-array>
     <string name="button_yes">Ja</string>
     <string name="button_continue">Fortsetzen</string>
@@ -461,6 +464,7 @@
         <item>Normal</item>
         <item>Groß</item>
         <item>Größer</item>
+        <item>Riesig</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Keine Verzögerung</item>

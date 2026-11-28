@@ -423,6 +423,8 @@
         <item>Klic</item>
         <item>Označi kot prebrano</item>
         <item>Označi kot neprebrano</item>
+        <item>Preberi na glas</item>
+        <item>Označi kot prebrano/neprebrano</item>
     </string-array>
     <string name="settings_delivery_title">Potrditev dostavitve sporočila</string>
     <string name="settings_delivery_summary">Potrdi, da so bila sporočila dostavljena uspešno</string>
@@ -554,6 +556,7 @@
         <item>Klic</item>
         <item>Označi kot prebrano</item>
         <item>Odgovori</item>
+        <item>Preberi na glas</item>
     </string-array>
     <string name="button_yes">Da</string>
     <string name="button_continue">Nadaljuj</string>
@@ -611,6 +614,7 @@
         <item>Običajna</item>
         <item>Velika</item>
         <item>Večja</item>
+        <item>Ogromna</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Brez zakasnitve</item>

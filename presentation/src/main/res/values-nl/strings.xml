@@ -335,6 +335,8 @@
         <item>Bellen</item>
         <item>Markeren als gelezen</item>
         <item>Markeren als ongelezen</item>
+        <item>Voorlezen</item>
+        <item>Markeren als gelezen/ongelezen</item>
     </string-array>
     <string name="settings_delivery_title">Afleverrapporten</string>
     <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>
@@ -445,6 +447,7 @@
         <item>Bel</item>
         <item>Markeer als gelezen</item>
         <item>Beantwoorden</item>
+        <item>Voorlezen</item>
     </string-array>
     <string name="button_yes">Ja</string>
     <string name="button_continue">Doorgaan</string>
@@ -485,7 +488,8 @@
         <item>Klein</item>
         <item>Normaal</item>
         <item>Groot</item>
-        <item>Groot</item>
+        <item>Groter</item>
+        <item>Enorm</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Geen vertraging</item>

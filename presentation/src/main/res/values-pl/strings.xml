@@ -388,6 +388,7 @@
         <item>Oznacz jako przeczytane</item>
         <item>Oznacz jako nieprzeczytane</item>
         <item>Mów</item>
+        <item>Oznacz jako przeczytane/nieprzeczytane</item>
     </string-array>
     <string name="settings_delivery_title">Potwierdzenie dostarczenia</string>
     <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>

@@ -70,6 +70,17 @@
     <string name="main_default_sms_message">Направете Open Messages стандартното приложение за SMS</string>
     <string name="main_default_sms_change">Променяне</string>
     <string name="settings_swipe_actions_change">ПРОМЕНЯНЕ</string>
+    <string-array name="settings_swipe_actions">
+        <item>Няма</item>
+        <item>Архивиране</item>
+        <item>Премахване</item>
+        <item>Забраняване</item>
+        <item>Обаждане</item>
+        <item>Отбелязване като прочетено</item>
+        <item>Отбелязване като непрочетено</item>
+        <item>Прочитане на глас</item>
+        <item>Отбелязване като прочетено/непрочетено</item>
+    </string-array>
     <string name="main_permission_required">Необходимо е разрешение</string>
     <string name="main_permission_sms">Open Messages се нуждае от разрешение за изпращане и преглед на SMS</string>
     <string name="main_permission_contacts">Open Messages се нуждае от разрешение за преглед на контактите</string>

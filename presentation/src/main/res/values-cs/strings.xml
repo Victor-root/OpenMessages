@@ -331,6 +331,8 @@
         <item>Volat</item>
         <item>Označit jako přečtené</item>
         <item>Označit jako nepřečtené</item>
+        <item>Přečíst nahlas</item>
+        <item>Označit jako přečtené/nepřečtené</item>
     </string-array>
     <string name="settings_delivery_title">Potvrzení o doručení</string>
     <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
@@ -438,6 +440,7 @@
         <item>Volat</item>
         <item>Označit jako přečtené</item>
         <item>Odpovědět</item>
+        <item>Přečíst nahlas</item>
     </string-array>
     <string name="button_yes">Ano</string>
     <string name="button_continue">Pokračovat</string>
@@ -477,6 +480,7 @@
         <item>Normální</item>
         <item>Velké</item>
         <item>Větší</item>
+        <item>Obrovské</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Bez prodlevy</item>

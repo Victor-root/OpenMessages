@@ -387,6 +387,8 @@
         <item>Ring upp</item>
         <item>Markera som läst</item>
         <item>Markera som oläst</item>
+        <item>Läs upp</item>
+        <item>Markera som läst/oläst</item>
     </string-array>
     <string name="settings_delivery_title">Leveransrapporter</string>
     <string name="settings_delivery_summary">Bekräfta att meddelanden har skickats</string>
@@ -505,6 +507,7 @@
         <item>Ring upp</item>
         <item>Markera som läst</item>
         <item>Svara</item>
+        <item>Läs upp</item>
     </string-array>
     <string name="button_yes">Ja</string>
     <string name="button_continue">Fortsätt</string>
@@ -555,6 +558,7 @@
         <item>Normal</item>
         <item>Stort</item>
         <item>Större</item>
+        <item>Jättestor</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Ingen fördröjning</item>

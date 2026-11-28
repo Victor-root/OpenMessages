@@ -331,6 +331,8 @@
         <item>Позвонить</item>
         <item>Пометить прочитанным</item>
         <item>Пометить непрочитанным</item>
+        <item>Прочитать вслух</item>
+        <item>Пометить прочитанным/непрочитанным</item>
     </string-array>
     <string name="settings_delivery_title">Отчёты о доставке</string>
     <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>
@@ -438,6 +440,7 @@
         <item>Позвонить</item>
         <item>Прочитано</item>
         <item>Ответить</item>
+        <item>Прочитать вслух</item>
     </string-array>
     <string name="button_yes">Да</string>
     <string name="button_continue">Продолжить</string>
@@ -477,6 +480,7 @@
         <item>Обычный</item>
         <item>Крупный</item>
         <item>Большой</item>
+        <item>Огромный</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Без задержки</item>

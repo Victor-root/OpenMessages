@@ -323,6 +323,8 @@
         <item>Ara</item>
         <item>Okundu olarak işaretle</item>
         <item>Okunmadı olarak işaretle</item>
+        <item>Sesli oku</item>
+        <item>Okundu/okunmadı olarak işaretle</item>
     </string-array>
     <string name="settings_delivery_title">İletim raporları</string>
     <string name="settings_delivery_summary">İletinizin sorunsuz gönderildiğinin onayını alın</string>
@@ -424,6 +426,7 @@
         <item>Ara</item>
         <item>Okundu olarak işaretle</item>
         <item>Cevapla</item>
+        <item>Sesli oku</item>
     </string-array>
     <string name="button_yes">Evet</string>
     <string name="button_continue">Devam</string>
@@ -461,6 +464,7 @@
         <item>Normal</item>
         <item>Büyük</item>
         <item>Daha büyük</item>
+        <item>Dev</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Gecikme yok</item>

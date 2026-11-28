@@ -331,6 +331,8 @@
         <item>Виклик</item>
         <item>Позначити прочитаним</item>
         <item>Позначити непрочитаним</item>
+        <item>Прочитати вголос</item>
+        <item>Позначити прочитаним/непрочитаним</item>
     </string-array>
     <string name="settings_delivery_title">Звіти про доставку</string>
     <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>
@@ -438,6 +440,7 @@
         <item>Виклик</item>
         <item>Позначити прочитаним</item>
         <item>Відповісти</item>
+        <item>Прочитати вголос</item>
     </string-array>
     <string name="button_yes">Так</string>
     <string name="button_continue">Продовжити</string>
@@ -477,6 +480,7 @@
         <item>Нормальний</item>
         <item>Великий</item>
         <item>Більший</item>
+        <item>Величезний</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Без затримок</item>

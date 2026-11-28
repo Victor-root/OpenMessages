@@ -423,6 +423,8 @@
         <item>Volať</item>
         <item>Označiť ako prečítané</item>
         <item>Označiť ako neprečítané</item>
+        <item>Prečítať nahlas</item>
+        <item>Označiť ako prečítané/neprečítané</item>
     </string-array>
     <string name="settings_delivery_title">Potvrdenie o doručení</string>
     <string name="settings_delivery_summary">Potvrdiť úspešné doručenie správy</string>
@@ -554,6 +556,7 @@
         <item>Volať</item>
         <item>Označiť ako prečítané</item>
         <item>Odpovedať</item>
+        <item>Prečítať nahlas</item>
     </string-array>
     <string name="button_yes">Áno</string>
     <string name="button_continue">Pokračovať</string>
@@ -611,6 +614,7 @@
         <item>Stredný</item>
         <item>Veľký</item>
         <item>Najväčší</item>
+        <item>Obrovský</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Bez oneskorenia</item>

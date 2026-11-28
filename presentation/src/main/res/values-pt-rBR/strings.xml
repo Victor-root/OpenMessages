@@ -415,6 +415,8 @@
         <item>Ligar</item>
         <item>Marcar como lida</item>
         <item>Marcar como não lida</item>
+        <item>Ler em voz alta</item>
+        <item>Marcar como lida/não lida</item>
     </string-array>
     <string name="settings_delivery_title">Confirmações de entrega</string>
     <string name="settings_delivery_summary">Confirme que as mensagens foram enviadas com sucesso</string>
@@ -540,6 +542,7 @@
         <item>Ligar</item>
         <item>Marcar como lida</item>
         <item>Responder</item>
+        <item>Ler em voz alta</item>
     </string-array>
     <string name="button_yes">Sim</string>
     <string name="button_continue">Continuar</string>
@@ -593,6 +596,7 @@
         <item>Normal</item>
         <item>Grande</item>
         <item>Enorme</item>
+        <item>Gigante</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Sem atraso</item>
