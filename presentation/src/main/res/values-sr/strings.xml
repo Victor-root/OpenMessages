@@ -55,7 +55,7 @@
     <string name="main_title_selected">%d  обележено</string>
     <string name="main_menu_clear">Обриши</string>
     <string name="main_menu_select_all">Изабери све</string>
-    <string name="main_menu_archive">Сачувај</string>
+    <string name="main_menu_archive">Архивирај</string>
     <string name="main_menu_unarchive">Врати у примљене</string>
     <string name="main_menu_delete">Обриши</string>
     <string name="main_menu_add_contact">Додај у контакте</string>
@@ -83,7 +83,7 @@
     </plurals>
     <string name="inbox_empty_text">Овде ће се појавити твоји разговори</string>
     <string name="inbox_search_empty_text">Нема резултата</string>
-    <string name="archived_empty_text">Овде ће се појавити твоји сачувани разговори</string>
+    <string name="archived_empty_text">Овде ће се појавити твоји архивирани разговори</string>
     <string name="main_fab_cd">Започни нов разговор</string>
     <string name="main_default_sms_title">Поново заволите СМС.</string>
     <string name="main_default_sms_message">Постави Open Messages као подразумевану СМС апликацију</string>
@@ -91,7 +91,7 @@
     <string name="main_permission_required">Потребна је дозвола</string>
     <string name="main_permission_sms">Open Messages тражи дозволу да шаље и прима СМС поруке</string>
     <string name="main_permission_contacts">Open Messages тражи приступ твојим контактима</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">Open Messages тражи дозволу да приказује обавештења</string>
     <string name="main_permission_allow">Дозволи</string>
     <string name="scheduled_menu_send_now">Пошаљи одмах</string>
     <string name="scheduled_menu_edit_message">Измени поруку</string>
@@ -101,7 +101,7 @@
     <string name="contacts_group_groups">Групе</string>
     <string name="conversations_group_today">Данас</string>
     <string name="conversations_group_yesterday">Јуче</string>
-    <string name="drawer_archived">Сачувано</string>
+    <string name="drawer_archived">Архивирано</string>
     <plurals name="drawer_unread_count">
         <item quantity="one">%d непрочитана</item>
         <item quantity="few">%d непрочитане</item>
@@ -259,7 +259,7 @@
     <string name="info_name">Наслов</string>
     <string name="info_notifications">Обавештења</string>
     <string name="info_theme">Тема</string>
-    <string name="info_archive">Сачувај</string>
+    <string name="info_archive">Архивирај</string>
     <string name="info_unarchive">Врати у примљене</string>
     <string name="info_block">Блокирај</string>
     <string name="info_unblock">Одблокирај</string>
@@ -276,8 +276,8 @@
     <string name="backup_restoring">Враћање резервне копије</string>
     <string name="backup_loading">Учитавање…</string>
     <string name="backup_never">Никад</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">Локација резервних копија</string>
+    <string name="backup_location_summary">Изабери фасциклу</string>
     <string name="backup_auto_title">Аутоматска резервна копија</string>
     <string name="backup_auto_never">Никад</string>
     <string name="backup_auto_daily">Сваки дан</string>
@@ -311,12 +311,12 @@
     <string name="backup_restore_confirm_title">Поврати резервну копију</string>
     <string name="backup_restore_stop_title">Заустави повраћај</string>
     <string name="backup_restore_stop_message">Поруке које су већ повраћене ће остати сачуване на Вашем уређају</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_title">Изабери локацију копија</string>
+    <string name="backup_select_location_rationale_message">Изабери фасциклу у коју ће се чувати резервне копије</string>
+    <string name="backup_details">%1$s\nБрој порука: %2$d</string>
+    <string name="backup_selected_backup_error_title">Грешка</string>
+    <string name="backup_selected_backup_error_message">Није могуће прочитати датотеку резервне копије</string>
+    <string name="backup_selected_backup_details_title">Детаљи копије</string>
     <string name="backup_restore_dialog_title">Резервне копије</string>
     <string name="backup_restore_dialog_empty">Нема резервних копија</string>
     <string name="backup_disclaimer">Тренутно су подржане резервне копије само SMS порука. Ускоро очекујте подршку за MMS поруке и заказано прављење резервних копија!</string>
@@ -410,12 +410,14 @@
     <string name="settings_swipe_actions_change">ПРОМЕНИ</string>
     <string-array name="settings_swipe_actions">
         <item>Ништа</item>
-        <item>Сачувај</item>
+        <item>Архивирај</item>
         <item>Обриши</item>
         <item>Блокирај</item>
         <item>Позови</item>
         <item>Означи као прочитано</item>
         <item>Означи као непрочитано</item>
+        <item>Прочитај наглас</item>
+        <item>Означи као прочитано/непрочитано</item>
     </string-array>
     <string name="settings_delivery_title">Потврде о испоруци</string>
     <string name="settings_delivery_summary">Потврди да су поруке успешно послате</string>
@@ -538,12 +540,13 @@
     <string name="theme_apply">Примени</string>
     <string-array name="notification_actions">
         <item>Ниједна</item>
-        <item>Сачувај</item>
+        <item>Архивирај</item>
         <item>Обриши</item>
         <item>Блокирај</item>
         <item>Позови</item>
         <item>Означи као прочитано</item>
         <item>Одговори</item>
+        <item>Прочитај наглас</item>
     </string-array>
     <string name="button_yes">Да</string>
     <string name="button_continue">Настави</string>
