@@ -627,18 +627,18 @@
         <item>Ερώτηση πριν το άνοιγμα</item>
     </string-array>
     <string-array name="quick_responses">
-        <item>Okay</item>
-        <item>Give me a moment</item>
-        <item>On my way</item>
-        <item>Thanks</item>
-        <item>Sounds good</item>
+        <item>Εντάξει</item>
+        <item>Μια στιγμή</item>
+        <item>Έρχομαι</item>
+        <item>Ευχαριστώ</item>
+        <item>Ακούγεται καλό</item>
         <item>Τι κάνεις;</item>
-        <item>Agreed</item>
-        <item>No</item>
-        <item>Love you</item>
-        <item>Sorry</item>
+        <item>Σύμφωνοι</item>
+        <item>Όχι</item>
+        <item>Σ\'αγαπώ</item>
+        <item>Συγγνώμη</item>
         <item>LOL</item>
-        <item>That\'s okay</item>
+        <item>Δεν πειράζει</item>
     </string-array>
     <string name="speak_no_messages">Κανένα μήνυμα</string>
     <string name="speak_unseen_messages">Εκφώνηση μη αναγνωσμένων μηνυμάτων</string>

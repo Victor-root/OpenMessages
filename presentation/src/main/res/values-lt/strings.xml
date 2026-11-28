@@ -170,7 +170,7 @@
     <string name="compose_send_group_summary_off">Žinutės bus siunčiamos atskirai kiekvienam gavėjui</string>
     <string name="compose_messages_empty">Čia jūsų pokalbio pradžios. Pasakykite kažką gražaus!</string>
     <string name="compose_vcard_label">Kontakto kortelė</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_for">Suplanuotas laikas:</string>
     <string name="compose_scheduled_future">Pasirinktas laikas turi būti ateityje!</string>
     <string name="compose_scheduled_toast">Pridėta prie planuojamų žinučių</string>
     <string name="compose_scheduled_view">Šio pokalbio suplanuotos žinutės</string>
@@ -329,7 +329,7 @@
     <string name="backup_selected_backup_details_title">Atsarginės kopijos informacija</string>
     <string name="backup_restore_dialog_title">Atsarginės kopijos</string>
     <string name="backup_restore_dialog_empty">Atsarginių kopijų nerasta</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">Pagal numatytuosius nustatymus atsarginės kopijos saugomos aplanke Documents/OpenMessages; norėdami jį pakeisti, naudokite nustatymą „Atsarginių kopijų vieta“ aukščiau. Galima įtraukti SMS ir MMS (su priedais), nustatymus, šablonus, blokavimo taisykles, suplanuotas žinutes ir archyvuotus ar prisegtus pokalbius. Norėdami ją kurti pagal grafiką, naudokite „Automatinė atsarginė kopija“ aukščiau.</string>
     <string name="backup_now">Kurti kopiją dabar</string>
     <string name="backup_now_summary">Sukurti naują atsarginę kopiją</string>
     <string name="backup_categories_title">Ką įtraukti į atsarginę kopiją?</string>
@@ -377,7 +377,7 @@
     <string name="settings_black_title">Visiškai juoda nakties tema</string>
     <string name="settings_night_start_title">Pradžios laikas</string>
     <string name="settings_night_end_title">Pabaigos laikas</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">Automatinė spalva kiekvienam pokalbiui</string>
     <string name="settings_text_size_title">Šrifto dydis</string>
     <string name="settings_system_font_title">Naudoti sistemos šriftą</string>
     <string name="settings_show_avatar_title">Rodyti kontakto nuotrauką</string>
@@ -617,12 +617,13 @@
         <item>Normalus</item>
         <item>Didelis</item>
         <item>Didžiausias</item>
+        <item>Milžiniškas</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Be delsimo</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>3 sekundės</item>
+        <item>5 sekundės</item>
+        <item>10 sekundžių</item>
     </string-array>
     <string-array name="header_quick_action_labels">
         <item>Nėra</item>
@@ -640,14 +641,14 @@
         <item>Trys natos</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>Automatinis</item>
         <item>100 kB</item>
         <item>200 kB</item>
         <item>300 kB</item>
         <item>600 kB</item>
         <item>1000 kB</item>
         <item>2000 kB</item>
-        <item>No compression</item>
+        <item>Be glaudinimo</item>
     </string-array>
     <string-array name="messageLinkHandlings">
         <item>Blokuoti</item>

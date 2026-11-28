@@ -273,8 +273,8 @@
     <string name="scheduled_options_title">Planlagt melding</string>
     <string-array name="scheduled_options">
         <item>Send nå</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Kopier tekst</item>
+        <item>Slett</item>
     </string-array>
     <string name="settings_category_appearance">Utseende</string>
     <string name="settings_category_general">Generelt</string>
@@ -284,7 +284,7 @@
     <string name="settings_black_title">Ren svart nattmodus</string>
     <string name="settings_night_start_title">Starttid</string>
     <string name="settings_night_end_title">Sluttidspunkt</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">Automatisk farge per samtale</string>
     <string name="settings_text_size_title">Skriftstørrelse</string>
     <string name="settings_system_font_title">Bruk systemskrift</string>
     <string name="settings_show_avatar_title">Vis kontaktbilde</string>
@@ -319,10 +319,12 @@
         <item>Ingen</item>
         <item>Arkivér</item>
         <item>Slett</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Blokker</item>
+        <item>Ring</item>
+        <item>Merk som lest</item>
+        <item>Merk som ulest</item>
+        <item>Les opp</item>
+        <item>Merk som lest/ulest</item>
     </string-array>
     <string name="settings_delivery_title">Leveringsbekreftelse</string>
     <string name="settings_delivery_summary">Bekreft at melding ble sendt</string>
@@ -418,12 +420,13 @@
     <string name="theme_apply">Bruk</string>
     <string-array name="notification_actions">
         <item>Ingen</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>Arkivér</item>
+        <item>Slett</item>
+        <item>Blokker</item>
+        <item>Ring</item>
+        <item>Merk som lest</item>
+        <item>Svar</item>
+        <item>Les opp</item>
     </string-array>
     <string name="button_yes">Ja</string>
     <string name="button_continue">Fortsett</string>
@@ -461,12 +464,13 @@
         <item>Standard</item>
         <item>Stor</item>
         <item>Større</item>
+        <item>Enorm</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Ingen forsinkelse</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>3 sekunder</item>
+        <item>5 sekunder</item>
+        <item>10 sekunder</item>
     </string-array>
     <string-array name="header_quick_action_labels">
         <item>Ingen</item>
