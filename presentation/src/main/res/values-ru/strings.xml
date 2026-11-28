@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Простой мессенджер с открытым кодом</string>
     <string name="shortcut_compose_long_label">Новая беседа</string>
     <string name="shortcut_compose_short_label">Написать</string>
     <string name="shortcut_compose_disabled_message">Ярлык отключён</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Настройки</string>
     <string name="title_notification_prefs">Уведомления</string>
     <string name="title_theme">Тема</string>
+    <string name="theme_default">По умолчанию</string>
+    <string name="theme_wallpaper">Обои</string>
+    <string name="theme_other_colors">Цвета</string>
+    <string name="theme_tab_presets">Палитра</string>
+    <string name="theme_tab_custom">Свой</string>
+    <string name="theme_apply_to_icon">Применить цвет к значку (приложение закроется)</string>
+    <string name="theme_tab_icon">Значок</string>
+    <string name="theme_icon_follow_theme">Как цвет темы приложения</string>
+    <string name="theme_icon_summary">Выберите цвет значка приложения независимо от темы. После изменения приложение закроется.</string>
+    <string name="theme_icon_change_title">Изменить значок приложения?</string>
+    <string name="theme_icon_change_message">Цвет значка приложения сейчас изменится. Android может заменить значок, только когда приложение закрыто, поэтому Open Messages закроется сразу после подтверждения.</string>
     <string name="title_conversations">Поиск во входящих…</string>
+    <string name="title_search">Поиск</string>
     <string name="title_compose">Написать</string>
     <string name="setup_skip">Пропустить</string>
     <string name="setup_next">Продолжить</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Сохранить в галерее</string>
     <string name="compose_menu_share">Поделиться</string>
     <string name="main_drawer_open_cd">Открыть боковое меню</string>
+    <string name="main_search_close_cd">Закрыть поиск</string>
+    <string name="main_search_clear_cd">Очистить поиск</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d выбрано</string>
     <string name="main_menu_clear">Очистить</string>
     <string name="main_menu_archive">Архивировать</string>
@@ -63,7 +79,18 @@
     <string name="main_permission_notifications">Open Messages требуется разрешение для отображения уведомлений</string>
     <string name="main_permission_allow">Разрешить</string>
     <string name="drawer_inbox">Входящие</string>
+    <string name="contacts_group_recent">Недавние</string>
+    <string name="contacts_group_starred">Избранные</string>
+    <string name="contacts_group_groups">Группы</string>
+    <string name="conversations_group_today">Сегодня</string>
+    <string name="conversations_group_yesterday">Вчера</string>
     <string name="drawer_archived">Архив</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d непрочитанное</item>
+        <item quantity="few">%d непрочитанных</item>
+        <item quantity="many">%d непрочитанных</item>
+        <item quantity="other">%d непрочитанных</item>
+    </plurals>
     <string name="drawer_scheduled">Планировщик</string>
     <string name="drawer_blocking">Блокировка</string>
     <string name="drawer_more">Ещё</string>
@@ -100,6 +127,8 @@
     <string name="compose_scheduled_future">Выбранное время должно быть в будущем!</string>
     <string name="compose_scheduled_toast">Добавлено в планировщик сообщений</string>
     <string name="compose_hint">Написать сообщение…</string>
+    <string name="compose_expand_cd">Развернуть на весь экран</string>
+    <string name="compose_collapse_cd">Свернуть</string>
     <string name="compose_menu_copy">Скопировать текст</string>
     <string name="compose_menu_forward">Переслать</string>
     <string name="compose_menu_delete">Удалить</string>
@@ -121,10 +150,34 @@
     <string name="compose_gallery_cd">Прикрепить фото</string>
     <string name="compose_camera_cd">Сделать снимок</string>
     <string name="compose_schedule_cd">Запланировать сообщение</string>
+    <string name="compose_schedule_title">Запланировать сообщение</string>
+    <string name="compose_schedule_in_hour">Через 1 час</string>
+    <string name="compose_schedule_tonight">Сегодня вечером</string>
+    <string name="compose_schedule_tomorrow_morning">Завтра утром</string>
+    <string name="compose_schedule_tomorrow_afternoon">Завтра днём</string>
+    <string name="compose_schedule_custom">Выбрать дату и время</string>
+    <string name="compose_schedule_confirm">Запланировать</string>
+    <string name="compose_schedule_previous_month">Предыдущий месяц</string>
+    <string name="compose_schedule_next_month">Следующий месяц</string>
+    <string name="compose_schedule_increase">Увеличить</string>
+    <string name="compose_schedule_decrease">Уменьшить</string>
     <string name="compose_contact_cd">Прикрепить контакт</string>
     <string name="compose_contact_error">Ошибка чтения контакта</string>
+    <string name="compose_attach_gallery">Галерея</string>
+    <string name="compose_attach_camera">Камера</string>
+    <string name="compose_attach_file">Файл</string>
+    <string name="compose_attach_audio">Аудио</string>
+    <string name="compose_attach_contact">Контакт</string>
+    <string name="compose_attach_schedule">Запланировать</string>
+    <string name="compose_attach_templates">Шаблоны</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Выбрана SIM-карта %1$d (%2$s)</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Видео слишком длинное для отправки по MMS. Максимум %d секунда.</item>
+        <item quantity="few">Видео слишком длинное для отправки по MMS. Максимум %d секунды.</item>
+        <item quantity="many">Видео слишком длинное для отправки по MMS. Максимум %d секунд.</item>
+        <item quantity="other">Видео слишком длинное для отправки по MMS. Максимум %d секунды.</item>
+    </plurals>
     <string name="compose_sim_cd">Выбрано %s, сменить SIM-карту</string>
     <string name="compose_send_cd">Отправить сообщение</string>
     <string name="message_status_sending">Отправка…</string>
@@ -143,11 +196,43 @@
     <string name="gallery_toast_saved">Сохранено в галерее</string>
     <string name="backup_title">Резервное копирование</string>
     <string name="backup_backing_up">Резервное копирование сообщений</string>
+    <string name="backup_failed_title">Ошибка резервного копирования</string>
+    <string name="backup_icon_change_title">Восстановить значок приложения?</string>
+    <string name="backup_icon_change_message">Резервная копия создана с другим цветом значка. Android может заменить значок, только когда приложение закрыто, поэтому Open Messages закроется сразу после подтверждения.</string>
+    <string name="icon_change_confirm">Применить и закрыть</string>
+    <string name="icon_change_later">Не сейчас</string>
     <string name="backup_restoring">Восстановление из резервной копии</string>
     <string name="backup_loading">Загрузка…</string>
     <string name="backup_never">Никогда</string>
     <string name="backup_location_title">Путь резервной копии</string>
     <string name="backup_location_summary">Выбор папки</string>
+    <string name="backup_auto_title">Автоматическое резервное копирование</string>
+    <string name="backup_auto_never">Никогда</string>
+    <string name="backup_auto_daily">Каждый день</string>
+    <string name="backup_auto_weekly">Каждую неделю</string>
+    <string name="backup_auto_custom">Другое…</string>
+    <string name="backup_auto_custom_title">Дней между копиями</string>
+    <string name="backup_auto_custom_hint">Количество дней</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Каждый %d день</item>
+        <item quantity="few">Каждые %d дня</item>
+        <item quantity="many">Каждые %d дней</item>
+        <item quantity="other">Каждые %d дня</item>
+    </plurals>
+    <string name="backup_zip_title">Сохранять в .zip</string>
+    <string name="backup_zip_summary">Хранить каждую копию в одном архиве, чтобы её было проще перенести на другой телефон</string>
+    <string name="backup_manage_title">Управление копиями</string>
+    <string name="backup_manage_summary">Переименование и удаление резервных копий</string>
+    <string name="backup_manage_empty">В этом месте резервных копий нет</string>
+    <string name="backup_manage_rename">Переименовать</string>
+    <string name="backup_manage_delete">Удалить</string>
+    <string name="backup_manage_delete_confirm">Удалить «%s»? Это действие нельзя отменить.</string>
+    <string name="backup_manage_error">Не удалось изменить эту копию</string>
+    <string name="backup_manage_type_folder">Папка</string>
+    <string name="backup_manage_type_zip">Архив zip</string>
+    <string name="backup_restore_from_title">Восстановить из</string>
+    <string name="backup_restore_from_folder">Папки</string>
+    <string name="backup_restore_from_zip">Файла .zip</string>
     <string name="backup_restore_title">Восстановление</string>
     <string name="backup_restore_summary">Выберите резервную копию</string>
     <string name="backup_restore_error_backup">Выполняется резервное копирование…</string>
@@ -165,11 +250,25 @@
     <string name="backup_restore_dialog_empty">Резервные копии не найдены</string>
     <string name="backup_disclaimer">В настоящее время поддерживается резервное копирование и восстановление только SMS. Поддержка MMS и регулярные резервные копии появятся в ближайшее время!</string>
     <string name="backup_now">Резервировать</string>
+    <string name="backup_now_summary">Создать новую резервную копию</string>
+    <string name="backup_categories_title">Что сохранить?</string>
+    <string name="backup_restore_source_title">Какую копию?</string>
+    <string name="backup_restore_categories_title">Восстановить из %s</string>
+    <string name="backup_category_messages">Сообщения (SMS, MMS и вложения)</string>
+    <string name="backup_category_settings">Настройки и шаблоны</string>
+    <string name="backup_category_blocking">Правила блокировки</string>
+    <string name="backup_category_conversations">Архивные и закреплённые</string>
+    <string name="backup_category_scheduled">Запланированные сообщения</string>
+    <string name="backup_exact_alarm_title">Разрешить точные будильники</string>
+    <string name="backup_exact_alarm_message">Чтобы отправлять запланированные сообщения точно в срок, Open Messages нужно разрешение на точные будильники. Без него они могут уходить с небольшой задержкой.</string>
+    <string name="backup_exact_alarm_grant">Разрешить</string>
+    <string name="backup_exact_alarm_skip">Всё равно восстановить</string>
     <string name="backup_progress_parsing">Анализ резервной копии…</string>
     <string name="backup_progress_running">%d/%d сообщений</string>
     <string name="backup_progress_saving">Сохранение резервной копии…</string>
     <string name="backup_progress_syncing">Синхронизация сообщений…</string>
     <string name="backup_progress_finished">Завершено!</string>
+    <string name="backup_progress_failed">Не удалось записать резервную копию. Проверьте свободное место и папку для копий.</string>
     <string name="backup_notification_channel_name">Резервирование</string>
     <string name="scheduled_title">Планировщик</string>
     <string name="scheduled_empty_description">Автоматически отправить сообщение когда пожелаете</string>
@@ -196,6 +295,12 @@
     <string name="settings_automatic_colors_title">Автоматические цвета контактов</string>
     <string name="settings_text_size_title">Размер шрифта</string>
     <string name="settings_system_font_title">Использовать системный шрифт</string>
+    <string name="settings_show_avatar_title">Показывать фото контакта</string>
+    <string name="settings_show_avatar_summary">Показывать фото отправителя в беседах. Отключите, чтобы сделать облачка сообщений шире.</string>
+    <string name="settings_hide_country_code_title">Скрывать код страны</string>
+    <string name="settings_hide_country_code_summary">Показывать номера в местном формате, например «06 ...» вместо «+33 6 ...»</string>
+    <string name="settings_edge_to_edge_title">Во весь экран</string>
+    <string name="settings_edge_to_edge_summary">Показывать содержимое под строкой состояния и панелью навигации</string>
     <string name="settings_auto_emoji_title">Автоматические emoji</string>
     <string name="settings_notifications_title">Уведомления</string>
     <string name="settings_notifications_o_summary">Нажмите для настройки</string>
@@ -229,6 +334,11 @@
     </string-array>
     <string name="settings_delivery_title">Отчёты о доставке</string>
     <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>
+    <string name="settings_send_sound_title">Звук при отправке</string>
+    <string name="settings_send_sound_summary">Короткий сигнал при отправке сообщения</string>
+    <string name="settings_send_sound_volume_title">Громкость</string>
+    <string name="settings_header_quick_action_title">Быстрое действие в заголовке</string>
+    <string name="settings_header_quick_action_summary">Добавить кнопку быстрого действия в заголовок беседы</string>
     <string name="settings_signature_title">Подпись</string>
     <string name="settings_signature_summary">Добавлять подпись в конец ваших сообщений</string>
     <string name="settings_unicode_title">Удалять акценты</string>
@@ -261,6 +371,17 @@
     <string name="blocking_drop_title">Удалять сообщения</string>
     <string name="blocking_drop_summary">Удалять входящие сообщения от заблокированных отправителей, а не скрывать их</string>
     <string name="blocking_conversations">Заблокированные беседы</string>
+    <string name="blocking_category_integrated">Встроенная блокировка</string>
+    <string name="blocking_integrated_description">Open Messages блокирует спам прямо на устройстве. Дополнительные источники ниже загружают свой список из интернета при включении, а затем работают офлайн.</string>
+    <string name="blocking_category_external_apps">Сторонние приложения</string>
+    <string name="blocked_numbers_summary">Номера, которые вы заблокировали сами</string>
+    <string name="blocking_source_phishing_title">Защита от фишинга</string>
+    <string name="blocking_source_phishing_summary">Блокирует сообщения со ссылками на известные фишинговые сайты. При включении список загружается из интернета, дальше фильтрация работает офлайн.</string>
+    <string name="blocking_source_flag_block_title">Блокировать возможный спам</string>
+    <string name="blocking_source_flag_block_summary">Отправлять сообщения, помеченные как возможный спам, сразу в заблокированные, а не просто отмечать их во входящих</string>
+    <string name="blocking_source_status_updating">Обновление…</string>
+    <string name="blocking_source_status_updated">Актуально · записей: %1$d</string>
+    <string name="blocking_source_status_failed">Не удалось загрузить, источник остаётся выключенным. Проверьте подключение и повторите попытку.</string>
     <string name="blocking_manager_title">Управление блокировкой</string>
     <string name="blocking_manager_built_in_summary">Встроенная функция блокировки Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Чёрный список с возможностью работы по расписанию для блокировки сообщений со спамом, звонков с определённых и неизвестных номеров</string>
@@ -321,10 +442,15 @@
     <string name="button_yes">Да</string>
     <string name="button_continue">Продолжить</string>
     <string name="button_cancel">Отмена</string>
+    <string name="button_close">Закрыть</string>
     <string name="button_delete">Удалить</string>
     <string name="button_save">Сохранить</string>
     <string name="button_stop">Остановить</string>
     <string name="button_set">Задать</string>
+    <string name="button_later">Позже</string>
+    <string name="icon_restart_title">Требуется перезапуск</string>
+    <string name="icon_restart_message">Чтобы значок приложения обновился, приложение нужно перезапустить.</string>
+    <string name="icon_restart_now">Перезапустить</string>
     <string name="button_undo">Отмена</string>
     <string name="toast_copied">Скопировано</string>
     <plurals name="notification_new_messages">
@@ -358,6 +484,21 @@
         <item>5 секунд</item>
         <item>10 секунд</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Нет</item>
+        <item>Архивировать</item>
+        <item>Отметить непрочитанным</item>
+        <item>Блокировать</item>
+        <item>Удалить</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Нет</item>
+        <item>Классический</item>
+        <item>Звонкий</item>
+        <item>Мягкий</item>
+        <item>Нисходящий</item>
+        <item>Три ноты</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Автоматически</item>
         <item>100 Кб</item>
@@ -367,6 +508,11 @@
         <item>1000 Кб</item>
         <item>2000 Кб</item>
         <item>Без сжатия</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Блокировать</item>
+        <item>Разрешить</item>
+        <item>Спрашивать перед открытием</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Хорошо</item>
@@ -387,6 +533,12 @@
     <string name="main_menu_edit_message">Редактировать сообщение</string>
     <string name="main_menu_rename_conversation">Переименовать разговор</string>
     <string name="main_sender_draft">Черновик: %s</string>
+    <string name="conversation_flagged_label">Возможно, спам</string>
+    <string name="snippet_picture">Изображение</string>
+    <string name="snippet_video">Видео</string>
+    <string name="snippet_audio">Аудио</string>
+    <string name="snippet_contact_card">Контакт</string>
+    <string name="search_group_conversations">Беседы</string>
     <string name="scheduled_menu_send_now">Отправить сейчас</string>
     <string name="scheduled_menu_edit_message">Редактировать сообщение</string>
     <plurals name="dialog_delete_chat">
@@ -407,7 +559,17 @@
     <string name="dialog_clear_compose_title">Стереть сообщение</string>
     <string name="dialog_clear_compose">Стереть сообщение? Эта операция не может быть отменена.</string>
     <string name="compose_scheduled_view">Запланированные сообщения для этого разговора</string>
+    <string name="compose_scheduled_bubble">Отправка в %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d вложение</item>
+        <item quantity="few">%d вложения</item>
+        <item quantity="many">%d вложений</item>
+        <item quantity="other">%d вложения</item>
+    </plurals>
     <string name="compose_no_valid_recipients">Не могу отправить другим участникам</string>
+    <string name="compose_flagged_title">Возможно, спам</string>
+    <string name="compose_flagged_approve">Это не спам</string>
+    <string name="compose_flagged_block">Блокировать</string>
     <string name="compose_menu_show_status">Показать статус</string>
     <string name="compose_attach_file_cd">Прикрепить файл</string>
     <string name="compose_audio_message_cd">Записать аудиосообщение</string>
@@ -415,6 +577,8 @@
     <string name="compose_record_audio_msg_cd">Записать аудиосообщение</string>
     <string name="compose_record_audio_msg_abort_cd">Отменить аудиосообщение</string>
     <string name="compose_record_audio_msg_attach_cd">Прикрепить аудиосообщение</string>
+    <string name="compose_audio_msg_title">Голосовое сообщение</string>
+    <string name="compose_audio_msg_attach">Прикрепить</string>
     <string name="compose_record_audio_msg_play_pause_cd">Проиграть или поставить на паузу аудиосообщение</string>
     <string name="compose_message_cancel">Отменить</string>
     <string name="compose_message_send_now">Отправить сейчас</string>
@@ -423,6 +587,10 @@
     <string name="compose_message_attachment">Прикреплено</string>
     <string name="compose_toast_drag_stt">Переместите кнопку преобразования речи в текст в любое желаемое место</string>
     <string name="message_body_too_long_to_display">⚠ Сообщение длинное. Скопируйте или сохраните для полного текста</string>
+    <string name="conversation_menu">Параметры беседы</string>
+    <string name="conversation_menu_media">Все медиафайлы</string>
+    <string name="media_title">Медиа</string>
+    <string name="media_empty">Здесь появятся фото и видео из этой беседы</string>
     <string name="clipboard_too_large_to_copy">Размер данных превышает лимит буфера обмена</string>
     <string name="clipboard_unable_to_copy_to">Не удалось скопировать в буфер обмена</string>
     <string name="scheduled_send_cd">Запланировать это сообщение</string>
@@ -431,9 +599,15 @@
     <string name="menu_mms_part_open">Открыть снаружи</string>
     <string name="attachment_missing">Отсутствует</string>
     <string name="settings_system_show_stt_title">Показать кнопку перевода речи в текст</string>
+    <string name="settings_drawer_swipe_title">Открывать меню свайпом</string>
+    <string name="settings_drawer_swipe_summary">Открывать боковое меню свайпом от левого края списка бесед</string>
     <string name="settings_notification_previews_summary">Показать имя и сообщение</string>
     <string name="settings_notification_silent_title">Заглушить, если не в контактах</string>
     <string name="settings_notification_silent_summary">Заглушает уведомления для сообщений без получателей из вашего списка контактов</string>
+    <string name="settings_copy_code_title">Копирование кодов из уведомлений</string>
+    <string name="settings_copy_code_summary">Добавляет кнопку «Скопировать код» в уведомления с одноразовыми кодами и кодами подтверждения</string>
+    <string name="notification_copy_code">Скопировать код</string>
+    <string name="notification_code_copied">Код скопирован</string>
     <string name="settings_unread_at_top_title">Непрочитанные сверху</string>
     <string name="settings_unread_at_top_summary">Показывать непрочитанные разговоры наверху</string>
     <string name="settings_mms_weblink_title">Обрабатывать ссылки в сообщениях</string>
@@ -475,9 +649,18 @@
     <string name="compose_send_group_summary_on">Получатели и ответы будут видны всем</string>
     <string name="compose_send_group_summary_off">Сообщения будут отправлены отдельно всем получателям</string>
     <string name="notification_foreground_worker_text">На Android 12 и более ранних версиях для фоновой работы требуется уведомление, позволяющее получать сообщения.</string>
+    <string name="notification_foreground_worker_channel_name">Уведомление о получении сообщений</string>
+    <string name="notification_me">Я</string>
     <string name="notification_foreground_worker_title">Получение сообщения</string>
     <string name="main_sync_emojis">Анализ реакций эмодзи…</string>
     <string name="message_management_title">Управление сообщениями</string>
+    <string name="templates_title">Шаблоны</string>
+    <string name="templates_empty">Сохранённых сообщений пока нет.\nНажмите +, чтобы сохранить сообщение, которое вы часто отправляете, затем нажмите на него, чтобы выбрать получателя.</string>
+    <string name="template_hint">Введите сообщение…</string>
+    <string name="template_title_hint">Название (необязательно)</string>
+    <string name="templates_add_cd">Новый шаблон</string>
+    <string name="template_new">Новый шаблон</string>
+    <string name="template_edit">Изменить шаблон</string>
     <string name="compose_reactions_title">Эмодзи</string>
     <string name="deduplicate_messages_category">Дедупликация сообщений</string>
     <string name="deduplicate_messages_title">Удалить дубликаты сообщений</string>

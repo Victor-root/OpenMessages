@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Jednoduchý open-source komunikátor</string>
     <string name="shortcut_compose_long_label">Nová konverzácia</string>
     <string name="shortcut_compose_short_label">Nová správa</string>
     <string name="shortcut_compose_disabled_message">Skratka je vypnutá</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">Nastavenia</string>
     <string name="title_notification_prefs">Upozornenia</string>
     <string name="title_theme">Téma</string>
+    <string name="theme_default">Predvolené</string>
+    <string name="theme_wallpaper">Tapeta</string>
+    <string name="theme_other_colors">Farby</string>
+    <string name="theme_tab_presets">Paleta</string>
+    <string name="theme_tab_custom">Vlastné</string>
+    <string name="theme_apply_to_icon">Použiť farbu na ikonu aplikácie (aplikácia sa zatvorí)</string>
+    <string name="theme_tab_icon">Ikona aplikácie</string>
+    <string name="theme_icon_follow_theme">Podľa farby motívu aplikácie</string>
+    <string name="theme_icon_summary">Vyberte farbu ikony aplikácie nezávisle od motívu. Po použití zmeny sa aplikácia zatvorí.</string>
+    <string name="theme_icon_change_title">Zmeniť ikonu aplikácie?</string>
+    <string name="theme_icon_change_message">Farba ikony aplikácie sa teraz zmení. Android môže ikonu vymeniť len pri zatvorenej aplikácii, preto sa Open Messages hneď po potvrdení zatvorí.</string>
     <string name="title_conversations">Hľadať správu…</string>
+    <string name="title_search">Hľadať</string>
     <string name="title_compose">Nová správa</string>
     <string name="setup_skip">Preskočiť</string>
     <string name="setup_next">Pokračovať</string>
     <string name="menu_add_person">Pridať osobu</string>
     <string name="menu_call">Volať</string>
     <string name="menu_mms_part_save">Uložiť do galérie</string>
+    <string name="menu_mms_part_share">Zdieľať</string>
+    <string name="menu_mms_part_forward">Preposlať</string>
+    <string name="menu_mms_part_open">Otvoriť externe</string>
     <string name="compose_menu_share">Zdielať</string>
     <string name="main_drawer_open_cd">Otvoriť navigačné menu</string>
+    <string name="main_search_close_cd">Zavrieť vyhľadávanie</string>
+    <string name="main_search_clear_cd">Vymazať vyhľadávanie</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d vybraných</string>
     <string name="main_menu_clear">Vymazať</string>
+    <string name="main_menu_select_all">Vybrať všetko</string>
     <string name="main_menu_archive">Archivovať</string>
     <string name="main_menu_unarchive">Zrušiť archiváciu</string>
     <string name="main_menu_delete">Odstrániť</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Označiť ako prečítané</string>
     <string name="main_menu_unread">Označiť ako neprečítané</string>
     <string name="main_menu_block">Zablokovať</string>
+    <string name="main_menu_send_now">Odoslať teraz</string>
+    <string name="main_menu_edit_message">Upraviť správu</string>
+    <string name="main_menu_rename_conversation">Premenovať konverzáciu</string>
     <string name="main_syncing">Synchronizácia správ…</string>
+    <string name="main_sync_emojis">Spracúvajú sa reakcie emoji…</string>
     <string name="main_sender_you">Vy: %s</string>
+    <string name="main_sender_draft">Koncept: %s</string>
+    <string name="conversation_flagged_label">Podozrenie na spam</string>
+    <string name="snippet_picture">Obrázok</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Zvuk</string>
+    <string name="snippet_contact_card">Vizitka</string>
+    <string name="search_group_conversations">Konverzácie</string>
     <string name="main_message_results_title">Výsledky v správach</string>
     <plurals name="main_message_results">
         <item quantity="other">%d správ</item>
@@ -62,11 +93,32 @@
     <string name="main_permission_contacts">Open Messages potrebuje povolenie na zobrazenie kontaktov</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Povoliť</string>
+    <string name="scheduled_menu_send_now">Odoslať teraz</string>
+    <string name="scheduled_menu_edit_message">Upraviť správu</string>
     <string name="drawer_inbox">Doručené</string>
+    <string name="contacts_group_recent">Nedávne</string>
+    <string name="contacts_group_starred">Obľúbené</string>
+    <string name="contacts_group_groups">Skupiny</string>
+    <string name="conversations_group_today">Dnes</string>
+    <string name="conversations_group_yesterday">Včera</string>
     <string name="drawer_archived">Archivované</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d neprečítaná</item>
+        <item quantity="few">%d neprečítané</item>
+        <item quantity="many">%d neprečítanej</item>
+        <item quantity="other">%d neprečítaných</item>
+    </plurals>
     <string name="drawer_scheduled">Naplánované</string>
     <string name="drawer_blocking">Blokovanie</string>
     <string name="drawer_more">Viac</string>
+    <string name="message_management_title">Správa správ</string>
+    <string name="templates_title">Šablóny</string>
+    <string name="templates_empty">Zatiaľ žiadne uložené správy.\nŤuknutím na + uložte správu, ktorú často posielate, a potom na ňu ťuknite a vyberte, komu ju poslať.</string>
+    <string name="template_hint">Napíšte správu…</string>
+    <string name="template_title_hint">Názov (nepovinné)</string>
+    <string name="templates_add_cd">Nová šablóna</string>
+    <string name="template_new">Nová šablóna</string>
+    <string name="template_edit">Upraviť šablónu</string>
     <string name="drawer_settings">Nastavenia</string>
     <string name="drawer_help">Nápoveda &amp; spätná väzba</string>
     <string name="drawer_invite">Pozvať priateľov</string>
@@ -81,6 +133,23 @@
         <item quantity="many">Ste si istý, že chcete odstrániť %d konverzácií?</item>
         <item quantity="other">Ste si istý, že chcete odstrániť %d konverzácií?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">Naozaj chcete odstrániť túto správu?</item>
+        <item quantity="few">Naozaj chcete odstrániť %d správy?</item>
+        <item quantity="many">Naozaj chcete odstrániť %d správy?</item>
+        <item quantity="other">Naozaj chcete odstrániť %d správ?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">Naozaj chcete odoslať túto správu teraz?</item>
+        <item quantity="few">Naozaj chcete odoslať %d správy teraz?</item>
+        <item quantity="many">Naozaj chcete odoslať %d správy teraz?</item>
+        <item quantity="other">Naozaj chcete odoslať %d správ teraz?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">Upraviť správu</string>
+    <string name="dialog_edit_scheduled_message">Úpravou sa táto správa odstráni z naplánovaných.\n\nNa ďalšej obrazovke ju nezabudnite znova odoslať, inak sa stratí.\n\nChcete pokračovať?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">Áno, upraviť správu</string>
+    <string name="dialog_clear_compose_title">Vymazať správu</string>
+    <string name="dialog_clear_compose">Vymazať správu? Túto akciu nie je možné vrátiť.</string>
     <string-array name="message_options">
         <item>Kopírovať text</item>
         <item>Preposlať</item>
@@ -94,19 +163,37 @@
     <string name="compose_subtitle_results">%1$d z %2$d výsledkov</string>
     <string name="compose_send_group_title">Poslať ako skupinovú správu</string>
     <string name="compose_send_group_summary">Príjemcovia a odpovede budú viditeľné všetkým</string>
+    <string name="compose_send_group_summary_on">Príjemcovia a odpovede budú viditeľné pre všetkých</string>
+    <string name="compose_send_group_summary_off">Správy sa odošlú každému príjemcovi zvlášť</string>
     <string name="compose_messages_empty">Toto je začiatok vašej konverzácie. Napíšte niečo pekného!</string>
     <string name="compose_vcard_label">Karta kontaktu</string>
     <string name="compose_scheduled_for">Naplánované na</string>
     <string name="compose_scheduled_future">Vybraný čas musí ešte len nastať!</string>
     <string name="compose_scheduled_toast">Pridané do naplánovaných správ</string>
+    <string name="compose_scheduled_view">Naplánované správy tejto konverzácie</string>
+    <string name="compose_scheduled_bubble">Odoslanie o %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d príloha</item>
+        <item quantity="few">%d prílohy</item>
+        <item quantity="many">%d prílohy</item>
+        <item quantity="other">%d príloh</item>
+    </plurals>
     <string name="compose_hint">Napíšte správu…</string>
+    <string name="compose_expand_cd">Rozbaliť na celú obrazovku</string>
+    <string name="compose_collapse_cd">Zbaliť</string>
+    <string name="compose_no_valid_recipients">Ostatným účastníkom nie je možné poslať správu</string>
+    <string name="compose_flagged_title">Podozrenie na spam</string>
+    <string name="compose_flagged_approve">Nie je to spam</string>
+    <string name="compose_flagged_block">Zablokovať</string>
     <string name="compose_menu_copy">Kopírovať text</string>
     <string name="compose_menu_forward">Preposlať</string>
+    <string name="compose_menu_show_status">Zobraziť stav</string>
     <string name="compose_menu_delete">Odstrániť</string>
     <string name="compose_menu_previous">Predchádzajúci</string>
     <string name="compose_menu_next">Ďalší</string>
     <string name="compose_menu_clear">Vymazať</string>
     <string name="compose_details_title">Detaily správy</string>
+    <string name="compose_reactions_title">Reakcie</string>
     <string name="compose_details_type">Typ: %s</string>
     <string name="compose_details_from">Od: %s</string>
     <string name="compose_details_to">Pre: %s</string>
@@ -118,18 +205,62 @@
     <string name="compose_details_delivered">Doručené: %s</string>
     <string name="compose_details_error_code">Kód chyby: %d</string>
     <string name="compose_attach_cd">Pridať prílohu</string>
+    <string name="compose_attach_file_cd">Priložiť ľubovoľný súbor</string>
     <string name="compose_gallery_cd">Priložiť fotografiu</string>
+    <string name="compose_audio_message_cd">Nahrať zvukovú správu</string>
     <string name="compose_camera_cd">Urobiť fotografiu</string>
     <string name="compose_schedule_cd">Naplánovať správu</string>
+    <string name="compose_schedule_title">Naplánovať správu</string>
+    <string name="compose_schedule_in_hour">O 1 hodinu</string>
+    <string name="compose_schedule_tonight">Dnes večer</string>
+    <string name="compose_schedule_tomorrow_morning">Zajtra ráno</string>
+    <string name="compose_schedule_tomorrow_afternoon">Zajtra popoludní</string>
+    <string name="compose_schedule_custom">Vybrať dátum a čas</string>
+    <string name="compose_schedule_confirm">Naplánovať</string>
+    <string name="compose_schedule_previous_month">Predchádzajúci mesiac</string>
+    <string name="compose_schedule_next_month">Nasledujúci mesiac</string>
+    <string name="compose_schedule_increase">Zvýšiť</string>
+    <string name="compose_schedule_decrease">Znížiť</string>
+    <string name="compose_schedule_cancel_cd">Zrušiť naplánovanie správy</string>
     <string name="compose_contact_cd">Pripojiť kontakt</string>
     <string name="compose_contact_error">Chyba čítania kontaktu</string>
+    <string name="compose_attach_gallery">Galéria</string>
+    <string name="compose_attach_camera">Fotoaparát</string>
+    <string name="compose_attach_file">Súbor</string>
+    <string name="compose_attach_audio">Zvuk</string>
+    <string name="compose_attach_contact">Kontakt</string>
+    <string name="compose_attach_schedule">Naplánovať</string>
+    <string name="compose_attach_templates">Šablóny</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Vybrána SIM %1$d (%2$s)</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Video je na odoslanie cez MMS príliš dlhé. Môže trvať najviac %d sekundu.</item>
+        <item quantity="few">Video je na odoslanie cez MMS príliš dlhé. Môže trvať najviac %d sekundy.</item>
+        <item quantity="many">Video je na odoslanie cez MMS príliš dlhé. Môže trvať najviac %d sekundy.</item>
+        <item quantity="other">Video je na odoslanie cez MMS príliš dlhé. Môže trvať najviac %d sekúnd.</item>
+    </plurals>
     <string name="compose_sim_cd">%s vybrané, zmeňte SIM kartu</string>
     <string name="compose_send_cd">Odoslať správu</string>
+    <string name="compose_record_audio_msg_cd">Nahrať zvukovú správu</string>
+    <string name="compose_record_audio_msg_abort_cd">Zrušiť zvukovú správu</string>
+    <string name="compose_record_audio_msg_attach_cd">Priložiť zvukovú správu</string>
+    <string name="compose_audio_msg_title">Hlasová správa</string>
+    <string name="compose_audio_msg_attach">Priložiť</string>
+    <string name="compose_record_audio_msg_play_pause_cd">Prehrať alebo pozastaviť zvukovú správu</string>
+    <string name="compose_message_cancel">Zrušiť</string>
+    <string name="compose_message_send_now">Odoslať teraz</string>
+    <string name="compose_message_sim">Číslo SIM</string>
+    <string name="compose_message_item">Položka správy</string>
+    <string name="compose_message_attachment">Príloha</string>
+    <string name="compose_toast_drag_stt">Tlačidlo prevodu reči na text môžete presunúť kamkoľvek</string>
     <string name="message_status_sending">Odosiela sa…</string>
     <string name="message_status_delivered">Doručené %s</string>
     <string name="message_status_failed">Odoslanie zlyhalo. Klepnutím skúste znovu</string>
+    <string name="message_body_too_long_to_display">⚠ Správa je dlhá. Celý text získate cez Kopírovať alebo Uložiť</string>
+    <string name="conversation_menu">Možnosti konverzácie</string>
+    <string name="conversation_menu_media">Zobraziť všetky médiá</string>
+    <string name="media_title">Médiá</string>
+    <string name="media_empty">Tu sa zobrazia fotky a videá zdieľané v tejto konverzácii</string>
     <string name="info_copied_address">Adresa skopírovaná</string>
     <string name="info_name">Názov konverzácie</string>
     <string name="info_notifications">Upozornenia</string>
@@ -143,11 +274,43 @@
     <string name="gallery_toast_saved">Uložené do galérie</string>
     <string name="backup_title">Záloha a obnovenie</string>
     <string name="backup_backing_up">Zálohovanie správ</string>
+    <string name="backup_failed_title">Zálohovanie zlyhalo</string>
+    <string name="backup_icon_change_title">Obnoviť ikonu aplikácie?</string>
+    <string name="backup_icon_change_message">Vaša záloha bola vytvorená s inou farbou ikony aplikácie. Android môže ikonu vymeniť len pri zatvorenej aplikácii, preto sa Open Messages hneď po potvrdení zatvorí.</string>
+    <string name="icon_change_confirm">Použiť a zatvoriť</string>
+    <string name="icon_change_later">Teraz nie</string>
     <string name="backup_restoring">Obnovenie zo zálohy</string>
     <string name="backup_loading">Načítavanie…</string>
     <string name="backup_never">Nikdy</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">Automatické zálohovanie</string>
+    <string name="backup_auto_never">Nikdy</string>
+    <string name="backup_auto_daily">Každý deň</string>
+    <string name="backup_auto_weekly">Každý týždeň</string>
+    <string name="backup_auto_custom">Vlastné…</string>
+    <string name="backup_auto_custom_title">Počet dní medzi zálohami</string>
+    <string name="backup_auto_custom_hint">Počet dní</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Každý %d deň</item>
+        <item quantity="few">Každé %d dni</item>
+        <item quantity="many">Každých %d dňa</item>
+        <item quantity="other">Každých %d dní</item>
+    </plurals>
+    <string name="backup_zip_title">Uložiť ako súbor .zip</string>
+    <string name="backup_zip_summary">Ukladať každú zálohu ako jeden archív, ktorý sa ľahšie prenáša medzi telefónmi</string>
+    <string name="backup_manage_title">Spravovať zálohy</string>
+    <string name="backup_manage_summary">Premenovanie alebo odstránenie záloh</string>
+    <string name="backup_manage_empty">V tomto umiestnení nie sú žiadne zálohy</string>
+    <string name="backup_manage_rename">Premenovať</string>
+    <string name="backup_manage_delete">Odstrániť</string>
+    <string name="backup_manage_delete_confirm">Odstrániť „%s“? Túto akciu nie je možné vrátiť.</string>
+    <string name="backup_manage_error">Túto zálohu sa nepodarilo upraviť</string>
+    <string name="backup_manage_type_folder">Priečinok</string>
+    <string name="backup_manage_type_zip">Archív zip</string>
+    <string name="backup_restore_from_title">Obnoviť z</string>
+    <string name="backup_restore_from_folder">Priečinka</string>
+    <string name="backup_restore_from_zip">Súboru .zip</string>
     <string name="backup_restore_title">Obnoviť</string>
     <string name="backup_restore_summary">Zvoľte zálohu</string>
     <string name="backup_restore_error_backup">Prebieha zálohovanie…</string>
@@ -165,12 +328,28 @@
     <string name="backup_restore_dialog_empty">Nenašli sa žiadne zálohy</string>
     <string name="backup_disclaimer">Momentálne sú pre zálohovanie a obnovenie podporované iba SMS. MMS podpora a plánované zálohy budú pridané už čoskoro!</string>
     <string name="backup_now">Zálohovať</string>
+    <string name="backup_now_summary">Vytvoriť novú zálohu</string>
+    <string name="backup_categories_title">Čo zálohovať?</string>
+    <string name="backup_restore_source_title">Ktorú zálohu?</string>
+    <string name="backup_restore_categories_title">Obnoviť z %s</string>
+    <string name="backup_category_messages">Správy (SMS, MMS a prílohy)</string>
+    <string name="backup_category_settings">Nastavenia a šablóny</string>
+    <string name="backup_category_blocking">Pravidlá blokovania</string>
+    <string name="backup_category_conversations">Archivované a pripnuté</string>
+    <string name="backup_category_scheduled">Naplánované správy</string>
+    <string name="backup_exact_alarm_title">Povoliť presné budíky</string>
+    <string name="backup_exact_alarm_message">Aby Open Messages odosielala naplánované správy presne načas, potrebuje povolenie nastavovať presné budíky. Bez neho môžu odísť s miernym oneskorením.</string>
+    <string name="backup_exact_alarm_grant">Povoliť</string>
+    <string name="backup_exact_alarm_skip">Napriek tomu obnoviť</string>
     <string name="backup_progress_parsing">Analýza zálohy…</string>
     <string name="backup_progress_running">%d/%d správ</string>
     <string name="backup_progress_saving">Ukladá sa záloha…</string>
     <string name="backup_progress_syncing">Synchronizácia správ…</string>
     <string name="backup_progress_finished">Dokončené!</string>
+    <string name="backup_progress_failed">Zálohu sa nepodarilo zapísať. Skontrolujte voľné miesto a priečinok záloh.</string>
     <string name="backup_notification_channel_name">Zálohovanie a obnovenie</string>
+    <string name="clipboard_too_large_to_copy">Údaje sú väčšie, ako dovoľuje schránka</string>
+    <string name="clipboard_unable_to_copy_to">Do schránky sa nepodarilo skopírovať</string>
     <string name="scheduled_title">Naplánované</string>
     <string name="scheduled_empty_description">Automaticky odošle správu v presnom okamihu, ktorý si prajete</string>
     <string name="scheduled_empty_message_1">Nazdar! Kedy máš narodeniny?</string>
@@ -179,12 +358,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Pošle sa 23. decembra</string>
     <string name="scheduled_compose_cd">Naplánovať správu</string>
+    <string name="scheduled_send_cd">Naplánovať túto správu</string>
     <string name="scheduled_options_title">Naplánovaná správa</string>
     <string-array name="scheduled_options">
         <item>Odoslať teraz</item>
         <item>Kopírovať text</item>
         <item>Odstrániť</item>
     </string-array>
+    <string name="attachment_missing">Chýba</string>
     <string name="settings_category_appearance">Vzhľad</string>
     <string name="settings_category_general">Všeobecné</string>
     <string name="settings_category_quick_reply">Rýchla odpoveď</string>
@@ -196,6 +377,15 @@
     <string name="settings_automatic_colors_title">Automatické farby kontaktov</string>
     <string name="settings_text_size_title">Veľkosť písma</string>
     <string name="settings_system_font_title">Použiť systémové písmo</string>
+    <string name="settings_show_avatar_title">Zobraziť fotku kontaktu</string>
+    <string name="settings_show_avatar_summary">Zobrazovať fotku odosielateľa v konverzáciách. Po vypnutí budú bubliny správ širšie.</string>
+    <string name="settings_hide_country_code_title">Skryť predvoľbu krajiny</string>
+    <string name="settings_hide_country_code_summary">Zobrazovať čísla v miestnom formáte, napr. „06 ...“ namiesto „+33 6 ...“</string>
+    <string name="settings_edge_to_edge_title">Od okraja po okraj</string>
+    <string name="settings_edge_to_edge_summary">Vykresľovať obsah pod stavovým a navigačným panelom</string>
+    <string name="settings_system_show_stt_title">Zobraziť tlačidlo prevodu reči na text</string>
+    <string name="settings_drawer_swipe_title">Otvoriť menu potiahnutím</string>
+    <string name="settings_drawer_swipe_summary">Otvoriť bočné menu potiahnutím od ľavého okraja zoznamu konverzácií</string>
     <string name="settings_auto_emoji_title">Automatické emoji</string>
     <string name="settings_notifications_title">Upozornenia</string>
     <string name="settings_notifications_o_summary">Klepnutím prizpôsobíte</string>
@@ -204,7 +394,14 @@
     <string name="settings_notification_action_2">Tlačidlo 2</string>
     <string name="settings_notification_action_3">Tlačidlo 3</string>
     <string name="settings_notification_previews_title">Obsah upozornení</string>
+    <string name="settings_notification_previews_summary">Zobraziť meno a správu</string>
     <string name="settings_notification_wake_title">Rozsvietiť obrazovku</string>
+    <string name="settings_notification_silent_title">Tiché, ak nejde o kontakt</string>
+    <string name="settings_notification_silent_summary">Stlmí upozornenia na správy od odosielateľov, ktorí nie sú vo vašich kontaktoch</string>
+    <string name="settings_copy_code_title">Kopírovať kódy z upozornení</string>
+    <string name="settings_copy_code_summary">Pridá do upozornení s jednorazovými a overovacími kódmi tlačidlo Kopírovať kód</string>
+    <string name="notification_copy_code">Kopírovať kód</string>
+    <string name="notification_code_copied">Kód bol skopírovaný</string>
     <string name="settings_vibration_title">Vybrácie</string>
     <string name="settings_ringtone_title">Zvuk</string>
     <string name="settings_ringtone_none">Žiadny</string>
@@ -229,6 +426,13 @@
     </string-array>
     <string name="settings_delivery_title">Potvrdenie o doručení</string>
     <string name="settings_delivery_summary">Potvrdiť úspešné doručenie správy</string>
+    <string name="settings_send_sound_title">Zvuk pri odoslaní</string>
+    <string name="settings_send_sound_summary">Prehrať krátky tón pri odoslaní správy</string>
+    <string name="settings_send_sound_volume_title">Hlasitosť</string>
+    <string name="settings_header_quick_action_title">Rýchla akcia v hlavičke</string>
+    <string name="settings_header_quick_action_summary">Pridať tlačidlo skratky do hlavičky konverzácie</string>
+    <string name="settings_unread_at_top_title">Neprečítané navrchu</string>
+    <string name="settings_unread_at_top_summary">Zobrazovať neprečítané konverzácie navrchu</string>
     <string name="settings_signature_title">Podpis</string>
     <string name="settings_signature_summary">Pridať podpis na koniec vašich správ</string>
     <string name="settings_unicode_title">Odstrániť diakritiku</string>
@@ -250,6 +454,9 @@
     <string name="settings_long_as_mms_title">Dlhé správy odoslať ako MMS</string>
     <string name="settings_long_as_mms_summary">Ak zlyháva odosielanie dlhých správ alebo sú odoslané v nesprávnom poradí, môžete ich poslať ako MMS. Môžu byť účtované ďalšie poplatky.</string>
     <string name="settings_mms_size_title">Automaticky komprimovať MMS prílohy</string>
+    <string name="settings_mms_weblink_title">Spracovanie odkazov v správach</string>
+    <string name="settings_disable_screenshots_title">Zakázať snímky obrazovky</string>
+    <string name="settings_diable_screenshots_summary">Zabrániť systému a iným aplikáciám robiť snímky obrazovky tejto aplikácie.</string>
     <string name="settings_sync_title">Synchronizovať správy</string>
     <string name="settings_sync_summary">Opätovne synchronizovať vaše správy s natívnou SMS databázou</string>
     <string name="settings_about_title">O aplikácii Open Messages</string>
@@ -261,6 +468,17 @@
     <string name="blocking_drop_title">Zahodiť správy</string>
     <string name="blocking_drop_summary">Zahodiť prichádzajúce správy od blokovaných odosielateľov namiesto ich skrytia.</string>
     <string name="blocking_conversations">Blokované konverzácie</string>
+    <string name="blocking_category_integrated">Vstavané blokovanie</string>
+    <string name="blocking_integrated_description">Open Messages blokuje spam priamo vo vašom zariadení. Voliteľné zdroje nižšie si po zapnutí stiahnu svoj zoznam z internetu a potom fungujú offline.</string>
+    <string name="blocking_category_external_apps">Externé aplikácie</string>
+    <string name="blocked_numbers_summary">Čísla, ktoré ste zablokovali sami</string>
+    <string name="blocking_source_phishing_title">Ochrana pred phishingom</string>
+    <string name="blocking_source_phishing_summary">Blokuje správy s odkazmi na známe phishingové stránky. Zapnutím sa zoznam stiahne z internetu, potom filtrovanie prebieha offline.</string>
+    <string name="blocking_source_flag_block_title">Blokovať podozrivý spam</string>
+    <string name="blocking_source_flag_block_summary">Presúvať správy označené ako možný spam rovno medzi blokované, namiesto ich obyčajného označenia v doručených</string>
+    <string name="blocking_source_status_updating">Aktualizuje sa…</string>
+    <string name="blocking_source_status_updated">Aktuálne · položiek: %1$d</string>
+    <string name="blocking_source_status_failed">Sťahovanie zlyhalo, zdroj zostáva vypnutý. Skontrolujte pripojenie a skúste to znova.</string>
     <string name="blocking_manager_title">Správca blokovaní</string>
     <string name="blocking_manager_built_in_summary">Vstavané blokovanie v Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
@@ -274,6 +492,15 @@
     <string name="blocked_numbers_dialog_title">Zablokovať správy od</string>
     <string name="blocked_numbers_dialog_hint">Telefónne číslo</string>
     <string name="blocked_numbers_dialog_block">Zablokovať</string>
+    <string name="message_content_filters_title">Filtre obsahu správ</string>
+    <string name="message_content_filters_empty">Tu sa zobrazia vaše filtre obsahu správ</string>
+    <string name="message_content_filters_add_cd">Vytvoriť nový filter</string>
+    <string name="message_content_filters_dialog_title">Zahodiť správy obsahujúce</string>
+    <string name="message_content_filters_dialog_hint">Slovo, fráza alebo regulárny výraz</string>
+    <string name="message_content_filters_dialog_case_switch">Rozlišovať veľké a malé písmená</string>
+    <string name="message_content_filters_dialog_regex_switch">Regulárny výraz</string>
+    <string name="message_content_filters_dialog_contacts_switch">Vrátane kontaktov</string>
+    <string name="message_content_filters_dialog_create">Vytvoriť</string>
     <string name="blocked_messages_title">Blokované správy</string>
     <string name="blocked_messages_empty">Tu sa objavia vami blokované čísla</string>
     <string name="blocking_block_title">Zablokovať</string>
@@ -290,6 +517,15 @@
         <item quantity="many">Pokračovať na %s a povoliť tieto čísla</item>
         <item quantity="other">Pokračovať na %s a povoliť tieto čísla</item>
     </plurals>
+    <string name="deduplicate_messages_category">Odstránenie duplicít</string>
+    <string name="deduplicate_messages_title">Odstrániť duplicitné správy</string>
+    <string name="deduplicate_messages_summary">Prehľadá databázu správ a odstráni všetky správy, ktoré sa presne zhodujú s pôvodnými</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Databáza správ sa prehľadá a nájdené duplicity sa odstránia.\nSprávy sa tak automaticky vymažú, pokračujte, len ak rozumiete následkom.</string>
+    <string name="auto_deduplicate_messages_title">Automaticky odstraňovať duplicitné správy</string>
+    <string name="auto_deduplicate_messages_summary">Duplicity sa budú odstraňovať počas synchronizácie. Upozorňujeme, že sa tak automaticky vymažú správy, a hoci je možnosť chybnej duplicity veľmi malá, stále existuje.\nBuďte opatrní.</string>
+    <string name="deduplicating_messages_finished">Odstraňovanie duplicít dokončené!</string>
+    <string name="deduplicating_messages_no_messages">Nenašli sa žiadne duplicitné správy.</string>
+    <string name="deduplicating_messages_failed">Odstraňovanie duplicít zlyhalo, skúste to znova</string>
     <string name="about_title">O aplikácii</string>
     <string name="about_version_title">Verzia</string>
     <string name="about_developer_title">Vývojár</string>
@@ -300,6 +536,7 @@
     <string name="about_copyright_title">Autorské práva</string>
     <string name="widget_loading">Načítavanie…</string>
     <string name="widget_more">Zobraziť viacej konverácií</string>
+    <string name="all_conversations_widget_title">Všetky konverzácie</string>
     <string name="quick_reply_menu_read">Označiť ako prečítané</string>
     <string name="quick_reply_menu_call">Volať</string>
     <string name="quick_reply_menu_delete">Odstrániť</string>
@@ -321,12 +558,30 @@
     <string name="button_yes">Áno</string>
     <string name="button_continue">Pokračovať</string>
     <string name="button_cancel">Zrušiť</string>
+    <string name="button_close">Zavrieť</string>
     <string name="button_delete">Odstrániť</string>
     <string name="button_save">Uložiť</string>
     <string name="button_stop">Zastaviť</string>
     <string name="button_set">Nastaviť</string>
+    <string name="button_later">Neskôr</string>
+    <string name="icon_restart_title">Vyžaduje sa reštart</string>
+    <string name="icon_restart_message">Na dokončenie zmeny ikony je potrebné aplikáciu reštartovať.</string>
+    <string name="icon_restart_now">Reštartovať</string>
     <string name="button_undo">Vrátiť späť</string>
+    <string name="button_clear">Vymazať</string>
     <string name="toast_copied">Skopírované</string>
+    <plurals name="toast_archived">
+        <item quantity="one">Konverzácia bola archivovaná</item>
+        <item quantity="few">Archivované %d konverzácie</item>
+        <item quantity="many">Archivovaných %d konverzácie</item>
+        <item quantity="other">Archivovaných %d konverzácií</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">Archivácia konverzácie bola zrušená</item>
+        <item quantity="few">Archivácia zrušená pre %d konverzácie</item>
+        <item quantity="many">Archivácia zrušená pre %d konverzácie</item>
+        <item quantity="other">Archivácia zrušená pre %d konverzácií</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">Nová správa</item>
         <item quantity="few">%s nové správy</item>
@@ -335,6 +590,11 @@
     </plurals>
     <string name="notification_message_failed_title">Správa nebola odoslaná</string>
     <string name="notification_message_failed_text">Zlyhalo odoslanie správy pre %s</string>
+    <string name="notification_foreground_worker_title">Prijímanie správy</string>
+    <string name="notification_foreground_worker_text">V systéme Android 12 a starších je na prácu na pozadí, ktorá umožňuje prijímať správy, potrebné upozornenie.</string>
+    <string name="notification_foreground_worker_channel_name">Upozornenie o prijímaní správ</string>
+    <string name="notification_me">Ja</string>
+    <string name="notification_message_failed_action">Odoslať znova</string>
     <string-array name="night_modes">
         <item>Systém</item>
         <item>Vypnuté</item>
@@ -358,6 +618,21 @@
         <item>5 sekúnd</item>
         <item>10 sekúnd</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Žiadna</item>
+        <item>Archivovať</item>
+        <item>Označiť ako neprečítané</item>
+        <item>Zablokovať</item>
+        <item>Odstrániť</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Žiadny</item>
+        <item>Klasický</item>
+        <item>Jasný</item>
+        <item>Jemný</item>
+        <item>Zostupný</item>
+        <item>Tri tóny</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automaticky</item>
         <item>100 kB</item>
@@ -367,6 +642,11 @@
         <item>1 000 kB</item>
         <item>2 000 kB</item>
         <item>Bez kompresie</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Zablokovať</item>
+        <item>Povoliť</item>
+        <item>Opýtať sa pred otvorením</item>
     </string-array>
     <string-array name="quick_responses">
         <item>V poriadku</item>
@@ -382,4 +662,13 @@
         <item>LOL</item>
         <item>To je v poriadku</item>
     </string-array>
+    <string name="speak_no_messages">Žiadne správy</string>
+    <string name="speak_unseen_messages">Prečítať nevidené správy</string>
+    <string name="messageLinkHandling_dialog_title">Upozornenie na externý odkaz</string>
+    <string name="messageLinkHandling_dialog_body">Niektoré odkazy môžu byť nebezpečné alebo vás nečakane presmerovať. Pred pokračovaním si skontrolujte odkaz nižšie:\n\n%1$s\n\nChcete pokračovať?</string>
+    <string name="messageLinkHandling_dialog_positive">Áno, otvoriť odkaz</string>
+    <string name="messageLinkHandling_dialog_negative">Nie</string>
+    <string name="error_stt_toast">Ľutujeme, pri načítaní služby prevodu reči na text nastala chyba.</string>
+    <string name="stt_toast_extra_prompt">Vyslovte svoju správu</string>
+    <string name="messages_text_share_file_error">Ups! Pri zdieľaní sa niečo pokazilo</string>
 </resources>

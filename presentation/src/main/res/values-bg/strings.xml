@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_tagline">Лесни съобщения с отворен код</string>
     <string name="shortcut_compose_long_label">Нов разговор</string>
     <string name="shortcut_compose_short_label">Писане</string>
     <string name="shortcut_compose_disabled_message">Бързият достъп е изключен</string>
@@ -7,7 +8,19 @@
     <string name="title_settings">Настройки</string>
     <string name="title_notification_prefs">Известия</string>
     <string name="title_theme">Тема</string>
+    <string name="theme_default">По подразбиране</string>
+    <string name="theme_wallpaper">Тапет</string>
+    <string name="theme_other_colors">Цветове</string>
+    <string name="theme_tab_presets">Палитра</string>
+    <string name="theme_tab_custom">Персонализирана</string>
+    <string name="theme_apply_to_icon">Прилагане на цвета към иконата (приложението ще се затвори)</string>
+    <string name="theme_tab_icon">Икона</string>
+    <string name="theme_icon_follow_theme">Като цвета на темата</string>
+    <string name="theme_icon_summary">Изберете цвета на иконата на приложението независимо от темата. При промяна приложението ще се затвори.</string>
+    <string name="theme_icon_change_title">Промяна на иконата?</string>
+    <string name="theme_icon_change_message">Цветът на иконата на приложението ще се промени. Android може да смени иконата само докато приложението е затворено, затова Open Messages ще се затвори веднага след потвърждението.</string>
     <string name="title_conversations">Търсене във входящи…</string>
+    <string name="title_search">Търсене</string>
     <string name="title_compose">Въведете име или номер</string>
     <string name="setup_skip">Пропускане</string>
     <string name="setup_next">Продължаване</string>
@@ -18,6 +31,9 @@
     <string name="menu_mms_part_forward">Препращане</string>
     <string name="menu_mms_part_open">Отваряне във външно приложение</string>
     <string name="main_drawer_open_cd">Отваряне на страничното меню</string>
+    <string name="main_search_close_cd">Затваряне на търсенето</string>
+    <string name="main_search_clear_cd">Изчистване на търсенето</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">Избрани: %d</string>
     <string name="main_menu_clear">Изчистване</string>
     <string name="main_menu_select_all">Избиране на всички</string>
@@ -36,6 +52,12 @@
     <string name="main_syncing">Синхронизиране на съобщенията…</string>
     <string name="main_sender_you">Вие: %s</string>
     <string name="main_sender_draft">Чернова: %s</string>
+    <string name="conversation_flagged_label">Възможен спам</string>
+    <string name="snippet_picture">Снимка</string>
+    <string name="snippet_video">Видео</string>
+    <string name="snippet_audio">Аудио</string>
+    <string name="snippet_contact_card">Визитка</string>
+    <string name="search_group_conversations">Разговори</string>
     <string name="main_message_results_title">Резултати в съобщенията</string>
     <plurals name="main_message_results">
         <item quantity="other">%d съобщения</item>
@@ -58,7 +80,16 @@
     <string name="scheduled_menu_edit_message">Променяне на съобщението</string>
     <string name="dialog_edit_scheduled_message_title">Променяне на съобщението</string>
     <string name="drawer_inbox">Входящи</string>
+    <string name="contacts_group_recent">Скорошни</string>
+    <string name="contacts_group_starred">Любими</string>
+    <string name="contacts_group_groups">Групи</string>
+    <string name="conversations_group_today">Днес</string>
+    <string name="conversations_group_yesterday">Вчера</string>
     <string name="drawer_archived">Архив</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d непрочетено</item>
+        <item quantity="other">%d непрочетени</item>
+    </plurals>
     <string name="drawer_scheduled">Планиране</string>
     <string name="drawer_blocking">Забраняване</string>
     <string name="blocking_title">Забраняване</string>
@@ -91,6 +122,11 @@
     <string name="dialog_edit_scheduled_message_positive_button">Да, променяне на съобщение</string>
     <string name="dialog_clear_compose_title">Изчистване на съобщението</string>
     <string name="dialog_clear_compose">Премахване на съобщението? Действието е необратимо.</string>
+    <string-array name="message_options">
+        <item>Копиране</item>
+        <item>Препращане</item>
+        <item>Премахване</item>
+    </string-array>
     <string name="compose_number_picker_title">Избиране на телефонен номер</string>
     <string name="compose_number_picker_default">%s ∙ стандартно</string>
     <string name="compose_number_picker_once">Веднъж</string>
@@ -98,6 +134,7 @@
     <string name="compose_title_selected">Избрани: %d</string>
     <string name="compose_subtitle_results">%1$d от %2$d резултата</string>
     <string name="compose_send_group_title">Изпращане като групово съобщение</string>
+    <string name="compose_send_group_summary">Получателите и отговорите ще са видими за всички</string>
     <string name="compose_send_group_summary_on">Получателите и отговорите ще бъдат видими за всички</string>
     <string name="compose_send_group_summary_off">Съобщенията ще бъдат изпратени до всеки получател поотделно</string>
     <string name="compose_messages_empty">Това е началото на разговора. Кажете нещо мило!</string>
@@ -106,8 +143,18 @@
     <string name="compose_scheduled_future">Времето трябва да е в бъдещето!</string>
     <string name="compose_scheduled_toast">Добавяне към планираните съобщения</string>
     <string name="compose_scheduled_view">Планирани съобщения към този разговор</string>
+    <string name="compose_scheduled_bubble">Изпращане в %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d прикачен файл</item>
+        <item quantity="other">%d прикачени файла</item>
+    </plurals>
     <string name="compose_hint">Напишете съобщение…</string>
+    <string name="compose_expand_cd">Разгъване на цял екран</string>
+    <string name="compose_collapse_cd">Свиване</string>
     <string name="compose_no_valid_recipients">Не може да бъде изпратено до другите получатели</string>
+    <string name="compose_flagged_title">Възможен спам</string>
+    <string name="compose_flagged_approve">Не е спам</string>
+    <string name="compose_flagged_block">Забраняване</string>
     <string name="compose_menu_copy">Копиране</string>
     <string name="compose_menu_share">Споделяне</string>
     <string name="compose_menu_forward">Препращане</string>
@@ -130,15 +177,39 @@
     <string name="compose_audio_message_cd">Записване на гласово съобщение</string>
     <string name="compose_camera_cd">Снимане</string>
     <string name="compose_schedule_cd">Планиране на съобщение</string>
+    <string name="compose_schedule_title">Планиране на съобщение</string>
+    <string name="compose_schedule_in_hour">След 1 час</string>
+    <string name="compose_schedule_tonight">Довечера</string>
+    <string name="compose_schedule_tomorrow_morning">Утре сутрин</string>
+    <string name="compose_schedule_tomorrow_afternoon">Утре следобед</string>
+    <string name="compose_schedule_custom">Избор на дата и час</string>
+    <string name="compose_schedule_confirm">Планиране</string>
+    <string name="compose_schedule_previous_month">Предишен месец</string>
+    <string name="compose_schedule_next_month">Следващ месец</string>
+    <string name="compose_schedule_increase">Увеличаване</string>
+    <string name="compose_schedule_decrease">Намаляване</string>
     <string name="compose_schedule_cancel_cd">Без планиране на съобщението</string>
     <string name="compose_contact_cd">Прикачане на контакт</string>
     <string name="compose_contact_error">Грешка при четене на контакт</string>
+    <string name="compose_attach_gallery">Галерия</string>
+    <string name="compose_attach_camera">Камера</string>
+    <string name="compose_attach_file">Файл</string>
+    <string name="compose_attach_audio">Аудио</string>
+    <string name="compose_attach_contact">Контакт</string>
+    <string name="compose_attach_schedule">Планиране</string>
+    <string name="compose_attach_templates">Шаблони</string>
     <string name="compose_sim_changed_toast">Избрана е SIM-карта %1$d (%2$s)</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Видеото е твърде дълго за изпращане чрез MMS. Може да е най-много %d секунда.</item>
+        <item quantity="other">Видеото е твърде дълго за изпращане чрез MMS. Може да е най-много %d секунди.</item>
+    </plurals>
     <string name="compose_sim_cd">Избрана %s, смяна на SIM-карта</string>
     <string name="compose_send_cd">Изпращане на съобщение</string>
     <string name="compose_record_audio_msg_cd">Записване на гласово съобщение</string>
     <string name="compose_record_audio_msg_abort_cd">Отказ на гласово съобщение</string>
     <string name="compose_record_audio_msg_attach_cd">Прикачане на гласово съобщение</string>
+    <string name="compose_audio_msg_title">Гласово съобщение</string>
+    <string name="compose_audio_msg_attach">Прикачване</string>
     <string name="compose_record_audio_msg_play_pause_cd">Възпроизвеждане или пауза на гласовото съобщение</string>
     <string name="compose_message_cancel">Отказ</string>
     <string name="compose_message_sim">Номер на SIM-картата</string>
@@ -149,6 +220,10 @@
     <string name="message_status_delivered">Доставено %s</string>
     <string name="message_status_failed">Грешка при изпращане. Докоснете за нов опит</string>
     <string name="message_body_too_long_to_display">⚠ Съобщението е дълго. Копирайте го или го запазете за достъп до пълния текст</string>
+    <string name="conversation_menu">Опции на разговора</string>
+    <string name="conversation_menu_media">Всички медийни файлове</string>
+    <string name="media_title">Медия</string>
+    <string name="media_empty">Снимките и видеоклиповете от този разговор ще се появят тук</string>
     <string name="info_copied_address">Адресът е копиран</string>
     <string name="info_name">Наименование на разговора</string>
     <string name="info_notifications">Известия</string>
@@ -162,12 +237,42 @@
     <string name="gallery_toast_saved">Запазено в галерията</string>
     <string name="backup_title">Резервно копие и възстановяване</string>
     <string name="backup_backing_up">Резервно копие на съобщенията</string>
+    <string name="backup_failed_title">Неуспешно резервно копие</string>
+    <string name="backup_icon_change_title">Възстановяване на иконата?</string>
+    <string name="backup_icon_change_message">Резервното ви копие е направено с друг цвят на иконата. Android може да смени иконата само докато приложението е затворено, затова Open Messages ще се затвори веднага след потвърждението.</string>
+    <string name="icon_change_confirm">Прилагане и затваряне</string>
+    <string name="icon_change_later">Не сега</string>
     <string name="backup_restoring">Възстановяване от резервно копие</string>
     <string name="backup_loading">Зареждане…</string>
     <string name="backup_never">Никога</string>
     <string name="settings_auto_delete_never">Никога</string>
     <string name="backup_location_title">Папка за резервни копия</string>
     <string name="backup_location_summary">Избиране на папка</string>
+    <string name="backup_auto_title">Автоматично резервно копие</string>
+    <string name="backup_auto_never">Никога</string>
+    <string name="backup_auto_daily">Всеки ден</string>
+    <string name="backup_auto_weekly">Всяка седмица</string>
+    <string name="backup_auto_custom">Друго…</string>
+    <string name="backup_auto_custom_title">Дни между копията</string>
+    <string name="backup_auto_custom_hint">Брой дни</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">На всеки %d ден</item>
+        <item quantity="other">На всеки %d дни</item>
+    </plurals>
+    <string name="backup_zip_title">Запазване като .zip файл</string>
+    <string name="backup_zip_summary">Всяко копие се пази в един архив, който по-лесно се пренася между телефони</string>
+    <string name="backup_manage_title">Управление на копията</string>
+    <string name="backup_manage_summary">Преименуване или премахване на резервните копия</string>
+    <string name="backup_manage_empty">Няма резервни копия на това място</string>
+    <string name="backup_manage_rename">Преименуване</string>
+    <string name="backup_manage_delete">Премахване</string>
+    <string name="backup_manage_delete_confirm">Премахване на „%s“? Действието не може да бъде отменено.</string>
+    <string name="backup_manage_error">Копието не можа да бъде променено</string>
+    <string name="backup_manage_type_folder">Папка</string>
+    <string name="backup_manage_type_zip">Zip архив</string>
+    <string name="backup_restore_from_title">Възстановяване от</string>
+    <string name="backup_restore_from_folder">Папка</string>
+    <string name="backup_restore_from_zip">Файл .zip</string>
     <string name="blocked_numbers_dialog_block">Забраняване</string>
     <string name="blocking_block_title">Забраняване</string>
     <string name="backup_restore_title">Възстановяване</string>
@@ -187,11 +292,25 @@
     <string name="backup_restore_dialog_empty">Липсват резервни копия</string>
     <string name="backup_disclaimer">В момента за резервни копия и възстановяване се поддържа само SMS. Поддръжка на MMS и резервни копия по график ще бъдат поддържани скоро!</string>
     <string name="backup_now">Създаване на резервно копие</string>
+    <string name="backup_now_summary">Създаване на ново резервно копие</string>
+    <string name="backup_categories_title">Какво да се запази?</string>
+    <string name="backup_restore_source_title">Кое копие?</string>
+    <string name="backup_restore_categories_title">Възстановяване от %s</string>
+    <string name="backup_category_messages">Съобщения (SMS, MMS и прикачени файлове)</string>
+    <string name="backup_category_settings">Настройки и шаблони</string>
+    <string name="backup_category_blocking">Правила за забраняване</string>
+    <string name="backup_category_conversations">Архивирани и закачени</string>
+    <string name="backup_category_scheduled">Планирани съобщения</string>
+    <string name="backup_exact_alarm_title">Разрешаване на точни аларми</string>
+    <string name="backup_exact_alarm_message">За да изпраща планираните съобщения точно навреме, Open Messages се нуждае от разрешение за точни аларми. Без него те може да тръгнат с малко закъснение.</string>
+    <string name="backup_exact_alarm_grant">Разрешаване</string>
+    <string name="backup_exact_alarm_skip">Възстановяване въпреки това</string>
     <string name="backup_progress_parsing">Разбор на резервното копие…</string>
     <string name="backup_progress_running">%d/%d съобщения</string>
     <string name="backup_progress_saving">Запазване на резервно копие…</string>
     <string name="backup_progress_syncing">Синхронизиране на съобщения…</string>
     <string name="backup_progress_finished">Готово!</string>
+    <string name="backup_progress_failed">Резервното копие не можа да бъде записано. Проверете свободното място и папката за копия.</string>
     <string name="backup_notification_channel_name">Резервно копие и възстановяване</string>
     <string name="clipboard_too_large_to_copy">Размерът на данните надхвърля ограничението при копиране</string>
     <string name="clipboard_unable_to_copy_to">Грешка при копиране</string>
@@ -204,6 +323,11 @@
     <string name="scheduled_compose_cd">Планиране на съобщение</string>
     <string name="scheduled_send_cd">Планиране на това съобщение</string>
     <string name="scheduled_options_title">Планирано съобщение</string>
+    <string-array name="scheduled_options">
+        <item>Изпращане сега</item>
+        <item>Копиране</item>
+        <item>Премахване</item>
+    </string-array>
     <string name="attachment_missing">Липсва</string>
     <string name="settings_category_appearance">Външен вид</string>
     <string name="settings_category_general">Общи</string>
@@ -216,7 +340,15 @@
     <string name="settings_automatic_colors_title">Автоматични цветове на контактите</string>
     <string name="settings_text_size_title">Размер на шрифта</string>
     <string name="settings_system_font_title">Използване на системния шрифт</string>
+    <string name="settings_show_avatar_title">Снимка на контакта</string>
+    <string name="settings_show_avatar_summary">Показване на снимката на подателя в разговорите. Изключете, за да са по-широки балончетата.</string>
+    <string name="settings_hide_country_code_title">Скриване на кода на държавата</string>
+    <string name="settings_hide_country_code_summary">Показване на номерата в местен формат, напр. „06 ...“ вместо „+33 6 ...“</string>
+    <string name="settings_edge_to_edge_title">От край до край</string>
+    <string name="settings_edge_to_edge_summary">Съдържанието се показва под лентата на състоянието и навигационната лента</string>
     <string name="settings_system_show_stt_title">Бутон за превръщане на реч в текст</string>
+    <string name="settings_drawer_swipe_title">Отваряне на менюто с плъзгане</string>
+    <string name="settings_drawer_swipe_summary">Отваряне на страничното меню с плъзгане от левия край на списъка с разговори</string>
     <string name="settings_auto_emoji_title">Автоматични емоции</string>
     <string name="settings_notifications_title">Известия</string>
     <string name="settings_notifications_o_summary">Докоснете за настройки</string>
@@ -230,6 +362,10 @@
     <string name="settings_notification_silent_title">Заглушаване, ако не е от контакт</string>
     <string name="gallery_error">Грешка при зареждане на медия</string>
     <string name="settings_notification_silent_summary">Заглушаване на известията за съобщенията с получатели, които не са ваши контакти</string>
+    <string name="settings_copy_code_title">Копиране на кодове от известията</string>
+    <string name="settings_copy_code_summary">Добавя бутон „Копиране на кода“ към известия с еднократни кодове и кодове за потвърждение</string>
+    <string name="notification_copy_code">Копиране на кода</string>
+    <string name="notification_code_copied">Кодът е копиран</string>
     <string name="settings_vibration_title">Вибриране</string>
     <string name="settings_ringtone_title">Звуци</string>
     <string name="settings_ringtone_none">Без</string>
@@ -247,6 +383,11 @@
     <string name="settings_swipe_actions_left">Плъзване на ляво</string>
     <string name="settings_delivery_title">Потвърждаване при изпращане</string>
     <string name="settings_delivery_summary">Потвърждаване на успешното изпращане на съобщението</string>
+    <string name="settings_send_sound_title">Звук при изпращане</string>
+    <string name="settings_send_sound_summary">Кратък сигнал при изпращане на съобщение</string>
+    <string name="settings_send_sound_volume_title">Сила на звука</string>
+    <string name="settings_header_quick_action_title">Бързо действие в заглавката</string>
+    <string name="settings_header_quick_action_summary">Добавяне на бутон за бърз достъп в заглавката на разговора</string>
     <string name="settings_unread_at_top_title">Непрочетените първи</string>
     <string name="settings_unread_at_top_summary">Показване на непрочетените разговори най-горе</string>
     <string name="settings_signature_title">Подпис</string>
@@ -279,6 +420,17 @@
     <string name="blocking_drop_title">Премахване на съобщения</string>
     <string name="blocking_drop_summary">Премахване, а не скриване, на входящите съобщения от забранените изпращачи</string>
     <string name="blocking_conversations">Забранени разговори</string>
+    <string name="blocking_category_integrated">Вградено забраняване</string>
+    <string name="blocking_integrated_description">Open Messages блокира спама на устройството ви. Допълнителните източници по-долу изтеглят списъка си от интернет, когато ги включите, и след това работят офлайн.</string>
+    <string name="blocking_category_external_apps">Външни приложения</string>
+    <string name="blocked_numbers_summary">Номера, които сте забранили сами</string>
+    <string name="blocking_source_phishing_title">Защита от фишинг</string>
+    <string name="blocking_source_phishing_summary">Блокира съобщения с връзки към известни фишинг сайтове. При включване списъкът се изтегля от интернет, след това филтрирането работи офлайн.</string>
+    <string name="blocking_source_flag_block_title">Забраняване на възможния спам</string>
+    <string name="blocking_source_flag_block_summary">Съобщенията, отбелязани като възможен спам, отиват направо в забранените, вместо само да се отбелязват във входящите</string>
+    <string name="blocking_source_status_updating">Обновяване…</string>
+    <string name="blocking_source_status_updated">Актуално · записи: %1$d</string>
+    <string name="blocking_source_status_failed">Неуспешно изтегляне, източникът остава изключен. Проверете връзката и опитайте отново.</string>
     <string name="blocking_manager_title">Управление на забраните</string>
     <string name="blocking_manager_built_in_summary">Вградена в Open Messages възможност за забраняване</string>
     <string name="blocking_manager_call_blocker_summary">Забранителният списък може да работи по график, за да предотвратява нежелани съобщения и входящи обаждания от определени или непознати номера</string>
@@ -338,11 +490,26 @@
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">Прилагане</string>
+    <string-array name="notification_actions">
+        <item>Няма</item>
+        <item>Архивиране</item>
+        <item>Премахване</item>
+        <item>Забраняване</item>
+        <item>Обаждане</item>
+        <item>Отбелязване като прочетено</item>
+        <item>Отговор</item>
+        <item>Прочитане на глас</item>
+    </string-array>
     <string name="button_yes">Да</string>
     <string name="button_continue">Продължаване</string>
     <string name="button_cancel">Отказ</string>
+    <string name="button_close">Затваряне</string>
     <string name="button_stop">Спиране</string>
     <string name="button_set">Задаване</string>
+    <string name="button_later">По-късно</string>
+    <string name="icon_restart_title">Нужно е рестартиране</string>
+    <string name="icon_restart_message">Приложението трябва да се рестартира, за да завърши смяната на иконата.</string>
+    <string name="icon_restart_now">Рестартиране</string>
     <string name="button_undo">Отменяне</string>
     <string name="button_clear">Изчистване</string>
     <string name="toast_copied">Копирано</string>
@@ -363,6 +530,74 @@
     <string name="notification_foreground_worker_title">Получаване на съобщения</string>
     <string name="notification_foreground_worker_text">На Андроид 12 и по-ранен е необходимо известие, позволяващо получаването на съобщения във фонов режим.</string>
     <string name="notification_message_failed_action">Повторно изпращане</string>
+    <string-array name="night_modes">
+        <item>Системен</item>
+        <item>Изключен</item>
+        <item>Винаги включен</item>
+        <item>Автоматичен</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>Показване на име и съобщение</item>
+        <item>Показване на име</item>
+        <item>Скриване на съдържанието</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>Малък</item>
+        <item>Нормален</item>
+        <item>Голям</item>
+        <item>По-голям</item>
+        <item>Огромен</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>Без изчакване</item>
+        <item>3 секунди</item>
+        <item>5 секунди</item>
+        <item>10 секунди</item>
+    </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Няма</item>
+        <item>Архивиране</item>
+        <item>Отбелязване като непрочетено</item>
+        <item>Забраняване</item>
+        <item>Премахване</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Няма</item>
+        <item>Класически</item>
+        <item>Ярък</item>
+        <item>Мек</item>
+        <item>Низходящ</item>
+        <item>Три тона</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>Автоматично</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>Без компресиране</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Забраняване</item>
+        <item>Разрешаване</item>
+        <item>Питане преди отваряне</item>
+    </string-array>
+    <string-array name="quick_responses">
+        <item>Добре</item>
+        <item>Момент</item>
+        <item>Идвам</item>
+        <item>Благодаря</item>
+        <item>Звучи добре</item>
+        <item>Какво става?</item>
+        <item>Съгласен съм</item>
+        <item>Не</item>
+        <item>Обичам те</item>
+        <item>Съжалявам</item>
+        <item>LOL</item>
+        <item>Няма проблем</item>
+    </string-array>
     <string name="speak_no_messages">Липсват съобщения</string>
     <string name="speak_unseen_messages">Изговаряне на непрочетените съобщения</string>
     <string name="messageLinkHandling_dialog_title">Предупреждение за изходяща препратка</string>
@@ -374,7 +609,15 @@
     <string name="messages_text_share_file_error">Грешка при споделяне</string>
     <string name="main_sync_emojis">Анализ на емоциите…</string>
     <string name="message_management_title">Управление на съобщения</string>
+    <string name="templates_title">Шаблони</string>
+    <string name="templates_empty">Все още няма запазени съобщения.\nДокоснете +, за да запазите съобщение, което изпращате често, след това го докоснете, за да изберете получател.</string>
+    <string name="template_hint">Въведете съобщение…</string>
+    <string name="template_title_hint">Заглавие (по избор)</string>
+    <string name="templates_add_cd">Нов шаблон</string>
+    <string name="template_new">Нов шаблон</string>
+    <string name="template_edit">Редактиране на шаблона</string>
     <string name="compose_reactions_title">Емоции</string>
     <string name="about_developer">Група прекрасни хора от цял свят!</string>
     <string name="notification_foreground_worker_channel_name">Известия на нишката, получаваща съобщения</string>
+    <string name="notification_me">Аз</string>
 </resources>
