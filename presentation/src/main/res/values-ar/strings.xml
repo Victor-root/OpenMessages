@@ -250,10 +250,10 @@
     <string name="backup_restore_stop_message">الرسائل التي تمت استعادتها ستبقى في جهازك</string>
     <string name="backup_select_location_rationale_title">حدد موقع النسخ الاحتياطي</string>
     <string name="backup_select_location_rationale_message">يرجى تحديد مجلد لحفظ النسخ الاحتياطية فيه</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_details">%1$s\n%2$d رسالة</string>
+    <string name="backup_selected_backup_error_title">خطأ</string>
     <string name="backup_selected_backup_error_message">تعذر قراءة ملف النسخ الاحتياطي</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_selected_backup_details_title">تفاصيل النسخة الاحتياطية</string>
     <string name="backup_restore_dialog_title">النسخ الاحتياطية</string>
     <string name="backup_restore_dialog_empty">لا توجد أي نسخة احتياطية</string>
     <string name="backup_disclaimer">النسخ الاحتياطي والاستعادة متاحة الآن فقط للرسائل النصّية. دعم رسائل الوسائط والرسائل المجدولة قادم قريباً!</string>

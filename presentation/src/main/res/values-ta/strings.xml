@@ -85,13 +85,13 @@
     <string name="inbox_search_empty_text">முடிவுகள் இல்லை</string>
     <string name="archived_empty_text">உம் காப்பகப்படுத்திய உரையாடல்கள் இங்கு தோன்றும்</string>
     <string name="main_fab_cd">புதிய உரையாடலைத் தொடங்கு</string>
-    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_title">மீண்டும் குறுஞ்செய்திகளை நேசியுங்கள்</string>
     <string name="main_default_sms_message">Open Messages-ஐ உம் இயல்புநிலை குறுஞ்செய்தி செயலியாக்கு</string>
     <string name="main_default_sms_change">மாற்று</string>
     <string name="main_permission_required">அனுமதி தேவை</string>
     <string name="main_permission_sms">SMS செய்திகளை அனுப்பவும் பார்க்கவும் Open Messages க்கு அனுமதி தேவை</string>
     <string name="main_permission_contacts">உங்கள் தொடர்புகளைக் காண Open Messages க்கு அனுமதி தேவை</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">அறிவிப்புகளைக் காட்ட Open Messages-க்கு அனுமதி தேவை</string>
     <string name="main_permission_allow">அனுமதி</string>
     <string name="scheduled_menu_send_now">இப்போது அனுப்பு</string>
     <string name="scheduled_menu_edit_message">செய்தியைத் திருத்து</string>
@@ -222,12 +222,12 @@
     <string name="compose_attach_schedule">திட்டமிடு</string>
     <string name="compose_attach_templates">வார்ப்புருக்கள்</string>
     <!-- Example: SIM 1 (Verizon) selected-->
-    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) தேர்ந்தெடுக்கப்பட்டது</string>
     <plurals name="compose_video_too_long">
         <item quantity="one">இந்த வீடியோ MMS மூலம் அனுப்ப மிக நீளமானது. அதிகபட்சம் %d வினாடி இருக்கலாம்.</item>
         <item quantity="other">இந்த வீடியோ MMS மூலம் அனுப்ப மிக நீளமானது. அதிகபட்சம் %d வினாடிகள் இருக்கலாம்.</item>
     </plurals>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
+    <string name="compose_sim_cd">%s தேர்ந்தெடுக்கப்பட்டது, SIM கார்டை மாற்று</string>
     <string name="compose_send_cd">தகவல் அனுப்பு</string>
     <string name="compose_record_audio_msg_cd">ஆடியோ செய்தியைப் பதிவுசெய்</string>
     <string name="compose_record_audio_msg_abort_cd">ஆடியோ செய்தியை ரத்துசெய்</string>
@@ -270,8 +270,8 @@
     <string name="backup_restoring">காப்புப்பிரதியிலிருந்து மீட்டமைக்கிறது</string>
     <string name="backup_loading">ஏற்றுகிறது…</string>
     <string name="backup_never">எப்போதும் வேண்டாம்</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">காப்புப்பிரதி இருப்பிடம்</string>
+    <string name="backup_location_summary">கோப்புறையை அமை</string>
     <string name="backup_auto_title">தானியங்கு காப்புப்பிரதி</string>
     <string name="backup_auto_never">ஒருபோதும் இல்லை</string>
     <string name="backup_auto_daily">தினமும்</string>
@@ -304,12 +304,12 @@
     <string name="backup_restore_confirm_title">காப்புப்பிரதியிலிருந்து மீட்டமை</string>
     <string name="backup_restore_stop_title">மீட்டமைப்பதை நிறுத்து</string>
     <string name="backup_restore_stop_message">ஏற்கனவே மீட்டமைக்கப்பட்ட செய்திகள் உங்கள் சாதனத்தில் இருக்கும்</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_title">காப்புப்பிரதி இருப்பிடத்தைத் தேர்ந்தெடு</string>
+    <string name="backup_select_location_rationale_message">உங்கள் காப்புப்பிரதிகளைச் சேமிக்க ஒரு கோப்புறையைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="backup_details">%1$s\n%2$d தகவல்கள்</string>
+    <string name="backup_selected_backup_error_title">பிழை</string>
+    <string name="backup_selected_backup_error_message">காப்புப்பிரதி கோப்பைப் படிக்க முடியவில்லை</string>
+    <string name="backup_selected_backup_details_title">காப்புப்பிரதி விவரங்கள்</string>
     <string name="backup_restore_dialog_title">காப்புப்பிரதிகள்</string>
     <string name="backup_restore_dialog_empty">காப்புப்பிரதிகள் ஏதுமில்லை</string>
     <string name="backup_disclaimer">தற்போது, எஸ்எம்எஸ் மட்டுமே காப்பு மற்றும் மீட்டமைப்பால் ஆதரிக்கப்படுகிறது. எம்எம்எஸ் ஆதரவு மற்றும் திட்டமிடப்பட்ட காப்புப்பிரதிகள் விரைவில் வரும்!</string>
@@ -421,8 +421,8 @@
     <string name="settings_unread_at_top_summary">படிக்காத உரையாடல்களை மேலே காட்டு</string>
     <string name="settings_signature_title">ஒப்பம்</string>
     <string name="settings_signature_summary">தகவலின் முடிவில் ஒப்பத்தை சேர்</string>
-    <string name="settings_unicode_title">Strip accents</string>
-    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
+    <string name="settings_unicode_title">உச்சரிப்புக் குறிகளை நீக்கு</string>
+    <string name="settings_unicode_summary">அனுப்பும் SMS தகவல்களில் எழுத்துகளின் உச்சரிப்புக் குறிகளை நீக்கு</string>
     <string name="settings_mobile_title">கைபேசி எண்கள் மட்டும்</string>
     <string name="settings_mobile_summary">தகவல் இயற்றும்போது, கைபேசி எண்கள் மட்டும் காட்டு</string>
     <string name="settings_auto_delete">தானாக பழைய தகவல்களை அழி</string>
@@ -436,13 +436,13 @@
         <item quantity="other">%d நாட்கள் கழித்து</item>
     </plurals>
     <string name="settings_long_as_mms_title">நீண்ட செய்திகளை எம்.எம்.எஸ் ஆக அனுப்பு</string>
-    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
-    <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_long_as_mms_summary">உங்கள் நீண்ட தகவல்கள் அனுப்பப்படவில்லை அல்லது தவறான வரிசையில் அனுப்பப்பட்டால், அவற்றை MMS தகவல்களாக அனுப்பலாம். கூடுதல் கட்டணம் விதிக்கப்படலாம்</string>
+    <string name="settings_mms_size_title">MMS பட இணைப்புகளைத் தானாகச் சுருக்கு</string>
     <string name="settings_mms_weblink_title">செய்திகளில் இணைப்புகளைக் கையாளுதல்</string>
     <string name="settings_disable_screenshots_title">ஸ்கிரீன்ஷாட்களை முடக்கு</string>
     <string name="settings_diable_screenshots_summary">இயக்க முறைமையும் பிற ஆப்களும் இந்த ஆப்பை ஸ்கிரீன்ஷாட் எடுப்பதைத் தடு.</string>
     <string name="settings_sync_title">தகவல்களை ஒத்திசை</string>
-    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+    <string name="settings_sync_summary">Android-இன் SMS தரவுத்தளத்துடன் உங்கள் தகவல்களை மீண்டும் ஒத்திசை</string>
     <string name="settings_about_title">Open Messages பற்றி</string>
     <string name="settings_version">பதிப்பு %s</string>
     <string name="settings_logging_enabled">பிழைத்திருத்த பதிவுசெய்தல் இயக்கப்பட்டது</string>
@@ -464,16 +464,16 @@
     <string name="blocking_source_status_updated">புதுப்பித்த நிலையில் · %1$d பதிவுகள்</string>
     <string name="blocking_source_status_failed">பதிவிறக்கம் தோல்வி, மூலம் முடக்கத்திலேயே இருக்கும். இணைப்பைச் சரிபார்த்து மீண்டும் முயல்.</string>
     <string name="blocking_manager_title">தடுத்தல் மேலாளர்</string>
-    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
-    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+    <string name="blocking_manager_built_in_summary">Open Messages-இல் உள்ளமைந்த தடுப்பு வசதி</string>
+    <string name="blocking_manager_call_blocker_summary">தடுப்புப் பட்டியல் மற்றும் அட்டவணை மூலம் ஸ்பேம் தகவல்கள், எண்கள் மற்றும் அறியாத அழைப்புகளைத் தடு</string>
+    <string name="blocking_manager_call_control_summary">உங்கள் அழைப்புகளையும் தகவல்களையும் ஒரே இடத்தில் தானாக வடிகட்டுங்கள்! சமூகம் அறிந்த ஸ்பேமர்களிடமிருந்து வரும் தேவையற்ற தகவல்களை Community IQ™ தடுக்கிறது</string>
+    <string name="blocking_manager_sia_summary">\"Should I Answer\" செயலியைப் பயன்படுத்தி கோரப்படாத எண்களிலிருந்து வரும் தகவல்களைத் தானாக வடிகட்டு</string>
     <string name="blocking_manager_copy_title">தடுக்கப்பட்ட எண்களை நகலெடு</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">%s-க்குச் சென்று ஏற்கனவே தடுத்த எண்களை நகலெடு</string>
     <string name="blocked_numbers_title">தடுக்கப்பட்ட எண்கள்</string>
     <string name="blocked_numbers_empty">உம் தடுக்கப்பட்ட எண்கள் இங்கு தோன்றும்</string>
     <string name="blocked_numbers_add_cd">ஒரு புது எண்ணை தடு</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_title">இதிலிருந்து வரும் தகவல்களைத் தடு</string>
     <string name="blocked_numbers_dialog_hint">தொலைபேசி எண்</string>
     <string name="blocked_numbers_dialog_block">தடு</string>
     <string name="message_content_filters_title">செய்தி உள்ளடக்க வடிகட்டிகள்</string>
@@ -490,12 +490,12 @@
     <string name="blocking_block_title">தடு</string>
     <string name="blocking_unblock_title">தடைநீக்கு</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="one">%s-க்குச் சென்று இந்த எண்ணைத் தடு</item>
+        <item quantity="other">%s-க்குச் சென்று இந்த எண்களைத் தடு</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="one">%s-க்குச் சென்று இந்த எண்ணை அனுமதி</item>
+        <item quantity="other">%s-க்குச் சென்று இந்த எண்களை அனுமதி</item>
     </plurals>
     <string name="deduplicate_messages_category">நகல் செய்திகளை நீக்குதல்</string>
     <string name="deduplicate_messages_title">நகல் செய்திகளை நீக்கு</string>
