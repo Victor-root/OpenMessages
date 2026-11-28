@@ -305,7 +305,7 @@
     <string name="backup_selected_backup_details_title">รายละเอียดข้อมูลสำรอง</string>
     <string name="backup_restore_dialog_title">ข้อมูลสำรอง</string>
     <string name="backup_restore_dialog_empty">ไม่พบข้อมูลสำรอง</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">โดยค่าเริ่มต้น ข้อมูลสำรองจะถูกบันทึกไว้ที่ Documents/OpenMessages ใช้ตำแหน่งข้อมูลสำรองด้านบนเพื่อเปลี่ยน คุณสามารถรวม SMS และ MMS (พร้อมไฟล์แนบ) การตั้งค่า เทมเพลต กฎการบล็อก ข้อความที่กำหนดเวลาไว้ และการสนทนาที่จัดเก็บหรือปักหมุดไว้ได้ทั้งหมด ใช้สำรองข้อมูลอัตโนมัติด้านบนเพื่อสำรองข้อมูลตามกำหนดเวลา</string>
     <string name="backup_now">สำรองข้อมูลเลย</string>
     <string name="backup_now_summary">สร้างข้อมูลสำรองใหม่</string>
     <string name="backup_categories_title">ต้องการสำรองข้อมูลอะไรบ้าง</string>
@@ -353,7 +353,7 @@
     <string name="settings_black_title">โหมดกลางคืนแบบมืดสนิท</string>
     <string name="settings_night_start_title">เวลาเริ่มต้น</string>
     <string name="settings_night_end_title">เวลาสิ้นสุด</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">สีอัตโนมัติสำหรับแต่ละการสนทนา</string>
     <string name="settings_text_size_title">ขนาดแบบอักษร</string>
     <string name="settings_system_font_title">ใช้แบบอักษรของระบบ</string>
     <string name="settings_show_avatar_title">แสดงรูปผู้ติดต่อ</string>
@@ -389,19 +389,21 @@
     <string name="settings_quick_reply_tap_dismiss_title">แตะเพื่อยกเลิก</string>
     <string name="settings_quick_reply_tap_dismiss_summary">แตะนอกป๊อปอัพเพื่อปิด</string>
     <string name="settings_delayed_title">การส่งแบบล่าช้า</string>
-    <string name="settings_swipe_actions">Swipe actions</string>
+    <string name="settings_swipe_actions">การทำงานเมื่อปัด</string>
     <string name="settings_swipe_actions_summary">ตั้งค่าการปัดสำหรับการสนทนา</string>
     <string name="settings_swipe_actions_right">ปัดขวา</string>
     <string name="settings_swipe_actions_left">ปัดซ้าย</string>
     <string name="settings_swipe_actions_change">เปลี่ยน</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>ไม่มี</item>
+        <item>จัดเก็บ</item>
+        <item>ลบ</item>
+        <item>ปิดกั้น</item>
+        <item>โทร</item>
+        <item>ทำเครื่องหมายว่าอ่านแล้ว</item>
+        <item>ทำเครื่องหมายว่ายังไม่อ่าน</item>
+        <item>อ่านออกเสียง</item>
+        <item>ทำเครื่องหมายว่าอ่านแล้ว/ยังไม่อ่าน</item>
     </string-array>
     <string name="settings_delivery_title">ยืนยันการส่ง</string>
     <string name="settings_delivery_summary">ยืนยันว่า ส่งข้อความเรียบร้อยแล้ว</string>
@@ -517,13 +519,14 @@
     <string name="theme_hex">HEX</string>
     <string name="theme_apply">ตกลง</string>
     <string-array name="notification_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>ไม่มี</item>
+        <item>จัดเก็บ</item>
+        <item>ลบ</item>
+        <item>ปิดกั้น</item>
+        <item>โทร</item>
+        <item>ทำเครื่องหมายว่าอ่านแล้ว</item>
+        <item>ตอบกลับ</item>
+        <item>อ่านออกเสียง</item>
     </string-array>
     <string name="button_yes">Yes</string>
     <string name="button_continue">ดำเนินการต่อ</string>
@@ -572,12 +575,13 @@
         <item>ปกติ</item>
         <item>ขนาดใหญ่</item>
         <item>ขนาดใหญ่มาก</item>
+        <item>ใหญ่พิเศษ</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>ไม่ล่าช้า</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>3 วินาที</item>
+        <item>5 วินาที</item>
+        <item>10 วินาที</item>
     </string-array>
     <string-array name="header_quick_action_labels">
         <item>ไม่มี</item>

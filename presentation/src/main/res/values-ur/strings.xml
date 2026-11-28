@@ -122,7 +122,7 @@
     <string name="drawer_help">مدد اور رائے</string>
     <string name="drawer_invite">دوستوں کو مدعو کریں</string>
     <string name="rate_title">کیا Open Messages پسند آ رہی ہے؟</string>
-    <string name="rate_summary">Share some love and rate us on Google Play!</string>
+    <string name="rate_summary">محبت بانٹیں اور GitHub پر ہمیں ستارہ دیں!</string>
     <string name="rate_okay">ٹھیک ہے!</string>
     <string name="rate_dismiss">رد کریں</string>
     <string name="dialog_delete_title">حذف کریں</string>
@@ -160,7 +160,7 @@
     <string name="compose_send_group_summary_off">پیغامات تمام وصول کنندگان کو الگ الگ بھیجے جائیں گے</string>
     <string name="compose_messages_empty">یہ آپ کی گفتگو کا آغاز ہے۔ کچھ اچھا کہیں!</string>
     <string name="compose_vcard_label">رابطہ کارڈ</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_for">شیڈول شدہ وقت:</string>
     <string name="compose_scheduled_future">منتخب وقت مستقبل کا ہونا چاہیے!</string>
     <string name="compose_scheduled_toast">شیڈول شدہ پیغامات میں شامل ہو گیا</string>
     <string name="compose_scheduled_view">اس گفتگو کے شیڈول شدہ پیغامات</string>
@@ -313,7 +313,7 @@
     <string name="backup_selected_backup_details_title">بیک اپ کی تفصیلات</string>
     <string name="backup_restore_dialog_title">بیک اپس</string>
     <string name="backup_restore_dialog_empty">کوئی بیک اپ نہیں ملا</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">طے شدہ طور پر، بیک اپ Documents/OpenMessages میں محفوظ ہوتے ہیں؛ اسے بدلنے کے لیے اوپر بیک اپ کا مقام استعمال کریں۔ آپ کے SMS اور MMS (منسلکات سمیت)، ترتیبات، سانچے، بلاکنگ کے اصول، شیڈول شدہ پیغامات اور آرکائیو شدہ یا پن شدہ گفتگوئیں سب شامل کی جا سکتی ہیں۔ باقاعدگی سے بیک اپ چلانے کے لیے اوپر خودکار بیک اپ استعمال کریں۔</string>
     <string name="backup_now">ابھی بیک اپ لیں</string>
     <string name="backup_now_summary">نیا بیک اپ بنائیں</string>
     <string name="backup_categories_title">کس چیز کا بیک اپ لیا جائے؟</string>
@@ -361,7 +361,7 @@
     <string name="settings_black_title">خالص سیاہ نائٹ موڈ</string>
     <string name="settings_night_start_title">آغاز کا وقت</string>
     <string name="settings_night_end_title">اختتام کا وقت</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">ہر گفتگو کے لیے خودکار رنگ</string>
     <string name="settings_text_size_title">فونٹ کا سائز</string>
     <string name="settings_system_font_title">سسٹم فونٹ استعمال کریں</string>
     <string name="settings_show_avatar_title">رابطے کی تصویر دکھائیں</string>

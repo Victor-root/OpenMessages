@@ -375,6 +375,8 @@
         <item>呼叫</item>
         <item>标记为已读</item>
         <item>标记为未读</item>
+        <item>朗读</item>
+        <item>标记为已读/未读</item>
     </string-array>
     <string name="settings_delivery_title">送达确认</string>
     <string name="settings_delivery_summary">确认短信已成功送达</string>
@@ -497,6 +499,7 @@
         <item>呼叫</item>
         <item>标记为已读</item>
         <item>回复</item>
+        <item>朗读</item>
     </string-array>
     <string name="button_yes">是</string>
     <string name="button_continue">继续</string>
@@ -545,6 +548,7 @@
         <item>正常</item>
         <item>大</item>
         <item>更大</item>
+        <item>超大</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>无延迟</item>

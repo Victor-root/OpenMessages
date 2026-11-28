@@ -423,6 +423,8 @@
         <item>התקשר</item>
         <item>סמן כהודעה שנקראה</item>
         <item>סמן כהודעה שלא נקראה</item>
+        <item>הקראה</item>
+        <item>סמן כהודעה שנקראה/שלא נקראה</item>
     </string-array>
     <string name="settings_delivery_title">אישור מסירה</string>
     <string name="settings_delivery_summary">אישור שההודעות נשלחו בהצלחה</string>
@@ -554,6 +556,7 @@
         <item>להתקשר</item>
         <item>סימון כהודעה שנקראה</item>
         <item>להשיב</item>
+        <item>הקראה</item>
     </string-array>
     <string name="button_yes">כן</string>
     <string name="button_continue">המשך</string>
@@ -611,6 +614,7 @@
         <item>רגיל</item>
         <item>גדול</item>
         <item>גדול יותר</item>
+        <item>ענק</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>ללא השהיה</item>

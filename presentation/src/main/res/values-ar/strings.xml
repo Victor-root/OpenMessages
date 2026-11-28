@@ -339,6 +339,8 @@
         <item>اتصل</item>
         <item>مقروء</item>
         <item>غير مقروء</item>
+        <item>قراءة بصوت عالٍ</item>
+        <item>مقروء/غير مقروء</item>
     </string-array>
     <string name="settings_delivery_title">تأكيدات الإستلام</string>
     <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>
@@ -452,6 +454,7 @@
         <item>اتصال</item>
         <item>مقروء</item>
         <item>اجابه</item>
+        <item>قراءة بصوت عالٍ</item>
     </string-array>
     <string name="button_yes">نعم</string>
     <string name="button_continue">الاستمرار</string>
@@ -493,6 +496,7 @@
         <item>عادي</item>
         <item>كبير</item>
         <item>أكبر</item>
+        <item>كبير جدًا</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>دون تأخير</item>

@@ -120,7 +120,7 @@
     <string name="drawer_help">Bantuan &amp; umpanbalik</string>
     <string name="drawer_invite">Undang teman</string>
     <string name="rate_title">Menikmati Open Messages?</string>
-    <string name="rate_summary">Share some love and rate us on Google Play!</string>
+    <string name="rate_summary">Tunjukkan dukungan dan beri kami Bintang di GitHub!</string>
     <string name="rate_okay">OKE!</string>
     <string name="rate_dismiss">ABAIKAN</string>
     <string name="dialog_delete_title">Hapus</string>
@@ -402,6 +402,8 @@
         <item>Panggil</item>
         <item>Tandai dibaca</item>
         <item>Tandai belum dibaca</item>
+        <item>Bacakan</item>
+        <item>Tandai dibaca/belum dibaca</item>
     </string-array>
     <string name="settings_delivery_title">Konfirmasi pengiriman</string>
     <string name="settings_delivery_summary">Mengonfirmasi bahwa pesan telah berhasil dikirim</string>
@@ -524,6 +526,7 @@
         <item>Panggil</item>
         <item>Tandai dibaca</item>
         <item>Balas</item>
+        <item>Bacakan</item>
     </string-array>
     <string name="button_yes">Ya</string>
     <string name="button_continue">Lanjutkan</string>
@@ -572,6 +575,7 @@
         <item>Normal</item>
         <item>Besar</item>
         <item>Lebih besar</item>
+        <item>Sangat besar</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Tanpa tundaan</item>

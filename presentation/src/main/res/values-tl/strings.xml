@@ -144,7 +144,7 @@
     <string name="dialog_clear_compose">I-clear ang mensahe? Hindi na ito maibabalik.</string>
     <string-array name="message_options">
         <item>Kopyahin ang text</item>
-        <item>Forward</item>
+        <item>Ipasa</item>
         <item>Tanggalin</item>
     </string-array>
     <string name="compose_number_picker_title">Magpili ng phone number</string>
@@ -312,7 +312,7 @@
     <string name="backup_selected_backup_details_title">Mga detalye ng backup</string>
     <string name="backup_restore_dialog_title">Mga backup</string>
     <string name="backup_restore_dialog_empty">Walang nakitang backup</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">Bilang default, sine-save ang mga backup sa Documents/OpenMessages; gamitin ang Lokasyon ng backup sa itaas para baguhin ito. Maaaring isama ang iyong mga SMS at MMS (kasama ang mga attachment), mga setting, mga template, mga patakaran sa pag-block, mga naka-iskedyul na mensahe at mga itinabi o naka-pin na usapan. Gamitin ang Awtomatikong backup sa itaas para regular itong patakbuhin.</string>
     <string name="backup_now">Mag-backup ngayon</string>
     <string name="backup_now_summary">Gumawa ng bagong backup</string>
     <string name="backup_categories_title">Ano ang iba-backup?</string>
@@ -360,7 +360,7 @@
     <string name="settings_black_title">Purong itim na night mode</string>
     <string name="settings_night_start_title">Oras ng simula</string>
     <string name="settings_night_end_title">Oras ng pagtatapos</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">Awtomatikong kulay bawat usapan</string>
     <string name="settings_text_size_title">Laki ng font</string>
     <string name="settings_system_font_title">Gamitin ang font ng system</string>
     <string name="settings_show_avatar_title">Ipakita ang larawan ng contact</string>
@@ -396,15 +396,7 @@
     <string name="settings_quick_reply_tap_dismiss_title">I-tap para isara</string>
     <string name="settings_quick_reply_tap_dismiss_summary">I-tap sa labas ng popup para isara ito</string>
     <string name="settings_delayed_title">Naantalang pagpapadala</string>
-    <string-array name="settings_swipe_actions">
-        <item>Wala</item>
-        <item>Itabi</item>
-        <item>Burahin</item>
-        <item>I-block</item>
-        <item>Tawagan</item>
-        <item>Markahang nabasa</item>
-        <item>Markahang hindi pa nabasa</item>
-    </string-array>
+    <string name="settings_swipe_actions">Mga aksyon sa pag-swipe</string>
     <string name="settings_swipe_actions_summary">I-configure ang mga swipe action para sa mga usapan</string>
     <string name="settings_swipe_actions_right">Swipe pakanan</string>
     <string name="settings_swipe_actions_left">Swipe pakaliwa</string>
@@ -417,6 +409,8 @@
         <item>Tawagan</item>
         <item>Markahang nabasa</item>
         <item>Markahang hindi pa nabasa</item>
+        <item>Basahin nang malakas</item>
+        <item>Markahang nabasa/hindi pa nabasa</item>
     </string-array>
     <string name="settings_delivery_title">Mga kumpirmasyon ng paghahatid</string>
     <string name="settings_delivery_summary">Kumpirmahin na matagumpay na naipadala ang mga mensahe</string>
@@ -542,6 +536,7 @@
         <item>Tawagan</item>
         <item>Markahang nabasa</item>
         <item>Sumagot</item>
+        <item>Basahin nang malakas</item>
     </string-array>
     <string name="button_yes">Yes</string>
     <string name="button_continue">Magpatuloy</string>
@@ -593,6 +588,7 @@
         <item>Normal</item>
         <item>Malaki</item>
         <item>Mas malaki</item>
+        <item>Sobrang laki</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Walang antala</item>
@@ -609,7 +605,7 @@
     </string-array>
     <string-array name="send_sound_labels">
         <item>Wala</item>
-        <item>Classic</item>
+        <item>Klasiko</item>
         <item>Matingkad</item>
         <item>Malambot</item>
         <item>Pababa</item>

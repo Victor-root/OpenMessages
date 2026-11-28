@@ -319,6 +319,8 @@
         <item>通話</item>
         <item>標示已讀</item>
         <item>標示未讀</item>
+        <item>朗讀</item>
+        <item>標示已讀/未讀</item>
     </string-array>
     <string name="settings_delivery_title">送達確認</string>
     <string name="settings_delivery_summary">確認訊息已成功送達</string>
@@ -419,6 +421,7 @@
         <item>通話</item>
         <item>標示已讀</item>
         <item>回覆</item>
+        <item>朗讀</item>
     </string-array>
     <string name="button_yes">確定</string>
     <string name="button_continue">繼續</string>
@@ -456,6 +459,7 @@
         <item>一般</item>
         <item>大</item>
         <item>更大</item>
+        <item>超大</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>無延遲</item>

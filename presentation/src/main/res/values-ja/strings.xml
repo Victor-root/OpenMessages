@@ -399,6 +399,8 @@
         <item>通話</item>
         <item>既読にする</item>
         <item>未読にする</item>
+        <item>読み上げ</item>
+        <item>既読/未読にする</item>
     </string-array>
     <string name="settings_delivery_title">配信確認</string>
     <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>
@@ -521,6 +523,7 @@
         <item>通話</item>
         <item>既読にする</item>
         <item>返信</item>
+        <item>読み上げ</item>
     </string-array>
     <string name="button_yes">はい</string>
     <string name="button_continue">続行</string>
@@ -568,6 +571,7 @@
         <item>小</item>
         <item>標準</item>
         <item>大</item>
+        <item>特大</item>
         <item>最大</item>
     </string-array>
     <string-array name="delayed_sending_labels">

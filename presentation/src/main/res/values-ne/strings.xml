@@ -38,11 +38,11 @@
     <string name="theme_icon_change_message">एप आइकनको रङ बदलिन लागेको छ। एप बन्द हुँदा मात्र Android ले आइकन बदल्न सक्छ, त्यसैले पुष्टि गर्नेबित्तिकै Open Messages बन्द हुनेछ।</string>
     <string name="title_conversations">इनबक्समा खोज्नुहोस्…</string>
     <string name="title_search">खोज्नुहोस्</string>
-    <string name="title_compose">Compose</string>
+    <string name="title_compose">नाम वा नम्बर टाइप गर्नुहोस्</string>
     <string name="setup_skip">छोड्नुहोस्</string>
     <string name="setup_next">जारी राख्नुहोस्</string>
     <string name="menu_add_person">व्यक्ति थप्नुहोस्</string>
-    <string name="menu_call">सम्पर्क</string>
+    <string name="menu_call">कल गर्नुहोस्</string>
     <string name="menu_mms_part_save">ग्यालेरीमा सुरक्षित गर्नुहोस्</string>
     <string name="menu_mms_part_share">सेयर गर्नुहोस्</string>
     <string name="menu_mms_part_forward">फर्वार्ड गर्नुहोस्</string>
@@ -122,7 +122,7 @@
     <string name="drawer_help">सहायता र प्रतिक्रिया</string>
     <string name="drawer_invite">साथीहरूलाई निम्त्याउनुहोस्</string>
     <string name="rate_title">Open Messages मन पर्दैछ?</string>
-    <string name="rate_summary">Share some love and rate us on Google Play!</string>
+    <string name="rate_summary">माया बाँड्नुहोस् र GitHub मा हामीलाई स्टार दिनुहोस्!</string>
     <string name="rate_okay">हुन्छ!</string>
     <string name="rate_dismiss">हटाउनुहोस्</string>
     <string name="dialog_delete_title">मेटाउनुहोस्</string>
@@ -160,7 +160,7 @@
     <string name="compose_send_group_summary_off">सन्देशहरू सबै प्रापकलाई छुट्टाछुट्टै पठाइनेछन्</string>
     <string name="compose_messages_empty">यो तपाईंको कुराकानीको सुरुवात हो। केही राम्रो भन्नुहोस्!</string>
     <string name="compose_vcard_label">सम्पर्क कार्ड</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_scheduled_for">तालिकाबद्ध समय:</string>
     <string name="compose_scheduled_future">छानिएको समय भविष्यको हुनुपर्छ!</string>
     <string name="compose_scheduled_toast">तालिकाबद्ध सन्देशहरूमा थपियो</string>
     <string name="compose_scheduled_view">यस कुराकानीका तालिकाबद्ध सन्देशहरू</string>
@@ -313,7 +313,7 @@
     <string name="backup_selected_backup_details_title">ब्याकअपको विवरण</string>
     <string name="backup_restore_dialog_title">ब्याकअपहरू</string>
     <string name="backup_restore_dialog_empty">कुनै ब्याकअप भेटिएन</string>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
+    <string name="backup_disclaimer">पूर्वनिर्धारित रूपमा, ब्याकअपहरू Documents/OpenMessages मा सेभ हुन्छन्; यसलाई बदल्न माथिको ब्याकअपको स्थान प्रयोग गर्नुहोस्। तपाईंका SMS र MMS (संलग्नकहरूसहित), सेटिङहरू, टेम्प्लेटहरू, ब्लकिङ नियमहरू, तालिकाबद्ध सन्देशहरू र आर्काइभ वा पिन गरिएका वार्तालापहरू सबै समावेश गर्न सकिन्छ। नियमित रूपमा ब्याकअप चलाउन माथिको स्वचालित ब्याकअप प्रयोग गर्नुहोस्।</string>
     <string name="backup_now">अहिले ब्याकअप गर्नुहोस्</string>
     <string name="backup_now_summary">नयाँ ब्याकअप बनाउनुहोस्</string>
     <string name="backup_categories_title">केको ब्याकअप लिने?</string>
@@ -361,7 +361,7 @@
     <string name="settings_black_title">पूर्ण कालो रात्रि मोड</string>
     <string name="settings_night_start_title">सुरु हुने समय</string>
     <string name="settings_night_end_title">अन्त्य हुने समय</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">प्रत्येक वार्तालापका लागि स्वचालित रङ</string>
     <string name="settings_text_size_title">फन्टको आकार</string>
     <string name="settings_system_font_title">प्रणालीको फन्ट प्रयोग गर्नुहोस्</string>
     <string name="settings_show_avatar_title">सम्पर्कको फोटो देखाउनुहोस्</string>

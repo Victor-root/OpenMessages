@@ -304,6 +304,8 @@
         <item>تماس</item>
         <item>نشان به‌عنوان خوانده شده</item>
         <item>نشان به‌عنوان خوانده نشده</item>
+        <item>خواندن با صدا</item>
+        <item>نشان به‌عنوان خوانده شده/خوانده نشده</item>
     </string-array>
     <string name="settings_delivery_title">هایشگ‌های رساندن</string>
     <string name="settings_delivery_summary">بِهایست که فرستادن پیام‌ها کامیاب بود</string>
@@ -405,6 +407,7 @@
         <item>تماس</item>
         <item>نشان به‌عنوان خوانده شده</item>
         <item>پاسخ</item>
+        <item>خواندن با صدا</item>
     </string-array>
     <string name="button_yes">آری</string>
     <string name="button_continue">ادامه</string>
@@ -442,6 +445,7 @@
         <item>عادی</item>
         <item>بزرگ</item>
         <item>بزرگتر</item>
+        <item>خیلی بزرگ</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>بدون درنگ</item>

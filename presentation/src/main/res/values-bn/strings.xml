@@ -409,6 +409,8 @@
         <item>কল</item>
         <item>পড়া হয়েছে চিহ্নিত করো</item>
         <item>পড়া হয়নি চিহ্নিত করো</item>
+        <item>পড়ে শোনাও</item>
+        <item>পড়া হয়েছে/পড়া হয়নি চিহ্নিত করো</item>
     </string-array>
     <string name="settings_delivery_title">ডেলিভারি নিশ্চিতকরন</string>
     <string name="settings_delivery_summary">নিশ্চিত করো যে বার্তা সফলভাবে পাঠানো হয়েছে</string>
@@ -534,6 +536,7 @@
         <item>কল</item>
         <item>পড়া হয়েছে</item>
         <item>প্রতুত্তর</item>
+        <item>পড়ে শোনাও</item>
     </string-array>
     <string name="button_yes">হ্যাঁ</string>
     <string name="button_continue">এগিয়ে যানও</string>
@@ -584,7 +587,8 @@
         <item>ছোট</item>
         <item>স্বাভাবিক</item>
         <item>বড়</item>
-        <item>বড়</item>
+        <item>আরও বড়</item>
+        <item>অনেক বড়</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>কোনো বিলম্ব নেই</item>
