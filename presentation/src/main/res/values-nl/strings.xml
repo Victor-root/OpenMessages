@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Eenvoudig, open source berichten</string>
     <string name="shortcut_compose_long_label">Nieuwe conversatie</string>
     <string name="shortcut_compose_short_label">Opstellen</string>
     <string name="shortcut_compose_disabled_message">Snelkoppeling uitgeschakeld</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Instellingen</string>
     <string name="title_notification_prefs">Notificaties</string>
     <string name="title_theme">Thema</string>
+    <string name="theme_default">Standaard</string>
+    <string name="theme_wallpaper">Achtergrond</string>
+    <string name="theme_other_colors">Kleuren</string>
+    <string name="theme_tab_presets">Palet</string>
+    <string name="theme_tab_custom">Aangepast</string>
+    <string name="theme_apply_to_icon">Kleur toepassen op app-pictogram (de app wordt gesloten)</string>
+    <string name="theme_tab_icon">App-pictogram</string>
+    <string name="theme_icon_follow_theme">Kleur van het app-thema volgen</string>
+    <string name="theme_icon_summary">Kies de kleur van uw app-pictogram, los van het thema. Bij het toepassen van een wijziging wordt de app gesloten.</string>
+    <string name="theme_icon_change_title">App-pictogram wijzigen?</string>
+    <string name="theme_icon_change_message">De kleur van het app-pictogram wordt gewijzigd. Android kan het pictogram alleen vervangen als de app gesloten is, dus Open Messages wordt afgesloten zodra u bevestigt.</string>
     <string name="title_conversations">Doorzoek inbox…</string>
+    <string name="title_search">Zoeken</string>
     <string name="title_compose">Type een naam of nummer</string>
     <string name="setup_skip">Overslaan</string>
     <string name="setup_next">Verder</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Opslaan in galerij</string>
     <string name="compose_menu_share">Delen</string>
     <string name="main_drawer_open_cd">Open navigatie lade</string>
+    <string name="main_search_close_cd">Zoeken sluiten</string>
+    <string name="main_search_clear_cd">Zoekopdracht wissen</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d geselecteerd</string>
     <string name="main_menu_clear">Wissen</string>
     <string name="main_menu_archive">Archiveren</string>
@@ -45,6 +61,7 @@
     <string name="main_menu_unread">Markeren als ongelezen</string>
     <string name="main_menu_block">Blokkeren</string>
     <string name="main_syncing">Berichten synchroniseren…</string>
+    <string name="main_sync_emojis">Emoji-reacties verwerken…</string>
     <string name="main_sender_you">Jij: %s</string>
     <string name="main_message_results_title">Resultaten in berichten</string>
     <plurals name="main_message_results">
@@ -63,10 +80,27 @@
     <string name="main_permission_notifications">Open Messages heeft toestemming nodig om mededelingen te tonen</string>
     <string name="main_permission_allow">Toestaan</string>
     <string name="drawer_inbox">Inbox</string>
+    <string name="contacts_group_recent">Recent</string>
+    <string name="contacts_group_starred">Favorieten</string>
+    <string name="contacts_group_groups">Groepen</string>
+    <string name="conversations_group_today">Vandaag</string>
+    <string name="conversations_group_yesterday">Gisteren</string>
     <string name="drawer_archived">Archief</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d ongelezen</item>
+        <item quantity="other">%d ongelezen</item>
+    </plurals>
     <string name="drawer_scheduled">Gepland</string>
     <string name="drawer_blocking">Blokkeren</string>
     <string name="drawer_more">Meer</string>
+    <string name="message_management_title">Berichtbeheer</string>
+    <string name="templates_title">Sjablonen</string>
+    <string name="templates_empty">Nog geen opgeslagen berichten.\nTik op + om een bericht op te slaan dat u vaak verstuurt, en tik er daarna op om te kiezen naar wie het moet.</string>
+    <string name="template_hint">Typ uw bericht…</string>
+    <string name="template_title_hint">Titel (optioneel)</string>
+    <string name="templates_add_cd">Nieuw sjabloon</string>
+    <string name="template_new">Nieuw sjabloon</string>
+    <string name="template_edit">Sjabloon bewerken</string>
     <string name="drawer_settings">Instellingen</string>
     <string name="drawer_help">Help &amp; feedback</string>
     <string name="drawer_invite">Vrienden uitnodigen</string>
@@ -92,12 +126,16 @@
     <string name="compose_subtitle_results">%1$d van de %2$d resultaten</string>
     <string name="compose_send_group_title">Versturen als groepsbericht</string>
     <string name="compose_send_group_summary">Ontvangers en antwoorden zijn zichtbaar voor iedereen</string>
+    <string name="compose_send_group_summary_on">Ontvangers en antwoorden zijn voor iedereen zichtbaar</string>
+    <string name="compose_send_group_summary_off">Berichten worden afzonderlijk naar alle ontvangers verstuurd</string>
     <string name="compose_messages_empty">Dit is het begin van je conversatie. Zeg iets leuks!</string>
     <string name="compose_vcard_label">Contactpersoonkaart</string>
     <string name="compose_scheduled_for">Geplande tijd:</string>
     <string name="compose_scheduled_future">De geselecteerde tijd moet in de toekomst liggen!</string>
     <string name="compose_scheduled_toast">Toegevoegd aan geplande berichten</string>
     <string name="compose_hint">Type een bericht…</string>
+    <string name="compose_expand_cd">Uitvouwen naar volledig scherm</string>
+    <string name="compose_collapse_cd">Samenvouwen</string>
     <string name="compose_menu_copy">Tekst kopiëren</string>
     <string name="compose_menu_forward">Doorsturen</string>
     <string name="compose_menu_delete">Verwijderen</string>
@@ -105,6 +143,7 @@
     <string name="compose_menu_next">Volgende</string>
     <string name="compose_menu_clear">Wissen</string>
     <string name="compose_details_title">Details van bericht</string>
+    <string name="compose_reactions_title">Reacties</string>
     <string name="compose_details_type">Type: %s</string>
     <string name="compose_details_from">Van: %s</string>
     <string name="compose_details_to">Naar: %s</string>
@@ -119,10 +158,32 @@
     <string name="compose_gallery_cd">Een foto toevoegen</string>
     <string name="compose_camera_cd">Een foto nemen</string>
     <string name="compose_schedule_cd">Bericht plannen</string>
+    <string name="compose_schedule_title">Bericht plannen</string>
+    <string name="compose_schedule_in_hour">Over 1 uur</string>
+    <string name="compose_schedule_tonight">Vanavond</string>
+    <string name="compose_schedule_tomorrow_morning">Morgenochtend</string>
+    <string name="compose_schedule_tomorrow_afternoon">Morgenmiddag</string>
+    <string name="compose_schedule_custom">Datum en tijd kiezen</string>
+    <string name="compose_schedule_confirm">Plannen</string>
+    <string name="compose_schedule_previous_month">Vorige maand</string>
+    <string name="compose_schedule_next_month">Volgende maand</string>
+    <string name="compose_schedule_increase">Verhogen</string>
+    <string name="compose_schedule_decrease">Verlagen</string>
     <string name="compose_contact_cd">Een contactpersoon toevoegen</string>
     <string name="compose_contact_error">Fout bij het lezen van contact</string>
+    <string name="compose_attach_gallery">Galerij</string>
+    <string name="compose_attach_camera">Camera</string>
+    <string name="compose_attach_file">Bestand</string>
+    <string name="compose_attach_audio">Audio</string>
+    <string name="compose_attach_contact">Contact</string>
+    <string name="compose_attach_schedule">Plannen</string>
+    <string name="compose_attach_templates">Sjablonen</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Simkaart %1$d (%2$s) geselecteerd</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Deze video is te lang om via MMS te versturen. Hij mag maximaal %d seconde duren.</item>
+        <item quantity="other">Deze video is te lang om via MMS te versturen. Hij mag maximaal %d seconden duren.</item>
+    </plurals>
     <string name="compose_sim_cd">%s geselecteerd, wijzig SIM-kaart</string>
     <string name="compose_send_cd">Verstuur bericht</string>
     <string name="message_status_sending">Verzenden…</string>
@@ -141,11 +202,41 @@
     <string name="gallery_toast_saved">Opgeslagen in galerij</string>
     <string name="backup_title">Back-up en herstel</string>
     <string name="backup_backing_up">Back-up van berichten aan het maken</string>
+    <string name="backup_failed_title">Back-up mislukt</string>
+    <string name="backup_icon_change_title">App-pictogram herstellen?</string>
+    <string name="backup_icon_change_message">Uw back-up is gemaakt met een andere kleur app-pictogram. Android kan het pictogram alleen vervangen als de app gesloten is, dus Open Messages wordt afgesloten zodra u bevestigt.</string>
+    <string name="icon_change_confirm">Toepassen en sluiten</string>
+    <string name="icon_change_later">Niet nu</string>
     <string name="backup_restoring">Bezig met het terugzetten van berichten</string>
     <string name="backup_loading">Bezig met laden…</string>
     <string name="backup_never">Nooit</string>
     <string name="backup_location_title">Back-up locatie</string>
     <string name="backup_location_summary">Map instellen</string>
+    <string name="backup_auto_title">Automatische back-up</string>
+    <string name="backup_auto_never">Nooit</string>
+    <string name="backup_auto_daily">Elke dag</string>
+    <string name="backup_auto_weekly">Elke week</string>
+    <string name="backup_auto_custom">Aangepast…</string>
+    <string name="backup_auto_custom_title">Dagen tussen back-ups</string>
+    <string name="backup_auto_custom_hint">Aantal dagen</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Elke %d dag</item>
+        <item quantity="other">Elke %d dagen</item>
+    </plurals>
+    <string name="backup_zip_title">Opslaan als .zip-bestand</string>
+    <string name="backup_zip_summary">Elke back-up als één archief opslaan, makkelijker over te zetten naar een andere telefoon</string>
+    <string name="backup_manage_title">Back-ups beheren</string>
+    <string name="backup_manage_summary">Uw back-ups hernoemen of verwijderen</string>
+    <string name="backup_manage_empty">Geen back-ups gevonden op deze locatie</string>
+    <string name="backup_manage_rename">Hernoemen</string>
+    <string name="backup_manage_delete">Verwijderen</string>
+    <string name="backup_manage_delete_confirm">\"%s\" verwijderen? Dit kan niet ongedaan worden gemaakt.</string>
+    <string name="backup_manage_error">Kan deze back-up niet bijwerken</string>
+    <string name="backup_manage_type_folder">Map</string>
+    <string name="backup_manage_type_zip">Zip-archief</string>
+    <string name="backup_restore_from_title">Herstellen vanuit</string>
+    <string name="backup_restore_from_folder">Een map</string>
+    <string name="backup_restore_from_zip">Een .zip-bestand</string>
     <string name="backup_restore_title">Herstellen</string>
     <string name="backup_restore_summary">Selecteer een back-up</string>
     <string name="backup_restore_error_backup">Bezig met het maken van back-up…</string>
@@ -163,11 +254,25 @@
     <string name="backup_restore_dialog_empty">Geen back-ups gevonden</string>
     <string name="backup_disclaimer">Op dit moment wordt alleen SMS ondersteund door back-up en terugzetten. MMS ondersteuning en geplande back-ups zullen spoedig beschikbaar komen!</string>
     <string name="backup_now">Nu back-up maken</string>
+    <string name="backup_now_summary">Een nieuwe back-up maken</string>
+    <string name="backup_categories_title">Wat moet er in de back-up?</string>
+    <string name="backup_restore_source_title">Welke back-up?</string>
+    <string name="backup_restore_categories_title">Herstellen vanuit %s</string>
+    <string name="backup_category_messages">Berichten (SMS, MMS en bijlagen)</string>
+    <string name="backup_category_settings">Instellingen en sjablonen</string>
+    <string name="backup_category_blocking">Blokkeerregels</string>
+    <string name="backup_category_conversations">Gearchiveerd en vastgezet</string>
+    <string name="backup_category_scheduled">Geplande berichten</string>
+    <string name="backup_exact_alarm_title">Exacte alarmen toestaan</string>
+    <string name="backup_exact_alarm_message">Om uw geplande berichten precies op tijd te versturen, heeft Open Messages toestemming nodig om exacte alarmen in te stellen. Zonder deze toestemming kunnen ze iets later verstuurd worden.</string>
+    <string name="backup_exact_alarm_grant">Toestaan</string>
+    <string name="backup_exact_alarm_skip">Toch herstellen</string>
     <string name="backup_progress_parsing">Back-up samenstellen…</string>
     <string name="backup_progress_running">%d/%d berichten</string>
     <string name="backup_progress_saving">Back-up opslaan…</string>
     <string name="backup_progress_syncing">Synchroniseren van berichten…</string>
     <string name="backup_progress_finished">Klaar!</string>
+    <string name="backup_progress_failed">De back-up kon niet worden geschreven. Controleer de vrije ruimte en de back-upmap.</string>
     <string name="backup_notification_channel_name">Back-up en herstel</string>
     <string name="scheduled_title">Gepland</string>
     <string name="scheduled_empty_description">Verzend automatisch een bericht, op de door jou ingestelde tijd</string>
@@ -194,6 +299,12 @@
     <string name="settings_automatic_colors_title">Automatische contactkleuren</string>
     <string name="settings_text_size_title">Tekst grootte</string>
     <string name="settings_system_font_title">Gebruik lettertype van systeem</string>
+    <string name="settings_show_avatar_title">Contactfoto tonen</string>
+    <string name="settings_show_avatar_summary">Toont de foto van de afzender in gesprekken. Zet dit uit om de berichtballonnen meer breedte te geven.</string>
+    <string name="settings_hide_country_code_title">Landcode verbergen</string>
+    <string name="settings_hide_country_code_summary">Telefoonnummers in titels in lokaal formaat tonen, bijv. \"06 ...\" in plaats van \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Rand tot rand</string>
+    <string name="settings_edge_to_edge_summary">Inhoud achter de status- en navigatiebalk tonen</string>
     <string name="settings_auto_emoji_title">Automatische emoji</string>
     <string name="settings_notifications_title">Notificaties</string>
     <string name="settings_notifications_o_summary">Tikken om aan te passen</string>
@@ -227,6 +338,11 @@
     </string-array>
     <string name="settings_delivery_title">Afleverrapporten</string>
     <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>
+    <string name="settings_send_sound_title">Geluid bij versturen</string>
+    <string name="settings_send_sound_summary">Een kort geluid afspelen wanneer u een bericht verstuurt</string>
+    <string name="settings_send_sound_volume_title">Volume</string>
+    <string name="settings_header_quick_action_title">Snelle actie in koptekst</string>
+    <string name="settings_header_quick_action_summary">Een snelkoppelingsknop toevoegen aan de koptekst van het gesprek</string>
     <string name="settings_signature_title">Handtekening</string>
     <string name="settings_signature_summary">Voeg een handtekening toe aan het eind van je berichten</string>
     <string name="settings_unicode_title">Verwijder accenten</string>
@@ -257,6 +373,17 @@
     <string name="blocking_drop_title">Berichten weggooien</string>
     <string name="blocking_drop_summary">Verwijder inkomende berichten van geblokkeerde afzenders in plaats van ze te verbergen</string>
     <string name="blocking_conversations">Geblokkeerde gesprekken</string>
+    <string name="blocking_category_integrated">Ingebouwd blokkeren</string>
+    <string name="blocking_integrated_description">Open Messages blokkeert spam op uw apparaat. De optionele bronnen hieronder downloaden hun lijst via internet wanneer u ze inschakelt en werken daarna offline.</string>
+    <string name="blocking_category_external_apps">Externe apps</string>
+    <string name="blocked_numbers_summary">Nummers die u zelf blokkeert</string>
+    <string name="blocking_source_phishing_title">Antiphishing</string>
+    <string name="blocking_source_phishing_summary">Blokkeert berichten met links naar bekende phishingsites. Bij inschakelen wordt de lijst via internet gedownload; daarna werkt het filteren offline.</string>
+    <string name="blocking_source_flag_block_title">Mogelijke spam blokkeren</string>
+    <string name="blocking_source_flag_block_summary">Berichten die als mogelijke spam zijn gemarkeerd direct naar de blokkeerlijst sturen in plaats van ze alleen in de inbox te labelen</string>
+    <string name="blocking_source_status_updating">Bijwerken…</string>
+    <string name="blocking_source_status_updated">Actueel · %1$d items</string>
+    <string name="blocking_source_status_failed">Downloaden mislukt, de bron blijft uit. Controleer uw verbinding en probeer het opnieuw.</string>
     <string name="blocking_manager_title">Blokkeermanager</string>
     <string name="blocking_manager_built_in_summary">Ingebouwde blokkeerfunctie in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blokkeer spamberichten, nummers &amp; onbekende oproepen met blacklist &amp; Schedule</string>
@@ -282,6 +409,15 @@
         <item quantity="one">Ga door naar %s en sta dit nummer toe</item>
         <item quantity="other">Ga door naar %s en sta deze nummers toe</item>
     </plurals>
+    <string name="deduplicate_messages_category">Dubbele berichten</string>
+    <string name="deduplicate_messages_title">Dubbele berichten verwijderen</string>
+    <string name="deduplicate_messages_summary">Doorzoekt de berichtendatabase en verwijdert alle berichten die exact overeenkomen met de originele berichten</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Uw berichtendatabase wordt doorzocht op dubbele berichten, die daarna worden verwijderd.\nDit verwijdert automatisch berichten. Ga alleen verder als u de gevolgen begrijpt.</string>
+    <string name="auto_deduplicate_messages_title">Dubbele berichten automatisch verwijderen</string>
+    <string name="auto_deduplicate_messages_summary">Dubbele berichten worden tijdens het synchroniseren verwijderd. Let op: dit verwijdert automatisch berichten, en hoewel de kans op een onterecht duplicaat erg klein is, is het wel mogelijk.\nWees voorzichtig.</string>
+    <string name="deduplicating_messages_finished">Dubbele berichten verwijderd!</string>
+    <string name="deduplicating_messages_no_messages">Geen dubbele berichten gevonden.</string>
+    <string name="deduplicating_messages_failed">Verwijderen van dubbele berichten mislukt, probeer het opnieuw</string>
     <string name="about_title">Over</string>
     <string name="about_version_title">Versie</string>
     <string name="about_developer_title">Ontwikkelaar</string>
@@ -313,10 +449,15 @@
     <string name="button_yes">Ja</string>
     <string name="button_continue">Doorgaan</string>
     <string name="button_cancel">Annuleren</string>
+    <string name="button_close">Sluiten</string>
     <string name="button_delete">Verwijderen</string>
     <string name="button_save">Opslaan</string>
     <string name="button_stop">Stop</string>
     <string name="button_set">Instellen</string>
+    <string name="button_later">Later</string>
+    <string name="icon_restart_title">Herstart vereist</string>
+    <string name="icon_restart_message">De app moet opnieuw worden gestart om het app-pictogram bij te werken.</string>
+    <string name="icon_restart_now">Herstarten</string>
     <string name="button_undo">Ongedaan maken</string>
     <string name="toast_copied">Gekopieerd</string>
     <plurals name="notification_new_messages">
@@ -325,6 +466,10 @@
     </plurals>
     <string name="notification_message_failed_title">Bericht niet verzonden</string>
     <string name="notification_message_failed_text">Het bericht naar %s is niet verzonden</string>
+    <string name="notification_foreground_worker_title">Bericht wordt ontvangen</string>
+    <string name="notification_foreground_worker_text">Op Android 12 en ouder is een notificatie nodig voor het achtergrondwerk waarmee berichten worden ontvangen.</string>
+    <string name="notification_foreground_worker_channel_name">Berichten ontvangen</string>
+    <string name="notification_me">Ik</string>
     <string-array name="night_modes">
         <item>Systeem</item>
         <item>Uitgeschakeld</item>
@@ -348,6 +493,21 @@
         <item>5 seconden</item>
         <item>10 seconden</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Geen</item>
+        <item>Archiveren</item>
+        <item>Markeren als ongelezen</item>
+        <item>Blokkeren</item>
+        <item>Verwijderen</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Geen</item>
+        <item>Klassiek</item>
+        <item>Helder</item>
+        <item>Zacht</item>
+        <item>Dalend</item>
+        <item>Drieklank</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatisch</item>
         <item>100kB</item>
@@ -357,6 +517,11 @@
         <item>1000kB</item>
         <item>2000kB</item>
         <item>Geen compressie</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blokkeren</item>
+        <item>Toestaan</item>
+        <item>Vragen voor openen</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Oké</item>
@@ -380,6 +545,12 @@
     <string name="main_menu_edit_message">Bewerk bericht</string>
     <string name="main_menu_rename_conversation">Hernoem conversatie</string>
     <string name="main_sender_draft">Concept: %s</string>
+    <string name="conversation_flagged_label">Mogelijke spam</string>
+    <string name="snippet_picture">Afbeelding</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Audio</string>
+    <string name="snippet_contact_card">Contactkaart</string>
+    <string name="search_group_conversations">Gesprekken</string>
     <string name="scheduled_menu_send_now">Zend nu</string>
     <string name="scheduled_menu_edit_message">Bewerk bericht</string>
     <plurals name="dialog_delete_chat">
@@ -396,7 +567,15 @@
     <string name="dialog_clear_compose_title">Wissen bericht</string>
     <string name="dialog_clear_compose">Wis het bericht? Deze actie kan niet ongedaan worden gemaakt.</string>
     <string name="compose_scheduled_view">Geplande berichten voor deze conversatie</string>
+    <string name="compose_scheduled_bubble">Gepland voor %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d bijlage</item>
+        <item quantity="other">%d bijlagen</item>
+    </plurals>
     <string name="compose_no_valid_recipients">Kan niet versturen naar andere participanten</string>
+    <string name="compose_flagged_title">Mogelijke spam</string>
+    <string name="compose_flagged_approve">Goedkeuren</string>
+    <string name="compose_flagged_block">Blokkeren</string>
     <string name="compose_menu_show_status">Toon status</string>
     <string name="compose_attach_file_cd">Bestand toevoegen</string>
     <string name="compose_audio_message_cd">Audio bericht opnemen</string>
@@ -404,21 +583,34 @@
     <string name="compose_record_audio_msg_cd">Audio bericht opnemen</string>
     <string name="compose_record_audio_msg_abort_cd">Annuleer audio bericht</string>
     <string name="compose_record_audio_msg_attach_cd">Audio bericht toevoegen</string>
+    <string name="compose_audio_msg_title">Spraakbericht</string>
+    <string name="compose_audio_msg_attach">Toevoegen</string>
     <string name="compose_record_audio_msg_play_pause_cd">Speel of pauzeer audio bericht</string>
     <string name="compose_message_cancel">Annuleer</string>
     <string name="compose_message_send_now">Versturen</string>
     <string name="compose_message_sim">SIM nummer</string>
+    <string name="compose_message_item">Bericht</string>
     <string name="compose_message_attachment">Bijlage</string>
     <string name="compose_toast_drag_stt">Verplaats de spraak-naar-tekst knop naar door u gelieve plaats</string>
     <string name="message_body_too_long_to_display">⚠ Bericht is te lang. Kopieer of Bewaar voor de volledige tekst</string>
+    <string name="conversation_menu">Gespreksopties</string>
+    <string name="conversation_menu_media">Alle media bekijken</string>
+    <string name="media_title">Media</string>
+    <string name="media_empty">Foto\'s en video\'s die in dit gesprek zijn gedeeld, verschijnen hier</string>
     <string name="clipboard_too_large_to_copy">Data grote overstijgt kladbord limiet</string>
     <string name="clipboard_unable_to_copy_to">Mislukt te kopiëren naar kladblok</string>
     <string name="scheduled_send_cd">Plan dit bericht</string>
     <string name="attachment_missing">Ontbreekt</string>
     <string name="settings_system_show_stt_title">Toon de spraak-naar-tekst knop</string>
+    <string name="settings_drawer_swipe_title">Vegen om het menu te openen</string>
+    <string name="settings_drawer_swipe_summary">Het zijmenu openen door vanaf de linkerrand van de gesprekkenlijst te vegen</string>
     <string name="settings_notification_previews_summary">Toon naam en bericht</string>
     <string name="settings_notification_silent_title">Stil wanneer geen contact</string>
     <string name="settings_notification_silent_summary">Stille notificaties voor berichten zonder ontvanger in uw contacten lijst</string>
+    <string name="settings_copy_code_title">Codes kopiëren uit notificaties</string>
+    <string name="settings_copy_code_summary">Voegt een knop Code kopiëren toe aan notificaties met eenmalige codes en verificatiecodes</string>
+    <string name="notification_copy_code">Code kopiëren</string>
+    <string name="notification_code_copied">Code gekopieerd</string>
     <string name="settings_unread_at_top_title">Ongelezen bovenaan</string>
     <string name="settings_unread_at_top_summary">Toon ongelezen conversaties bovenaan</string>
     <string name="settings_mms_weblink_title">Link afhandeling in berichten</string>
@@ -427,8 +619,12 @@
     <string name="message_content_filters_title">Bericht inhoud filters</string>
     <string name="message_content_filters_empty">Uw bericht inhoud filters verschijnen hier</string>
     <string name="message_content_filters_add_cd">Maak een nieuwe filter</string>
+    <string name="message_content_filters_dialog_title">Berichten negeren die overeenkomen met</string>
+    <string name="message_content_filters_dialog_hint">Woord, zin of reguliere expressie</string>
     <string name="message_content_filters_dialog_case_switch">Hoofdlettergevoelig</string>
+    <string name="message_content_filters_dialog_regex_switch">Reguliere expressie</string>
     <string name="message_content_filters_dialog_contacts_switch">Contacten toevoegen</string>
+    <string name="message_content_filters_dialog_create">Aanmaken</string>
     <string name="all_conversations_widget_title">Alle conversaties</string>
     <string name="button_clear">Wissen</string>
     <plurals name="toast_archived">

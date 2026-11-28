@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Einfache Open-Source-Nachrichten</string>
     <string name="shortcut_compose_long_label">Neue Unterhaltung</string>
     <string name="shortcut_compose_short_label">Verfassen</string>
     <string name="shortcut_compose_disabled_message">Schnellzugriff deaktiviert</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Einstellungen</string>
     <string name="title_notification_prefs">Benachrichtigungen</string>
     <string name="title_theme">Erscheinungsbild</string>
+    <string name="theme_default">Standard</string>
+    <string name="theme_wallpaper">Hintergrundbild</string>
+    <string name="theme_other_colors">Farben</string>
+    <string name="theme_tab_presets">Palette</string>
+    <string name="theme_tab_custom">Eigene</string>
+    <string name="theme_apply_to_icon">Farbe auf App-Symbol anwenden (die App wird geschlossen)</string>
+    <string name="theme_tab_icon">App-Symbol</string>
+    <string name="theme_icon_follow_theme">An die Designfarbe der App anpassen</string>
+    <string name="theme_icon_summary">Wähle die Farbe deines App-Symbols unabhängig vom Design. Beim Übernehmen einer Änderung wird die App geschlossen.</string>
+    <string name="theme_icon_change_title">App-Symbol ändern?</string>
+    <string name="theme_icon_change_message">Die Farbe des App-Symbols wird gleich geändert. Android kann das Symbol nur austauschen, während die App geschlossen ist, daher wird Open Messages beendet, sobald du bestätigst.</string>
     <string name="title_conversations">Im Posteingang suchen…</string>
+    <string name="title_search">Suchen</string>
     <string name="title_compose">Verfassen</string>
     <string name="setup_skip">Überspringen</string>
     <string name="setup_next">Weiter</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">In der Galerie speichern</string>
     <string name="compose_menu_share">Text teilen</string>
     <string name="main_drawer_open_cd">Navigationsmenü öffnen</string>
+    <string name="main_search_close_cd">Suche schließen</string>
+    <string name="main_search_clear_cd">Suche löschen</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d ausgewählt</string>
     <string name="main_menu_clear">Zurücksetzen</string>
     <string name="main_menu_archive">Archivieren</string>
@@ -63,7 +79,16 @@
     <string name="main_permission_notifications">Open Messages benötigt die Berechtigung, um Benachrichtigungen anzuzeigen</string>
     <string name="main_permission_allow">Zulassen</string>
     <string name="drawer_inbox">Posteingang</string>
+    <string name="contacts_group_recent">Zuletzt</string>
+    <string name="contacts_group_starred">Favoriten</string>
+    <string name="contacts_group_groups">Gruppen</string>
+    <string name="conversations_group_today">Heute</string>
+    <string name="conversations_group_yesterday">Gestern</string>
     <string name="drawer_archived">Archiviert</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d ungelesen</item>
+        <item quantity="other">%d ungelesen</item>
+    </plurals>
     <string name="drawer_scheduled">Geplant</string>
     <string name="drawer_blocking">Blockiert</string>
     <string name="drawer_more">Mehr</string>
@@ -98,6 +123,8 @@
     <string name="compose_scheduled_future">Gewählte Zeit muss in der Zukunft liegen!</string>
     <string name="compose_scheduled_toast">Zu den geplanten Nachrichten hinzugefügt</string>
     <string name="compose_hint">Schreibe eine Nachricht…</string>
+    <string name="compose_expand_cd">Auf Vollbild erweitern</string>
+    <string name="compose_collapse_cd">Einklappen</string>
     <string name="compose_menu_copy">Text kopieren</string>
     <string name="compose_menu_forward">Weiterleiten</string>
     <string name="compose_menu_delete">Löschen</string>
@@ -119,10 +146,32 @@
     <string name="compose_gallery_cd">Foto anhängen</string>
     <string name="compose_camera_cd">Foto aufnehmen</string>
     <string name="compose_schedule_cd">Nachricht planen</string>
+    <string name="compose_schedule_title">Nachricht planen</string>
+    <string name="compose_schedule_in_hour">In 1 Stunde</string>
+    <string name="compose_schedule_tonight">Heute Abend</string>
+    <string name="compose_schedule_tomorrow_morning">Morgen früh</string>
+    <string name="compose_schedule_tomorrow_afternoon">Morgen Nachmittag</string>
+    <string name="compose_schedule_custom">Datum und Uhrzeit wählen</string>
+    <string name="compose_schedule_confirm">Planen</string>
+    <string name="compose_schedule_previous_month">Vorheriger Monat</string>
+    <string name="compose_schedule_next_month">Nächster Monat</string>
+    <string name="compose_schedule_increase">Erhöhen</string>
+    <string name="compose_schedule_decrease">Verringern</string>
     <string name="compose_contact_cd">Kontakt anhängen</string>
     <string name="compose_contact_error">Fehler beim Lesen des Kontaktes</string>
+    <string name="compose_attach_gallery">Galerie</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Datei</string>
+    <string name="compose_attach_audio">Audio</string>
+    <string name="compose_attach_contact">Kontakt</string>
+    <string name="compose_attach_schedule">Planen</string>
+    <string name="compose_attach_templates">Vorlagen</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) ausgewählt</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Dieses Video ist zu lang für MMS. Es darf höchstens %d Sekunde dauern.</item>
+        <item quantity="other">Dieses Video ist zu lang für MMS. Es darf höchstens %d Sekunden dauern.</item>
+    </plurals>
     <string name="compose_sim_cd">%s ausgewählt, SIM-Karte ändern</string>
     <string name="compose_send_cd">Nachricht senden</string>
     <string name="message_status_sending">Wird gesendet…</string>
@@ -141,11 +190,41 @@
     <string name="gallery_toast_saved">In der Galerie gespeichert</string>
     <string name="backup_title">Sichern und Wiederherstellen</string>
     <string name="backup_backing_up">Sichere Nachrichten</string>
+    <string name="backup_failed_title">Sicherung fehlgeschlagen</string>
+    <string name="backup_icon_change_title">App-Symbol wiederherstellen?</string>
+    <string name="backup_icon_change_message">Deine Sicherung wurde mit einer anderen Farbe des App-Symbols erstellt. Android kann das Symbol nur austauschen, während die App geschlossen ist, daher wird Open Messages beendet, sobald du bestätigst.</string>
+    <string name="icon_change_confirm">Übernehmen und schließen</string>
+    <string name="icon_change_later">Nicht jetzt</string>
     <string name="backup_restoring">Aus Sicherung wiederherstellen</string>
     <string name="backup_loading">Lade…</string>
     <string name="backup_never">Niemals</string>
     <string name="backup_location_title">Sicherungsort</string>
     <string name="backup_location_summary">Ordner festlegen</string>
+    <string name="backup_auto_title">Automatische Sicherung</string>
+    <string name="backup_auto_never">Nie</string>
+    <string name="backup_auto_daily">Täglich</string>
+    <string name="backup_auto_weekly">Wöchentlich</string>
+    <string name="backup_auto_custom">Benutzerdefiniert…</string>
+    <string name="backup_auto_custom_title">Tage zwischen Sicherungen</string>
+    <string name="backup_auto_custom_hint">Anzahl der Tage</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Jeden Tag</item>
+        <item quantity="other">Alle %d Tage</item>
+    </plurals>
+    <string name="backup_zip_title">Als .zip-Datei speichern</string>
+    <string name="backup_zip_summary">Jede Sicherung als einzelnes Archiv speichern, einfacher zwischen Handys zu übertragen</string>
+    <string name="backup_manage_title">Sicherungen verwalten</string>
+    <string name="backup_manage_summary">Sicherungen umbenennen oder löschen</string>
+    <string name="backup_manage_empty">An diesem Ort wurden keine Sicherungen gefunden</string>
+    <string name="backup_manage_rename">Umbenennen</string>
+    <string name="backup_manage_delete">Löschen</string>
+    <string name="backup_manage_delete_confirm">\"%s\" löschen? Das kann nicht rückgängig gemacht werden.</string>
+    <string name="backup_manage_error">Diese Sicherung konnte nicht aktualisiert werden</string>
+    <string name="backup_manage_type_folder">Ordner</string>
+    <string name="backup_manage_type_zip">Zip-Archiv</string>
+    <string name="backup_restore_from_title">Wiederherstellen aus</string>
+    <string name="backup_restore_from_folder">Einem Ordner</string>
+    <string name="backup_restore_from_zip">Einer .zip-Datei</string>
     <string name="backup_restore_title">Wiederherstellen</string>
     <string name="backup_restore_summary">Sicherung auswählen</string>
     <string name="backup_restore_error_backup">Sicherung wird durchgeführt…</string>
@@ -163,11 +242,25 @@
     <string name="backup_restore_dialog_empty">Keine Sicherungen gefunden</string>
     <string name="backup_disclaimer">Derzeit wird nur das Sichern und Wiederherstellen von SMS unterstützt. Die Unterstützung für MMS und geplante Sicherungen folgen demnächst!</string>
     <string name="backup_now">Jetzt sichern</string>
+    <string name="backup_now_summary">Neue Sicherung erstellen</string>
+    <string name="backup_categories_title">Was soll gesichert werden?</string>
+    <string name="backup_restore_source_title">Welche Sicherung?</string>
+    <string name="backup_restore_categories_title">Aus %s wiederherstellen</string>
+    <string name="backup_category_messages">Nachrichten (SMS, MMS und Anhänge)</string>
+    <string name="backup_category_settings">Einstellungen und Vorlagen</string>
+    <string name="backup_category_blocking">Blockierregeln</string>
+    <string name="backup_category_conversations">Archiviert und angeheftet</string>
+    <string name="backup_category_scheduled">Geplante Nachrichten</string>
+    <string name="backup_exact_alarm_title">Genaue Wecker erlauben</string>
+    <string name="backup_exact_alarm_message">Damit deine geplanten Nachrichten genau zur richtigen Zeit gesendet werden, braucht Open Messages die Berechtigung für genaue Wecker. Ohne sie werden sie eventuell etwas später gesendet.</string>
+    <string name="backup_exact_alarm_grant">Erlauben</string>
+    <string name="backup_exact_alarm_skip">Trotzdem wiederherstellen</string>
     <string name="backup_progress_parsing">Analysiere Sicherung…</string>
     <string name="backup_progress_running">%d/%d Nachrichten</string>
     <string name="backup_progress_saving">Sicherung wird gespeichert…</string>
     <string name="backup_progress_syncing">Synchronisiere Nachrichten…</string>
     <string name="backup_progress_finished">Fertig!</string>
+    <string name="backup_progress_failed">Die Sicherung konnte nicht geschrieben werden. Prüfe den freien Speicher und den Sicherungsordner.</string>
     <string name="backup_notification_channel_name">Sicherung und Wiederherstellung</string>
     <string name="scheduled_title">Geplant</string>
     <string name="scheduled_empty_description">Nachricht genau dann senden, wenn du magst</string>
@@ -194,6 +287,12 @@
     <string name="settings_automatic_colors_title">Automatische Kontaktfarben</string>
     <string name="settings_text_size_title">Schriftgröße</string>
     <string name="settings_system_font_title">Systemschriftart verwenden</string>
+    <string name="settings_show_avatar_title">Kontaktfoto anzeigen</string>
+    <string name="settings_show_avatar_summary">Zeigt das Foto des Absenders in Unterhaltungen. Deaktiviere es, um den Nachrichtenblasen mehr Breite zu geben.</string>
+    <string name="settings_hide_country_code_title">Ländervorwahl ausblenden</string>
+    <string name="settings_hide_country_code_summary">Telefonnummern im Titel im lokalen Format anzeigen, z. B. \"06 ...\" statt \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Randlose Anzeige</string>
+    <string name="settings_edge_to_edge_summary">Inhalte hinter Status- und Navigationsleiste anzeigen</string>
     <string name="settings_auto_emoji_title">Automatische Emoji</string>
     <string name="settings_notifications_title">Benachrichtigungen</string>
     <string name="settings_notifications_o_summary">Zum Anpassen antippen</string>
@@ -227,6 +326,11 @@
     </string-array>
     <string name="settings_delivery_title">Zustellbestätigungen</string>
     <string name="settings_delivery_summary">Bestätigung, dass Nachrichten erfolgreich gesendet wurden</string>
+    <string name="settings_send_sound_title">Ton beim Senden</string>
+    <string name="settings_send_sound_summary">Beim Senden einer Nachricht einen kurzen Ton abspielen</string>
+    <string name="settings_send_sound_volume_title">Lautstärke</string>
+    <string name="settings_header_quick_action_title">Schnellaktion in der Kopfzeile</string>
+    <string name="settings_header_quick_action_summary">Eine Verknüpfung zur Kopfzeile der Unterhaltung hinzufügen</string>
     <string name="settings_signature_title">Signatur</string>
     <string name="settings_signature_summary">Füge eine Signatur am Ende deiner Nachrichten hinzu</string>
     <string name="settings_unicode_title">Akzente entfernen</string>
@@ -257,6 +361,17 @@
     <string name="blocking_drop_title">Nachrichten verwerfen</string>
     <string name="blocking_drop_summary">Eingehende Nachrichten von blockierten Absendern verwerfen, anstatt sie auszublenden</string>
     <string name="blocking_conversations">Blockierte Unterhaltungen</string>
+    <string name="blocking_category_integrated">Integriertes Blockieren</string>
+    <string name="blocking_integrated_description">Open Messages blockiert Spam auf deinem Gerät. Die optionalen Quellen unten laden ihre Liste beim Einschalten aus dem Internet herunter und funktionieren danach offline.</string>
+    <string name="blocking_category_external_apps">Externe Apps</string>
+    <string name="blocked_numbers_summary">Nummern, die du selbst blockierst</string>
+    <string name="blocking_source_phishing_title">Anti-Phishing</string>
+    <string name="blocking_source_phishing_summary">Blockiert Nachrichten mit Links zu bekannten Phishing-Seiten. Beim Einschalten wird die Liste aus dem Internet geladen, danach erfolgt die Filterung offline.</string>
+    <string name="blocking_source_flag_block_title">Spamverdacht blockieren</string>
+    <string name="blocking_source_flag_block_summary">Als möglicher Spam markierte Nachrichten direkt in die Blockierliste verschieben, statt sie nur im Posteingang zu kennzeichnen</string>
+    <string name="blocking_source_status_updating">Wird aktualisiert…</string>
+    <string name="blocking_source_status_updated">Aktuell · %1$d Einträge</string>
+    <string name="blocking_source_status_failed">Download fehlgeschlagen, die Quelle bleibt deaktiviert. Prüfe deine Verbindung und versuche es erneut.</string>
     <string name="blocking_manager_title">Blockierverwaltung</string>
     <string name="blocking_manager_built_in_summary">In Open Messages integrierte Blockierfunktion</string>
     <string name="blocking_manager_call_blocker_summary">Spam-Nachrichten und Nummern &amp; unbekannte Anrufe mit Sperrliste &amp; Zeitplan blockieren</string>
@@ -313,10 +428,15 @@
     <string name="button_yes">Ja</string>
     <string name="button_continue">Fortsetzen</string>
     <string name="button_cancel">Abbrechen</string>
+    <string name="button_close">Schließen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_save">Speichern</string>
     <string name="button_stop">Stop</string>
     <string name="button_set">Einstellen</string>
+    <string name="button_later">Später</string>
+    <string name="icon_restart_title">Neustart erforderlich</string>
+    <string name="icon_restart_message">Das App-Symbol benötigt einen Neustart der App, um die Aktualisierung abzuschließen.</string>
+    <string name="icon_restart_now">Neu starten</string>
     <string name="button_undo">Rückgängig</string>
     <string name="toast_copied">Kopiert</string>
     <plurals name="notification_new_messages">
@@ -348,6 +468,21 @@
         <item>5 Sekunden</item>
         <item>10 Sekunden</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Keine</item>
+        <item>Archivieren</item>
+        <item>Als ungelesen markieren</item>
+        <item>Blockieren</item>
+        <item>Löschen</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Kein</item>
+        <item>Klassisch</item>
+        <item>Hell</item>
+        <item>Sanft</item>
+        <item>Absteigend</item>
+        <item>Dreiklang</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatisch</item>
         <item>100KB</item>
@@ -357,6 +492,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Keine Komprimierung</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blockieren</item>
+        <item>Erlauben</item>
+        <item>Vor dem Öffnen fragen</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Okay</item>
@@ -380,6 +520,12 @@
     <string name="main_menu_edit_message">Nachricht bearbeiten</string>
     <string name="main_menu_rename_conversation">Unterhaltung umbenennen</string>
     <string name="main_sender_draft">Entwurf: %s</string>
+    <string name="conversation_flagged_label">Spamverdacht</string>
+    <string name="snippet_picture">Bild</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Audio</string>
+    <string name="snippet_contact_card">Kontaktkarte</string>
+    <string name="search_group_conversations">Unterhaltungen</string>
     <string name="scheduled_menu_send_now">Jetzt senden</string>
     <string name="scheduled_menu_edit_message">Nachricht bearbeiten</string>
     <plurals name="dialog_delete_chat">
@@ -396,7 +542,15 @@
     <string name="dialog_clear_compose_title">Nachricht löschen</string>
     <string name="dialog_clear_compose">Die Nachricht löschen? Diese Aktion kann nicht rückgängig gemacht werden.</string>
     <string name="compose_scheduled_view">Geplante Nachrichten für diese Unterhaltung</string>
+    <string name="compose_scheduled_bubble">Geplant für %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d Anhang</item>
+        <item quantity="other">%d Anhänge</item>
+    </plurals>
     <string name="compose_no_valid_recipients">Kann sie nicht an andere Empfänger senden</string>
+    <string name="compose_flagged_title">Spamverdacht</string>
+    <string name="compose_flagged_approve">Zulassen</string>
+    <string name="compose_flagged_block">Blockieren</string>
     <string name="compose_menu_show_status">Status anzeigen</string>
     <string name="compose_attach_file_cd">Beliebige Datei anhängen</string>
     <string name="compose_audio_message_cd">Audio-Nachricht aufnehmen</string>
@@ -404,6 +558,8 @@
     <string name="compose_record_audio_msg_cd">Audio-Nachricht aufnehmen</string>
     <string name="compose_record_audio_msg_abort_cd">Audio-Nachricht abbrechen</string>
     <string name="compose_record_audio_msg_attach_cd">Audio-Nachricht anhängen</string>
+    <string name="compose_audio_msg_title">Sprachnachricht</string>
+    <string name="compose_audio_msg_attach">Anhängen</string>
     <string name="compose_record_audio_msg_play_pause_cd">Audio-Nachricht abspielen oder pausieren</string>
     <string name="compose_message_cancel">Abbrechen</string>
     <string name="compose_message_send_now">Jetzt senden</string>
@@ -412,14 +568,24 @@
     <string name="compose_message_attachment">Anhang</string>
     <string name="compose_toast_drag_stt">Verschiebe den \"Sprache zu Text\"-Knopf an eine beliebige Stelle</string>
     <string name="message_body_too_long_to_display">⚠ Die Nachricht ist lang. Kopieren oder Speichern für den vollständigen Text</string>
+    <string name="conversation_menu">Optionen der Unterhaltung</string>
+    <string name="conversation_menu_media">Alle Medien ansehen</string>
+    <string name="media_title">Medien</string>
+    <string name="media_empty">Fotos und Videos aus dieser Unterhaltung erscheinen hier</string>
     <string name="clipboard_too_large_to_copy">Datengröße überschreitet Zwischenablagegrenze</string>
     <string name="clipboard_unable_to_copy_to">In die Zwischenablage kopieren nicht möglich</string>
     <string name="scheduled_send_cd">Diese Nachricht planen</string>
     <string name="attachment_missing">Fehlt</string>
     <string name="settings_system_show_stt_title">„Sprache zu Text“-Knopf anzeigen</string>
+    <string name="settings_drawer_swipe_title">Zum Öffnen des Menüs wischen</string>
+    <string name="settings_drawer_swipe_summary">Seitenmenü durch Wischen vom linken Rand der Unterhaltungsliste öffnen</string>
     <string name="settings_notification_previews_summary">Name und Nachricht anzeigen</string>
     <string name="settings_notification_silent_title">Stumm, wenn kein Kontakt</string>
     <string name="settings_notification_silent_summary">Stummschalten von Benachrichtigungen für Nachrichten ohne Empfänger in deinen Kontakten</string>
+    <string name="settings_copy_code_title">Codes aus Benachrichtigungen kopieren</string>
+    <string name="settings_copy_code_summary">Fügt Benachrichtigungen mit Einmal- und Bestätigungscodes eine Schaltfläche zum Kopieren hinzu</string>
+    <string name="notification_copy_code">Code kopieren</string>
+    <string name="notification_code_copied">Code kopiert</string>
     <string name="settings_unread_at_top_title">Ungelesene oben</string>
     <string name="settings_unread_at_top_summary">Ungelesene Unterhaltungen oben anzeigen</string>
     <string name="settings_mms_weblink_title">Linkverarbeitung in Nachrichten</string>
@@ -457,8 +623,17 @@
     <string name="compose_send_group_summary_on">Empfänger und Antworten sind für alle sichtbar</string>
     <string name="compose_send_group_summary_off">Die Nachrichten werden separat an alle Empfänger gesendet</string>
     <string name="notification_foreground_worker_text">Unter Android 12 und älteren Versionen ist eine Benachrichtigung für die Hintergrundarbeit erforderlich, die den Empfang von Nachrichten ermöglicht.</string>
+    <string name="notification_foreground_worker_channel_name">Nachrichtenempfang</string>
+    <string name="notification_me">Ich</string>
     <string name="notification_foreground_worker_title">Empfange Nachricht</string>
     <string name="message_management_title">Nachrichtenverwaltung</string>
+    <string name="templates_title">Vorlagen</string>
+    <string name="templates_empty">Noch keine gespeicherten Nachrichten.\nTippe auf +, um eine oft gesendete Nachricht zu speichern, und tippe sie dann an, um Empfänger auszuwählen.</string>
+    <string name="template_hint">Nachricht eingeben…</string>
+    <string name="template_title_hint">Titel (optional)</string>
+    <string name="templates_add_cd">Neue Vorlage</string>
+    <string name="template_new">Neue Vorlage</string>
+    <string name="template_edit">Vorlage bearbeiten</string>
     <string name="main_sync_emojis">Emoji-Reaktionen analysieren…</string>
     <string name="deduplicate_messages_category">Nachrichten deduplizieren</string>
     <string name="deduplicate_messages_title">Doppelte Nachrichten entfernen</string>
