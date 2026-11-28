@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Mesagerie simplă, cu sursă deschisă</string>
     <string name="shortcut_compose_long_label">Conversație nouă</string>
     <string name="shortcut_compose_short_label">Compune</string>
     <string name="shortcut_compose_disabled_message">Comanda rapidă dezactivată</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Setări</string>
     <string name="title_notification_prefs">Notificări</string>
     <string name="title_theme">Tematică</string>
+    <string name="theme_default">Implicit</string>
+    <string name="theme_wallpaper">Imagine de fundal</string>
+    <string name="theme_other_colors">Culori</string>
+    <string name="theme_tab_presets">Paletă</string>
+    <string name="theme_tab_custom">Personalizat</string>
+    <string name="theme_apply_to_icon">Aplică culoarea pe pictograma aplicației (aplicația se va închide)</string>
+    <string name="theme_tab_icon">Pictograma aplicației</string>
+    <string name="theme_icon_follow_theme">Folosește culoarea temei aplicației</string>
+    <string name="theme_icon_summary">Alege culoarea pictogramei aplicației, independent de temă. Aplicarea unei modificări va închide aplicația.</string>
+    <string name="theme_icon_change_title">Schimbi pictograma aplicației?</string>
+    <string name="theme_icon_change_message">Culoarea pictogramei aplicației urmează să se schimbe. Android poate schimba pictograma doar cât timp aplicația este închisă, așa că Open Messages se va închide imediat ce confirmi.</string>
     <string name="title_conversations">Caută în inbox…</string>
+    <string name="title_search">Caută</string>
     <string name="title_compose">Scrie un nume sau un număr</string>
     <string name="setup_skip">Omite</string>
     <string name="setup_next">Continuă</string>
@@ -35,6 +48,9 @@
     <string name="menu_mms_part_forward">Redirecționează</string>
     <string name="menu_mms_part_open">Deschide extern</string>
     <string name="main_drawer_open_cd">Deschide panoul de navigare</string>
+    <string name="main_search_close_cd">Închide căutarea</string>
+    <string name="main_search_clear_cd">Șterge căutarea</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d selectate</string>
     <string name="main_menu_clear">Șterge</string>
     <string name="main_menu_select_all">Selectează tot</string>
@@ -51,7 +67,15 @@
     <string name="main_menu_edit_message">Modifică mesajul</string>
     <string name="main_menu_rename_conversation">Redenumește conversația</string>
     <string name="main_syncing">Se sincronizează mesajele…</string>
+    <string name="main_sync_emojis">Se analizează reacțiile emoji…</string>
     <string name="main_sender_you">Tu: %s</string>
+    <string name="main_sender_draft">Ciornă: %s</string>
+    <string name="conversation_flagged_label">Posibil spam</string>
+    <string name="snippet_picture">Imagine</string>
+    <string name="snippet_video">Videoclip</string>
+    <string name="snippet_audio">Audio</string>
+    <string name="snippet_contact_card">Fișă de contact</string>
+    <string name="search_group_conversations">Conversații</string>
     <string name="main_message_results_title">Rezultate în mesaje</string>
     <plurals name="main_message_results">
         <item quantity="other">%d mesaje</item>
@@ -71,10 +95,28 @@
     <string name="scheduled_menu_send_now">Trimite acum</string>
     <string name="scheduled_menu_edit_message">Modifică mesajul</string>
     <string name="drawer_inbox">Mesaje primite</string>
+    <string name="contacts_group_recent">Recente</string>
+    <string name="contacts_group_starred">Favorite</string>
+    <string name="contacts_group_groups">Grupuri</string>
+    <string name="conversations_group_today">Astăzi</string>
+    <string name="conversations_group_yesterday">Ieri</string>
     <string name="drawer_archived">Arhivate</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d necitită</item>
+        <item quantity="few">%d necitite</item>
+        <item quantity="other">%d necitite</item>
+    </plurals>
     <string name="drawer_scheduled">Programate</string>
     <string name="drawer_blocking">Blocate</string>
     <string name="drawer_more">Mai multe</string>
+    <string name="message_management_title">Gestionarea mesajelor</string>
+    <string name="templates_title">Șabloane</string>
+    <string name="templates_empty">Niciun mesaj salvat încă.\nAtinge + pentru a salva un mesaj pe care îl trimiți des, apoi atinge-l pentru a alege cui să-l trimiți.</string>
+    <string name="template_hint">Scrie mesajul…</string>
+    <string name="template_title_hint">Titlu (opțional)</string>
+    <string name="templates_add_cd">Șablon nou</string>
+    <string name="template_new">Șablon nou</string>
+    <string name="template_edit">Editează șablonul</string>
     <string name="drawer_settings">Setări</string>
     <string name="drawer_help">Ajutor și feedback</string>
     <string name="drawer_invite">Invită prieteni</string>
@@ -116,14 +158,29 @@
     <string name="compose_subtitle_results">%1$d din %2$d rezultate</string>
     <string name="compose_send_group_title">Trimite ca mesaj de grup</string>
     <string name="compose_send_group_summary">Destinatarii si răspunsurile vor fi vizibile tuturor</string>
+    <string name="compose_send_group_summary_on">Destinatarii și răspunsurile vor fi vizibile pentru toți</string>
+    <string name="compose_send_group_summary_off">Mesajele vor fi trimise separat fiecărui destinatar</string>
     <string name="compose_messages_empty">Acesta este începutul conversației tale. Spune ceva drăguț!</string>
     <string name="compose_vcard_label">Carte de contact</string>
     <string name="compose_scheduled_for">Programat pentru</string>
     <string name="compose_scheduled_future">Timpul selectat trebuie să fie în viitor!</string>
     <string name="compose_scheduled_toast">Adăugat la mesajele programate</string>
+    <string name="compose_scheduled_view">Mesaje programate pentru această conversație</string>
+    <string name="compose_scheduled_bubble">Se trimite la %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d atașament</item>
+        <item quantity="few">%d atașamente</item>
+        <item quantity="other">%d de atașamente</item>
+    </plurals>
     <string name="compose_hint">Scrie un mesaj…</string>
+    <string name="compose_expand_cd">Extinde pe tot ecranul</string>
+    <string name="compose_collapse_cd">Restrânge</string>
     <string name="compose_no_valid_recipients">Nu se poate trimite altor participanți</string>
+    <string name="compose_flagged_title">Posibil spam</string>
+    <string name="compose_flagged_approve">Aprobă</string>
+    <string name="compose_flagged_block">Blochează</string>
     <string name="compose_menu_copy">Copiază textul</string>
+    <string name="compose_menu_share">Distribuie textul</string>
     <string name="compose_menu_forward">Redirecționează</string>
     <string name="compose_menu_show_status">Arată starea</string>
     <string name="compose_menu_delete">Șterge</string>
@@ -131,6 +188,7 @@
     <string name="compose_menu_next">Următorul</string>
     <string name="compose_menu_clear">Curăță</string>
     <string name="compose_details_title">Detalii mesaj</string>
+    <string name="compose_reactions_title">Reacții</string>
     <string name="compose_details_type">Tip: %s</string>
     <string name="compose_details_from">De la: %s</string>
     <string name="compose_details_to">Către: %s</string>
@@ -147,16 +205,41 @@
     <string name="compose_audio_message_cd">Înregistrează un mesaj audio</string>
     <string name="compose_camera_cd">Realizează o fotografie</string>
     <string name="compose_schedule_cd">Programează mesajul</string>
+    <string name="compose_schedule_title">Programează mesajul</string>
+    <string name="compose_schedule_in_hour">Peste o oră</string>
+    <string name="compose_schedule_tonight">Diseară</string>
+    <string name="compose_schedule_tomorrow_morning">Mâine dimineață</string>
+    <string name="compose_schedule_tomorrow_afternoon">Mâine după-amiază</string>
+    <string name="compose_schedule_custom">Alege data și ora</string>
+    <string name="compose_schedule_confirm">Programează</string>
+    <string name="compose_schedule_previous_month">Luna anterioară</string>
+    <string name="compose_schedule_next_month">Luna următoare</string>
+    <string name="compose_schedule_increase">Mărește</string>
+    <string name="compose_schedule_decrease">Micșorează</string>
     <string name="compose_schedule_cancel_cd">Anulează programarea mesajului</string>
     <string name="compose_contact_cd">Atașează un contact</string>
     <string name="compose_contact_error">Eroare la citirea contactului</string>
+    <string name="compose_attach_gallery">Galerie</string>
+    <string name="compose_attach_camera">Cameră</string>
+    <string name="compose_attach_file">Fișier</string>
+    <string name="compose_attach_audio">Audio</string>
+    <string name="compose_attach_contact">Contact</string>
+    <string name="compose_attach_schedule">Programează</string>
+    <string name="compose_attach_templates">Șabloane</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selectat</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Acest videoclip este prea lung pentru a fi trimis prin MMS. Poate dura cel mult %d secundă.</item>
+        <item quantity="few">Acest videoclip este prea lung pentru a fi trimis prin MMS. Poate dura cel mult %d secunde.</item>
+        <item quantity="other">Acest videoclip este prea lung pentru a fi trimis prin MMS. Poate dura cel mult %d de secunde.</item>
+    </plurals>
     <string name="compose_sim_cd">%s selectat, schimbă cartela SIM</string>
     <string name="compose_send_cd">Trimite mesajul</string>
     <string name="compose_record_audio_msg_cd">Înregistrează un mesaj audio</string>
     <string name="compose_record_audio_msg_abort_cd">Anulează mesajul audio</string>
     <string name="compose_record_audio_msg_attach_cd">Atașează mesaj audio</string>
+    <string name="compose_audio_msg_title">Mesaj vocal</string>
+    <string name="compose_audio_msg_attach">Atașează</string>
     <string name="compose_record_audio_msg_play_pause_cd">Redă sau întrerupe mesajul audio</string>
     <string name="compose_message_cancel">Anulează</string>
     <string name="compose_message_send_now">Trimite acum</string>
@@ -167,6 +250,11 @@
     <string name="message_status_sending">Se trimite…</string>
     <string name="message_status_delivered">Livrat %s</string>
     <string name="message_status_failed">Trimitere eșuată. Atinge pentru a încerca din nou</string>
+    <string name="message_body_too_long_to_display">⚠ Mesajul este lung. Copiază-l sau salvează-l pentru textul complet</string>
+    <string name="conversation_menu">Opțiuni conversație</string>
+    <string name="conversation_menu_media">Vezi toate fișierele media</string>
+    <string name="media_title">Media</string>
+    <string name="media_empty">Fotografiile și videoclipurile trimise în această conversație vor apărea aici</string>
     <string name="info_copied_address">Adresă copiată</string>
     <string name="info_name">Titlul conversației</string>
     <string name="info_notifications">Notificări</string>
@@ -180,11 +268,42 @@
     <string name="gallery_toast_saved">Salvat în galerie</string>
     <string name="backup_title">Copie de rezervă și restaurare</string>
     <string name="backup_backing_up">Se creează copie de rezervă pentru mesaje</string>
+    <string name="backup_failed_title">Copia de rezervă a eșuat</string>
+    <string name="backup_icon_change_title">Restaurezi pictograma aplicației?</string>
+    <string name="backup_icon_change_message">Copia de rezervă a fost făcută cu o altă culoare a pictogramei aplicației. Android poate schimba pictograma doar cât timp aplicația este închisă, așa că Open Messages se va închide imediat ce confirmi.</string>
+    <string name="icon_change_confirm">Aplică și închide</string>
+    <string name="icon_change_later">Nu acum</string>
     <string name="backup_restoring">Restaurare din copia de rezervă</string>
     <string name="backup_loading">Se încarcă…</string>
     <string name="backup_never">Niciodată</string>
     <string name="backup_location_title">Locație copie de rezervă</string>
     <string name="backup_location_summary">Setează dosarul</string>
+    <string name="backup_auto_title">Copie de rezervă automată</string>
+    <string name="backup_auto_never">Niciodată</string>
+    <string name="backup_auto_daily">Zilnic</string>
+    <string name="backup_auto_weekly">Săptămânal</string>
+    <string name="backup_auto_custom">Personalizat…</string>
+    <string name="backup_auto_custom_title">Zile între copiile de rezervă</string>
+    <string name="backup_auto_custom_hint">Număr de zile</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">La fiecare %d zi</item>
+        <item quantity="few">La fiecare %d zile</item>
+        <item quantity="other">La fiecare %d de zile</item>
+    </plurals>
+    <string name="backup_zip_title">Salvează ca fișier .zip</string>
+    <string name="backup_zip_summary">Păstrează fiecare copie de rezervă într-o singură arhivă, mai ușor de mutat pe alt telefon</string>
+    <string name="backup_manage_title">Gestionează copiile de rezervă</string>
+    <string name="backup_manage_summary">Redenumește sau șterge copiile de rezervă</string>
+    <string name="backup_manage_empty">Nu s-a găsit nicio copie de rezervă în această locație</string>
+    <string name="backup_manage_rename">Redenumește</string>
+    <string name="backup_manage_delete">Șterge</string>
+    <string name="backup_manage_delete_confirm">Ștergi „%s”? Acțiunea nu poate fi anulată.</string>
+    <string name="backup_manage_error">Copia de rezervă nu a putut fi actualizată</string>
+    <string name="backup_manage_type_folder">Dosar</string>
+    <string name="backup_manage_type_zip">Arhivă zip</string>
+    <string name="backup_restore_from_title">Restaurează din</string>
+    <string name="backup_restore_from_folder">Un dosar</string>
+    <string name="backup_restore_from_zip">Un fișier .zip</string>
     <string name="backup_restore_title">Restaurează</string>
     <string name="backup_restore_summary">Selectează o copie de rezervă</string>
     <string name="backup_restore_error_backup">Copie de rezervă în curs de desfășurare…</string>
@@ -202,12 +321,28 @@
     <string name="backup_restore_dialog_empty">Nu a fost găsită nici o copie de rezervă</string>
     <string name="backup_disclaimer">Momentan, doar SMS este acceptat prin Backup și Restaurare. Suportul MMS și backup-urile programate vor fi disponibile în curând!</string>
     <string name="backup_now">Fă o copie acum</string>
+    <string name="backup_now_summary">Creează o copie de rezervă nouă</string>
+    <string name="backup_categories_title">Ce vrei să salvezi?</string>
+    <string name="backup_restore_source_title">Ce copie de rezervă?</string>
+    <string name="backup_restore_categories_title">Restaurează din %s</string>
+    <string name="backup_category_messages">Mesaje (SMS, MMS și atașamente)</string>
+    <string name="backup_category_settings">Setări și șabloane</string>
+    <string name="backup_category_blocking">Reguli de blocare</string>
+    <string name="backup_category_conversations">Arhivate și fixate</string>
+    <string name="backup_category_scheduled">Mesaje programate</string>
+    <string name="backup_exact_alarm_title">Permite alarmele exacte</string>
+    <string name="backup_exact_alarm_message">Pentru a trimite mesajele programate la ora exactă, Open Messages are nevoie de permisiunea de a seta alarme exacte. Fără ea, mesajele pot pleca puțin mai târziu.</string>
+    <string name="backup_exact_alarm_grant">Permite</string>
+    <string name="backup_exact_alarm_skip">Restaurează oricum</string>
     <string name="backup_progress_parsing">Se analizează copia de rezervă…</string>
     <string name="backup_progress_running">%d/%d mesaje</string>
     <string name="backup_progress_saving">Salvare copie de rezervă…</string>
     <string name="backup_progress_syncing">Se sincronizează mesajele…</string>
     <string name="backup_progress_finished">Finalizat!</string>
+    <string name="backup_progress_failed">Copia de rezervă nu a putut fi scrisă. Verifică spațiul liber și dosarul copiilor de rezervă.</string>
     <string name="backup_notification_channel_name">Copie de rezervă și restaurare</string>
+    <string name="clipboard_too_large_to_copy">Datele depășesc limita clipboardului</string>
+    <string name="clipboard_unable_to_copy_to">Nu s-a putut copia în clipboard</string>
     <string name="scheduled_title">Planificare</string>
     <string name="scheduled_empty_description">Trimite automat un mesaj, exact în momentul în care dorești</string>
     <string name="scheduled_empty_message_1">Hei! Când a fost ziua ta de naștere?</string>
@@ -216,7 +351,13 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Trimite pe 23 decembrie </string>
     <string name="scheduled_compose_cd">Programează un mesaj</string>
+    <string name="scheduled_send_cd">Programează acest mesaj</string>
     <string name="scheduled_options_title">Mesaj programat</string>
+    <string-array name="scheduled_options">
+        <item>Trimite acum</item>
+        <item>Copiază textul</item>
+        <item>Șterge</item>
+    </string-array>
     <string name="attachment_missing">Lipsește</string>
     <string name="settings_category_appearance">Aspect</string>
     <string name="settings_category_general">General</string>
@@ -229,7 +370,15 @@
     <string name="settings_automatic_colors_title">Culori de contact automate</string>
     <string name="settings_text_size_title">Dimensiunea fontului</string>
     <string name="settings_system_font_title">Folosește fontul sistemului</string>
+    <string name="settings_show_avatar_title">Afișează fotografia contactului</string>
+    <string name="settings_show_avatar_summary">Afișează fotografia expeditorului în conversații. Dezactiveaz-o pentru bule de mesaj mai late.</string>
+    <string name="settings_hide_country_code_title">Ascunde prefixul țării</string>
+    <string name="settings_hide_country_code_summary">Afișează numerele de telefon în format local, de ex. \"06 ...\" în loc de \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Pe tot ecranul</string>
+    <string name="settings_edge_to_edge_summary">Afișează conținutul în spatele barelor de stare și de navigare</string>
     <string name="settings_system_show_stt_title">Arată butonul vorbire-în-text</string>
+    <string name="settings_drawer_swipe_title">Glisează pentru a deschide meniul</string>
+    <string name="settings_drawer_swipe_summary">Deschide meniul lateral glisând de la marginea stângă a listei de conversații</string>
     <string name="settings_auto_emoji_title">Emoji automat</string>
     <string name="settings_notifications_title">Notificări</string>
     <string name="settings_notifications_o_summary">Atinge pentru a personaliza</string>
@@ -242,6 +391,10 @@
     <string name="settings_notification_wake_title">Trezește ecranul</string>
     <string name="settings_notification_silent_title">Silențios dacă nu este contact</string>
     <string name="settings_notification_silent_summary">Notificări silențioase pentru mesajele fără destinatari în contactele tale</string>
+    <string name="settings_copy_code_title">Copiază codurile din notificări</string>
+    <string name="settings_copy_code_summary">Adaugă un buton Copiază codul la notificările cu coduri unice și de verificare</string>
+    <string name="notification_copy_code">Copiază codul</string>
+    <string name="notification_code_copied">Cod copiat</string>
     <string name="settings_vibration_title">Vibrații</string>
     <string name="settings_ringtone_title">Sunet</string>
     <string name="settings_ringtone_none">Fără</string>
@@ -267,6 +420,11 @@
     </string-array>
     <string name="settings_delivery_title">Confirmare de livrare</string>
     <string name="settings_delivery_summary">Confirmare că mesajele au fost trimise cu succes</string>
+    <string name="settings_send_sound_title">Sunet la trimitere</string>
+    <string name="settings_send_sound_summary">Redă un sunet scurt când trimiți un mesaj</string>
+    <string name="settings_send_sound_volume_title">Volum</string>
+    <string name="settings_header_quick_action_title">Acțiune rapidă în antet</string>
+    <string name="settings_header_quick_action_summary">Adaugă un buton de comandă rapidă în antetul conversației</string>
     <string name="settings_unread_at_top_title">Necitit în partea de sus</string>
     <string name="settings_unread_at_top_summary">Arată conversațiile necitite în partea de sus</string>
     <string name="settings_signature_title">Semnătură</string>
@@ -290,6 +448,8 @@
     <string name="settings_long_as_mms_summary">În cazul în care mesajele text mai lungi nu reușesc să fie trimise sau se trimit în ordine greșită, le poți trimite ca mesaje MMS. Pot fi aplicate taxe suplimentare</string>
     <string name="settings_mms_size_title">Auto-comprimare atașamente MMS</string>
     <string name="settings_mms_weblink_title">Manipularea link-urilor în mesaje</string>
+    <string name="settings_disable_screenshots_title">Dezactivează capturile de ecran</string>
+    <string name="settings_diable_screenshots_summary">Împiedică sistemul și alte aplicații să facă capturi de ecran ale aplicației.</string>
     <string name="settings_sync_title">Sincronizare mesaje</string>
     <string name="settings_sync_summary">Re-sincronizează mesajele cu baza de date Android SMS</string>
     <string name="settings_about_title">Despre Open Messages</string>
@@ -301,6 +461,17 @@
     <string name="blocking_drop_title">Șterge mesajele</string>
     <string name="blocking_drop_summary">Șterge mesajele primite de la expeditorii blocați în loc să le ascunzi</string>
     <string name="blocking_conversations">Conversații blocate</string>
+    <string name="blocking_category_integrated">Blocare integrată</string>
+    <string name="blocking_integrated_description">Open Messages blochează spamul pe dispozitivul tău. Sursele opționale de mai jos își descarcă lista de pe internet când le activezi, apoi funcționează offline.</string>
+    <string name="blocking_category_external_apps">Aplicații externe</string>
+    <string name="blocked_numbers_summary">Numere pe care le blochezi tu</string>
+    <string name="blocking_source_phishing_title">Anti-phishing</string>
+    <string name="blocking_source_phishing_summary">Blochează mesajele cu linkuri către site-uri de phishing cunoscute. Activarea descarcă lista de pe internet; apoi filtrarea se face offline.</string>
+    <string name="blocking_source_flag_block_title">Blochează posibilul spam</string>
+    <string name="blocking_source_flag_block_summary">Trimite mesajele marcate ca posibil spam direct în lista celor blocate, în loc să le marcheze doar în inbox</string>
+    <string name="blocking_source_status_updating">Se actualizează…</string>
+    <string name="blocking_source_status_updated">Actualizat · %1$d intrări</string>
+    <string name="blocking_source_status_failed">Descărcarea a eșuat, sursa rămâne dezactivată. Verifică conexiunea și încearcă din nou.</string>
     <string name="blocking_manager_title">Manager de blocări</string>
     <string name="blocking_manager_built_in_summary">Funcționalitate de blocare încorporată în Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blocare mesaje spam, numere și apeluri necunoscute din lista neagră și Planificare</string>
@@ -314,6 +485,15 @@
     <string name="blocked_numbers_dialog_title">Blochează mesajele text de la</string>
     <string name="blocked_numbers_dialog_hint">Număr de telefon</string>
     <string name="blocked_numbers_dialog_block">Blochează</string>
+    <string name="message_content_filters_title">Filtre de conținut</string>
+    <string name="message_content_filters_empty">Filtrele de conținut al mesajelor vor apărea aici</string>
+    <string name="message_content_filters_add_cd">Creează un filtru nou</string>
+    <string name="message_content_filters_dialog_title">Elimină mesajele care conțin</string>
+    <string name="message_content_filters_dialog_hint">Cuvânt, expresie sau expresie regulată</string>
+    <string name="message_content_filters_dialog_case_switch">Sensibil la majuscule</string>
+    <string name="message_content_filters_dialog_regex_switch">Expresie regulată</string>
+    <string name="message_content_filters_dialog_contacts_switch">Include contactele</string>
+    <string name="message_content_filters_dialog_create">Creează</string>
     <string name="blocked_messages_title">Mesaje blocate</string>
     <string name="blocked_messages_empty">Mesajele tale blocate vor apărea aici</string>
     <string name="blocking_block_title">Blochează</string>
@@ -328,6 +508,15 @@
         <item quantity="few">Continuați să %s și permite aceste numere</item>
         <item quantity="other">Continuă să %s și permite aceste numere</item>
     </plurals>
+    <string name="deduplicate_messages_category">Elimină duplicatele</string>
+    <string name="deduplicate_messages_title">Elimină mesajele duplicate</string>
+    <string name="deduplicate_messages_summary">Scanează baza de date a mesajelor și șterge toate mesajele identice cu cele originale</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Baza de date a mesajelor va fi scanată pentru duplicate, iar acestea vor fi apoi eliminate.\nAstfel se vor șterge mesaje automat, continuă doar dacă înțelegi consecințele.</string>
+    <string name="auto_deduplicate_messages_title">Elimină automat duplicatele</string>
+    <string name="auto_deduplicate_messages_summary">Eliminarea duplicatelor se va face în timpul sincronizării. Atenție, astfel se vor șterge mesaje automat și, deși șansa unui fals duplicat este foarte mică, ea există.\nFii prudent.</string>
+    <string name="deduplicating_messages_finished">Eliminarea duplicatelor s-a încheiat!</string>
+    <string name="deduplicating_messages_no_messages">Nu s-a găsit niciun mesaj duplicat.</string>
+    <string name="deduplicating_messages_failed">Eliminarea duplicatelor a eșuat, încearcă din nou</string>
     <string name="about_title">Despre</string>
     <string name="about_version_title">Versiune</string>
     <string name="about_developer_title">Dezvoltator</string>
@@ -338,6 +527,7 @@
     <string name="about_copyright_title">Drepturi de autor</string>
     <string name="widget_loading">Se încarcă...</string>
     <string name="widget_more">Vezi mai multe conversații</string>
+    <string name="all_conversations_widget_title">Toate conversațiile</string>
     <string name="quick_reply_menu_read">Marchează ca citit</string>
     <string name="quick_reply_menu_call">Apel</string>
     <string name="quick_reply_menu_delete">Șterge</string>
@@ -345,6 +535,7 @@
     <string name="quick_reply_menu_collapse">Arată mai puțin</string>
     <string name="quick_reply_menu_view">Deschide conversația</string>
     <string name="theme_material">Material</string>
+    <string name="theme_hex">HEX</string>
     <string name="theme_apply">Aplică</string>
     <string-array name="notification_actions">
         <item>Niciunul</item>
@@ -359,10 +550,15 @@
     <string name="button_yes">Da</string>
     <string name="button_continue">Continuă</string>
     <string name="button_cancel">Renunță</string>
+    <string name="button_close">Închide</string>
     <string name="button_delete">Șterge</string>
     <string name="button_save">Salvează</string>
     <string name="button_stop">Oprește</string>
     <string name="button_set">Setează</string>
+    <string name="button_later">Mai târziu</string>
+    <string name="icon_restart_title">Repornire necesară</string>
+    <string name="icon_restart_message">Aplicația trebuie repornită pentru a termina actualizarea pictogramei.</string>
+    <string name="icon_restart_now">Repornește</string>
     <string name="button_undo">Anulează</string>
     <string name="button_clear">Șterge</string>
     <string name="toast_copied">Copiat</string>
@@ -371,6 +567,11 @@
         <item quantity="few">%d convesații arhivate</item>
         <item quantity="other">%d convesații arhivate</item>
     </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">Conversație dezarhivată</item>
+        <item quantity="few">%d conversații dezarhivate</item>
+        <item quantity="other">%d de conversații dezarhivate</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">Mesaj nou</item>
         <item quantity="few">%s mesaje noi</item>
@@ -378,6 +579,11 @@
     </plurals>
     <string name="notification_message_failed_title">Mesajul nu a fost trimis</string>
     <string name="notification_message_failed_text">Mesajul către %s nu a putut fi trimis</string>
+    <string name="notification_foreground_worker_title">Se primește un mesaj</string>
+    <string name="notification_foreground_worker_text">Pe Android 12 și versiunile mai vechi, este necesară o notificare pentru activitatea în fundal care permite primirea mesajelor.</string>
+    <string name="notification_foreground_worker_channel_name">Notificare pentru primirea mesajelor</string>
+    <string name="notification_me">Eu</string>
+    <string name="notification_message_failed_action">Retrimite</string>
     <string-array name="night_modes">
         <item>Sistem</item>
         <item>Dezactivat</item>
@@ -401,6 +607,21 @@
         <item>3 secunde</item>
         <item>5 secunde</item>
         <item>10 secunde</item>
+    </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Niciuna</item>
+        <item>Arhivează</item>
+        <item>Marchează ca necitit</item>
+        <item>Blochează</item>
+        <item>Șterge</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Niciunul</item>
+        <item>Clasic</item>
+        <item>Luminos</item>
+        <item>Discret</item>
+        <item>Descendent</item>
+        <item>Trei note</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Automat</item>
@@ -439,4 +660,5 @@
     <string name="messageLinkHandling_dialog_negative">Nu</string>
     <string name="error_stt_toast">Nici un serviciu vorbire-în-text disponibil</string>
     <string name="stt_toast_extra_prompt">Vorbește mesajul</string>
+    <string name="messages_text_share_file_error">Hopa! Ceva n-a mers bine la distribuire</string>
 </resources>

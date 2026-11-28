@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Enkle meldinger med åpen kildekode</string>
     <string name="shortcut_compose_long_label">Ny samtale</string>
     <string name="shortcut_compose_short_label">Skriv</string>
     <string name="shortcut_compose_disabled_message">Snarvei deaktivert</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Innstillinger</string>
     <string name="title_notification_prefs">Varsler</string>
     <string name="title_theme">Drakt</string>
+    <string name="theme_default">Standard</string>
+    <string name="theme_wallpaper">Bakgrunnsbilde</string>
+    <string name="theme_other_colors">Farger</string>
+    <string name="theme_tab_presets">Palett</string>
+    <string name="theme_tab_custom">Egendefinert</string>
+    <string name="theme_apply_to_icon">Bruk fargen på appikonet (appen lukkes)</string>
+    <string name="theme_tab_icon">Appikon</string>
+    <string name="theme_icon_follow_theme">Følg appens temafarge</string>
+    <string name="theme_icon_summary">Velg fargen på appikonet, uavhengig av temaet. Appen lukkes når en endring tas i bruk.</string>
+    <string name="theme_icon_change_title">Bytte appikon?</string>
+    <string name="theme_icon_change_message">Fargen på appikonet er i ferd med å endres. Android kan bare bytte ikon mens appen er lukket, så Open Messages avsluttes så snart du bekrefter.</string>
     <string name="title_conversations">Søk i innboks …</string>
+    <string name="title_search">Søk</string>
     <string name="title_compose">Skriv navn eller nummer</string>
     <string name="setup_skip">Hopp over</string>
     <string name="setup_next">Fortsett</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Lagre til galleri</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">Åpne navigasjonsskuff</string>
+    <string name="main_search_close_cd">Lukk søket</string>
+    <string name="main_search_clear_cd">Tøm søket</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d valgt</string>
     <string name="main_menu_clear">Tøm</string>
     <string name="main_menu_archive">Arkiv</string>
@@ -63,7 +79,16 @@
     <string name="main_permission_notifications">Open Messages trenger tillatelser til på vise varsler</string>
     <string name="main_permission_allow">Tillat</string>
     <string name="drawer_inbox">Innboks</string>
+    <string name="contacts_group_recent">Nylige</string>
+    <string name="contacts_group_starred">Favoritter</string>
+    <string name="contacts_group_groups">Grupper</string>
+    <string name="conversations_group_today">I dag</string>
+    <string name="conversations_group_yesterday">I går</string>
     <string name="drawer_archived">Arkivert</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d ulest</item>
+        <item quantity="other">%d uleste</item>
+    </plurals>
     <string name="drawer_scheduled">Planlagt</string>
     <string name="drawer_blocking">Blokkert</string>
     <string name="drawer_more">Mer</string>
@@ -98,6 +123,8 @@
     <string name="compose_scheduled_future">Valgt tid må være i fremtiden!</string>
     <string name="compose_scheduled_toast">Lagt til planlagte meldinger</string>
     <string name="compose_hint">Skriv en melding…</string>
+    <string name="compose_expand_cd">Utvid til fullskjerm</string>
+    <string name="compose_collapse_cd">Skjul</string>
     <string name="compose_menu_copy">Kopier tekst</string>
     <string name="compose_menu_forward">Videresend</string>
     <string name="compose_menu_delete">Slett</string>
@@ -119,10 +146,32 @@
     <string name="compose_gallery_cd">Legg til bilde</string>
     <string name="compose_camera_cd">Ta bilde</string>
     <string name="compose_schedule_cd">Planlegg melding</string>
+    <string name="compose_schedule_title">Planlegg melding</string>
+    <string name="compose_schedule_in_hour">Om 1 time</string>
+    <string name="compose_schedule_tonight">I kveld</string>
+    <string name="compose_schedule_tomorrow_morning">I morgen tidlig</string>
+    <string name="compose_schedule_tomorrow_afternoon">I morgen ettermiddag</string>
+    <string name="compose_schedule_custom">Velg dato og klokkeslett</string>
+    <string name="compose_schedule_confirm">Planlegg</string>
+    <string name="compose_schedule_previous_month">Forrige måned</string>
+    <string name="compose_schedule_next_month">Neste måned</string>
+    <string name="compose_schedule_increase">Øk</string>
+    <string name="compose_schedule_decrease">Reduser</string>
     <string name="compose_contact_cd">Legg til kontakt</string>
     <string name="compose_contact_error">Feil ved åpning av kontakt</string>
+    <string name="compose_attach_gallery">Galleri</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Fil</string>
+    <string name="compose_attach_audio">Lyd</string>
+    <string name="compose_attach_contact">Kontakt</string>
+    <string name="compose_attach_schedule">Planlegg</string>
+    <string name="compose_attach_templates">Maler</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) valgt</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Denne videoen er for lang til å sendes som MMS. Den kan vare opptil %d sekund.</item>
+        <item quantity="other">Denne videoen er for lang til å sendes som MMS. Den kan vare opptil %d sekunder.</item>
+    </plurals>
     <string name="compose_sim_cd">%s er valgt, velg annet SIM-kort</string>
     <string name="compose_send_cd">Send melding</string>
     <string name="message_status_sending">Sender …</string>
@@ -141,11 +190,41 @@
     <string name="gallery_toast_saved">Lagret i galleriet</string>
     <string name="backup_title">Sikret</string>
     <string name="backup_backing_up">Sikkerhetskopierer meldinger</string>
+    <string name="backup_failed_title">Sikkerhetskopieringen mislyktes</string>
+    <string name="backup_icon_change_title">Gjenopprette appikonet?</string>
+    <string name="backup_icon_change_message">Sikkerhetskopien din ble laget med en annen farge på appikonet. Android kan bare bytte ikon mens appen er lukket, så Open Messages avsluttes så snart du bekrefter.</string>
+    <string name="icon_change_confirm">Bruk og lukk</string>
+    <string name="icon_change_later">Ikke nå</string>
     <string name="backup_restoring">Gjenoppretter fra sikkerhetskopi</string>
     <string name="backup_loading">Henter …</string>
     <string name="backup_never">Aldri</string>
     <string name="backup_location_title">Sikkerhetskopi plassering</string>
     <string name="backup_location_summary">Angi mappe</string>
+    <string name="backup_auto_title">Automatisk sikkerhetskopiering</string>
+    <string name="backup_auto_never">Aldri</string>
+    <string name="backup_auto_daily">Hver dag</string>
+    <string name="backup_auto_weekly">Hver uke</string>
+    <string name="backup_auto_custom">Egendefinert…</string>
+    <string name="backup_auto_custom_title">Dager mellom sikkerhetskopier</string>
+    <string name="backup_auto_custom_hint">Antall dager</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Hver dag</item>
+        <item quantity="other">Hver %d. dag</item>
+    </plurals>
+    <string name="backup_zip_title">Lagre som .zip-fil</string>
+    <string name="backup_zip_summary">Lagre hver sikkerhetskopi som ett arkiv, enklere å flytte mellom telefoner</string>
+    <string name="backup_manage_title">Administrer sikkerhetskopier</string>
+    <string name="backup_manage_summary">Gi nytt navn til eller slett sikkerhetskopiene dine</string>
+    <string name="backup_manage_empty">Fant ingen sikkerhetskopier på dette stedet</string>
+    <string name="backup_manage_rename">Gi nytt navn</string>
+    <string name="backup_manage_delete">Slett</string>
+    <string name="backup_manage_delete_confirm">Slette «%s»? Dette kan ikke angres.</string>
+    <string name="backup_manage_error">Kunne ikke oppdatere denne sikkerhetskopien</string>
+    <string name="backup_manage_type_folder">Mappe</string>
+    <string name="backup_manage_type_zip">Zip-arkiv</string>
+    <string name="backup_restore_from_title">Gjenopprett fra</string>
+    <string name="backup_restore_from_folder">En mappe</string>
+    <string name="backup_restore_from_zip">En .zip-fil</string>
     <string name="backup_restore_title">Gjenopprett</string>
     <string name="backup_restore_summary">Velg en sikkerhetskopi</string>
     <string name="backup_restore_error_backup">Sikkerhetskopiering pågår …</string>
@@ -163,11 +242,25 @@
     <string name="backup_restore_dialog_empty">Fant ingen sikkerhetskopier</string>
     <string name="backup_disclaimer">Per idag er det bare mulig å sikkerhetskopiere SMS. MMS og planlagte sikkerhetskopiering kommer snart!</string>
     <string name="backup_now">Sikkerhetskopier nå</string>
+    <string name="backup_now_summary">Lag en ny sikkerhetskopi</string>
+    <string name="backup_categories_title">Hva skal sikkerhetskopieres?</string>
+    <string name="backup_restore_source_title">Hvilken sikkerhetskopi?</string>
+    <string name="backup_restore_categories_title">Gjenopprett fra %s</string>
+    <string name="backup_category_messages">Meldinger (SMS, MMS og vedlegg)</string>
+    <string name="backup_category_settings">Innstillinger og maler</string>
+    <string name="backup_category_blocking">Blokkeringsregler</string>
+    <string name="backup_category_conversations">Arkiverte og festede</string>
+    <string name="backup_category_scheduled">Planlagte meldinger</string>
+    <string name="backup_exact_alarm_title">Tillat nøyaktige alarmer</string>
+    <string name="backup_exact_alarm_message">For å sende de planlagte meldingene dine til nøyaktig riktig tid trenger Open Messages tillatelse til å stille inn nøyaktige alarmer. Uten den kan de bli sendt litt sent.</string>
+    <string name="backup_exact_alarm_grant">Tillat</string>
+    <string name="backup_exact_alarm_skip">Gjenopprett likevel</string>
     <string name="backup_progress_parsing">Ser gjennom sikkerhetskopien …</string>
     <string name="backup_progress_running">%d/%d meldinger</string>
     <string name="backup_progress_saving">Lagrer sikkerhetskopi …</string>
     <string name="backup_progress_syncing">Synkroniserer meldinger …</string>
     <string name="backup_progress_finished">Ferdig!</string>
+    <string name="backup_progress_failed">Sikkerhetskopien kunne ikke skrives. Sjekk ledig plass og mappen for sikkerhetskopier.</string>
     <string name="backup_notification_channel_name">Sikkerhetskopiering og gjenoppretting</string>
     <string name="scheduled_title">Planlagt</string>
     <string name="scheduled_empty_description">Send automatisk en melding på det tidspunktet du ønsker</string>
@@ -194,6 +287,12 @@
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Skriftstørrelse</string>
     <string name="settings_system_font_title">Bruk systemskrift</string>
+    <string name="settings_show_avatar_title">Vis kontaktbilde</string>
+    <string name="settings_show_avatar_summary">Vis avsenderens bilde i samtaler. Slå det av for å gi meldingsboblene mer bredde.</string>
+    <string name="settings_hide_country_code_title">Skjul landskode</string>
+    <string name="settings_hide_country_code_summary">Vis telefonnumre i lokalt format, f.eks. \"06 ...\" i stedet for \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Kant til kant</string>
+    <string name="settings_edge_to_edge_summary">Tegn innholdet bak status- og navigasjonsfeltene</string>
     <string name="settings_auto_emoji_title">Automatisk emoji</string>
     <string name="settings_notifications_title">Varsler</string>
     <string name="settings_notifications_o_summary">Trykk for å tilpasse</string>
@@ -227,6 +326,11 @@
     </string-array>
     <string name="settings_delivery_title">Leveringsbekreftelse</string>
     <string name="settings_delivery_summary">Bekreft at melding ble sendt</string>
+    <string name="settings_send_sound_title">Lyd ved sending</string>
+    <string name="settings_send_sound_summary">Spill av en kort tone når du sender en melding</string>
+    <string name="settings_send_sound_volume_title">Volum</string>
+    <string name="settings_header_quick_action_title">Hurtighandling i toppfeltet</string>
+    <string name="settings_header_quick_action_summary">Legg til en snarveisknapp i toppfeltet i samtalen</string>
     <string name="settings_signature_title">Signatur</string>
     <string name="settings_signature_summary">Legg til en signatur til slutten av dine meldinger</string>
     <string name="settings_unicode_title">Ta bort akutt-tegn</string>
@@ -257,6 +361,17 @@
     <string name="blocking_drop_title">Forkast meldinger</string>
     <string name="blocking_drop_summary">Forkast meldinger fra blokkerte sendere istedenfor å skjule dem</string>
     <string name="blocking_conversations">Blokkerte samtaler</string>
+    <string name="blocking_category_integrated">Innebygd blokkering</string>
+    <string name="blocking_integrated_description">Open Messages blokkerer søppelpost på enheten din. De valgfrie kildene nedenfor laster ned listen sin fra internett når du slår dem på, og fungerer deretter uten nett.</string>
+    <string name="blocking_category_external_apps">Eksterne apper</string>
+    <string name="blocked_numbers_summary">Numre du blokkerer selv</string>
+    <string name="blocking_source_phishing_title">Anti-phishing</string>
+    <string name="blocking_source_phishing_summary">Blokkerer meldinger med lenker til kjente phishing-nettsteder. Når du slår dette på, lastes listen ned fra internett; deretter skjer filtreringen uten nett.</string>
+    <string name="blocking_source_flag_block_title">Blokker mistenkt søppelpost</string>
+    <string name="blocking_source_flag_block_summary">Send meldinger som er merket som mulig søppelpost rett til blokkeringslisten i stedet for bare å merke dem i innboksen</string>
+    <string name="blocking_source_status_updating">Oppdaterer…</string>
+    <string name="blocking_source_status_updated">Oppdatert · %1$d oppføringer</string>
+    <string name="blocking_source_status_failed">Nedlastingen mislyktes, kilden forblir av. Sjekk tilkoblingen og prøv igjen.</string>
     <string name="blocking_manager_title">Blokkeringer</string>
     <string name="blocking_manager_built_in_summary">Innebygd blokkeringsfunksjon i Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blokker spammeldinger, numre og ukjente anrop med svarteliste og planlegging</string>
@@ -313,10 +428,15 @@
     <string name="button_yes">Ja</string>
     <string name="button_continue">Fortsett</string>
     <string name="button_cancel">Avbryt</string>
+    <string name="button_close">Lukk</string>
     <string name="button_delete">Slett</string>
     <string name="button_save">Lagre</string>
     <string name="button_stop">Avbryt</string>
     <string name="button_set">Angi</string>
+    <string name="button_later">Senere</string>
+    <string name="icon_restart_title">Omstart kreves</string>
+    <string name="icon_restart_message">Appen må startes på nytt for å fullføre oppdateringen av appikonet.</string>
+    <string name="icon_restart_now">Start på nytt</string>
     <string name="button_undo">Angre</string>
     <string name="toast_copied">Kopiert</string>
     <plurals name="notification_new_messages">
@@ -348,6 +468,21 @@
         <item>5 seconds</item>
         <item>10 seconds</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Ingen</item>
+        <item>Arkiver</item>
+        <item>Merk som ulest</item>
+        <item>Blokker</item>
+        <item>Slett</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Ingen</item>
+        <item>Klassisk</item>
+        <item>Lys</item>
+        <item>Myk</item>
+        <item>Fallende</item>
+        <item>Tre toner</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>
         <item>100KB</item>
@@ -357,6 +492,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>No compression</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blokker</item>
+        <item>Tillat</item>
+        <item>Spør før åpning</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Ok</item>
@@ -380,6 +520,12 @@
     <string name="main_menu_edit_message">Rediger melding</string>
     <string name="main_menu_rename_conversation">Omkall samtale</string>
     <string name="main_sender_draft">Utkast: %s</string>
+    <string name="conversation_flagged_label">Mistenkt søppelpost</string>
+    <string name="snippet_picture">Bilde</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Lyd</string>
+    <string name="snippet_contact_card">Kontaktkort</string>
+    <string name="search_group_conversations">Samtaler</string>
     <string name="scheduled_menu_send_now">Send nå</string>
     <string name="scheduled_menu_edit_message">Rediger melding</string>
     <plurals name="dialog_delete_chat">
@@ -411,19 +557,46 @@
     <string name="dialog_edit_scheduled_message">Hvis du redigerer denne meldingen blir den fjernet fra planlagte meldinger .\n\nPass på at du sender den inn på nytt på neste skjerm, ellers blir meldingen tapt.\n\nVil du forsette?</string>
     <string name="dialog_clear_compose">Slett meldingen? Denne handlingen kan ikke angres.</string>
     <string name="compose_scheduled_view">Planlagte meldinger for denne samtalen</string>
+    <string name="compose_scheduled_bubble">Sendes %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d vedlegg</item>
+        <item quantity="other">%d vedlegg</item>
+    </plurals>
     <string name="compose_no_valid_recipients">Kan ikke sendes til andre deltakere</string>
+    <string name="compose_flagged_title">Mistenkt søppelpost</string>
+    <string name="compose_flagged_approve">Godkjenn</string>
+    <string name="compose_flagged_block">Blokker</string>
     <string name="compose_menu_show_status">Vis status</string>
     <string name="compose_audio_message_cd">Ta opp en lydmelding</string>
     <string name="compose_record_audio_msg_attach_cd">Legg til lydmelding</string>
+    <string name="compose_audio_msg_title">Talemelding</string>
+    <string name="compose_audio_msg_attach">Legg ved</string>
     <string name="message_management_title">Melding Administrasjon</string>
+    <string name="templates_title">Maler</string>
+    <string name="templates_empty">Ingen lagrede meldinger ennå.\nTrykk på + for å lagre en melding du ofte sender, og trykk deretter på den for å velge hvem den skal sendes til.</string>
+    <string name="template_hint">Skriv meldingen din…</string>
+    <string name="template_title_hint">Tittel (valgfritt)</string>
+    <string name="templates_add_cd">Ny mal</string>
+    <string name="template_new">Ny mal</string>
+    <string name="template_edit">Rediger mal</string>
     <string name="compose_record_audio_msg_play_pause_cd">Spill av eller sett lydmelding på pause</string>
     <string name="compose_toast_drag_stt">Flytt tale-til-tekst knappen hvor som helst du vil</string>
     <string name="message_body_too_long_to_display">⚠ Meldingen er lang. Kopier eller Lagre for å se hele teksten</string>
+    <string name="conversation_menu">Samtalevalg</string>
+    <string name="conversation_menu_media">Se alle medier</string>
+    <string name="media_title">Medier</string>
+    <string name="media_empty">Bilder og videoer som deles i denne samtalen, vises her</string>
     <string name="clipboard_too_large_to_copy">Datastørrelse overskrider utklippstavlens grense</string>
     <string name="clipboard_unable_to_copy_to">Kan ikke kopiere til utklippstavle</string>
     <string name="settings_system_show_stt_title">Vis tale-til-tekst knappen</string>
+    <string name="settings_drawer_swipe_title">Sveip for å åpne menyen</string>
+    <string name="settings_drawer_swipe_summary">Åpne sidemenyen ved å sveipe fra venstre kant av samtalelisten</string>
     <string name="settings_notification_silent_title">Still om ikke en kontakt</string>
     <string name="settings_notification_silent_summary">Deaktiverer varsler for meldinger som ikke har mottakere i din kontaktliste</string>
+    <string name="settings_copy_code_title">Kopier koder fra varsler</string>
+    <string name="settings_copy_code_summary">Legger til en Kopier kode-knapp i varsler med engangs- og bekreftelseskoder</string>
+    <string name="notification_copy_code">Kopier kode</string>
+    <string name="notification_code_copied">Koden er kopiert</string>
     <string name="settings_unread_at_top_title">Uleste øverst</string>
     <string name="settings_unread_at_top_summary">Vis uleste samtaler øverst</string>
     <string name="speak_no_messages">Ingen Meldinger</string>
@@ -447,12 +620,18 @@
     <string name="deduplicate_messages_title">Fjern dupliserte meldinger</string>
     <string name="deduplicate_messages_summary">Skanner gjennom meldingsdatabasen og sletter alle meldinger som nøyaktig matcher opprinnelige meldinger</string>
     <string name="deduplicate_message_confirmation_dialog_message">Meldingsdatabase din vil bli skannet for duplikater, og deretter vil disse duplikatene bli fjernet.\nDette vil automatisk slette meldinger, fortsett bare om du forstår konsekvensene.</string>
+    <string name="auto_deduplicate_messages_title">Fjern duplikater automatisk</string>
+    <string name="auto_deduplicate_messages_summary">Duplikater fjernes under synkroniseringen. Merk at dette sletter meldinger automatisk, og selv om sjansen for et falskt duplikat er svært liten, finnes den.\nVær forsiktig.</string>
+    <string name="deduplicating_messages_finished">Duplikatene er fjernet!</string>
+    <string name="deduplicating_messages_no_messages">Fant ingen dupliserte meldinger.</string>
+    <string name="deduplicating_messages_failed">Kunne ikke fjerne duplikater, prøv igjen</string>
     <string name="all_conversations_widget_title">Alle Samtaler</string>
     <string name="about_developer">Et team med fantastiske folk fra hele verden rundt!</string>
     <string name="button_clear">Tøm</string>
     <string name="notification_foreground_worker_title">Mottatt melding</string>
     <string name="notification_foreground_worker_text">På Android 12 og eldre kreves det et varsel for bakgrunnsarbeid som muliggjør mottak av meldinger.</string>
     <string name="notification_foreground_worker_channel_name">Meldingsmottaker arbeider varsel</string>
+    <string name="notification_me">Meg</string>
     <string name="notification_message_failed_action">Send på nytt</string>
     <string name="messageLinkHandling_dialog_title">Ekstern Lenke Varsel</string>
     <string name="messageLinkHandling_dialog_body">Noen lenker kan være utrygge eller omdirigere deg uventet. Se gjennom lenken nedenfor før du fortsetter:\n\n%1$s\n\nVil du fortsette?</string>

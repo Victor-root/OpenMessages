@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">Enkla meddelanden med öppen källkod</string>
     <string name="shortcut_compose_long_label">Ny konversation</string>
     <string name="shortcut_compose_short_label">Skriv</string>
     <string name="shortcut_compose_disabled_message">Genvägen inaktiverades</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">Inställningar</string>
     <string name="title_notification_prefs">Aviseringar</string>
     <string name="title_theme">Tema</string>
+    <string name="theme_default">Standard</string>
+    <string name="theme_wallpaper">Bakgrundsbild</string>
+    <string name="theme_other_colors">Färger</string>
+    <string name="theme_tab_presets">Palett</string>
+    <string name="theme_tab_custom">Anpassad</string>
+    <string name="theme_apply_to_icon">Använd färgen på appikonen (appen stängs)</string>
+    <string name="theme_tab_icon">Appikon</string>
+    <string name="theme_icon_follow_theme">Följ appens temafärg</string>
+    <string name="theme_icon_summary">Välj färg på appikonen, oberoende av temat. Appen stängs när en ändring tillämpas.</string>
+    <string name="theme_icon_change_title">Byta appikon?</string>
+    <string name="theme_icon_change_message">Appikonens färg kommer att ändras. Android kan bara byta ikon när appen är stängd, så Open Messages stängs så fort du bekräftar.</string>
     <string name="title_conversations">Sök i inkorg…</string>
+    <string name="title_search">Sök</string>
     <string name="title_compose">Ange ett namn eller nummer</string>
     <string name="setup_skip">Hoppa över</string>
     <string name="setup_next">Fortsätt</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">Spara till galleri</string>
     <string name="compose_menu_share">Dela</string>
     <string name="main_drawer_open_cd">Öppna navigeringspanelen</string>
+    <string name="main_search_close_cd">Stäng sökningen</string>
+    <string name="main_search_clear_cd">Rensa sökningen</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d vald</string>
     <string name="main_menu_clear">Rensa</string>
     <string name="main_menu_archive">Arkiv</string>
@@ -45,7 +61,15 @@
     <string name="main_menu_unread">Markera som oläst</string>
     <string name="main_menu_block">Blockera</string>
     <string name="main_syncing">Synkroniserar meddelanden…</string>
+    <string name="main_sync_emojis">Tolkar emojireaktioner…</string>
     <string name="main_sender_you">Du: %s</string>
+    <string name="main_sender_draft">Utkast: %s</string>
+    <string name="conversation_flagged_label">Misstänkt skräppost</string>
+    <string name="snippet_picture">Bild</string>
+    <string name="snippet_video">Video</string>
+    <string name="snippet_audio">Ljud</string>
+    <string name="snippet_contact_card">Kontaktkort</string>
+    <string name="search_group_conversations">Konversationer</string>
     <string name="main_message_results_title">Resultat i meddelanden</string>
     <plurals name="main_message_results">
         <item quantity="other">%d meddelanden</item>
@@ -63,10 +87,27 @@
     <string name="main_permission_notifications">Open Messages behöver behörighet för att visa aviseringar</string>
     <string name="main_permission_allow">Tillåt</string>
     <string name="drawer_inbox">Inkorg</string>
+    <string name="contacts_group_recent">Senaste</string>
+    <string name="contacts_group_starred">Favoriter</string>
+    <string name="contacts_group_groups">Grupper</string>
+    <string name="conversations_group_today">I dag</string>
+    <string name="conversations_group_yesterday">I går</string>
     <string name="drawer_archived">Arkiverat</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d oläst</item>
+        <item quantity="other">%d olästa</item>
+    </plurals>
     <string name="drawer_scheduled">Schemalagt</string>
     <string name="drawer_blocking">Blockerar</string>
     <string name="drawer_more">Mer</string>
+    <string name="message_management_title">Meddelandehantering</string>
+    <string name="templates_title">Mallar</string>
+    <string name="templates_empty">Inga sparade meddelanden än.\nTryck på + för att spara ett meddelande du ofta skickar, tryck sedan på det för att välja vem det ska skickas till.</string>
+    <string name="template_hint">Skriv ditt meddelande…</string>
+    <string name="template_title_hint">Rubrik (valfritt)</string>
+    <string name="templates_add_cd">Ny mall</string>
+    <string name="template_new">Ny mall</string>
+    <string name="template_edit">Redigera mall</string>
     <string name="drawer_settings">Inställningar</string>
     <string name="drawer_help">Hjälp &amp; återgivning</string>
     <string name="drawer_invite">Bjud in vänner</string>
@@ -92,19 +133,35 @@
     <string name="compose_subtitle_results">%1$d av %2$d resultat</string>
     <string name="compose_send_group_title">Skicka som ett grupp-meddelande</string>
     <string name="compose_send_group_summary">Mottagare och svar kommer att vara synligt för alla</string>
+    <string name="compose_send_group_summary_on">Mottagare och svar blir synliga för alla</string>
+    <string name="compose_send_group_summary_off">Meddelanden skickas separat till varje mottagare</string>
     <string name="compose_messages_empty">Det här är början på din konversation. Säg något snällt!</string>
     <string name="compose_vcard_label">Kontaktkort</string>
     <string name="compose_scheduled_for">Schemalagd tid:</string>
     <string name="compose_scheduled_future">Den valda tiden måste vara i framtiden!</string>
     <string name="compose_scheduled_toast">Lades till i schemalagda meddelanden</string>
+    <string name="compose_scheduled_view">Schemalagda meddelanden i den här konversationen</string>
+    <string name="compose_scheduled_bubble">Skickas %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d bilaga</item>
+        <item quantity="other">%d bilagor</item>
+    </plurals>
     <string name="compose_hint">Skriv ett meddelande…</string>
+    <string name="compose_expand_cd">Visa i helskärm</string>
+    <string name="compose_collapse_cd">Fäll ihop</string>
+    <string name="compose_no_valid_recipients">Kan inte skicka till de andra deltagarna</string>
+    <string name="compose_flagged_title">Misstänkt skräppost</string>
+    <string name="compose_flagged_approve">Godkänn</string>
+    <string name="compose_flagged_block">Blockera</string>
     <string name="compose_menu_copy">Kopiera text</string>
     <string name="compose_menu_forward">Vidarebefordra</string>
+    <string name="compose_menu_show_status">Visa status</string>
     <string name="compose_menu_delete">Radera</string>
     <string name="compose_menu_previous">Föregående</string>
     <string name="compose_menu_next">Nästa</string>
     <string name="compose_menu_clear">Rensa</string>
     <string name="compose_details_title">Meddelandedetaljer</string>
+    <string name="compose_reactions_title">Reaktioner</string>
     <string name="compose_details_type">Typ: %s</string>
     <string name="compose_details_from">Från: %s</string>
     <string name="compose_details_to">Till: %s</string>
@@ -116,18 +173,60 @@
     <string name="compose_details_delivered">Levererades: %s</string>
     <string name="compose_details_error_code">Felkod: %d</string>
     <string name="compose_attach_cd">Lägg till en bilaga</string>
+    <string name="compose_attach_file_cd">Bifoga valfri fil</string>
     <string name="compose_gallery_cd">Bifoga en bild</string>
+    <string name="compose_audio_message_cd">Spela in ett ljudmeddelande</string>
     <string name="compose_camera_cd">Ta en bild</string>
     <string name="compose_schedule_cd">Schemalägg meddelande</string>
+    <string name="compose_schedule_title">Schemalägg meddelande</string>
+    <string name="compose_schedule_in_hour">Om 1 timme</string>
+    <string name="compose_schedule_tonight">I kväll</string>
+    <string name="compose_schedule_tomorrow_morning">I morgon förmiddag</string>
+    <string name="compose_schedule_tomorrow_afternoon">I morgon eftermiddag</string>
+    <string name="compose_schedule_custom">Välj datum och tid</string>
+    <string name="compose_schedule_confirm">Schemalägg</string>
+    <string name="compose_schedule_previous_month">Föregående månad</string>
+    <string name="compose_schedule_next_month">Nästa månad</string>
+    <string name="compose_schedule_increase">Öka</string>
+    <string name="compose_schedule_decrease">Minska</string>
+    <string name="compose_schedule_cancel_cd">Avbryt schemalagt meddelande</string>
     <string name="compose_contact_cd">Bifoga en kontakt</string>
     <string name="compose_contact_error">Fel uppstod när kontakt lästes in</string>
+    <string name="compose_attach_gallery">Galleri</string>
+    <string name="compose_attach_camera">Kamera</string>
+    <string name="compose_attach_file">Fil</string>
+    <string name="compose_attach_audio">Ljud</string>
+    <string name="compose_attach_contact">Kontakt</string>
+    <string name="compose_attach_schedule">Schemalägg</string>
+    <string name="compose_attach_templates">Mallar</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) valdes</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">Videon är för lång för att skickas med MMS. Den får vara högst %d sekund.</item>
+        <item quantity="other">Videon är för lång för att skickas med MMS. Den får vara högst %d sekunder.</item>
+    </plurals>
     <string name="compose_sim_cd">%s valt, byt SIM-kort</string>
     <string name="compose_send_cd">Skicka meddelandet</string>
+    <string name="compose_record_audio_msg_cd">Spela in ljudmeddelande</string>
+    <string name="compose_record_audio_msg_abort_cd">Avbryt ljudmeddelande</string>
+    <string name="compose_record_audio_msg_attach_cd">Bifoga ljudmeddelande</string>
+    <string name="compose_audio_msg_title">Röstmeddelande</string>
+    <string name="compose_audio_msg_attach">Bifoga</string>
+    <string name="compose_record_audio_msg_play_pause_cd">Spela upp eller pausa ljudmeddelandet</string>
+    <string name="compose_message_cancel">Avbryt</string>
+    <string name="compose_message_send_now">Skicka nu</string>
+    <string name="compose_message_sim">SIM-nummer</string>
+    <string name="compose_message_item">Meddelandeobjekt</string>
+    <string name="compose_message_attachment">Bilaga</string>
+    <string name="compose_toast_drag_stt">Flytta knappen för tal till text vart du vill</string>
     <string name="message_status_sending">Skickar…</string>
     <string name="message_status_delivered">Levererade %s</string>
     <string name="message_status_failed">Misslyckades med att skicka. Knacka för att försöka igen</string>
+    <string name="message_body_too_long_to_display">⚠ Meddelandet är långt. Kopiera eller spara för hela texten</string>
+    <string name="conversation_menu">Konversationsalternativ</string>
+    <string name="conversation_menu_media">Visa all media</string>
+    <string name="media_title">Media</string>
+    <string name="media_empty">Foton och videor som delas i den här konversationen visas här</string>
     <string name="info_copied_address">Adress kopierades</string>
     <string name="info_name">Titel för konversation</string>
     <string name="info_notifications">Aviseringar</string>
@@ -141,11 +240,41 @@
     <string name="gallery_toast_saved">Spara till galleri</string>
     <string name="backup_title">Säkerhetskopiera och återställ</string>
     <string name="backup_backing_up">Säkerhetskopierar meddelandena</string>
+    <string name="backup_failed_title">Säkerhetskopieringen misslyckades</string>
+    <string name="backup_icon_change_title">Återställa appikonen?</string>
+    <string name="backup_icon_change_message">Din säkerhetskopia gjordes med en annan färg på appikonen. Android kan bara byta ikon när appen är stängd, så Open Messages stängs så fort du bekräftar.</string>
+    <string name="icon_change_confirm">Tillämpa och stäng</string>
+    <string name="icon_change_later">Inte nu</string>
     <string name="backup_restoring">Återställer från säkerhetskopia</string>
     <string name="backup_loading">Laddar…</string>
     <string name="backup_never">Aldrig</string>
     <string name="backup_location_title">Plats för säkerhetskopiering</string>
     <string name="backup_location_summary">Ange mapp</string>
+    <string name="backup_auto_title">Automatisk säkerhetskopiering</string>
+    <string name="backup_auto_never">Aldrig</string>
+    <string name="backup_auto_daily">Varje dag</string>
+    <string name="backup_auto_weekly">Varje vecka</string>
+    <string name="backup_auto_custom">Anpassad…</string>
+    <string name="backup_auto_custom_title">Dagar mellan säkerhetskopior</string>
+    <string name="backup_auto_custom_hint">Antal dagar</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">Varje dag</item>
+        <item quantity="other">Med %d dagars intervall</item>
+    </plurals>
+    <string name="backup_zip_title">Spara som .zip-fil</string>
+    <string name="backup_zip_summary">Spara varje säkerhetskopia som ett enda arkiv, enklare att flytta mellan telefoner</string>
+    <string name="backup_manage_title">Hantera säkerhetskopior</string>
+    <string name="backup_manage_summary">Byt namn på eller radera dina säkerhetskopior</string>
+    <string name="backup_manage_empty">Inga säkerhetskopior hittades på den här platsen</string>
+    <string name="backup_manage_rename">Byt namn</string>
+    <string name="backup_manage_delete">Radera</string>
+    <string name="backup_manage_delete_confirm">Radera \"%s\"? Det går inte att ångra.</string>
+    <string name="backup_manage_error">Kunde inte uppdatera säkerhetskopian</string>
+    <string name="backup_manage_type_folder">Mapp</string>
+    <string name="backup_manage_type_zip">Zip-arkiv</string>
+    <string name="backup_restore_from_title">Återställ från</string>
+    <string name="backup_restore_from_folder">En mapp</string>
+    <string name="backup_restore_from_zip">En .zip-fil</string>
     <string name="backup_restore_title">Återställ</string>
     <string name="backup_restore_summary">Välj en säkerhetskopia</string>
     <string name="backup_restore_error_backup">Säkerhetskopiering pågår…</string>
@@ -163,12 +292,28 @@
     <string name="backup_restore_dialog_empty">Inga säkerhetskopior kunde hittas</string>
     <string name="backup_disclaimer">För närvarande så stöds endast SMS av Säkerhetskopiera och Återställ. MMS-stöd och schemalagda säkerhetskopieringar kommer att dyka upp inom kort!</string>
     <string name="backup_now">Säkerhetskopiera nu</string>
+    <string name="backup_now_summary">Skapa en ny säkerhetskopia</string>
+    <string name="backup_categories_title">Vad ska säkerhetskopieras?</string>
+    <string name="backup_restore_source_title">Vilken säkerhetskopia?</string>
+    <string name="backup_restore_categories_title">Återställ från %s</string>
+    <string name="backup_category_messages">Meddelanden (SMS, MMS och bilagor)</string>
+    <string name="backup_category_settings">Inställningar och mallar</string>
+    <string name="backup_category_blocking">Blockeringsregler</string>
+    <string name="backup_category_conversations">Arkiverade och fästa</string>
+    <string name="backup_category_scheduled">Schemalagda meddelanden</string>
+    <string name="backup_exact_alarm_title">Tillåt exakta alarm</string>
+    <string name="backup_exact_alarm_message">För att skicka dina schemalagda meddelanden på exakt rätt tid behöver Open Messages behörighet att ställa in exakta alarm. Utan den kan de skickas lite sent.</string>
+    <string name="backup_exact_alarm_grant">Tillåt</string>
+    <string name="backup_exact_alarm_skip">Återställ ändå</string>
     <string name="backup_progress_parsing">Tolkar säkerhetskopieringen…</string>
     <string name="backup_progress_running">%d/%d meddelanden</string>
     <string name="backup_progress_saving">Sparar säkerhetskopian…</string>
     <string name="backup_progress_syncing">Synkroniserar meddelandena…</string>
     <string name="backup_progress_finished">Avslutad!</string>
+    <string name="backup_progress_failed">Säkerhetskopian kunde inte skrivas. Kontrollera ledigt utrymme och mappen för säkerhetskopior.</string>
     <string name="backup_notification_channel_name">Säkerhetskopiera och återställ</string>
+    <string name="clipboard_too_large_to_copy">Datamängden överskrider urklippets gräns</string>
+    <string name="clipboard_unable_to_copy_to">Det gick inte att kopiera till urklipp</string>
     <string name="scheduled_title">Schemalagda</string>
     <string name="scheduled_empty_description">Skicka ett meddelande automatiskt i det exakta ögonblicket som du önskar</string>
     <string name="scheduled_empty_message_1">Hi! När var din födelsedag igen?</string>
@@ -177,12 +322,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Skickar den 23:e December </string>
     <string name="scheduled_compose_cd">Schemalägg ett meddelande</string>
+    <string name="scheduled_send_cd">Schemalägg det här meddelandet</string>
     <string name="scheduled_options_title">Schemalagt meddelande</string>
     <string-array name="scheduled_options">
         <item>Skicka nu</item>
         <item>Kopiera text</item>
         <item>Radera</item>
     </string-array>
+    <string name="attachment_missing">Saknas</string>
     <string name="settings_category_appearance">Utseende</string>
     <string name="settings_category_general">Generellt</string>
     <string name="settings_category_quick_reply">Snabbsvar</string>
@@ -194,6 +341,15 @@
     <string name="settings_automatic_colors_title">Automatiska kontaktfärger</string>
     <string name="settings_text_size_title">Storlek på typsnitt</string>
     <string name="settings_system_font_title">Använd systemteckensnitt</string>
+    <string name="settings_show_avatar_title">Visa kontaktfoto</string>
+    <string name="settings_show_avatar_summary">Visa avsändarens foto i konversationer. Stäng av för att ge meddelandebubblorna mer bredd.</string>
+    <string name="settings_hide_country_code_title">Dölj landskod</string>
+    <string name="settings_hide_country_code_summary">Visa telefonnummer i lokalt format, t.ex. \"06 ...\" i stället för \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">Kant till kant</string>
+    <string name="settings_edge_to_edge_summary">Rita innehållet bakom status- och navigeringsfälten</string>
+    <string name="settings_system_show_stt_title">Visa knappen för tal till text</string>
+    <string name="settings_drawer_swipe_title">Svep för att öppna menyn</string>
+    <string name="settings_drawer_swipe_summary">Öppna sidomenyn genom att svepa från vänsterkanten av konversationslistan</string>
     <string name="settings_auto_emoji_title">Automatisk uttryckssymbol</string>
     <string name="settings_notifications_title">Aviseringar</string>
     <string name="settings_notifications_o_summary">Tryck för att anpassa</string>
@@ -202,7 +358,14 @@
     <string name="settings_notification_action_2">Knapp 2</string>
     <string name="settings_notification_action_3">Knapp 3</string>
     <string name="settings_notification_previews_title">Notifikations förhandsvisningar</string>
+    <string name="settings_notification_previews_summary">Visa namn och meddelande</string>
     <string name="settings_notification_wake_title">Väck skärm</string>
+    <string name="settings_notification_silent_title">Tyst om inte en kontakt</string>
+    <string name="settings_notification_silent_summary">Tystar aviseringar för meddelanden från avsändare som inte finns bland dina kontakter</string>
+    <string name="settings_copy_code_title">Kopiera koder från aviseringar</string>
+    <string name="settings_copy_code_summary">Lägger till knappen Kopiera kod i aviseringar med engångs- och verifieringskoder</string>
+    <string name="notification_copy_code">Kopiera kod</string>
+    <string name="notification_code_copied">Koden kopierad</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Ljud</string>
     <string name="settings_ringtone_none">Ingen</string>
@@ -227,6 +390,13 @@
     </string-array>
     <string name="settings_delivery_title">Leveransrapporter</string>
     <string name="settings_delivery_summary">Bekräfta att meddelanden har skickats</string>
+    <string name="settings_send_sound_title">Ljud vid skickande</string>
+    <string name="settings_send_sound_summary">Spela en kort ton när du skickar ett meddelande</string>
+    <string name="settings_send_sound_volume_title">Volym</string>
+    <string name="settings_header_quick_action_title">Snabbåtgärd i rubriken</string>
+    <string name="settings_header_quick_action_summary">Lägg till en genvägsknapp i konversationens rubrik</string>
+    <string name="settings_unread_at_top_title">Olästa överst</string>
+    <string name="settings_unread_at_top_summary">Visa olästa konversationer överst</string>
     <string name="settings_signature_title">Signatur</string>
     <string name="settings_signature_summary">Lägg till en signatur i slutet av dina meddelanden</string>
     <string name="settings_unicode_title">Ta bort accenter</string>
@@ -246,6 +416,9 @@
     <string name="settings_long_as_mms_title">Skicka långa meddelanden som MMS</string>
     <string name="settings_long_as_mms_summary">Om dina längre textmeddelanden inte skickas eller skickas i fel ordning kan du skicka dem som MMS-meddelanden istället. Ytterligare avgifter kan tillkomma</string>
     <string name="settings_mms_size_title">Komprimera MMS-bilagor automatiskt</string>
+    <string name="settings_mms_weblink_title">Länkhantering i meddelanden</string>
+    <string name="settings_disable_screenshots_title">Inaktivera skärmbilder</string>
+    <string name="settings_diable_screenshots_summary">Hindra systemet och andra appar från att ta skärmbilder av appen.</string>
     <string name="settings_sync_title">Synkronisera meddelanden</string>
     <string name="settings_sync_summary">Synkronisera dina meddelanden med telefonens SMS-databas</string>
     <string name="settings_about_title">Om Open Messages</string>
@@ -257,6 +430,17 @@
     <string name="blocking_drop_title">Avvisa meddelanden</string>
     <string name="blocking_drop_summary">Avvisa inkommande meddelanden från blockerade avsändare istället för att dölja dem</string>
     <string name="blocking_conversations">Blockerade konversationer</string>
+    <string name="blocking_category_integrated">Inbyggd blockering</string>
+    <string name="blocking_integrated_description">Open Messages blockerar skräppost på din enhet. De valfria källorna nedan laddar ner sin lista från internet när du aktiverar dem och fungerar sedan offline.</string>
+    <string name="blocking_category_external_apps">Externa appar</string>
+    <string name="blocked_numbers_summary">Nummer som du själv blockerar</string>
+    <string name="blocking_source_phishing_title">Antinätfiske</string>
+    <string name="blocking_source_phishing_summary">Blockerar meddelanden med länkar till kända nätfiskewebbplatser. När du aktiverar detta laddas listan ner från internet; därefter sker filtreringen offline.</string>
+    <string name="blocking_source_flag_block_title">Blockera misstänkt skräppost</string>
+    <string name="blocking_source_flag_block_summary">Skicka meddelanden som märkts som möjlig skräppost direkt till blockeringslistan i stället för att bara märka dem i inkorgen</string>
+    <string name="blocking_source_status_updating">Uppdaterar…</string>
+    <string name="blocking_source_status_updated">Uppdaterad · %1$d poster</string>
+    <string name="blocking_source_status_failed">Nedladdningen misslyckades, källan förblir avstängd. Kontrollera anslutningen och försök igen.</string>
     <string name="blocking_manager_title">Blockerings-hanterare</string>
     <string name="blocking_manager_built_in_summary">Inbyggd blockeringsfunktion i Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Blockera spam, nummer &amp; okända samtal med svartlista &amp; schema</string>
@@ -270,6 +454,8 @@
     <string name="blocked_numbers_dialog_title">Blockera SMS från</string>
     <string name="blocked_numbers_dialog_hint">Telefonnummer</string>
     <string name="blocked_numbers_dialog_block">Blockera</string>
+    <string name="message_content_filters_title">Innehållsfilter</string>
+    <string name="message_content_filters_empty">Dina innehållsfilter för meddelanden visas här</string>
     <string name="blocked_messages_title">Blockerade meddelanden</string>
     <string name="blocked_messages_empty">Dina blockerade meddelanden visas här</string>
     <string name="blocking_block_title">Blockera</string>
@@ -282,6 +468,15 @@
         <item quantity="one">Fortsätt till %s och tillåt detta nummer</item>
         <item quantity="other">Fortsätt till %s och tillåt dessa nummer</item>
     </plurals>
+    <string name="deduplicate_messages_category">Ta bort dubbletter</string>
+    <string name="deduplicate_messages_title">Ta bort dubblettmeddelanden</string>
+    <string name="deduplicate_messages_summary">Söker igenom meddelandedatabasen och raderar alla meddelanden som är exakt likadana som originalet</string>
+    <string name="deduplicate_message_confirmation_dialog_message">Meddelandedatabasen söks igenom efter dubbletter som sedan tas bort.\nDetta raderar meddelanden automatiskt, fortsätt bara om du förstår konsekvenserna.</string>
+    <string name="auto_deduplicate_messages_title">Ta bort dubbletter automatiskt</string>
+    <string name="auto_deduplicate_messages_summary">Dubbletter tas bort under synkroniseringen. Observera att detta raderar meddelanden automatiskt, och även om risken för en felaktig dubblett är mycket liten finns den.\nVar försiktig.</string>
+    <string name="deduplicating_messages_finished">Dubbletterna har tagits bort!</string>
+    <string name="deduplicating_messages_no_messages">Inga dubblettmeddelanden hittades.</string>
+    <string name="deduplicating_messages_failed">Det gick inte att ta bort dubbletter, försök igen</string>
     <string name="about_title">Om</string>
     <string name="about_version_title">Version</string>
     <string name="about_developer_title">Utvecklare</string>
@@ -292,6 +487,7 @@
     <string name="about_copyright_title">Kopieringsskydd</string>
     <string name="widget_loading">Laddar…</string>
     <string name="widget_more">Visa fler konversationer</string>
+    <string name="all_conversations_widget_title">Alla konversationer</string>
     <string name="quick_reply_menu_read">Markera som läst</string>
     <string name="quick_reply_menu_call">Ring</string>
     <string name="quick_reply_menu_delete">Ta bort</string>
@@ -313,18 +509,36 @@
     <string name="button_yes">Ja</string>
     <string name="button_continue">Fortsätt</string>
     <string name="button_cancel">Avbryt</string>
+    <string name="button_close">Stäng</string>
     <string name="button_delete">Radera</string>
     <string name="button_save">Spara</string>
     <string name="button_stop">Stoppa</string>
     <string name="button_set">Ställ in</string>
+    <string name="button_later">Senare</string>
+    <string name="icon_restart_title">Omstart krävs</string>
+    <string name="icon_restart_message">Appen måste startas om för att appikonen ska bli klart uppdaterad.</string>
+    <string name="icon_restart_now">Starta om</string>
     <string name="button_undo">Ångra</string>
+    <string name="button_clear">Rensa</string>
     <string name="toast_copied">Kopierad</string>
+    <plurals name="toast_archived">
+        <item quantity="one">Konversationen arkiverades</item>
+        <item quantity="other">%d konversationer arkiverades</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">Konversationen avarkiverades</item>
+        <item quantity="other">%d konversationer avarkiverades</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">Nytt meddelande</item>
         <item quantity="other">%s nya meddelanden</item>
     </plurals>
     <string name="notification_message_failed_title">Meddelandet skickades inte</string>
     <string name="notification_message_failed_text">Meddelandet till %s misslyckades att skicka</string>
+    <string name="notification_foreground_worker_title">Tar emot meddelande</string>
+    <string name="notification_foreground_worker_text">På Android 12 och äldre krävs en avisering för bakgrundsarbetet som gör det möjligt att ta emot meddelanden.</string>
+    <string name="notification_foreground_worker_channel_name">Avisering för mottagning av meddelanden</string>
+    <string name="notification_me">Jag</string>
     <string-array name="night_modes">
         <item>System</item>
         <item>Inaktiverad</item>
@@ -348,6 +562,21 @@
         <item>5 sekunder</item>
         <item>10 sekunder</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>Ingen</item>
+        <item>Arkivera</item>
+        <item>Markera som oläst</item>
+        <item>Blockera</item>
+        <item>Radera</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>Inget</item>
+        <item>Klassiskt</item>
+        <item>Ljust</item>
+        <item>Mjukt</item>
+        <item>Fallande</item>
+        <item>Tre toner</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatisk</item>
         <item>100KB</item>
@@ -357,6 +586,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>Ingen komprimering</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>Blockera</item>
+        <item>Tillåt</item>
+        <item>Fråga innan öppning</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Okej</item>
@@ -390,12 +624,25 @@
         <item quantity="other">Är du säker på att du vill skicka %d meddelanden nu?</item>
     </plurals>
     <string name="dialog_edit_scheduled_message_title">Redigera meddelande</string>
+    <string name="dialog_edit_scheduled_message">Om du redigerar meddelandet tas det bort från schemat.\n\nSe till att schemalägga det igen på nästa skärm, annars går det förlorat.\n\nVill du fortsätta?</string>
     <string name="dialog_edit_scheduled_message_positive_button">Ja, redigera meddelandet</string>
     <string name="dialog_clear_compose_title">Rensa meddelande</string>
     <string name="dialog_clear_compose">Rensa meddelandet? Denna åtgärd kan inte ångras.</string>
     <string name="notification_message_failed_action">Skicka igen</string>
     <string name="speak_no_messages">Inga meddelanden</string>
+    <string name="speak_unseen_messages">Läs upp osedda meddelanden</string>
     <string name="messageLinkHandling_dialog_title">Varning för extern länk</string>
+    <string name="messageLinkHandling_dialog_body">Vissa länkar kan vara osäkra eller leda dig någon annanstans än väntat. Granska länken nedan innan du fortsätter:\n\n%1$s\n\nVill du fortsätta?</string>
+    <string name="messageLinkHandling_dialog_positive">Ja, öppna länken</string>
+    <string name="messageLinkHandling_dialog_negative">Nej</string>
+    <string name="error_stt_toast">Tyvärr uppstod ett fel när tjänsten för tal till text skulle laddas.</string>
+    <string name="stt_toast_extra_prompt">Säg ditt meddelande</string>
+    <string name="messages_text_share_file_error">Hoppsan! Något gick fel vid delningen</string>
     <string name="message_content_filters_add_cd">Skapa ett nytt filter</string>
+    <string name="message_content_filters_dialog_title">Släng meddelanden som matchar</string>
     <string name="message_content_filters_dialog_hint">Ord, fras eller reguljärt uttryck</string>
+    <string name="message_content_filters_dialog_case_switch">Skiftlägeskänslig</string>
+    <string name="message_content_filters_dialog_regex_switch">Reguljärt uttryck</string>
+    <string name="message_content_filters_dialog_contacts_switch">Inkludera kontakter</string>
+    <string name="message_content_filters_dialog_create">Skapa</string>
 </resources>
