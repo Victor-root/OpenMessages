@@ -25,7 +25,7 @@
     <string name="title_settings">Setelan</string>
     <string name="title_notification_prefs">Notifikasi</string>
     <string name="title_theme">Tema</string>
-    <string name="theme_default">Default</string>
+    <string name="theme_default">Bawaan</string>
     <string name="theme_wallpaper">Wallpaper</string>
     <string name="theme_other_colors">Warna</string>
     <string name="theme_tab_presets">Palet</string>
@@ -85,13 +85,13 @@
     <string name="inbox_search_empty_text">Tidak ada hasil</string>
     <string name="archived_empty_text">Arsip percakapan anda akan ditampilkan di sini</string>
     <string name="main_fab_cd">Mulai percakapan baru</string>
-    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_title">Kembali senang berkirim pesan</string>
     <string name="main_default_sms_message">Tetapkan Open Messages sebagai aplikasi SMS default anda</string>
     <string name="main_default_sms_change">Ubah</string>
     <string name="main_permission_required">Membutuhkan izin</string>
     <string name="main_permission_sms">Open Messages membutuhkan izin untuk mengirim dan membaca pesan SMS</string>
     <string name="main_permission_contacts">Open Messages membutuhkan izin untuk membaca kontak anda</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">Open Messages membutuhkan izin untuk menampilkan notifikasi</string>
     <string name="main_permission_allow">Izinkan</string>
     <string name="scheduled_menu_send_now">Kirim sekarang</string>
     <string name="scheduled_menu_edit_message">Edit pesan</string>
@@ -115,7 +115,7 @@
     <string name="template_title_hint">Judul (opsional)</string>
     <string name="templates_add_cd">Template baru</string>
     <string name="template_new">Template baru</string>
-    <string name="template_edit">Edit template</string>
+    <string name="template_edit">Ubah template</string>
     <string name="drawer_settings">Setelan</string>
     <string name="drawer_help">Bantuan &amp; umpanbalik</string>
     <string name="drawer_invite">Undang teman</string>
@@ -144,7 +144,7 @@
         <item>Hapus</item>
     </string-array>
     <string name="compose_number_picker_title">Pilih nomor telepon</string>
-    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_default">%s ∙ Bawaan</string>
     <string name="compose_number_picker_once">Hanya sekali</string>
     <string name="compose_number_picker_always">Selalu</string>
     <string name="compose_title_selected">%d dipilih</string>
@@ -264,8 +264,8 @@
     <string name="backup_restoring">Memulihkan cadangan pesan</string>
     <string name="backup_loading">Memuat…</string>
     <string name="backup_never">Tidak pernah</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">Lokasi cadangan</string>
+    <string name="backup_location_summary">Pilih folder</string>
     <string name="backup_auto_title">Pencadangan otomatis</string>
     <string name="backup_auto_never">Tidak pernah</string>
     <string name="backup_auto_daily">Setiap hari</string>
@@ -297,12 +297,12 @@
     <string name="backup_restore_confirm_title">Pulihkan dari cadangan</string>
     <string name="backup_restore_stop_title">Setop pemulihan</string>
     <string name="backup_restore_stop_message">Pesan yang telah dipulihkan akan tetap berada di perangkat anda</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_title">Pilih lokasi cadangan</string>
+    <string name="backup_select_location_rationale_message">Pilih folder untuk menyimpan cadangan Anda</string>
+    <string name="backup_details">%1$s\n%2$d pesan</string>
+    <string name="backup_selected_backup_error_title">Galat</string>
+    <string name="backup_selected_backup_error_message">Tidak bisa membaca file cadangan</string>
+    <string name="backup_selected_backup_details_title">Detail cadangan</string>
     <string name="backup_restore_dialog_title">Cadangan</string>
     <string name="backup_restore_dialog_empty">Cadangan tidak ditemukan</string>
     <string name="backup_disclaimer">Saat ini, Cadangan dan Pemulihan hanya mendukung pesan SMS. Dukungan MMS dan cadangan terjadwal akan segera datang!</string>

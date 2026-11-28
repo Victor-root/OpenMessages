@@ -20,7 +20,7 @@
     <string name="app_tagline">Simple at open-source na pagmemensahe</string>
     <string name="shortcut_compose_long_label">Bagong usapan</string>
     <string name="shortcut_compose_short_label">Sumulat</string>
-    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
+    <string name="shortcut_compose_disabled_message">Naka-disable ang shortcut</string>
     <string name="title_archived">Nakatabi</string>
     <string name="title_settings">Mga setting</string>
     <string name="title_notification_prefs">Mga Notification</string>
@@ -28,8 +28,8 @@
     <string name="theme_default">Default</string>
     <string name="theme_wallpaper">Wallpaper</string>
     <string name="theme_other_colors">Mga kulay</string>
-    <string name="theme_tab_presets">Palette</string>
-    <string name="theme_tab_custom">Custom</string>
+    <string name="theme_tab_presets">Mga palette</string>
+    <string name="theme_tab_custom">Sariling kulay</string>
     <string name="theme_apply_to_icon">Ilapat ang kulay sa icon ng app (magsasara ang app)</string>
     <string name="theme_tab_icon">Icon ng app</string>
     <string name="theme_icon_follow_theme">Itugma sa kulay ng tema ng app</string>
@@ -43,16 +43,16 @@
     <string name="setup_next">Magpatuloy</string>
     <string name="menu_add_person">Magdagdag nang tao</string>
     <string name="menu_call">Tawagan</string>
-    <string name="menu_mms_part_save">Save to gallery</string>
+    <string name="menu_mms_part_save">I-save sa gallery</string>
     <string name="menu_mms_part_share">Ibahagi</string>
     <string name="menu_mms_part_forward">Ipasa</string>
     <string name="menu_mms_part_open">Buksan sa ibang app</string>
     <string name="compose_menu_share">Magbahagi</string>
-    <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_drawer_open_cd">Buksan ang navigation drawer</string>
     <string name="main_search_close_cd">Isara ang paghahanap</string>
     <string name="main_search_clear_cd">I-clear ang paghahanap</string>
     <string name="main_sim_cd">SIM %d</string>
-    <string name="main_title_selected">%d selected</string>
+    <string name="main_title_selected">%d napili</string>
     <string name="main_menu_clear">Malinaw</string>
     <string name="main_menu_select_all">Piliin lahat</string>
     <string name="main_menu_archive">Itabi</string>
@@ -61,13 +61,13 @@
     <string name="main_menu_add_contact">Maglagay nang mga contacts</string>
     <string name="main_menu_pin">I-ipit sa itaas</string>
     <string name="main_menu_unpin">I-unpin</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
-    <string name="main_menu_block">Block</string>
+    <string name="main_menu_read">Markahang nabasa</string>
+    <string name="main_menu_unread">Markahang hindi pa nabasa</string>
+    <string name="main_menu_block">I-block</string>
     <string name="main_menu_send_now">Ipadala na</string>
     <string name="main_menu_edit_message">I-edit ang mensahe</string>
     <string name="main_menu_rename_conversation">Palitan ang pangalan ng usapan</string>
-    <string name="main_syncing">Syncing messages…</string>
+    <string name="main_syncing">Sini-sync ang mga mensahe…</string>
     <string name="main_sync_emojis">Pinoproseso ang mga emoji reaction…</string>
     <string name="main_sender_you">Ikaw: %s</string>
     <string name="main_sender_draft">Draft: %s</string>
@@ -85,13 +85,13 @@
     <string name="inbox_search_empty_text">Walang nakita</string>
     <string name="archived_empty_text">Ang iyong mga isinantabing pakikipag-usap at makikita rito</string>
     <string name="main_fab_cd">Magsimula ng bagong usapan</string>
-    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_title">Mahalin muli ang pagte-text</string>
     <string name="main_default_sms_message">Gawin ang Open Messages bilang iyong default na SMS app</string>
     <string name="main_default_sms_change">Baguhin</string>
     <string name="main_permission_required">Kailangan ang iyong pahintulot</string>
     <string name="main_permission_sms">Kailangan ng Open Messages ang iyong pahintulot para maipadala at makita ang mga mensahe</string>
     <string name="main_permission_contacts">Kailangan ng Open Messages ang iyong pahintulot para makita ang iyong contacts</string>
-    <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
+    <string name="main_permission_notifications">Kailangan ng Open Messages ang iyong pahintulot para magpakita ng mga notification</string>
     <string name="main_permission_allow">Payagan</string>
     <string name="scheduled_menu_send_now">Ipadala na</string>
     <string name="scheduled_menu_edit_message">I-edit ang mensahe</string>
@@ -107,7 +107,7 @@
         <item quantity="other">%d hindi pa nababasa</item>
     </plurals>
     <string name="drawer_scheduled">Iskedyul</string>
-    <string name="drawer_blocking">Blocking</string>
+    <string name="drawer_blocking">Pag-block</string>
     <string name="drawer_more">Higit pa</string>
     <string name="message_management_title">Pamamahala ng Mensahe</string>
     <string name="templates_title">Mga template</string>
@@ -117,13 +117,13 @@
     <string name="templates_add_cd">Bagong template</string>
     <string name="template_new">Bagong template</string>
     <string name="template_edit">I-edit ang template</string>
-    <string name="drawer_settings">Settings</string>
+    <string name="drawer_settings">Mga setting</string>
     <string name="drawer_help">magbigay ng Feedback</string>
     <string name="drawer_invite">Maganyaya ng mga kaibigan</string>
     <string name="rate_title">Natutuwa sa Open Messages?</string>
     <string name="rate_summary">Ibahagi ang pag-ibig at i-rate kami sa Google Play!</string>
-    <string name="rate_okay">OKAY!</string>
-    <string name="rate_dismiss">DISMISS</string>
+    <string name="rate_okay">SIGE!</string>
+    <string name="rate_dismiss">ISARA</string>
     <string name="dialog_delete_title">Tanggalin</string>
     <plurals name="dialog_delete_message">
         <item quantity="one">Sigurado ka bang gusto mong burahin ang pag-uusap na ito?</item>
@@ -161,45 +161,45 @@
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Naka-iskedyul para sa</string>
     <string name="compose_scheduled_future">Ang napiling oras ay dapat na sa hinaharap!</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_scheduled_toast">Idinagdag sa mga naka-iskedyul na mensahe</string>
     <string name="compose_scheduled_view">Mga naka-iskedyul na mensahe sa usapang ito</string>
     <string name="compose_scheduled_bubble">Ipapadala sa %s</string>
     <plurals name="compose_scheduled_bubble_attachments">
         <item quantity="one">%d attachment</item>
         <item quantity="other">%d na attachment</item>
     </plurals>
-    <string name="compose_hint">Write a message…</string>
+    <string name="compose_hint">Sumulat ng mensahe…</string>
     <string name="compose_expand_cd">I-full screen</string>
     <string name="compose_collapse_cd">I-collapse</string>
     <string name="compose_no_valid_recipients">Hindi maipadala sa ibang kalahok</string>
     <string name="compose_flagged_title">Pinaghihinalaang spam</string>
     <string name="compose_flagged_approve">Aprubahan</string>
     <string name="compose_flagged_block">I-block</string>
-    <string name="compose_menu_copy">Copy text</string>
-    <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_copy">Kopyahin ang text</string>
+    <string name="compose_menu_forward">Ipasa</string>
     <string name="compose_menu_show_status">Ipakita ang status</string>
-    <string name="compose_menu_delete">Delete</string>
-    <string name="compose_menu_previous">Previous</string>
-    <string name="compose_menu_next">Next</string>
-    <string name="compose_menu_clear">Clear</string>
-    <string name="compose_details_title">Message details</string>
+    <string name="compose_menu_delete">Burahin</string>
+    <string name="compose_menu_previous">Nakaraan</string>
+    <string name="compose_menu_next">Susunod</string>
+    <string name="compose_menu_clear">I-clear</string>
+    <string name="compose_details_title">Mga detalye ng mensahe</string>
     <string name="compose_reactions_title">Mga reaction</string>
-    <string name="compose_details_type">Type: %s</string>
-    <string name="compose_details_from">From: %s</string>
+    <string name="compose_details_type">Uri: %s</string>
+    <string name="compose_details_from">Mula kay: %s</string>
     <string name="compose_details_to">To: %s</string>
-    <string name="compose_details_subject">Subject: %s</string>
-    <string name="compose_details_priority">Priority: %s</string>
-    <string name="compose_details_size">Size: %s</string>
-    <string name="compose_details_sent">Sent: %s</string>
-    <string name="compose_details_received">Received: %s</string>
-    <string name="compose_details_delivered">Delivered: %s</string>
+    <string name="compose_details_subject">Paksa: %s</string>
+    <string name="compose_details_priority">Priyoridad: %s</string>
+    <string name="compose_details_size">Laki: %s</string>
+    <string name="compose_details_sent">Ipinadala: %s</string>
+    <string name="compose_details_received">Natanggap: %s</string>
+    <string name="compose_details_delivered">Naihatid: %s</string>
     <string name="compose_details_error_code">Error code: %d</string>
-    <string name="compose_attach_cd">Add an attachment</string>
+    <string name="compose_attach_cd">Magdagdag ng attachment</string>
     <string name="compose_attach_file_cd">Mag-attach ng kahit anong file</string>
-    <string name="compose_gallery_cd">Attach a photo</string>
+    <string name="compose_gallery_cd">Mag-attach ng larawan</string>
     <string name="compose_audio_message_cd">Mag-record ng audio message</string>
-    <string name="compose_camera_cd">Take a photo</string>
-    <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_camera_cd">Kumuha ng larawan</string>
+    <string name="compose_schedule_cd">I-iskedyul ang mensahe</string>
     <string name="compose_schedule_title">I-iskedyul ang mensahe</string>
     <string name="compose_schedule_in_hour">Makalipas ang 1 oras</string>
     <string name="compose_schedule_tonight">Mamayang gabi</string>
@@ -212,8 +212,8 @@
     <string name="compose_schedule_increase">Dagdagan</string>
     <string name="compose_schedule_decrease">Bawasan</string>
     <string name="compose_schedule_cancel_cd">Kanselahin ang iskedyul ng mensahe</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_contact_cd">Mag-attach ng contact</string>
+    <string name="compose_contact_error">Hindi mabasa ang contact</string>
     <string name="compose_attach_gallery">Gallery</string>
     <string name="compose_attach_camera">Camera</string>
     <string name="compose_attach_file">File</string>
@@ -222,13 +222,13 @@
     <string name="compose_attach_schedule">Iskedyul</string>
     <string name="compose_attach_templates">Mga template</string>
     <!-- Example: SIM 1 (Verizon) selected-->
-    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_changed_toast">Napili ang SIM %1$d (%2$s)</string>
     <plurals name="compose_video_too_long">
         <item quantity="one">Masyadong mahaba ang video na ito para ipadala sa MMS. Hanggang %d segundo lang ito.</item>
         <item quantity="other">Masyadong mahaba ang video na ito para ipadala sa MMS. Hanggang %d segundo lang ito.</item>
     </plurals>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
-    <string name="compose_send_cd">Send message</string>
+    <string name="compose_sim_cd">Napili ang %s, palitan ang SIM card</string>
+    <string name="compose_send_cd">Ipadala ang mensahe</string>
     <string name="compose_record_audio_msg_cd">Mag-record ng audio message</string>
     <string name="compose_record_audio_msg_abort_cd">Kanselahin ang audio message</string>
     <string name="compose_record_audio_msg_attach_cd">I-attach ang audio message</string>
@@ -241,42 +241,42 @@
     <string name="compose_message_item">Item ng mensahe</string>
     <string name="compose_message_attachment">Attachment</string>
     <string name="compose_toast_drag_stt">Ilipat ang speech-to-text button kahit saan mo gusto</string>
-    <string name="message_status_sending">Sending…</string>
-    <string name="message_status_delivered">Delivered %s</string>
-    <string name="message_status_failed">Failed to send. Tap to try again</string>
+    <string name="message_status_sending">Ipinapadala…</string>
+    <string name="message_status_delivered">Naihatid %s</string>
+    <string name="message_status_failed">Hindi naipadala. I-tap para subukang muli</string>
     <string name="message_body_too_long_to_display">⚠ Mahaba ang mensahe. Kopyahin o I-save para makita ang buong text</string>
     <string name="conversation_menu">Mga opsyon sa usapan</string>
     <string name="conversation_menu_media">Tingnan lahat ng media</string>
     <string name="media_title">Media</string>
     <string name="media_empty">Lalabas dito ang mga larawan at video na ibinahagi sa usapang ito</string>
-    <string name="info_copied_address">Address copied</string>
-    <string name="info_name">Conversation title</string>
-    <string name="info_notifications">Notifications</string>
-    <string name="info_theme">Theme</string>
-    <string name="info_archive">Archive</string>
-    <string name="info_unarchive">Unarchive</string>
-    <string name="info_block">Block</string>
-    <string name="info_unblock">Unblock</string>
-    <string name="info_delete">Delete conversation</string>
-    <string name="gallery_error">Couldn\'t load media</string>
-    <string name="gallery_toast_saved">Saved to gallery</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
+    <string name="info_copied_address">Nakopya ang address</string>
+    <string name="info_name">Pamagat ng usapan</string>
+    <string name="info_notifications">Mga notification</string>
+    <string name="info_theme">Tema</string>
+    <string name="info_archive">Itabi</string>
+    <string name="info_unarchive">Ilabas</string>
+    <string name="info_block">I-block</string>
+    <string name="info_unblock">I-unblock</string>
+    <string name="info_delete">Burahin ang usapan</string>
+    <string name="gallery_error">Hindi ma-load ang media</string>
+    <string name="gallery_toast_saved">Na-save sa gallery</string>
+    <string name="backup_title">Backup at restore</string>
+    <string name="backup_backing_up">Bina-backup ang mga mensahe</string>
     <string name="backup_failed_title">Nabigo ang backup</string>
     <string name="backup_icon_change_title">Ibalik ang icon ng app?</string>
     <string name="backup_icon_change_message">Ginawa ang iyong backup gamit ang ibang kulay ng icon ng app. Napapalitan lang ng Android ang icon habang nakasara ang app, kaya magsasara ang Open Messages sa sandaling kumpirmahin mo.</string>
     <string name="icon_change_confirm">Ilapat at isara</string>
     <string name="icon_change_later">Hindi muna</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_loading">Loading…</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_restoring">Nire-restore mula sa backup</string>
+    <string name="backup_loading">Naglo-load…</string>
+    <string name="backup_never">Hindi kailanman</string>
+    <string name="backup_location_title">Lokasyon ng backup</string>
+    <string name="backup_location_summary">Pumili ng folder</string>
     <string name="backup_auto_title">Awtomatikong backup</string>
     <string name="backup_auto_never">Hindi kailanman</string>
     <string name="backup_auto_daily">Araw-araw</string>
     <string name="backup_auto_weekly">Linggo-linggo</string>
-    <string name="backup_auto_custom">Custom…</string>
+    <string name="backup_auto_custom">Iba pa…</string>
     <string name="backup_auto_custom_title">Ilang araw sa pagitan ng mga backup</string>
     <string name="backup_auto_custom_hint">Bilang ng araw</string>
     <plurals name="backup_auto_every_days">
@@ -297,23 +297,23 @@
     <string name="backup_restore_from_title">I-restore mula sa</string>
     <string name="backup_restore_from_folder">Isang folder</string>
     <string name="backup_restore_from_zip">Isang .zip file</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_backup">Backup in progress…</string>
-    <string name="backup_restore_error_restore">Restore in progress…</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_restore_title">I-restore</string>
+    <string name="backup_restore_summary">Pumili ng backup</string>
+    <string name="backup_restore_error_backup">Kasalukuyang nagba-backup…</string>
+    <string name="backup_restore_error_restore">Kasalukuyang nagre-restore…</string>
+    <string name="backup_restore_confirm_title">I-restore mula sa backup</string>
+    <string name="backup_restore_stop_title">Ihinto ang restore</string>
+    <string name="backup_restore_stop_message">Mananatili sa iyong device ang mga mensaheng na-restore na</string>
+    <string name="backup_select_location_rationale_title">Pumili ng lokasyon ng backup</string>
+    <string name="backup_select_location_rationale_message">Pumili ng folder kung saan ise-save ang iyong mga backup</string>
+    <string name="backup_details">%1$s\n%2$d mensahe</string>
     <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_selected_backup_error_message">Hindi mabasa ang backup file</string>
+    <string name="backup_selected_backup_details_title">Mga detalye ng backup</string>
+    <string name="backup_restore_dialog_title">Mga backup</string>
+    <string name="backup_restore_dialog_empty">Walang nakitang backup</string>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
+    <string name="backup_now">Mag-backup ngayon</string>
     <string name="backup_now_summary">Gumawa ng bagong backup</string>
     <string name="backup_categories_title">Ano ang iba-backup?</string>
     <string name="backup_restore_source_title">Aling backup?</string>
@@ -327,91 +327,99 @@
     <string name="backup_exact_alarm_message">Para maipadala ang iyong mga naka-iskedyul na mensahe sa eksaktong oras, kailangan ng Open Messages ng pahintulot na mag-set ng mga eksaktong alarm. Kung wala ito, baka medyo maantala ang pagpapadala.</string>
     <string name="backup_exact_alarm_grant">Payagan</string>
     <string name="backup_exact_alarm_skip">I-restore pa rin</string>
-    <string name="backup_progress_parsing">Parsing backup…</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup…</string>
-    <string name="backup_progress_syncing">Syncing messages…</string>
-    <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_parsing">Binabasa ang backup…</string>
+    <string name="backup_progress_running">%d/%d mensahe</string>
+    <string name="backup_progress_saving">Sine-save ang backup…</string>
+    <string name="backup_progress_syncing">Sini-sync ang mga mensahe…</string>
+    <string name="backup_progress_finished">Tapos na!</string>
     <string name="backup_progress_failed">Hindi maisulat ang backup. Tingnan ang natitirang espasyo at ang backup folder.</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_notification_channel_name">Backup at restore</string>
     <string name="clipboard_too_large_to_copy">Lumampas sa limitasyon ng clipboard ang laki ng data</string>
     <string name="clipboard_unable_to_copy_to">Hindi makopya sa clipboard</string>
-    <string name="scheduled_title">Scheduled</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
-    <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
-    <string name="scheduled_empty_message_2">It\'s on December 23rd</string>
-    <string name="scheduled_empty_message_3">Happy birthday! Look at what a great friend I am, remembering your birthday</string>
+    <string name="scheduled_title">Naka-iskedyul</string>
+    <string name="scheduled_empty_description">Awtomatikong magpadala ng mensahe sa mismong oras na gusto mo</string>
+    <string name="scheduled_empty_message_1">Uy! Kailan nga ulit ang birthday mo?</string>
+    <string name="scheduled_empty_message_2">Sa Disyembre 23</string>
+    <string name="scheduled_empty_message_3">Maligayang kaarawan! Tingnan mo kung gaano ako kabuting kaibigan, naaalala ko ang birthday mo</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
-    <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_compose_cd">Mag-iskedyul ng mensahe</string>
     <string name="scheduled_send_cd">I-iskedyul ang mensaheng ito</string>
-    <string name="scheduled_options_title">Scheduled message</string>
+    <string name="scheduled_options_title">Naka-iskedyul na mensahe</string>
     <string-array name="scheduled_options">
-        <item>Send now</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Ipadala na</item>
+        <item>Kopyahin ang text</item>
+        <item>Burahin</item>
     </string-array>
     <string name="attachment_missing">Nawawala</string>
-    <string name="settings_category_appearance">Appearance</string>
-    <string name="settings_category_general">General</string>
-    <string name="settings_category_quick_reply">Quick Reply</string>
-    <string name="settings_theme_title">Theme</string>
+    <string name="settings_category_appearance">Itsura</string>
+    <string name="settings_category_general">Pangkalahatan</string>
+    <string name="settings_category_quick_reply">Mabilisang Sagot</string>
+    <string name="settings_theme_title">Tema</string>
     <string name="settings_night_title">Night mode</string>
-    <string name="settings_black_title">Pure black night mode</string>
-    <string name="settings_night_start_title">Start time</string>
-    <string name="settings_night_end_title">End time</string>
+    <string name="settings_black_title">Purong itim na night mode</string>
+    <string name="settings_night_start_title">Oras ng simula</string>
+    <string name="settings_night_end_title">Oras ng pagtatapos</string>
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
-    <string name="settings_text_size_title">Font size</string>
-    <string name="settings_system_font_title">Use system font</string>
+    <string name="settings_text_size_title">Laki ng font</string>
+    <string name="settings_system_font_title">Gamitin ang font ng system</string>
     <string name="settings_show_avatar_title">Ipakita ang larawan ng contact</string>
     <string name="settings_show_avatar_summary">Ipakita ang larawan ng nagpadala sa mga usapan. I-off ito para lumapad ang mga message bubble.</string>
     <string name="settings_hide_country_code_title">Itago ang country code</string>
     <string name="settings_hide_country_code_summary">Ipakita ang mga numero ng telepono sa lokal na format, hal. \"06 ...\" sa halip na \"+33 6 ...\"</string>
-    <string name="settings_edge_to_edge_title">Edge-to-edge</string>
+    <string name="settings_edge_to_edge_title">Hanggang gilid</string>
     <string name="settings_edge_to_edge_summary">Ipakita ang content sa likod ng status bar at navigation bar</string>
     <string name="settings_system_show_stt_title">Ipakita ang speech-to-text button</string>
     <string name="settings_drawer_swipe_title">Mag-swipe para buksan ang menu</string>
     <string name="settings_drawer_swipe_summary">Buksan ang side menu sa pag-swipe mula sa kaliwang gilid ng listahan ng mga usapan</string>
-    <string name="settings_auto_emoji_title">Automatic emoji</string>
-    <string name="settings_notifications_title">Notifications</string>
-    <string name="settings_notifications_o_summary">Tap to customize</string>
-    <string name="settings_notification_actions_title">Actions</string>
+    <string name="settings_auto_emoji_title">Awtomatikong emoji</string>
+    <string name="settings_notifications_title">Mga notification</string>
+    <string name="settings_notifications_o_summary">I-tap para i-customize</string>
+    <string name="settings_notification_actions_title">Mga aksyon</string>
     <string name="settings_notification_action_1">Button 1</string>
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
-    <string name="settings_notification_previews_title">Notification previews</string>
+    <string name="settings_notification_previews_title">Mga preview ng notification</string>
     <string name="settings_notification_previews_summary">Ipakita ang pangalan at mensahe</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">Gisingin ang screen</string>
     <string name="settings_notification_silent_title">Tahimik kung hindi contact</string>
     <string name="settings_notification_silent_summary">Pinapatahimik ang mga notification ng mensahe mula sa mga wala sa iyong contacts</string>
     <string name="settings_copy_code_title">Kopyahin ang mga code mula sa notification</string>
     <string name="settings_copy_code_summary">Nagdadagdag ng button na Kopyahin ang code sa mga notification para sa one-time at verification code</string>
     <string name="notification_copy_code">Kopyahin ang code</string>
     <string name="notification_code_copied">Nakopya ang code</string>
-    <string name="settings_vibration_title">Vibration</string>
-    <string name="settings_ringtone_title">Sound</string>
-    <string name="settings_ringtone_none">None</string>
-    <string name="settings_quick_reply_title">Quick Reply</string>
-    <string name="settings_quick_reply_summary">Popup for new messages</string>
-    <string name="settings_quick_reply_tap_dismiss_title">Tap to dismiss</string>
-    <string name="settings_quick_reply_tap_dismiss_summary">Tap outside of the popup to close it</string>
-    <string name="settings_delayed_title">Delayed sending</string>
-    <string name="settings_swipe_actions">Swipe actions</string>
-    <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-    <string name="settings_swipe_actions_right">Right swipe</string>
-    <string name="settings_swipe_actions_left">Left swipe</string>
-    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string name="settings_vibration_title">Pag-vibrate</string>
+    <string name="settings_ringtone_title">Tunog</string>
+    <string name="settings_ringtone_none">Wala</string>
+    <string name="settings_quick_reply_title">Mabilisang Sagot</string>
+    <string name="settings_quick_reply_summary">Popup para sa mga bagong mensahe</string>
+    <string name="settings_quick_reply_tap_dismiss_title">I-tap para isara</string>
+    <string name="settings_quick_reply_tap_dismiss_summary">I-tap sa labas ng popup para isara ito</string>
+    <string name="settings_delayed_title">Naantalang pagpapadala</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Wala</item>
+        <item>Itabi</item>
+        <item>Burahin</item>
+        <item>I-block</item>
+        <item>Tawagan</item>
+        <item>Markahang nabasa</item>
+        <item>Markahang hindi pa nabasa</item>
     </string-array>
-    <string name="settings_delivery_title">Delivery confirmations</string>
-    <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_swipe_actions_summary">I-configure ang mga swipe action para sa mga usapan</string>
+    <string name="settings_swipe_actions_right">Swipe pakanan</string>
+    <string name="settings_swipe_actions_left">Swipe pakaliwa</string>
+    <string name="settings_swipe_actions_change">PALITAN</string>
+    <string-array name="settings_swipe_actions">
+        <item>Wala</item>
+        <item>Itabi</item>
+        <item>Burahin</item>
+        <item>I-block</item>
+        <item>Tawagan</item>
+        <item>Markahang nabasa</item>
+        <item>Markahang hindi pa nabasa</item>
+    </string-array>
+    <string name="settings_delivery_title">Mga kumpirmasyon ng paghahatid</string>
+    <string name="settings_delivery_summary">Kumpirmahin na matagumpay na naipadala ang mga mensahe</string>
     <string name="settings_send_sound_title">Tunog sa pagpapadala</string>
     <string name="settings_send_sound_summary">Magpatugtog ng maikling tunog kapag nagpadala ka ng mensahe</string>
     <string name="settings_send_sound_volume_title">Volume</string>
@@ -419,39 +427,39 @@
     <string name="settings_header_quick_action_summary">Magdagdag ng shortcut button sa header ng usapan</string>
     <string name="settings_unread_at_top_title">Hindi pa nababasa sa itaas</string>
     <string name="settings_unread_at_top_summary">Ipakita sa itaas ang mga usapang hindi pa nababasa</string>
-    <string name="settings_signature_title">Signature</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
-    <string name="settings_unicode_title">Strip accents</string>
-    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
-    <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_signature_title">Lagda</string>
+    <string name="settings_signature_summary">Magdagdag ng lagda sa dulo ng iyong mga mensahe</string>
+    <string name="settings_unicode_title">Alisin ang mga accent</string>
+    <string name="settings_unicode_summary">Alisin ang mga accent sa mga titik ng mga papalabas na SMS</string>
+    <string name="settings_mobile_title">Mobile number lang</string>
+    <string name="settings_mobile_summary">Kapag sumusulat ng mensahe, mobile number lang ang ipakita</string>
+    <string name="settings_auto_delete">Awtomatikong burahin ang mga lumang mensahe</string>
+    <string name="settings_auto_delete_dialog_message">Buburahin ang mga mensahe pagkalipas ng itinakdang bilang ng araw</string>
+    <string name="settings_auto_delete_dialog_hint">Bilang ng araw</string>
+    <string name="settings_auto_delete_never">Hindi kailanman</string>
+    <string name="settings_auto_delete_warning">Awtomatikong burahin ang mga lumang mensahe?</string>
+    <string name="settings_auto_delete_warning_message">Kapag nagpatuloy ka, %1$d mensahe ang buburahin ngayon</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">Pagkalipas ng 1 araw</item>
+        <item quantity="other">Pagkalipas ng %d araw</item>
     </plurals>
-    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
-    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
-    <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_long_as_mms_title">Ipadala ang mahahabang mensahe bilang MMS</string>
+    <string name="settings_long_as_mms_summary">Kung hindi naipapadala ang mahahaba mong text, o mali ang pagkakasunod-sunod, maaari mo itong ipadala bilang MMS. Maaaring may dagdag na singil</string>
+    <string name="settings_mms_size_title">Awtomatikong i-compress ang mga larawang attachment sa MMS</string>
     <string name="settings_mms_weblink_title">Paghawak ng link sa mga mensahe</string>
     <string name="settings_disable_screenshots_title">I-disable ang Screenshot</string>
     <string name="settings_diable_screenshots_summary">Pigilan ang iyong OS at ibang app na kumuha ng screenshot ng app.</string>
-    <string name="settings_sync_title">Sync messages</string>
-    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-    <string name="settings_about_title">About Open Messages</string>
-    <string name="settings_version">Version %s</string>
-    <string name="settings_logging_enabled">Debug logging enabled</string>
-    <string name="settings_logging_disabled">Debug logging disabled</string>
-    <string name="settings_delay_duration_hint">Enter duration (seconds)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
+    <string name="settings_sync_title">I-sync ang mga mensahe</string>
+    <string name="settings_sync_summary">I-sync muli ang iyong mga mensahe sa native na SMS database ng Android</string>
+    <string name="settings_about_title">Tungkol sa Open Messages</string>
+    <string name="settings_version">Bersyon %s</string>
+    <string name="settings_logging_enabled">Naka-enable ang debug logging</string>
+    <string name="settings_logging_disabled">Naka-disable ang debug logging</string>
+    <string name="settings_delay_duration_hint">Ilagay ang tagal (segundo)</string>
+    <string name="blocking_title">Pag-block</string>
+    <string name="blocking_drop_title">Itapon ang mga mensahe</string>
+    <string name="blocking_drop_summary">Itapon ang mga papasok na mensahe mula sa mga naka-block na nagpadala sa halip na itago ang mga ito</string>
+    <string name="blocking_conversations">Mga naka-block na usapan</string>
     <string name="blocking_category_integrated">Built-in na pag-block</string>
     <string name="blocking_integrated_description">Bina-block ng Open Messages ang spam sa iyong device. Ang mga opsyonal na source sa ibaba ay nagda-download ng listahan nila sa internet kapag in-on mo ang mga ito, tapos gumagana na offline.</string>
     <string name="blocking_category_external_apps">Mga external na app</string>
@@ -463,19 +471,19 @@
     <string name="blocking_source_status_updating">Ina-update…</string>
     <string name="blocking_source_status_updated">Updated · %1$d entry</string>
     <string name="blocking_source_status_failed">Nabigo ang pag-download, mananatiling naka-off ang source. Tingnan ang iyong koneksyon at subukan ulit.</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
-    <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
-    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocking_manager_title">Tagapamahala ng Pag-block</string>
+    <string name="blocking_manager_built_in_summary">Built-in na pag-block sa Open Messages</string>
+    <string name="blocking_manager_call_blocker_summary">I-block ang mga spam na mensahe, numero at hindi kilalang tawag gamit ang blacklist at iskedyul</string>
+    <string name="blocking_manager_call_control_summary">Awtomatikong i-filter ang iyong mga tawag at mensahe sa iisang lugar! Pinipigilan ng Community IQ™ ang mga hindi gustong mensahe mula sa mga spammer na kilala ng komunidad</string>
+    <string name="blocking_manager_sia_summary">Awtomatikong i-filter ang mga mensahe mula sa mga hindi hinihinging numero gamit ang app na \"Should I Answer\"</string>
+    <string name="blocking_manager_copy_title">Kopyahin ang mga naka-block na numero</string>
+    <string name="blocking_manager_copy_summary">Magpatuloy sa %s at kopyahin ang iyong mga naka-block na numero</string>
+    <string name="blocked_numbers_title">Mga naka-block na numero</string>
+    <string name="blocked_numbers_empty">Makikita rito ang iyong mga naka-block na numero</string>
+    <string name="blocked_numbers_add_cd">Mag-block ng bagong numero</string>
+    <string name="blocked_numbers_dialog_title">I-block ang mga text mula sa</string>
+    <string name="blocked_numbers_dialog_hint">Numero ng telepono</string>
+    <string name="blocked_numbers_dialog_block">I-block</string>
     <string name="message_content_filters_title">Mga filter ng nilalaman ng mensahe</string>
     <string name="message_content_filters_empty">Lalabas dito ang iyong mga filter ng nilalaman ng mensahe</string>
     <string name="message_content_filters_add_cd">Gumawa ng bagong filter</string>
@@ -485,17 +493,17 @@
     <string name="message_content_filters_dialog_regex_switch">Regular expression</string>
     <string name="message_content_filters_dialog_contacts_switch">Isama ang mga contact</string>
     <string name="message_content_filters_dialog_create">Gumawa</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocked_messages_title">Mga naka-block na mensahe</string>
+    <string name="blocked_messages_empty">Makikita rito ang iyong mga naka-block na mensahe</string>
+    <string name="blocking_block_title">I-block</string>
+    <string name="blocking_unblock_title">I-unblock</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="one">Magpatuloy sa %s at i-block ang numerong ito</item>
+        <item quantity="other">Magpatuloy sa %s at i-block ang mga numerong ito</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="one">Magpatuloy sa %s at payagan ang numerong ito</item>
+        <item quantity="other">Magpatuloy sa %s at payagan ang mga numerong ito</item>
     </plurals>
     <string name="deduplicate_messages_category">Alisin ang Dobleng Mensahe</string>
     <string name="deduplicate_messages_title">Burahin ang Dobleng Mensahe</string>
@@ -506,50 +514,50 @@
     <string name="deduplicating_messages_finished">Tapos na ang pag-alis ng dobleng mensahe!</string>
     <string name="deduplicating_messages_no_messages">Walang nakitang dobleng mensahe.</string>
     <string name="deduplicating_messages_failed">Nabigo ang pag-alis ng dobleng mensahe, pakisubukan ulit</string>
-    <string name="about_title">About</string>
-    <string name="about_version_title">Version</string>
+    <string name="about_title">Tungkol dito</string>
+    <string name="about_version_title">Bersyon</string>
     <string name="about_developer_title">Developer</string>
     <string name="about_source_title">Source code</string>
-    <string name="about_changelog_title">Changelog</string>
-    <string name="about_contact_title">Contact</string>
-    <string name="about_license_title">License</string>
+    <string name="about_changelog_title">Mga pagbabago</string>
+    <string name="about_contact_title">Makipag-ugnayan</string>
+    <string name="about_license_title">Lisensya</string>
     <string name="about_copyright_title">Copyright</string>
-    <string name="widget_loading">Loading…</string>
-    <string name="widget_more">View more conversations</string>
+    <string name="widget_loading">Naglo-load…</string>
+    <string name="widget_more">Tingnan ang iba pang usapan</string>
     <string name="all_conversations_widget_title">Lahat ng Usapan</string>
-    <string name="quick_reply_menu_read">Mark read</string>
-    <string name="quick_reply_menu_call">Call</string>
-    <string name="quick_reply_menu_delete">Delete</string>
-    <string name="quick_reply_menu_expand">Show more</string>
-    <string name="quick_reply_menu_collapse">Show less</string>
-    <string name="quick_reply_menu_view">Open conversation</string>
+    <string name="quick_reply_menu_read">Markahang nabasa</string>
+    <string name="quick_reply_menu_call">Tawagan</string>
+    <string name="quick_reply_menu_delete">Burahin</string>
+    <string name="quick_reply_menu_expand">Ipakita ang higit pa</string>
+    <string name="quick_reply_menu_collapse">Ipakita ang mas kaunti</string>
+    <string name="quick_reply_menu_view">Buksan ang usapan</string>
     <string name="theme_material">Material</string>
     <string name="theme_hex">HEX</string>
-    <string name="theme_apply">Apply</string>
+    <string name="theme_apply">Ilapat</string>
     <string-array name="notification_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>Wala</item>
+        <item>Itabi</item>
+        <item>Burahin</item>
+        <item>I-block</item>
+        <item>Tawagan</item>
+        <item>Markahang nabasa</item>
+        <item>Sumagot</item>
     </string-array>
     <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
-    <string name="button_cancel">Cancel</string>
+    <string name="button_continue">Magpatuloy</string>
+    <string name="button_cancel">Kanselahin</string>
     <string name="button_close">Isara</string>
-    <string name="button_delete">Delete</string>
-    <string name="button_save">Save</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_delete">Burahin</string>
+    <string name="button_save">I-save</string>
+    <string name="button_stop">Ihinto</string>
     <string name="button_set">Set</string>
     <string name="button_later">Mamaya</string>
     <string name="icon_restart_title">Kailangang i-restart</string>
     <string name="icon_restart_message">Kailangang i-restart ang app para matapos ang pag-update ng icon nito.</string>
     <string name="icon_restart_now">I-restart</string>
-    <string name="button_undo">Undo</string>
+    <string name="button_undo">I-undo</string>
     <string name="button_clear">I-clear</string>
-    <string name="toast_copied">Copied</string>
+    <string name="toast_copied">Nakopya</string>
     <plurals name="toast_archived">
         <item quantity="one">Naitabi ang usapan</item>
         <item quantity="other">Naitabi ang %d na usapan</item>
@@ -559,11 +567,11 @@
         <item quantity="other">Nailabas ang %d na usapan</item>
     </plurals>
     <plurals name="notification_new_messages">
-        <item quantity="one">New message</item>
-        <item quantity="other">%s new messages</item>
+        <item quantity="one">Bagong mensahe</item>
+        <item quantity="other">%s bagong mensahe</item>
     </plurals>
-    <string name="notification_message_failed_title">Message not sent</string>
-    <string name="notification_message_failed_text">The message to %s failed to send</string>
+    <string name="notification_message_failed_title">Hindi naipadala ang mensahe</string>
+    <string name="notification_message_failed_text">Hindi naipadala ang mensahe kay %s</string>
     <string name="notification_foreground_worker_title">Tumatanggap ng mensahe</string>
     <string name="notification_foreground_worker_text">Sa Android 12 at mas luma, kailangan ng notification para sa background na proseso na nagpapahintulot sa pagtanggap ng mga mensahe.</string>
     <string name="notification_foreground_worker_channel_name">Notification ng proseso sa pagtanggap ng mensahe</string>
@@ -571,26 +579,26 @@
     <string name="notification_message_failed_action">Ipadala ulit</string>
     <string-array name="night_modes">
         <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>Naka-disable</item>
+        <item>Laging naka-on</item>
+        <item>Awtomatiko</item>
     </string-array>
     <string-array name="notification_preview_options">
-        <item>Show name and message</item>
-        <item>Show name</item>
-        <item>Hide contents</item>
+        <item>Ipakita ang pangalan at mensahe</item>
+        <item>Ipakita ang pangalan</item>
+        <item>Itago ang nilalaman</item>
     </string-array>
     <string-array name="text_sizes">
-        <item>Small</item>
+        <item>Maliit</item>
         <item>Normal</item>
-        <item>Large</item>
-        <item>Larger</item>
+        <item>Malaki</item>
+        <item>Mas malaki</item>
     </string-array>
     <string-array name="delayed_sending_labels">
-        <item>No delay</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>Walang antala</item>
+        <item>3 segundo</item>
+        <item>5 segundo</item>
+        <item>10 segundo</item>
     </string-array>
     <string-array name="header_quick_action_labels">
         <item>Wala</item>
@@ -608,14 +616,14 @@
         <item>Tatlong nota</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>Awtomatiko</item>
         <item>100KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Walang compression</item>
     </string-array>
     <string-array name="messageLinkHandlings">
         <item>I-block</item>
@@ -623,18 +631,18 @@
         <item>Magtanong bago buksan</item>
     </string-array>
     <string-array name="quick_responses">
-        <item>Okay</item>
-        <item>Give me a moment</item>
-        <item>On my way</item>
-        <item>Thanks</item>
-        <item>Sounds good</item>
-        <item>What\'s up?</item>
-        <item>Agreed</item>
-        <item>No</item>
-        <item>Love you</item>
-        <item>Sorry</item>
+        <item>Sige</item>
+        <item>Sandali lang</item>
+        <item>Papunta na ako</item>
+        <item>Salamat</item>
+        <item>Ayos</item>
+        <item>Kumusta?</item>
+        <item>Sang-ayon</item>
+        <item>Hindi</item>
+        <item>Mahal kita</item>
+        <item>Pasensya na</item>
         <item>LOL</item>
-        <item>That\'s okay</item>
+        <item>Okay lang</item>
     </string-array>
     <string name="speak_no_messages">Walang Mensahe</string>
     <string name="speak_unseen_messages">Basahin nang malakas ang mga hindi pa nakikitang mensahe</string>
