@@ -1,5 +1,61 @@
 # 📋 Changelog
 
+## 🚀 v2.0.0 (not yet released)
+
+A redesign and a rebuild. The whole app has a new look, sending and opening conversations are much faster, and under the hood the app moved to today's Android: new database, new build tools, Android 16 as its target, and no Google build plugins left.
+
+### ➕ Added
+- 🗂️ **Conversation menu in a floating card:** the ⋮ button opens the conversation's options right under it (contact, media, rename, notifications, mark unread, archive, block, delete) instead of a separate details page.
+- 🖼️ **"See all media" page** gathering the photos and videos of a conversation in a grid.
+- 📅 **New scheduling dialog:** times at hand (in 1 hour, this evening, tomorrow morning or afternoon) or any day on a calendar, in the conversation's colour, instead of the system date and time pickers.
+- 🕐 **Time and sending state inside each bubble**, as Signal shows them, with day headings only when the day changes.
+- 🏢 **Contact's company** shown after the name in the conversation list and under the name in a conversation.
+- 📶 **SIM marker** in the conversation list on phones with two SIMs, and SIM icons in the colour Android gives each SIM.
+- 🔔 **Unread count badge** on each conversation of the list.
+- 👆 **Optional swipe to open the side menu** from the left edge of the conversation list.
+- 🔤 **Contacts grouped by initial**, with a letter rail to jump through them.
+- 🎙️ **Voice recorder as a bottom sheet** with a new record button.
+- 📎 **Attach any file** through the system file picker.
+- 🎞️ **Videos shrunk to fit an MMS**, with a warning when one is too long to be sent.
+- 🌍 **Translations completed** in every language the app ships, from Arabic to Vietnamese, including Malayalam and Kurdish which had none.
+
+### 🔄 Changed
+- 🎨 **A new look throughout:** flat toolbars, rounded blocks for settings and lists, a drawer redrawn, a deeper colour palette, Material 3 dialogs and switches.
+- 💬 **Conversation list laid out like Google Messages:** flat rows from edge to edge, bigger rounded avatars, the time above the unread count.
+- 🌈 **Each conversation wears its own colour** on every screen opened from it: settings icons, switches, dialog buttons, scheduling, notifications.
+- ↩️ **Back button as a slim chevron**, narrow in a conversation so its name keeps the room.
+- ✨ **New messages rise into the conversation** from the composer, and the send and record buttons swap with a smooth animation.
+- 👆 **Selected messages tinted in the conversation's colour** across the whole row, where the old grey barely showed.
+- 📱 **Side menu over the status and navigation bars**, with or without edge-to-edge.
+- 🧾 **Bottom sheets run on into the navigation bar** in their own colour instead of over a grey band.
+
+### ⚡ Faster
+- 📤 **A sent SMS appears the moment you tap send**, before the system has even finished writing it.
+- 📜 **Long conversations open at once:** only the newest messages are loaded, older ones as you scroll up.
+- 🏠 **The conversation list no longer stalls** on every change when there are hundreds of conversations.
+- ⌨️ **Typing a long message no longer lags** at each new line.
+
+### 🐛 Fixed
+- 🧹 **Deduplication no longer deletes** distinct outgoing MMS or unsent texts.
+- ↪️ **Forwarding keeps the pictures** and no longer adds the signature twice.
+- 💾 **Restoring a backup no longer duplicates** content filters or scheduled messages.
+- 📝 **Drafts survive a message sync.**
+- 🎨 **Choosing a conversation's colour** no longer shows the app icon tab, and conversations not yet holding a message no longer share one colour.
+- 🔢 **"1 message"** instead of "1 messages" in search results.
+- 🔔 **Replying from a notification** now dismisses it.
+- 📱 **The screen keeps clear of side system bars and camera cut-outs**, and the keyboard no longer takes the whole screen held sideways.
+- 🔤 **Missing accessibility descriptions** added on several buttons.
+
+### 🗑️ Removed
+- 💬 **The quick reply popup** on Android 10 and later, where the system no longer lets it show reliably.
+- 💳 **The leftovers of the Plus upgrade**, billing and referral code from the original app.
+
+### 🔧 Under the hood
+- 🗄️ **The app's data moved from Realm to Room.** Existing data is carried over on the first launch of v2.
+- 🤖 **Targets Android 16 (API 36)**, built with Gradle 9, AGP 9, Kotlin 2.4 and RxJava 3.
+- 🚫 **No more Firebase or Google Services build plugins**, and the Lato font ships inside the app instead of being downloaded.
+- 🧩 **Libraries updated** to their newest versions, and the MMS code trimmed to what the app actually runs.
+
 ## 🚀 v1.0.1 (2026-08-19)
 
 A bug-fix release. Every issue below is marked with where it comes from. Most are pre-existing bugs from the original codebase rather than regressions introduced during the Open Messages rebrand: they were already present in the code this project forked from, and only ever showed up on certain phones or with certain settings, which is why they went unnoticed until now. The two that came in with v1.0.0 say so.
