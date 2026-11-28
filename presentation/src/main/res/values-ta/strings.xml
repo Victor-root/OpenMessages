@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">எளிய, திறந்த மூல குறுஞ்செய்தி</string>
     <string name="shortcut_compose_long_label">புதிய உரையாடல்</string>
     <string name="shortcut_compose_short_label">எழுது</string>
     <string name="shortcut_compose_disabled_message">குறுக்குவழி முடக்கப்பட்டது</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">அமைப்புகள்</string>
     <string name="title_notification_prefs">அறிவிப்புகள்</string>
     <string name="title_theme">நிற அமைப்பு</string>
+    <string name="theme_default">இயல்புநிலை</string>
+    <string name="theme_wallpaper">வால்பேப்பர்</string>
+    <string name="theme_other_colors">நிறங்கள்</string>
+    <string name="theme_tab_presets">வண்ணத்தட்டு</string>
+    <string name="theme_tab_custom">தனிப்பயன்</string>
+    <string name="theme_apply_to_icon">ஆப் ஐகானுக்கு நிறத்தைப் பயன்படுத்து (ஆப் மூடப்படும்)</string>
+    <string name="theme_tab_icon">ஆப் ஐகான்</string>
+    <string name="theme_icon_follow_theme">ஆப்பின் நிற அமைப்புடன் பொருத்து</string>
+    <string name="theme_icon_summary">நிற அமைப்பைச் சாராமல் உங்கள் ஆப் ஐகானின் நிறத்தைத் தேர்ந்தெடு. மாற்றத்தைப் பயன்படுத்தினால் ஆப் மூடப்படும்.</string>
+    <string name="theme_icon_change_title">ஆப் ஐகானை மாற்றவா?</string>
+    <string name="theme_icon_change_message">ஆப் ஐகானின் நிறம் மாறப்போகிறது. ஆப் மூடியிருக்கும்போது மட்டுமே Android ஐகானை மாற்ற முடியும், எனவே நீங்கள் உறுதிசெய்தவுடன் Open Messages மூடப்படும்.</string>
     <string name="title_conversations">உட்பெட்டியை தேடு…</string>
+    <string name="title_search">தேடு</string>
     <string name="title_compose">பெயர் அ எண்ணைத் தட்டச்சு செய்</string>
     <string name="setup_skip">தவிர்</string>
     <string name="setup_next">தொடர்</string>
     <string name="menu_add_person">நபரைச் சேர்</string>
     <string name="menu_call">அழை</string>
     <string name="menu_mms_part_save">காட்சியகத்தில் சேமி</string>
+    <string name="menu_mms_part_share">பகிர்</string>
+    <string name="menu_mms_part_forward">முன்னனுப்பு</string>
+    <string name="menu_mms_part_open">வெளி ஆப்பில் திற</string>
     <string name="compose_menu_share">பகிர்</string>
     <string name="main_drawer_open_cd">வழிசெலுத்தல் அலமாரியை திற</string>
+    <string name="main_search_close_cd">தேடலை மூடு</string>
+    <string name="main_search_clear_cd">தேடலை அழி</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d தேர்ந்தெடுக்கப்பட்டது</string>
     <string name="main_menu_clear">அழி</string>
+    <string name="main_menu_select_all">அனைத்தையும் தேர்ந்தெடு</string>
     <string name="main_menu_archive">காப்பகப்படுத்து</string>
     <string name="main_menu_unarchive">காப்பகம்நீக்கு</string>
     <string name="main_menu_delete">நீக்கு</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">வாசித்ததாக குறி</string>
     <string name="main_menu_unread">வாசிக்காததாக குறி</string>
     <string name="main_menu_block">தடு</string>
+    <string name="main_menu_send_now">இப்போது அனுப்பு</string>
+    <string name="main_menu_edit_message">செய்தியைத் திருத்து</string>
+    <string name="main_menu_rename_conversation">உரையாடலின் பெயரை மாற்று</string>
     <string name="main_syncing">செய்திகள் ஒத்திசைக்கப்படுகின்றன…</string>
+    <string name="main_sync_emojis">எமோஜி எதிர்வினைகள் படிக்கப்படுகின்றன…</string>
     <string name="main_sender_you">நீங்கள்: %s</string>
+    <string name="main_sender_draft">வரைவு: %s</string>
+    <string name="conversation_flagged_label">ஸ்பேம் என சந்தேகம்</string>
+    <string name="snippet_picture">படம்</string>
+    <string name="snippet_video">வீடியோ</string>
+    <string name="snippet_audio">ஆடியோ</string>
+    <string name="snippet_contact_card">தொடர்பு அட்டை</string>
+    <string name="search_group_conversations">உரையாடல்கள்</string>
     <string name="main_message_results_title">தகவல்களிலுள்ள முடிவுகள்</string>
     <plurals name="main_message_results">
         <item quantity="other">%d செய்திகள்</item>
@@ -62,11 +93,30 @@
     <string name="main_permission_contacts">உங்கள் தொடர்புகளைக் காண Open Messages க்கு அனுமதி தேவை</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">அனுமதி</string>
+    <string name="scheduled_menu_send_now">இப்போது அனுப்பு</string>
+    <string name="scheduled_menu_edit_message">செய்தியைத் திருத்து</string>
     <string name="drawer_inbox">உட்பெட்டி</string>
+    <string name="contacts_group_recent">சமீபத்தியவை</string>
+    <string name="contacts_group_starred">பிடித்தவை</string>
+    <string name="contacts_group_groups">குழுக்கள்</string>
+    <string name="conversations_group_today">இன்று</string>
+    <string name="conversations_group_yesterday">நேற்று</string>
     <string name="drawer_archived">காப்பகப்படுத்தப்பட்டது</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d படிக்காதது</item>
+        <item quantity="other">%d படிக்காதவை</item>
+    </plurals>
     <string name="drawer_scheduled">திட்டமிடப்பட்டவை</string>
     <string name="drawer_blocking">தடுப்பது</string>
     <string name="drawer_more">மேலும்</string>
+    <string name="message_management_title">செய்தி மேலாண்மை</string>
+    <string name="templates_title">வார்ப்புருக்கள்</string>
+    <string name="templates_empty">இன்னும் சேமித்த செய்திகள் இல்லை.\nஅடிக்கடி அனுப்பும் செய்தியைச் சேமிக்க + ஐத் தட்டு, பிறகு யாருக்கு அனுப்புவது எனத் தேர்ந்தெடுக்க அதைத் தட்டு.</string>
+    <string name="template_hint">உங்கள் செய்தியைத் தட்டச்சு செய்…</string>
+    <string name="template_title_hint">தலைப்பு (விருப்பத்தேர்வு)</string>
+    <string name="templates_add_cd">புதிய வார்ப்புரு</string>
+    <string name="template_new">புதிய வார்ப்புரு</string>
+    <string name="template_edit">வார்ப்புருவைத் திருத்து</string>
     <string name="drawer_settings">அமைப்புகள்</string>
     <string name="drawer_help">உதவி &amp; மீள்கருத்து</string>
     <string name="drawer_invite">நண்பர்களை அழைப்பிடு</string>
@@ -79,6 +129,19 @@
         <item quantity="one">இவ்வுரையாடலை அழிக்க உறுதியாக விரும்புகிறீரா?</item>
         <item quantity="other">%d உரையாடலைகளை அழிக்க உறுதியாக விரும்புகிறீரா?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">இந்தச் செய்தியை நிச்சயமாக நீக்க வேண்டுமா?</item>
+        <item quantity="other">%d செய்திகளை நிச்சயமாக நீக்க வேண்டுமா?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">இந்தச் செய்தியை இப்போதே நிச்சயமாக அனுப்ப வேண்டுமா?</item>
+        <item quantity="other">%d செய்திகளை இப்போதே நிச்சயமாக அனுப்ப வேண்டுமா?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">செய்தியைத் திருத்து</string>
+    <string name="dialog_edit_scheduled_message">இந்தச் செய்தியைத் திருத்தினால் அது அட்டவணையிலிருந்து நீக்கப்படும்.\n\nஅடுத்த திரையில் அதை மீண்டும் சமர்ப்பிக்க மறக்காதீர்கள், இல்லையெனில் அது இழக்கப்படும்.\n\nதொடர வேண்டுமா?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">ஆம், செய்தியைத் திருத்து</string>
+    <string name="dialog_clear_compose_title">செய்தியை அழி</string>
+    <string name="dialog_clear_compose">செய்தியை அழிக்கவா? இதைச் செயல்தவிர்க்க முடியாது.</string>
     <string-array name="message_options">
         <item>சொற்சரத்தை நகலெடு</item>
         <item>முன்னனுப்பு</item>
@@ -92,19 +155,35 @@
     <string name="compose_subtitle_results">%2$d-ல் %1$d ஆம் முடிவு</string>
     <string name="compose_send_group_title">குழு தகவலாக அனுப்பு</string>
     <string name="compose_send_group_summary">பெறுநர்கள் மற்றும் பதில்கள் அனைவருக்கும் தெரியும்</string>
+    <string name="compose_send_group_summary_on">பெறுநர்களும் பதில்களும் அனைவருக்கும் தெரியும்</string>
+    <string name="compose_send_group_summary_off">செய்திகள் ஒவ்வொரு பெறுநருக்கும் தனித்தனியாக அனுப்பப்படும்</string>
     <string name="compose_messages_empty">இது உங்கள் உரையாடலின் ஆரம்பம். ஏதாவது நல்லதைச் சொல்லுங்கள்!</string>
     <string name="compose_vcard_label">தொடர்பு அட்டை</string>
     <string name="compose_scheduled_for">குறித்த நேரம்</string>
     <string name="compose_scheduled_future">தேர்ந்தெடுக்கப்பட்ட நேரம் எதிர்காலத்தில் இருக்க வேண்டும்!</string>
     <string name="compose_scheduled_toast">நேரங்குறிக்கப்பட்ட தகவல்களுக்கு சேர்க்கப்பட்டது</string>
+    <string name="compose_scheduled_view">இந்த உரையாடலுக்கான திட்டமிட்ட செய்திகள்</string>
+    <string name="compose_scheduled_bubble">%s அன்று அனுப்பப்படும்</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d இணைப்பு</item>
+        <item quantity="other">%d இணைப்புகள்</item>
+    </plurals>
     <string name="compose_hint">ஒரு தகவலை எழுது…</string>
+    <string name="compose_expand_cd">முழுத் திரைக்கு விரிவாக்கு</string>
+    <string name="compose_collapse_cd">சுருக்கு</string>
+    <string name="compose_no_valid_recipients">மற்ற பங்கேற்பாளர்களுக்கு அனுப்ப முடியாது</string>
+    <string name="compose_flagged_title">ஸ்பேம் என சந்தேகம்</string>
+    <string name="compose_flagged_approve">அனுமதி</string>
+    <string name="compose_flagged_block">தடு</string>
     <string name="compose_menu_copy">சொற்சரத்தை நகலெடு</string>
     <string name="compose_menu_forward">முன்னனுப்பு</string>
+    <string name="compose_menu_show_status">நிலையைக் காட்டு</string>
     <string name="compose_menu_delete">நீக்கு</string>
     <string name="compose_menu_previous">முந்தைய</string>
     <string name="compose_menu_next">அடுத்தது</string>
     <string name="compose_menu_clear">அழி</string>
     <string name="compose_details_title">செய்தி விவரங்கள்</string>
+    <string name="compose_reactions_title">எதிர்வினைகள்</string>
     <string name="compose_details_type">தட்டு: %s</string>
     <string name="compose_details_from">அனுப்புநர்: %s</string>
     <string name="compose_details_to">பெறுநர்: %s</string>
@@ -116,18 +195,60 @@
     <string name="compose_details_delivered">வழங்கியவை: %s</string>
     <string name="compose_details_error_code">பிழை குறியீடு: %d</string>
     <string name="compose_attach_cd">இணைப்பைச் சேர்</string>
+    <string name="compose_attach_file_cd">ஏதேனும் கோப்பை இணை</string>
     <string name="compose_gallery_cd">புகைப்படத்தை இணை</string>
+    <string name="compose_audio_message_cd">ஆடியோ செய்தியைப் பதிவுசெய்</string>
     <string name="compose_camera_cd">புகைப்படம் எடு</string>
     <string name="compose_schedule_cd">செய்தி திட்டமிடு</string>
+    <string name="compose_schedule_title">செய்தியைத் திட்டமிடு</string>
+    <string name="compose_schedule_in_hour">1 மணி நேரத்தில்</string>
+    <string name="compose_schedule_tonight">இன்று மாலை</string>
+    <string name="compose_schedule_tomorrow_morning">நாளை காலை</string>
+    <string name="compose_schedule_tomorrow_afternoon">நாளை மதியம்</string>
+    <string name="compose_schedule_custom">தேதியும் நேரமும் தேர்ந்தெடு</string>
+    <string name="compose_schedule_confirm">திட்டமிடு</string>
+    <string name="compose_schedule_previous_month">முந்தைய மாதம்</string>
+    <string name="compose_schedule_next_month">அடுத்த மாதம்</string>
+    <string name="compose_schedule_increase">அதிகரி</string>
+    <string name="compose_schedule_decrease">குறை</string>
+    <string name="compose_schedule_cancel_cd">செய்தித் திட்டமிடலை ரத்துசெய்</string>
     <string name="compose_contact_cd">தொடர்பை இணை</string>
     <string name="compose_contact_error">தொடர்பை வாசிப்பதில் பிழை</string>
+    <string name="compose_attach_gallery">கேலரி</string>
+    <string name="compose_attach_camera">கேமரா</string>
+    <string name="compose_attach_file">கோப்பு</string>
+    <string name="compose_attach_audio">ஆடியோ</string>
+    <string name="compose_attach_contact">தொடர்பு</string>
+    <string name="compose_attach_schedule">திட்டமிடு</string>
+    <string name="compose_attach_templates">வார்ப்புருக்கள்</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">இந்த வீடியோ MMS மூலம் அனுப்ப மிக நீளமானது. அதிகபட்சம் %d வினாடி இருக்கலாம்.</item>
+        <item quantity="other">இந்த வீடியோ MMS மூலம் அனுப்ப மிக நீளமானது. அதிகபட்சம் %d வினாடிகள் இருக்கலாம்.</item>
+    </plurals>
     <string name="compose_sim_cd">%s selected, change SIM card</string>
     <string name="compose_send_cd">தகவல் அனுப்பு</string>
+    <string name="compose_record_audio_msg_cd">ஆடியோ செய்தியைப் பதிவுசெய்</string>
+    <string name="compose_record_audio_msg_abort_cd">ஆடியோ செய்தியை ரத்துசெய்</string>
+    <string name="compose_record_audio_msg_attach_cd">ஆடியோ செய்தியை இணை</string>
+    <string name="compose_audio_msg_title">குரல் செய்தி</string>
+    <string name="compose_audio_msg_attach">இணை</string>
+    <string name="compose_record_audio_msg_play_pause_cd">ஆடியோ செய்தியை இயக்கு அல்லது இடைநிறுத்து</string>
+    <string name="compose_message_cancel">ரத்துசெய்</string>
+    <string name="compose_message_send_now">இப்போது அனுப்பு</string>
+    <string name="compose_message_sim">SIM எண்</string>
+    <string name="compose_message_item">செய்தி உருப்படி</string>
+    <string name="compose_message_attachment">இணைப்பு</string>
+    <string name="compose_toast_drag_stt">பேச்சிலிருந்து உரை பொத்தானை விரும்பிய இடத்திற்கு நகர்த்து</string>
     <string name="message_status_sending">அனுப்புகிறது…</string>
     <string name="message_status_delivered">%s வழங்கப்பட்டது</string>
     <string name="message_status_failed">அனுப்பப்படவில்லை. மீண்டும் முயல தட்டு</string>
+    <string name="message_body_too_long_to_display">⚠ செய்தி நீளமானது. முழு உரைக்கு நகலெடு அல்லது சேமி</string>
+    <string name="conversation_menu">உரையாடல் விருப்பங்கள்</string>
+    <string name="conversation_menu_media">எல்லா மீடியாவையும் பார்</string>
+    <string name="media_title">மீடியா</string>
+    <string name="media_empty">இந்த உரையாடலில் பகிரப்பட்ட படங்களும் வீடியோக்களும் இங்கே தோன்றும்</string>
     <string name="info_copied_address">முகவரி நகலெடுக்கப்பட்டது</string>
     <string name="info_name">உரையாடல் தலைப்பு</string>
     <string name="info_notifications">அறிவிப்புகள்</string>
@@ -141,11 +262,41 @@
     <string name="gallery_toast_saved">காட்சி கூடத்தில் சேமிக்கப்பட்டது</string>
     <string name="backup_title">காப்பு மற்றும் மீட்பு</string>
     <string name="backup_backing_up">செய்திகளைக் காப்புப் பிரதி எடுக்கிறது</string>
+    <string name="backup_failed_title">காப்புப்பிரதி தோல்வியடைந்தது</string>
+    <string name="backup_icon_change_title">ஆப் ஐகானை மீட்டமைக்கவா?</string>
+    <string name="backup_icon_change_message">உங்கள் காப்புப்பிரதி வேறு நிற ஆப் ஐகானுடன் உருவாக்கப்பட்டது. ஆப் மூடியிருக்கும்போது மட்டுமே Android ஐகானை மாற்ற முடியும், எனவே நீங்கள் உறுதிசெய்தவுடன் Open Messages மூடப்படும்.</string>
+    <string name="icon_change_confirm">பயன்படுத்தி மூடு</string>
+    <string name="icon_change_later">இப்போது வேண்டாம்</string>
     <string name="backup_restoring">காப்புப்பிரதியிலிருந்து மீட்டமைக்கிறது</string>
     <string name="backup_loading">ஏற்றுகிறது…</string>
     <string name="backup_never">எப்போதும் வேண்டாம்</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">தானியங்கு காப்புப்பிரதி</string>
+    <string name="backup_auto_never">ஒருபோதும் இல்லை</string>
+    <string name="backup_auto_daily">தினமும்</string>
+    <string name="backup_auto_weekly">வாரந்தோறும்</string>
+    <string name="backup_auto_custom">தனிப்பயன்…</string>
+    <string name="backup_auto_custom_title">காப்புப்பிரதிகளுக்கு இடையிலான நாட்கள்</string>
+    <string name="backup_auto_custom_hint">நாட்களின் எண்ணிக்கை</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">%d நாளுக்கு ஒருமுறை</item>
+        <item quantity="other">%d நாட்களுக்கு ஒருமுறை</item>
+    </plurals>
+    <string name="backup_zip_title">.zip கோப்பாகச் சேமி</string>
+    <string name="backup_zip_summary">ஒவ்வொரு காப்புப்பிரதியையும் ஒரே காப்பகமாகச் சேமி, ஃபோன்களுக்கு இடையே நகர்த்த எளிது</string>
+    <string name="backup_manage_title">காப்புப்பிரதிகளை நிர்வகி</string>
+    <string name="backup_manage_summary">உங்கள் காப்புப்பிரதிகளின் பெயரை மாற்று அல்லது நீக்கு</string>
+    <string name="backup_manage_empty">இந்த இடத்தில் காப்புப்பிரதிகள் இல்லை</string>
+    <string name="backup_manage_rename">பெயர் மாற்று</string>
+    <string name="backup_manage_delete">நீக்கு</string>
+    <string name="backup_manage_delete_confirm">\"%s\" ஐ நீக்கவா? இதைச் செயல்தவிர்க்க முடியாது.</string>
+    <string name="backup_manage_error">இந்தக் காப்புப்பிரதியைப் புதுப்பிக்க முடியவில்லை</string>
+    <string name="backup_manage_type_folder">கோப்புறை</string>
+    <string name="backup_manage_type_zip">Zip காப்பகம்</string>
+    <string name="backup_restore_from_title">எங்கிருந்து மீட்டமைப்பது</string>
+    <string name="backup_restore_from_folder">ஒரு கோப்புறை</string>
+    <string name="backup_restore_from_zip">ஒரு .zip கோப்பு</string>
     <string name="backup_restore_title">மீட்டமை</string>
     <string name="backup_restore_summary">காப்புப்பிரதியைத் தேர்ந்தெடு</string>
     <string name="backup_restore_error_backup"> செயலில் காப்புப்பிரதி…</string>
@@ -163,12 +314,28 @@
     <string name="backup_restore_dialog_empty">காப்புப்பிரதிகள் ஏதுமில்லை</string>
     <string name="backup_disclaimer">தற்போது, எஸ்எம்எஸ் மட்டுமே காப்பு மற்றும் மீட்டமைப்பால் ஆதரிக்கப்படுகிறது. எம்எம்எஸ் ஆதரவு மற்றும் திட்டமிடப்பட்ட காப்புப்பிரதிகள் விரைவில் வரும்!</string>
     <string name="backup_now">இப்போது காப்புப்பிரதி செய்</string>
+    <string name="backup_now_summary">புதிய காப்புப்பிரதியை உருவாக்கு</string>
+    <string name="backup_categories_title">எதைக் காப்புப்பிரதி எடுக்க வேண்டும்?</string>
+    <string name="backup_restore_source_title">எந்தக் காப்புப்பிரதி?</string>
+    <string name="backup_restore_categories_title">%s இலிருந்து மீட்டமை</string>
+    <string name="backup_category_messages">செய்திகள் (SMS, MMS மற்றும் இணைப்புகள்)</string>
+    <string name="backup_category_settings">அமைப்புகளும் வார்ப்புருக்களும்</string>
+    <string name="backup_category_blocking">தடுப்பு விதிகள்</string>
+    <string name="backup_category_conversations">காப்பகப்படுத்தியவை மற்றும் முள்ளிட்டவை</string>
+    <string name="backup_category_scheduled">திட்டமிட்ட செய்திகள்</string>
+    <string name="backup_exact_alarm_title">துல்லியமான அலாரங்களை அனுமதி</string>
+    <string name="backup_exact_alarm_message">உங்கள் திட்டமிட்ட செய்திகளைச் சரியான நேரத்தில் அனுப்ப, Open Messages க்குத் துல்லியமான அலாரங்களை அமைக்கும் அனுமதி தேவை. அது இல்லாவிட்டால், அவை சற்றுத் தாமதமாகச் செல்லலாம்.</string>
+    <string name="backup_exact_alarm_grant">அனுமதி</string>
+    <string name="backup_exact_alarm_skip">பரவாயில்லை, மீட்டமை</string>
     <string name="backup_progress_parsing">காப்புப் பிரதி பாகுபடுத்துகிறது…</string>
     <string name="backup_progress_running">%d/%d செய்திகள்</string>
     <string name="backup_progress_saving">காப்புப்பிரதியைச் சேமிக்கிறது…</string>
     <string name="backup_progress_syncing">செய்திகளை ஒத்திசைக்கிறது…</string>
     <string name="backup_progress_finished">முடிந்தது!</string>
+    <string name="backup_progress_failed">காப்புப்பிரதியை எழுத முடியவில்லை. மீதமுள்ள இடத்தையும் காப்புப்பிரதிக் கோப்புறையையும் சரிபார்.</string>
     <string name="backup_notification_channel_name">காப்பு மற்றும் மீட்பு</string>
+    <string name="clipboard_too_large_to_copy">தரவின் அளவு கிளிப்போர்டு வரம்பை மீறுகிறது</string>
+    <string name="clipboard_unable_to_copy_to">கிளிப்போர்டுக்கு நகலெடுக்க முடியவில்லை</string>
     <string name="scheduled_title">திட்டமிடப்பட்டது</string>
     <string name="scheduled_empty_description">நீங்கள் விரும்பும் சரியான நேரத்தில் தானாக ஒரு செய்தியை அனுப்பு</string>
     <string name="scheduled_empty_message_1">ஏய்! உங்கள் பிறந்த நாள் எப்போது?</string>
@@ -177,12 +344,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">டிசம்பர் 23 அன்று அனுப்புகிறது</string>
     <string name="scheduled_compose_cd">செய்தியைத் திட்டமிடு</string>
+    <string name="scheduled_send_cd">இந்தச் செய்தியைத் திட்டமிடு</string>
     <string name="scheduled_options_title">திட்டமிடப்பட்ட செய்தி</string>
     <string-array name="scheduled_options">
         <item>இப்போது அனுப்பு</item>
         <item>உரையை நகலெடு</item>
         <item>நீக்கு</item>
     </string-array>
+    <string name="attachment_missing">காணவில்லை</string>
     <string name="settings_category_appearance">தோற்றம்</string>
     <string name="settings_category_general">பொது</string>
     <string name="settings_category_quick_reply">விரைவு பதில்</string>
@@ -194,6 +363,15 @@
     <string name="settings_automatic_colors_title">தானியங்கு தொடர்பு நிறங்கள்</string>
     <string name="settings_text_size_title">எழுத்துரு அளவு</string>
     <string name="settings_system_font_title">இச்சாதன எழுத்துரு கொள்</string>
+    <string name="settings_show_avatar_title">தொடர்பின் படத்தைக் காட்டு</string>
+    <string name="settings_show_avatar_summary">உரையாடல்களில் அனுப்புநரின் படத்தைக் காட்டு. செய்திக் குமிழ்களுக்கு அதிக அகலம் தர இதை முடக்கு.</string>
+    <string name="settings_hide_country_code_title">நாட்டுக் குறியீட்டை மறை</string>
+    <string name="settings_hide_country_code_summary">தொலைபேசி எண்களை உள்ளூர் வடிவத்தில் காட்டு, எ.கா. \"+33 6 ...\" என்பதற்குப் பதிலாக \"06 ...\"</string>
+    <string name="settings_edge_to_edge_title">விளிம்பு முதல் விளிம்பு வரை</string>
+    <string name="settings_edge_to_edge_summary">நிலைப் பட்டி மற்றும் வழிசெலுத்தல் பட்டிக்குப் பின்னாலும் உள்ளடக்கத்தைக் காட்டு</string>
+    <string name="settings_system_show_stt_title">பேச்சிலிருந்து உரை பொத்தானைக் காட்டு</string>
+    <string name="settings_drawer_swipe_title">மெனுவைத் திறக்க ஸ்வைப் செய்</string>
+    <string name="settings_drawer_swipe_summary">உரையாடல் பட்டியலின் இடது விளிம்பிலிருந்து ஸ்வைப் செய்து பக்க மெனுவைத் திற</string>
     <string name="settings_auto_emoji_title">தானியங்கு உருவடி</string>
     <string name="settings_notifications_title">அறிவிப்புகள்</string>
     <string name="settings_notifications_o_summary">தனிப்பயனாக்க தட்டு</string>
@@ -202,7 +380,14 @@
     <string name="settings_notification_action_2">பொத்தான் 2</string>
     <string name="settings_notification_action_3">பொத்தான் 3</string>
     <string name="settings_notification_previews_title">அறிவிப்பு முற்பார்வைகள்</string>
+    <string name="settings_notification_previews_summary">பெயரையும் செய்தியையும் காட்டு</string>
     <string name="settings_notification_wake_title">திரையை எழுப்பு</string>
+    <string name="settings_notification_silent_title">தொடர்பு இல்லையெனில் அமைதி</string>
+    <string name="settings_notification_silent_summary">உங்கள் தொடர்புகளில் இல்லாதவர்களின் செய்திகளுக்கான அறிவிப்புகளை அமைதியாக்கும்</string>
+    <string name="settings_copy_code_title">அறிவிப்புகளிலிருந்து குறியீடுகளை நகலெடு</string>
+    <string name="settings_copy_code_summary">ஒருமுறைக் குறியீடுகள் மற்றும் சரிபார்ப்புக் குறியீடுகளின் அறிவிப்புகளில் குறியீட்டை நகலெடு பொத்தானைச் சேர்க்கும்</string>
+    <string name="notification_copy_code">குறியீட்டை நகலெடு</string>
+    <string name="notification_code_copied">குறியீடு நகலெடுக்கப்பட்டது</string>
     <string name="settings_vibration_title">அதிர்வு</string>
     <string name="settings_ringtone_title">ஒலி</string>
     <string name="settings_ringtone_none">ஏதுமில்லை</string>
@@ -227,6 +412,13 @@
     </string-array>
     <string name="settings_delivery_title">வழங்குதல் உறுதிப்படுத்தல்கள்</string>
     <string name="settings_delivery_summary">தகவல்கள் வெற்றிகரமாக அனுப்பப்பட்டதை உறுதிசெய்</string>
+    <string name="settings_send_sound_title">அனுப்பும்போது ஒலி</string>
+    <string name="settings_send_sound_summary">செய்தி அனுப்பும்போது ஒரு சிறிய ஒலியை இயக்கு</string>
+    <string name="settings_send_sound_volume_title">ஒலியளவு</string>
+    <string name="settings_header_quick_action_title">தலைப்பு விரைவுச் செயல்</string>
+    <string name="settings_header_quick_action_summary">உரையாடல் தலைப்பில் ஒரு குறுக்குவழி பொத்தானைச் சேர்</string>
+    <string name="settings_unread_at_top_title">படிக்காதவை மேலே</string>
+    <string name="settings_unread_at_top_summary">படிக்காத உரையாடல்களை மேலே காட்டு</string>
     <string name="settings_signature_title">ஒப்பம்</string>
     <string name="settings_signature_summary">தகவலின் முடிவில் ஒப்பத்தை சேர்</string>
     <string name="settings_unicode_title">Strip accents</string>
@@ -246,6 +438,9 @@
     <string name="settings_long_as_mms_title">நீண்ட செய்திகளை எம்.எம்.எஸ் ஆக அனுப்பு</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_mms_weblink_title">செய்திகளில் இணைப்புகளைக் கையாளுதல்</string>
+    <string name="settings_disable_screenshots_title">ஸ்கிரீன்ஷாட்களை முடக்கு</string>
+    <string name="settings_diable_screenshots_summary">இயக்க முறைமையும் பிற ஆப்களும் இந்த ஆப்பை ஸ்கிரீன்ஷாட் எடுப்பதைத் தடு.</string>
     <string name="settings_sync_title">தகவல்களை ஒத்திசை</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
     <string name="settings_about_title">Open Messages பற்றி</string>
@@ -257,6 +452,17 @@
     <string name="blocking_drop_title">தகவல்களை கைவிடு</string>
     <string name="blocking_drop_summary">தடுத்த அனுப்புநர்களிடமிருந்து வரும் தகவல்களை மறைப்பதற்கு பதிலாக கைவிடு</string>
     <string name="blocking_conversations">தடுக்கப்பட்ட உரையாடல்கள்</string>
+    <string name="blocking_category_integrated">உள்ளமைந்த தடுப்பு</string>
+    <string name="blocking_integrated_description">Open Messages உங்கள் சாதனத்திலேயே ஸ்பேமைத் தடுக்கிறது. கீழே உள்ள விருப்ப மூலங்கள் இயக்கப்படும்போது தங்கள் பட்டியலை இணையத்திலிருந்து பதிவிறக்கி, பிறகு ஆஃப்லைனில் செயல்படும்.</string>
+    <string name="blocking_category_external_apps">வெளி ஆப்கள்</string>
+    <string name="blocked_numbers_summary">நீங்களே தடுத்த எண்கள்</string>
+    <string name="blocking_source_phishing_title">ஃபிஷிங் தடுப்பு</string>
+    <string name="blocking_source_phishing_summary">அறியப்பட்ட ஃபிஷிங் தளங்களுக்கான இணைப்புகள் உள்ள செய்திகளைத் தடுக்கும். இதை இயக்கினால் பட்டியல் இணையத்திலிருந்து பதிவிறக்கப்படும்; அதன் பிறகு வடிகட்டுதல் ஆஃப்லைனில் நடக்கும்.</string>
+    <string name="blocking_source_flag_block_title">சந்தேகமான ஸ்பேமைத் தடு</string>
+    <string name="blocking_source_flag_block_summary">ஸ்பேமாக இருக்கலாம் எனக் குறிக்கப்பட்ட செய்திகளை உட்பெட்டியில் குறியிடுவதற்குப் பதிலாக நேரடியாகத் தடுப்புப் பட்டியலுக்கு அனுப்பு</string>
+    <string name="blocking_source_status_updating">புதுப்பிக்கிறது…</string>
+    <string name="blocking_source_status_updated">புதுப்பித்த நிலையில் · %1$d பதிவுகள்</string>
+    <string name="blocking_source_status_failed">பதிவிறக்கம் தோல்வி, மூலம் முடக்கத்திலேயே இருக்கும். இணைப்பைச் சரிபார்த்து மீண்டும் முயல்.</string>
     <string name="blocking_manager_title">தடுத்தல் மேலாளர்</string>
     <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
@@ -270,6 +476,15 @@
     <string name="blocked_numbers_dialog_title">Block texts from</string>
     <string name="blocked_numbers_dialog_hint">தொலைபேசி எண்</string>
     <string name="blocked_numbers_dialog_block">தடு</string>
+    <string name="message_content_filters_title">செய்தி உள்ளடக்க வடிகட்டிகள்</string>
+    <string name="message_content_filters_empty">உங்கள் செய்தி உள்ளடக்க வடிகட்டிகள் இங்கே தோன்றும்</string>
+    <string name="message_content_filters_add_cd">புதிய வடிகட்டியை உருவாக்கு</string>
+    <string name="message_content_filters_dialog_title">பொருந்தும் செய்திகளை நிராகரி</string>
+    <string name="message_content_filters_dialog_hint">சொல், சொற்றொடர் அல்லது ரெகுலர் எக்ஸ்பிரஷன்</string>
+    <string name="message_content_filters_dialog_case_switch">எழுத்து வடிவ உணர்திறன்</string>
+    <string name="message_content_filters_dialog_regex_switch">ரெகுலர் எக்ஸ்பிரஷன்</string>
+    <string name="message_content_filters_dialog_contacts_switch">தொடர்புகளையும் சேர்</string>
+    <string name="message_content_filters_dialog_create">உருவாக்கு</string>
     <string name="blocked_messages_title">தடுக்கப்பட்ட தகவல்கள்</string>
     <string name="blocked_messages_empty">உம் தடுக்கப்பட்ட தகவல்கள் இங்கு தோன்றும்</string>
     <string name="blocking_block_title">தடு</string>
@@ -282,6 +497,15 @@
         <item quantity="one">Continue to %s and allow this number</item>
         <item quantity="other">Continue to %s and allow these numbers</item>
     </plurals>
+    <string name="deduplicate_messages_category">நகல் செய்திகளை நீக்குதல்</string>
+    <string name="deduplicate_messages_title">நகல் செய்திகளை நீக்கு</string>
+    <string name="deduplicate_messages_summary">செய்தி தரவுத்தளத்தை ஸ்கேன் செய்து அசல் செய்திகளுடன் சரியாகப் பொருந்தும் எல்லாச் செய்திகளையும் நீக்கும்</string>
+    <string name="deduplicate_message_confirmation_dialog_message">உங்கள் செய்தி தரவுத்தளத்தில் நகல்கள் தேடப்பட்டு, பிறகு அவை நீக்கப்படும்.\nஇது தானாகச் செய்திகளை நீக்கும், விளைவுகளைப் புரிந்தால் மட்டும் தொடரவும்.</string>
+    <string name="auto_deduplicate_messages_title">நகல் செய்திகளைத் தானாக நீக்கு</string>
+    <string name="auto_deduplicate_messages_summary">ஒத்திசைவின்போது நகல்கள் நீக்கப்படும். கவனிக்கவும், இது தானாகச் செய்திகளை நீக்கும், தவறான நகலுக்கான வாய்ப்பு மிகக் குறைவு என்றாலும் அது சாத்தியமே.\nகவனமாக இருக்கவும்.</string>
+    <string name="deduplicating_messages_finished">நகல் செய்திகள் நீக்கப்பட்டன!</string>
+    <string name="deduplicating_messages_no_messages">நகல் செய்திகள் எதுவும் இல்லை.</string>
+    <string name="deduplicating_messages_failed">நகல் செய்திகளை நீக்க முடியவில்லை, மீண்டும் முயலவும்</string>
     <string name="about_title">இதுபற்றி</string>
     <string name="about_version_title">பதிப்பு</string>
     <string name="about_developer_title">உருவாக்குநர்</string>
@@ -292,6 +516,7 @@
     <string name="about_copyright_title">பதிப்புரிமை</string>
     <string name="widget_loading">ஏற்றுகிறது...</string>
     <string name="widget_more">மேலும் உரையாடல்களை பார்</string>
+    <string name="all_conversations_widget_title">அனைத்து உரையாடல்களும்</string>
     <string name="quick_reply_menu_read">படித்ததாகக் குறி</string>
     <string name="quick_reply_menu_call">அழை</string>
     <string name="quick_reply_menu_delete">அழி</string>
@@ -313,18 +538,37 @@
     <string name="button_yes">ஆம்</string>
     <string name="button_continue">தொடரு</string>
     <string name="button_cancel">ரத்துசெய்</string>
+    <string name="button_close">மூடு</string>
     <string name="button_delete">அழி</string>
     <string name="button_save">சேமி</string>
     <string name="button_stop">நிறுத்து</string>
     <string name="button_set">அமை</string>
+    <string name="button_later">பிறகு</string>
+    <string name="icon_restart_title">மறுதொடக்கம் தேவை</string>
+    <string name="icon_restart_message">ஆப் ஐகான் புதுப்பிப்பை முடிக்க ஆப்பை மறுதொடக்கம் செய்ய வேண்டும்.</string>
+    <string name="icon_restart_now">மறுதொடக்கு</string>
     <string name="button_undo">செயல்தவிர்</string>
+    <string name="button_clear">அழி</string>
     <string name="toast_copied">நகலெடுக்கப்பட்டது</string>
+    <plurals name="toast_archived">
+        <item quantity="one">உரையாடல் காப்பகப்படுத்தப்பட்டது</item>
+        <item quantity="other">%d உரையாடல்கள் காப்பகப்படுத்தப்பட்டன</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">உரையாடல் காப்பகத்திலிருந்து நீக்கப்பட்டது</item>
+        <item quantity="other">%d உரையாடல்கள் காப்பகத்திலிருந்து நீக்கப்பட்டன</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">புது தகவல்</item>
         <item quantity="other">%s புது தகவல்கள்</item>
     </plurals>
     <string name="notification_message_failed_title">தகவல் அனுப்பப்படவில்லை</string>
     <string name="notification_message_failed_text">%s-க்கான குறுந்தகவல் அனுப்ப தோல்வி</string>
+    <string name="notification_foreground_worker_title">செய்தி பெறப்படுகிறது</string>
+    <string name="notification_foreground_worker_text">Android 12 மற்றும் அதற்கு முந்தைய பதிப்புகளில், செய்திகளைப் பெற உதவும் பின்னணிப் பணிக்கு ஓர் அறிவிப்பு தேவை.</string>
+    <string name="notification_foreground_worker_channel_name">செய்தி பெறும் பணி அறிவிப்பு</string>
+    <string name="notification_me">நான்</string>
+    <string name="notification_message_failed_action">மீண்டும் அனுப்பு</string>
     <string-array name="night_modes">
         <item>முறைமை</item>
         <item>முடக்கத்தில்</item>
@@ -348,6 +592,21 @@
         <item>5 வினாடிகள்</item>
         <item>10 வினாடிகள்</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>எதுவுமில்லை</item>
+        <item>காப்பகப்படுத்து</item>
+        <item>வாசிக்காததாக குறி</item>
+        <item>தடு</item>
+        <item>நீக்கு</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>எதுவுமில்லை</item>
+        <item>கிளாசிக்</item>
+        <item>பிரகாசம்</item>
+        <item>மென்மை</item>
+        <item>இறங்குமுகம்</item>
+        <item>மூன்று ஸ்வரம்</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>தானியங்கு</item>
         <item>100KB</item>
@@ -357,6 +616,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>No compression</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>தடு</item>
+        <item>அனுமதி</item>
+        <item>திறக்கும் முன் கேள்</item>
     </string-array>
     <string-array name="quick_responses">
         <item>சரி</item>
@@ -372,4 +636,13 @@
         <item>சசி(சத்தமாக சிரிக்கிறேன்)</item>
         <item>அது பரவாயில்லை</item>
     </string-array>
+    <string name="speak_no_messages">செய்திகள் இல்லை</string>
+    <string name="speak_unseen_messages">பார்க்காத செய்திகளைப் படித்துக் காட்டு</string>
+    <string name="messageLinkHandling_dialog_title">வெளி இணைப்பு எச்சரிக்கை</string>
+    <string name="messageLinkHandling_dialog_body">சில இணைப்புகள் பாதுகாப்பற்றதாக இருக்கலாம் அல்லது எதிர்பாராத இடத்திற்குத் திருப்பிவிடலாம். தொடரும் முன் கீழே உள்ள இணைப்பைச் சரிபார்க்கவும்:\n\n%1$s\n\nதொடர வேண்டுமா?</string>
+    <string name="messageLinkHandling_dialog_positive">ஆம், இணைப்பைத் திற</string>
+    <string name="messageLinkHandling_dialog_negative">இல்லை</string>
+    <string name="error_stt_toast">மன்னிக்கவும், பேச்சிலிருந்து உரை சேவையை ஏற்றுவதில் பிழை ஏற்பட்டது.</string>
+    <string name="stt_toast_extra_prompt">உங்கள் செய்தியைப் பேசுங்கள்</string>
+    <string name="messages_text_share_file_error">அச்சச்சோ! பகிரும்போது ஏதோ தவறு நடந்தது</string>
 </resources>

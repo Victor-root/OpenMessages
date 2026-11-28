@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">مراسلة بسيطة ومفتوحة المصدر</string>
     <string name="shortcut_compose_long_label">محادثة جديدة</string>
     <string name="shortcut_compose_short_label">ألِّف</string>
     <string name="shortcut_compose_disabled_message">الاختصار معطَّل</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">الإعدادات</string>
     <string name="title_notification_prefs">الإشعارات</string>
     <string name="title_theme">السمة</string>
+    <string name="theme_default">الافتراضي</string>
+    <string name="theme_wallpaper">الخلفية</string>
+    <string name="theme_other_colors">الألوان</string>
+    <string name="theme_tab_presets">لوحة الألوان</string>
+    <string name="theme_tab_custom">مخصص</string>
+    <string name="theme_apply_to_icon">تطبيق اللون على أيقونة التطبيق (سيُغلق التطبيق)</string>
+    <string name="theme_tab_icon">أيقونة التطبيق</string>
+    <string name="theme_icon_follow_theme">مطابقة لون سمة التطبيق</string>
+    <string name="theme_icon_summary">اختر لون أيقونة التطبيق بشكل مستقل عن السمة. تطبيق أي تغيير سيُغلق التطبيق.</string>
+    <string name="theme_icon_change_title">تغيير أيقونة التطبيق؟</string>
+    <string name="theme_icon_change_message">لون أيقونة التطبيق على وشك التغيير. لا يستطيع Android تبديل الأيقونة إلا والتطبيق مغلق، لذا سيُغلق Open Messages فور التأكيد.</string>
     <string name="title_conversations">البحث في علبة الوارد…</string>
+    <string name="title_search">بحث</string>
     <string name="title_compose">أكتب اسماً أو رقماً</string>
     <string name="setup_skip">تخطي</string>
     <string name="setup_next">متابعة</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">حفظ إلى المعرض</string>
     <string name="compose_menu_share">مشاركة</string>
     <string name="main_drawer_open_cd">فتح درج التنقل</string>
+    <string name="main_search_close_cd">إغلاق البحث</string>
+    <string name="main_search_clear_cd">مسح البحث</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d محددة</string>
     <string name="main_menu_clear">مسح</string>
     <string name="main_menu_archive">أرشفة</string>
@@ -63,7 +79,20 @@
     <string name="main_permission_notifications">يحتاج تطبيق Open Messages إلى إذن لعرض الإشعارات</string>
     <string name="main_permission_allow">سماح</string>
     <string name="drawer_inbox">صندوق الوارد</string>
+    <string name="contacts_group_recent">الأخيرة</string>
+    <string name="contacts_group_starred">المفضلة</string>
+    <string name="contacts_group_groups">المجموعات</string>
+    <string name="conversations_group_today">اليوم</string>
+    <string name="conversations_group_yesterday">أمس</string>
     <string name="drawer_archived">المؤرشفة</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="zero">%d غير مقروءة</item>
+        <item quantity="one">%d غير مقروءة</item>
+        <item quantity="two">%d غير مقروءة</item>
+        <item quantity="few">%d غير مقروءة</item>
+        <item quantity="many">%d غير مقروءة</item>
+        <item quantity="other">%d غير مقروءة</item>
+    </plurals>
     <string name="drawer_scheduled">المجدولة</string>
     <string name="drawer_blocking">الحظر</string>
     <string name="drawer_more">المزيد</string>
@@ -102,6 +131,8 @@
     <string name="compose_scheduled_future">الوقت المحدّد يجب أن يكون مستقبلاً!</string>
     <string name="compose_scheduled_toast">أضيفت إلى الرسائل المجدولة</string>
     <string name="compose_hint">كتابة رسالة…</string>
+    <string name="compose_expand_cd">توسيع إلى ملء الشاشة</string>
+    <string name="compose_collapse_cd">طي</string>
     <string name="compose_menu_copy">نسخ النص</string>
     <string name="compose_menu_forward">إعادة توجيه</string>
     <string name="compose_menu_delete">حذف</string>
@@ -123,10 +154,36 @@
     <string name="compose_gallery_cd">إرفاق صورة</string>
     <string name="compose_camera_cd">التقاط صورة</string>
     <string name="compose_schedule_cd">جدوِل الرسالة</string>
+    <string name="compose_schedule_title">جدولة الرسالة</string>
+    <string name="compose_schedule_in_hour">بعد ساعة</string>
+    <string name="compose_schedule_tonight">هذا المساء</string>
+    <string name="compose_schedule_tomorrow_morning">صباح الغد</string>
+    <string name="compose_schedule_tomorrow_afternoon">ظهر الغد</string>
+    <string name="compose_schedule_custom">اختيار التاريخ والوقت</string>
+    <string name="compose_schedule_confirm">جدولة</string>
+    <string name="compose_schedule_previous_month">الشهر السابق</string>
+    <string name="compose_schedule_next_month">الشهر التالي</string>
+    <string name="compose_schedule_increase">زيادة</string>
+    <string name="compose_schedule_decrease">إنقاص</string>
     <string name="compose_contact_cd">إرفاق جهة اتصال</string>
     <string name="compose_contact_error">خطأ في قراءة جهة الاتصال</string>
+    <string name="compose_attach_gallery">المعرض</string>
+    <string name="compose_attach_camera">الكاميرا</string>
+    <string name="compose_attach_file">ملف</string>
+    <string name="compose_attach_audio">صوت</string>
+    <string name="compose_attach_contact">جهة اتصال</string>
+    <string name="compose_attach_schedule">جدولة</string>
+    <string name="compose_attach_templates">القوالب</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">تم اختيار شريحة SIM %1$d (%2$s)</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="zero">هذا الفيديو طويل جدًا لإرساله عبر MMS. الحد الأقصى %d ثانية.</item>
+        <item quantity="one">هذا الفيديو طويل جدًا لإرساله عبر MMS. الحد الأقصى ثانية واحدة.</item>
+        <item quantity="two">هذا الفيديو طويل جدًا لإرساله عبر MMS. الحد الأقصى ثانيتان.</item>
+        <item quantity="few">هذا الفيديو طويل جدًا لإرساله عبر MMS. الحد الأقصى %d ثوانٍ.</item>
+        <item quantity="many">هذا الفيديو طويل جدًا لإرساله عبر MMS. الحد الأقصى %d ثانية.</item>
+        <item quantity="other">هذا الفيديو طويل جدًا لإرساله عبر MMS. الحد الأقصى %d ثانية.</item>
+    </plurals>
     <string name="compose_sim_cd">%s محددة، غيّر شريحة SIM</string>
     <string name="compose_send_cd">إرسال الرسالة</string>
     <string name="message_status_sending">الإرسال جارٍ…</string>
@@ -145,11 +202,45 @@
     <string name="gallery_toast_saved">تم الحفظ في المعرض</string>
     <string name="backup_title">النسخ الاحتياطي والاستعادة</string>
     <string name="backup_backing_up">النسخ الاحتياطي للرسائل</string>
+    <string name="backup_failed_title">فشل النسخ الاحتياطي</string>
+    <string name="backup_icon_change_title">استعادة أيقونة التطبيق؟</string>
+    <string name="backup_icon_change_message">أُنشئت نسختك الاحتياطية بلون مختلف لأيقونة التطبيق. لا يستطيع Android تبديل الأيقونة إلا والتطبيق مغلق، لذا سيُغلق Open Messages فور التأكيد.</string>
+    <string name="icon_change_confirm">تطبيق وإغلاق</string>
+    <string name="icon_change_later">ليس الآن</string>
     <string name="backup_restoring">استعادة من النسخة الاحتياطية</string>
     <string name="backup_loading">تحميل…</string>
     <string name="backup_never">أبداً</string>
     <string name="backup_location_title">موقع النسخ الاحتياطي</string>
     <string name="backup_location_summary">تعيين المجلد</string>
+    <string name="backup_auto_title">النسخ الاحتياطي التلقائي</string>
+    <string name="backup_auto_never">أبدًا</string>
+    <string name="backup_auto_daily">كل يوم</string>
+    <string name="backup_auto_weekly">كل أسبوع</string>
+    <string name="backup_auto_custom">مخصص…</string>
+    <string name="backup_auto_custom_title">عدد الأيام بين النسخ الاحتياطية</string>
+    <string name="backup_auto_custom_hint">عدد الأيام</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="zero">كل %d يوم</item>
+        <item quantity="one">كل يوم</item>
+        <item quantity="two">كل يومين</item>
+        <item quantity="few">كل %d أيام</item>
+        <item quantity="many">كل %d يومًا</item>
+        <item quantity="other">كل %d يوم</item>
+    </plurals>
+    <string name="backup_zip_title">الحفظ كملف ‎.zip</string>
+    <string name="backup_zip_summary">حفظ كل نسخة احتياطية كأرشيف واحد، أسهل للنقل بين الهواتف</string>
+    <string name="backup_manage_title">إدارة النسخ الاحتياطية</string>
+    <string name="backup_manage_summary">إعادة تسمية نسخك الاحتياطية أو حذفها</string>
+    <string name="backup_manage_empty">لا توجد نسخ احتياطية في هذا الموقع</string>
+    <string name="backup_manage_rename">إعادة تسمية</string>
+    <string name="backup_manage_delete">حذف</string>
+    <string name="backup_manage_delete_confirm">حذف \"%s\"؟ لا يمكن التراجع عن ذلك.</string>
+    <string name="backup_manage_error">تعذّر تحديث هذه النسخة الاحتياطية</string>
+    <string name="backup_manage_type_folder">مجلد</string>
+    <string name="backup_manage_type_zip">أرشيف Zip</string>
+    <string name="backup_restore_from_title">الاستعادة من</string>
+    <string name="backup_restore_from_folder">مجلد</string>
+    <string name="backup_restore_from_zip">ملف ‎.zip</string>
     <string name="backup_restore_title">استعادة</string>
     <string name="backup_restore_summary">اختر نسخة احتياطية</string>
     <string name="backup_restore_error_backup">النسخ الاحتياطي قيد التقدم…</string>
@@ -167,11 +258,25 @@
     <string name="backup_restore_dialog_empty">لا توجد أي نسخة احتياطية</string>
     <string name="backup_disclaimer">النسخ الاحتياطي والاستعادة متاحة الآن فقط للرسائل النصّية. دعم رسائل الوسائط والرسائل المجدولة قادم قريباً!</string>
     <string name="backup_now">النسخ الاحتياطي الآن</string>
+    <string name="backup_now_summary">إنشاء نسخة احتياطية جديدة</string>
+    <string name="backup_categories_title">ما الذي تريد نسخه احتياطيًا؟</string>
+    <string name="backup_restore_source_title">أي نسخة احتياطية؟</string>
+    <string name="backup_restore_categories_title">الاستعادة من %s</string>
+    <string name="backup_category_messages">الرسائل (SMS وMMS والمرفقات)</string>
+    <string name="backup_category_settings">الإعدادات والقوالب</string>
+    <string name="backup_category_blocking">قواعد الحظر</string>
+    <string name="backup_category_conversations">المؤرشفة والمثبتة</string>
+    <string name="backup_category_scheduled">الرسائل المجدولة</string>
+    <string name="backup_exact_alarm_title">السماح بالمنبهات الدقيقة</string>
+    <string name="backup_exact_alarm_message">لإرسال رسائلك المجدولة في الوقت المحدد تمامًا، يحتاج Open Messages إلى إذن ضبط المنبهات الدقيقة. بدونه قد تُرسل متأخرة قليلًا.</string>
+    <string name="backup_exact_alarm_grant">سماح</string>
+    <string name="backup_exact_alarm_skip">الاستعادة على أي حال</string>
     <string name="backup_progress_parsing">توزيع النسخ الاحتياطي…</string>
     <string name="backup_progress_running">%d/%d رسائل</string>
     <string name="backup_progress_saving">جارٍ حفظُ النسخة الاحتياطية…</string>
     <string name="backup_progress_syncing">مزامنة الرسائل جارية…</string>
     <string name="backup_progress_finished">تم!</string>
+    <string name="backup_progress_failed">تعذّرت كتابة النسخة الاحتياطية. تحقق من المساحة المتبقية ومن مجلد النسخ الاحتياطي.</string>
     <string name="backup_notification_channel_name">النسخ الاحتياطي والاستعادة</string>
     <string name="scheduled_title">مجدولة</string>
     <string name="scheduled_empty_description">الإرسال الآلي لأي رسالة في الوقت الذي ترغب بالضبط</string>
@@ -198,6 +303,12 @@
     <string name="settings_automatic_colors_title">تلوين جهات الاتصال تلقائيا</string>
     <string name="settings_text_size_title">حجم الخط</string>
     <string name="settings_system_font_title">استخدم خط النظام</string>
+    <string name="settings_show_avatar_title">إظهار صورة جهة الاتصال</string>
+    <string name="settings_show_avatar_summary">إظهار صورة المرسل في المحادثات. أوقفه لمنح فقاعات الرسائل عرضًا أكبر.</string>
+    <string name="settings_hide_country_code_title">إخفاء رمز البلد</string>
+    <string name="settings_hide_country_code_summary">عرض أرقام الهاتف بالصيغة المحلية، مثل \"06 ...\" بدلًا من \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">من الحافة إلى الحافة</string>
+    <string name="settings_edge_to_edge_summary">عرض المحتوى خلف شريط الحالة وشريط التنقل</string>
     <string name="settings_auto_emoji_title">إيموجي تلقائية</string>
     <string name="settings_notifications_title">الإشعارات</string>
     <string name="settings_notifications_o_summary">أنقر للتخصيص</string>
@@ -231,6 +342,11 @@
     </string-array>
     <string name="settings_delivery_title">تأكيدات الإستلام</string>
     <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>
+    <string name="settings_send_sound_title">صوت عند الإرسال</string>
+    <string name="settings_send_sound_summary">تشغيل نغمة قصيرة عند إرسال رسالة</string>
+    <string name="settings_send_sound_volume_title">مستوى الصوت</string>
+    <string name="settings_header_quick_action_title">إجراء سريع في الترويسة</string>
+    <string name="settings_header_quick_action_summary">إضافة زر اختصار إلى ترويسة المحادثة</string>
     <string name="settings_signature_title">توقيع</string>
     <string name="settings_signature_summary">اضافة توقيع الى نهاية الرسائل</string>
     <string name="settings_unicode_title">نزع حركات التشكيل</string>
@@ -265,6 +381,17 @@
     <string name="blocking_drop_title">مسح الرسائل</string>
     <string name="blocking_drop_summary">قم بحذف الرسائل الواردة من المرسلين المحظورين بدلاً من إخفائها</string>
     <string name="blocking_conversations">المحادثات المحظورة</string>
+    <string name="blocking_category_integrated">الحظر المدمج</string>
+    <string name="blocking_integrated_description">يحظر Open Messages الرسائل المزعجة على جهازك. تنزّل المصادر الاختيارية أدناه قائمتها من الإنترنت عند تفعيلها، ثم تعمل دون اتصال.</string>
+    <string name="blocking_category_external_apps">تطبيقات خارجية</string>
+    <string name="blocked_numbers_summary">الأرقام التي حظرتها بنفسك</string>
+    <string name="blocking_source_phishing_title">مكافحة التصيد</string>
+    <string name="blocking_source_phishing_summary">يحظر الرسائل التي تحتوي روابط لمواقع تصيد معروفة. تفعيله ينزّل القائمة من الإنترنت؛ ثم تتم التصفية دون اتصال.</string>
+    <string name="blocking_source_flag_block_title">حظر الرسائل المشتبه بها</string>
+    <string name="blocking_source_flag_block_summary">إرسال الرسائل الموسومة كرسائل مزعجة محتملة مباشرة إلى قائمة المحظورات بدلًا من الاكتفاء بوسمها في صندوق الوارد</string>
+    <string name="blocking_source_status_updating">جارٍ التحديث…</string>
+    <string name="blocking_source_status_updated">محدّث · %1$d إدخال</string>
+    <string name="blocking_source_status_failed">فشل التنزيل، سيبقى المصدر متوقفًا. تحقق من اتصالك وحاول مجددًا.</string>
     <string name="blocking_manager_title">مدير المحظورات</string>
     <string name="blocking_manager_built_in_summary">وظيفة حظر مدمجة في برنامج Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">حظر الرسائل المزعجة والأرقام والمكالمات غير المعروفة باستخدام القائمة السوداء وجدولة المكالمات</string>
@@ -329,10 +456,15 @@
     <string name="button_yes">نعم</string>
     <string name="button_continue">الاستمرار</string>
     <string name="button_cancel">إلغاء</string>
+    <string name="button_close">إغلاق</string>
     <string name="button_delete">حذف</string>
     <string name="button_save">حفظ</string>
     <string name="button_stop">إيقاف</string>
     <string name="button_set">تعيين</string>
+    <string name="button_later">لاحقًا</string>
+    <string name="icon_restart_title">إعادة التشغيل مطلوبة</string>
+    <string name="icon_restart_message">تحتاج أيقونة التطبيق إلى إعادة تشغيل التطبيق لإكمال التحديث.</string>
+    <string name="icon_restart_now">إعادة التشغيل</string>
     <string name="button_undo">تراجع</string>
     <string name="toast_copied">تم النسخ</string>
     <plurals name="notification_new_messages">
@@ -368,6 +500,21 @@
         <item>خمس ثوان</item>
         <item>عشر ثوان</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>بلا</item>
+        <item>أرشفة</item>
+        <item>تعليم كغير مقروءة</item>
+        <item>حظر</item>
+        <item>حذف</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>بلا</item>
+        <item>كلاسيكي</item>
+        <item>ساطع</item>
+        <item>ناعم</item>
+        <item>تنازلي</item>
+        <item>ثلاث نغمات</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>تلقائي</item>
         <item>100كيلوبايت</item>
@@ -377,6 +524,11 @@
         <item>1000كيلوبايت</item>
         <item>2000كيلوبايت</item>
         <item>بدون ضغط</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>حظر</item>
+        <item>سماح</item>
+        <item>السؤال قبل الفتح</item>
     </string-array>
     <string-array name="quick_responses">
         <item>حسنًا</item>
@@ -400,10 +552,23 @@
     <string name="main_menu_rename_conversation">إعادة تسمية المحادثة</string>
     <string name="main_sync_emojis">تحليل ردود فعل الرموز التعبيرية…</string>
     <string name="main_sender_draft">مسودة: %s</string>
+    <string name="conversation_flagged_label">يُشتبه بأنها رسالة مزعجة</string>
+    <string name="snippet_picture">صورة</string>
+    <string name="snippet_video">فيديو</string>
+    <string name="snippet_audio">صوت</string>
+    <string name="snippet_contact_card">بطاقة جهة اتصال</string>
+    <string name="search_group_conversations">المحادثات</string>
     <string name="menu_mms_part_open">افتح خارجياً</string>
     <string name="scheduled_menu_send_now">أرسل الآن</string>
     <string name="scheduled_menu_edit_message">تعديل الرسالة</string>
     <string name="message_management_title">إدارة الرسائل</string>
+    <string name="templates_title">القوالب</string>
+    <string name="templates_empty">لا توجد رسائل محفوظة بعد.\nانقر على + لحفظ رسالة ترسلها كثيرًا، ثم انقر عليها لاختيار من ترسلها إليه.</string>
+    <string name="template_hint">اكتب رسالتك…</string>
+    <string name="template_title_hint">العنوان (اختياري)</string>
+    <string name="templates_add_cd">قالب جديد</string>
+    <string name="template_new">قالب جديد</string>
+    <string name="template_edit">تعديل القالب</string>
     <plurals name="dialog_delete_chat">
         <item quantity="zero">هل أنت متأكد من رغبتك في حذف هذه الرسالة؟</item>
         <item quantity="one">هل أنت متأكد من رغبتك في حذف هذه الرسالة؟</item>
@@ -428,7 +593,19 @@
     <string name="compose_send_group_summary_on">ستكون أسماء المستلمين والردود مرئية للجميع</string>
     <string name="compose_send_group_summary_off">سيتم إرسال الرسائل بشكل منفصل إلى جميع المستلمين</string>
     <string name="compose_scheduled_view">الرسائل المجدولة لهذه المحادثة</string>
+    <string name="compose_scheduled_bubble">سيُرسل في %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="zero">%d مرفق</item>
+        <item quantity="one">مرفق واحد</item>
+        <item quantity="two">مرفقان</item>
+        <item quantity="few">%d مرفقات</item>
+        <item quantity="many">%d مرفقًا</item>
+        <item quantity="other">%d مرفق</item>
+    </plurals>
     <string name="compose_no_valid_recipients">لا يمكن إرسالها إلى المشاركين الآخرين</string>
+    <string name="compose_flagged_title">يُشتبه بأنها رسالة مزعجة</string>
+    <string name="compose_flagged_approve">موافقة</string>
+    <string name="compose_flagged_block">حظر</string>
     <string name="compose_menu_show_status">عرض الحالة</string>
     <string name="compose_reactions_title">الردود</string>
     <string name="compose_attach_file_cd">أرفق أي ملف</string>
@@ -437,6 +614,8 @@
     <string name="compose_record_audio_msg_cd">سجل رسالة صوتية</string>
     <string name="compose_record_audio_msg_abort_cd">ألغي الرسالة الصوتية</string>
     <string name="compose_record_audio_msg_attach_cd">إرفاق رسائل صوتية</string>
+    <string name="compose_audio_msg_title">رسالة صوتية</string>
+    <string name="compose_audio_msg_attach">إرفاق</string>
     <string name="compose_record_audio_msg_play_pause_cd">تشغيل أو إيقاف الرسالة الصوتية مؤقتًا</string>
     <string name="compose_message_cancel">إلغاء</string>
     <string name="compose_message_send_now">أرسل الآن</string>
@@ -445,14 +624,24 @@
     <string name="compose_message_attachment">الملحق</string>
     <string name="compose_toast_drag_stt">انقل زر تحويل الكلام إلى نص إلى أي مكان تريده</string>
     <string name="message_body_too_long_to_display">⚠ الرسالة طويلة. انسخها أو احفظها لعرض النص الكامل</string>
+    <string name="conversation_menu">خيارات المحادثة</string>
+    <string name="conversation_menu_media">عرض كل الوسائط</string>
+    <string name="media_title">الوسائط</string>
+    <string name="media_empty">ستظهر هنا الصور ومقاطع الفيديو المشتركة في هذه المحادثة</string>
     <string name="clipboard_too_large_to_copy">حجم البيانات يتجاوز الحد المسموح به في الحافظة</string>
     <string name="clipboard_unable_to_copy_to">تعذر النسخ إلى الحافظة</string>
     <string name="scheduled_send_cd">تمت جدولة هذه الرسائل</string>
     <string name="attachment_missing">مفقود</string>
     <string name="settings_system_show_stt_title">إظهار زر تحويل الكلام إلى نص</string>
+    <string name="settings_drawer_swipe_title">السحب لفتح القائمة</string>
+    <string name="settings_drawer_swipe_summary">فتح القائمة الجانبية بالسحب من الحافة اليسرى لقائمة المحادثات</string>
     <string name="settings_notification_previews_summary">إظهار الاسم والرسالة</string>
     <string name="settings_notification_silent_title">صامت إن لم يكن جهة اتصال</string>
     <string name="settings_notification_silent_summary">يقوم هذا الخيار بكتم الإشعارات الخاصة بالرسائل التي لا يوجد مستلمون لها في جهات اتصالك</string>
+    <string name="settings_copy_code_title">نسخ الرموز من الإشعارات</string>
+    <string name="settings_copy_code_summary">يضيف زر نسخ الرمز إلى إشعارات رموز الاستخدام الواحد ورموز التحقق</string>
+    <string name="notification_copy_code">نسخ الرمز</string>
+    <string name="notification_code_copied">تم نسخ الرمز</string>
     <string name="settings_unread_at_top_title">غير مقروء في الأعلى</string>
     <string name="settings_unread_at_top_summary">عرض المحادثات غير المقروءة في الأعلى</string>
     <string name="settings_mms_weblink_title">معالجة الروابط في الرسائل</string>
@@ -495,6 +684,8 @@
     </plurals>
     <string name="notification_foreground_worker_title">استلام الرسائل</string>
     <string name="notification_foreground_worker_text">في نظام Android 12 والإصدارات الأقدم، يلزم وجود إشعار للعمل في الخلفية الذي يتيح استقبال الرسائل.</string>
+    <string name="notification_foreground_worker_channel_name">إشعار عملية استلام الرسائل</string>
+    <string name="notification_me">أنا</string>
     <string name="notification_message_failed_action">أعد الإرسال</string>
     <string name="speak_no_messages">لا توجد رسائل</string>
     <string name="speak_unseen_messages">تكلم رسائل غير مرئية</string>

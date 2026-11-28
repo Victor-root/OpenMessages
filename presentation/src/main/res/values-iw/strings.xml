@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">הודעות פשוטות בקוד פתוח</string>
     <string name="shortcut_compose_long_label">התכתבות חדשה</string>
     <string name="shortcut_compose_short_label">כתוב הודעה</string>
     <string name="shortcut_compose_disabled_message">קיצור הדרך הושבת</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">הגדרות</string>
     <string name="title_notification_prefs">התראות</string>
     <string name="title_theme">ערכת נושא</string>
+    <string name="theme_default">ברירת מחדל</string>
+    <string name="theme_wallpaper">טפט</string>
+    <string name="theme_other_colors">צבעים</string>
+    <string name="theme_tab_presets">פלטה</string>
+    <string name="theme_tab_custom">מותאם אישית</string>
+    <string name="theme_apply_to_icon">החל את הצבע על סמל האפליקציה (האפליקציה תיסגר)</string>
+    <string name="theme_tab_icon">סמל האפליקציה</string>
+    <string name="theme_icon_follow_theme">התאם לצבע ערכת הנושא</string>
+    <string name="theme_icon_summary">בחר את צבע סמל האפליקציה, ללא תלות בערכת הנושא. החלת שינוי תסגור את האפליקציה.</string>
+    <string name="theme_icon_change_title">לשנות את סמל האפליקציה?</string>
+    <string name="theme_icon_change_message">צבע סמל האפליקציה עומד להשתנות. Android יכולה להחליף את הסמל רק כשהאפליקציה סגורה, לכן Open Messages תיסגר מיד עם האישור.</string>
     <string name="title_conversations">חיפוש בהודעות נכנסות…</string>
+    <string name="title_search">חיפוש</string>
     <string name="title_compose">נא להקליד שם או מספר</string>
     <string name="setup_skip">דלג</string>
     <string name="setup_next">המשך</string>
     <string name="menu_add_person">הוסף איש קשר</string>
     <string name="menu_call">התקשרות</string>
     <string name="menu_mms_part_save">שמור לגלריה</string>
+    <string name="menu_mms_part_share">שיתוף</string>
+    <string name="menu_mms_part_forward">העבר</string>
+    <string name="menu_mms_part_open">פתח באפליקציה חיצונית</string>
     <string name="compose_menu_share">שיתוף</string>
     <string name="main_drawer_open_cd">פתח מגירת ניווט</string>
+    <string name="main_search_close_cd">סגור חיפוש</string>
+    <string name="main_search_clear_cd">נקה חיפוש</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d נבחרו</string>
     <string name="main_menu_clear">נקה</string>
+    <string name="main_menu_select_all">בחר הכול</string>
     <string name="main_menu_archive">לארכיון</string>
     <string name="main_menu_unarchive">שליפה מהארכיון</string>
     <string name="main_menu_delete">מחק</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">סמן כהודעה שנקראה</string>
     <string name="main_menu_unread">סמן כהודעה שלא נקראה</string>
     <string name="main_menu_block">חסום</string>
+    <string name="main_menu_send_now">שלח עכשיו</string>
+    <string name="main_menu_edit_message">ערוך הודעה</string>
+    <string name="main_menu_rename_conversation">שנה שם התכתבות</string>
     <string name="main_syncing">מסנכרן הודעות…</string>
+    <string name="main_sync_emojis">מעבד תגובות אימוג׳י…</string>
     <string name="main_sender_you">אתה: %s</string>
+    <string name="main_sender_draft">טיוטה: %s</string>
+    <string name="conversation_flagged_label">חשד לספאם</string>
+    <string name="snippet_picture">תמונה</string>
+    <string name="snippet_video">סרטון</string>
+    <string name="snippet_audio">שמע</string>
+    <string name="snippet_contact_card">כרטיס איש קשר</string>
+    <string name="search_group_conversations">התכתבויות</string>
     <string name="main_message_results_title">תוצאות בהודעות</string>
     <plurals name="main_message_results">
         <item quantity="other">%d הודעות</item>
@@ -62,11 +93,32 @@
     <string name="main_permission_contacts">ל־Open Messages נדרשות הרשאות כדי לצפות באנשי הקשר שלך</string>
     <string name="main_permission_notifications">ל־Open Messages דרושות הרשאות כדי להציג התראות</string>
     <string name="main_permission_allow">אפשר</string>
+    <string name="scheduled_menu_send_now">שלח עכשיו</string>
+    <string name="scheduled_menu_edit_message">ערוך הודעה</string>
     <string name="drawer_inbox">דואר נכנס</string>
+    <string name="contacts_group_recent">אחרונים</string>
+    <string name="contacts_group_starred">מועדפים</string>
+    <string name="contacts_group_groups">קבוצות</string>
+    <string name="conversations_group_today">היום</string>
+    <string name="conversations_group_yesterday">אתמול</string>
     <string name="drawer_archived">בארכיון</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">הודעה אחת שלא נקראה</item>
+        <item quantity="two">%d שלא נקראו</item>
+        <item quantity="many">%d שלא נקראו</item>
+        <item quantity="other">%d שלא נקראו</item>
+    </plurals>
     <string name="drawer_scheduled">מתוזמן</string>
     <string name="drawer_blocking">חסימה</string>
     <string name="drawer_more">עוד</string>
+    <string name="message_management_title">ניהול הודעות</string>
+    <string name="templates_title">תבניות</string>
+    <string name="templates_empty">אין עדיין הודעות שמורות.\nהקש על + כדי לשמור הודעה שאתה שולח לעיתים קרובות, ואז הקש עליה כדי לבחור למי לשלוח.</string>
+    <string name="template_hint">הקלד את ההודעה…</string>
+    <string name="template_title_hint">כותרת (לא חובה)</string>
+    <string name="templates_add_cd">תבנית חדשה</string>
+    <string name="template_new">תבנית חדשה</string>
+    <string name="template_edit">ערוך תבנית</string>
     <string name="drawer_settings">הגדרות</string>
     <string name="drawer_help">עזרה ומשוב</string>
     <string name="drawer_invite">הזמנת חברים</string>
@@ -81,6 +133,23 @@
         <item quantity="many">למחוק את %d ההתכתבויות האלה?</item>
         <item quantity="other">למחוק את %d ההתכתבויות האלה?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">האם אתה בטוח שברצונך למחוק הודעה זו?</item>
+        <item quantity="two">האם אתה בטוח שברצונך למחוק %d הודעות?</item>
+        <item quantity="many">האם אתה בטוח שברצונך למחוק %d הודעות?</item>
+        <item quantity="other">האם אתה בטוח שברצונך למחוק %d הודעות?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">האם אתה בטוח שברצונך לשלוח הודעה זו עכשיו?</item>
+        <item quantity="two">האם אתה בטוח שברצונך לשלוח %d הודעות עכשיו?</item>
+        <item quantity="many">האם אתה בטוח שברצונך לשלוח %d הודעות עכשיו?</item>
+        <item quantity="other">האם אתה בטוח שברצונך לשלוח %d הודעות עכשיו?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">ערוך הודעה</string>
+    <string name="dialog_edit_scheduled_message">עריכת ההודעה תסיר אותה מהתזמון.\n\nהקפד לשלוח אותה שוב במסך הבא, אחרת היא תאבד.\n\nלהמשיך?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">כן, ערוך את ההודעה</string>
+    <string name="dialog_clear_compose_title">נקה הודעה</string>
+    <string name="dialog_clear_compose">לנקות את ההודעה? לא ניתן לבטל פעולה זו.</string>
     <string-array name="message_options">
         <item>העתק טקסט</item>
         <item>העבר</item>
@@ -94,19 +163,37 @@
     <string name="compose_subtitle_results">%1$d מתוך %2$d תוצאות</string>
     <string name="compose_send_group_title">שליחה כהודעה קבוצתית</string>
     <string name="compose_send_group_summary">הנמענים והתגובות יהיו חשופים בפני כולם</string>
+    <string name="compose_send_group_summary_on">הנמענים והתשובות יהיו גלויים לכולם</string>
+    <string name="compose_send_group_summary_off">ההודעות יישלחו בנפרד לכל הנמענים</string>
     <string name="compose_messages_empty">זאת תחילת ההתכתבות שלך. כדאי לפתוח במשהו נחמד!</string>
     <string name="compose_vcard_label">כרטיס קשר</string>
     <string name="compose_scheduled_for">מתוזמן למועד</string>
     <string name="compose_scheduled_future">הזמן הנבחר חייב להיות בעתיד!</string>
     <string name="compose_scheduled_toast">הוספה להודעות המתוזמנות</string>
+    <string name="compose_scheduled_view">הודעות מתוזמנות להתכתבות זו</string>
+    <string name="compose_scheduled_bubble">נשלחת ב־%s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">קובץ מצורף אחד</item>
+        <item quantity="two">%d קבצים מצורפים</item>
+        <item quantity="many">%d קבצים מצורפים</item>
+        <item quantity="other">%d קבצים מצורפים</item>
+    </plurals>
     <string name="compose_hint">כתוב הודעה…</string>
+    <string name="compose_expand_cd">הרחב למסך מלא</string>
+    <string name="compose_collapse_cd">כווץ</string>
+    <string name="compose_no_valid_recipients">לא ניתן לשלוח למשתתפים האחרים</string>
+    <string name="compose_flagged_title">חשד לספאם</string>
+    <string name="compose_flagged_approve">אשר</string>
+    <string name="compose_flagged_block">חסום</string>
     <string name="compose_menu_copy">העתק טקסט</string>
     <string name="compose_menu_forward">העבר</string>
+    <string name="compose_menu_show_status">הצג סטטוס</string>
     <string name="compose_menu_delete">מחק</string>
     <string name="compose_menu_previous">הקודם</string>
     <string name="compose_menu_next">הבא</string>
     <string name="compose_menu_clear">נקה</string>
     <string name="compose_details_title">פרטי הודעה</string>
+    <string name="compose_reactions_title">תגובות</string>
     <string name="compose_details_type">סוג: %s</string>
     <string name="compose_details_from">מאת: %s</string>
     <string name="compose_details_to">אל: %s</string>
@@ -118,18 +205,62 @@
     <string name="compose_details_delivered">נמסר: %s</string>
     <string name="compose_details_error_code">קוד שגיאה: %d</string>
     <string name="compose_attach_cd">הוסף קובץ מצורף</string>
+    <string name="compose_attach_file_cd">צרף קובץ כלשהו</string>
     <string name="compose_gallery_cd">צרף תמונה</string>
+    <string name="compose_audio_message_cd">הקלט הודעה קולית</string>
     <string name="compose_camera_cd">צלם תמונה</string>
     <string name="compose_schedule_cd">תזמון הודעה</string>
+    <string name="compose_schedule_title">תזמון הודעה</string>
+    <string name="compose_schedule_in_hour">בעוד שעה</string>
+    <string name="compose_schedule_tonight">הערב</string>
+    <string name="compose_schedule_tomorrow_morning">מחר בבוקר</string>
+    <string name="compose_schedule_tomorrow_afternoon">מחר אחר הצהריים</string>
+    <string name="compose_schedule_custom">בחר תאריך ושעה</string>
+    <string name="compose_schedule_confirm">תזמן</string>
+    <string name="compose_schedule_previous_month">החודש הקודם</string>
+    <string name="compose_schedule_next_month">החודש הבא</string>
+    <string name="compose_schedule_increase">הגדל</string>
+    <string name="compose_schedule_decrease">הקטן</string>
+    <string name="compose_schedule_cancel_cd">בטל תזמון הודעה</string>
     <string name="compose_contact_cd">צרף איש קשר</string>
     <string name="compose_contact_error">שגיאה בקריאת איש קשר</string>
+    <string name="compose_attach_gallery">גלריה</string>
+    <string name="compose_attach_camera">מצלמה</string>
+    <string name="compose_attach_file">קובץ</string>
+    <string name="compose_attach_audio">שמע</string>
+    <string name="compose_attach_contact">איש קשר</string>
+    <string name="compose_attach_schedule">תזמון</string>
+    <string name="compose_attach_templates">תבניות</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">נבחר SIM מס׳ %1$d ‏(%2$s)</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">הסרטון ארוך מדי לשליחה ב־MMS. האורך המרבי הוא שנייה אחת.</item>
+        <item quantity="two">הסרטון ארוך מדי לשליחה ב־MMS. האורך המרבי הוא %d שניות.</item>
+        <item quantity="many">הסרטון ארוך מדי לשליחה ב־MMS. האורך המרבי הוא %d שניות.</item>
+        <item quantity="other">הסרטון ארוך מדי לשליחה ב־MMS. האורך המרבי הוא %d שניות.</item>
+    </plurals>
     <string name="compose_sim_cd">%s נבחר, החלף כרטיס SIM</string>
     <string name="compose_send_cd">שלח הודעה</string>
+    <string name="compose_record_audio_msg_cd">הקלט הודעה קולית</string>
+    <string name="compose_record_audio_msg_abort_cd">בטל הודעה קולית</string>
+    <string name="compose_record_audio_msg_attach_cd">צרף הודעה קולית</string>
+    <string name="compose_audio_msg_title">הודעה קולית</string>
+    <string name="compose_audio_msg_attach">צרף</string>
+    <string name="compose_record_audio_msg_play_pause_cd">הפעל או השהה הודעה קולית</string>
+    <string name="compose_message_cancel">ביטול</string>
+    <string name="compose_message_send_now">שלח עכשיו</string>
+    <string name="compose_message_sim">מספר SIM</string>
+    <string name="compose_message_item">פריט הודעה</string>
+    <string name="compose_message_attachment">קובץ מצורף</string>
+    <string name="compose_toast_drag_stt">הזז את לחצן ההכתבה לכל מקום שתרצה</string>
     <string name="message_status_sending">שולח…</string>
     <string name="message_status_delivered">%s נמסרה</string>
     <string name="message_status_failed">השליחה נכשלה. הקש כדי לנסות שוב</string>
+    <string name="message_body_too_long_to_display">⚠ ההודעה ארוכה. העתק או שמור לקבלת הטקסט המלא</string>
+    <string name="conversation_menu">אפשרויות התכתבות</string>
+    <string name="conversation_menu_media">כל המדיה</string>
+    <string name="media_title">מדיה</string>
+    <string name="media_empty">תמונות וסרטונים ששותפו בהתכתבות זו יופיעו כאן</string>
     <string name="info_copied_address">הכתובת הועתקה</string>
     <string name="info_name">כותרת התכתבות</string>
     <string name="info_notifications">התראות</string>
@@ -143,11 +274,43 @@
     <string name="gallery_toast_saved">נשמר לגלריה</string>
     <string name="backup_title">גיבוי ושחזור</string>
     <string name="backup_backing_up">מגבה הודעות</string>
+    <string name="backup_failed_title">הגיבוי נכשל</string>
+    <string name="backup_icon_change_title">לשחזר את סמל האפליקציה?</string>
+    <string name="backup_icon_change_message">הגיבוי נוצר עם צבע אחר לסמל האפליקציה. Android יכולה להחליף את הסמל רק כשהאפליקציה סגורה, לכן Open Messages תיסגר מיד עם האישור.</string>
+    <string name="icon_change_confirm">החל וסגור</string>
+    <string name="icon_change_later">לא עכשיו</string>
     <string name="backup_restoring">משחזר מגיבוי</string>
     <string name="backup_loading">טוען…</string>
     <string name="backup_never">לעולם לא</string>
     <string name="backup_location_title">מיקום הגיבוי</string>
     <string name="backup_location_summary">הגדרת תיקייה</string>
+    <string name="backup_auto_title">גיבוי אוטומטי</string>
+    <string name="backup_auto_never">אף פעם</string>
+    <string name="backup_auto_daily">כל יום</string>
+    <string name="backup_auto_weekly">כל שבוע</string>
+    <string name="backup_auto_custom">מותאם אישית…</string>
+    <string name="backup_auto_custom_title">ימים בין גיבויים</string>
+    <string name="backup_auto_custom_hint">מספר ימים</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">כל יום</item>
+        <item quantity="two">כל %d ימים</item>
+        <item quantity="many">כל %d ימים</item>
+        <item quantity="other">כל %d ימים</item>
+    </plurals>
+    <string name="backup_zip_title">שמור כקובץ ‎.zip</string>
+    <string name="backup_zip_summary">שמור כל גיבוי כארכיון יחיד, קל יותר להעברה בין טלפונים</string>
+    <string name="backup_manage_title">ניהול גיבויים</string>
+    <string name="backup_manage_summary">שינוי שם או מחיקה של הגיבויים</string>
+    <string name="backup_manage_empty">לא נמצאו גיבויים במיקום זה</string>
+    <string name="backup_manage_rename">שנה שם</string>
+    <string name="backup_manage_delete">מחק</string>
+    <string name="backup_manage_delete_confirm">למחוק את \"%s\"? לא ניתן לבטל פעולה זו.</string>
+    <string name="backup_manage_error">לא ניתן לעדכן גיבוי זה</string>
+    <string name="backup_manage_type_folder">תיקייה</string>
+    <string name="backup_manage_type_zip">ארכיון Zip</string>
+    <string name="backup_restore_from_title">שחזור מתוך</string>
+    <string name="backup_restore_from_folder">תיקייה</string>
+    <string name="backup_restore_from_zip">קובץ ‎.zip</string>
     <string name="backup_restore_title">שחזור</string>
     <string name="backup_restore_summary">בחר גיבוי</string>
     <string name="backup_restore_error_backup">מתבצע גיבוי…</string>
@@ -165,12 +328,28 @@
     <string name="backup_restore_dialog_empty">לא נמצאו גיבויים</string>
     <string name="backup_disclaimer">נכון לעכשיו, קיימת תמיכה בהודעות מסוג SMS בתכונת הגיבוי והשחזור. תמיכה ב־MMS וגיבויים מתוזמנים יגיעו בעתיד הקרוב!</string>
     <string name="backup_now">גבה כעת</string>
+    <string name="backup_now_summary">צור גיבוי חדש</string>
+    <string name="backup_categories_title">מה לגבות?</string>
+    <string name="backup_restore_source_title">איזה גיבוי?</string>
+    <string name="backup_restore_categories_title">שחזור מתוך %s</string>
+    <string name="backup_category_messages">הודעות (SMS, MMS וקבצים מצורפים)</string>
+    <string name="backup_category_settings">הגדרות ותבניות</string>
+    <string name="backup_category_blocking">כללי חסימה</string>
+    <string name="backup_category_conversations">בארכיון ומוצמדות</string>
+    <string name="backup_category_scheduled">הודעות מתוזמנות</string>
+    <string name="backup_exact_alarm_title">אפשר התראות מדויקות</string>
+    <string name="backup_exact_alarm_message">כדי לשלוח את ההודעות המתוזמנות בדיוק בזמן, Open Messages צריכה הרשאה להגדיר התראות מדויקות. בלעדיה, הן עלולות לצאת באיחור קל.</string>
+    <string name="backup_exact_alarm_grant">אפשר</string>
+    <string name="backup_exact_alarm_skip">שחזר בכל זאת</string>
     <string name="backup_progress_parsing">הגיבוי מפוענח…</string>
     <string name="backup_progress_running">%d/%d הודעות</string>
     <string name="backup_progress_saving">שומר גיבוי…</string>
     <string name="backup_progress_syncing">מסנכרן הודעות…</string>
     <string name="backup_progress_finished">הסתיים!</string>
+    <string name="backup_progress_failed">לא ניתן היה לכתוב את הגיבוי. בדוק את השטח הפנוי ואת תיקיית הגיבוי.</string>
     <string name="backup_notification_channel_name">גיבוי ושחזור</string>
+    <string name="clipboard_too_large_to_copy">גודל הנתונים חורג ממגבלת הלוח</string>
+    <string name="clipboard_unable_to_copy_to">לא ניתן להעתיק ללוח</string>
     <string name="scheduled_title">מתוזמן</string>
     <string name="scheduled_empty_description">שלח הודעה אוטומטית, ברגע המדויק שמתאים לך</string>
     <string name="scheduled_empty_message_1">היי! מתי יום ההולדת שלך שוב?</string>
@@ -179,12 +358,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">לשליחה ב־23 בדצמבר</string>
     <string name="scheduled_compose_cd">תזמון הודעה</string>
+    <string name="scheduled_send_cd">תזמן הודעה זו</string>
     <string name="scheduled_options_title">הודעה מתוזמנת</string>
     <string-array name="scheduled_options">
         <item>שלח כעת</item>
         <item>העתק טקסט</item>
         <item>מחק</item>
     </string-array>
+    <string name="attachment_missing">חסר</string>
     <string name="settings_category_appearance">מראה</string>
     <string name="settings_category_general">כללי</string>
     <string name="settings_category_quick_reply">תגובה מהירה</string>
@@ -196,6 +377,15 @@
     <string name="settings_automatic_colors_title">צבעים אוטומטיים לאנשי קשר</string>
     <string name="settings_text_size_title">גודל גופן</string>
     <string name="settings_system_font_title">שימוש בגופן המערכת</string>
+    <string name="settings_show_avatar_title">הצג תמונת איש קשר</string>
+    <string name="settings_show_avatar_summary">הצג את תמונת השולח בהתכתבויות. כבה כדי לתת לבועות ההודעה יותר רוחב.</string>
+    <string name="settings_hide_country_code_title">הסתר קידומת מדינה</string>
+    <string name="settings_hide_country_code_summary">הצג מספרי טלפון בפורמט מקומי, למשל \"06 ...\" במקום \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">מקצה לקצה</string>
+    <string name="settings_edge_to_edge_summary">הצג תוכן מאחורי שורת המצב וסרגל הניווט</string>
+    <string name="settings_system_show_stt_title">הצג את לחצן ההכתבה</string>
+    <string name="settings_drawer_swipe_title">החלק לפתיחת התפריט</string>
+    <string name="settings_drawer_swipe_summary">פתח את התפריט הצדדי בהחלקה מהקצה השמאלי של רשימת ההתכתבויות</string>
     <string name="settings_auto_emoji_title">אימוג׳י אוטומטי</string>
     <string name="settings_notifications_title">התראות</string>
     <string name="settings_notifications_o_summary">הקש כדי להתאים אישית</string>
@@ -204,7 +394,14 @@
     <string name="settings_notification_action_2">כפתור 2</string>
     <string name="settings_notification_action_3">כפתור 3</string>
     <string name="settings_notification_previews_title">תצוגות מקדימות של התראות</string>
+    <string name="settings_notification_previews_summary">הצג שם והודעה</string>
     <string name="settings_notification_wake_title">הפעלת המסך</string>
+    <string name="settings_notification_silent_title">שקט אם לא איש קשר</string>
+    <string name="settings_notification_silent_summary">משתיק התראות על הודעות משולחים שאינם באנשי הקשר שלך</string>
+    <string name="settings_copy_code_title">העתקת קודים מהתראות</string>
+    <string name="settings_copy_code_summary">מוסיף לחצן העתק קוד להתראות של קודים חד־פעמיים וקודי אימות</string>
+    <string name="notification_copy_code">העתק קוד</string>
+    <string name="notification_code_copied">הקוד הועתק</string>
     <string name="settings_vibration_title">רטט</string>
     <string name="settings_ringtone_title">צליל</string>
     <string name="settings_ringtone_none">ללא</string>
@@ -229,6 +426,13 @@
     </string-array>
     <string name="settings_delivery_title">אישור מסירה</string>
     <string name="settings_delivery_summary">אישור שההודעות נשלחו בהצלחה</string>
+    <string name="settings_send_sound_title">צליל בשליחה</string>
+    <string name="settings_send_sound_summary">השמע צליל קצר כשאתה שולח הודעה</string>
+    <string name="settings_send_sound_volume_title">עוצמת קול</string>
+    <string name="settings_header_quick_action_title">פעולה מהירה בכותרת</string>
+    <string name="settings_header_quick_action_summary">הוסף לחצן קיצור לכותרת ההתכתבות</string>
+    <string name="settings_unread_at_top_title">שלא נקראו למעלה</string>
+    <string name="settings_unread_at_top_summary">הצג התכתבויות שלא נקראו בראש הרשימה</string>
     <string name="settings_signature_title">חתימה</string>
     <string name="settings_signature_summary">הוספת חתימה לסוף ההודעות שלך</string>
     <string name="settings_unicode_title">סינון סימנים דיאקריטיים</string>
@@ -250,6 +454,9 @@
     <string name="settings_long_as_mms_title">לשלוח הודעות ארוכות כ־MMS</string>
     <string name="settings_long_as_mms_summary">אם יש לך בעיה בשליחת הודעות טקסט ארוכות יותר או בעיה ברצף שליחת ההודעה, ניתן לשלוח כהודעת MMS במקום. עלול לגרור עלויות נוספות</string>
     <string name="settings_mms_size_title">דחיסה אוטומטית של קבצים מצורפים להודעות MMS</string>
+    <string name="settings_mms_weblink_title">טיפול בקישורים בהודעות</string>
+    <string name="settings_disable_screenshots_title">חסום צילומי מסך</string>
+    <string name="settings_diable_screenshots_summary">מנע ממערכת ההפעלה ומאפליקציות אחרות לצלם את מסך האפליקציה.</string>
     <string name="settings_sync_title">סנכרון הודעות</string>
     <string name="settings_sync_summary">סנכרון ההודעות שלך מחדש עם מסד הנתונים המובנה של Android</string>
     <string name="settings_about_title">על אודות Open Messages</string>
@@ -261,6 +468,17 @@
     <string name="blocking_drop_title">השמטת הודעות</string>
     <string name="blocking_drop_summary">להשמיט הודעות נכנסות משולחים חסומים במקום להסתיר אותן</string>
     <string name="blocking_conversations">התכתבויות חסומות</string>
+    <string name="blocking_category_integrated">חסימה מובנית</string>
+    <string name="blocking_integrated_description">Open Messages חוסמת ספאם במכשיר שלך. המקורות האופציונליים שלמטה מורידים את הרשימה שלהם מהאינטרנט כשמפעילים אותם, ואז פועלים במצב לא מקוון.</string>
+    <string name="blocking_category_external_apps">אפליקציות חיצוניות</string>
+    <string name="blocked_numbers_summary">מספרים שחסמת בעצמך</string>
+    <string name="blocking_source_phishing_title">הגנה מפני דיוג</string>
+    <string name="blocking_source_phishing_summary">חוסם הודעות עם קישורים לאתרי דיוג ידועים. ההפעלה מורידה את הרשימה מהאינטרנט; לאחר מכן הסינון פועל במצב לא מקוון.</string>
+    <string name="blocking_source_flag_block_title">חסום חשד לספאם</string>
+    <string name="blocking_source_flag_block_summary">העבר הודעות שסומנו כספאם אפשרי ישירות לרשימת החסומים במקום רק לסמן אותן בדואר הנכנס</string>
+    <string name="blocking_source_status_updating">מעדכן…</string>
+    <string name="blocking_source_status_updated">מעודכן · %1$d רשומות</string>
+    <string name="blocking_source_status_failed">ההורדה נכשלה, המקור נשאר כבוי. בדוק את החיבור ונסה שוב.</string>
     <string name="blocking_manager_title">מנהל חסימות</string>
     <string name="blocking_manager_built_in_summary">תכונת חסימה מובנית בתוך Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">חסימת הודעות ספאם, מספרים ושיחות לא מזוהות עם רשימת חסימה ותזמון</string>
@@ -274,6 +492,15 @@
     <string name="blocked_numbers_dialog_title">חסימת הודעות מאת</string>
     <string name="blocked_numbers_dialog_hint">מספר טלפון</string>
     <string name="blocked_numbers_dialog_block">חסימה</string>
+    <string name="message_content_filters_title">מסנני תוכן הודעות</string>
+    <string name="message_content_filters_empty">מסנני תוכן ההודעות שלך יופיעו כאן</string>
+    <string name="message_content_filters_add_cd">צור מסנן חדש</string>
+    <string name="message_content_filters_dialog_title">השמט הודעות התואמות</string>
+    <string name="message_content_filters_dialog_hint">מילה, ביטוי או ביטוי רגולרי</string>
+    <string name="message_content_filters_dialog_case_switch">תלוי רישיות</string>
+    <string name="message_content_filters_dialog_regex_switch">ביטוי רגולרי</string>
+    <string name="message_content_filters_dialog_contacts_switch">כלול אנשי קשר</string>
+    <string name="message_content_filters_dialog_create">צור</string>
     <string name="blocked_messages_title">הודעות חסומות</string>
     <string name="blocked_messages_empty">ההודעות שנחסמו תופענה להלן</string>
     <string name="blocking_block_title">חסימה</string>
@@ -290,6 +517,15 @@
         <item quantity="many">להמשיך אל %s ולאפשר את המספרים האלו</item>
         <item quantity="other">להמשיך אל %s ולאפשר את המספרים האלו</item>
     </plurals>
+    <string name="deduplicate_messages_category">הסרת כפילויות</string>
+    <string name="deduplicate_messages_title">הסר הודעות כפולות</string>
+    <string name="deduplicate_messages_summary">סורק את מסד נתוני ההודעות ומוחק את כל ההודעות הזהות בדיוק להודעות המקוריות</string>
+    <string name="deduplicate_message_confirmation_dialog_message">מסד נתוני ההודעות ייסרק לאיתור כפילויות, ואז הכפילויות יוסרו.\nפעולה זו מוחקת הודעות באופן אוטומטי, המשך רק אם אתה מבין את ההשלכות.</string>
+    <string name="auto_deduplicate_messages_title">הסרה אוטומטית של הודעות כפולות</string>
+    <string name="auto_deduplicate_messages_summary">הסרת הכפילויות תתבצע במהלך הסנכרון. שים לב, פעולה זו מוחקת הודעות באופן אוטומטי, ולמרות שהסיכוי לכפילות שגויה נמוך מאוד, הוא עדיין קיים.\nנא לנקוט זהירות.</string>
+    <string name="deduplicating_messages_finished">הסרת ההודעות הכפולות הסתיימה!</string>
+    <string name="deduplicating_messages_no_messages">לא נמצאו הודעות כפולות.</string>
+    <string name="deduplicating_messages_failed">הסרת ההודעות הכפולות נכשלה, נסה שוב</string>
     <string name="about_title">על אודות</string>
     <string name="about_version_title">גרסה</string>
     <string name="about_developer_title">מפתח</string>
@@ -300,6 +536,7 @@
     <string name="about_copyright_title">זכויות יוצרים</string>
     <string name="widget_loading">בטעינה…</string>
     <string name="widget_more">הצגת התכתבויות נוספות</string>
+    <string name="all_conversations_widget_title">כל ההתכתבויות</string>
     <string name="quick_reply_menu_read">סימון כהודעה שנקראה</string>
     <string name="quick_reply_menu_call">להתקשר</string>
     <string name="quick_reply_menu_delete">מחיקה</string>
@@ -321,12 +558,30 @@
     <string name="button_yes">כן</string>
     <string name="button_continue">המשך</string>
     <string name="button_cancel">ביטול</string>
+    <string name="button_close">סגור</string>
     <string name="button_delete">מחיקה</string>
     <string name="button_save">שמירה</string>
     <string name="button_stop">עצירה</string>
     <string name="button_set">הגדרה</string>
+    <string name="button_later">מאוחר יותר</string>
+    <string name="icon_restart_title">נדרשת הפעלה מחדש</string>
+    <string name="icon_restart_message">יש להפעיל מחדש את האפליקציה כדי לסיים את עדכון הסמל.</string>
+    <string name="icon_restart_now">הפעל מחדש</string>
     <string name="button_undo">ביטול</string>
+    <string name="button_clear">נקה</string>
     <string name="toast_copied">הועתק</string>
+    <plurals name="toast_archived">
+        <item quantity="one">ההתכתבות הועברה לארכיון</item>
+        <item quantity="two">%d התכתבויות הועברו לארכיון</item>
+        <item quantity="many">%d התכתבויות הועברו לארכיון</item>
+        <item quantity="other">%d התכתבויות הועברו לארכיון</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">ההתכתבות הוצאה מהארכיון</item>
+        <item quantity="two">%d התכתבויות הוצאו מהארכיון</item>
+        <item quantity="many">%d התכתבויות הוצאו מהארכיון</item>
+        <item quantity="other">%d התכתבויות הוצאו מהארכיון</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">הודעה חדשה</item>
         <item quantity="two">%s הודעות חדשות</item>
@@ -335,6 +590,11 @@
     </plurals>
     <string name="notification_message_failed_title">הודעה לא נשלחה</string>
     <string name="notification_message_failed_text">שליחת ההודעה אל %s נכשלה</string>
+    <string name="notification_foreground_worker_title">מקבל הודעה</string>
+    <string name="notification_foreground_worker_text">ב־Android 12 ומטה, נדרשת התראה עבור פעולת הרקע שמאפשרת קבלת הודעות.</string>
+    <string name="notification_foreground_worker_channel_name">התראת תהליך קבלת הודעות</string>
+    <string name="notification_me">אני</string>
+    <string name="notification_message_failed_action">שלח שוב</string>
     <string-array name="night_modes">
         <item>מערכת</item>
         <item>מושבת</item>
@@ -358,6 +618,21 @@
         <item>5 שניות</item>
         <item>10 שניות</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>ללא</item>
+        <item>לארכיון</item>
+        <item>סמן כלא נקראה</item>
+        <item>חסום</item>
+        <item>מחק</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>ללא</item>
+        <item>קלאסי</item>
+        <item>בהיר</item>
+        <item>רך</item>
+        <item>יורד</item>
+        <item>שלושה צלילים</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>אוטומטי</item>
         <item>100 ק״ב</item>
@@ -367,6 +642,11 @@
         <item>1000 ק״ב</item>
         <item>2000 ק״ב</item>
         <item>ללא דחיסה</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>חסום</item>
+        <item>אפשר</item>
+        <item>שאל לפני פתיחה</item>
     </string-array>
     <string-array name="quick_responses">
         <item>בסדר</item>
@@ -382,4 +662,13 @@
         <item>חחח</item>
         <item>הכול בסדר</item>
     </string-array>
+    <string name="speak_no_messages">אין הודעות</string>
+    <string name="speak_unseen_messages">הקרא הודעות שלא נצפו</string>
+    <string name="messageLinkHandling_dialog_title">אזהרת קישור חיצוני</string>
+    <string name="messageLinkHandling_dialog_body">קישורים מסוימים עלולים להיות לא בטוחים או להפנות אותך למקום לא צפוי. בדוק את הקישור שלמטה לפני שתמשיך:\n\n%1$s\n\nלהמשיך?</string>
+    <string name="messageLinkHandling_dialog_positive">כן, פתח את הקישור</string>
+    <string name="messageLinkHandling_dialog_negative">לא</string>
+    <string name="error_stt_toast">מצטערים, אירעה שגיאה בטעינת שירות ההכתבה.</string>
+    <string name="stt_toast_extra_prompt">אמור את ההודעה שלך</string>
+    <string name="messages_text_share_file_error">אופס! משהו השתבש בעת השיתוף</string>
 </resources>

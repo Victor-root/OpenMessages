@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">सरल, खुला स्रोत सन्देश सेवा</string>
     <string name="shortcut_compose_long_label">New conversation</string>
     <string name="shortcut_compose_short_label">Compose</string>
     <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
@@ -24,17 +25,36 @@
     <string name="title_settings">Settings</string>
     <string name="title_notification_prefs">Notifications</string>
     <string name="title_theme">Theme</string>
+    <string name="theme_default">पूर्वनिर्धारित</string>
+    <string name="theme_wallpaper">वालपेपर</string>
+    <string name="theme_other_colors">रङहरू</string>
+    <string name="theme_tab_presets">प्यालेट</string>
+    <string name="theme_tab_custom">आफ्नै</string>
+    <string name="theme_apply_to_icon">एप आइकनमा रङ लगाउनुहोस् (एप बन्द हुनेछ)</string>
+    <string name="theme_tab_icon">एप आइकन</string>
+    <string name="theme_icon_follow_theme">एपको थिमको रङसँग मिलाउनुहोस्</string>
+    <string name="theme_icon_summary">थिमबाट अलग, आफ्नो एप आइकनको रङ छान्नुहोस्। परिवर्तन लागू गर्दा एप बन्द हुनेछ।</string>
+    <string name="theme_icon_change_title">एप आइकन बदल्ने?</string>
+    <string name="theme_icon_change_message">एप आइकनको रङ बदलिन लागेको छ। एप बन्द हुँदा मात्र Android ले आइकन बदल्न सक्छ, त्यसैले पुष्टि गर्नेबित्तिकै Open Messages बन्द हुनेछ।</string>
     <string name="title_conversations">Search inbox…</string>
+    <string name="title_search">खोज्नुहोस्</string>
     <string name="title_compose">Compose</string>
     <string name="setup_skip">Skip</string>
     <string name="setup_next">Continue</string>
     <string name="menu_add_person">Add person</string>
     <string name="menu_call">सम्पर्क</string>
     <string name="menu_mms_part_save">Save to gallery</string>
+    <string name="menu_mms_part_share">सेयर गर्नुहोस्</string>
+    <string name="menu_mms_part_forward">फर्वार्ड गर्नुहोस्</string>
+    <string name="menu_mms_part_open">बाहिरी एपमा खोल्नुहोस्</string>
     <string name="compose_menu_share">Share</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
+    <string name="main_search_close_cd">खोज बन्द गर्नुहोस्</string>
+    <string name="main_search_clear_cd">खोज मेटाउनुहोस्</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d selected</string>
     <string name="main_menu_clear">Clear</string>
+    <string name="main_menu_select_all">सबै छान्नुहोस्</string>
     <string name="main_menu_archive">Archive</string>
     <string name="main_menu_unarchive">Unarchive</string>
     <string name="main_menu_delete">Delete</string>
@@ -44,8 +64,19 @@
     <string name="main_menu_read">Mark read</string>
     <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_block">Block</string>
+    <string name="main_menu_send_now">अहिले पठाउनुहोस्</string>
+    <string name="main_menu_edit_message">सन्देश सम्पादन गर्नुहोस्</string>
+    <string name="main_menu_rename_conversation">कुराकानीको नाम बदल्नुहोस्</string>
     <string name="main_syncing">Syncing messages…</string>
+    <string name="main_sync_emojis">इमोजी प्रतिक्रियाहरू पढ्दै…</string>
     <string name="main_sender_you">You: %s</string>
+    <string name="main_sender_draft">मस्यौदा: %s</string>
+    <string name="conversation_flagged_label">शंकास्पद स्प्याम</string>
+    <string name="snippet_picture">तस्बिर</string>
+    <string name="snippet_video">भिडियो</string>
+    <string name="snippet_audio">अडियो</string>
+    <string name="snippet_contact_card">सम्पर्क कार्ड</string>
+    <string name="search_group_conversations">कुराकानीहरू</string>
     <string name="main_message_results_title">Results in messages</string>
     <plurals name="main_message_results">
         <item quantity="other">%d messages</item>
@@ -62,11 +93,30 @@
     <string name="main_permission_contacts">Open Messages needs permission to view your contacts</string>
     <string name="main_permission_notifications">Open Messages needs permission to display notifications</string>
     <string name="main_permission_allow">Allow</string>
+    <string name="scheduled_menu_send_now">अहिले पठाउनुहोस्</string>
+    <string name="scheduled_menu_edit_message">सन्देश सम्पादन गर्नुहोस्</string>
     <string name="drawer_inbox">Inbox</string>
+    <string name="contacts_group_recent">हालैका</string>
+    <string name="contacts_group_starred">मनपर्ने</string>
+    <string name="contacts_group_groups">समूहहरू</string>
+    <string name="conversations_group_today">आज</string>
+    <string name="conversations_group_yesterday">हिजो</string>
     <string name="drawer_archived">Archived</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d नपढिएको</item>
+        <item quantity="other">%d नपढिएका</item>
+    </plurals>
     <string name="drawer_scheduled">Scheduled</string>
     <string name="drawer_blocking">Blocking</string>
     <string name="drawer_more">More</string>
+    <string name="message_management_title">सन्देश व्यवस्थापन</string>
+    <string name="templates_title">टेम्प्लेटहरू</string>
+    <string name="templates_empty">अहिलेसम्म कुनै सन्देश सुरक्षित छैन।\nप्रायः पठाउने सन्देश सुरक्षित गर्न + थिच्नुहोस्, त्यसपछि कसलाई पठाउने छान्न त्यसमा थिच्नुहोस्।</string>
+    <string name="template_hint">आफ्नो सन्देश लेख्नुहोस्…</string>
+    <string name="template_title_hint">शीर्षक (ऐच्छिक)</string>
+    <string name="templates_add_cd">नयाँ टेम्प्लेट</string>
+    <string name="template_new">नयाँ टेम्प्लेट</string>
+    <string name="template_edit">टेम्प्लेट सम्पादन गर्नुहोस्</string>
     <string name="drawer_settings">Settings</string>
     <string name="drawer_help">Help &amp; feedback</string>
     <string name="drawer_invite">Invite friends</string>
@@ -79,6 +129,19 @@
         <item quantity="one">Are you sure you would like to delete this conversation?</item>
         <item quantity="other">Are you sure you would like to delete %d conversations?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">के तपाईं यो सन्देश मेटाउन निश्चित हुनुहुन्छ?</item>
+        <item quantity="other">के तपाईं %d सन्देशहरू मेटाउन निश्चित हुनुहुन्छ?</item>
+    </plurals>
+    <plurals name="dialog_send_now">
+        <item quantity="one">के तपाईं यो सन्देश अहिले पठाउन निश्चित हुनुहुन्छ?</item>
+        <item quantity="other">के तपाईं %d सन्देशहरू अहिले पठाउन निश्चित हुनुहुन्छ?</item>
+    </plurals>
+    <string name="dialog_edit_scheduled_message_title">सन्देश सम्पादन गर्नुहोस्</string>
+    <string name="dialog_edit_scheduled_message">यो सन्देश सम्पादन गर्दा यो तालिकाबाट हट्नेछ।\n\nअर्को स्क्रिनमा यसलाई फेरि पेस गर्न नबिर्सनुहोस्, नत्र यो हराउनेछ।\n\nके तपाईं जारी राख्न चाहनुहुन्छ?</string>
+    <string name="dialog_edit_scheduled_message_positive_button">हो, सन्देश सम्पादन गर्नुहोस्</string>
+    <string name="dialog_clear_compose_title">सन्देश मेटाउनुहोस्</string>
+    <string name="dialog_clear_compose">सन्देश मेटाउने? यो कार्य पूर्ववत् गर्न सकिँदैन।</string>
     <string-array name="message_options">
         <item>Copy text</item>
         <item>Forward</item>
@@ -92,19 +155,35 @@
     <string name="compose_subtitle_results">%1$d of %2$d results</string>
     <string name="compose_send_group_title">Send as group message</string>
     <string name="compose_send_group_summary">Recipients and replies will be visible to everyone</string>
+    <string name="compose_send_group_summary_on">प्रापक र जवाफहरू सबैले देख्नेछन्</string>
+    <string name="compose_send_group_summary_off">सन्देशहरू सबै प्रापकलाई छुट्टाछुट्टै पठाइनेछन्</string>
     <string name="compose_messages_empty">This is the start of your conversation. Say something nice!</string>
     <string name="compose_vcard_label">Contact card</string>
     <string name="compose_scheduled_for">Scheduled for</string>
     <string name="compose_scheduled_future">Selected time must be in the future!</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_scheduled_view">यस कुराकानीका तालिकाबद्ध सन्देशहरू</string>
+    <string name="compose_scheduled_bubble">%s मा पठाइँदै</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d संलग्नक</item>
+        <item quantity="other">%d संलग्नकहरू</item>
+    </plurals>
     <string name="compose_hint">Write a message…</string>
+    <string name="compose_expand_cd">पूरा स्क्रिनमा फैलाउनुहोस्</string>
+    <string name="compose_collapse_cd">खुम्च्याउनुहोस्</string>
+    <string name="compose_no_valid_recipients">अन्य सहभागीहरूलाई पठाउन सकिँदैन</string>
+    <string name="compose_flagged_title">शंकास्पद स्प्याम</string>
+    <string name="compose_flagged_approve">स्वीकृत गर्नुहोस्</string>
+    <string name="compose_flagged_block">ब्लक गर्नुहोस्</string>
     <string name="compose_menu_copy">Copy text</string>
     <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_show_status">स्थिति देखाउनुहोस्</string>
     <string name="compose_menu_delete">Delete</string>
     <string name="compose_menu_previous">Previous</string>
     <string name="compose_menu_next">Next</string>
     <string name="compose_menu_clear">Clear</string>
     <string name="compose_details_title">Message details</string>
+    <string name="compose_reactions_title">प्रतिक्रियाहरू</string>
     <string name="compose_details_type">Type: %s</string>
     <string name="compose_details_from">From: %s</string>
     <string name="compose_details_to">To: %s</string>
@@ -116,18 +195,60 @@
     <string name="compose_details_delivered">Delivered: %s</string>
     <string name="compose_details_error_code">Error code: %d</string>
     <string name="compose_attach_cd">Add an attachment</string>
+    <string name="compose_attach_file_cd">कुनै पनि फाइल संलग्न गर्नुहोस्</string>
     <string name="compose_gallery_cd">Attach a photo</string>
+    <string name="compose_audio_message_cd">अडियो सन्देश रेकर्ड गर्नुहोस्</string>
     <string name="compose_camera_cd">Take a photo</string>
     <string name="compose_schedule_cd">Schedule message</string>
+    <string name="compose_schedule_title">सन्देशको समय तोक्नुहोस्</string>
+    <string name="compose_schedule_in_hour">१ घण्टामा</string>
+    <string name="compose_schedule_tonight">आज बेलुका</string>
+    <string name="compose_schedule_tomorrow_morning">भोलि बिहान</string>
+    <string name="compose_schedule_tomorrow_afternoon">भोलि दिउँसो</string>
+    <string name="compose_schedule_custom">मिति र समय छान्नुहोस्</string>
+    <string name="compose_schedule_confirm">समय तोक्नुहोस्</string>
+    <string name="compose_schedule_previous_month">अघिल्लो महिना</string>
+    <string name="compose_schedule_next_month">अर्को महिना</string>
+    <string name="compose_schedule_increase">बढाउनुहोस्</string>
+    <string name="compose_schedule_decrease">घटाउनुहोस्</string>
+    <string name="compose_schedule_cancel_cd">सन्देशको तालिका रद्द गर्नुहोस्</string>
     <string name="compose_contact_cd">Attach a contact</string>
     <string name="compose_contact_error">Error reading contact</string>
+    <string name="compose_attach_gallery">ग्यालरी</string>
+    <string name="compose_attach_camera">क्यामेरा</string>
+    <string name="compose_attach_file">फाइल</string>
+    <string name="compose_attach_audio">अडियो</string>
+    <string name="compose_attach_contact">सम्पर्क</string>
+    <string name="compose_attach_schedule">तालिका</string>
+    <string name="compose_attach_templates">टेम्प्लेटहरू</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">यो भिडियो MMS मार्फत पठाउन धेरै लामो छ। यो बढीमा %d सेकेन्डको हुन सक्छ।</item>
+        <item quantity="other">यो भिडियो MMS मार्फत पठाउन धेरै लामो छ। यो बढीमा %d सेकेन्डको हुन सक्छ।</item>
+    </plurals>
     <string name="compose_sim_cd">%s selected, change SIM card</string>
     <string name="compose_send_cd">Send message</string>
+    <string name="compose_record_audio_msg_cd">अडियो सन्देश रेकर्ड गर्नुहोस्</string>
+    <string name="compose_record_audio_msg_abort_cd">अडियो सन्देश रद्द गर्नुहोस्</string>
+    <string name="compose_record_audio_msg_attach_cd">अडियो सन्देश संलग्न गर्नुहोस्</string>
+    <string name="compose_audio_msg_title">भ्वाइस सन्देश</string>
+    <string name="compose_audio_msg_attach">संलग्न गर्नुहोस्</string>
+    <string name="compose_record_audio_msg_play_pause_cd">अडियो सन्देश बजाउनुहोस् वा रोक्नुहोस्</string>
+    <string name="compose_message_cancel">रद्द गर्नुहोस्</string>
+    <string name="compose_message_send_now">अहिले पठाउनुहोस्</string>
+    <string name="compose_message_sim">SIM नम्बर</string>
+    <string name="compose_message_item">सन्देश वस्तु</string>
+    <string name="compose_message_attachment">संलग्नक</string>
+    <string name="compose_toast_drag_stt">बोलेर लेख्ने बटनलाई जहाँ मन लाग्छ त्यहाँ सार्नुहोस्</string>
     <string name="message_status_sending">Sending…</string>
     <string name="message_status_delivered">Delivered %s</string>
     <string name="message_status_failed">Failed to send. Tap to try again</string>
+    <string name="message_body_too_long_to_display">⚠ सन्देश लामो छ। पूरा पाठका लागि प्रतिलिपि वा सुरक्षित गर्नुहोस्</string>
+    <string name="conversation_menu">कुराकानीका विकल्पहरू</string>
+    <string name="conversation_menu_media">सबै मिडिया हेर्नुहोस्</string>
+    <string name="media_title">मिडिया</string>
+    <string name="media_empty">यस कुराकानीमा सेयर गरिएका तस्बिर र भिडियोहरू यहाँ देखिनेछन्</string>
     <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Notifications</string>
@@ -141,11 +262,41 @@
     <string name="gallery_toast_saved">Saved to gallery</string>
     <string name="backup_title">Backup and restore</string>
     <string name="backup_backing_up">Backing up messages</string>
+    <string name="backup_failed_title">ब्याकअप असफल भयो</string>
+    <string name="backup_icon_change_title">एप आइकन पुनर्स्थापना गर्ने?</string>
+    <string name="backup_icon_change_message">तपाईंको ब्याकअप फरक रङको एप आइकनसँग बनाइएको थियो। एप बन्द हुँदा मात्र Android ले आइकन बदल्न सक्छ, त्यसैले पुष्टि गर्नेबित्तिकै Open Messages बन्द हुनेछ।</string>
+    <string name="icon_change_confirm">लागू गरी बन्द गर्नुहोस्</string>
+    <string name="icon_change_later">अहिले होइन</string>
     <string name="backup_restoring">Restoring from backup</string>
     <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
     <string name="backup_location_title">Backup location</string>
     <string name="backup_location_summary">Set folder</string>
+    <string name="backup_auto_title">स्वचालित ब्याकअप</string>
+    <string name="backup_auto_never">कहिल्यै होइन</string>
+    <string name="backup_auto_daily">हरेक दिन</string>
+    <string name="backup_auto_weekly">हरेक हप्ता</string>
+    <string name="backup_auto_custom">आफ्नै…</string>
+    <string name="backup_auto_custom_title">ब्याकअपबीचका दिनहरू</string>
+    <string name="backup_auto_custom_hint">दिनको सङ्ख्या</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">हरेक %d दिनमा</item>
+        <item quantity="other">हरेक %d दिनमा</item>
+    </plurals>
+    <string name="backup_zip_title">.zip फाइलको रूपमा सुरक्षित गर्नुहोस्</string>
+    <string name="backup_zip_summary">हरेक ब्याकअपलाई एउटै आर्काइभमा राख्नुहोस्, फोनहरूबीच सार्न सजिलो</string>
+    <string name="backup_manage_title">ब्याकअपहरू व्यवस्थापन गर्नुहोस्</string>
+    <string name="backup_manage_summary">आफ्ना ब्याकअपहरूको नाम बदल्नुहोस् वा मेटाउनुहोस्</string>
+    <string name="backup_manage_empty">यस स्थानमा कुनै ब्याकअप भेटिएन</string>
+    <string name="backup_manage_rename">नाम बदल्नुहोस्</string>
+    <string name="backup_manage_delete">मेटाउनुहोस्</string>
+    <string name="backup_manage_delete_confirm">\"%s\" मेटाउने? यो कार्य पूर्ववत् गर्न सकिँदैन।</string>
+    <string name="backup_manage_error">यो ब्याकअप अद्यावधिक गर्न सकिएन</string>
+    <string name="backup_manage_type_folder">फोल्डर</string>
+    <string name="backup_manage_type_zip">Zip आर्काइभ</string>
+    <string name="backup_restore_from_title">कहाँबाट पुनर्स्थापना</string>
+    <string name="backup_restore_from_folder">एउटा फोल्डर</string>
+    <string name="backup_restore_from_zip">एउटा .zip फाइल</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_backup">Backup in progress…</string>
@@ -163,12 +314,28 @@
     <string name="backup_restore_dialog_empty">No backups found</string>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
     <string name="backup_now">Backup now</string>
+    <string name="backup_now_summary">नयाँ ब्याकअप बनाउनुहोस्</string>
+    <string name="backup_categories_title">केको ब्याकअप लिने?</string>
+    <string name="backup_restore_source_title">कुन ब्याकअप?</string>
+    <string name="backup_restore_categories_title">%s बाट पुनर्स्थापना</string>
+    <string name="backup_category_messages">सन्देशहरू (SMS, MMS र संलग्नकहरू)</string>
+    <string name="backup_category_settings">सेटिङ र टेम्प्लेटहरू</string>
+    <string name="backup_category_blocking">ब्लक गर्ने नियमहरू</string>
+    <string name="backup_category_conversations">आर्काइभ र पिन गरिएका</string>
+    <string name="backup_category_scheduled">तालिकाबद्ध सन्देशहरू</string>
+    <string name="backup_exact_alarm_title">सटीक अलार्मको अनुमति दिनुहोस्</string>
+    <string name="backup_exact_alarm_message">तालिकाबद्ध सन्देशहरू ठ्याक्कै समयमा पठाउन Open Messages लाई सटीक अलार्म सेट गर्ने अनुमति चाहिन्छ। यसबिना, ती अलि ढिलो जान सक्छन्।</string>
+    <string name="backup_exact_alarm_grant">अनुमति दिनुहोस्</string>
+    <string name="backup_exact_alarm_skip">जे भए पनि पुनर्स्थापना गर्नुहोस्</string>
     <string name="backup_progress_parsing">Parsing backup…</string>
     <string name="backup_progress_running">%d/%d messages</string>
     <string name="backup_progress_saving">Saving backup…</string>
     <string name="backup_progress_syncing">Syncing messages…</string>
     <string name="backup_progress_finished">Finished!</string>
+    <string name="backup_progress_failed">ब्याकअप लेख्न सकिएन। बाँकी ठाउँ र ब्याकअप फोल्डर जाँच गर्नुहोस्।</string>
     <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="clipboard_too_large_to_copy">डेटाको आकार क्लिपबोर्डको सीमाभन्दा बढी छ</string>
+    <string name="clipboard_unable_to_copy_to">क्लिपबोर्डमा प्रतिलिपि गर्न सकिएन</string>
     <string name="scheduled_title">Scheduled</string>
     <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
@@ -177,12 +344,14 @@
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
     <string name="scheduled_empty_message_3_timestamp">Sending on December 23rd </string>
     <string name="scheduled_compose_cd">Schedule a message</string>
+    <string name="scheduled_send_cd">यो सन्देशको समय तोक्नुहोस्</string>
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Send now</item>
         <item>Copy text</item>
         <item>Delete</item>
     </string-array>
+    <string name="attachment_missing">हराएको</string>
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_category_general">General</string>
     <string name="settings_category_quick_reply">Quick Reply</string>
@@ -194,6 +363,15 @@
     <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Font size</string>
     <string name="settings_system_font_title">Use system font</string>
+    <string name="settings_show_avatar_title">सम्पर्कको फोटो देखाउनुहोस्</string>
+    <string name="settings_show_avatar_summary">कुराकानीमा पठाउनेको फोटो देखाउनुहोस्। सन्देशका बबलहरूलाई बढी चौडाइ दिन यसलाई बन्द गर्नुहोस्।</string>
+    <string name="settings_hide_country_code_title">देशको कोड लुकाउनुहोस्</string>
+    <string name="settings_hide_country_code_summary">फोन नम्बरहरू स्थानीय ढाँचामा देखाउनुहोस्, जस्तै \"+33 6 ...\" को सट्टा \"06 ...\"</string>
+    <string name="settings_edge_to_edge_title">किनारादेखि किनारासम्म</string>
+    <string name="settings_edge_to_edge_summary">स्थिति र नेभिगेसन बारपछाडि पनि सामग्री देखाउनुहोस्</string>
+    <string name="settings_system_show_stt_title">बोलेर लेख्ने बटन देखाउनुहोस्</string>
+    <string name="settings_drawer_swipe_title">मेनु खोल्न स्वाइप गर्नुहोस्</string>
+    <string name="settings_drawer_swipe_summary">कुराकानी सूचीको बायाँ किनाराबाट स्वाइप गरेर छेउको मेनु खोल्नुहोस्</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_o_summary">Tap to customize</string>
@@ -202,7 +380,14 @@
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">Notification previews</string>
+    <string name="settings_notification_previews_summary">नाम र सन्देश देखाउनुहोस्</string>
     <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_silent_title">सम्पर्क नभए मौन</string>
+    <string name="settings_notification_silent_summary">तपाईंको सम्पर्कमा नभएका पठाउनेका सन्देशका सूचनाहरू मौन राख्छ</string>
+    <string name="settings_copy_code_title">सूचनाबाट कोड प्रतिलिपि</string>
+    <string name="settings_copy_code_summary">एक पटके र प्रमाणीकरण कोडका सूचनामा कोड प्रतिलिपि गर्ने बटन थप्छ</string>
+    <string name="notification_copy_code">कोड प्रतिलिपि गर्नुहोस्</string>
+    <string name="notification_code_copied">कोड प्रतिलिपि भयो</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_ringtone_none">None</string>
@@ -227,6 +412,13 @@
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
+    <string name="settings_send_sound_title">पठाउँदा आवाज</string>
+    <string name="settings_send_sound_summary">सन्देश पठाउँदा छोटो आवाज बजाउनुहोस्</string>
+    <string name="settings_send_sound_volume_title">भोल्युम</string>
+    <string name="settings_header_quick_action_title">हेडरको द्रुत कार्य</string>
+    <string name="settings_header_quick_action_summary">कुराकानीको हेडरमा सर्टकट बटन थप्नुहोस्</string>
+    <string name="settings_unread_at_top_title">नपढिएका माथि</string>
+    <string name="settings_unread_at_top_summary">नपढिएका कुराकानीहरू माथि देखाउनुहोस्</string>
     <string name="settings_signature_title">Signature</string>
     <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Strip accents</string>
@@ -246,6 +438,9 @@
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS image attachments</string>
+    <string name="settings_mms_weblink_title">सन्देशमा लिङ्कको व्यवहार</string>
+    <string name="settings_disable_screenshots_title">स्क्रिनसट बन्द गर्नुहोस्</string>
+    <string name="settings_diable_screenshots_summary">अपरेटिङ सिस्टम र अन्य एपहरूलाई यस एपको स्क्रिनसट लिनबाट रोक्नुहोस्।</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
     <string name="settings_about_title">About Open Messages</string>
@@ -257,6 +452,17 @@
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
     <string name="blocking_conversations">Blocked conversations</string>
+    <string name="blocking_category_integrated">भित्री ब्लकिङ</string>
+    <string name="blocking_integrated_description">Open Messages ले तपाईंको यन्त्रमै स्प्याम ब्लक गर्छ। तलका ऐच्छिक स्रोतहरूले खोल्दा इन्टरनेटबाट आफ्नो सूची डाउनलोड गर्छन्, त्यसपछि अफलाइन काम गर्छन्।</string>
+    <string name="blocking_category_external_apps">बाहिरी एपहरू</string>
+    <string name="blocked_numbers_summary">तपाईंले आफैं ब्लक गरेका नम्बरहरू</string>
+    <string name="blocking_source_phishing_title">एन्टी-फिसिङ</string>
+    <string name="blocking_source_phishing_summary">ज्ञात फिसिङ साइटका लिङ्क भएका सन्देशहरू ब्लक गर्छ। यसलाई खोल्दा इन्टरनेटबाट सूची डाउनलोड हुन्छ; त्यसपछि फिल्टरिङ अफलाइन हुन्छ।</string>
+    <string name="blocking_source_flag_block_title">शंकास्पद स्प्याम ब्लक गर्नुहोस्</string>
+    <string name="blocking_source_flag_block_summary">सम्भावित स्प्याम भनी चिनो लगाइएका सन्देशहरूलाई इनबक्समा लेबल मात्र नलगाई सिधै ब्लक सूचीमा पठाउनुहोस्</string>
+    <string name="blocking_source_status_updating">अद्यावधिक हुँदै…</string>
+    <string name="blocking_source_status_updated">अद्यावधिक · %1$d प्रविष्टिहरू</string>
+    <string name="blocking_source_status_failed">डाउनलोड असफल भयो, स्रोत बन्द रहन्छ। आफ्नो जडान जाँच गरी फेरि प्रयास गर्नुहोस्।</string>
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_built_in_summary">Built-in blocking functionality in Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
@@ -270,6 +476,15 @@
     <string name="blocked_numbers_dialog_title">Block texts from</string>
     <string name="blocked_numbers_dialog_hint">Phone number</string>
     <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="message_content_filters_title">सन्देश सामग्री फिल्टरहरू</string>
+    <string name="message_content_filters_empty">तपाईंका सन्देश सामग्री फिल्टरहरू यहाँ देखिनेछन्</string>
+    <string name="message_content_filters_add_cd">नयाँ फिल्टर बनाउनुहोस्</string>
+    <string name="message_content_filters_dialog_title">मेल खाने सन्देशहरू हटाउनुहोस्</string>
+    <string name="message_content_filters_dialog_hint">शब्द, वाक्यांश वा रेगुलर एक्सप्रेसन</string>
+    <string name="message_content_filters_dialog_case_switch">ठूलो-सानो अक्षर फरक</string>
+    <string name="message_content_filters_dialog_regex_switch">रेगुलर एक्सप्रेसन</string>
+    <string name="message_content_filters_dialog_contacts_switch">सम्पर्कहरू समावेश गर्नुहोस्</string>
+    <string name="message_content_filters_dialog_create">बनाउनुहोस्</string>
     <string name="blocked_messages_title">Blocked messages</string>
     <string name="blocked_messages_empty">Your blocked messages will appear here</string>
     <string name="blocking_block_title">Block</string>
@@ -282,6 +497,15 @@
         <item quantity="one">Continue to %s and allow this number</item>
         <item quantity="other">Continue to %s and allow these numbers</item>
     </plurals>
+    <string name="deduplicate_messages_category">दोहोरिएका सन्देशहरू</string>
+    <string name="deduplicate_messages_title">दोहोरिएका सन्देशहरू हटाउनुहोस्</string>
+    <string name="deduplicate_messages_summary">सन्देश डेटाबेस जाँच गरी मूल सन्देशसँग ठ्याक्कै मिल्ने सबै सन्देशहरू मेटाउँछ</string>
+    <string name="deduplicate_message_confirmation_dialog_message">तपाईंको सन्देश डेटाबेसमा दोहोरिएका सन्देशहरू खोजिनेछ, त्यसपछि ती हटाइनेछन्।\nयसले स्वचालित रूपमा सन्देशहरू मेटाउँछ, परिणाम बुझ्नुभएको छ भने मात्र अघि बढ्नुहोस्।</string>
+    <string name="auto_deduplicate_messages_title">दोहोरिएका सन्देशहरू स्वचालित रूपमा हटाउनुहोस्</string>
+    <string name="auto_deduplicate_messages_summary">सिङ्क गर्दा दोहोरिएका सन्देशहरू हटाइनेछन्। ध्यान दिनुहोस्, यसले स्वचालित रूपमा सन्देशहरू मेटाउँछ, र गलत दोहोरोको सम्भावना निकै कम भए पनि सम्भव छ।\nकृपया सावधानी अपनाउनुहोस्।</string>
+    <string name="deduplicating_messages_finished">दोहोरिएका सन्देशहरू हटाइसकियो!</string>
+    <string name="deduplicating_messages_no_messages">कुनै दोहोरिएको सन्देश भेटिएन।</string>
+    <string name="deduplicating_messages_failed">दोहोरिएका सन्देशहरू हटाउन असफल भयो, कृपया फेरि प्रयास गर्नुहोस्</string>
     <string name="about_title">About</string>
     <string name="about_version_title">Version</string>
     <string name="about_developer_title">Developer</string>
@@ -292,6 +516,7 @@
     <string name="about_copyright_title">Copyright</string>
     <string name="widget_loading">Loading…</string>
     <string name="widget_more">View more conversations</string>
+    <string name="all_conversations_widget_title">सबै कुराकानीहरू</string>
     <string name="quick_reply_menu_read">Mark read</string>
     <string name="quick_reply_menu_call">Call</string>
     <string name="quick_reply_menu_delete">Delete</string>
@@ -313,18 +538,37 @@
     <string name="button_yes">Yes</string>
     <string name="button_continue">Continue</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_close">बन्द गर्नुहोस्</string>
     <string name="button_delete">Delete</string>
     <string name="button_save">Save</string>
     <string name="button_stop">Stop</string>
     <string name="button_set">Set</string>
+    <string name="button_later">पछि</string>
+    <string name="icon_restart_title">पुनः सुरु गर्न आवश्यक</string>
+    <string name="icon_restart_message">एप आइकनको अद्यावधिक पूरा गर्न एप पुनः सुरु गर्नुपर्छ।</string>
+    <string name="icon_restart_now">पुनः सुरु गर्नुहोस्</string>
     <string name="button_undo">Undo</string>
+    <string name="button_clear">मेटाउनुहोस्</string>
     <string name="toast_copied">Copied</string>
+    <plurals name="toast_archived">
+        <item quantity="one">कुराकानी आर्काइभ गरियो</item>
+        <item quantity="other">%d कुराकानीहरू आर्काइभ गरिए</item>
+    </plurals>
+    <plurals name="toast_unarchived">
+        <item quantity="one">कुराकानी आर्काइभबाट निकालियो</item>
+        <item quantity="other">%d कुराकानीहरू आर्काइभबाट निकालिए</item>
+    </plurals>
     <plurals name="notification_new_messages">
         <item quantity="one">New message</item>
         <item quantity="other">%s new messages</item>
     </plurals>
     <string name="notification_message_failed_title">Message not sent</string>
     <string name="notification_message_failed_text">The message to %s failed to send</string>
+    <string name="notification_foreground_worker_title">सन्देश प्राप्त हुँदै</string>
+    <string name="notification_foreground_worker_text">Android 12 र पुरानोमा, सन्देश प्राप्त गर्ने पृष्ठभूमि कार्यका लागि सूचना आवश्यक हुन्छ।</string>
+    <string name="notification_foreground_worker_channel_name">सन्देश प्राप्ति प्रक्रियाको सूचना</string>
+    <string name="notification_me">म</string>
+    <string name="notification_message_failed_action">फेरि पठाउनुहोस्</string>
     <string-array name="night_modes">
         <item>System</item>
         <item>Disabled</item>
@@ -348,6 +592,21 @@
         <item>5 seconds</item>
         <item>10 seconds</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>कुनै पनि होइन</item>
+        <item>आर्काइभ</item>
+        <item>नपढिएको चिनो लगाउनुहोस्</item>
+        <item>ब्लक गर्नुहोस्</item>
+        <item>मेटाउनुहोस्</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>कुनै पनि होइन</item>
+        <item>क्लासिक</item>
+        <item>उज्यालो</item>
+        <item>नरम</item>
+        <item>घट्दो</item>
+        <item>तीन स्वर</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>Automatic</item>
         <item>100KB</item>
@@ -357,6 +616,11 @@
         <item>1000KB</item>
         <item>2000KB</item>
         <item>No compression</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>ब्लक गर्नुहोस्</item>
+        <item>अनुमति दिनुहोस्</item>
+        <item>खोल्नुअघि सोध्नुहोस्</item>
     </string-array>
     <string-array name="quick_responses">
         <item>Okay</item>
@@ -372,4 +636,13 @@
         <item>LOL</item>
         <item>That\'s okay</item>
     </string-array>
+    <string name="speak_no_messages">कुनै सन्देश छैन</string>
+    <string name="speak_unseen_messages">नदेखिएका सन्देशहरू पढेर सुनाउनुहोस्</string>
+    <string name="messageLinkHandling_dialog_title">बाहिरी लिङ्क चेतावनी</string>
+    <string name="messageLinkHandling_dialog_body">केही लिङ्कहरू असुरक्षित हुन सक्छन् वा तपाईंलाई अनपेक्षित ठाउँमा पुर्‍याउन सक्छन्। अघि बढ्नुअघि तलको लिङ्क जाँच गर्नुहोस्:\n\n%1$s\n\nके तपाईं जारी राख्न चाहनुहुन्छ?</string>
+    <string name="messageLinkHandling_dialog_positive">हो, लिङ्क खोल्नुहोस्</string>
+    <string name="messageLinkHandling_dialog_negative">होइन</string>
+    <string name="error_stt_toast">माफ गर्नुहोस्, बोलेर लेख्ने सेवा लोड गर्दा त्रुटि भयो।</string>
+    <string name="stt_toast_extra_prompt">आफ्नो सन्देश बोल्नुहोस्</string>
+    <string name="messages_text_share_file_error">ओहो! सेयर गर्दा केही गडबड भयो</string>
 </resources>

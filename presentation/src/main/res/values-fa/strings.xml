@@ -17,6 +17,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Open Messages.  If not, see <http://www.gnu.org/licenses/>.
   --><resources>
+    <string name="app_tagline">پیام‌رسانی ساده و متن‌باز</string>
     <string name="shortcut_compose_long_label">گفتگوی نو</string>
     <string name="shortcut_compose_short_label">نوشتن</string>
     <string name="shortcut_compose_disabled_message">میانبر ناکارا شد</string>
@@ -24,7 +25,19 @@
     <string name="title_settings">پیکربندی</string>
     <string name="title_notification_prefs">آگاهنده‌ها</string>
     <string name="title_theme">پوسته</string>
+    <string name="theme_default">پیش‌فرض</string>
+    <string name="theme_wallpaper">کاغذدیواری</string>
+    <string name="theme_other_colors">رنگ‌ها</string>
+    <string name="theme_tab_presets">رنگ‌دان</string>
+    <string name="theme_tab_custom">دلخواه</string>
+    <string name="theme_apply_to_icon">رنگ را بر نماد برنامه بگذار (برنامه بسته می‌شود)</string>
+    <string name="theme_tab_icon">نماد برنامه</string>
+    <string name="theme_icon_follow_theme">هماهنگ با رنگ پوسته</string>
+    <string name="theme_icon_summary">رنگ نماد برنامه را جدا از پوسته برگزینید. با به‌کار بستن دگرگونی، برنامه بسته می‌شود.</string>
+    <string name="theme_icon_change_title">نماد برنامه دگرگون شود؟</string>
+    <string name="theme_icon_change_message">رنگ نماد برنامه در آستانه دگرگونی است. Android تنها هنگامی که برنامه بسته است می‌تواند نماد را عوض کند، پس Open Messages بی‌درنگ پس از پذیرش شما بسته می‌شود.</string>
     <string name="title_conversations">جستجو در دریافتی …</string>
+    <string name="title_search">جستجو</string>
     <string name="title_compose">نام یا شماره‌ای را اندر نشانید</string>
     <string name="setup_skip">بتاییدن</string>
     <string name="setup_next">ادامه</string>
@@ -33,6 +46,9 @@
     <string name="menu_mms_part_save">سِتَنجیدن در نگارستان</string>
     <string name="compose_menu_share">هم‌رسانی</string>
     <string name="main_drawer_open_cd">بازکردن کشو ناوبری</string>
+    <string name="main_search_close_cd">بستن جستجو</string>
+    <string name="main_search_clear_cd">پاک کردن جستجو</string>
+    <string name="main_sim_cd">SIM %d</string>
     <string name="main_title_selected">%d گزیده شده</string>
     <string name="main_menu_clear">پاک‌کردن</string>
     <string name="main_menu_archive">بایگانی</string>
@@ -63,10 +79,27 @@
     <string name="main_permission_notifications">Open Messages به هیشتن برای نمایش آگاهنده‌ها نیاز دارد</string>
     <string name="main_permission_allow">هیشتن</string>
     <string name="drawer_inbox">دریافتی</string>
+    <string name="contacts_group_recent">تازه‌ها</string>
+    <string name="contacts_group_starred">برگزیده‌ها</string>
+    <string name="contacts_group_groups">گروه‌ها</string>
+    <string name="conversations_group_today">امروز</string>
+    <string name="conversations_group_yesterday">دیروز</string>
     <string name="drawer_archived">بایگانی شده</string>
+    <plurals name="drawer_unread_count">
+        <item quantity="one">%d خوانده‌نشده</item>
+        <item quantity="other">%d خوانده‌نشده</item>
+    </plurals>
     <string name="drawer_scheduled">زمان‌بندی شده</string>
     <string name="drawer_blocking">بژکم کردن</string>
     <string name="drawer_more">بيشتر</string>
+    <string name="message_management_title">راینیدن پیام‌ها</string>
+    <string name="templates_title">الگوها</string>
+    <string name="templates_empty">هنوز پیامی ذخیره نشده.\nبرای ذخیره پیامی که بارها می‌فرستید + را بزنید، سپس روی آن بزنید تا گیرنده را برگزینید.</string>
+    <string name="template_hint">پیام خود را بنویسید…</string>
+    <string name="template_title_hint">سرنام (دلخواه)</string>
+    <string name="templates_add_cd">الگوی نو</string>
+    <string name="template_new">الگوی نو</string>
+    <string name="template_edit">ویرایش الگو</string>
     <string name="drawer_settings">پیکربندی</string>
     <string name="drawer_help">راهنما اود بازخورد</string>
     <string name="drawer_invite">نِوِستن دوستان</string>
@@ -98,6 +131,8 @@
     <string name="compose_scheduled_future">زمان برگزیده باید در آینده باشد!</string>
     <string name="compose_scheduled_toast">به پیام‌های برنامه‌ریزی شده افزوده شد</string>
     <string name="compose_hint">نوشتن پیام…</string>
+    <string name="compose_expand_cd">گسترش به تمام‌صفحه</string>
+    <string name="compose_collapse_cd">جمع کردن</string>
     <string name="compose_menu_copy">رونگاشتن نوشتار</string>
     <string name="compose_menu_forward">بازفرست</string>
     <string name="compose_menu_delete">سِتُردن</string>
@@ -119,10 +154,32 @@
     <string name="compose_gallery_cd">پیوست یک نگاره</string>
     <string name="compose_camera_cd">گرفتن نگاره</string>
     <string name="compose_schedule_cd">زمان‌بندی پیام</string>
+    <string name="compose_schedule_title">زمان‌بندی پیام</string>
+    <string name="compose_schedule_in_hour">۱ ساعت دیگر</string>
+    <string name="compose_schedule_tonight">امشب</string>
+    <string name="compose_schedule_tomorrow_morning">فردا بامداد</string>
+    <string name="compose_schedule_tomorrow_afternoon">فردا پسین</string>
+    <string name="compose_schedule_custom">گزینش روز و زمان</string>
+    <string name="compose_schedule_confirm">زمان‌بندی</string>
+    <string name="compose_schedule_previous_month">ماه پیشین</string>
+    <string name="compose_schedule_next_month">ماه پسین</string>
+    <string name="compose_schedule_increase">افزایش</string>
+    <string name="compose_schedule_decrease">کاهش</string>
     <string name="compose_contact_cd">پیوست یک هَمدرِنگ</string>
     <string name="compose_contact_error">ایرنگ در خواندن همدرنگ</string>
+    <string name="compose_attach_gallery">نگارخانه</string>
+    <string name="compose_attach_camera">دوربین</string>
+    <string name="compose_attach_file">پرونده</string>
+    <string name="compose_attach_audio">آوا</string>
+    <string name="compose_attach_contact">همدرنگ</string>
+    <string name="compose_attach_schedule">زمان‌بندی</string>
+    <string name="compose_attach_templates">الگوها</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">سیم‌کارت %1$d (%2$s) گزیده شد</string>
+    <plurals name="compose_video_too_long">
+        <item quantity="one">این ویدیو برای فرستادن با MMS بسیار بلند است. بیشینه درازای آن %d ثانیه است.</item>
+        <item quantity="other">این ویدیو برای فرستادن با MMS بسیار بلند است. بیشینه درازای آن %d ثانیه است.</item>
+    </plurals>
     <string name="compose_sim_cd">%s گزیده شد، سیم‌کارت را بورتانید</string>
     <string name="compose_send_cd">فرستادن پیام</string>
     <string name="message_status_sending">فرستاده می‌شود…</string>
@@ -141,6 +198,11 @@
     <string name="gallery_toast_saved">در نگارستان سِتَنجیده شد</string>
     <string name="backup_title">پشتیبان‌گیری و بازیابی</string>
     <string name="backup_backing_up">پشتیبان‌گیری از پیام‌ها</string>
+    <string name="backup_failed_title">پشتیبان‌گیری ناکام ماند</string>
+    <string name="backup_icon_change_title">نماد برنامه بازگردانده شود؟</string>
+    <string name="backup_icon_change_message">پشتیبان شما با رنگ دیگری برای نماد برنامه ساخته شده است. Android تنها هنگامی که برنامه بسته است می‌تواند نماد را عوض کند، پس Open Messages بی‌درنگ پس از پذیرش شما بسته می‌شود.</string>
+    <string name="icon_change_confirm">به‌کار بستن و بستن</string>
+    <string name="icon_change_later">اکنون نه</string>
     <string name="backup_restoring">بازگرداندن پشتیبان</string>
     <string name="backup_loading">بارگذاری…</string>
     <string name="backup_never">هرگز</string>
@@ -161,11 +223,25 @@
     <string name="backup_restore_dialog_empty">پشتیبانی یافت نشد</string>
     <string name="backup_disclaimer">هم اینک، تنها پشتیبان‌گیری و بازگردانی پیامک پشتیبانی می شود. پشتیبان‌گیری و برنامه‌ریزی برای پشتیبان‌گیری از MMS به‌زودی خواهد آمد!</string>
     <string name="backup_now">اکنون پشتیبان‌گیری کن</string>
+    <string name="backup_now_summary">ساختن پشتیبان نو</string>
+    <string name="backup_categories_title">از چه چیزهایی پشتیبان گرفته شود؟</string>
+    <string name="backup_restore_source_title">کدام پشتیبان؟</string>
+    <string name="backup_restore_categories_title">بازگردانی از %s</string>
+    <string name="backup_category_messages">پیام‌ها (SMS، MMS و پیوست‌ها)</string>
+    <string name="backup_category_settings">پیکربندی و الگوها</string>
+    <string name="backup_category_blocking">هنجارهای بژکم</string>
+    <string name="backup_category_conversations">بایگانی‌شده و آندروا</string>
+    <string name="backup_category_scheduled">پیام‌های برنامه‌ریزی شده</string>
+    <string name="backup_exact_alarm_title">اجازه زنگ‌های دقیق</string>
+    <string name="backup_exact_alarm_message">برای فرستادن پیام‌های برنامه‌ریزی شده درست سر زمان، Open Messages نیاز به اجازه تنظیم زنگ‌های دقیق دارد. بدون آن، شاید کمی دیرتر فرستاده شوند.</string>
+    <string name="backup_exact_alarm_grant">اجازه دادن</string>
+    <string name="backup_exact_alarm_skip">با این همه بازگردان</string>
     <string name="backup_progress_parsing">تجزیه پشتیبان…</string>
     <string name="backup_progress_running">%d/%d پیام</string>
     <string name="backup_progress_saving">ستَنجاندن پشتیبان…</string>
     <string name="backup_progress_syncing">همگام‌سازی پیام‌ها…</string>
     <string name="backup_progress_finished">پایان یافت!</string>
+    <string name="backup_progress_failed">نوشتن پشتیبان شدنی نبود. فضای بازمانده و پوشه پشتیبان را بررسی کنید.</string>
     <string name="backup_notification_channel_name">پشتیبان‌گیری اود بازگردانی</string>
     <string name="scheduled_title">برنامه‌ریزی شده</string>
     <string name="scheduled_empty_description">در همان آنی که می خواهید،خودکار پیام بفرستید</string>
@@ -192,6 +268,12 @@
     <string name="settings_automatic_colors_title">رنگ همدرنگِ خودکار</string>
     <string name="settings_text_size_title">اندازه قلم</string>
     <string name="settings_system_font_title">قلم سامانه را بکار‌گیر</string>
+    <string name="settings_show_avatar_title">نمایش نگاره همدرنگ</string>
+    <string name="settings_show_avatar_summary">نگاره فرستنده را در گفتگوها نشان بده. برای پهنای بیشتر حباب‌های پیام آن را خاموش کنید.</string>
+    <string name="settings_hide_country_code_title">پنهان کردن پیش‌شماره کشور</string>
+    <string name="settings_hide_country_code_summary">شماره‌ها را به ریخت بومی نشان بده، برای نمونه \"06 ...\" به جای \"+33 6 ...\"</string>
+    <string name="settings_edge_to_edge_title">لبه تا لبه</string>
+    <string name="settings_edge_to_edge_summary">نمایش محتوا پشت نوار وضعیت و نوار ناوبری</string>
     <string name="settings_auto_emoji_title">دیمگ خودکار</string>
     <string name="settings_notifications_title">آگاهنده‌ها</string>
     <string name="settings_notifications_o_summary">پَرماسیدن برای سفارشی‌سازی</string>
@@ -225,6 +307,11 @@
     </string-array>
     <string name="settings_delivery_title">هایشگ‌های رساندن</string>
     <string name="settings_delivery_summary">بِهایست که فرستادن پیام‌ها کامیاب بود</string>
+    <string name="settings_send_sound_title">آوای فرستادن</string>
+    <string name="settings_send_sound_summary">هنگام فرستادن پیام آوایی کوتاه پخش کن</string>
+    <string name="settings_send_sound_volume_title">بلندی آوا</string>
+    <string name="settings_header_quick_action_title">کنش تند سرصفحه</string>
+    <string name="settings_header_quick_action_summary">افزودن دکمه میان‌بر به سرصفحه گفتگو</string>
     <string name="settings_signature_title">دستینه</string>
     <string name="settings_signature_summary">به پایان پیام‌های خود دستینگی بیافزایید</string>
     <string name="settings_unicode_title">ستردن گویش‌ها</string>
@@ -255,6 +342,17 @@
     <string name="blocking_drop_title">پیام‌ها را دور بینداز</string>
     <string name="blocking_drop_summary">دریافتی‌های فرستنده‌های بژکم شده را به جای مخفی کردن، دور بیانداز</string>
     <string name="blocking_conversations">گفتگوهای بژکم شده</string>
+    <string name="blocking_category_integrated">بژکم درونی</string>
+    <string name="blocking_integrated_description">Open Messages هرزنامه را روی دستگاه شما بژکم می‌کند. سرچشمه‌های دلخواه زیر، هنگام روشن شدن فهرست خود را از اینترنت بارگیری می‌کنند و سپس بی‌اینترنت کار می‌کنند.</string>
+    <string name="blocking_category_external_apps">برنامه‌های بیرونی</string>
+    <string name="blocked_numbers_summary">شماره‌هایی که خودتان بژکم کرده‌اید</string>
+    <string name="blocking_source_phishing_title">ضد فیشینگ</string>
+    <string name="blocking_source_phishing_summary">پیام‌هایی را که به تارنماهای فیشینگ شناخته‌شده پیوند دارند بژکم می‌کند. روشن کردن آن فهرست را از اینترنت بارگیری می‌کند؛ پس از آن پالایش بی‌اینترنت انجام می‌شود.</string>
+    <string name="blocking_source_flag_block_title">بژکم هرزنامه‌های گمانی</string>
+    <string name="blocking_source_flag_block_summary">پیام‌هایی که شاید هرزنامه باشند را به جای تنها برچسب زدن در دریافتی، یکراست به فهرست بژکم‌شدگان بفرست</string>
+    <string name="blocking_source_status_updating">در حال به‌روزرسانی…</string>
+    <string name="blocking_source_status_updated">به‌روز · %1$d درآیه</string>
+    <string name="blocking_source_status_failed">بارگیری ناکام ماند، سرچشمه خاموش می‌ماند. پیوند اینترنت را بررسی کرده و دوباره بیازمایید.</string>
     <string name="blocking_manager_title">راینیدن بژکم شدگان</string>
     <string name="blocking_manager_built_in_summary">کارکرد بژکم کننده درونی در Open Messages</string>
     <string name="blocking_manager_call_blocker_summary">بژکم کردن پیام‌های هرزنامه، شماره‌ها و زنگ‌های ناشناخته با لیست سیاه اود برنامه‌ریزی</string>
@@ -311,10 +409,15 @@
     <string name="button_yes">آری</string>
     <string name="button_continue">ادامه</string>
     <string name="button_cancel">وازدن</string>
+    <string name="button_close">بستن</string>
     <string name="button_delete">سِتُردن</string>
     <string name="button_save">ذخیره</string>
     <string name="button_stop">ایست</string>
     <string name="button_set">گذاردن</string>
+    <string name="button_later">پسان‌تر</string>
+    <string name="icon_restart_title">بازآغازی نیاز است</string>
+    <string name="icon_restart_message">برای پایان به‌روزرسانی نماد، برنامه باید دوباره آغاز شود.</string>
+    <string name="icon_restart_now">بازآغازی</string>
     <string name="button_undo">اَگرد</string>
     <string name="toast_copied">پچین شد</string>
     <plurals name="notification_new_messages">
@@ -346,6 +449,21 @@
         <item>۵ ثانیه</item>
         <item>۱۰ ثانیه</item>
     </string-array>
+    <string-array name="header_quick_action_labels">
+        <item>هیچ</item>
+        <item>بایگانی</item>
+        <item>خوانده‌نشده</item>
+        <item>بژکم کردن</item>
+        <item>سِتُردن</item>
+    </string-array>
+    <string-array name="send_sound_labels">
+        <item>هیچ</item>
+        <item>کلاسیک</item>
+        <item>روشن</item>
+        <item>نرم</item>
+        <item>فرودآینده</item>
+        <item>سه‌نت</item>
+    </string-array>
     <string-array name="mms_sizes">
         <item>خودکار</item>
         <item>۱۰۰ کیلوبایت</item>
@@ -355,6 +473,11 @@
         <item>۱۰۰۰ کیلوبایت</item>
         <item>۲۰۰۰ کیلوبایت</item>
         <item>بدون فشرده‌سازی</item>
+    </string-array>
+    <string-array name="messageLinkHandlings">
+        <item>بژکم کردن</item>
+        <item>اجازه دادن</item>
+        <item>پرسیدن پیش از باز کردن</item>
     </string-array>
     <string-array name="quick_responses">
         <item>باشه</item>
@@ -383,6 +506,11 @@
     <string name="dialog_edit_scheduled_message_positive_button">آری، پیام را ویرایش کنید</string>
     <string name="dialog_clear_compose">پیام پاک شود؟ این کار برگشت‌ناپذیر است.</string>
     <string name="compose_scheduled_view">پیام برنامه‌ریزی شده برای این گفتگو</string>
+    <string name="compose_scheduled_bubble">فرستادن در %s</string>
+    <plurals name="compose_scheduled_bubble_attachments">
+        <item quantity="one">%d پیوست</item>
+        <item quantity="other">%d پیوست</item>
+    </plurals>
     <string name="dialog_clear_compose_title">پاک‌کردن پیام</string>
     <string name="compose_attach_file_cd">پیوست هر پرونده</string>
     <string name="compose_message_cancel">وازدن</string>
@@ -412,11 +540,22 @@
     <string name="dialog_edit_scheduled_message">ویرایش این پیام آن را از زمان‌بندی می‌سترداند.\n\nاُستیگان شوید که آن را دوباره در برگه پسین بفرستید، وگرنه از دست خواهد رفت.\n\nآیا می‌خواهید ادامه دهید؟</string>
     <string name="main_menu_rename_conversation">بازنامیدن گفتگو</string>
     <string name="main_sender_draft">پیش‌نویش: %s</string>
+    <string name="conversation_flagged_label">گمان هرزنامه</string>
+    <string name="snippet_picture">نگاره</string>
+    <string name="snippet_video">ویدیو</string>
+    <string name="snippet_audio">آوا</string>
+    <string name="snippet_contact_card">کارت همدرنگ</string>
+    <string name="search_group_conversations">گفتگوها</string>
     <string name="compose_no_valid_recipients">نمی‌توان آن را به دیگر هَنبازان فرستاد</string>
+    <string name="compose_flagged_title">گمان هرزنامه</string>
+    <string name="compose_flagged_approve">پذیرفتن</string>
+    <string name="compose_flagged_block">بژکم کردن</string>
     <string name="compose_audio_message_cd">آوانگاری یک پیام</string>
     <string name="compose_menu_show_status">نمایش جاور</string>
     <string name="compose_schedule_cancel_cd">وازدن پیام برنامه‌ریزی شده</string>
     <string name="compose_record_audio_msg_attach_cd">پیوست پیام صدایی</string>
+    <string name="compose_audio_msg_title">پیام آوایی</string>
+    <string name="compose_audio_msg_attach">پیوست کردن</string>
     <string name="compose_record_audio_msg_cd">آوانگاری پیام</string>
     <string name="compose_record_audio_msg_abort_cd">وازدن پیام صدایی</string>
     <string name="compose_message_send_now">اکنون بفرست</string>
@@ -424,10 +563,16 @@
     <string name="compose_record_audio_msg_play_pause_cd">پخش یا درنگ پیام صدایی</string>
     <string name="compose_toast_drag_stt">بندیمه گفتار به نوشتار را به هر‌جا دوست دارید جابجا کنید</string>
     <string name="message_body_too_long_to_display">⚠ پیام بلند است. برای همه نوشتار، از آن رونگاشت گرفته یا بسِتَنجانید</string>
+    <string name="conversation_menu">گزینه‌های گفتگو</string>
+    <string name="conversation_menu_media">دیدن همه رسانه‌ها</string>
+    <string name="media_title">رسانه</string>
+    <string name="media_empty">نگاره‌ها و ویدیوهای هم‌رسانی‌شده در این گفتگو اینجا نمایش داده می‌شوند</string>
     <string name="compose_message_attachment">پیوست</string>
     <string name="scheduled_send_cd">برنامه‌ریزی این پیام</string>
     <string name="attachment_missing">ناپیدا</string>
     <string name="settings_system_show_stt_title">نمایش بندیمه گفتار به نوشتار</string>
+    <string name="settings_drawer_swipe_title">کشیدن برای باز کردن فهرست</string>
+    <string name="settings_drawer_swipe_summary">فهرست کناری را با کشیدن از لبه چپ فهرست گفتگوها باز کنید</string>
     <string name="settings_notification_silent_title">اگر همدرنگ نیست، بی‌صدا باشد</string>
     <string name="settings_mms_weblink_title">شیوه رسیدگی به پیوند‌ها در پیام‌ها</string>
     <string name="settings_unread_at_top_summary">نماش گفتگو‌های خوانده نشده در بالا</string>
@@ -437,10 +582,39 @@
     <string name="button_clear">پاک کردن</string>
     <string name="backup_location_title">جای پشتیبان‌گیری</string>
     <string name="backup_location_summary">برگماشتن پوشه</string>
+    <string name="backup_auto_title">پشتیبان‌گیری خودکار</string>
+    <string name="backup_auto_never">هرگز</string>
+    <string name="backup_auto_daily">هر روز</string>
+    <string name="backup_auto_weekly">هر هفته</string>
+    <string name="backup_auto_custom">دلخواه…</string>
+    <string name="backup_auto_custom_title">روزهای میان پشتیبان‌ها</string>
+    <string name="backup_auto_custom_hint">شمار روزها</string>
+    <plurals name="backup_auto_every_days">
+        <item quantity="one">هر %d روز</item>
+        <item quantity="other">هر %d روز</item>
+    </plurals>
+    <string name="backup_zip_title">ذخیره به‌شکل پرونده ‎.zip</string>
+    <string name="backup_zip_summary">هر پشتیبان را در یک بایگانی یکتا نگه دارید، برای جابه‌جایی میان گوشی‌ها آسان‌تر</string>
+    <string name="backup_manage_title">راینیدن پشتیبان‌ها</string>
+    <string name="backup_manage_summary">پشتیبان‌های خود را دگرنام کنید یا بستُرید</string>
+    <string name="backup_manage_empty">در این جا پشتیبانی یافت نشد</string>
+    <string name="backup_manage_rename">دگرنام کردن</string>
+    <string name="backup_manage_delete">سِتُردن</string>
+    <string name="backup_manage_delete_confirm">\"%s\" سترده شود؟ این کار برگشت‌پذیر نیست.</string>
+    <string name="backup_manage_error">به‌روزرسانی این پشتیبان شدنی نبود</string>
+    <string name="backup_manage_type_folder">پوشه</string>
+    <string name="backup_manage_type_zip">بایگانی Zip</string>
+    <string name="backup_restore_from_title">بازگردانی از</string>
+    <string name="backup_restore_from_folder">یک پوشه</string>
+    <string name="backup_restore_from_zip">یک پرونده ‎.zip</string>
     <string name="clipboard_too_large_to_copy">اندازه‌ی داده از گنجایش بُریده‌‏دان بیشتر است</string>
     <string name="clipboard_unable_to_copy_to">نمی‌توان به بُریده‌‏دان پچین کرد</string>
     <string name="settings_notification_previews_summary">نمایش نام اود پیام</string>
     <string name="settings_notification_silent_summary">آگاهنده‌ها را برای پیام‌هایی که از همدرنگان شما نیستند، بی‌صدا می‌کند</string>
+    <string name="settings_copy_code_title">رونگاشتن کدها از آگاهنده‌ها</string>
+    <string name="settings_copy_code_summary">دکمه رونگاشت کد را به آگاهنده‌های کدهای یک‌بارمصرف و راستی‌آزمایی می‌افزاید</string>
+    <string name="notification_copy_code">رونگاشت کد</string>
+    <string name="notification_code_copied">کد رونگاشته شد</string>
     <string name="settings_disable_screenshots_title">ناکارا کردن نماگرفت‌ها</string>
     <string name="settings_diable_screenshots_summary">سامانه‌عامل اود دیگر برنامه‌ها را از نماگرفتن از برنامه بازدارید.</string>
     <string name="compose_message_item">تاگ پیام</string>
@@ -457,9 +631,18 @@
     <string name="compose_send_group_summary_off">پیام، جداگانه برای هر دریافت‌کننده فرستاده خواهد شد</string>
     <string name="notification_foreground_worker_title">دریافت پیام</string>
     <string name="notification_foreground_worker_text">در اندروید ۱۲ اود پس از آن، آگاهنده‌ای برای دریافت پیام در پس‌زمینه نیاز است.</string>
+    <string name="notification_foreground_worker_channel_name">آگاهنده فرایند دریافت پیام</string>
+    <string name="notification_me">من</string>
     <string name="compose_send_group_summary_on">دریافت‌کننده‌ها اود پاسخ‌ها برای همه نمایان خواهند بود</string>
     <string name="main_sync_emojis">تجزیه واکنش دیمگ‌ها…</string>
     <string name="compose_reactions_title">واکنش‌ها</string>
     <string name="deduplicate_messages_category">پیام‌های دو باره</string>
     <string name="deduplicate_messages_title">سِتُردن پیام‌های همسان</string>
+    <string name="deduplicate_messages_summary">پایگاه داده پیام‌ها را می‌کاود و همه پیام‌هایی را که درست همانند پیام‌های اصلی هستند می‌سترد</string>
+    <string name="deduplicate_message_confirmation_dialog_message">پایگاه داده پیام‌های شما برای یافتن پیام‌های تکراری کاویده می‌شود و سپس آن‌ها سترده می‌شوند.\nاین کار پیام‌ها را خودکار می‌سترد، تنها اگر پیامدهایش را می‌دانید پیش بروید.</string>
+    <string name="auto_deduplicate_messages_title">ستردن خودکار پیام‌های تکراری</string>
+    <string name="auto_deduplicate_messages_summary">ستردن پیام‌های تکراری هنگام همگام‌سازی انجام می‌شود. آگاه باشید، این کار پیام‌ها را خودکار می‌سترد، و اگرچه بخت تکراری نادرست بسیار کم است، باز هم شدنی است.\nلطفا هشیار باشید.</string>
+    <string name="deduplicating_messages_finished">ستردن پیام‌های تکراری به پایان رسید!</string>
+    <string name="deduplicating_messages_no_messages">پیام تکراری یافت نشد.</string>
+    <string name="deduplicating_messages_failed">ستردن پیام‌های تکراری ناکام ماند، لطفا دوباره بیازمایید</string>
 </resources>
